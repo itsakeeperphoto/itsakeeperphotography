@@ -1,6 +1,7 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
 import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
 import "../../styles/about-page.css";
 
 interface Props {
@@ -31,7 +32,11 @@ const originNote = origin.paragraphs?.[0];
 const originParagraphs = origin.paragraphs?.slice(originNote ? 1 : 0);
 const lessonLead = lessons.paragraphs?.[0];
 const lessonParagraphs = lessons.paragraphs?.slice(lessonLead ? 1 : 0);
-const heroHeadingParts = page.hero.heading.split(" — ");
+const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" Behind ");
+const heroHeadingLines = [
+  heroHeadingLead,
+  ...(heroHeadingTail ? [`Behind ${heroHeadingTail}`] : []),
+];
 
 const heroLeftImage = origin.secondaryImage || lessonPrints[0]?.image || belief.image;
 const heroRightImage = lessonPrints[2]?.image || belief.image;
@@ -46,90 +51,28 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
-  <header
-    class:list={["about-hero", `tone-${page.hero.tone}`]}
-    aria-labelledby="about-hero-title"
-    data-about-hero
-  >
-    <div class="about-hero__stage">
-      {page.hero.image && (
-        <figure class="about-hero__portrait-field">
-          <Picture
-            src={page.hero.image}
-            alt={page.hero.imageAlt || ""}
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-            responsiveSrcset
-            sizes="(max-width: 767px) 100vw, (max-width: 1050px) 50vw, 43vw"
-            imgClass="about-hero__portrait-image photo--editorial"
-          />
-        </figure>
-      )}
-
-      {heroLeftImage && (
-        <figure
-          class="about-hero__print about-hero__print--left"
-          aria-hidden="true"
-          data-about-hero-print="left"
-        >
-          <Picture
-            src={heroLeftImage}
-            alt=""
-            loading="eager"
-            decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
-
-      {heroRightImage && (
-        <figure
-          class="about-hero__print about-hero__print--right"
-          aria-hidden="true"
-          data-about-hero-print="right"
-        >
-          <Picture
-            src={heroRightImage}
-            alt=""
-            loading="eager"
-            decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
-
-      <div class="about-hero__wash" aria-hidden="true"></div>
-
-      <div class="about-hero__copy">
-        {page.hero.scriptLine && (
-          <p class="about-script about-hero__script" aria-hidden="true">
-            {page.hero.scriptLine}
-          </p>
-        )}
-        <h1 id="about-hero-title">
-          <span>{heroHeadingParts[0]}</span>
-          {heroHeadingParts.length > 1 && (
-            <span> — {heroHeadingParts.slice(1).join(" — ")}</span>
-          )}
-        </h1>
-        {page.hero.intro && <p class="about-hero__intro">{page.hero.intro}</p>}
-        {page.hero.links?.length && (
-          <div class="about-hero__actions">
-            {page.hero.links.map((link) => (
-              <a class="outline-button" href={link.href}>{link.label}</a>
-            ))}
-          </div>
-        )}
-      </div>
-
-    </div>
-    <div class="about-hero__paper-edge" aria-hidden="true"></div>
-  </header>
+  <EditorialHero
+    pageKey="about"
+    titleId="about-hero-title"
+    heading={page.hero.heading}
+    headingLines={heroHeadingLines}
+    scriptLine={page.hero.scriptLine || ""}
+    intro={page.hero.intro}
+    links={page.hero.links}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 32%"
+    mobileBackgroundPosition="50% 24%"
+    leftPrint={{
+      src: heroLeftImage,
+      objectPosition: "50% 45%",
+    }}
+    rightPrint={{
+      src: heroRightImage,
+      objectPosition: "50% 48%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+  />
 
   <section
     id={origin.id}

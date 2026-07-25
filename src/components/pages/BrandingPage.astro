@@ -1,0 +1,429 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+import "../../styles/branding-page.css";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+  inquiry?: any;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) {
+    throw new Error(`Branding page is missing the required section: ${id}`);
+  }
+  return section;
+};
+
+const face = requireSection("your-business-has-a-face");
+const custom = requireSection("custom-business-photography");
+const includes = requireSection("branding-session-includes");
+const audiences = requireSection("who-books-branding-sessions");
+const questions = requireSection("branding-session-questions");
+
+const lisaWorkingImage = "/uploads/lisa-photographer-at-work-black-white.jpg";
+const lisaPortraitImage = "/uploads/lisa-photographer-tricities.jpg";
+const businessPortraitImage = "/uploads/business-branding-portrait-richland.jpg";
+
+const faqSchema = (questions.items || [])
+  .filter((item) => item.heading && item.paragraphs?.length)
+  .map((item) => ({
+    "@type": "Question",
+    name: item.heading,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.paragraphs?.join(" "),
+    },
+  }));
+
+// CONTENT PENDING: [PENDIENTE: entregables exactos, cantidad de imágenes, derechos de uso comercial — Q54, Q58]
+// CONTENT PENDING: [PENDIENTE: si Lisa ofrece membresía/paquete recurrente — hueco competitivo vs. JK Photos]
+---
+
+<article
+  class="branding-page"
+  data-branding-page
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="branding"
+    titleId="branding-hero-title"
+    heading={page.hero.heading}
+    headingLines={[
+      "Branding Photography",
+      "for Tri-Cities",
+      "Businesses",
+    ]}
+    scriptLine="your work"
+    intro={page.hero.intro}
+    links={page.hero.links}
+    backgroundImage={lisaWorkingImage}
+    backgroundAlt="Lisa reviewing photographs on the back of her camera."
+    backgroundPosition="50% 48%"
+    mobileBackgroundPosition="49% 46%"
+    leftPrint={{
+      src: businessPortraitImage,
+      objectPosition: "50% 44%",
+    }}
+    rightPrint={{
+      src: lisaPortraitImage,
+      objectPosition: "50% 42%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+  />
+
+  <section
+    class="branding-face"
+    data-branding-section="face"
+    aria-labelledby={`${face.id}-title`}
+  >
+    <div class="branding-shell branding-face__inner">
+      <div class="branding-face__media" data-line-target="face-media">
+        <span
+          class="branding-face__line"
+          data-construction-line
+          data-line-anchor="image"
+          data-anchor-target="face-arch"
+          aria-hidden="true"
+        ></span>
+
+        <figure
+          class="branding-face__arch"
+          data-branding-arch="face"
+          data-branding-photo="portrait"
+          data-line-target="face-arch"
+        >
+          <Picture
+            src={businessPortraitImage}
+            alt="A Tri-Cities business owner smiling for her branding portrait."
+            loading="eager"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 76vw, (max-width: 1050px) 38vw, 27vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure
+          class="branding-print branding-face__print"
+          data-branding-photo="working"
+        >
+          <span class="branding-tape" aria-hidden="true"></span>
+          <Picture
+            src={lisaWorkingImage}
+            alt="Lisa checking an image on her camera."
+            loading="lazy"
+            decoding="async"
+            optimizedMobileWidth={400}
+            optimizedDesktopWidth={640}
+            imgClass="branding-face__print-image photo--editorial"
+          />
+        </figure>
+      </div>
+
+      <div class="branding-face__copy">
+        <p class="branding-eyebrow">Your business has a face</p>
+        <h2 id={`${face.id}-title`}>{face.heading}</h2>
+        <div class="branding-prose">
+          {face.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-custom"
+    data-branding-section="library"
+    aria-labelledby={`${custom.id}-title`}
+  >
+    <div class="branding-shell branding-custom__inner">
+      <div class="branding-custom__copy">
+        <p class="branding-eyebrow">Custom business photography</p>
+        <h2 id={`${custom.id}-title`}>{custom.heading}</h2>
+        <div class="branding-prose">
+          {custom.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+
+      <div
+        class="branding-custom__mosaic"
+        data-branding-mosaic
+        data-line-target="branding-mosaic"
+      >
+        <span
+          class="branding-custom__line branding-custom__line--horizontal"
+          data-construction-line
+          data-line-anchor="image"
+          data-anchor-target="branding-mosaic"
+          aria-hidden="true"
+        ></span>
+        <span
+          class="branding-custom__line branding-custom__line--vertical"
+          data-construction-line
+          data-line-anchor="image"
+          data-anchor-target="branding-mosaic"
+          aria-hidden="true"
+        ></span>
+
+        <figure
+          class="branding-print branding-custom__photo branding-custom__photo--portrait"
+          data-branding-photo="portrait"
+        >
+          <Picture
+            src={businessPortraitImage}
+            alt="A business owner photographed against a brick wall."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 36vw, (max-width: 1050px) 30vw, 18vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure
+          class="branding-print branding-custom__photo branding-custom__photo--working"
+          data-branding-photo="working"
+        >
+          <span class="branding-tape" aria-hidden="true"></span>
+          <Picture
+            src={lisaWorkingImage}
+            alt="Lisa working with her camera."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 48vw, (max-width: 1050px) 40vw, 24vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure
+          class="branding-print branding-custom__photo branding-custom__photo--detail"
+          data-branding-photo="detail"
+          aria-hidden="true"
+        >
+          <Picture
+            src={lisaWorkingImage}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            optimizedMobileWidth={400}
+            optimizedDesktopWidth={640}
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure
+          class="branding-print branding-custom__photo branding-custom__photo--space"
+          data-branding-photo="space"
+          aria-hidden="true"
+        >
+          <Picture
+            src={lisaPortraitImage}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            optimizedMobileWidth={400}
+            optimizedDesktopWidth={640}
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-includes"
+    data-branding-section="includes"
+    aria-labelledby={`${includes.id}-title`}
+  >
+    <div class="branding-shell branding-includes__inner">
+      <header class="branding-includes__heading">
+        <p class="branding-eyebrow">What a Branding Session Includes</p>
+        <p class="branding-script" aria-hidden="true">built around your brand</p>
+        <h2 id={`${includes.id}-title`}>{includes.heading}</h2>
+      </header>
+
+      {includes.items?.length && (
+        <ol
+          class="branding-includes__ledger"
+          data-branding-process
+          data-line-target="branding-process"
+        >
+          {includes.items.map((item, index) => (
+            <li data-branding-step>
+              <span class="branding-includes__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {item.heading && <h3>{item.heading}</h3>}
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  </section>
+
+  <section
+    class="branding-audiences"
+    data-branding-section="audiences"
+    aria-labelledby={`${audiences.id}-title`}
+  >
+    <div class="branding-shell branding-audiences__inner">
+      <header class="branding-audiences__heading">
+        <p class="branding-eyebrow">People whose business is personal</p>
+        <h2 id={`${audiences.id}-title`}>{audiences.heading}</h2>
+      </header>
+
+      <div
+        class="branding-audiences__triptych"
+        data-branding-triptych
+        data-line-target="audience-triptych"
+      >
+        <figure
+          class="branding-audiences__panel branding-audiences__panel--left"
+          data-branding-panel="left"
+        >
+          <Picture
+            src={businessPortraitImage}
+            alt="A local entrepreneur photographed for her business."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 74vw, 29vw"
+            imgClass="photo--editorial"
+          />
+          <figcaption>Entrepreneurs</figcaption>
+        </figure>
+
+        <figure
+          class="branding-audiences__panel branding-audiences__panel--center"
+          data-branding-panel="center"
+          data-branding-arch="audience"
+        >
+          <Picture
+            src={lisaWorkingImage}
+            alt="Lisa seated with her camera while working."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 82vw, 29vw"
+            imgClass="photo--editorial"
+          />
+          <figcaption>Makers</figcaption>
+        </figure>
+
+        <figure
+          class="branding-audiences__panel branding-audiences__panel--right"
+          data-branding-panel="right"
+        >
+          <Picture
+            src={lisaPortraitImage}
+            alt="Lisa holding her camera for a professional portrait."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 74vw, 29vw"
+            imgClass="photo--editorial"
+          />
+          <figcaption>Small teams</figcaption>
+        </figure>
+      </div>
+
+      <div class="branding-audiences__copy branding-prose">
+        {audiences.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-faq"
+    data-branding-faq
+    aria-labelledby={`${questions.id}-title`}
+  >
+    <div class="branding-shell branding-faq__inner">
+      <header class="branding-faq__heading">
+        <p class="branding-eyebrow">Branding Session Questions</p>
+        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        {questions.links?.map((link) => (
+          <a class="branding-text-link" href={link.href}>{link.label}</a>
+        ))}
+      </header>
+
+      {questions.items?.length && (
+        <div class="branding-faq__list">
+          {questions.items.map((item, index) => (
+            <details class="branding-faq__item" open={index === 0}>
+              <summary>
+                <span class="branding-faq__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="branding-faq__question" role="heading" aria-level="3">
+                  {item.heading}
+                </span>
+                <span class="branding-faq__mark" aria-hidden="true">+</span>
+              </summary>
+              <div class="branding-faq__answer">
+                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                {item.links?.map((link) => (
+                  <a class="branding-text-link" href={link.href}>{link.label}</a>
+                ))}
+              </div>
+            </details>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  {page.finalCta && (
+    <section
+      class="branding-final"
+      data-branding-final
+      aria-labelledby="branding-final-title"
+    >
+      <div class="branding-final__background" aria-hidden="true">
+        <Picture
+          src={lisaWorkingImage}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="100vw"
+          imgClass="branding-final__image photo--editorial"
+        />
+        <div class="branding-final__wash"></div>
+      </div>
+
+      <div class="branding-shell branding-final__inner">
+        <div class="branding-final__frame">
+          <p class="branding-script" aria-hidden="true">who you are</p>
+          <h2 id="branding-final-title">{page.finalCta.heading}</h2>
+          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {page.finalCta.link && (
+            <a class="outline-button" href={page.finalCta.link.href}>
+              {page.finalCta.link.label}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {faqSchema.length > 0 && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqSchema,
+      })}
+    />
+  )}
+</article>

@@ -1,8 +1,10 @@
 ---
 import type { EditorialPageData } from "../../content/page-types";
 import AboutPage from "./AboutPage.astro";
+import BrandingPage from "./BrandingPage.astro";
 import ContentPage from "./ContentPage.astro";
 import FamilyPage from "./FamilyPage.astro";
+import HeadshotPage from "./HeadshotPage.astro";
 import NewbornPage from "./NewbornPage.astro";
 import SeniorPage from "./SeniorPage.astro";
 
@@ -14,15 +16,22 @@ interface Props {
 
 const props = Astro.props;
 const isAboutPage = props.page.route === "/about/";
+const isBrandingPage =
+  props.page.route === "/branding-photographer-tri-cities-wa/";
 const isFamilyPage = props.page.route === "/family-photographer-tri-cities-wa/";
+const isHeadshotPage = props.page.route === "/headshot-photographer-tri-cities-wa/";
 const isNewbornPage = props.page.route === "/newborn-photographer-tri-cities-wa/";
 const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
 ---
 
 {isAboutPage
   ? <AboutPage {...props} />
+  : isBrandingPage
+    ? <BrandingPage {...props} />
   : isFamilyPage
     ? <FamilyPage {...props} />
+  : isHeadshotPage
+    ? <HeadshotPage {...props} />
   : isNewbornPage
     ? <NewbornPage {...props} />
   : isSeniorPage

@@ -1,6 +1,7 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
 import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
 import "../../styles/senior-page.css";
 
 interface Props {
@@ -27,6 +28,10 @@ const heroSideImage = "/uploads/spring-portrait-blossoms-tricities.jpg";
 const parentRearImage = "/uploads/autumn-senior-portrait-tricities.jpg";
 const finalBackgroundImage = "/uploads/senior-riverside-golden-hour-tricities.jpg";
 const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" in ");
+const heroHeadingLines = [
+  heroHeadingLead,
+  ...(heroHeadingTail ? [`in ${heroHeadingTail}`] : []),
+];
 
 const faqSchema = (questions.items || [])
   .filter((item) => item.heading && item.paragraphs?.length)
@@ -45,66 +50,25 @@ const faqSchema = (questions.items || [])
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
-  <header class="senior-hero" aria-labelledby="senior-hero-title">
-    <div class="senior-hero__background">
-      {page.hero.image && (
-        <Picture
-          src={page.hero.image}
-          alt={page.hero.imageAlt || ""}
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="senior-hero__background-image"
-        />
-      )}
-      <div class="senior-hero__wash" aria-hidden="true"></div>
-    </div>
-
-    <figure class="senior-hero__print senior-hero__print--left" aria-hidden="true">
-      <Picture
-        src={heroSideImage}
-        alt=""
-        loading="eager"
-        decoding="async"
-        optimizedMobileWidth={400}
-        imgClass="photo--editorial"
-      />
-    </figure>
-
-    <div class="senior-hero__copy">
-      <p class="senior-script senior-hero__script" aria-hidden="true">this year</p>
-      <h1 id="senior-hero-title">
-        <span>{heroHeadingLead}</span>
-        {heroHeadingTail && <span>in {heroHeadingTail}</span>}
-      </h1>
-      {page.hero.intro && <p class="senior-hero__intro">{page.hero.intro}</p>}
-      {page.hero.links?.length && (
-        <div class="senior-hero__actions">
-          {page.hero.links.map((link) => (
-            <a class="outline-button" href={link.href}>{link.label}</a>
-          ))}
-        </div>
-      )}
-    </div>
-
-    {page.hero.secondaryImage && (
-      <figure class="senior-hero__print senior-hero__print--right" aria-hidden="true">
-        <Picture
-          src={page.hero.secondaryImage}
-          alt=""
-          loading="eager"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    <div class="senior-hero__paper-edge" aria-hidden="true"></div>
-  </header>
+  <EditorialHero
+    pageKey="senior"
+    titleId="senior-hero-title"
+    heading={page.hero.heading}
+    headingLines={heroHeadingLines}
+    scriptLine={page.hero.scriptLine || "this year"}
+    intro={page.hero.intro}
+    links={page.hero.links}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="54% 50%"
+    mobileBackgroundPosition="55% 50%"
+    leftPrint={{ src: heroSideImage, objectPosition: "50% 45%" }}
+    rightPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 48%",
+    }}
+    paperEdgeColor="var(--color-weathered-sand)"
+  />
 
   <section
     class:list={["senior-year", `tone-${yearOnly.tone}`]}

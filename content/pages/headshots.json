@@ -10,7 +10,12 @@
   "hero": {
     "tone": "earth",
     "heading": "Professional Headshots in the Tri-Cities, WA",
+    "scriptLine": "you on your best day",
     "intro": "Headshots in Richland, Kennewick and Pasco that look like you on your best day — warm, confident and approachable, not stiff and corporate.",
+    "image": "/uploads/headshot-professional-formal-stairs-tricities.jpg",
+    "imageAlt": "Formal portrait of a person in a dark suit seated on a modern staircase.",
+    "secondaryImage": "/uploads/business-branding-portrait-richland.jpg",
+    "secondaryImageAlt": "Smiling woman photographed against a brick wall.",
     "links": [
       {
         "label": "Book Your Headshot",
@@ -24,9 +29,17 @@
       "kind": "prose",
       "tone": "ivory",
       "heading": "A Headshot You're Proud to Put Everywhere",
+      "image": "/uploads/business-branding-portrait-richland.jpg",
+      "imageAlt": "Smiling woman photographed against a brick wall.",
       "paragraphs": [
         "Your headshot shows up before you do — on LinkedIn, your company's team page, the conference program, the \"About\" page someone checks before they ever call you. It deserves better than a cropped vacation photo or that stiff picture from three jobs ago.",
         "My headshots are warm and genuinely you: professional enough for the boardroom, human enough that people feel like they've already met you."
+      ],
+      "links": [
+        {
+          "label": "Book Your Headshot",
+          "href": "/contact/"
+        }
       ]
     },
     {
@@ -34,9 +47,14 @@
       "kind": "split",
       "tone": "sand",
       "heading": "Yes — Even If You Hate Having Your Picture Taken",
+      "scriptLine": "You're not — you've just never been guided.",
+      "image": "/uploads/headshot-environmental-portrait-tricities.jpg",
+      "imageAlt": "Environmental portrait of a person in a light jacket against corrugated metal.",
+      "secondaryImage": "/uploads/headshot-warm-portrait-tricities.jpg",
+      "secondaryImageAlt": "Warm outdoor portrait of a person among garden flowers.",
       "paragraphs": [
-        "Most people who book headshots with me open with the same line: \"Just so you know, I'm terrible at this.\" You're not — you've just never been guided.",
-        "I'll direct you through the whole session: where to angle your shoulders, what to do with your hands, when to take a deep breath in through your nose and out through your mouth. Between prompts, the real expressions happen — and those are the frames you'll choose. One of the things clients mention most in my reviews is how at ease they felt, even the ones who dreaded coming."
+        "If your first thought is, \"Just so you know, I'm terrible at this,\" you are not alone. You're not — you've just never been guided.",
+        "I'll direct you through the whole session: where to angle your shoulders, what to do with your hands, when to take a deep breath in through your nose and out through your mouth. Between prompts, the real expressions happen — and those are the frames you'll choose. The goal is a portrait that feels composed, confident and recognizably you."
       ]
     },
     {
@@ -44,7 +62,9 @@
       "kind": "steps",
       "tone": "olive",
       "heading": "How a Headshot Session Works",
-      "intro": "Headshot sessions are efficient on purpose — professionals don't have all afternoon.",
+      "intro": "Headshot sessions are focused on purpose: a clear plan, calm direction and a concise set of images built for where you'll use them.",
+      "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
+      "imageAlt": "Lisa Weiss reviewing photographs on the back of her camera during a portrait session.",
       "items": [
         {
           "heading": "We plan quickly.",
@@ -55,7 +75,7 @@
         {
           "heading": "We shoot.",
           "paragraphs": [
-            "Natural light, guided posing, a few backdrop or location changes for variety. Most headshot sessions are done within the hour."
+            "Natural light, guided posing and enough backdrop or location variety to give you useful options without turning the session into an all-day production."
           ]
         },
         {
@@ -71,9 +91,29 @@
       "kind": "services",
       "tone": "earth",
       "heading": "Headshots for Teams",
+      "items": [
+        {
+          "image": "/uploads/business-branding-portrait-richland.jpg",
+          "imageAlt": "Smiling woman photographed against a brick wall."
+        },
+        {
+          "image": "/uploads/headshot-formal-portrait-stairs-tricities.jpg",
+          "imageAlt": "Person in a dark suit photographed on a modern staircase."
+        },
+        {
+          "image": "/uploads/headshot-environmental-portrait-tricities.jpg",
+          "imageAlt": "Person in a light jacket photographed against corrugated metal."
+        }
+      ],
       "paragraphs": [
-        "Consistent, warm headshots for your whole team — photographed at your Tri-Cities office or a location we choose, scheduled so it barely interrupts the workday. If your team page is a patchwork of selfies and ten-year-old photos, I can fix that in a morning.",
+        "Headshots for a team start with a shared plan for location, light and framing, then give each person the same calm direction. Tell me your headcount and where the portraits need to live, and I'll recommend the right setup.",
         "Building a full brand image library instead?"
+      ],
+      "links": [
+        {
+          "label": "Explore Branding Photography",
+          "href": "/branding-photographer-tri-cities-wa/"
+        }
       ]
     },
     {
@@ -81,6 +121,8 @@
       "kind": "faq",
       "tone": "ivory",
       "heading": "Headshot Questions",
+      "image": "/uploads/headshot-warm-portrait-tricities.jpg",
+      "imageAlt": "Warm outdoor portrait of a person among garden flowers.",
       "items": [
         {
           "heading": "What should I wear for a headshot?",
@@ -91,7 +133,7 @@
         {
           "heading": "How long does a headshot session take?",
           "paragraphs": [
-            "Usually under an hour for individuals. Team sessions depend on headcount — tell me how many people and I'll map out the morning."
+            "Timing depends on how many final looks you need, how many people are being photographed and whether we are changing locations or setups. Share the scope in your inquiry and I'll recommend a practical schedule."
           ]
         },
         {
@@ -123,16 +165,19 @@
   ],
   "finalCta": {
     "tone": "walnut",
+    "eyebrow": "ready when you are",
     "heading": "Let's Update That Profile Photo",
     "paragraphs": [
       "Tell me where your headshot needs to work and when you need it."
     ],
+    "image": "/uploads/headshot-professional-formal-stairs-tricities.jpg",
+    "imageAlt": "Formal portrait of a person in a dark suit seated on a modern staircase.",
     "link": {
       "label": "Book your headshot",
       "href": "/contact/"
     }
   },
   "pending": [
-    "[PENDIENTE: duración/formato exacto — Q54]"
+    "[PENDIENTE: validar el copy final y reemplazar la selección editorial por una muestra real de headshots de equipo antes de indexar]"
   ]
 }

@@ -310,7 +310,7 @@
   /* Photographic banner */
   --banner-height: 31.25rem;
   --banner-image-position-x: 62%;
-  --banner-image-position-y: 70%;
+  --banner-image-position-y: 55%;
 
   /* Biography: layered portrait and archival camera-detail print */
   --bio-height: 52rem;
@@ -320,7 +320,7 @@
   --bio-copy-width: 31.25rem;
   --bio-media-width: 100%;
   --bio-media-height: 52rem;
-  --bio-portrait-y: 8.75rem;
+  --bio-portrait-y: calc(8.75rem - var(--space-8));
   --bio-portrait-width: clamp(22.5rem, 30.56vw, 27.5rem);
   --bio-portrait-height: clamp(30rem, 40.97vw, 36.875rem);
   --bio-portrait-position-x: 50%;
@@ -328,7 +328,7 @@
   --bio-print-width: clamp(15.5rem, 20.83vw, 18.75rem);
   --bio-print-height: clamp(20.75rem, 27.78vw, 25rem);
   --bio-print-left: var(--space-10);
-  --bio-print-bottom: var(--space-3);
+  --bio-print-bottom: calc(var(--space-3) + var(--space-8));
   --bio-print-mat-inline: var(--space-2);
   --bio-print-mat-top: var(--space-2);
   --bio-print-mat-bottom: var(--space-3);

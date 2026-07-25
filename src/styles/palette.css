@@ -231,13 +231,17 @@ body {
 .photo-banner__copy {
   position: relative;
   z-index: var(--layer-media-front);
-  width: min(81.5625rem, calc(100% - (var(--page-gutter-desktop) * 2)));
+  width: min(
+    var(--design-width),
+    calc(100% - (var(--page-gutter-desktop) * 2))
+  );
   margin-inline: auto;
+  padding-block: var(--space-20) var(--space-24);
   color: var(--color-warm-ivory);
 }
 
 .photo-banner__copy h2 {
-  max-width: 15ch;
+  max-width: 18ch;
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 4.5vw, 4.6rem);
@@ -257,7 +261,7 @@ body {
 }
 
 .photo-banner__copy .outline-button {
-  margin-top: var(--space-6);
+  margin-top: var(--space-8);
 }
 
 .biography {
@@ -306,7 +310,7 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 38%;
+  left: max(0px, calc((100% - var(--content-shell-width)) / 2));
   width: 1px;
   background: color-mix(in srgb, var(--color-deep-umber) 30%, transparent);
   content: "";
@@ -571,6 +575,13 @@ body {
 
 }
 
+@media (max-width: 1050px) {
+  .photo-banner__copy {
+    width: calc(100% - (var(--page-gutter-tablet) * 2));
+    padding-block: var(--space-16);
+  }
+}
+
 @media (max-width: 767px) {
   .hero {
     align-content: center;
@@ -607,22 +618,18 @@ body {
   }
 
   .photo-banner__phrase {
-    top: 8%;
+    top: var(--space-10);
     right: var(--page-gutter-mobile);
   }
 
   .photo-banner__copy {
     width: calc(100% - (var(--page-gutter-mobile) * 2));
     align-self: end;
-    padding-bottom: var(--space-10);
+    padding-block: var(--space-36) var(--space-12);
   }
 
   .photo-banner__copy p {
     font-size: var(--font-size-body-sm);
-  }
-
-  .home-faq::before {
-    left: var(--page-gutter-mobile);
   }
 
   .home-faq__item summary {

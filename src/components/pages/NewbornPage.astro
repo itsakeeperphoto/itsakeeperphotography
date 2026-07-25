@@ -1,6 +1,7 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
 import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
 import "../../styles/newborn-page.css";
 
 interface Props {
@@ -24,6 +25,11 @@ const growing = requireSection("growing-families");
 const questions = requireSection("newborn-session-questions");
 
 const processItems = process.items || [];
+const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" in ");
+const heroHeadingLines = [
+  heroHeadingLead.replace("Photographer", "Photo\u200bgrapher"),
+  ...(heroHeadingTail ? [`in ${heroHeadingTail}`] : []),
+];
 
 const faqSchema = (questions.items || [])
   .filter((item) => item.heading && item.paragraphs?.length)
@@ -42,98 +48,28 @@ const faqSchema = (questions.items || [])
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
-  <header class="newborn-hero" aria-labelledby="newborn-hero-title">
-    <div class="newborn-hero__background">
-      {page.hero.image && (
-        <Picture
-          src={page.hero.image}
-          alt={page.hero.imageAlt || ""}
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="newborn-hero__background-image"
-        />
-      )}
-      <div class="newborn-hero__wash" aria-hidden="true"></div>
-    </div>
-
-    {firstDays.image && (
-      <figure class="newborn-hero__print newborn-hero__print--left-rear" aria-hidden="true">
-        <Picture
-          src={firstDays.image}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    {page.hero.secondaryImage && (
-      <figure class="newborn-hero__print newborn-hero__print--left-front" aria-hidden="true">
-        <Picture
-          src={page.hero.secondaryImage}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    <div class="newborn-hero__copy">
-      {page.hero.scriptLine && (
-        <p class="newborn-script newborn-hero__script" aria-hidden="true">
-          {page.hero.scriptLine}
-        </p>
-      )}
-      <h1 id="newborn-hero-title">{page.hero.heading}</h1>
-      {page.hero.intro && <p class="newborn-hero__intro">{page.hero.intro}</p>}
-      {page.hero.links?.length && (
-        <div class="newborn-hero__actions">
-          {page.hero.links.map((link) => (
-            <a class="outline-button" href={link.href}>{link.label}</a>
-          ))}
-        </div>
-      )}
-    </div>
-
-    {growing.secondaryImage && (
-      <figure class="newborn-hero__print newborn-hero__print--right-rear" aria-hidden="true">
-        <Picture
-          src={growing.secondaryImage}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    {babyLed.secondaryImage && (
-      <figure class="newborn-hero__print newborn-hero__print--right-front" aria-hidden="true">
-        <Picture
-          src={babyLed.secondaryImage}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    <div class="newborn-hero__paper-edge" aria-hidden="true"></div>
-  </header>
+  <EditorialHero
+    pageKey="newborn"
+    titleId="newborn-hero-title"
+    heading={page.hero.heading}
+    headingLines={heroHeadingLines}
+    scriptLine={page.hero.scriptLine || ""}
+    intro={page.hero.intro}
+    links={page.hero.links}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 50%"
+    mobileBackgroundPosition="57% 50%"
+    leftPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 45%",
+    }}
+    rightPrint={{
+      src: babyLed.secondaryImage,
+      objectPosition: "50% 48%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+  />
 
   <section
     class:list={["newborn-first-days", `tone-${firstDays.tone}`]}

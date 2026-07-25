@@ -92,171 +92,6 @@
   text-transform: uppercase;
 }
 
-/* Hero */
-
-.newborn-hero {
-  position: relative;
-  z-index: 3;
-  min-height: clamp(39rem, 50vw, 45rem);
-  color: var(--newborn-ivory);
-  background: var(--newborn-umber);
-  isolation: isolate;
-}
-
-.newborn-hero__background,
-.newborn-hero__background picture,
-.newborn-hero__background img,
-.newborn-hero__wash {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.newborn-hero__background {
-  z-index: -2;
-}
-
-.newborn-hero__background-image {
-  object-position: 50% 50%;
-  filter:
-    saturate(var(--photo-hero-saturation))
-    contrast(var(--photo-hero-contrast))
-    brightness(0.8)
-    sepia(var(--photo-hero-sepia));
-}
-
-.newborn-hero__wash {
-  z-index: 1;
-  background: rgba(40, 30, 16, 0.54);
-}
-
-.newborn-hero__copy {
-  position: absolute;
-  z-index: 3;
-  top: 48%;
-  left: 50%;
-  width: min(45rem, 52vw);
-  text-align: center;
-  transform: translate(-50%, -50%);
-}
-
-.newborn-hero__script {
-  margin-bottom: 0.45rem;
-  font-size: clamp(2.65rem, 4.2vw, 4.25rem);
-}
-
-.newborn-hero h1 {
-  max-width: 44rem;
-  margin-inline: auto;
-  font-size: clamp(3.45rem, 5vw, 4.8rem);
-  letter-spacing: 0.025em;
-  line-height: 0.93;
-  text-wrap: balance;
-}
-
-.newborn-hero h1::after {
-  display: block;
-  width: 4rem;
-  height: 1px;
-  margin: 1.45rem auto 1.3rem;
-  background: currentColor;
-  content: "";
-  opacity: 0.72;
-}
-
-.newborn-hero__intro {
-  max-width: 39rem;
-  margin-inline: auto;
-  font-family: var(--font-body);
-  font-size: clamp(1.125rem, 1.55vw, 1.3125rem);
-  font-style: italic;
-  line-height: 1.45;
-}
-
-.newborn-hero__actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.75rem;
-}
-
-.newborn-hero .outline-button {
-  border-color: currentColor;
-  color: var(--newborn-ivory);
-}
-
-.newborn-hero__print {
-  position: absolute;
-  z-index: 4;
-  width: clamp(8.75rem, 12vw, 11rem);
-  padding: 0.5rem 0.5rem 1.45rem;
-  background: var(--newborn-ivory);
-}
-
-.newborn-hero__print picture,
-.newborn-hero__print img {
-  aspect-ratio: 3 / 4;
-}
-
-.newborn-hero__print--left-rear {
-  bottom: -3.75rem;
-  left: -2.7rem;
-  width: clamp(10rem, 14vw, 12.5rem);
-  transform: rotate(-3deg);
-}
-
-.newborn-hero__print--left-front {
-  bottom: 1rem;
-  left: clamp(1.4rem, 3vw, 3.4rem);
-  transform: rotate(4deg);
-}
-
-.newborn-hero__print--right-rear {
-  right: -2.8rem;
-  bottom: -3rem;
-  width: clamp(10rem, 14vw, 12.5rem);
-  transform: rotate(3deg);
-}
-
-.newborn-hero__print--right-front {
-  right: clamp(1.2rem, 3vw, 3.4rem);
-  bottom: 1.75rem;
-  transform: rotate(-4deg);
-}
-
-.newborn-hero__paper-edge {
-  position: absolute;
-  z-index: 5;
-  right: -1%;
-  bottom: -1px;
-  left: -1%;
-  height: 1.4rem;
-  background: var(--newborn-ivory);
-  clip-path: polygon(
-    0 67%,
-    4% 49%,
-    8% 58%,
-    13% 43%,
-    18% 55%,
-    24% 40%,
-    30% 55%,
-    36% 45%,
-    42% 59%,
-    48% 41%,
-    54% 53%,
-    60% 39%,
-    66% 58%,
-    72% 44%,
-    78% 56%,
-    84% 39%,
-    90% 53%,
-    95% 43%,
-    100% 58%,
-    100% 100%,
-    0 100%
-  );
-}
-
 /* Those first days */
 
 .newborn-first-days {
@@ -804,7 +639,6 @@
     color: var(--newborn-clay);
   }
 
-  .newborn-hero .outline-button:hover,
   .newborn-note .outline-button:hover {
     color: var(--newborn-umber);
     background: var(--newborn-ivory);
@@ -814,14 +648,6 @@
 @media (max-width: 78.125rem) {
   .newborn-shell {
     width: min(calc(100% - 8rem), 67rem);
-  }
-
-  .newborn-hero {
-    min-height: clamp(39rem, 52vw, 41rem);
-  }
-
-  .newborn-hero__copy {
-    width: min(42rem, 56vw);
   }
 
   .newborn-first-days__inner {
@@ -842,38 +668,6 @@
 @media (max-width: 65.625rem) {
   .newborn-shell {
     width: min(calc(100% - 4.5rem), 58rem);
-  }
-
-  .newborn-hero {
-    min-height: 35.5rem;
-  }
-
-  .newborn-hero__copy {
-    width: min(38rem, 66vw);
-  }
-
-  .newborn-hero h1 {
-    font-size: clamp(3rem, 6vw, 3.8rem);
-  }
-
-  .newborn-hero__print--left-rear {
-    left: -3rem;
-    width: 8.75rem;
-  }
-
-  .newborn-hero__print--right-rear {
-    right: -3rem;
-    width: 8.75rem;
-  }
-
-  .newborn-hero__print--left-front {
-    left: -1.5rem;
-    bottom: -0.3rem;
-  }
-
-  .newborn-hero__print--right-front {
-    right: -1.5rem;
-    bottom: 0.6rem;
   }
 
   .newborn-first-days {
@@ -976,65 +770,6 @@
 
   .newborn-prose {
     font-size: 1.125rem;
-  }
-
-  .newborn-hero {
-    min-height: 37rem;
-  }
-
-  .newborn-hero__background-image {
-    object-position: 57% 50%;
-  }
-
-  .newborn-hero__copy {
-    top: 43%;
-    width: min(calc(100% - 2.75rem), 31rem);
-  }
-
-  .newborn-hero__script {
-    font-size: 2.75rem;
-  }
-
-  .newborn-hero h1 {
-    max-width: 28rem;
-    font-size: clamp(2.7rem, 12vw, 3.35rem);
-    line-height: 0.95;
-  }
-
-  .newborn-hero h1::after {
-    margin-block: 1.1rem 1rem;
-  }
-
-  .newborn-hero__intro {
-    max-width: 28rem;
-    font-size: 1.0625rem;
-    line-height: 1.4;
-  }
-
-  .newborn-hero__actions {
-    margin-top: 1.25rem;
-  }
-
-  .newborn-hero__print {
-    width: 7.6rem;
-    padding: 0.35rem 0.35rem 1rem;
-  }
-
-  .newborn-hero__print--left-front {
-    left: -2.9rem;
-    bottom: -1.1rem;
-    transform: rotate(-4deg);
-  }
-
-  .newborn-hero__print--right-front {
-    right: -2.9rem;
-    bottom: -0.8rem;
-    transform: rotate(4deg);
-  }
-
-  .newborn-hero__print--left-rear,
-  .newborn-hero__print--right-rear {
-    display: none;
   }
 
   .newborn-first-days {
@@ -1222,33 +957,6 @@
 @media (max-width: 29.9375rem) {
   .newborn-shell {
     width: calc(100% - 2.5rem);
-  }
-
-  .newborn-hero {
-    min-height: 38rem;
-  }
-
-  .newborn-hero__copy {
-    top: 42%;
-    width: calc(100% - 2.25rem);
-  }
-
-  .newborn-hero__script {
-    font-size: 2.35rem;
-  }
-
-  .newborn-hero h1 {
-    max-width: 22rem;
-    font-size: clamp(2.4rem, 11.3vw, 2.75rem);
-  }
-
-  .newborn-hero__intro {
-    max-width: 22rem;
-    font-size: 1rem;
-  }
-
-  .newborn-hero .outline-button {
-    padding-inline: 1.1rem;
   }
 
   .newborn-first-days__inner {

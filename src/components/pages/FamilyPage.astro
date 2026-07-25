@@ -1,6 +1,7 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
 import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
 import "../../styles/family-page.css";
 
 interface Props {
@@ -37,6 +38,11 @@ const [locationsHeadingMiddle, locationsHeadingTail] =
   locationsHeadingRest?.split(" Around ") || [];
 const [finalHeadingLead, finalHeadingTail] =
   page.finalCta?.heading.split(" Family's ") || [];
+const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" in ");
+const heroHeadingLines = [
+  heroHeadingLead.replace("Photographer", "Photo\u200bgrapher"),
+  ...(heroHeadingTail ? [`in ${heroHeadingTail}`] : []),
+];
 
 // CONTENT PENDING: [PENDIENTE: 2–3 reseñas reales de familias, con nombre — Q47]
 
@@ -57,69 +63,28 @@ const faqSchema = (questions.items || [])
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
-  <header class="family-hero" aria-labelledby="family-hero-title">
-    <div class="family-hero__background">
-      {page.hero.image && (
-        <Picture
-          src={page.hero.image}
-          alt={page.hero.imageAlt || ""}
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="family-hero__image photo--editorial"
-        />
-      )}
-      <div class="family-hero__wash" aria-hidden="true"></div>
-    </div>
-
-    <div class="family-shell family-hero__inner">
-      <div class="family-hero__copy">
-        <h1 id="family-hero-title">{page.hero.heading}</h1>
-        {page.hero.intro && <p>{page.hero.intro}</p>}
-        {page.hero.links?.length && (
-          <div class="family-hero__actions">
-            {page.hero.links.map((link) => (
-              <a class="outline-button" href={link.href}>{link.label}</a>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-
-    {page.hero.secondaryImage && (
-      <figure class="family-print family-hero__print family-hero__print--left" aria-hidden="true" data-family-photo>
-        <span class="family-tape" aria-hidden="true"></span>
-        <Picture
-          src={page.hero.secondaryImage}
-          alt=""
-          loading="eager"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    {locations.secondaryImage && (
-      <figure class="family-print family-hero__print family-hero__print--right" aria-hidden="true" data-family-photo>
-        <span class="family-tape family-tape--reverse" aria-hidden="true"></span>
-        <Picture
-          src={locations.secondaryImage}
-          alt=""
-          loading="eager"
-          decoding="async"
-          optimizedMobileWidth={400}
-          optimizedDesktopWidth={640}
-          imgClass="photo--editorial"
-        />
-      </figure>
-    )}
-
-    <div class="family-hero__paper-edge" data-paper-edge aria-hidden="true"></div>
-  </header>
+  <EditorialHero
+    pageKey="family"
+    titleId="family-hero-title"
+    heading={page.hero.heading}
+    headingLines={heroHeadingLines}
+    scriptLine={page.hero.scriptLine || "this season"}
+    intro={page.hero.intro}
+    links={page.hero.links}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="52% 49%"
+    mobileBackgroundPosition="60% 50%"
+    leftPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 43%",
+    }}
+    rightPrint={{
+      src: locations.secondaryImage,
+      objectPosition: "50% 43%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+  />
 
   <section
     class="family-intro"
