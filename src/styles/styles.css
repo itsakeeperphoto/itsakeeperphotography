@@ -429,14 +429,24 @@
   --sessions-padding-top: 13.5rem;
   --sessions-padding-bottom: 8.5rem;
 
-  /* Process and client notes */
+  /* Process and client-note archive */
   --process-grid-gap: 0;
   --process-step-padding: 2rem;
   --process-number-size: 0.75rem;
   --process-heading-size: 1.375rem;
-  --kind-words-gap: 0;
-  --kind-word-padding: 2.5rem;
-  --kind-word-quote-size: 1.375rem;
+  --review-card-width: 18rem;
+  --review-card-height: 29rem;
+  --review-hanger-space: 2rem;
+  --review-track-gap: 3rem;
+  --review-track-padding: var(--page-gutter-desktop);
+  --review-wire-y: 1.25rem;
+  --review-wire-height: 6rem;
+  --review-arc-depth: 64.5;
+  --review-arc-space: 4.03125rem;
+  --review-photo-inset: 0.75rem;
+  --review-caption-height: 4.75rem;
+  --review-flip-duration: var(--duration-image-enter);
+  --review-auto-pan-speed: 0.045;
 
   /* Guided inquiry */
   --color-form-error: #74483D;
@@ -1966,6 +1976,9 @@ footer[id] {
 @media (max-width: 479px) {
   :root {
     --portfolio-mobile-side: 12%;
+    --review-card-width: calc(100vw - (var(--page-gutter-small) * 2));
+    --review-card-height: 27.75rem;
+    --review-caption-height: 4.5rem;
   }
 
   .social-link {
@@ -1980,6 +1993,10 @@ footer[id] {
   .footer-nav {
     flex-direction: column;
     gap: var(--space-1);
+  }
+
+  .review-polaroid__back {
+    padding-inline: var(--space-5);
   }
 }
 
@@ -2241,57 +2258,277 @@ footer[id] {
   line-height: var(--line-height-body);
 }
 
-/* Restrained Google review themes */
+/* Client-note archive: one structural wire and tactile, square-edged prints. */
 .kind-words {
+  position: relative;
   padding-block: var(--content-padding-block);
+  overflow: hidden;
   background: var(--color-surface-sage);
 }
 
+.kind-words__header {
+  position: relative;
+  padding-bottom: var(--space-20);
+}
+
 .kind-words .section-intro {
-  margin-bottom: var(--section-intro-gap);
+  margin-bottom: var(--space-0);
 }
 
-.kind-words__grid {
+.kind-words .section-heading {
+  max-width: 54rem;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+.kind-words__archive {
+  position: relative;
+  display: block;
+  width: var(--full-width);
+}
+
+.kind-words__wire {
+  position: absolute;
+  z-index: var(--layer-base);
+  top: var(--space-0);
+  right: var(--space-0);
+  left: var(--space-0);
+  display: block;
+  width: var(--full-width);
+  height: var(--review-wire-height);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.kind-words__wire path {
+  fill: none;
+  stroke: var(--color-line-cool);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.kind-words__wire-path--compact {
+  display: none;
+}
+
+.kind-words__rail {
+  position: relative;
+  z-index: var(--layer-portfolio);
+  width: var(--full-width);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.kind-words__rail::-webkit-scrollbar {
+  display: none;
+  width: var(--space-0);
+  height: var(--space-0);
+}
+
+.kind-words__rail:focus-visible {
+  outline-offset: calc(var(--outline-focus-offset) * -1);
+}
+
+.kind-words__track {
+  display: flex;
+  width: max-content;
+  align-items: flex-start;
+  gap: var(--review-track-gap);
+  padding: var(--space-0) var(--review-track-padding)
+    calc(var(--review-arc-space) + var(--space-5));
+}
+
+.kind-words__group {
+  display: flex;
+  flex: none;
+  width: max-content;
+  align-items: flex-start;
+  gap: var(--review-track-gap);
+}
+
+.kind-words__group--clone {
+  display: flex;
+}
+
+.review-polaroid {
+  position: relative;
+  flex: 0 0 var(--review-card-width);
+  width: var(--review-card-width);
+  height: var(--review-card-height);
+  padding-top: var(--review-hanger-space);
+  transform: translate3d(0, var(--review-arc-y, 0px), 0) rotate(var(--review-tilt));
+  transform-origin: 50% var(--review-wire-y);
+  scroll-snap-align: center;
+  will-change: transform;
+}
+
+.review-polaroid[data-review-state="back"] {
+  z-index: var(--layer-media-front);
+}
+
+.review-polaroid__hanger {
+  position: absolute;
+  z-index: calc(var(--layer-media-front) + 1);
+  top: var(--space-0);
+  left: 50%;
+  display: block;
+  width: 3.5rem;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.review-polaroid__scene {
+  position: relative;
+  width: var(--full-width);
+  height: calc(var(--review-card-height) - var(--review-hanger-space));
+  perspective: 75rem;
+}
+
+.review-polaroid__flipper {
+  position: relative;
+  width: var(--full-width);
+  height: var(--full-width);
+  transform-style: preserve-3d;
+  transition: transform var(--review-flip-duration) cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
+}
+
+.review-polaroid[data-review-state="back"] .review-polaroid__flipper {
+  transform: rotateY(180deg);
+}
+
+.kind-words__archive:not(.is-enhanced) .review-polaroid:hover .review-polaroid__flipper,
+.kind-words__archive:not(.is-enhanced) .review-polaroid:focus-visible
+  .review-polaroid__flipper {
+  transform: rotateY(180deg);
+}
+
+.review-polaroid__face {
+  position: absolute;
+  inset: var(--space-0);
+  overflow: hidden;
+  border: var(--border-hairline) solid var(--color-deep-umber);
+  border-radius: var(--radius-none);
+  background: var(--color-warm-ivory);
+  box-shadow: var(--shadow-none);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.review-polaroid__front {
   display: grid;
-  grid-template-columns: repeat(3, minmax(var(--space-0), 1fr));
-  gap: var(--kind-words-gap);
-  border-top: var(--border-hairline) solid var(--color-line-cool);
-  border-bottom: var(--border-hairline) solid var(--color-line-cool);
+  grid-template-rows: minmax(var(--space-0), 1fr) var(--review-caption-height);
+  padding: var(--review-photo-inset) var(--review-photo-inset) var(--space-0);
+  transform: rotateY(0deg) translateZ(1px);
 }
 
-.kind-word {
-  min-width: var(--space-0);
-  padding: var(--kind-word-padding);
-  margin: var(--space-0);
-  border-left: var(--border-hairline) solid var(--color-line-cool);
+.review-polaroid__picture,
+.review-polaroid__image {
+  width: var(--full-width);
+  height: var(--full-width);
 }
 
-.kind-word:last-child {
-  border-right: var(--border-hairline) solid var(--color-line-cool);
+.review-polaroid__picture {
+  display: block;
+  min-height: var(--space-0);
+  overflow: hidden;
+  background: var(--color-walnut);
 }
 
-.kind-word p {
-  margin: var(--space-0);
+.review-polaroid__image {
+  object-fit: cover;
 }
 
-.kind-word__text {
-  font-family: var(--font-body);
-  font-size: var(--kind-word-quote-size);
-  font-style: italic;
-  line-height: var(--line-height-body);
-}
-
-.kind-word figcaption {
-  margin-top: var(--space-6);
-  color: var(--color-utility);
+.review-polaroid__front figcaption {
+  display: grid;
+  align-content: center;
+  gap: var(--space-1);
+  padding-right: var(--space-20);
+  color: var(--color-deep-umber);
   font-family: var(--font-utility);
   font-size: var(--font-size-caption);
   letter-spacing: var(--tracking-caption);
   text-transform: uppercase;
 }
 
+.review-polaroid__front figcaption small {
+  color: var(--color-walnut);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-utility);
+}
+
+.review-polaroid__back {
+  display: grid;
+  grid-template-rows: auto minmax(var(--space-0), 1fr) auto;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-6) calc(var(--space-16) + var(--space-2));
+  color: var(--color-deep-umber);
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.review-polaroid__rating {
+  color: var(--color-clay);
+  font-family: var(--font-utility);
+  font-size: var(--font-size-body-sm);
+  letter-spacing: var(--space-1);
+}
+
+.review-polaroid__quote-scroll {
+  min-height: var(--space-0);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--color-clay) var(--color-weathered-sand);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+.review-polaroid__quote-scroll:focus-visible {
+  outline-color: var(--color-deep-umber);
+  outline-offset: var(--space-1);
+}
+
+.review-polaroid__back blockquote {
+  margin: var(--space-0);
+}
+
+.review-polaroid__back blockquote p {
+  color: var(--color-deep-umber);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-sm);
+  font-style: italic;
+  line-height: 1.55;
+  text-wrap: pretty;
+  white-space: pre-line;
+}
+
+.review-polaroid__attribution {
+  display: grid;
+  gap: var(--space-1);
+  padding-right: var(--space-16);
+  color: var(--color-walnut);
+  font-family: var(--font-utility);
+  font-size: var(--font-size-caption);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+}
+
+.review-polaroid__attribution strong {
+  color: var(--color-deep-umber);
+  font-weight: var(--font-weight-medium);
+}
+
+.review-polaroid__attribution small {
+  color: var(--color-clay);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-utility);
+}
+
 .kind-words__google {
-  margin: var(--space-8) var(--space-0) var(--space-0);
+  margin: var(--space-8) auto var(--space-0);
   text-align: center;
 }
 
@@ -2305,6 +2542,13 @@ footer[id] {
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   text-underline-offset: var(--space-2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kind-words__google a:hover {
+    color: var(--color-warm-ivory);
+    text-decoration: none;
+  }
 }
 
 /* Golden-hour inquiry hook */
@@ -2968,8 +3212,10 @@ footer[id] {
 @media (max-width: 1250px) {
   :root {
     --brand-logo-width: 13.5rem;
-    --kind-word-padding: 2rem;
     --inquiry-confirmation-image-width: 22rem;
+    --review-card-width: 17.5rem;
+    --review-track-gap: 2.25rem;
+    --review-track-padding: var(--page-gutter-tablet);
   }
 
   .primary-nav__link {
@@ -2986,6 +3232,11 @@ footer[id] {
     --brand-logo-width: var(--brand-logo-tablet-width);
     --footer-client-columns: 1fr 1fr;
     --footer-client-gap: 3rem;
+    --review-card-width: min(20rem, 42vw);
+    --review-track-gap: 2rem;
+    --review-track-padding: var(--page-gutter-tablet);
+    --review-arc-depth: 42;
+    --review-arc-space: 2.625rem;
   }
 
   .content-shell,
@@ -3020,6 +3271,14 @@ footer[id] {
 
   .process__step:nth-child(2) {
     border-right: var(--border-hairline) solid var(--color-line-warm);
+  }
+
+  .kind-words__wire-path--desktop {
+    display: none;
+  }
+
+  .kind-words__wire-path--compact {
+    display: inline;
   }
 
   .photo-options {
@@ -3063,7 +3322,10 @@ footer[id] {
     --sessions-padding-bottom: 5.5rem;
     --content-padding-block: 5.5rem;
     --process-step-padding: 1.5rem;
-    --kind-word-padding: 1.75rem;
+    --review-card-width: min(21rem, calc(100vw - 3rem));
+    --review-card-height: 28.5rem;
+    --review-track-gap: 1.5rem;
+    --review-track-padding: var(--page-gutter-small);
     --inquiry-intro-height: 39rem;
     --inquiry-hook-padding: 1rem;
     --inquiry-workspace-padding-block: 5rem;
@@ -3123,31 +3385,27 @@ footer[id] {
     width: min(var(--full-width), 22rem);
   }
 
-  .process .section-intro,
-  .kind-words .section-intro {
+  .process .section-intro {
     margin-bottom: var(--space-12);
   }
 
-  .process__timeline,
-  .kind-words__grid {
+  .process__timeline {
     grid-template-columns: minmax(var(--space-0), 1fr);
   }
 
   .process__step,
   .process__step:nth-child(2),
   .process__step:nth-child(3),
-  .process__step:nth-child(4),
-  .kind-word {
+  .process__step:nth-child(4) {
     border-right: var(--border-hairline) solid var(--color-line-warm);
   }
 
-  .process__step + .process__step,
-  .kind-word + .kind-word {
+  .process__step + .process__step {
     border-top: var(--border-hairline) solid var(--color-line-warm);
   }
 
-  .kind-word:last-child {
-    border-right: var(--border-hairline) solid var(--color-line-cool);
+  .kind-words__header {
+    padding-bottom: var(--space-16);
   }
 
   .inquiry__hook {
@@ -3251,13 +3509,24 @@ footer[id] {
     transform: none !important;
     transition: none !important;
   }
+
+  .review-polaroid__flipper {
+    transition: none !important;
+  }
+
+  .kind-words__group--clone {
+    display: none;
+  }
+
 }
 
 @media (forced-colors: active) {
   .photo-print,
   .location-option > span,
   .film-progress__frame,
-  .instagram-placeholder {
+  .instagram-placeholder,
+  .review-polaroid__face,
+  .review-polaroid__hanger {
     forced-color-adjust: auto;
   }
 }

@@ -329,14 +329,26 @@ const faqSchema = (questions.items || [])
           class:list={["newborn-note", `tone-${page.finalCta.tone}`]}
           aria-labelledby="newborn-final-title"
         >
-          <span class="newborn-note__pin" aria-hidden="true"></span>
-          <h2 id="newborn-final-title">{page.finalCta.heading}</h2>
-          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-          {page.finalCta.link && (
-            <a class="outline-button" href={page.finalCta.link.href}>
-              {page.finalCta.link.label}
-            </a>
-          )}
+          <div class="newborn-note__paper" aria-hidden="true">
+            <Picture
+              src="/uploads/newborn-torn-paper-note.webp"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 29.9375rem) calc(100vw - 2.5rem), (max-width: 65.625rem) min(calc(100vw - 3rem), 26.5rem), (max-width: 78.125rem) 25rem, 27rem"
+              imgClass="newborn-note__paper-image"
+            />
+          </div>
+          <div class="newborn-note__content">
+            <h2 id="newborn-final-title">{page.finalCta.heading}</h2>
+            {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            {page.finalCta.link && (
+              <a class="outline-button" href={page.finalCta.link.href}>
+                {page.finalCta.link.label}
+              </a>
+            )}
+          </div>
         </aside>
       )}
     </div>

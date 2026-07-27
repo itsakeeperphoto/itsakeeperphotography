@@ -1179,6 +1179,12 @@ export default defineConfig({
         label: "Kind Words (Testimonials)",
         path: "content/testimonials",
         format: "json",
+        indexes: [
+          {
+            name: "order",
+            fields: [{ name: "order" }],
+          },
+        ],
         ui: {
           itemProps: (item?: { name?: string; sessionType?: string }) => ({
             label: [item?.name, item?.sessionType].filter(Boolean).join(" · ") || "New kind word",
@@ -1186,19 +1192,32 @@ export default defineConfig({
         },
         fields: [
           {
+            type: "number",
+            name: "order",
+            label: "Display order",
+            required: true,
+            description: "Controls the order of the review photographs on the homepage.",
+            ui: {
+              validate: (value?: number) => {
+                if (!Number.isInteger(value) || Number(value) < 1 || Number(value) > 6) {
+                  return "Use a whole number from 1 through 6.";
+                }
+              },
+            },
+          },
+          {
             type: "string",
             name: "quote",
             label: "The quote",
             required: true,
-            description: "One or two short sentences in the client's words.",
-            ui: { component: "textarea", validate: maxChars(180) },
+            description: "The client's words, preserved exactly as supplied.",
+            ui: { component: "textarea" },
           },
           {
             type: "string",
             name: "name",
             label: "Who said it",
-            required: true,
-            description: "A first name (e.g. “Sarah”) or a group (e.g. “Families often mention”).",
+            description: "Leave empty when the client's name has not been supplied.",
             ui: { validate: maxChars(40) },
           },
           {
@@ -1210,11 +1229,24 @@ export default defineConfig({
             ui: { validate: maxChars(30) },
           },
           {
+            type: "image",
+            name: "image",
+            label: "Session photograph",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "imageAlt",
+            label: "Session photograph description",
+            required: true,
+            ui: { validate: maxChars(160) },
+          },
+          {
             type: "boolean",
             name: "featured",
             label: "Show on the homepage",
             description:
-              "The homepage shows the first three kind words that have this turned on.",
+              "The homepage shows the first six kind words that have this turned on.",
           },
         ],
       },

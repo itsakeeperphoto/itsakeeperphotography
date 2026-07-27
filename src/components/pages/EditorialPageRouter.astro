@@ -5,6 +5,7 @@ import BrandingPage from "./BrandingPage.astro";
 import ContentPage from "./ContentPage.astro";
 import FamilyPage from "./FamilyPage.astro";
 import HeadshotPage from "./HeadshotPage.astro";
+import JournalPage from "./JournalPage.astro";
 import NewbornPage from "./NewbornPage.astro";
 import SeniorPage from "./SeniorPage.astro";
 
@@ -20,6 +21,7 @@ const isBrandingPage =
   props.page.route === "/branding-photographer-tri-cities-wa/";
 const isFamilyPage = props.page.route === "/family-photographer-tri-cities-wa/";
 const isHeadshotPage = props.page.route === "/headshot-photographer-tri-cities-wa/";
+const isJournalPage = props.page.route === "/journal/";
 const isNewbornPage = props.page.route === "/newborn-photographer-tri-cities-wa/";
 const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
 ---
@@ -32,6 +34,8 @@ const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
     ? <FamilyPage {...props} />
   : isHeadshotPage
     ? <HeadshotPage {...props} />
+  : isJournalPage
+    ? <JournalPage {...props} />
   : isNewbornPage
     ? <NewbornPage {...props} />
   : isSeniorPage

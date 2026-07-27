@@ -6,8 +6,11 @@ export const homepage = homepageJson;
 
 export interface Testimonial {
   quote: string;
-  name: string;
+  name?: string;
   sessionType: string;
+  order: number;
+  image: string;
+  imageAlt: string;
   featured?: boolean;
 }
 
@@ -18,12 +21,13 @@ const testimonialModules = import.meta.glob<{ default: Testimonial }>(
 
 export const testimonials: Testimonial[] = Object.keys(testimonialModules)
   .sort()
-  .map((key) => testimonialModules[key].default);
+  .map((key) => testimonialModules[key].default)
+  .sort((a, b) => a.order - b.order);
 
-/** The homepage shows at most three featured kind words (3-column grid). */
+/** The homepage review rail shows at most six featured client stories. */
 export const featuredTestimonials = testimonials
   .filter((t) => t.featured)
-  .slice(0, 3);
+  .slice(0, 6);
 
 /** "(509) 948-7322" -> "+15099487322" for tel: links. */
 export function telHref(phone: string): string {

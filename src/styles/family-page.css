@@ -11,9 +11,7 @@
 
 .family-process,
 .family-heirlooms,
-.family-locations,
-.family-faq,
-.family-final {
+.family-locations {
   --color-focus-ring: var(--color-focus-ring-light);
 }
 
@@ -87,8 +85,7 @@
 
 .family-prose p,
 .family-process__ledger p,
-.family-faq__answer p,
-.family-final p {
+.family-faq__answer p {
   margin: 0;
   font-family: var(--font-body);
   font-size: clamp(1.0625rem, 1.55vw, 1.3125rem);
@@ -558,43 +555,58 @@
 
 /* FAQ */
 .family-faq {
+  --family-shell: var(--design-width);
+  --color-focus-ring: var(--color-focus-ring-dark);
   position: relative;
-  padding: clamp(7rem, 10vw, 10rem) 0;
-  color: var(--color-warm-ivory);
-  background: var(--color-muted-olive);
+  padding: var(--space-30) 0;
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
 }
 
 .family-faq__inner {
   display: grid;
-  grid-template-columns: minmax(15rem, 0.54fr) minmax(28rem, 1.18fr) minmax(10rem, 0.34fr);
-  gap: clamp(var(--space-10), 5vw, var(--space-20));
+  grid-template-columns: minmax(0, 1fr) minmax(28rem, 32rem);
+  gap: var(--space-20);
   align-items: start;
 }
 
+.family-faq__content {
+  min-width: 0;
+}
+
+.family-faq__title-rule {
+  display: block;
+  width: var(--space-24);
+  height: var(--border-hairline);
+  margin-bottom: var(--space-12);
+  background: var(--family-line-dark);
+}
+
 .family-faq__heading h2 {
-  max-width: 8ch;
-  font-size: clamp(3rem, 4.7vw, 5.25rem);
+  max-width: 17ch;
+  font-size: clamp(3.25rem, 5.4vw, 5.5rem);
 }
 
 .family-faq__list {
-  border-top: var(--border-hairline) solid var(--family-line-light);
+  margin-top: var(--space-12);
+  border-top: var(--border-hairline) solid var(--family-line-dark);
 }
 
 .family-faq__item {
-  border-bottom: var(--border-hairline) solid var(--family-line-light);
+  border-bottom: var(--border-hairline) solid var(--family-line-dark);
 }
 
 .family-faq__item summary {
   display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr) var(--minimum-hit-area);
+  grid-template-columns: var(--space-12) minmax(0, 1fr) var(--space-12);
   gap: var(--space-4);
   align-items: center;
-  min-height: 5.75rem;
-  padding-block: var(--space-4);
+  min-height: var(--space-24);
+  padding-block: var(--space-6);
   cursor: pointer;
   list-style: none;
   transition:
-    color var(--duration-ui) var(--ease-ui),
+    color var(--duration-ui) var(--ease-interaction),
     transform var(--duration-fast) var(--ease-interaction);
 }
 
@@ -602,108 +614,121 @@
   display: none;
 }
 
+.family-faq__number {
+  color: var(--color-clay);
+}
+
 .family-faq__question {
   font-family: var(--font-display);
-  font-size: clamp(1.45rem, 2.1vw, 2.25rem);
-  letter-spacing: var(--tracking-utility);
+  font-size: clamp(1.625rem, 2vw, 2.25rem);
+  letter-spacing: 0;
   line-height: 1.12;
-  text-transform: uppercase;
+  text-wrap: pretty;
 }
 
 .family-faq__mark {
-  display: inline-grid;
+  position: relative;
+  display: block;
   width: var(--minimum-hit-area);
   height: var(--minimum-hit-area);
-  place-items: center;
-  font-family: var(--font-utility);
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: var(--font-weight-regular);
-  transition: transform var(--duration-ui) var(--ease-interaction);
+  justify-self: end;
 }
 
-.family-faq__item[open] .family-faq__mark {
-  transform: rotate(45deg);
+.family-faq__mark::before,
+.family-faq__mark::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.25rem;
+  height: var(--border-hairline);
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.family-faq__mark::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition:
+    opacity var(--duration-ui) var(--ease-interaction),
+    transform var(--duration-ui) var(--ease-interaction);
+}
+
+.family-faq__item[open] .family-faq__mark::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scaleX(0);
 }
 
 .family-faq__answer {
-  max-width: 42rem;
-  padding: 0 var(--minimum-hit-area) var(--space-8)
-    calc(2.75rem + var(--space-4));
+  max-width: none;
+  padding: 0 var(--space-16) var(--space-8);
 }
 
 .family-faq__item summary:active {
   transform: translateY(1px);
 }
 
-.family-faq__photo {
-  width: 100%;
-  height: 38rem;
-  overflow: hidden;
-  border: var(--border-hairline) solid var(--family-line-light);
-}
-
-.family-faq__photo img {
-  object-position: 52% 48%;
-}
-
-/* Final invitation */
-.family-final {
+.family-faq__note {
+  --color-focus-ring: var(--color-focus-ring-light);
   position: relative;
-  min-height: 42rem;
   isolation: isolate;
-  overflow: hidden;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  align-items: center;
+  justify-self: end;
+  margin-top: var(--space-12);
+  padding: var(--space-24) var(--space-12) var(--space-16);
   color: var(--color-warm-ivory);
-  background: var(--color-deep-umber);
 }
 
-.family-final__background,
-.family-final__background picture,
-.family-final__background img,
-.family-final__wash {
+.family-faq__note-paper {
   position: absolute;
+  z-index: 0;
   inset: 0;
+  pointer-events: none;
+}
+
+.family-faq__note-paper picture,
+.family-faq__note-paper img {
   width: 100%;
   height: 100%;
 }
 
-.family-final__image {
-  object-fit: cover;
-  object-position: 58% 50%;
-  filter: saturate(0.86) contrast(0.98) brightness(0.72) sepia(0.05);
+.family-faq__note-paper-image {
+  object-fit: fill;
 }
 
-.family-final__wash {
-  background: rgba(40, 30, 16, 0.58);
+.family-faq__note-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
-.family-final__inner {
-  display: grid;
-  align-items: center;
-  min-height: 42rem;
-  padding-block: var(--space-24);
+.family-faq__note h2 {
+  margin-bottom: var(--space-8);
+  font-size: clamp(2.4rem, 3vw, 3rem);
+  letter-spacing: 0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
 }
 
-.family-final__copy {
-  width: min(48rem, 62%);
+.family-faq__note p {
+  max-width: 28ch;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.1875rem;
+  font-style: italic;
+  line-height: 1.55;
 }
 
-.family-final h2 {
-  font-size: clamp(3rem, 4.8vw, 5.25rem);
-}
-
-.family-final p {
-  max-width: 40rem;
-  margin-top: var(--space-8);
-}
-
-.family-final .outline-button {
+.family-faq__note .outline-button {
+  margin-top: var(--space-10);
   border-color: var(--color-warm-ivory);
   color: var(--color-warm-ivory);
-  background: rgba(40, 30, 16, 0.28);
+  background: transparent;
 }
 
-.family-final .outline-button:focus-visible {
+.family-faq__note .outline-button:focus-visible {
   color: var(--color-deep-umber);
   background: var(--color-warm-ivory);
   border-color: var(--color-warm-ivory);
@@ -714,14 +739,14 @@
     color: var(--color-clay);
   }
 
-  .family-final .outline-button:hover {
+  .family-faq__note .outline-button:hover {
     color: var(--color-deep-umber);
     background: var(--color-warm-ivory);
     border-color: var(--color-warm-ivory);
   }
 
   .family-faq__item summary:hover {
-    color: color-mix(in srgb, var(--color-warm-ivory) 78%, var(--color-weathered-sand));
+    color: var(--color-clay);
   }
 }
 
@@ -741,8 +766,30 @@
   }
 
   .family-faq__inner {
-    grid-template-columns: minmax(13rem, 0.45fr) minmax(26rem, 1.15fr) minmax(9rem, 0.3fr);
-    gap: var(--space-10);
+    grid-template-columns: minmax(0, 1fr) minmax(21rem, 23rem);
+    gap: var(--space-16);
+  }
+
+  .family-faq__heading h2 {
+    max-width: none;
+  }
+
+  .family-faq__note {
+    padding: 4.5rem var(--space-8) var(--space-10);
+  }
+
+  .family-faq__note h2 {
+    margin-bottom: var(--space-6);
+    font-size: 2.5rem;
+  }
+
+  .family-faq__note p {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+
+  .family-faq__note .outline-button {
+    margin-top: var(--space-6);
   }
 }
 
@@ -846,15 +893,22 @@
   }
 
   .family-faq__inner {
-    grid-template-columns: minmax(13rem, 0.45fr) minmax(0, 1.05fr);
-    gap: var(--space-12);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-16);
   }
 
-  .family-faq__photo {
-    grid-column: 2;
-    width: 44%;
-    height: 18rem;
-    margin-left: auto;
+  .family-faq__content {
+    width: 100%;
+  }
+
+  .family-faq__note {
+    width: min(100%, 26.5rem);
+    justify-self: center;
+    margin-top: 0;
+  }
+
+  .family-faq__note h2 {
+    font-size: 2.5rem;
   }
 }
 
@@ -870,8 +924,7 @@
 
   .family-prose p,
   .family-process__ledger p,
-  .family-faq__answer p,
-  .family-final p {
+  .family-faq__answer p {
     font-size: 1.0625rem;
   }
 
@@ -1064,62 +1117,50 @@
   }
 
   .family-faq {
-    padding: var(--space-24) 0;
+    padding: var(--space-16) 0;
   }
 
   .family-faq__inner {
     grid-template-columns: 1fr;
-    gap: var(--space-12);
+    gap: var(--space-16);
   }
 
   .family-faq__heading h2 {
-    max-width: 9ch;
+    max-width: 12ch;
+    font-size: clamp(2.75rem, 11vw, 3.7rem);
+  }
+
+  .family-faq__title-rule {
+    width: var(--space-16);
+    margin-bottom: var(--space-8);
+  }
+
+  .family-faq__list {
+    margin-top: var(--space-8);
   }
 
   .family-faq__item summary {
-    grid-template-columns: 2.25rem minmax(0, 1fr) var(--minimum-hit-area);
+    grid-template-columns: 2.25rem minmax(0, 1fr) 2.75rem;
     gap: var(--space-3);
+    min-height: var(--space-20);
+    padding-block: var(--space-4);
   }
 
   .family-faq__question {
     font-size: clamp(1.35rem, 6.5vw, 1.8rem);
-    letter-spacing: var(--tracking-utility);
   }
 
   .family-faq__answer {
-    padding-right: 0;
-    padding-left: calc(2.25rem + var(--space-3));
+    padding: 0 0 var(--space-6) var(--space-12);
   }
 
-  .family-faq__photo {
-    grid-column: auto;
-    width: 100%;
-    height: 20rem;
+  .family-faq__note {
+    width: min(100%, 26.5rem);
+    padding: 4.5rem var(--space-8) var(--space-10);
   }
 
-  .family-final {
-    min-height: 41rem;
-  }
-
-  .family-final__image {
-    object-position: 72% 50%;
-  }
-
-  .family-final__wash {
-    background: rgba(40, 30, 16, 0.66);
-  }
-
-  .family-final__inner {
-    min-height: 41rem;
-    padding: var(--space-24) 0;
-  }
-
-  .family-final__copy {
-    width: 100%;
-  }
-
-  .family-final h2 {
-    max-width: none;
+  .family-faq__note h2 {
+    font-size: 2.5rem;
   }
 }
 
@@ -1169,11 +1210,26 @@
   }
 
   .family-faq__item summary {
-    min-height: 5.25rem;
+    min-height: var(--space-20);
   }
 
-  .family-final h2 {
-    font-size: clamp(2.7rem, 12vw, 3.5rem);
+  .family-faq__note {
+    padding: var(--space-16) var(--space-8) var(--space-8);
+  }
+
+  .family-faq__note h2 {
+    margin-bottom: var(--space-5);
+    font-size: clamp(2rem, 8vw, 2.25rem);
+  }
+
+  .family-faq__note p {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .family-faq__note .outline-button {
+    width: 100%;
+    margin-top: var(--space-6);
   }
 }
 
@@ -1181,14 +1237,13 @@
   .family-page .outline-button,
   .family-page .family-text-link,
   .family-page .family-faq__item summary,
-  .family-page .family-faq__mark {
+  .family-page .family-faq__mark::after {
     transition: none;
   }
 
   .family-page .outline-button:active,
   .family-page .family-text-link:active,
-  .family-page .family-faq__item summary:active,
-  .family-page .family-faq__item[open] .family-faq__mark {
+  .family-page .family-faq__item summary:active {
     transform: none;
   }
 }

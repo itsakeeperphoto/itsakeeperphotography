@@ -26,7 +26,6 @@ const reviews = requireSection("what-parents-say");
 const questions = requireSection("family-session-questions");
 
 const reviewQuote = reviews.items?.find((item) => item.quote)?.quote;
-const finalImage = "/uploads/family-golden-hour-columbia-basin.jpg";
 const [sessionsHeadingLead, sessionsHeadingTail] = sessions.heading?.split(", ") || [];
 const [processHeadingLead, processHeadingTail] = process.heading?.split(" With Me ") || [];
 const heirloomHeadingTail = "Family Heirlooms";
@@ -36,8 +35,6 @@ const heirloomHeadingLead = heirlooms.heading?.endsWith(heirloomHeadingTail)
 const [locationsHeadingLead, locationsHeadingRest] = locations.heading?.split(" — ") || [];
 const [locationsHeadingMiddle, locationsHeadingTail] =
   locationsHeadingRest?.split(" Around ") || [];
-const [finalHeadingLead, finalHeadingTail] =
-  page.finalCta?.heading.split(" Family's ") || [];
 const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" in ");
 const heroHeadingLines = [
   heroHeadingLead.replace("Photographer", "Photo\u200bgrapher"),
@@ -404,77 +401,63 @@ const faqSchema = (questions.items || [])
     aria-labelledby={`${questions.id}-title`}
   >
     <div class="family-shell family-faq__inner">
-      <header class="family-faq__heading">
-        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
-      </header>
+      <div class="family-faq__content">
+        <header class="family-faq__heading">
+          <span class="family-faq__title-rule" aria-hidden="true"></span>
+          <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        </header>
 
-      {questions.items?.length && (
-        <div class="family-faq__list">
-          {questions.items.map((item, index) => (
-            <details class="family-faq__item" open={index === 0}>
-              <summary>
-                <span class="family-faq__number" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span class="family-faq__question" role="heading" aria-level="3">
-                  {item.heading}
-                </span>
-                <span class="family-faq__mark" aria-hidden="true">+</span>
-              </summary>
-              <div class="family-faq__answer">
-                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-              </div>
-            </details>
-          ))}
-        </div>
-      )}
+        {questions.items?.length && (
+          <div class="family-faq__list">
+            {questions.items.map((item, index) => (
+              <details class="family-faq__item" open={index === 0}>
+                <summary>
+                  <span class="family-faq__number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span class="family-faq__question" role="heading" aria-level="3">
+                    {item.heading}
+                  </span>
+                  <span class="family-faq__mark" aria-hidden="true"></span>
+                </summary>
+                <div class="family-faq__answer">
+                  {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                </div>
+              </details>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {questions.image && (
-        <figure class="family-faq__photo" data-family-photo>
-          <Picture
-            src={questions.image}
-            alt={questions.imageAlt || ""}
-            loading="lazy"
-            decoding="async"
-            optimizedMobileWidth={640}
-            optimizedDesktopWidth={960}
-            imgClass="photo--editorial"
-          />
-        </figure>
+      {page.finalCta && (
+        <aside
+          class="family-faq__note"
+          aria-labelledby="family-faq-note-title"
+        >
+          <div class="family-faq__note-paper" aria-hidden="true">
+            <Picture
+              src="/uploads/newborn-torn-paper-note.webp"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 479px) calc(100vw - 2.5rem), (max-width: 767px) min(calc(100vw - 3rem), 26.5rem), (max-width: 1050px) 25rem, (max-width: 1250px) 23rem, 28rem"
+              imgClass="family-faq__note-paper-image"
+            />
+          </div>
+          <div class="family-faq__note-content">
+            <h2 id="family-faq-note-title">{page.finalCta.heading}</h2>
+            {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            {page.finalCta.link && (
+              <a class="outline-button" href={page.finalCta.link.href}>
+                {page.finalCta.link.label}
+              </a>
+            )}
+          </div>
+        </aside>
       )}
     </div>
   </section>
-
-  {page.finalCta && (
-    <section class="family-final" aria-labelledby="family-final-title">
-      <div class="family-final__background" aria-hidden="true">
-        <Picture
-          src={finalImage}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="family-final__image photo--editorial"
-        />
-        <div class="family-final__wash"></div>
-      </div>
-
-      <div class="family-shell family-final__inner">
-        <div class="family-final__copy">
-          <h2 id="family-final-title">
-            <span>{finalHeadingLead}</span>
-            {" "}
-            {finalHeadingTail && <span>Family's {finalHeadingTail}</span>}
-          </h2>
-          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-          {page.finalCta.link && (
-            <a class="outline-button" href={page.finalCta.link.href}>{page.finalCta.link.label}</a>
-          )}
-        </div>
-      </div>
-    </section>
-  )}
 
   {faqSchema.length > 0 && (
     <script

@@ -1,0 +1,297 @@
+---
+import type {
+  EditorialPageData,
+  PageItem,
+  PageSection,
+} from "../../content/page-types";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+import "../../styles/journal-page.css";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+  inquiry?: any;
+}
+
+interface JournalGuide {
+  item: PageItem;
+  image: string;
+  imageAlt: string;
+  href?: string;
+  shape: "landscape" | "arch" | "portrait";
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) throw new Error(`Journal page is missing the required section: ${id}`);
+  return section;
+};
+
+const planning = requireSection("planning-guides");
+const guides = planning.items || [];
+const requireGuide = (heading: string): PageItem => {
+  const guide = guides.find((candidate) => candidate.heading === heading);
+  if (!guide) throw new Error(`Journal page is missing the required guide: ${heading}`);
+  return guide;
+};
+
+const featuredGuide = requireGuide(
+  "12 Best Places to Take Pictures in the Tri-Cities, WA",
+);
+const seniorGuide = requireGuide(
+  "When to Take Senior Pictures: A Tri-Cities Timeline",
+);
+const newbornGuide = requireGuide("In-Home vs. Studio Newborn Photography");
+const brandingGuide = requireGuide(
+  "Branding Photos vs. Headshots: What Your Business Actually Needs",
+);
+const featuredHref = featuredGuide.links?.[0]?.href;
+if (!featuredHref) {
+  throw new Error("The featured Journal guide requires a destination.");
+}
+
+const guideCards: JournalGuide[] = [
+  {
+    item: seniorGuide,
+    image: "/uploads/journal-senior-golden-hour-tricities.jpg",
+    imageAlt: "A senior photographed in warm evening light.",
+    href: seniorGuide.links?.[0]?.href,
+    shape: "landscape",
+  },
+  {
+    item: newbornGuide,
+    image: "/uploads/family-newborn-at-home-tricities.jpg",
+    imageAlt: "A family together with their newborn at home.",
+    shape: "arch",
+  },
+  {
+    item: brandingGuide,
+    image: "/uploads/business-branding-portrait-richland.jpg",
+    imageAlt: "A business owner photographed for her brand.",
+    shape: "portrait",
+  },
+];
+
+const portfolioLabel = planning.links?.[0]?.label || "Photography Portfolio";
+const portfolioHref = planning.links?.[0]?.href;
+if (!portfolioHref) {
+  throw new Error("The Journal portfolio interlude requires a destination.");
+}
+const finalCta = page.finalCta;
+---
+
+<article
+  class="journal-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="journal"
+    titleId="journal-hero-title"
+    heading={page.hero.heading}
+    headingLines={["Journal"]}
+    scriptLine="the"
+    intro={page.hero.intro}
+    backgroundImage="/uploads/maternity-waiting-to-welcome-tricities.jpg"
+    backgroundAlt="A family waiting to welcome a baby in the Tri-Cities."
+    backgroundPosition="64% 50%"
+    mobileBackgroundPosition="68% 50%"
+    leftPrint={{
+      src: "/uploads/journal-senior-golden-hour-tricities.jpg",
+      objectPosition: "50% 43%",
+    }}
+    rightPrint={{
+      src: "/uploads/journal-family-golden-hour-tricities.jpg",
+      objectPosition: "50% 44%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+  />
+
+  <section class="journal-planning" aria-labelledby="journal-planning-guides-title">
+    <div class="journal-feature">
+      <span class="journal-feature__line" aria-hidden="true"></span>
+      <div class="journal-shell">
+        <a
+          class="journal-feature__link"
+          href={featuredHref}
+          aria-labelledby="journal-feature-title"
+        >
+          <div class="journal-feature__media">
+            <figure class="journal-feature__arch">
+              <Picture
+                src="/uploads/journal-family-golden-hour-tricities.jpg"
+                alt="Parents holding their baby in golden evening light."
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) 78vw, (max-width: 1050px) 46vw, 34vw"
+                imgClass="photo--editorial"
+              />
+            </figure>
+
+            <figure class="journal-print journal-feature__print" aria-hidden="true">
+              <span class="journal-tape" aria-hidden="true"></span>
+              <Picture
+                src="/uploads/journal-family-children-golden-hour-tricities.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) 64vw, (max-width: 1050px) 36vw, 25vw"
+                imgClass="photo--editorial"
+              />
+            </figure>
+          </div>
+
+          <div class="journal-feature__copy">
+            <span class="journal-number" aria-hidden="true">01</span>
+            <h2 id="journal-planning-guides-title">{planning.heading}</h2>
+            <h3 id="journal-feature-title">{featuredGuide.heading}</h3>
+            {featuredGuide.detail && <p>{featuredGuide.detail}</p>}
+            <span class="journal-read-mark" aria-hidden="true">→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="journal-guides">
+      <div class="journal-shell">
+        <p class="journal-guides__script" aria-hidden="true">plan like an insider</p>
+        <span class="journal-guides__line" aria-hidden="true"></span>
+
+        <div class="journal-guides__grid">
+          {guideCards.map((guide, index) => (
+            guide.href ? (
+              <a
+                class:list={["journal-guide", `journal-guide--${guide.shape}`]}
+                href={guide.href}
+                aria-labelledby={`journal-guide-${index + 2}-title`}
+              >
+                <div class="journal-guide__stage">
+                  <figure class="journal-guide__image">
+                    <Picture
+                      src={guide.image}
+                      alt={guide.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      responsiveSrcset
+                      sizes="(max-width: 767px) 82vw, (max-width: 1050px) 30vw, 28vw"
+                      imgClass="photo--editorial"
+                    />
+                  </figure>
+                </div>
+                <div class="journal-guide__copy">
+                  <span class="journal-number" aria-hidden="true">
+                    {String(index + 2).padStart(2, "0")}
+                  </span>
+                  <h3 id={`journal-guide-${index + 2}-title`}>{guide.item.heading}</h3>
+                  {guide.item.detail && <p>{guide.item.detail}</p>}
+                  <span class="journal-read-mark" aria-hidden="true">→</span>
+                </div>
+              </a>
+            ) : (
+              <article
+                class:list={["journal-guide", `journal-guide--${guide.shape}`]}
+                aria-labelledby={`journal-guide-${index + 2}-title`}
+              >
+                <div class="journal-guide__stage">
+                  <figure class="journal-guide__image">
+                    <Picture
+                      src={guide.image}
+                      alt={guide.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      responsiveSrcset
+                      sizes="(max-width: 767px) 82vw, (max-width: 1050px) 30vw, 28vw"
+                      imgClass="photo--editorial"
+                    />
+                  </figure>
+                </div>
+                <div class="journal-guide__copy">
+                  <span class="journal-number" aria-hidden="true">
+                    {String(index + 2).padStart(2, "0")}
+                  </span>
+                  <h3 id={`journal-guide-${index + 2}-title`}>{guide.item.heading}</h3>
+                  {guide.item.detail && <p>{guide.item.detail}</p>}
+                </div>
+              </article>
+            )
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journal-portfolio" aria-label={portfolioLabel}>
+    <div class="journal-portfolio__line" aria-hidden="true"></div>
+    <a
+      class="journal-shell journal-portfolio__inner"
+      href={portfolioHref}
+      aria-labelledby="journal-portfolio-title"
+    >
+      <div class="journal-portfolio__copy">
+        <p class="journal-portfolio__script" aria-hidden="true">where the light falls</p>
+        <h2 id="journal-portfolio-title">{portfolioLabel}</h2>
+      </div>
+
+      <div class="journal-portfolio__media">
+        <figure class="journal-print journal-portfolio__portrait">
+          <Picture
+            src="/uploads/journal-lisa-behind-scenes-black-white.jpg"
+            alt="Lisa looking through her camera during a session."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 70vw, (max-width: 1050px) 38vw, 28vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure class="journal-print journal-portfolio__landscape" aria-hidden="true">
+          <span class="journal-tape journal-tape--corner" aria-hidden="true"></span>
+          <Picture
+            src="/uploads/about-story-senior-horse-tricities.jpg"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 62vw, (max-width: 1050px) 34vw, 25vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+    </a>
+  </section>
+
+  {finalCta && (
+    <section class="journal-final" aria-labelledby="journal-final-title">
+      <div class="journal-final__background" aria-hidden="true">
+        <Picture
+          src="/uploads/about-final-couple-golden-hour-tricities.jpg"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="100vw"
+          imgClass="photo--editorial"
+        />
+        <span class="journal-final__wash"></span>
+      </div>
+
+      <div class="journal-shell journal-final__inner">
+        <div class="journal-final__frame">
+          <h2 id="journal-final-title">{finalCta.heading}</h2>
+          {finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {finalCta.link && (
+            <a class="outline-button" href={finalCta.link.href}>
+              {finalCta.link.label}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+</article>

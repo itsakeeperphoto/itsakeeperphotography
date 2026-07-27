@@ -33,6 +33,7 @@ const {
   additionalSchema = [],
   loadEditorialMotion = Boolean(homepage),
 } = Astro.props;
+const isDevelopment = import.meta.env.DEV;
 
 const normalizedCanonicalPath = canonicalPath === "/"
   ? "/"
@@ -229,9 +230,17 @@ const webPageSchema = normalizedCanonicalPath !== "/"
       </>
     )}
     {loadEditorialMotion ? (
-      <script src="/scripts/site.min.js" defer is:inline></script>
+      <script
+        src={isDevelopment ? "/scripts/site.js" : "/scripts/site.min.js"}
+        defer
+        is:inline
+      ></script>
     ) : (
-      <script src="/scripts/chrome.min.js" defer is:inline></script>
+      <script
+        src={isDevelopment ? "/scripts/chrome.js" : "/scripts/chrome.min.js"}
+        defer
+        is:inline
+      ></script>
     )}
   </head>
 

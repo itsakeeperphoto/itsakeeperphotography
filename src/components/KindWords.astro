@@ -1,7 +1,9 @@
 ---
 import { tinaField } from "@tinacms/astro/tina-field";
+import Picture from "./Picture.astro";
 
-const { kindWords, settings, testimonials } = Astro.props;
+const { kindWords, settings, testimonials = [] } = Astro.props;
+const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3deg"];
 ---
 
 <section
@@ -10,7 +12,7 @@ const { kindWords, settings, testimonials } = Astro.props;
   aria-labelledby="kind-words-title"
   data-tina-field={tinaField(kindWords)}
 >
-  <div class="content-shell">
+  <div class="content-shell kind-words__header">
     <div class="section-intro">
       <p class="section-eyebrow" data-tina-field={tinaField(kindWords, "eyebrow")}>
         {kindWords.eyebrow}
@@ -21,24 +23,122 @@ const { kindWords, settings, testimonials } = Astro.props;
         data-tina-field={tinaField(kindWords, "heading")}
       >{kindWords.heading}</h2>
     </div>
-
-    <div class="kind-words__grid">
-      {testimonials.map((testimonial) => (
-        <figure class="kind-word" data-tina-field={tinaField(testimonial)}>
-          <p class="kind-word__text">{testimonial.quote}</p>
-          <figcaption>{testimonial.name} · {testimonial.sessionType}</figcaption>
-        </figure>
-      ))}
-    </div>
-
-    {kindWords.reviewsLine && kindWords.buttonHref && (
-      <p class="kind-words__google">
-        <a
-          href={kindWords.buttonHref}
-          aria-label={`Read ${kindWords.reviewsLine} for ${settings.businessName}`}
-          data-tina-field={tinaField(kindWords, "reviewsLine")}
-        >{kindWords.reviewsLine}</a>
-      </p>
-    )}
   </div>
+
+  <review-polaroids class="kind-words__archive" data-review-archive>
+    <svg
+      class="kind-words__wire"
+      viewBox="0 0 1000 96"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        class="kind-words__wire-path kind-words__wire-path--desktop"
+        d="M 0 14 Q 500 143 1000 14"
+      ></path>
+      <path
+        class="kind-words__wire-path kind-words__wire-path--compact"
+        d="M 0 14 Q 500 98 1000 14"
+      ></path>
+    </svg>
+
+    <div
+      class="kind-words__rail"
+      data-review-rail
+      tabindex="0"
+      role="region"
+      aria-label="Client review photographs. Scroll horizontally to explore all reviews."
+    >
+      <div class="kind-words__track">
+        <div class="kind-words__group" data-review-group>
+          {testimonials.map((testimonial, index) => {
+            return (
+              <article
+                class="review-polaroid"
+                style={`--review-tilt: ${cardTilts[index % cardTilts.length]};`}
+                tabindex="0"
+                aria-label={`${testimonial.sessionType} client review${testimonial.name ? ` from ${testimonial.name}` : ""}`}
+                data-review-card
+                data-review-state="front"
+                data-review-index={String(index + 1)}
+                data-tina-field={tinaField(testimonial)}
+              >
+                <img
+                  class="review-polaroid__hanger"
+                  src="/uploads/bronze-paper-clip.png"
+                  width="192"
+                  height="161"
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                  aria-hidden="true"
+                />
+
+                <div class="review-polaroid__scene">
+                  <div class="review-polaroid__flipper" data-review-flipper>
+                    <figure class="review-polaroid__face review-polaroid__front" data-review-front>
+                      <Picture
+                        src={testimonial.image}
+                        alt={testimonial.imageAlt}
+                        pictureClass="review-polaroid__picture"
+                        imgClass="review-polaroid__image"
+                        loading="lazy"
+                        decoding="async"
+                        sizes="(max-width: 479px) calc(100vw - 48px), (max-width: 1050px) 320px, 288px"
+                        responsiveSrcset={true}
+                        dataTinaField={tinaField(testimonial, "image")}
+                      />
+                      <figcaption>
+                        <span>{testimonial.sessionType}</span>
+                        <small>Photographed by Lisa</small>
+                      </figcaption>
+                    </figure>
+
+                    <div
+                      class="review-polaroid__face review-polaroid__back"
+                      aria-hidden="true"
+                      inert
+                      data-review-back
+                    >
+                      <p class="review-polaroid__rating">
+                        <span class="sr-only">5 out of 5 stars.</span>
+                        <span aria-hidden="true">★★★★★</span>
+                      </p>
+
+                      <div
+                        class="review-polaroid__quote-scroll"
+                        data-review-scroll
+                        data-review-scroll-label={`Full ${testimonial.sessionType} review`}
+                      >
+                        <blockquote>
+                          <p>{testimonial.quote}</p>
+                        </blockquote>
+                      </div>
+
+                      <p class="review-polaroid__attribution">
+                        {testimonial.name?.trim() && <strong>{testimonial.name}</strong>}
+                        <span>{testimonial.sessionType}</span>
+                        <small hidden data-review-scroll-cue>Scroll to finish</small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </review-polaroids>
+
+  {kindWords.reviewsLine && kindWords.buttonHref && (
+    <p class="kind-words__google content-shell">
+      <a
+        href={kindWords.buttonHref}
+        aria-label={`${kindWords.reviewsLine} for ${settings.businessName}`}
+        data-tina-field={tinaField(kindWords, "reviewsLine")}
+      >{kindWords.reviewsLine}</a>
+    </p>
+  )}
 </section>

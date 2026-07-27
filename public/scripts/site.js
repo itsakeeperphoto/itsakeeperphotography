@@ -242,6 +242,511 @@
   };
   renderGoldenHour();
 
+  /*
+   * The client-note archive behaves like a row of real prints: a fine pointer
+   * previews a note only while it remains over a photograph. Keyboard focus is
+   * the equivalent temporary interaction and closes as soon as focus leaves.
+   * Nothing can be pinned open. The inactive face is removed from the
+   * accessibility tree, and the archive resumes as soon as the interaction ends.
+   */
+  class ReviewPolaroids extends HTMLElement {
+    connectedCallback() {
+      if (this.controller) return;
+
+      this.controller = new AbortController();
+      const { signal } = this.controller;
+      this.section = this.closest(".kind-words");
+      this.rail = this.querySelector("[data-review-rail]");
+      this.track = this.querySelector(".kind-words__track");
+      this.originalGroup = this.querySelector("[data-review-group]");
+      this.loopClones = this.createLoopClones();
+      this.beforeGroup = this.loopClones?.before || null;
+      this.afterGroup = this.loopClones?.after || null;
+      this.cards = [...this.querySelectorAll("[data-review-card]")];
+      this.finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+      this.pointerInside = false;
+      this.manualInteraction = false;
+      this.inView = true;
+      this.frame = 0;
+      this.arcFrame = 0;
+      this.manualResumeTimer = 0;
+      this.lastFrameTime = 0;
+      this.panPosition = 0;
+      this.sequenceSpan = 0;
+      this.loopStart = 0;
+      this.loopInitialized = false;
+      this.hoveredCard = null;
+      this.focusedCard = null;
+      this.resizeObserver = null;
+      this.intersectionObserver = null;
+
+      if (!this.rail || !this.track || !this.originalGroup || !this.cards.length) return;
+
+      this.cards.forEach((card) => this.prepareCard(card, signal));
+      this.classList.add("is-enhanced");
+
+      const beginManualScroll = () => {
+        window.clearTimeout(this.manualResumeTimer);
+        this.manualResumeTimer = 0;
+        this.manualInteraction = true;
+        this.syncMotion();
+      };
+
+      const finishManualScroll = () => {
+        if (!this.manualInteraction) return;
+        window.clearTimeout(this.manualResumeTimer);
+        this.manualResumeTimer = window.setTimeout(() => {
+          this.manualResumeTimer = 0;
+          this.manualInteraction = false;
+          this.syncMotion();
+        }, 180);
+      };
+
+      this.rail.addEventListener(
+        "scroll",
+        () => {
+          if (this.manualInteraction) finishManualScroll();
+          this.queueArcUpdate();
+        },
+        {
+          passive: true,
+          signal,
+        }
+      );
+      this.rail.addEventListener("pointerdown", beginManualScroll, { signal });
+      window.addEventListener("pointerup", finishManualScroll, { signal });
+      window.addEventListener("pointercancel", finishManualScroll, { signal });
+      this.rail.addEventListener("scrollend", finishManualScroll, { signal });
+      this.rail.addEventListener(
+        "keydown",
+        (event) => {
+          if (
+            ![
+              "ArrowLeft",
+              "ArrowRight",
+              "Home",
+              "End",
+              "PageUp",
+              "PageDown",
+            ].includes(event.key)
+          ) {
+            return;
+          }
+          beginManualScroll();
+        },
+        { signal }
+      );
+      this.rail.addEventListener("keyup", finishManualScroll, { signal });
+      this.rail.addEventListener(
+        "wheel",
+        (event) => {
+          if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) && !event.shiftKey) return;
+          beginManualScroll();
+          finishManualScroll();
+        },
+        { passive: true, signal }
+      );
+
+      const mediaChanged = () => {
+        this.updateLoopMetrics();
+        this.syncMotion();
+      };
+      this.finePointer.addEventListener("change", mediaChanged, { signal });
+      reduceMotion.addEventListener("change", mediaChanged, { signal });
+      document.addEventListener("visibilitychange", mediaChanged, { signal });
+
+      if ("IntersectionObserver" in window) {
+        this.intersectionObserver = new IntersectionObserver(
+          ([entry]) => {
+            this.inView = Boolean(entry?.isIntersecting);
+            this.syncMotion();
+          },
+          { rootMargin: "12% 0px", threshold: 0.01 }
+        );
+        this.intersectionObserver.observe(this);
+      }
+
+      if ("ResizeObserver" in window) {
+        this.resizeObserver = new ResizeObserver(() => {
+          this.updateLoopMetrics();
+          this.refreshOpenReviews();
+          this.syncMotion();
+        });
+        this.resizeObserver.observe(this.originalGroup);
+      } else {
+        window.addEventListener(
+          "resize",
+          () => {
+            this.updateLoopMetrics();
+            this.refreshOpenReviews();
+            this.syncMotion();
+          },
+          {
+            passive: true,
+            signal,
+          }
+        );
+      }
+
+      window.requestAnimationFrame(() => {
+        this.updateLoopMetrics();
+        this.syncMotion();
+      });
+    }
+
+    disconnectedCallback() {
+      this.controller?.abort();
+      this.controller = null;
+      this.intersectionObserver?.disconnect();
+      this.resizeObserver?.disconnect();
+      this.classList.remove("is-enhanced");
+      this.dataset.reviewMotion = "paused";
+      window.cancelAnimationFrame(this.frame);
+      window.cancelAnimationFrame(this.arcFrame);
+      window.clearTimeout(this.manualResumeTimer);
+      this.frame = 0;
+      this.arcFrame = 0;
+      this.manualResumeTimer = 0;
+    }
+
+    createLoopClones() {
+      if (!this.track || !this.originalGroup) return null;
+
+      const existingBefore = this.track.querySelector('[data-review-clone="before"]');
+      const existingAfter = this.track.querySelector('[data-review-clone="after"]');
+      if (existingBefore && existingAfter) {
+        return { before: existingBefore, after: existingAfter };
+      }
+
+      const createClone = (position) => {
+        const clone = this.originalGroup.cloneNode(true);
+        clone.classList.add("kind-words__group--clone");
+        clone.removeAttribute("data-review-group");
+        clone.setAttribute("data-review-clone", position);
+        clone.setAttribute("aria-hidden", "true");
+
+        clone.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+        clone
+          .querySelectorAll(
+            "[aria-controls], [aria-describedby], [aria-labelledby]"
+          )
+          .forEach((element) => {
+            element.removeAttribute("aria-controls");
+            element.removeAttribute("aria-describedby");
+            element.removeAttribute("aria-labelledby");
+          });
+        clone.querySelectorAll("[data-tina-field]").forEach((element) => {
+          element.removeAttribute("data-tina-field");
+        });
+        clone.querySelectorAll("[data-review-card]").forEach((card) => {
+          card.setAttribute("data-review-clone-card", "");
+        });
+        clone
+          .querySelectorAll("button, a, input, select, textarea, [tabindex]")
+          .forEach((control) => {
+            control.tabIndex = -1;
+            control.setAttribute("aria-hidden", "true");
+          });
+
+        return clone;
+      };
+
+      const before = existingBefore || createClone("before");
+      const after = existingAfter || createClone("after");
+      if (!existingBefore) this.track.prepend(before);
+      if (!existingAfter) this.track.append(after);
+
+      return { before, after };
+    }
+
+    updateLoopMetrics() {
+      if (!this.rail || !this.originalGroup || !this.beforeGroup) return;
+
+      const styles = getComputedStyle(this);
+      this.arcDepth =
+        Number.parseFloat(styles.getPropertyValue("--review-arc-depth")) || 64.5;
+      this.autoPanSpeed =
+        Number.parseFloat(styles.getPropertyValue("--review-auto-pan-speed")) || 0.045;
+
+      const previousSpan = this.sequenceSpan;
+      const previousLoopStart = this.loopStart;
+      const nextSpan = this.originalGroup.offsetLeft - this.beforeGroup.offsetLeft;
+      if (nextSpan <= 1) {
+        this.sequenceSpan = 0;
+        this.loopInitialized = false;
+        this.panPosition = 0;
+        this.rail.scrollLeft = 0;
+        this.updateArcPositions();
+        return;
+      }
+
+      this.sequenceSpan = nextSpan;
+      this.loopStart = this.beforeGroup.offsetLeft;
+
+      const shouldReset =
+        !this.loopInitialized ||
+        previousSpan <= 1 ||
+        this.panPosition < this.loopStart ||
+        this.panPosition > this.loopStart + this.sequenceSpan * 2;
+
+      if (shouldReset) {
+        this.panPosition = this.originalGroup.offsetLeft;
+        this.rail.scrollLeft = this.panPosition;
+        this.loopInitialized = true;
+      } else if (previousSpan !== nextSpan) {
+        const progress = (this.panPosition - previousLoopStart) / previousSpan;
+        this.panPosition = this.loopStart + progress * nextSpan;
+        this.rail.scrollLeft = this.panPosition;
+      }
+
+      this.cards.forEach((card) => {
+        card.reviewCenter = card.offsetLeft + card.offsetWidth / 2;
+      });
+      this.updateArcPositions();
+    }
+
+    queueArcUpdate() {
+      if (this.frame || this.arcFrame) return;
+
+      this.arcFrame = window.requestAnimationFrame(() => {
+        this.arcFrame = 0;
+        this.panPosition = this.rail.scrollLeft;
+        this.updateArcPositions();
+      });
+    }
+
+    updateArcPositions() {
+      if (!this.rail || !this.cards.length) return;
+
+      const railWidth = this.rail.clientWidth;
+      if (railWidth <= 1) return;
+
+      const depth = this.arcDepth || 64.5;
+      const scrollLeft = this.rail.scrollLeft;
+
+      this.cards.forEach((card) => {
+        const center = Number.isFinite(card.reviewCenter)
+          ? card.reviewCenter
+          : card.offsetLeft + card.offsetWidth / 2;
+        const normalized = Math.min(1, Math.max(0, (center - scrollLeft) / railWidth));
+        const arcY = depth * 4 * normalized * (1 - normalized);
+        card.style.setProperty("--review-arc-y", `${arcY.toFixed(2)}px`);
+      });
+    }
+
+    prepareCard(card, signal) {
+      const front = card.querySelector("[data-review-front]");
+      const back = card.querySelector("[data-review-back]");
+      const quoteScroll = card.querySelector("[data-review-scroll]");
+      const scrollCue = card.querySelector("[data-review-scroll-cue]");
+
+      if (!front || !back) return;
+
+      const previewOpen = () => {
+        if (!this.finePointer.matches) return;
+        this.pointerInside = true;
+        this.hoveredCard = card;
+        this.syncMotion();
+        this.setCardState(card, true, { pinned: false, input: "pointer" });
+      };
+
+      const previewClose = () => {
+        if (this.hoveredCard === card) {
+          this.hoveredCard = null;
+          this.pointerInside = false;
+        }
+        if (this.focusedCard === card) return;
+        this.setCardState(card, false);
+      };
+
+      card.addEventListener("pointerenter", previewOpen, { signal });
+      card.addEventListener("pointerleave", previewClose, { signal });
+      card.addEventListener(
+        "focusin",
+        (event) => {
+          const target = event.target;
+          const keyboardFocus =
+            this.focusedCard === card ||
+            (target instanceof Element && target.matches(":focus-visible"));
+          if (!keyboardFocus) return;
+
+          this.focusedCard = card;
+          this.setCardState(card, true);
+        },
+        { signal }
+      );
+      card.addEventListener(
+        "focusout",
+        () => {
+          window.requestAnimationFrame(() => {
+            if (card.contains(document.activeElement) || this.focusedCard !== card) return;
+            this.focusedCard = null;
+            if (this.hoveredCard !== card) this.setCardState(card, false);
+            else this.syncMotion();
+          });
+        },
+        { signal }
+      );
+
+      card.addEventListener(
+        "keydown",
+        (event) => {
+          if (event.key !== "Escape" || card.dataset.reviewState !== "back") return;
+          event.preventDefault();
+          this.focusedCard = null;
+          this.setCardState(card, false);
+          this.rail.focus({ preventScroll: true });
+        },
+        { signal }
+      );
+
+      this.updateFaces({
+        card,
+        front,
+        back,
+        quoteScroll,
+        scrollCue,
+        open: false,
+      });
+    }
+
+    setCardState(card, open) {
+      if (open) {
+        this.cards.forEach((otherCard) => {
+          if (otherCard !== card && otherCard.dataset.reviewState === "back") {
+            this.setCardState(otherCard, false);
+          }
+        });
+      }
+
+      const front = card.querySelector("[data-review-front]");
+      const back = card.querySelector("[data-review-back]");
+      const quoteScroll = card.querySelector("[data-review-scroll]");
+      const scrollCue = card.querySelector("[data-review-scroll-cue]");
+
+      if (!front || !back) return;
+
+      card.dataset.reviewState = open ? "back" : "front";
+
+      this.updateFaces({
+        card,
+        front,
+        back,
+        quoteScroll,
+        scrollCue,
+        open,
+      });
+      this.syncMotion();
+    }
+
+    updateFaces({ card, front, back, quoteScroll, scrollCue, open }) {
+      front.setAttribute("aria-hidden", String(open));
+      front.inert = open;
+      back.setAttribute("aria-hidden", String(!open));
+      back.inert = !open;
+
+      if (!quoteScroll) return;
+      if (!open) {
+        quoteScroll.scrollTop = 0;
+        quoteScroll.removeAttribute("tabindex");
+        quoteScroll.removeAttribute("aria-label");
+        scrollCue?.setAttribute("hidden", "");
+        return;
+      }
+
+      this.queueOverflowMeasurement(card);
+    }
+
+    measureCardOverflow(card) {
+      if (card?.dataset.reviewState !== "back") return;
+
+      const quoteScroll = card.querySelector("[data-review-scroll]");
+      const scrollCue = card.querySelector("[data-review-scroll-cue]");
+      if (!quoteScroll) return;
+
+      const isScrollable = quoteScroll.scrollHeight > quoteScroll.clientHeight + 2;
+      if (isScrollable) {
+        quoteScroll.tabIndex = 0;
+        quoteScroll.setAttribute(
+          "aria-label",
+          quoteScroll.dataset.reviewScrollLabel || "Full client review"
+        );
+        scrollCue?.removeAttribute("hidden");
+      } else {
+        quoteScroll.removeAttribute("tabindex");
+        quoteScroll.removeAttribute("aria-label");
+        scrollCue?.setAttribute("hidden", "");
+      }
+    }
+
+    queueOverflowMeasurement(card) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => this.measureCardOverflow(card));
+      });
+      window.setTimeout(() => this.measureCardOverflow(card), 360);
+    }
+
+    refreshOpenReviews() {
+      this.cards
+        .filter((card) => card.dataset.reviewState === "back")
+        .forEach((card) => this.queueOverflowMeasurement(card));
+    }
+
+    canAutoPan() {
+      return (
+        this.sequenceSpan > 1 &&
+        !reduceMotion.matches &&
+        !this.pointerInside &&
+        !this.manualInteraction &&
+        !this.focusedCard &&
+        this.inView &&
+        !document.hidden
+      );
+    }
+
+    syncMotion() {
+      if (!this.canAutoPan()) {
+        this.dataset.reviewMotion = "paused";
+        window.cancelAnimationFrame(this.frame);
+        this.frame = 0;
+        this.lastFrameTime = 0;
+        this.updateArcPositions();
+        return;
+      }
+
+      this.dataset.reviewMotion = "running";
+      if (!this.frame) {
+        this.panPosition = this.rail.scrollLeft;
+        this.frame = window.requestAnimationFrame((time) => this.pan(time));
+      }
+    }
+
+    pan(time) {
+      this.frame = 0;
+      if (!this.canAutoPan()) return;
+
+      const elapsed = this.lastFrameTime ? Math.min(time - this.lastFrameTime, 64) : 0;
+      this.lastFrameTime = time;
+      const speed = this.autoPanSpeed || 0.045;
+
+      this.panPosition -= elapsed * speed;
+      while (this.panPosition <= this.loopStart + 1) {
+        this.panPosition += this.sequenceSpan;
+      }
+      while (this.panPosition > this.loopStart + this.sequenceSpan + 1) {
+        this.panPosition -= this.sequenceSpan;
+      }
+
+      this.rail.scrollLeft = this.panPosition;
+      this.updateArcPositions();
+      this.frame = window.requestAnimationFrame((nextTime) => this.pan(nextTime));
+    }
+  }
+
+  if (!customElements.get("review-polaroids")) {
+    customElements.define("review-polaroids", ReviewPolaroids);
+  }
+
   const initInquiry = () => {
     const intro = document.querySelector("[data-inquiry-intro]");
     const workspace = document.querySelector("[data-inquiry-workspace]");
@@ -990,7 +1495,7 @@
 
         const groupedSections = [
           [".process", ".section-intro, .process__step"],
-          [".kind-words", ".section-intro, .kind-word, .kind-words__google"],
+          [".kind-words", ".section-intro, .kind-words__archive, .kind-words__google"],
           [".inquiry__intro", ".inquiry__hook"],
           [".site-footer", ".footer-brand, .footer-address, .footer-links, .instagram-placeholder, .footer-copyright"],
         ];
