@@ -38,6 +38,7 @@ const isDevelopment = import.meta.env.DEV;
 const normalizedCanonicalPath = canonicalPath === "/"
   ? "/"
   : `/${canonicalPath.replace(/^\/+|\/+$/g, "")}/`;
+const hasHomepagePreloader = normalizedCanonicalPath === "/";
 const canonical = absoluteUrl(normalizedCanonicalPath);
 const siteRoot = `${siteOrigin}/`;
 const absolute = (path: string) => new URL(path, siteRoot).toString();
@@ -138,6 +139,38 @@ const webPageSchema = normalizedCanonicalPath !== "/"
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {hasHomepagePreloader && (
+      <script is:inline define:vars={{ isDevelopment }}>
+        (() => {
+          const root = document.documentElement;
+          const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          const supportsWaapi =
+            typeof Element.prototype.animate === "function";
+          const qaMode =
+            isDevelopment &&
+            new URLSearchParams(window.location.search).has("preloader-qa");
+
+          if (qaMode) root.classList.add("is-preloader-qa");
+
+          if (!reduceMotion && supportsWaapi && !document.hidden) {
+            root.classList.add("is-preloading");
+
+            const release = () => {
+              root.classList.remove("is-preloading", "is-preloader-qa");
+              root.removeAttribute("data-preloader-state");
+              document.querySelector("[data-site-preloader]")?.remove();
+            };
+
+            if (!qaMode) {
+              window.__sitePreloaderFailsafe = window.setTimeout(release, 4200);
+            }
+          }
+        })();
+      </script>
+    )}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -245,6 +278,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
   </head>
 
   <body>
+    <slot name="preloader" />
     <a class="skip-link" href="#main-content">Skip to content</a>
     <slot />
   </body>

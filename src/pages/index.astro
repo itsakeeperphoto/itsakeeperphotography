@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import TinaIsland from "@tinacms/astro/TinaIsland.astro";
 import HomepagePage from "../components/HomepagePage.astro";
+import SitePreloader from "../components/SitePreloader.astro";
 import { getStaticHomepagePage } from "../lib/static-content";
 import { homepageWrapper } from "../lib/tina/wrappers";
 
@@ -17,6 +18,7 @@ const settings = data.settings;
   homepage={homepage}
   settings={settings}
 >
+  <SitePreloader slot="preloader" />
   <TinaIsland name="homepage" wrapper={homepageWrapper} primary>
     <HomepagePage data={data} />
   </TinaIsland>

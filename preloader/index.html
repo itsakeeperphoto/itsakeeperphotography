@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Cinematic camera preloader concept for It's A Keeper Photography."
+    />
+    <title>It's A Keeper Photography — Cinematic Preloader</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23281e10'/%3E%3Ccircle cx='32' cy='32' r='18' fill='%23604a31' stroke='%238d5933' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23f2e8d7'/%3E%3C/svg%3E"
+    />
+
+    <!--
+      Progressive enhancement:
+      The site is visible by default. JavaScript opts into the preloader only
+      when motion is allowed, so a script failure can never trap the visitor.
+    -->
+    <script>
+      (() => {
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        const qaMode = new URLSearchParams(window.location.search).has("qa");
+
+        document.documentElement.classList.add("has-js");
+        if (qaMode) document.documentElement.classList.add("is-qa");
+
+        if (!reduceMotion) {
+          document.documentElement.classList.add("is-preloading");
+        }
+      })();
+    </script>
+
+    <!-- Existing brand-system alternatives: display, script, and utility. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Allura&family=Cabin:wght@400;500&family=Cormorant+Garamond:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ================================================================
+         1. Brand tokens
+         ================================================================ */
+      :root {
+        --deep-umber: #281e10;
+        --walnut: #493621;
+        --warm-earth: #604a31;
+        --clay: #8d5933;
+        --muted-olive: #71674e;
+        --weathered-sand: #b6a997;
+        --warm-ivory: #f2e8d7;
+        --flash-ivory: #fff8ee;
+
+        --font-display: "Cormorant Garamond", "Times New Roman", Times, serif;
+        --font-script: "Allura", "Brush Script MT", cursive;
+        --font-utility: "Cabin", "Helvetica Neue", Arial, sans-serif;
+
+        --hairline: 1px;
+        --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+        --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      }
+
+      /* ================================================================
+         2. Base and accessible defaults
+         ================================================================ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 20rem;
+        color: var(--deep-umber);
+        background: var(--warm-ivory);
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        font-family: var(--font-utility);
+        background: var(--warm-ivory);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ================================================================
+         3. Example site underneath the preloader
+         ================================================================ */
+      .demo-site {
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: clamp(1.5rem, 5vw, 5rem);
+        color: var(--warm-ivory);
+        background: var(--warm-earth);
+        transform: scale(1);
+        transform-origin: center;
+      }
+
+      .demo-site::before,
+      .demo-site::after {
+        position: absolute;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+      }
+
+      .demo-site::before {
+        inset: clamp(1.25rem, 4vw, 4rem);
+        border: var(--hairline) solid rgb(242 232 215 / 22%);
+      }
+
+      .demo-site::after {
+        width: min(54vw, 41rem);
+        aspect-ratio: 1 / 1;
+        right: min(-16vw, -7rem);
+        bottom: min(-22vw, -10rem);
+        border: var(--hairline) solid rgb(242 232 215 / 18%);
+        border-radius: 50% 50% 0 0;
+      }
+
+      .is-preloading .demo-hero {
+        opacity: 0.86;
+        transform: scale(1.02);
+        will-change: transform, opacity;
+      }
+
+      .demo-hero {
+        width: min(70rem, 100%);
+        text-align: center;
+        transform: scale(1);
+        transform-origin: center;
+      }
+
+      .demo-hero__line {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.75rem, 2vw, 1.5rem);
+        width: min(35rem, 78vw);
+        margin: 0 auto clamp(1.25rem, 3vw, 2rem);
+        color: var(--weathered-sand);
+        font-family: var(--font-script);
+        font-size: clamp(1.6rem, 4vw, 3.25rem);
+      }
+
+      .demo-hero__line::before,
+      .demo-hero__line::after {
+        flex: 1;
+        height: var(--hairline);
+        background: currentColor;
+        content: "";
+      }
+
+      .demo-hero h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        line-height: 0.92;
+        text-transform: uppercase;
+        text-wrap: balance;
+      }
+
+      .demo-hero p {
+        max-width: 48ch;
+        margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
+        color: rgb(242 232 215 / 82%);
+        font-family: var(--font-display);
+        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        font-style: italic;
+        line-height: 1.55;
+        text-wrap: pretty;
+      }
+
+      /* ================================================================
+         4. Full-screen preloader shell and split shutter panels
+         ================================================================ */
+      .preloader {
+        position: fixed;
+        z-index: 100;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        contain: strict;
+      }
+
+      .is-preloading .preloader {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        /*
+          Emergency fallback: if orchestration fails after opt-in, the overlay
+          still releases the site. The normal path removes the node at 4s.
+        */
+        animation: emergency-dismiss 240ms var(--ease-out-quint) 4.8s forwards;
+      }
+
+      html.is-preloading.is-qa .preloader {
+        animation: none;
+      }
+
+      @keyframes emergency-dismiss {
+        to {
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+        }
+      }
+
+      .preloader__panel {
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        width: 100%;
+        height: calc(50% + 1px);
+        background-color: var(--deep-umber);
+        background-image: radial-gradient(
+          circle at 50% 50%,
+          var(--walnut) 0,
+          var(--deep-umber) 68%
+        );
+        background-repeat: no-repeat;
+        background-size: 100vw 100vh;
+        will-change: transform;
+      }
+
+      .preloader__panel--top {
+        top: 0;
+        background-position: center top;
+        border-bottom: var(--hairline) solid rgb(182 169 151 / 10%);
+      }
+
+      .preloader__panel--bottom {
+        bottom: 0;
+        background-position: center bottom;
+        border-top: var(--hairline) solid rgb(182 169 151 / 10%);
+      }
+
+      .preloader__content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+      }
+
+      /* ================================================================
+         5. Camera scene
+         ================================================================ */
+      .camera-stage,
+      .camera-float {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        transform-origin: center;
+        will-change: transform, opacity;
+      }
+
+      .camera-stage {
+        width: min(90vw, 34rem);
+        opacity: 0;
+        transform: translate3d(0, 0.5rem, 0) scale(0.85);
+      }
+
+      .camera-float {
+        width: 100%;
+      }
+
+      .camera-svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .camera-svg g {
+        transform-box: view-box;
+      }
+
+      #camera-body {
+        transform-origin: 320px 248px;
+      }
+
+      #camera-top {
+        transform-origin: 320px 126px;
+      }
+
+      #lens-outer,
+      #lens-mid,
+      #lens-inner,
+      #lens-glass,
+      #shutter-iris {
+        transform-origin: 320px 246px;
+        will-change: transform, opacity;
+      }
+
+      #shutter-button {
+        transform-origin: 500px 104px;
+        will-change: transform;
+      }
+
+      #flash-glint {
+        opacity: 0;
+        transform-origin: 320px 246px;
+        will-change: transform, opacity;
+      }
+
+      #viewfinder-frames {
+        opacity: 0;
+        transform-origin: 320px 220px;
+        will-change: transform, opacity;
+      }
+
+      #iris-top {
+        transform: translate3d(0, -4.5rem, 0);
+        transform-origin: 320px 246px;
+        will-change: transform;
+      }
+
+      #iris-bottom {
+        transform: translate3d(0, 4.5rem, 0);
+        transform-origin: 320px 246px;
+        will-change: transform;
+      }
+
+      /* Optical bridge between the SVG lens and the HTML wordmark. */
+      .lens-portal {
+        position: absolute;
+        z-index: 1;
+        width: clamp(7rem, 18vw, 11rem);
+        aspect-ratio: 1;
+        border: var(--hairline) solid rgb(242 232 215 / 38%);
+        border-radius: 50%;
+        opacity: 0;
+        background: radial-gradient(
+          circle at 36% 30%,
+          var(--warm-ivory) 0,
+          var(--clay) 28%,
+          var(--walnut) 66%,
+          var(--deep-umber) 100%
+        );
+        transform: scale(0.2);
+        transform-origin: center;
+        will-change: transform, opacity;
+      }
+
+      /* ================================================================
+         6. Brand lockup born from the lens
+         ================================================================ */
+      .brand-lockup {
+        position: absolute;
+        z-index: 3;
+        width: min(90vw, 62rem);
+        color: var(--warm-ivory);
+        opacity: 0;
+        text-align: center;
+        transform: scale(0.22);
+        transform-origin: center;
+        will-change: transform, opacity;
+      }
+
+      /* LOGO: replace this HTML lockup with the real brand SVG if supplied. */
+      .brand-lockup__wordmark {
+        display: block;
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 4.65vw, 4.2rem);
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        line-height: 0.94;
+        text-transform: uppercase;
+        text-wrap: balance;
+      }
+
+      .brand-lockup__wordmark + .brand-lockup__wordmark {
+        margin-top: 0.2em;
+      }
+
+      .brand-lockup__script-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(0.8rem, 2vw, 1.5rem);
+        width: min(38rem, 88%);
+        margin: clamp(1rem, 2.6vw, 1.6rem) auto;
+        color: var(--weathered-sand);
+      }
+
+      .brand-lockup__script-row::before,
+      .brand-lockup__script-row::after {
+        flex: 1;
+        height: var(--hairline);
+        background: currentColor;
+        content: "";
+      }
+
+      .brand-lockup__script {
+        flex: none;
+        font-family: var(--font-script);
+        font-size: clamp(1.55rem, 3.2vw, 3.4rem);
+        line-height: 0.9;
+        white-space: nowrap;
+      }
+
+      .brand-lockup__details {
+        margin: 0;
+        font-family: var(--font-utility);
+        font-size: clamp(0.58rem, 0.85vw, 0.78rem);
+        font-weight: 400;
+        letter-spacing: 0.28em;
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+
+      /* ================================================================
+         7. Warm full-screen camera flash
+         ================================================================ */
+      .flash {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        opacity: 0;
+        background: var(--flash-ivory);
+        pointer-events: none;
+        will-change: opacity;
+      }
+
+      /* ================================================================
+         8. Responsive refinements
+         ================================================================ */
+      @media (max-width: 48rem) {
+        .camera-stage {
+          width: min(88vw, 27rem);
+        }
+
+        .brand-lockup {
+          width: min(92vw, 40rem);
+        }
+
+        .brand-lockup__script-row {
+          width: min(32rem, 92%);
+        }
+      }
+
+      @media (max-width: 26.25rem) {
+        .demo-site {
+          padding-inline: 1.25rem;
+        }
+
+        .demo-hero__line {
+          width: 100%;
+          font-size: clamp(1.45rem, 7vw, 1.75rem);
+        }
+
+        .demo-hero h1 {
+          font-size: clamp(2.25rem, 10vw, 3rem);
+          letter-spacing: 0.045em;
+          line-height: 0.96;
+        }
+
+        .demo-hero p {
+          font-size: 1.05rem;
+        }
+
+        .camera-stage {
+          width: min(92vw, 22rem);
+        }
+
+        .brand-lockup__wordmark {
+          font-size: clamp(1.45rem, 7vw, 1.75rem);
+          letter-spacing: 0.1em;
+        }
+
+        .brand-lockup__script-row {
+          gap: 0.65rem;
+          width: 95%;
+          margin-block: 1rem;
+        }
+
+        .brand-lockup__script {
+          font-size: clamp(1.45rem, 7vw, 1.8rem);
+        }
+
+        .brand-lockup__details {
+          font-size: 0.58rem;
+          letter-spacing: 0.2em;
+        }
+      }
+
+      /* ================================================================
+         9. Reduced motion and safety
+         ================================================================ */
+      @media (prefers-reduced-motion: reduce) {
+        .preloader {
+          display: none !important;
+        }
+
+        .demo-site {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+    </style>
+
+    <noscript>
+      <style>
+        .preloader {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+
+  <body>
+    <!-- ================================================================
+         Example site revealed after the cinematic preloader
+         ================================================================ -->
+    <main class="demo-site" id="main-content">
+      <section class="demo-hero" aria-labelledby="demo-title">
+        <div class="demo-hero__line" aria-hidden="true">
+          the seasons worth keeping
+        </div>
+        <h1 id="demo-title">It's A Keeper<br />Photography</h1>
+        <p>
+          Warm, natural portraits in the Tri-Cities — photographed with care,
+          patience, and golden light.
+        </p>
+      </section>
+    </main>
+
+    <!-- ================================================================
+         Cinematic preloader
+         ================================================================ -->
+    <div
+      class="preloader"
+      id="preloader"
+      data-phase="idle"
+      aria-label="Loading It's A Keeper Photography"
+      role="status"
+    >
+      <span class="visually-hidden">Preparing the photography portfolio…</span>
+
+      <!-- The halves become the opening camera shutter in Phase 4. -->
+      <div
+        class="preloader__panel preloader__panel--top"
+        id="panel-top"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="preloader__panel preloader__panel--bottom"
+        id="panel-bottom"
+        aria-hidden="true"
+      ></div>
+
+      <div class="preloader__content" aria-hidden="true">
+        <div class="camera-stage" id="camera-stage">
+          <div class="camera-float" id="camera-float">
+            <!--
+              CAMERA SVG: hand-drawn, dependency-free, and separated into
+              animation groups requested by the brief.
+            -->
+            <svg
+              class="camera-svg"
+              id="camera-svg"
+              viewBox="0 0 640 440"
+              role="img"
+              aria-labelledby="camera-title camera-description"
+              focusable="false"
+            >
+              <title id="camera-title">A warm-toned professional camera</title>
+              <desc id="camera-description">
+                A stylized front-facing mirrorless camera whose lens focuses,
+                flashes, and reveals the studio wordmark.
+              </desc>
+
+              <defs>
+                <radialGradient id="lens-gradient" cx="36%" cy="30%" r="72%">
+                  <stop offset="0" stop-color="#f2e8d7" stop-opacity="0.86" />
+                  <stop offset="0.22" stop-color="#8d5933" stop-opacity="0.9" />
+                  <stop offset="0.63" stop-color="#493621" />
+                  <stop offset="1" stop-color="#281e10" />
+                </radialGradient>
+                <clipPath id="lens-clip">
+                  <circle cx="320" cy="246" r="67" />
+                </clipPath>
+              </defs>
+
+              <!-- Main body: restrained planar surfaces, no cartoon shadow. -->
+              <g id="camera-body">
+                <path
+                  d="M100 126H536Q576 126 576 166V328Q576 370 534 370H104Q64 370 64 330V164Q64 126 100 126Z"
+                  fill="#604a31"
+                />
+                <path
+                  d="M88 163Q88 148 104 148H538Q552 148 552 164V330Q552 346 536 346H104Q88 346 88 330Z"
+                  fill="#493621"
+                  opacity="0.34"
+                />
+                <path
+                  d="M480 145H535Q558 145 558 170V324Q558 350 532 350H493Q474 326 474 293V186Q474 159 480 145Z"
+                  fill="#493621"
+                />
+                <path
+                  d="M497 166V326"
+                  fill="none"
+                  stroke="#71674e"
+                  stroke-opacity="0.58"
+                  stroke-width="2"
+                />
+                <circle cx="129" cy="174" r="6" fill="#71674e" />
+                <rect
+                  x="112"
+                  y="194"
+                  width="52"
+                  height="8"
+                  rx="4"
+                  fill="#281e10"
+                  opacity="0.52"
+                />
+              </g>
+
+              <!-- Camera top, viewfinder housing, and hot shoe. -->
+              <g id="camera-top">
+                <path
+                  d="M112 139L134 105Q139 96 151 96H230L252 70Q260 59 274 59H348Q362 59 371 70L394 96H493Q508 96 514 109L529 139Z"
+                  fill="#71674e"
+                />
+                <rect
+                  x="282"
+                  y="52"
+                  width="58"
+                  height="12"
+                  rx="3"
+                  fill="#281e10"
+                />
+                <rect
+                  x="291"
+                  y="50"
+                  width="40"
+                  height="4"
+                  rx="2"
+                  fill="#8d5933"
+                />
+                <rect
+                  x="277"
+                  y="76"
+                  width="86"
+                  height="50"
+                  rx="9"
+                  fill="#493621"
+                />
+                <rect
+                  x="288"
+                  y="84"
+                  width="64"
+                  height="32"
+                  rx="5"
+                  fill="#281e10"
+                  stroke="#b6a997"
+                  stroke-opacity="0.55"
+                  stroke-width="2"
+                />
+                <path
+                  d="M296 91H332"
+                  fill="none"
+                  stroke="#f2e8d7"
+                  stroke-linecap="round"
+                  stroke-opacity="0.28"
+                  stroke-width="2"
+                />
+              </g>
+
+              <!-- Physical shutter control. -->
+              <g id="shutter-button">
+                <rect
+                  x="467"
+                  y="99"
+                  width="62"
+                  height="18"
+                  rx="9"
+                  fill="#281e10"
+                />
+                <ellipse cx="498" cy="99" rx="23" ry="8" fill="#8d5933" />
+                <ellipse
+                  cx="492"
+                  cy="97"
+                  rx="9"
+                  ry="2.5"
+                  fill="#f2e8d7"
+                  opacity="0.3"
+                />
+              </g>
+
+              <!-- Concentric focusing hardware. -->
+              <g id="lens-outer">
+                <circle cx="320" cy="246" r="124" fill="#281e10" />
+                <circle
+                  cx="320"
+                  cy="246"
+                  r="116"
+                  fill="none"
+                  stroke="#8d5933"
+                  stroke-width="4"
+                />
+                <circle
+                  cx="320"
+                  cy="246"
+                  r="110"
+                  fill="none"
+                  stroke="#b6a997"
+                  stroke-opacity="0.26"
+                  stroke-width="1"
+                />
+              </g>
+
+              <g id="lens-mid">
+                <circle cx="320" cy="246" r="106" fill="#604a31" />
+                <circle cx="320" cy="246" r="98" fill="#493621" />
+                <g
+                  fill="none"
+                  stroke="#f2e8d7"
+                  stroke-linecap="round"
+                  stroke-opacity="0.26"
+                  stroke-width="3"
+                >
+                  <path d="M320 143V153" />
+                  <path d="M320 339V349" />
+                  <path d="M217 246H227" />
+                  <path d="M413 246H423" />
+                  <path d="M247 173L254 180" />
+                  <path d="M386 312L393 319" />
+                  <path d="M393 173L386 180" />
+                  <path d="M254 312L247 319" />
+                </g>
+              </g>
+
+              <g id="lens-inner">
+                <circle cx="320" cy="246" r="88" fill="#281e10" />
+                <circle cx="320" cy="246" r="79" fill="#71674e" />
+                <circle
+                  cx="320"
+                  cy="246"
+                  r="72"
+                  fill="none"
+                  stroke="#f2e8d7"
+                  stroke-opacity="0.34"
+                  stroke-width="1"
+                />
+              </g>
+
+              <!-- Lens glass, warm highlight, and fast two-curtain shutter. -->
+              <g id="lens-glass">
+                <circle
+                  cx="320"
+                  cy="246"
+                  r="67"
+                  fill="url(#lens-gradient)"
+                  stroke="#f2e8d7"
+                  stroke-opacity="0.38"
+                  stroke-width="2"
+                />
+                <circle
+                  cx="299"
+                  cy="224"
+                  r="16"
+                  fill="#f2e8d7"
+                  opacity="0.08"
+                />
+              </g>
+
+              <g id="shutter-iris" clip-path="url(#lens-clip)">
+                <g id="iris-top">
+                  <path
+                    d="M253 246A67 67 0 0 1 387 246V179H253Z"
+                    fill="#281e10"
+                    opacity="0.96"
+                  />
+                </g>
+                <g id="iris-bottom">
+                  <path
+                    d="M253 246A67 67 0 0 0 387 246V313H253Z"
+                    fill="#281e10"
+                    opacity="0.96"
+                  />
+                </g>
+              </g>
+
+              <!-- Reflected light traverses the glass during rack focus. -->
+              <g id="flash-glint" clip-path="url(#lens-clip)">
+                <g transform="rotate(-24 320 246)">
+                  <rect
+                    x="218"
+                    y="239"
+                    width="180"
+                    height="12"
+                    rx="6"
+                    fill="#f2e8d7"
+                    opacity="0.64"
+                  />
+                </g>
+              </g>
+
+              <!-- Editorial composition brackets appear only during focus. -->
+              <g
+                id="viewfinder-frames"
+                fill="none"
+                stroke="#b6a997"
+                stroke-linecap="square"
+                stroke-width="2"
+              >
+                <path d="M48 126V82H92" />
+                <path d="M548 82H592V126" />
+                <path d="M48 314V358H92" />
+                <path d="M548 358H592V314" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="lens-portal" id="lens-portal"></div>
+
+        <!-- LOGO: replace this HTML lockup with the real brand SVG if supplied. -->
+        <div class="brand-lockup" id="brand-lockup">
+          <p class="brand-lockup__wordmark">It's A Keeper</p>
+          <p class="brand-lockup__wordmark">Photography</p>
+          <div class="brand-lockup__script-row">
+            <span class="brand-lockup__script">the seasons worth keeping</span>
+          </div>
+          <p class="brand-lockup__details">Session Details · Richland, WA</p>
+        </div>
+      </div>
+
+      <div class="flash" id="flash" aria-hidden="true"></div>
+    </div>
+
+    <script>
+      /* ================================================================
+         10. WAAPI timeline orchestration — approximately 4 seconds
+         ================================================================ */
+      (() => {
+        "use strict";
+
+        const preloader = document.querySelector("#preloader");
+        const site = document.querySelector("#main-content");
+        const siteReveal = document.querySelector(".demo-hero");
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        const qaMode = new URLSearchParams(window.location.search).has("qa");
+
+        let finished = false;
+        let safetyTimer;
+        const phaseTimers = [];
+        const animations = [];
+
+        const elements = {
+          cameraStage: document.querySelector("#camera-stage"),
+          cameraFloat: document.querySelector("#camera-float"),
+          lensOuter: document.querySelector("#lens-outer"),
+          lensMid: document.querySelector("#lens-mid"),
+          lensInner: document.querySelector("#lens-inner"),
+          lensGlass: document.querySelector("#lens-glass"),
+          shutterButton: document.querySelector("#shutter-button"),
+          irisTop: document.querySelector("#iris-top"),
+          irisBottom: document.querySelector("#iris-bottom"),
+          glint: document.querySelector("#flash-glint"),
+          viewfinder: document.querySelector("#viewfinder-frames"),
+          lensPortal: document.querySelector("#lens-portal"),
+          brand: document.querySelector("#brand-lockup"),
+          flash: document.querySelector("#flash"),
+          panelTop: document.querySelector("#panel-top"),
+          panelBottom: document.querySelector("#panel-bottom"),
+        };
+
+        const wait = (milliseconds) =>
+          new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+
+        /**
+         * Every animated property is transform or opacity. WAAPI keeps the
+         * predetermined choreography compositor-friendly and dependency-free.
+         */
+        const play = (element, keyframes, options) => {
+          if (!element) return null;
+
+          const animation = element.animate(keyframes, {
+            fill: "both",
+            ...options,
+          });
+
+          animations.push(animation);
+          return animation;
+        };
+
+        const setPhase = (phase) => {
+          document.documentElement.dataset.preloaderState = phase;
+          if (preloader) preloader.dataset.phase = phase;
+          window.dispatchEvent(
+            new CustomEvent("preloader:statechange", {
+              detail: { phase },
+            })
+          );
+        };
+
+        const phaseAt = (milliseconds) => {
+          if (milliseconds >= 4000) return "complete";
+          if (milliseconds >= 2900) return "reveal";
+          if (milliseconds >= 1900) return "brand";
+          if (milliseconds >= 1400) return "capture";
+          if (milliseconds >= 600) return "focus";
+          return "entry";
+        };
+
+        const schedulePhase = (phase, delay) => {
+          phaseTimers.push(window.setTimeout(() => setPhase(phase), delay));
+        };
+
+        const finish = () => {
+          if (finished) return;
+          finished = true;
+
+          window.clearTimeout(safetyTimer);
+          phaseTimers.forEach(window.clearTimeout);
+          document.documentElement.classList.remove("is-preloading");
+
+          if (siteReveal) {
+            siteReveal.style.removeProperty("will-change");
+            siteReveal.style.removeProperty("opacity");
+            siteReveal.style.removeProperty("transform");
+          }
+
+          if (preloader) {
+            preloader.dataset.phase = "complete";
+            preloader.setAttribute("aria-hidden", "true");
+            preloader.hidden = true;
+            preloader.remove();
+          }
+
+          window.__preloaderComplete = true;
+        };
+
+        const startTimeline = () => {
+          if (!preloader || !site || !siteReveal || reduceMotion) {
+            finish();
+            return;
+          }
+
+          window.__preloaderStartedAt = performance.now();
+          window.__preloaderComplete = false;
+          setPhase("entry");
+
+          if (!qaMode) {
+            schedulePhase("focus", 600);
+            schedulePhase("capture", 1400);
+            schedulePhase("brand", 1900);
+            schedulePhase("reveal", 2900);
+          }
+
+          /* Phase 0 — camera enters with one controlled weighted settle. */
+          play(
+            elements.cameraStage,
+            [
+              {
+                opacity: 0,
+                transform: "translate3d(0, 8px, 0) scale(0.85)",
+                offset: 0,
+              },
+              {
+                opacity: 1,
+                transform: "translate3d(0, -1px, 0) scale(1.025)",
+                offset: 0.72,
+              },
+              {
+                opacity: 1,
+                transform: "translate3d(0, 0, 0) scale(1)",
+                offset: 1,
+              },
+            ],
+            {
+              duration: 600,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            }
+          );
+
+          /* Phase 1 — a single calm float, rack focus, and composition frame. */
+          play(
+            elements.cameraFloat,
+            [
+              { transform: "translate3d(0, 0, 0)" },
+              { transform: "translate3d(0, -3px, 0)", offset: 0.5 },
+              { transform: "translate3d(0, 0, 0)" },
+            ],
+            {
+              delay: 600,
+              duration: 800,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.lensOuter,
+            [
+              { transform: "rotate(0deg) scale(1)" },
+              { transform: "rotate(3.5deg) scale(1.025)", offset: 0.52 },
+              { transform: "rotate(1deg) scale(1)" },
+            ],
+            {
+              delay: 620,
+              duration: 720,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.lensMid,
+            [
+              { transform: "rotate(0deg) scale(1)" },
+              { transform: "rotate(-5deg) scale(0.985)", offset: 0.5 },
+              { transform: "rotate(-1.5deg) scale(1)" },
+            ],
+            {
+              delay: 650,
+              duration: 690,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.lensInner,
+            [
+              { transform: "rotate(0deg) scale(1)" },
+              { transform: "rotate(6deg) scale(1.035)", offset: 0.48 },
+              { transform: "rotate(1deg) scale(1)" },
+            ],
+            {
+              delay: 680,
+              duration: 650,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.lensGlass,
+            [
+              { transform: "scale(1)" },
+              { transform: "scale(0.94)", offset: 0.5 },
+              { transform: "scale(1)" },
+            ],
+            {
+              delay: 700,
+              duration: 590,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.glint,
+            [
+              {
+                opacity: 0,
+                transform: "translate3d(-92px, 0, 0) scale(0.98)",
+              },
+              {
+                opacity: 0.72,
+                transform: "translate3d(0, 0, 0) scale(1)",
+                offset: 0.48,
+              },
+              {
+                opacity: 0,
+                transform: "translate3d(92px, 0, 0) scale(1.02)",
+              },
+            ],
+            {
+              delay: 790,
+              duration: 430,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            }
+          );
+
+          play(
+            elements.viewfinder,
+            [
+              { opacity: 0, transform: "scale(1.08)" },
+              { opacity: 0.72, transform: "scale(1)", offset: 0.34 },
+              { opacity: 0.58, transform: "scale(0.985)", offset: 0.76 },
+              { opacity: 0, transform: "scale(0.985)" },
+            ],
+            {
+              delay: 640,
+              duration: 760,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            }
+          );
+
+          /* Phase 2 — physical shutter press, flash, iris, and camera kick. */
+          play(
+            elements.shutterButton,
+            [
+              { transform: "translate3d(0, 0, 0)" },
+              { transform: "translate3d(0, 6px, 0)", offset: 0.46 },
+              { transform: "translate3d(0, 0, 0)" },
+            ],
+            {
+              delay: 1410,
+              duration: 190,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            }
+          );
+
+          play(
+            elements.irisTop,
+            [
+              { transform: "translate3d(0, -72px, 0)" },
+              { transform: "translate3d(0, 0, 0)", offset: 0.36 },
+              { transform: "translate3d(0, -72px, 0)" },
+            ],
+            {
+              delay: 1470,
+              duration: 250,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.irisBottom,
+            [
+              { transform: "translate3d(0, 72px, 0)" },
+              { transform: "translate3d(0, 0, 0)", offset: 0.36 },
+              { transform: "translate3d(0, 72px, 0)" },
+            ],
+            {
+              delay: 1470,
+              duration: 250,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.flash,
+            [
+              {
+                opacity: 0,
+                offset: 0,
+                easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+              },
+              {
+                opacity: 0.94,
+                offset: 0.22,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              {
+                opacity: 0.76,
+                offset: 0.36,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              { opacity: 0, offset: 1 },
+            ],
+            {
+              delay: 1490,
+              duration: 420,
+              easing: "linear",
+            }
+          );
+
+          play(
+            elements.cameraFloat,
+            [
+              { transform: "translate3d(0, 0, 0) rotate(0deg)" },
+              {
+                transform: "translate3d(0, -4px, 0) rotate(-0.35deg)",
+                offset: 0.28,
+              },
+              {
+                transform: "translate3d(0, 1px, 0) rotate(0.1deg)",
+                offset: 0.68,
+              },
+              { transform: "translate3d(0, 0, 0) rotate(0deg)" },
+            ],
+            {
+              delay: 1500,
+              duration: 260,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              fill: "forwards",
+            }
+          );
+
+          /* Phase 3 — optical portal opens; wordmark scales from lens center. */
+          play(
+            elements.lensPortal,
+            [
+              {
+                opacity: 0,
+                transform: "scale(0.2)",
+                easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+              },
+              {
+                opacity: 0.78,
+                transform: "scale(1.1)",
+                offset: 0.42,
+                easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+              },
+              {
+                opacity: 0.26,
+                transform: "scale(3.2)",
+                offset: 0.76,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              { opacity: 0, transform: "scale(6)" },
+            ],
+            {
+              delay: 1880,
+              duration: 720,
+              easing: "linear",
+            }
+          );
+
+          play(
+            elements.cameraStage,
+            [
+              {
+                opacity: 1,
+                transform: "translate3d(0, 0, 0) scale(1)",
+                easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+              },
+              {
+                opacity: 0.38,
+                transform: "translate3d(0, 0, 0) scale(0.9)",
+                offset: 0.52,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              {
+                opacity: 0,
+                transform: "translate3d(0, 0, 0) scale(0.78)",
+              },
+            ],
+            {
+              delay: 1900,
+              duration: 650,
+              easing: "linear",
+              fill: "forwards",
+            }
+          );
+
+          play(
+            elements.brand,
+            [
+              {
+                opacity: 0,
+                transform: "scale(0.22)",
+                easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+              },
+              {
+                opacity: 0.38,
+                transform: "scale(0.62)",
+                offset: 0.3,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              {
+                opacity: 1,
+                transform: "scale(1.025)",
+                offset: 0.7,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              {
+                opacity: 1,
+                transform: "scale(1)",
+                offset: 0.84,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              },
+              { opacity: 1, transform: "scale(1)" },
+            ],
+            {
+              delay: 1900,
+              duration: 1000,
+              easing: "linear",
+            }
+          );
+
+          /* Phase 4 — brand recedes while the two shutter panels open. */
+          play(
+            elements.brand,
+            [
+              { opacity: 1, transform: "scale(1)" },
+              { opacity: 0, transform: "scale(0.965)" },
+            ],
+            {
+              delay: 2920,
+              duration: 330,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              fill: "forwards",
+            }
+          );
+
+          play(
+            elements.panelTop,
+            [
+              { transform: "translate3d(0, 0, 0)" },
+              { transform: "translate3d(0, -100%, 0)" },
+            ],
+            {
+              delay: 3000,
+              duration: 850,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            elements.panelBottom,
+            [
+              { transform: "translate3d(0, 0, 0)" },
+              { transform: "translate3d(0, 100%, 0)" },
+            ],
+            {
+              delay: 3000,
+              duration: 850,
+              easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+            }
+          );
+
+          play(
+            siteReveal,
+            [
+              { opacity: 0.86, transform: "scale(1.02)" },
+              { opacity: 1, transform: "scale(1)" },
+            ],
+            {
+              delay: 2950,
+              duration: 900,
+              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            }
+          );
+
+          if (qaMode) {
+            animations.forEach((animation) => {
+              animation.pause();
+              animation.currentTime = 0;
+            });
+
+            window.__PRELOADER_QA__ = {
+              duration: 4100,
+              get phase() {
+                return preloader?.dataset.phase ?? "complete";
+              },
+              seek(milliseconds) {
+                const time = Math.max(0, Math.min(4100, milliseconds));
+
+                animations.forEach((animation) => {
+                  animation.pause();
+                  animation.currentTime = time;
+                });
+
+                const phase = phaseAt(time);
+                setPhase(phase);
+                window.__preloaderComplete = phase === "complete";
+
+                return { phase, time };
+              },
+            };
+
+            return;
+          }
+
+          safetyTimer = window.setTimeout(finish, 4100);
+        };
+
+        const boot = async () => {
+          if (
+            reduceMotion ||
+            !document.documentElement.classList.contains("is-preloading")
+          ) {
+            finish();
+            return;
+          }
+
+          if (typeof Element.prototype.animate !== "function") {
+            finish();
+            return;
+          }
+
+          /*
+            Give brand fonts a brief chance to settle without making the
+            experience depend on network availability.
+          */
+          if (document.fonts?.ready) {
+            await Promise.race([document.fonts.ready, wait(180)]);
+          }
+
+          startTimeline();
+        };
+
+        /*
+          A hidden tab may pause visual timelines. Finish immediately so the
+          preloader can never block a visitor who returns later.
+        */
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden && !finished) finish();
+        });
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", boot, { once: true });
+        } else {
+          boot();
+        }
+      })();
+    </script>
+  </body>
+</html>
