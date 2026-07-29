@@ -40,3 +40,4 @@ public/uploads/*-1440.webp
 artifacts/qa/
 artifacts/lighthouse/
 artifacts/audits/
+.seo-cache/

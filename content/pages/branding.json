@@ -6,63 +6,107 @@
   "schemaType": "Service",
   "signature": "overlap",
   "title": "Branding Photographer in the Tri-Cities, WA | It's A Keeper",
-  "description": "Custom business photography for Tri-Cities entrepreneurs. Branding sessions in Richland, Kennewick and Pasco that show the real person behind your business.",
+  "description": "Custom business photography for Tri-Cities entrepreneurs — you, your work and your space, photographed so your marketing finally looks like your business feels.",
   "hero": {
     "tone": "walnut",
     "heading": "Branding Photography for Tri-Cities Businesses",
-    "intro": "Custom business photography in Richland, Kennewick and Pasco — warm, genuine images of you, your work and your space, so your marketing finally looks like your business actually feels.",
+    "intro": "Custom business photography in Richland, Kennewick and Pasco — warm, genuine images of you, your work and your space, made to carry your marketing for the whole year.",
+    "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
+    "imageAlt": "Lisa Weiss reviewing photographs on the back of her camera during a branding session.",
+    "secondaryImage": "/uploads/business-branding-portrait-richland.jpg",
+    "secondaryImageAlt": "Tri-Cities business owner smiling during a personal branding portrait against a brick wall.",
     "links": [
       {
         "label": "Plan Your Branding Session",
-        "href": "/contact/"
+        "href": "#branding-final-cta"
       }
     ]
   },
   "sections": [
     {
-      "id": "your-business-has-a-face",
+      "id": "people-hire-people",
       "kind": "prose",
       "tone": "sand",
-      "heading": "Your Business Has a Face — Let People See It",
+      "heading": "People Hire People",
+      "image": "/uploads/business-branding-portrait-richland.jpg",
+      "imageAlt": "Tri-Cities business owner smiling during a personal branding portrait against a brick wall.",
+      "secondaryImage": "/uploads/review-lisa-griffith-headshot-tricities.jpg",
+      "secondaryImageAlt": "Business professional photographed in a warm studio headshot against a dark background.",
       "paragraphs": [
-        "People don't hire logos. They hire people — and in a community like the Tri-Cities, they usually hire people they feel like they already know. That's what branding photography does: it introduces you before you've said a word.",
-        "When I photograph a business owner, I'm not just collecting headshots and product shots. I'm looking for the heart behind the work — why you started, how you serve, what it feels like to walk into your space. Those are the images that make someone stop scrolling and think, \"I want to work with her.\""
+        "Nobody hires a logo. They hire a person — and in a community like the Tri-Cities, they usually hire the person they feel like they already know.",
+        "That's what branding photography actually does. It introduces you before you've said a word.",
+        "When I photograph a business owner, I'm not collecting generic professional stock of you standing near a window. I'm looking for the reason you started, the way you work, what it feels like to walk into your space. Those are the images that make someone stop scrolling and think I want to work with her."
       ]
     },
     {
       "id": "custom-business-photography",
       "kind": "split",
       "tone": "olive",
-      "heading": "Custom Business Photography, Built Around Your Brand",
+      "heading": "Custom Business Photography, Built Around You",
+      "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
+      "imageAlt": "Lisa Weiss working with her camera during a portrait session.",
+      "secondaryImage": "/uploads/business-branding-portrait-richland.jpg",
+      "secondaryImageAlt": "Personal branding portrait of a Tri-Cities business owner in natural light.",
       "paragraphs": [
-        "No two businesses get the same session, because no two businesses have the same story. A custom branding session with me is planned around your brand's colors, your spaces, your tools, your process, and — most importantly — you, at ease and in your element.",
-        "The result is a library of images that work everywhere you show up: your website, Instagram, Google Business Profile, email newsletters, and the local press feature you haven't gotten yet."
+        "No two sessions look the same, because no two businesses have the same story.",
+        "I plan yours around your brand's colors, your actual spaces, your tools, your process — and mostly around you, at ease and in your element. The result is a library of images that work everywhere you show up: your website, Instagram, your Google Business Profile, your newsletter, and the local feature you haven't landed yet."
       ]
     },
     {
-      "id": "branding-session-includes",
-      "kind": "steps",
+      "id": "what-well-photograph",
+      "kind": "services",
       "tone": "ivory",
-      "heading": "What a Branding Session Includes",
+      "heading": "What We'll Photograph",
+      "intro": "A branding gallery usually covers four things:",
       "items": [
         {
-          "heading": "The strategy call",
+          "heading": "You",
           "paragraphs": [
-            "We'll talk about your business, where the images will live, and the shots that would actually move the needle for you — not a generic shot list."
+            "portraits that feel like your brand rather than like a passport photo. These double as your headshots."
           ]
         },
         {
-          "heading": "The session",
+          "heading": "Your work",
           "paragraphs": [
-            "On location at your studio, shop, office or a Tri-Cities spot that fits your brand. I'll guide you the whole way — if you can feel awkward in front of a camera at your own workplace, believe me, I've seen it, and I know how to melt it."
+            "hands, tools, process, craft. The evidence that you actually do the thing."
           ]
         },
         {
-          "heading": "Your image library",
+          "heading": "Your space",
           "paragraphs": [
-            "A gallery of warm, consistent, on-brand images sized for real use — enough variety to feed your marketing for months."
+            "the studio, shop, office or corner of the world where it happens."
+          ]
+        },
+        {
+          "heading": "Your details",
+          "paragraphs": [
+            "products, textures, materials, the small things your clients notice and you've stopped seeing."
           ]
         }
+      ]
+    },
+    {
+      "id": "usage-rights",
+      "kind": "comparison",
+      "tone": "walnut",
+      "heading": "About Usage Rights — Read This Part",
+      "intro": "This is where most photography gets confusing, so let me be plain.",
+      "items": [
+        {
+          "heading": "personal print rights",
+          "paragraphs": [
+            "When you book a family session, your images come with personal print rights: print them for your home, share them on social media, send them to grandma."
+          ]
+        },
+        {
+          "heading": "commercial usage license",
+          "paragraphs": [
+            "When you book a branding session, you're getting something different — a commercial usage license. Those images are yours to use to promote your business: your website, ads, a business card, a billboard if you're feeling ambitious. That's why branding is priced differently from the start. You're not paying for more photographs; you're paying for broader rights to use them."
+          ]
+        }
+      ],
+      "paragraphs": [
+        "I'd rather explain this clearly up front than have you find out later that the photograph you loved wasn't licensed for what you needed. Book it as branding and it's covered."
       ]
     },
     {
@@ -70,33 +114,88 @@
       "kind": "services",
       "tone": "earth",
       "heading": "Who Books Branding Sessions With Me",
+      "image": "/uploads/business-branding-portrait-richland.jpg",
+      "imageAlt": "Tri-Cities business owner photographed for a warm personal branding portrait.",
+      "secondaryImage": "/uploads/review-lisa-griffith-headshot-tricities.jpg",
+      "secondaryImageAlt": "Business professional photographed for a warm studio headshot.",
       "paragraphs": [
-        "Tri-Cities entrepreneurs, makers, wellness professionals, realtors, salons, boutiques, coaches and small teams — people whose business is personal. If your clients choose you and not just your price list, branding photography is for you.",
-        "Need just a great portrait for LinkedIn instead?"
+        "Tri-Cities entrepreneurs, makers, wellness professionals, realtors, salons, boutiques, coaches and small teams. People whose business is personal.",
+        "If your clients choose you — your style, your process, the way you make them feel — rather than comparing your price list to someone else's, branding photography is built for you.",
+        "If what you need right now is one great portrait rather than a full library, that's a headshot, and that's a perfectly good place to start."
+      ],
+      "links": [
+        {
+          "label": "that's a headshot",
+          "href": "/headshot-photographer-tri-cities-wa/"
+        }
       ]
     },
     {
-      "id": "branding-session-questions",
+      "id": "how-it-works",
+      "kind": "steps",
+      "tone": "ivory",
+      "heading": "How It Works",
+      "items": [
+        {
+          "heading": "Strategy call.",
+          "paragraphs": [
+            "Your business, where the images will live, and the shots that would actually move something for you — not a generic list."
+          ]
+        },
+        {
+          "heading": "We plan.",
+          "paragraphs": [
+            "Wardrobe, spaces, props, the order of the day."
+          ]
+        },
+        {
+          "heading": "We shoot on location.",
+          "paragraphs": [
+            "Your workplace, or a Tri-Cities spot that fits your brand. I'll guide you the whole time — feeling awkward in front of a camera inside your own business is completely normal and completely fixable."
+          ]
+        },
+        {
+          "heading": "Your library arrives.",
+          "paragraphs": [
+            "Warm, consistent, on-brand images sized for real use."
+          ],
+          "links": [
+            {
+              "label": "Your library arrives.",
+              "href": "/investment/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "branding-questions",
       "kind": "faq",
       "tone": "sand",
-      "heading": "Branding Session Questions",
+      "heading": "Branding Questions",
       "items": [
         {
           "heading": "What's the difference between branding photos and headshots?",
           "paragraphs": [
-            "A headshot is one great portrait of you. Branding photography is a full library — you working, your space, your details, your story. Most businesses eventually need both."
+            "A headshot is one great portrait of you. Branding photography is a full library — you, your work, your space, your details. Every branding session includes headshots, so if you're unsure, branding covers both."
           ],
           "links": [
             {
-              "label": "Full breakdown: Branding photos vs. headshots",
+              "label": "A headshot is one great portrait of you.",
               "href": "/journal/branding-photos-vs-headshots/"
             }
           ]
         },
         {
+          "heading": "Can I use these images for advertising?",
+          "paragraphs": [
+            "Yes. Branding sessions include commercial usage rights, which is exactly what separates them from a personal session."
+          ]
+        },
+        {
           "heading": "Where do branding sessions happen?",
           "paragraphs": [
-            "Usually at your place of business, anywhere in Richland, Kennewick or Pasco. If you don't have a physical space, we'll choose Tri-Cities locations that match your brand's feel."
+            "Usually at your place of business anywhere in Richland, Kennewick or Pasco. If you don't have a physical space, we'll choose Tri-Cities locations that match your brand."
           ]
         },
         {
@@ -106,16 +205,16 @@
           ]
         },
         {
-          "heading": "How often should I update branding photos?",
+          "heading": "How often should branding photos be updated?",
           "paragraphs": [
-            "Most businesses refresh once or twice a year, as offers, spaces and seasons change."
+            "Most businesses refresh once or twice a year as offers, spaces and seasons change. Headshots hold up longer — every two to three years, or after any big change."
           ]
-        }
-      ],
-      "links": [
+        },
         {
-          "label": "Reviews",
-          "href": "/reviews/"
+          "heading": "What should I wear?",
+          "paragraphs": [
+            "Your brand's colors, your real working clothes, and one more polished option. We plan it together — the goal is recognizably you, one notch elevated."
+          ]
         }
       ]
     }
@@ -124,15 +223,16 @@
     "tone": "umber",
     "heading": "Let's Show Them Who You Are",
     "paragraphs": [
-      "Tell me about your business and where you want it to go. I read and answer every inquiry myself."
+      "Tell me about your business and where you want it to go."
     ],
+    "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
+    "imageAlt": "Lisa Weiss working behind the camera during a portrait session.",
     "link": {
       "label": "Start planning",
       "href": "/contact/"
     }
   },
   "pending": [
-    "[PENDIENTE: entregables exactos, cantidad de imágenes, derechos de uso comercial — Q54, Q58]",
-    "[PENDIENTE: si Lisa ofrece membresía/paquete recurrente — hueco competitivo vs. JK Photos]"
+    "[PENDIENTE: entregables exactos, cantidad de imágenes, duración por paquete]"
   ]
 }

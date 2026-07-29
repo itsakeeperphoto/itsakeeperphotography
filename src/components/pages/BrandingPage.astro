@@ -1,5 +1,9 @@
 ---
-import type { EditorialPageData, PageSection } from "../../content/page-types";
+import type {
+  EditorialPageData,
+  PageLink,
+  PageSection,
+} from "../../content/page-types";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/branding-page.css";
@@ -8,6 +12,13 @@ interface Props {
   page: EditorialPageData;
   settings: any;
   inquiry?: any;
+}
+
+interface LinkedParagraph {
+  text: string;
+  before?: string;
+  after?: string;
+  link?: PageLink;
 }
 
 const { page } = Astro.props;
@@ -20,29 +31,49 @@ const requireSection = (id: string): PageSection => {
   return section;
 };
 
-const face = requireSection("your-business-has-a-face");
+const linkParagraphs = (
+  paragraphs: string[] = [],
+  links: PageLink[] = [],
+): LinkedParagraph[] =>
+  paragraphs.map((paragraph) => {
+    const link = links.find((candidate) => paragraph.includes(candidate.label));
+    if (!link) return { text: paragraph };
+
+    const start = paragraph.indexOf(link.label);
+    return {
+      text: paragraph,
+      before: paragraph.slice(0, start),
+      after: paragraph.slice(start + link.label.length),
+      link,
+    };
+  });
+
+const people = requireSection("people-hire-people");
 const custom = requireSection("custom-business-photography");
-const includes = requireSection("branding-session-includes");
+const photograph = requireSection("what-well-photograph");
+const rights = requireSection("usage-rights");
 const audiences = requireSection("who-books-branding-sessions");
-const questions = requireSection("branding-session-questions");
+const process = requireSection("how-it-works");
+const questions = requireSection("branding-questions");
+
+const audienceParagraphs = linkParagraphs(
+  audiences.paragraphs,
+  audiences.links,
+);
+const faqItems = (questions.items || []).map((item) => ({
+  ...item,
+  linkedParagraphs: linkParagraphs(item.paragraphs, item.links),
+}));
 
 const lisaWorkingImage = "/uploads/lisa-photographer-at-work-black-white.jpg";
 const lisaPortraitImage = "/uploads/lisa-photographer-tricities.jpg";
-const businessPortraitImage = "/uploads/business-branding-portrait-richland.jpg";
+const businessPortraitImage =
+  people.image || "/uploads/business-branding-portrait-richland.jpg";
+const businessHeadshotImage =
+  people.secondaryImage ||
+  "/uploads/review-lisa-griffith-headshot-tricities.jpg";
 
-const faqSchema = (questions.items || [])
-  .filter((item) => item.heading && item.paragraphs?.length)
-  .map((item) => ({
-    "@type": "Question",
-    name: item.heading,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.paragraphs?.join(" "),
-    },
-  }));
-
-// CONTENT PENDING: [PENDIENTE: entregables exactos, cantidad de imágenes, derechos de uso comercial — Q54, Q58]
-// CONTENT PENDING: [PENDIENTE: si Lisa ofrece membresía/paquete recurrente — hueco competitivo vs. JK Photos]
+// CONTENT PENDING: [PENDIENTE: entregables exactos, cantidad de imágenes, duración por paquete]
 ---
 
 <article
@@ -63,12 +94,12 @@ const faqSchema = (questions.items || [])
     scriptLine="your work"
     intro={page.hero.intro}
     links={page.hero.links}
-    backgroundImage={lisaWorkingImage}
-    backgroundAlt="Lisa reviewing photographs on the back of her camera."
+    backgroundImage={page.hero.image || lisaWorkingImage}
+    backgroundAlt={page.hero.imageAlt || "Lisa Weiss working with her camera."}
     backgroundPosition="50% 48%"
     mobileBackgroundPosition="49% 46%"
     leftPrint={{
-      src: businessPortraitImage,
+      src: page.hero.secondaryImage || businessPortraitImage,
       objectPosition: "50% 44%",
     }}
     rightPrint={{
@@ -80,29 +111,29 @@ const faqSchema = (questions.items || [])
 
   <section
     class="branding-face"
-    data-branding-section="face"
-    aria-labelledby={`${face.id}-title`}
+    data-branding-section="people"
+    aria-labelledby={`${people.id}-title`}
   >
     <div class="branding-shell branding-face__inner">
-      <div class="branding-face__media" data-line-target="face-media">
+      <div class="branding-face__media" data-line-target="people-media">
         <span
           class="branding-face__line"
           data-construction-line
           data-line-anchor="image"
-          data-anchor-target="face-arch"
+          data-anchor-target="people-arch"
           aria-hidden="true"
         ></span>
 
         <figure
           class="branding-face__arch"
-          data-branding-arch="face"
+          data-branding-arch="people"
           data-branding-photo="portrait"
-          data-line-target="face-arch"
+          data-line-target="people-arch"
         >
           <Picture
             src={businessPortraitImage}
-            alt="A Tri-Cities business owner smiling for her branding portrait."
-            loading="eager"
+            alt={people.imageAlt || ""}
+            loading="lazy"
             decoding="async"
             responsiveSrcset
             sizes="(max-width: 767px) 76vw, (max-width: 1050px) 38vw, 27vw"
@@ -112,26 +143,25 @@ const faqSchema = (questions.items || [])
 
         <figure
           class="branding-print branding-face__print"
-          data-branding-photo="working"
+          data-branding-photo="headshot"
         >
           <span class="branding-tape" aria-hidden="true"></span>
           <Picture
-            src={lisaWorkingImage}
-            alt="Lisa checking an image on her camera."
+            src={businessHeadshotImage}
+            alt={people.secondaryImageAlt || ""}
             loading="lazy"
             decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
+            responsiveSrcset
+              sizes="(max-width: 767px) 42vw, (max-width: 1050px) 22vw, 16vw"
             imgClass="branding-face__print-image photo--editorial"
           />
         </figure>
       </div>
 
       <div class="branding-face__copy">
-        <p class="branding-eyebrow">Your business has a face</p>
-        <h2 id={`${face.id}-title`}>{face.heading}</h2>
+        <h2 id={`${people.id}-title`}>{people.heading}</h2>
         <div class="branding-prose">
-          {face.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {people.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
     </div>
@@ -139,12 +169,11 @@ const faqSchema = (questions.items || [])
 
   <section
     class="branding-custom"
-    data-branding-section="library"
+    data-branding-section="custom"
     aria-labelledby={`${custom.id}-title`}
   >
     <div class="branding-shell branding-custom__inner">
       <div class="branding-custom__copy">
-        <p class="branding-eyebrow">Custom business photography</p>
         <h2 id={`${custom.id}-title`}>{custom.heading}</h2>
         <div class="branding-prose">
           {custom.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
@@ -176,8 +205,8 @@ const faqSchema = (questions.items || [])
           data-branding-photo="portrait"
         >
           <Picture
-            src={businessPortraitImage}
-            alt="A business owner photographed against a brick wall."
+            src={custom.secondaryImage || businessPortraitImage}
+            alt={custom.secondaryImageAlt || ""}
             loading="lazy"
             decoding="async"
             responsiveSrcset
@@ -192,8 +221,8 @@ const faqSchema = (questions.items || [])
         >
           <span class="branding-tape" aria-hidden="true"></span>
           <Picture
-            src={lisaWorkingImage}
-            alt="Lisa working with her camera."
+            src={custom.image || lisaWorkingImage}
+            alt={custom.imageAlt || ""}
             loading="lazy"
             decoding="async"
             responsiveSrcset
@@ -204,23 +233,23 @@ const faqSchema = (questions.items || [])
 
         <figure
           class="branding-print branding-custom__photo branding-custom__photo--detail"
-          data-branding-photo="detail"
+          data-branding-photo="headshot"
           aria-hidden="true"
         >
           <Picture
-            src={lisaWorkingImage}
+            src={businessHeadshotImage}
             alt=""
             loading="lazy"
             decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
+            responsiveSrcset
+            sizes="(max-width: 767px) 39vw, (max-width: 1050px) 31vw, 18vw"
             imgClass="photo--editorial"
           />
         </figure>
 
         <figure
           class="branding-print branding-custom__photo branding-custom__photo--space"
-          data-branding-photo="space"
+          data-branding-photo="photographer"
           aria-hidden="true"
         >
           <Picture
@@ -228,8 +257,8 @@ const faqSchema = (questions.items || [])
             alt=""
             loading="lazy"
             decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
+            responsiveSrcset
+            sizes="(max-width: 767px) 32vw, (max-width: 1050px) 27vw, 17vw"
             imgClass="photo--editorial"
           />
         </figure>
@@ -238,26 +267,21 @@ const faqSchema = (questions.items || [])
   </section>
 
   <section
-    class="branding-includes"
-    data-branding-section="includes"
-    aria-labelledby={`${includes.id}-title`}
+    class="branding-library"
+    data-branding-section="photograph"
+    aria-labelledby={`${photograph.id}-title`}
   >
-    <div class="branding-shell branding-includes__inner">
-      <header class="branding-includes__heading">
-        <p class="branding-eyebrow">What a Branding Session Includes</p>
-        <p class="branding-script" aria-hidden="true">built around your brand</p>
-        <h2 id={`${includes.id}-title`}>{includes.heading}</h2>
+    <div class="branding-shell branding-library__inner">
+      <header class="branding-library__heading">
+        <h2 id={`${photograph.id}-title`}>{photograph.heading}</h2>
+        {photograph.intro && <p>{photograph.intro}</p>}
       </header>
 
-      {includes.items?.length && (
-        <ol
-          class="branding-includes__ledger"
-          data-branding-process
-          data-line-target="branding-process"
-        >
-          {includes.items.map((item, index) => (
-            <li data-branding-step>
-              <span class="branding-includes__number" aria-hidden="true">
+      {photograph.items?.length && (
+        <ol class="branding-library__list" data-line-target="brand-library">
+          {photograph.items.map((item, index) => (
+            <li>
+              <span class="branding-library__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {item.heading && <h3>{item.heading}</h3>}
@@ -270,13 +294,40 @@ const faqSchema = (questions.items || [])
   </section>
 
   <section
+    class="branding-rights"
+    data-branding-section="rights"
+    aria-labelledby={`${rights.id}-title`}
+  >
+    <div class="branding-shell branding-rights__inner">
+      <header class="branding-rights__heading">
+        <h2 id={`${rights.id}-title`}>{rights.heading}</h2>
+        {rights.intro && <p>{rights.intro}</p>}
+      </header>
+
+      {rights.items?.length && (
+        <div class="branding-rights__comparison" data-line-target="usage-rights">
+          {rights.items.map((item) => (
+            <article>
+              {item.heading && <h3>{item.heading}</h3>}
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            </article>
+          ))}
+        </div>
+      )}
+
+      <div class="branding-rights__close">
+        {rights.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section
     class="branding-audiences"
     data-branding-section="audiences"
     aria-labelledby={`${audiences.id}-title`}
   >
     <div class="branding-shell branding-audiences__inner">
       <header class="branding-audiences__heading">
-        <p class="branding-eyebrow">People whose business is personal</p>
         <h2 id={`${audiences.id}-title`}>{audiences.heading}</h2>
       </header>
 
@@ -290,15 +341,14 @@ const faqSchema = (questions.items || [])
           data-branding-panel="left"
         >
           <Picture
-            src={businessPortraitImage}
-            alt="A local entrepreneur photographed for her business."
+            src={audiences.image || businessPortraitImage}
+            alt={audiences.imageAlt || ""}
             loading="lazy"
             decoding="async"
             responsiveSrcset
             sizes="(max-width: 767px) 74vw, 29vw"
             imgClass="photo--editorial"
           />
-          <figcaption>Entrepreneurs</figcaption>
         </figure>
 
         <figure
@@ -307,15 +357,14 @@ const faqSchema = (questions.items || [])
           data-branding-arch="audience"
         >
           <Picture
-            src={lisaWorkingImage}
-            alt="Lisa seated with her camera while working."
+            src={audiences.secondaryImage || businessHeadshotImage}
+            alt={audiences.secondaryImageAlt || ""}
             loading="lazy"
             decoding="async"
             responsiveSrcset
             sizes="(max-width: 767px) 82vw, 29vw"
             imgClass="photo--editorial"
           />
-          <figcaption>Makers</figcaption>
         </figure>
 
         <figure
@@ -324,40 +373,96 @@ const faqSchema = (questions.items || [])
         >
           <Picture
             src={lisaPortraitImage}
-            alt="Lisa holding her camera for a professional portrait."
+            alt="Lisa Weiss holding her camera for a professional portrait."
             loading="lazy"
             decoding="async"
             responsiveSrcset
             sizes="(max-width: 767px) 74vw, 29vw"
             imgClass="photo--editorial"
           />
-          <figcaption>Small teams</figcaption>
         </figure>
       </div>
 
       <div class="branding-audiences__copy branding-prose">
-        {audiences.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        {audienceParagraphs.map((paragraph) => (
+          <p>
+            {paragraph.link ? (
+              <>
+                {paragraph.before}<a
+                  class="branding-inline-link"
+                  href={paragraph.link.href}
+                >{paragraph.link.label}</a>{paragraph.after}
+              </>
+            ) : (
+              paragraph.text
+            )}
+          </p>
+        ))}
       </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-includes"
+    data-branding-section="process"
+    aria-labelledby={`${process.id}-title`}
+  >
+    <div class="branding-shell branding-includes__inner">
+      <header class="branding-includes__heading">
+        <h2 id={`${process.id}-title`}>{process.heading}</h2>
+      </header>
+
+      {process.items?.length && (
+        <ol
+          class="branding-includes__ledger"
+          data-branding-process
+          data-line-target="branding-process"
+        >
+          {process.items.map((item, index) => {
+            const headingLink = item.links?.find(
+              (link) => link.label === item.heading,
+            );
+
+            return (
+              <li data-branding-step>
+                <span class="branding-includes__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                {item.heading && (
+                  <h3>
+                    {headingLink ? (
+                      <a
+                        class="branding-inline-link"
+                        href={headingLink.href}
+                      >{item.heading}</a>
+                    ) : (
+                      item.heading
+                    )}
+                  </h3>
+                )}
+                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              </li>
+            );
+          })}
+        </ol>
+      )}
     </div>
   </section>
 
   <section
     class="branding-faq"
     data-branding-faq
+    data-branding-section="questions"
     aria-labelledby={`${questions.id}-title`}
   >
     <div class="branding-shell branding-faq__inner">
       <header class="branding-faq__heading">
-        <p class="branding-eyebrow">Branding Session Questions</p>
         <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
-        {questions.links?.map((link) => (
-          <a class="branding-text-link" href={link.href}>{link.label}</a>
-        ))}
       </header>
 
-      {questions.items?.length && (
+      {faqItems.length > 0 && (
         <div class="branding-faq__list">
-          {questions.items.map((item, index) => (
+          {faqItems.map((item, index) => (
             <details class="branding-faq__item" open={index === 0}>
               <summary>
                 <span class="branding-faq__number" aria-hidden="true">
@@ -369,9 +474,19 @@ const faqSchema = (questions.items || [])
                 <span class="branding-faq__mark" aria-hidden="true">+</span>
               </summary>
               <div class="branding-faq__answer">
-                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-                {item.links?.map((link) => (
-                  <a class="branding-text-link" href={link.href}>{link.label}</a>
+                {item.linkedParagraphs.map((paragraph) => (
+                  <p>
+                    {paragraph.link ? (
+                      <>
+                        {paragraph.before}<a
+                          class="branding-inline-link"
+                          href={paragraph.link.href}
+                        >{paragraph.link.label}</a>{paragraph.after}
+                      </>
+                    ) : (
+                      paragraph.text
+                    )}
+                  </p>
                 ))}
               </div>
             </details>
@@ -383,13 +498,14 @@ const faqSchema = (questions.items || [])
 
   {page.finalCta && (
     <section
+      id="branding-final-cta"
       class="branding-final"
       data-branding-final
       aria-labelledby="branding-final-title"
     >
       <div class="branding-final__background" aria-hidden="true">
         <Picture
-          src={lisaWorkingImage}
+          src={page.finalCta.image || lisaWorkingImage}
           alt=""
           loading="lazy"
           decoding="async"
@@ -413,17 +529,5 @@ const faqSchema = (questions.items || [])
         </div>
       </div>
     </section>
-  )}
-
-  {faqSchema.length > 0 && (
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faqSchema,
-      })}
-    />
   )}
 </article>

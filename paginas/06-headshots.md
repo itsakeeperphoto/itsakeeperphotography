@@ -1,5 +1,9 @@
 # HEADSHOTS — `/headshot-photographer-tri-cities-wa/`
-_Página 6 de 18 · Core commercial · P1 · Quick win (ya #5 sin página dedicada; JK Photos #3 es superable)_
+_Página 6 de 18 · Core commercial · P1 · **v2 — enriquecida 2026-07**_
+
+> **Quick win:** ya rankeamos #5 para `headshot photographers tri-cities` (40/mes, KD 2) sin página dedicada. JK Photos está #3 con una página débil. Crear esta página debería llevarnos a top 2.
+>
+> **Diferenciador nuevo y concreto:** Lisa lleva equipo de estudio portátil al lugar del cliente. Ha montado en salas de espera de clínicas y oficinas vacías. Eso resuelve el problema real de las empresas — nadie quiere mandar a doce empleados a un estudio.
 
 ---
 
@@ -9,18 +13,23 @@ _Página 6 de 18 · Core commercial · P1 · Quick win (ya #5 sin página dedica
 |---|---|
 | **URL** | `/headshot-photographer-tri-cities-wa/` |
 | **Keyword primaria** | headshot photographers tri-cities (40/mes, KD 2) |
-| **Secundarias** | headshot photographer tri-cities (30) · headshot photographer richland (30) · headshot photographer kennewick (20) · headshot photographer pasco (10) · professional headshots tri cities · linkedin headshot photographer |
-| **Title** (51) | `Headshot Photographer Tri-Cities WA | It's A Keeper` |
-| **Meta description** (150) | `Professional headshots in the Tri-Cities you'll actually want to use. Relaxed sessions in Richland, Kennewick and Pasco — guided posing, natural light.` |
+| **Secundarias** | headshot photographer tri-cities (30) · headshot photographer richland (30) · headshot photographer kennewick (20) · headshot photographer pasco (10) · professional headshots tri cities · linkedin headshot photographer · on-site team headshots |
+| **Title** (53) | `Headshot Photographer Tri-Cities WA | I Come to You` |
+| **Meta description** (152) | `Professional headshots in Richland, Kennewick and Pasco — photographed at your office with portable studio lighting. Individuals and teams, guided the whole way.` |
+
+### Entidades a establecer
+professional headshots · corporate headshots · team headshots · LinkedIn headshot · on-location photography · portable studio lighting · Tri-Cities · Richland · Kennewick · Pasco
+**Atributo diferencial clave:** *photographed on location at your workplace with portable studio equipment* — declararlo en copy, FAQ y schema.
 
 ### Estructura de headings
 
 ```
 H1  Professional Headshots in the Tri-Cities, WA
- H2  A Headshot You're Proud to Put Everywhere
- H2  Yes — Even If You Hate Having Your Picture Taken
- H2  How a Headshot Session Works
+ H2  I Bring the Studio to You
+ H2  A Headshot You'll Actually Use
+ H2  Even If You Hate Having Your Picture Taken
  H2  Headshots for Teams
+ H2  How a Session Works
  H2  Headshot Questions
  H2  Let's Update That Profile Photo
 ```
@@ -33,80 +42,104 @@ H1  Professional Headshots in the Tri-Cities, WA
 
 **H1:** Professional Headshots in the Tri-Cities, WA
 
-**Subhead:** Headshots in Richland, Kennewick and Pasco that look like you on your best day — warm, confident and approachable, not stiff and corporate.
+**Subhead:** Warm, confident headshots photographed at your Richland, Kennewick or Pasco workplace — I bring the studio, you bring about twenty minutes.
 
 **CTA:** Book Your Headshot → `/contact/`
 
-### Sección 2
+---
 
-**H2:** A Headshot You're Proud to Put Everywhere
+**H2: I Bring the Studio to You**
 
-Your headshot shows up before you do — on LinkedIn, your company's team page, the conference program, the "About" page someone checks before they ever call you. It deserves better than a cropped vacation photo or that stiff picture from three jobs ago.
+I don't have a studio, and for headshots that turns out to be an advantage.
 
-My headshots are warm and genuinely *you*: professional enough for the boardroom, human enough that people feel like they've already met you.
+I bring portable studio lighting and backdrops to wherever you work. I've photographed physicians' headshots by setting up in a clinic's lab room, and in an unused waiting area, and in a spare office nobody had touched in months. If you can give me a small corner and a little time, I can make it look like a studio.
 
-### Sección 3 — Objeción
+Which means nobody on your team has to drive anywhere, block out an afternoon, or reschedule patients. That's usually the difference between a company finally updating its team page and putting it off for another year.
 
-**H2:** Yes — Even If You Hate Having Your Picture Taken
+---
 
-Most people who book headshots with me open with the same line: "Just so you know, I'm terrible at this." You're not — you've just never been guided.
+**H2: A Headshot You'll Actually Use**
 
-I'll direct you through the whole session: where to angle your shoulders, what to do with your hands, when to take a deep breath in through your nose and out through your mouth. Between prompts, the real expressions happen — and those are the frames you'll choose. One of the things clients mention most in my reviews is how at ease they felt, even the ones who dreaded coming.
+Your headshot arrives before you do. LinkedIn, your company's team page, the conference program, the proposal, the "about" page someone checks before they ever pick up the phone.
 
-### Sección 4 — Proceso
+It deserves better than a cropped wedding photo or the one from three jobs ago that you keep meaning to replace.
 
-**H2:** How a Headshot Session Works
+Mine are warm and genuinely *you* — professional enough for the boardroom, human enough that someone feels like they've already met you. Which, in a community like the Tri-Cities, is most of the reason people call.
 
-Headshot sessions are efficient on purpose — professionals don't have all afternoon.
+---
 
-1. **We plan quickly.** Where the headshot will live (LinkedIn? website? press?), what to wear, and the impression you want to give.
-2. **We shoot.** Natural light, guided posing, a few backdrop or location changes for variety. Most headshot sessions are done within the hour. `[PENDIENTE: duración/formato exacto — Q54]`
-3. **You choose.** You'll see a gallery of edited images — true-to-you retouching that keeps you looking like yourself, on a very good day.
+**H2: Even If You Hate Having Your Picture Taken**
 
-### Sección 5 — Equipos
+Most people who book headshots open with the same line: "Just so you know, I'm terrible at this."
 
-**H2:** Headshots for Teams
+You're not. You've just never been guided.
 
-Consistent, warm headshots for your whole team — photographed at your Tri-Cities office or a location we choose, scheduled so it barely interrupts the workday. If your team page is a patchwork of selfies and ten-year-old photos, I can fix that in a morning.
+I'll direct the entire thing — where to put your shoulders, what to do with your hands, when to take a breath in through your nose and out through your mouth. Between prompts, the real expressions show up, and those are the ones you'll choose. The compliment I get most often in my reviews is how at ease people felt, and that includes plenty who arrived dreading it.
 
-Building a full brand image library instead? → Branding Photography → `/branding-photographer-tri-cities-wa/`
+---
 
-### Sección 6 — FAQ
+**H2: Headshots for Teams**
 
-**H2:** Headshot Questions
+Consistent, warm headshots for your whole team, photographed on site and scheduled so it barely interrupts the workday. Tell me how many people and I'll map out the morning.
+
+If your team page is currently a patchwork of selfies, vacation crops and photos from 2016, this is a very fixable problem — and it's usually a single visit.
+
+---
+
+**H2: How a Session Works**
+
+1. **Quick planning.** Where the headshot needs to work, what to wear, and the impression you want to give.
+2. **I arrive and set up.** Portable lighting and backdrop, in whatever space you've got.
+3. **We shoot.** Guided the whole way, with a few variations for options. Individuals are usually done well within the hour.
+4. **You choose.** A gallery of edited images, retouched honestly — I'll take care of the temporary things and leave you looking like you.
+
+`[PENDIENTE: duración y entregables exactos por paquete]`
+
+---
+
+**H2: Headshot Questions**
+
+**H3: Do you have a studio?**
+No — I bring one to you. Portable studio lighting and backdrops set up at your office, clinic or workplace anywhere in the Tri-Cities.
 
 **H3: What should I wear for a headshot?**
-Solid colors near your face photograph best; avoid busy patterns and large logos. We'll talk it through before your session — bring two or three options and I'll help you choose.
+Solid colors near your face photograph best. Avoid busy patterns and large logos. Bring two or three options and I'll help you choose when I arrive.
 
 **H3: How long does a headshot session take?**
-Usually under an hour for individuals. Team sessions depend on headcount — tell me how many people and I'll map out the morning.
-
-**H3: Headshot or branding session — which do I need?**
-If you need one great portrait, a headshot. If you need a library of images of you, your work and your space, branding.
-→ The full comparison → `/journal/branding-photos-vs-headshots/`
+Usually under an hour for an individual. Team sessions depend on headcount — most teams are done in a morning.
 
 **H3: Do you retouch headshots?**
-Gently. I'll take care of the temporary things — a blemish, a stray hair — and leave you looking like you. No plastic skin, no stranger's face.
+Gently and honestly. A blemish, a stray hair, a collar sitting oddly. What I won't do is smooth you into someone else — you should still look like you on a very good day.
 
-### CTA final
+**H3: Do I need a headshot or a branding session?**
+If you need one great portrait, a headshot. If you need a library of images of you, your work and your space, that's branding.
 
-**H2:** Let's Update That Profile Photo
+**H3: Can you photograph our whole team in one visit?**
+Yes, and that's usually how it's done. Send me a headcount and I'll build a schedule around your workday.
+
+---
+
+**H2: Let's Update That Profile Photo**
+
 Tell me where your headshot needs to work and when you need it.
+
 **CTA:** Book your headshot → `/contact/`
 
 ---
 
-## Internal links
+## Internal links (4 en prosa)
 
-- Entrantes: Home, Branding, journal branding-vs-headshots, city pages.
-- Salientes: `/branding-photographer-tri-cities-wa/` · `/journal/branding-photos-vs-headshots/` · `/contact/` · `/reviews/`.
+1. `/journal/branding-photos-vs-headshots/` — en la FAQ "headshot or branding session"
+2. `/branding-photographer-tri-cities-wa/` — desde la misma FAQ
+3. `/reviews/` — en "Even If You Hate Having Your Picture Taken", desde la mención de reseñas
+4. `/contact/` — CTA final
 
 ## Alt texts
 
-- `Professional headshot of a Tri-Cities businesswoman in warm natural light`
-- `Headshot photography session with guided posing in Richland, WA`
-- `Consistent team headshots for a Kennewick business`
-- `Approachable LinkedIn headshot of a Tri-Cities professional`
+- `Professional headshot photographed on location at a Tri-Cities office`
+- `Portable studio lighting set up for team headshots in a Richland workplace`
+- `Warm professional headshot of a Kennewick business professional`
+- `Consistent team headshots photographed on site for a Tri-Cities company`
 
 ## Schema JSON-LD
 
@@ -117,10 +150,24 @@ Tell me where your headshot needs to work and when you need it.
     {
       "@type": "Service",
       "name": "Professional Headshots",
-      "serviceType": "Professional headshot photography",
+      "serviceType": "On-location professional and team headshot photography",
+      "description": "Professional headshots photographed on location at the client's workplace using portable studio lighting and backdrops. Individual and full-team sessions available across Richland, Kennewick and Pasco, Washington.",
       "provider": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "areaServed": [{"@type": "City", "name": "Richland"}, {"@type": "City", "name": "Kennewick"}, {"@type": "City", "name": "Pasco"}],
+      "areaServed": [
+        {"@type": "City", "name": "Richland", "containedInPlace": {"@type": "State", "name": "Washington"}},
+        {"@type": "City", "name": "Kennewick"},
+        {"@type": "City", "name": "Pasco"}
+      ],
       "url": "https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Do you have a headshot studio in the Tri-Cities?", "acceptedAnswer": {"@type": "Answer", "text": "No — portable studio lighting and backdrops are brought to the client's office, clinic or workplace anywhere in the Tri-Cities."}},
+        {"@type": "Question", "name": "What should I wear for a professional headshot?", "acceptedAnswer": {"@type": "Answer", "text": "Solid colors near the face photograph best. Busy patterns and large logos are best avoided. Bringing two or three options allows for guidance on site."}},
+        {"@type": "Question", "name": "How long does a headshot session take?", "acceptedAnswer": {"@type": "Answer", "text": "Usually under an hour for an individual. Team sessions depend on headcount and are typically completed in a single morning."}},
+        {"@type": "Question", "name": "Can you photograph an entire team's headshots in one visit?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Team headshots are photographed on site in a single visit, scheduled around the workday."}}
+      ]
     },
     {
       "@type": "BreadcrumbList",
@@ -128,15 +175,15 @@ Tell me where your headshot needs to work and when you need it.
         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itsakeeperphotography.com/"},
         {"@type": "ListItem", "position": 2, "name": "Professional Headshots", "item": "https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/"}
       ]
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {"@type": "Question", "name": "What should I wear for a professional headshot?", "acceptedAnswer": {"@type": "Answer", "text": "Solid colors near your face photograph best; avoid busy patterns and large logos. Wardrobe is planned together before the session."}},
-        {"@type": "Question", "name": "How long does a headshot session take?", "acceptedAnswer": {"@type": "Answer", "text": "Usually under an hour for individuals; team sessions depend on headcount."}},
-        {"@type": "Question", "name": "Do you retouch headshots?", "acceptedAnswer": {"@type": "Answer", "text": "Gently — temporary things like blemishes are removed while keeping you looking like yourself."}}
-      ]
     }
   ]
 }
 ```
+
+---
+
+## Notas de la reescritura
+
+**El cambio grande:** "no tengo estudio" pasó de carencia implícita a titular — **"I Bring the Studio to You"**. El ejemplo de los médicos es concreto y verificable, y resuelve la fricción real de las empresas: nadie quiere mandar a doce empleados a manejar a un estudio. Es el argumento que gana cuentas B2B.
+
+**Sección de equipos ampliada:** la línea del team page hecho de selfies y fotos de 2016 nombra el problema como lo ve el cliente.

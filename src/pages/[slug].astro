@@ -6,6 +6,7 @@ import SiteShell from "../components/SiteShell.astro";
 import { getContentPage } from "../lib/content-pages";
 import { topLevelEditorialManifest } from "../lib/page-manifest";
 import { getStaticHomepagePage } from "../lib/static-content";
+import { absoluteUrl, siteOrigin } from "../lib/site-environment";
 import { contentPageWrapper } from "../lib/tina/wrappers";
 
 export function getStaticPaths() {
@@ -19,6 +20,129 @@ const { entry } = Astro.props;
 const page = getContentPage(entry.contentPath);
 const shared = getStaticHomepagePage();
 const { homepage, settings } = shared.data;
+const canonical = absoluteUrl(entry.path);
+const detailedService =
+  entry.id === "family"
+    ? {
+        name: "Family Photography",
+        breadcrumbName: "Family Photography",
+        serviceType: "Outdoor family portrait photography",
+        description:
+          "Relaxed golden-hour family photography sessions in the Tri-Cities, directed through activities and prompts rather than static posing, with wardrobe guidance and planning included.",
+      }
+    : entry.id === "seniors"
+      ? {
+          name: "Senior Pictures",
+          breadcrumbName: "Senior Pictures",
+          serviceType: "High school senior portrait photography",
+          description:
+            "Senior portrait sessions in the Tri-Cities photographed at golden hour across multiple locations in one evening, with wardrobe planning and full posing guidance included.",
+        }
+      : entry.id === "headshots"
+        ? {
+            name: "Professional Headshots",
+            breadcrumbName: "Professional Headshots",
+            serviceType: "On-location professional and team headshot photography",
+            description:
+              "Professional headshots photographed on location at the client's workplace using portable studio lighting and backdrops. Individual and full-team sessions available across Richland, Kennewick and Pasco, Washington.",
+          }
+        : entry.id === "branding"
+          ? {
+              name: "Branding Photography",
+              breadcrumbName: "Branding Photography",
+              serviceType:
+                "Custom business and personal branding photography",
+              description:
+                "Custom business photography sessions producing a full library of brand images — portraits, work in progress, workspace and product details — with commercial usage rights included. Serving Richland, Kennewick and Pasco, Washington.",
+            }
+          : null;
+const detailedServiceId = `${canonical}#service`;
+const detailedFaqSchema =
+  entry.id === "branding"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${canonical}#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "What's the difference between branding photos and headshots?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "A headshot is one polished portrait. Branding photography is a full library covering the person, their work, their space and their product details. Branding sessions include headshots.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Can branding photos be used for advertising?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. Branding sessions include commercial usage rights, which is what distinguishes them from personal sessions that carry personal print rights only.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Where do branding sessions take place?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Usually at the client's place of business in Richland, Kennewick or Pasco, or at Tri-Cities locations chosen to match the brand.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How often should branding photos be updated?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Most businesses refresh branding images once or twice a year. Headshots typically last two to three years.",
+            },
+          },
+        ],
+      }
+    : null;
+const detailedAdditionalSchema = detailedService
+  ? [
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": detailedServiceId,
+        name: detailedService.name,
+        serviceType: detailedService.serviceType,
+        description: detailedService.description,
+        provider: { "@id": `${siteOrigin}/#business` },
+        areaServed: [
+          {
+            "@type": "City",
+            name: "Richland",
+            containedInPlace: { "@type": "State", name: "Washington" },
+          },
+          { "@type": "City", name: "Kennewick" },
+          { "@type": "City", name: "Pasco" },
+        ],
+        url: canonical,
+        mainEntityOfPage: { "@id": `${canonical}#webpage` },
+      },
+      ...(detailedFaqSchema ? [detailedFaqSchema] : []),
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteOrigin}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: detailedService.breadcrumbName,
+            item: canonical,
+          },
+        ],
+      },
+    ]
+  : [];
 ---
 
 <Base
@@ -29,7 +153,8 @@ const { homepage, settings } = shared.data;
   seoImage={page.hero.image}
   seoImageAlt={page.hero.imageAlt}
   searchVisibility={entry.searchVisibility}
-  schemaType={entry.schemaType}
+  schemaType={detailedService ? "WebPage" : entry.schemaType}
+  additionalSchema={detailedAdditionalSchema}
   loadEditorialMotion={entry.id === "contact"}
 >
   <SiteShell settings={settings} homepage={homepage} currentPath={entry.path}>

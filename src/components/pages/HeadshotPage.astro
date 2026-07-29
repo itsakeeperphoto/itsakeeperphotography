@@ -1,5 +1,9 @@
 ---
-import type { EditorialPageData, PageSection } from "../../content/page-types";
+import type {
+  EditorialPageData,
+  PageLink,
+  PageSection,
+} from "../../content/page-types";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/headshot-page.css";
@@ -10,6 +14,11 @@ interface Props {
   inquiry?: any;
 }
 
+interface LinkedSegment {
+  text: string;
+  link?: PageLink;
+}
+
 const { page } = Astro.props;
 
 const requireSection = (id: string): PageSection => {
@@ -18,10 +27,11 @@ const requireSection = (id: string): PageSection => {
   return section;
 };
 
-const proud = requireSection("a-headshot-you-are-proud-to-use");
+const studio = requireSection("i-bring-the-studio-to-you");
+const useful = requireSection("a-headshot-you-will-actually-use");
 const guided = requireSection("even-if-you-hate-pictures");
-const process = requireSection("headshot-session-process");
 const teams = requireSection("headshots-for-teams");
+const process = requireSection("headshot-session-process");
 const questions = requireSection("headshot-questions");
 
 const heroHeadingMatch = page.hero.heading.match(/^(.*?)\s+in\s+(.*)$/i);
@@ -29,9 +39,38 @@ const heroHeadingLines = heroHeadingMatch
   ? [heroHeadingMatch[1], `in ${heroHeadingMatch[2]}`]
   : [page.hero.heading];
 
-const teamItems = teams.items || [];
-const finalLeftPrint = teamItems[0]?.image || page.hero.secondaryImage;
-const finalRightPrint = teamItems[2]?.image || guided.secondaryImage;
+const splitWithLinks = (
+  paragraph: string,
+  links: PageLink[] = [],
+): LinkedSegment[] => {
+  const matches = links
+    .map((link) => ({
+      link,
+      start: paragraph.indexOf(link.label),
+    }))
+    .filter((match) => match.start >= 0)
+    .sort((a, b) => a.start - b.start);
+
+  if (matches.length === 0) return [{ text: paragraph }];
+
+  const segments: LinkedSegment[] = [];
+  let cursor = 0;
+
+  for (const match of matches) {
+    if (match.start < cursor) continue;
+    if (match.start > cursor) {
+      segments.push({ text: paragraph.slice(cursor, match.start) });
+    }
+    segments.push({ text: match.link.label, link: match.link });
+    cursor = match.start + match.link.label.length;
+  }
+
+  if (cursor < paragraph.length) {
+    segments.push({ text: paragraph.slice(cursor) });
+  }
+
+  return segments;
+};
 
 const faqSchema = (questions.items || [])
   .filter((item) => item.heading && item.paragraphs?.length)
@@ -67,52 +106,101 @@ const faqSchema = (questions.items || [])
       objectPosition: "50% 42%",
     }}
     rightPrint={{
-      src: guided.secondaryImage,
-      objectPosition: "50% 44%",
+      src: studio.secondaryImage,
+      objectPosition: "50% 34%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
   />
 
   <section
-    id={proud.id}
-    class:list={["headshot-proud", `tone-${proud.tone}`]}
-    aria-labelledby={`${proud.id}-title`}
+    id={studio.id}
+    class:list={["headshot-studio", `tone-${studio.tone}`]}
+    aria-labelledby={`${studio.id}-title`}
   >
-    <div class="headshot-shell headshot-proud__inner">
-      {proud.image && (
-        <figure class="headshot-proud__arch">
-          <Picture
-            src={proud.image}
-            alt={proud.imageAlt || ""}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 82vw, (max-width: 1050px) 40vw, 25rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
-
-      <div class="headshot-proud__copy">
+    <div class="headshot-shell headshot-studio__inner">
+      <div class="headshot-studio__copy">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${proud.id}-title`}>{proud.heading}</h2>
+        <h2 id={`${studio.id}-title`}>{studio.heading}</h2>
         <div class="headshot-prose">
-          {proud.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {studio.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
-        {proud.links?.length && (
-          <div class="headshot-links">
-            {proud.links.map((link) => (
-              <a
-                class="headshot-text-link"
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
+      </div>
+
+      <div class="headshot-studio__media">
+        <span class="headshot-studio__construction" aria-hidden="true"></span>
+        {studio.image && (
+          <figure class="headshot-studio__primary">
+            <Picture
+              src={studio.image}
+              alt={studio.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 82vw, (max-width: 1050px) 46vw, 31rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
         )}
+        {studio.secondaryImage && (
+          <figure class="headshot-print headshot-studio__proof">
+            <span class="headshot-tape" aria-hidden="true"></span>
+            <Picture
+              src={studio.secondaryImage}
+              alt={studio.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 42vw, (max-width: 1050px) 22vw, 14rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section
+    id={useful.id}
+    class:list={["headshot-useful", `tone-${useful.tone}`]}
+    aria-labelledby={`${useful.id}-title`}
+  >
+    <div class="headshot-shell headshot-useful__inner">
+      <div class="headshot-useful__media">
+        <span class="headshot-useful__line" aria-hidden="true"></span>
+        {useful.image && (
+          <figure class="headshot-useful__arch">
+            <Picture
+              src={useful.image}
+              alt={useful.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 78vw, (max-width: 1050px) 40vw, 25rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {useful.secondaryImage && (
+          <figure class="headshot-print headshot-useful__proof" aria-hidden="true">
+            <Picture
+              src={useful.secondaryImage}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              optimizedMobileWidth={360}
+              optimizedDesktopWidth={520}
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
+
+      <div class="headshot-useful__copy">
+        <span class="headshot-rule" aria-hidden="true"></span>
+        <h2 id={`${useful.id}-title`}>{useful.heading}</h2>
+        <div class="headshot-prose">
+          {useful.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
       </div>
     </div>
   </section>
@@ -127,67 +215,97 @@ const faqSchema = (questions.items || [])
         <span class="headshot-rule" aria-hidden="true"></span>
         <h2 id={`${guided.id}-title`}>{guided.heading}</h2>
         <div class="headshot-prose">
-          {guided.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {guided.paragraphs?.map((paragraph) => (
+            <p>
+              {splitWithLinks(paragraph, guided.links).map((segment) =>
+                segment.link ? (
+                  <a href={segment.link.href}>{segment.text}</a>
+                ) : (
+                  segment.text
+                ),
+              )}
+            </p>
+          ))}
         </div>
-        {guided.links?.length && (
-          <div class="headshot-links">
-            {guided.links.map((link) => (
-              <a
-                class="headshot-text-link"
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-        )}
       </div>
 
-      {(guided.image || guided.secondaryImage || guided.scriptLine) && (
-        <div class="headshot-guided__media">
-          {guided.image && (
-            <figure class="headshot-print headshot-guided__primary">
-              <Picture
-                src={guided.image}
-                alt={guided.imageAlt || ""}
-                loading="lazy"
-                decoding="async"
-                responsiveSrcset
-                sizes="(max-width: 767px) 84vw, (max-width: 1050px) 48vw, 31rem"
-                imgClass="photo--editorial"
-              />
-            </figure>
-          )}
+      <div class="headshot-guided__media">
+        <span class="headshot-guided__line" aria-hidden="true"></span>
+        {guided.image && (
+          <figure class="headshot-guided__primary">
+            <Picture
+              src={guided.image}
+              alt={guided.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 76vw, (max-width: 1050px) 42vw, 28rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {guided.secondaryImage && (
+          <figure class="headshot-print headshot-guided__secondary">
+            <span class="headshot-tape" aria-hidden="true"></span>
+            <Picture
+              src={guided.secondaryImage}
+              alt={guided.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 42vw, (max-width: 1050px) 24vw, 16rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
+    </div>
+  </section>
 
-          {guided.secondaryImage && (
-            <figure
-              class="headshot-print headshot-guided__secondary"
-              aria-hidden="true"
-            >
-              <Picture
-                src={guided.secondaryImage}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                optimizedMobileWidth={400}
-                optimizedDesktopWidth={640}
-                imgClass="photo--editorial"
-              />
-            </figure>
-          )}
+  <section
+    id={teams.id}
+    class:list={["headshot-teams", `tone-${teams.tone}`]}
+    aria-labelledby={`${teams.id}-title`}
+  >
+    <div class="headshot-shell headshot-teams__inner">
+      <header class="headshot-teams__heading">
+        <span class="headshot-rule" aria-hidden="true"></span>
+        <h2 id={`${teams.id}-title`}>{teams.heading}</h2>
+      </header>
 
-          {guided.scriptLine && (
-            <div class="headshot-guided__note" aria-hidden="true">
-              <span class="headshot-guided__pin"></span>
-              <p>{guided.scriptLine}</p>
-            </div>
-          )}
+      <div class="headshot-teams__copy headshot-prose">
+        {teams.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
 
-          <span class="headshot-guided__clay-accent" aria-hidden="true"></span>
-        </div>
-      )}
+      <div class="headshot-teams__proofs">
+        <span class="headshot-teams__line" aria-hidden="true"></span>
+        {teams.image && (
+          <figure class="headshot-print headshot-teams__proof headshot-teams__proof--first">
+            <Picture
+              src={teams.image}
+              alt={teams.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 55vw, (max-width: 1050px) 28vw, 19rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {teams.secondaryImage && (
+          <figure class="headshot-print headshot-teams__proof headshot-teams__proof--second">
+            <Picture
+              src={teams.secondaryImage}
+              alt={teams.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 52vw, (max-width: 1050px) 26vw, 18rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
     </div>
   </section>
 
@@ -200,19 +318,17 @@ const faqSchema = (questions.items || [])
       <header class="headshot-process__heading">
         <span class="headshot-rule" aria-hidden="true"></span>
         <h2 id={`${process.id}-title`}>{process.heading}</h2>
-        {process.intro && <p>{process.intro}</p>}
       </header>
 
       {process.image && (
-        <figure class="headshot-print headshot-process__photo">
-          <span class="headshot-tape" aria-hidden="true"></span>
+        <figure class="headshot-process__photo">
           <Picture
             src={process.image}
             alt={process.imageAlt || ""}
             loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 48vw, 34rem"
+            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 42vw, 28rem"
             imgClass="photo--editorial"
           />
         </figure>
@@ -234,104 +350,7 @@ const faqSchema = (questions.items || [])
         </ol>
       )}
 
-      {process.links?.length && (
-        <div class="headshot-links headshot-process__links">
-          {process.links.map((link) => (
-            <a
-              class="headshot-text-link"
-              href={link.href}
-              target={link.external ? "_blank" : undefined}
-              rel={link.external ? "noopener noreferrer" : undefined}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  </section>
-
-  <section
-    id={teams.id}
-    class:list={["headshot-teams", `tone-${teams.tone}`]}
-    aria-labelledby={`${teams.id}-title`}
-  >
-    <div class="headshot-shell headshot-teams__inner">
-      <h2 class="sr-only" id={`${teams.id}-title`}>{teams.heading}</h2>
-
-      {teamItems.length > 0 && (
-        <div class="headshot-teams__gallery">
-          <svg
-            class="headshot-teams__arc-copy"
-            viewBox="0 0 520 220"
-            role="presentation"
-            aria-hidden="true"
-          >
-            <defs>
-              <path
-                id="headshot-teams-arc"
-                d="M 38 188 A 224 224 0 0 1 482 188"
-              ></path>
-            </defs>
-            <text>
-              <textPath
-                href="#headshot-teams-arc"
-                startOffset="50%"
-                text-anchor="middle"
-              >
-                {teams.heading?.toUpperCase()}
-              </textPath>
-            </text>
-          </svg>
-
-          <ul class="headshot-teams__triptych">
-            {teamItems.map((item, index) => (
-              <li
-                class:list={[
-                  "headshot-teams__item",
-                  { "headshot-teams__item--arch": index === 1 },
-                ]}
-              >
-                {item.image && (
-                  <figure>
-                    <Picture
-                      src={item.image}
-                      alt={item.imageAlt || ""}
-                      loading="lazy"
-                      decoding="async"
-                      responsiveSrcset
-                      sizes="(max-width: 767px) 82vw, (max-width: 1050px) 30vw, 23rem"
-                      imgClass="photo--editorial"
-                    />
-                  </figure>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <span class="headshot-teams__clay-accent" aria-hidden="true"></span>
-        </div>
-      )}
-
-      <div class="headshot-teams__copy">
-        <div class="headshot-prose">
-          {teams.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-        </div>
-        {teams.links?.length && (
-          <div class="headshot-links">
-            {teams.links.map((link) => (
-              <a
-                class="headshot-text-link"
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
+      {/* CONTENT PENDING: [PENDIENTE: duración y entregables exactos por paquete] */}
     </div>
   </section>
 
@@ -341,81 +360,58 @@ const faqSchema = (questions.items || [])
     aria-labelledby={`${questions.id}-title`}
   >
     <div class="headshot-shell headshot-faq__inner">
-      {questions.image && (
-        <figure class="headshot-faq__photo">
-          <Picture
-            src={questions.image}
-            alt={questions.imageAlt || ""}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 40vw, 27rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
+      <header class="headshot-faq__heading">
+        <span class="headshot-rule" aria-hidden="true"></span>
+        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        {questions.image && (
+          <figure class="headshot-faq__arch">
+            <Picture
+              src={questions.image}
+              alt={questions.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 60vw, (max-width: 1050px) 28vw, 18rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </header>
+
+      {questions.items?.length && (
+        <div class="headshot-faq__list">
+          {questions.items.map((item, index) => (
+            <details class="headshot-faq__item" open={index === 0}>
+              <summary>
+                <span class="headshot-faq__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                {item.heading && <h3>{item.heading}</h3>}
+                <span class="headshot-faq__mark" aria-hidden="true"></span>
+              </summary>
+              <div class="headshot-faq__answer">
+                {item.paragraphs?.map((paragraph) => (
+                  <p>
+                    {splitWithLinks(paragraph, item.links).map((segment) =>
+                      segment.link ? (
+                        <a href={segment.link.href}>{segment.text}</a>
+                      ) : (
+                        segment.text
+                      ),
+                    )}
+                  </p>
+                ))}
+              </div>
+            </details>
+          ))}
+        </div>
       )}
-
-      <div class="headshot-faq__content">
-        <header class="headshot-faq__heading">
-          <span class="headshot-rule" aria-hidden="true"></span>
-          <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
-        </header>
-
-        {questions.items?.length && (
-          <div class="headshot-faq__list">
-            {questions.items.map((item, index) => (
-              <details class="headshot-faq__item" open={index === 0}>
-                <summary>
-                  <span class="headshot-faq__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    class="headshot-faq__question"
-                    role="heading"
-                    aria-level="3"
-                  >
-                    {item.heading}
-                  </span>
-                  <span class="headshot-faq__mark" aria-hidden="true"></span>
-                </summary>
-                <div class="headshot-faq__answer">
-                  {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-                  {item.links?.map((link) => (
-                    <a
-                      class="headshot-text-link"
-                      href={link.href}
-                      target={link.external ? "_blank" : undefined}
-                      rel={link.external ? "noopener noreferrer" : undefined}
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              </details>
-            ))}
-          </div>
-        )}
-
-        {questions.links?.length && (
-          <div class="headshot-links headshot-faq__links">
-            {questions.links.map((link) => (
-              <a
-                class="headshot-text-link"
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   </section>
 
   {page.finalCta && (
     <section
+      id="headshot-final-cta"
       class:list={["headshot-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="headshot-final-title"
     >
@@ -434,28 +430,8 @@ const faqSchema = (questions.items || [])
         </div>
       )}
 
-      {finalLeftPrint && (
-        <figure
-          class="headshot-print headshot-final__print headshot-final__print--left"
-          aria-hidden="true"
-        >
-          <Picture
-            src={finalLeftPrint}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
-
       <div class="headshot-shell headshot-final__inner">
         <div class="headshot-final__copy">
-          {page.finalCta.eyebrow && (
-            <p class="headshot-final__eyebrow">{page.finalCta.eyebrow}</p>
-          )}
           <h2 id="headshot-final-title">{page.finalCta.heading}</h2>
           {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
           {page.finalCta.link && (
@@ -470,23 +446,6 @@ const faqSchema = (questions.items || [])
           )}
         </div>
       </div>
-
-      {finalRightPrint && (
-        <figure
-          class="headshot-print headshot-final__print headshot-final__print--right"
-          aria-hidden="true"
-        >
-          <Picture
-            src={finalRightPrint}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            optimizedMobileWidth={400}
-            optimizedDesktopWidth={640}
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
     </section>
   )}
 

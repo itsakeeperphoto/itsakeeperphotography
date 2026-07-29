@@ -173,19 +173,22 @@ _(Mantener las 3 citas actuales; añadir atribución con nombre real cuando Lisa
 **H2:** Questions Families Ask Me
 
 **H3: What areas do you serve?**
-I'm based in Richland, Washington, and photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the surrounding areas. Most sessions happen outdoors at golden hour, at a location we choose together.
+I'm based in Richland, Washington, and photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the surrounding areas, with no travel fee anywhere in the area. Most sessions happen outdoors at golden hour, at a location we choose together. Newborn sessions happen in your home.
 
 **H3: How far in advance should I book?**
-I reserve most sessions four to six weeks ahead. Senior sessions and fall family sessions fill fastest, so if you have a season in mind, reach out early and we'll plan it right.
+I reserve most sessions four to six weeks ahead. May through October is my busiest season and fall dates fill first every year, so if you're picturing autumn light, reach out in late summer.
 
 **H3: What if we're awkward in front of the camera?**
-Then you're my favorite kind of client. Most people who step in front of my camera feel a little nervous at first — my whole approach is built around gentle prompts and guidance, so you always know what to do. You'll leave saying it was actually fun. Promise.
+Then you're my favorite kind of client. Almost everyone feels nervous at first — my whole approach is built around gentle prompts and guidance, so you always know what to do. I'll probably ask you to fake-laugh at some point, and a real one always follows. You'll leave saying it was actually fun.
 
-**H3: Do you photograph weddings?**
-I photograph small, intimate elopements only — not full wedding days or events. If you're planning something small and meaningful, I'd love to hear about it.
+**H3: How long until we see our photos?**
+About two weeks, and then we sit down together in person to go through your gallery. Final images follow roughly a week after you choose.
+
+**H3: What do you photograph?**
+Seniors, families, newborns, couples, small elopements, branding and headshots. I don't photograph full weddings, events or boudoir — if that's what you need, I'm always glad to point you toward someone who specializes in it.
 
 **H3: What should we wear?**
-That's something we figure out together before your session. I'll help you choose outfits that photograph beautifully and that you can actually move, sit and play in comfortably.
+We figure that out together before your session. Send me what you're thinking and I'll help you choose — the most important thing is that you're comfortable, because if you're not comfortable, it shows in every frame.
 
 ---
 
@@ -275,11 +278,12 @@ _(Internal linking de footer = refuerzo de arquitectura en todo el sitio.)_
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": "What areas do you serve?", "acceptedAnswer": {"@type": "Answer", "text": "I'm based in Richland, Washington, and photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the surrounding areas. Most sessions happen outdoors at golden hour."}},
-        {"@type": "Question", "name": "How far in advance should I book?", "acceptedAnswer": {"@type": "Answer", "text": "Most sessions are reserved four to six weeks ahead. Senior sessions and fall family sessions fill fastest."}},
-        {"@type": "Question", "name": "What if we're awkward in front of the camera?", "acceptedAnswer": {"@type": "Answer", "text": "Most clients feel nervous at first. Sessions are built around gentle prompts and guidance, so you always know what to do — and most people say it was actually fun."}},
-        {"@type": "Question", "name": "Do you photograph weddings?", "acceptedAnswer": {"@type": "Answer", "text": "Only small, intimate elopements — not full wedding days or events."}},
-        {"@type": "Question", "name": "What should we wear?", "acceptedAnswer": {"@type": "Answer", "text": "Wardrobe is planned together before every session, with guidance on outfits that photograph beautifully and are comfortable to move in."}}
+        {"@type": "Question", "name": "What areas do you serve?", "acceptedAnswer": {"@type": "Answer", "text": "Based in Richland, Washington, photographing throughout the Tri-Cities — Richland, Kennewick, Pasco and surrounding areas — with no travel fee. Most sessions are outdoors at golden hour; newborn sessions take place in the client's home."}},
+        {"@type": "Question", "name": "How far in advance should I book a photo session?", "acceptedAnswer": {"@type": "Answer", "text": "Most sessions are reserved four to six weeks ahead. May through October is peak season and fall dates fill first."}},
+        {"@type": "Question", "name": "What if we're awkward in front of the camera?", "acceptedAnswer": {"@type": "Answer", "text": "Almost everyone feels nervous at first. Sessions are fully guided with gentle prompts, so clients always know what to do."}},
+        {"@type": "Question", "name": "How long until we see our photos?", "acceptedAnswer": {"@type": "Answer", "text": "About two weeks until an in-person gallery viewing, with final images following roughly a week after selection."}},
+        {"@type": "Question", "name": "What types of photography do you offer?", "acceptedAnswer": {"@type": "Answer", "text": "Senior pictures, family photography, newborn sessions, couples, small elopements, branding photography and professional headshots. Full weddings, events and boudoir are not offered."}},
+        {"@type": "Question", "name": "What should we wear for photos?", "acceptedAnswer": {"@type": "Answer", "text": "Wardrobe is planned together before every session, prioritising comfort and avoiding busy patterns or large logos."}}
       ]
     }
   ]

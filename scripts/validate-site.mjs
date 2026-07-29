@@ -23,8 +23,32 @@ const htmlFiles = (await collectHtml(output)).filter(
   (file) => !file.includes(`${path.sep}admin${path.sep}`)
 );
 const failures = [];
+const internalTargetExists = (href) => {
+  let pathname;
+  try {
+    pathname = decodeURIComponent(href.split(/[?#]/, 1)[0]);
+  } catch {
+    return false;
+  }
+
+  const relative = pathname.replace(/^\/+/, "");
+  const candidates = pathname.endsWith("/")
+    ? [path.join(output, relative, "index.html")]
+    : [
+        path.join(output, relative),
+        path.join(output, relative, "index.html"),
+        path.join(output, `${relative}.html`),
+      ];
+
+  const outputRoot = path.resolve(output);
+  return candidates.some((candidate) => {
+    const resolved = path.resolve(candidate);
+    return resolved.startsWith(`${outputRoot}${path.sep}`) && existsSync(resolved);
+  });
+};
 const indexableReleaseFiles = new Set([
   "index.html",
+  `family-photographer-tri-cities-wa${path.sep}index.html`,
   `portfolio${path.sep}index.html`,
 ]);
 
@@ -37,8 +61,13 @@ for (const file of htmlFiles) {
     .map((match) => match[1])
     .filter((href) => href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/#"));
 
-  if (internalAnchors.length > 4) {
-    failures.push(`${relative}: ${internalAnchors.length} internal body links (${internalAnchors.join(", ")})`);
+  const brokenInternalAnchors = [
+    ...new Set(internalAnchors.filter((href) => !internalTargetExists(href))),
+  ];
+  if (brokenInternalAnchors.length) {
+    failures.push(
+      `${relative}: broken internal body links (${brokenInternalAnchors.join(", ")})`
+    );
   }
   if (/\[(?:PENDIENTE|VALIDAR|FECHA)|CONTENT PENDING/i.test(withoutComments)) {
     failures.push(`${relative}: unresolved placeholder leaked into rendered HTML`);
@@ -105,6 +134,7 @@ if (mode === "staging") {
   const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   const expectedSitemapUrls = [
     "https://www.itsakeeperphotography.com/",
+    "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/portfolio/",
   ];
   if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) {
@@ -113,11 +143,14 @@ if (mode === "staging") {
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");
   }
-  if (!/https:\/\/www\.itsakeeperphotography\.com\//.test(llms) || /\/portfolio\//.test(llms)) {
+  if (
+    !/https:\/\/www\.itsakeeperphotography\.com\//.test(llms) ||
+    !/https:\/\/www\.itsakeeperphotography\.com\/family-photographer-tri-cities-wa\//.test(llms) ||
+    /\/portfolio\//.test(llms)
+  ) {
     failures.push("llms.txt: release membership is incorrect");
   }
   for (const route of [
-    "/family-photographer-tri-cities-wa/*",
     "/contact/*",
     "/journal/*",
     "/privacy/*",

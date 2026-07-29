@@ -2,7 +2,7 @@ async (page) => {
   const baseUrl = page.url().match(/^https?:\/\/[^/]+/)?.[0];
   if (!baseUrl) throw new Error("Open the local site before running this suite.");
   const route = "/branding-photographer-tri-cities-wa/";
-  const artifactDir = ".artifacts/branding-redesign/final";
+  const artifactDir = "artifacts/branding-page";
   const viewports = [
     { id: "1440x1000", width: 1440, height: 1000 },
     { id: "1200x900", width: 1200, height: 900 },
@@ -50,11 +50,13 @@ async (page) => {
 
     const sections = [
       "[data-editorial-hero-page='branding']",
-      "[data-branding-section='face']",
-      "[data-branding-section='library']",
-      "[data-branding-section='includes']",
+      "[data-branding-section='people']",
+      "[data-branding-section='custom']",
+      "[data-branding-section='photograph']",
+      "[data-branding-section='rights']",
       "[data-branding-section='audiences']",
-      "[data-branding-faq]",
+      "[data-branding-section='process']",
+      "[data-branding-section='questions']",
       "[data-branding-final]",
     ];
     for (const selector of sections) {
@@ -186,7 +188,7 @@ async (page) => {
         };
       });
 
-      const arch = rect(document.querySelector("[data-branding-arch='face']"));
+      const arch = rect(document.querySelector("[data-branding-arch='people']"));
       const facePrint = rect(document.querySelector(".branding-face__print"));
       const mosaicPhotos = [
         ...document.querySelectorAll("[data-branding-mosaic] [data-branding-photo]"),
@@ -259,6 +261,20 @@ async (page) => {
       const hero = document.querySelector("[data-editorial-hero-page='branding']");
       const heroTitle = hero?.querySelector("[data-hero-title]");
       const heroPrints = [...(hero?.querySelectorAll("[data-hero-print]") || [])];
+      const schemaTypes = [
+        ...document.querySelectorAll('script[type="application/ld+json"]'),
+      ]
+        .flatMap((script) => {
+          try {
+            const schema = JSON.parse(script.textContent || "{}");
+            return schema["@graph"]
+              ? schema["@graph"].map((node) => node["@type"])
+              : [schema["@type"]];
+          } catch {
+            return [];
+          }
+        })
+        .filter(Boolean);
       const activeAnimations = root
         .getAnimations({ subtree: true })
         .filter((animation) => animation.playState === "running")
@@ -331,11 +347,23 @@ async (page) => {
         faqRailWidth: parseFloat(faqStyle.borderLeftWidth),
         faqBottomWidth: parseFloat(faqStyle.borderBottomWidth),
         h1Count: hero?.querySelectorAll("h1").length || 0,
+        h2Count: root?.querySelectorAll("h2").length || 0,
+        sectionCount:
+          root?.querySelectorAll("[data-branding-section]").length || 0,
+        title: document.title,
+        description:
+          document.querySelector('meta[name="description"]')?.content || "",
+        canonical:
+          document.querySelector('link[rel="canonical"]')?.href || "",
+        schemaTypes,
         heroLabelledByPass:
           hero?.getAttribute("aria-labelledby") === heroTitle?.getAttribute("id"),
         heroAccessibleHeading:
           heroTitle?.getAttribute("aria-label") ===
           "Branding Photography for Tri-Cities Businesses",
+        heroTitleTextFits:
+          Boolean(heroTitle) &&
+          heroTitle.scrollWidth <= heroTitle.clientWidth + 1,
         heroPrintCount: heroPrints.length,
         heroDecorativePrintsPass: heroPrints.every(
           (print) =>
@@ -367,8 +395,8 @@ async (page) => {
     if (
       JSON.stringify(metrics.internalLinks) !==
       JSON.stringify([
-        "/contact/",
-        "/reviews/",
+        "/headshot-photographer-tri-cities-wa/",
+        "/investment/",
         "/journal/branding-photos-vs-headshots/",
         "/contact/",
       ])
@@ -388,7 +416,7 @@ async (page) => {
     }
     if (metrics.mosaicPhotoCount !== 4) failures.push("mosaic count");
     if (
-      metrics.processStepCount !== 3 ||
+      metrics.processStepCount !== 4 ||
       metrics.processIntersections.length > 0
     ) {
       failures.push("process geometry");
@@ -411,10 +439,37 @@ async (page) => {
       metrics.h1Count !== 1 ||
       !metrics.heroLabelledByPass ||
       !metrics.heroAccessibleHeading ||
+      !metrics.heroTitleTextFits ||
       metrics.heroPrintCount !== 2 ||
       !metrics.heroDecorativePrintsPass
     ) {
       failures.push("shared hero contract");
+    }
+    if (metrics.h2Count !== 8 || metrics.sectionCount !== 7) {
+      failures.push("heading/section structure");
+    }
+    if (
+      metrics.title !==
+        "Branding Photographer in the Tri-Cities, WA | It's A Keeper" ||
+      metrics.description !==
+        "Custom business photography for Tri-Cities entrepreneurs — you, your work and your space, photographed so your marketing finally looks like your business feels." ||
+      !metrics.canonical.endsWith(
+        "/branding-photographer-tri-cities-wa/",
+      )
+    ) {
+      failures.push("metadata");
+    }
+    if (
+      ![
+        "LocalBusiness",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "FAQPage",
+        "BreadcrumbList",
+      ].every((type) => metrics.schemaTypes.includes(type))
+    ) {
+      failures.push("schema graph");
     }
     if (
       !metrics.reducedMotion ||

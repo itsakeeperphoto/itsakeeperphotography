@@ -20,8 +20,8 @@ export const pageManifest = [
     path: "/family-photographer-tri-cities-wa/",
     contentPath: "family.json",
     family: "service",
-    contentStatus: "draft",
-    searchVisibility: "noindex",
+    contentStatus: "ready",
+    searchVisibility: "index",
     schemaType: "Service",
     sitemap: true,
     llms: true,
@@ -42,7 +42,7 @@ export const pageManifest = [
     llms: true,
     primaryRoute: true,
     signature: "arch",
-    title: "Senior Pictures Tri-Cities WA | It's A Keeper Photography",
+    title: "Senior Pictures Tri-Cities WA | Class of 2027 Photographer",
     summary: "Confident, natural senior pictures photographed in golden light.",
   },
   {
@@ -72,8 +72,9 @@ export const pageManifest = [
     llms: true,
     primaryRoute: true,
     signature: "overlap",
-    title: "Branding Photographer Tri-Cities WA | Custom Business Photos",
-    summary: "Personal branding photography for Tri-Cities businesses.",
+    title: "Branding Photographer in the Tri-Cities, WA | It's A Keeper",
+    summary:
+      "Custom business photography for Tri-Cities entrepreneurs, with warm brand images and commercial usage rights included.",
   },
   {
     id: "headshots",
@@ -86,9 +87,10 @@ export const pageManifest = [
     sitemap: true,
     llms: true,
     primaryRoute: true,
-    signature: "arch",
-    title: "Professional Headshots Tri-Cities WA | Natural & Confident",
-    summary: "Natural professional headshots for Tri-Cities professionals and teams.",
+    signature: "overlap",
+    title: "Headshot Photographer Tri-Cities WA | I Come to You",
+    summary:
+      "Professional headshots in Richland, Kennewick and Pasco — photographed at your office with portable studio lighting.",
   },
   {
     id: "investment",

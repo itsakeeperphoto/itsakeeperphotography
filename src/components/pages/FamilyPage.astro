@@ -18,30 +18,16 @@ const requireSection = (id: string): PageSection => {
   return section;
 };
 
-const sessions = requireSection("sessions-that-feel-like-play");
-const process = requireSection("family-session-process");
+const play = requireSection("play-not-posing");
+const kids = requireSection("about-your-kids");
+const preparation = requireSection("family-session-preparation");
+const howItWorks = requireSection("how-it-works");
+const seasonality = requireSection("family-seasonality");
 const heirlooms = requireSection("family-heirlooms");
-const locations = requireSection("family-photo-locations");
-const reviews = requireSection("what-parents-say");
 const questions = requireSection("family-session-questions");
 
-const reviewQuote = reviews.items?.find((item) => item.quote)?.quote;
-const [sessionsHeadingLead, sessionsHeadingTail] = sessions.heading?.split(", ") || [];
-const [processHeadingLead, processHeadingTail] = process.heading?.split(" With Me ") || [];
-const heirloomHeadingTail = "Family Heirlooms";
-const heirloomHeadingLead = heirlooms.heading?.endsWith(heirloomHeadingTail)
-  ? heirlooms.heading.slice(0, -heirloomHeadingTail.length).trim()
-  : heirlooms.heading;
-const [locationsHeadingLead, locationsHeadingRest] = locations.heading?.split(" — ") || [];
-const [locationsHeadingMiddle, locationsHeadingTail] =
-  locationsHeadingRest?.split(" Around ") || [];
-const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" in ");
-const heroHeadingLines = [
-  heroHeadingLead.replace("Photographer", "Photo\u200bgrapher"),
-  ...(heroHeadingTail ? [`in ${heroHeadingTail}`] : []),
-];
-
-// CONTENT PENDING: [PENDIENTE: 2–3 reseñas reales de familias, con nombre — Q47]
+const investmentPhrase = "we sit down in person";
+const investmentHref = howItWorks.links?.[0]?.href || "/investment/";
 
 const faqSchema = (questions.items || [])
   .filter((item) => item.heading && item.paragraphs?.length)
@@ -64,7 +50,7 @@ const faqSchema = (questions.items || [])
     pageKey="family"
     titleId="family-hero-title"
     heading={page.hero.heading}
-    headingLines={heroHeadingLines}
+    headingLines={[page.hero.heading]}
     scriptLine={page.hero.scriptLine || "this season"}
     intro={page.hero.intro}
     links={page.hero.links}
@@ -77,109 +63,255 @@ const faqSchema = (questions.items || [])
       objectPosition: "50% 43%",
     }}
     rightPrint={{
-      src: locations.secondaryImage,
+      src: seasonality.secondaryImage,
       objectPosition: "50% 43%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
   />
 
   <section
-    class="family-intro"
-    aria-labelledby={`${sessions.id}-title`}
+    class="family-play"
+    aria-labelledby={`${play.id}-title`}
   >
-    <div class="family-shell family-intro__inner">
-      {sessions.image && (
+    <div class="family-shell family-play__inner">
+      {play.image && (
         <figure
-          class="family-intro__arch"
+          class="family-play__arch"
           data-family-arch
           data-family-photo
-          data-line-target="intro-arch"
+          data-line-target="play-arch"
         >
           <Picture
-            src={sessions.image}
-            alt={sessions.imageAlt || ""}
-            loading="eager"
+            src={play.image}
+            alt={play.imageAlt || ""}
+            loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 479px) 76vw, (max-width: 1050px) 40vw, 30vw"
+            sizes="(max-width: 767px) min(82vw, 25rem), (max-width: 1050px) 40vw, 30vw"
             imgClass="photo--editorial"
           />
         </figure>
       )}
 
       <span
-        class="family-intro__line"
+        class="family-play__line"
         data-construction-line
         data-line-anchor="image"
-        data-anchor-target="intro-arch"
+        data-anchor-target="play-arch"
         aria-hidden="true"
       ></span>
 
-      <div class="family-intro__copy">
+      <div class="family-play__copy">
         <span class="family-section-number" aria-hidden="true">02</span>
-        <h2 id={`${sessions.id}-title`}>
-          <span>{sessionsHeadingLead}{sessionsHeadingTail && ","}</span>
-          {" "}
-          {sessionsHeadingTail && <span>{sessionsHeadingTail}</span>}
-        </h2>
+        <h2 id={`${play.id}-title`}>{play.heading}</h2>
         <div class="family-prose">
-          {sessions.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {play.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
     </div>
   </section>
 
   <section
-    class="family-process"
-    aria-labelledby={`${process.id}-title`}
+    class="family-kids"
+    aria-labelledby={`${kids.id}-title`}
   >
-    <div class="family-shell family-process__inner">
-      <div class="family-process__lead">
-        <div class="family-process__index" aria-hidden="true">
-          {process.items?.map((item, index) => (
+    <div class="family-shell">
+      <header class="family-kids__header">
+        <span class="family-section-number" aria-hidden="true">03</span>
+        <h2 id={`${kids.id}-title`}>{kids.heading}</h2>
+        {kids.intro && <p class="family-section-intro">{kids.intro}</p>}
+      </header>
+
+      <div class="family-kids__composition">
+        {(kids.image || kids.secondaryImage) && (
+          <div class="family-kids__media" data-family-overlap>
+            {kids.image && (
+              <figure
+                class="family-kids__photo family-kids__photo--arch"
+                data-family-arch
+                data-family-photo
+              >
+                <Picture
+                  src={kids.image}
+                  alt={kids.imageAlt || ""}
+                  loading="lazy"
+                  decoding="async"
+                  responsiveSrcset
+                  sizes="(max-width: 767px) 80vw, (max-width: 1050px) 48vw, 31vw"
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+
+            {kids.secondaryImage && (
+              <figure
+                class="family-print family-kids__photo family-kids__photo--print"
+                data-family-photo
+              >
+                <span class="family-tape family-tape--reverse" aria-hidden="true"></span>
+                <Picture
+                  src={kids.secondaryImage}
+                  alt={kids.secondaryImageAlt || ""}
+                  loading="lazy"
+                  decoding="async"
+                  optimizedMobileWidth={640}
+                  optimizedDesktopWidth={960}
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+          </div>
+        )}
+
+        <div class="family-kids__ledger">
+          {kids.items?.length && (
+            <ul>
+              {kids.items.map((item) => (
+                <li>
+                  <span class="family-kids__node" aria-hidden="true"></span>
+                  <div>
+                    {item.heading && <h3>{item.heading}</h3>}
+                    {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {kids.paragraphs?.length && (
+            <aside class="family-kids__parent-note" aria-label="A note for parents">
+              {kids.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </aside>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="family-preparation"
+    aria-labelledby={`${preparation.id}-title`}
+  >
+    <div class="family-shell">
+      <header class="family-preparation__header">
+        <div>
+          <span class="family-section-number" aria-hidden="true">04</span>
+          <h2 id={`${preparation.id}-title`}>{preparation.heading}</h2>
+        </div>
+        {preparation.intro && (
+          <p class="family-section-intro">{preparation.intro}</p>
+        )}
+      </header>
+
+      <div class="family-preparation__body">
+        {preparation.items?.length && (
+          <ul class="family-preparation__ledger">
+            {preparation.items.map((item) => (
+              <li>
+                <span class="family-preparation__mark" aria-hidden="true"></span>
+                <div>
+                  {item.heading && <h3>{item.heading}</h3>}
+                  {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {(preparation.image || preparation.secondaryImage) && (
+          <div class="family-preparation__media" data-family-overlap>
+            {preparation.image && (
+              <figure
+                class="family-preparation__photo family-preparation__photo--rear"
+                data-family-photo
+              >
+                <Picture
+                  src={preparation.image}
+                  alt={preparation.imageAlt || ""}
+                  loading="lazy"
+                  decoding="async"
+                  responsiveSrcset
+                  sizes="(max-width: 767px) 88vw, (max-width: 1050px) 52vw, 35vw"
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+
+            {preparation.secondaryImage && (
+              <figure
+                class="family-print family-preparation__photo family-preparation__photo--front"
+                data-family-photo
+              >
+                <span class="family-tape" aria-hidden="true"></span>
+                <Picture
+                  src={preparation.secondaryImage}
+                  alt={preparation.secondaryImageAlt || ""}
+                  loading="lazy"
+                  decoding="async"
+                  optimizedMobileWidth={640}
+                  optimizedDesktopWidth={960}
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="family-how"
+    aria-labelledby={`${howItWorks.id}-title`}
+  >
+    <div class="family-shell">
+      <div class="family-how__lead">
+        <div class="family-how__index" aria-hidden="true">
+          {howItWorks.items?.map((item, index) => (
             <span>
               <b>{String(index + 1).padStart(2, "0")}</b>
-              {item.heading?.split(":")[0]}
+              {item.heading}
             </span>
           ))}
         </div>
 
-        <div class="family-process__title">
-          <span class="family-section-number" aria-hidden="true">03</span>
-          <h2 id={`${process.id}-title`}>
-            <span>{processHeadingLead}</span>
-            {" "}
-            {processHeadingTail && <span>With Me {processHeadingTail}</span>}
-          </h2>
+        <div class="family-how__title">
+          <span class="family-section-number" aria-hidden="true">05</span>
+          <h2 id={`${howItWorks.id}-title`}>{howItWorks.heading}</h2>
+          {howItWorks.intro && (
+            <p class="family-section-intro">{howItWorks.intro}</p>
+          )}
         </div>
       </div>
 
-      {(process.image || process.secondaryImage) && (
-        <div
-          class="family-process__media"
-          data-family-overlap
-          data-line-target="process-media"
-        >
-          {process.image && (
-            <figure class="family-process__photo family-process__photo--rear" data-family-photo>
+      {(howItWorks.image || howItWorks.secondaryImage) && (
+        <div class="family-how__media" data-family-overlap>
+          {howItWorks.image && (
+            <figure
+              class="family-how__photo family-how__photo--rear"
+              data-family-photo
+            >
               <Picture
-                src={process.image}
-                alt={process.imageAlt || ""}
+                src={howItWorks.image}
+                alt={howItWorks.imageAlt || ""}
                 loading="lazy"
                 decoding="async"
                 responsiveSrcset
-                sizes="(max-width: 767px) 88vw, (max-width: 1050px) 60vw, 53vw"
+                sizes="(max-width: 767px) 88vw, (max-width: 1050px) 67vw, 53vw"
                 imgClass="photo--editorial"
               />
             </figure>
           )}
 
-          {process.secondaryImage && (
-            <figure class="family-print family-process__photo family-process__photo--front" data-family-photo>
-              <span class="family-tape" aria-hidden="true"></span>
+          {howItWorks.secondaryImage && (
+            <figure
+              class="family-print family-how__photo family-how__photo--front"
+              data-family-photo
+            >
+              <span class="family-tape family-tape--reverse" aria-hidden="true"></span>
               <Picture
-                src={process.secondaryImage}
-                alt={process.secondaryImageAlt || ""}
+                src={howItWorks.secondaryImage}
+                alt={howItWorks.secondaryImageAlt || ""}
                 loading="lazy"
                 decoding="async"
                 optimizedMobileWidth={640}
@@ -191,31 +323,111 @@ const faqSchema = (questions.items || [])
         </div>
       )}
 
-      {process.items?.length && (
-        <div
-          class="family-process__ledger-frame"
-          data-line-target="process-ledger"
-        >
-          <span
-            class="family-process__ledger-line"
-            data-construction-line
-            data-line-anchor="grid"
-            data-anchor-target="process-ledger"
-            aria-hidden="true"
-          ></span>
-          <ol class="family-process__ledger">
-            {process.items.map((item, index) => (
-              <li>
-                <span class="family-process__number" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+      {howItWorks.items?.length && (
+        <ol class="family-how__ledger">
+          {howItWorks.items.map((item, index) => (
+            <li>
+              <span class="family-how__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
                 {item.heading && <h3>{item.heading}</h3>}
-                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-              </li>
-            ))}
-          </ol>
-        </div>
+                {item.paragraphs?.map((paragraph) => {
+                  const investmentPhraseStart = paragraph.indexOf(investmentPhrase);
+                  const shouldLinkInvestment =
+                    index === 3 && investmentPhraseStart >= 0;
+                  const beforeLink = shouldLinkInvestment
+                    ? paragraph.slice(0, investmentPhraseStart)
+                    : paragraph;
+                  const afterLink = shouldLinkInvestment
+                    ? paragraph.slice(investmentPhraseStart + investmentPhrase.length)
+                    : "";
+
+                  return (
+                    <p>
+                      {shouldLinkInvestment ? (
+                        <>
+                          {beforeLink}<a href={investmentHref}>{investmentPhrase}</a>{afterLink}
+                        </>
+                      ) : paragraph}
+                    </p>
+                  );
+                })}
+              </div>
+            </li>
+          ))}
+        </ol>
       )}
+    </div>
+  </section>
+
+  <section
+    class="family-seasonality"
+    aria-labelledby={`${seasonality.id}-title`}
+  >
+    <div class="family-shell family-seasonality__inner">
+      <div class="family-seasonality__copy">
+        <span class="family-section-number" aria-hidden="true">06</span>
+        <h2 id={`${seasonality.id}-title`}>{seasonality.heading}</h2>
+
+        {seasonality.paragraphs?.length && (
+          <div class="family-seasonality__seasons">
+            {seasonality.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        )}
+
+        {seasonality.links?.[0] && (
+          <a class="family-text-link" href={seasonality.links[0].href}>
+            {seasonality.links[0].label}
+          </a>
+        )}
+      </div>
+
+      <div class="family-seasonality__media" data-line-target="seasonality-media">
+        <span
+          class="family-seasonality__line"
+          data-construction-line
+          data-line-anchor="image"
+          data-anchor-target="seasonality-media"
+          aria-hidden="true"
+        ></span>
+
+        {seasonality.image && (
+          <figure
+            class="family-seasonality__landscape"
+            data-family-photo
+          >
+            <span class="family-tape" aria-hidden="true"></span>
+            <Picture
+              src={seasonality.image}
+              alt={seasonality.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 100vw, (max-width: 1050px) 68vw, 52vw"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+
+        {seasonality.secondaryImage && (
+          <figure
+            class="family-seasonality__arch"
+            data-family-arch
+            data-family-photo
+          >
+            <Picture
+              src={seasonality.secondaryImage}
+              alt={seasonality.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              optimizedMobileWidth={640}
+              optimizedDesktopWidth={960}
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
     </div>
   </section>
 
@@ -240,31 +452,30 @@ const faqSchema = (questions.items || [])
 
     <div class="family-shell family-heirlooms__inner">
       <div class="family-heirlooms__copy">
-        <span class="family-section-number" aria-hidden="true">04</span>
-        <h2 id={`${heirlooms.id}-title`}>
-          <span>{heirloomHeadingLead}</span>
-          {" "}
-          {heirloomHeadingLead !== heirlooms.heading && <span>{heirloomHeadingTail}</span>}
-        </h2>
+        <span class="family-section-number" aria-hidden="true">07</span>
+        <h2 id={`${heirlooms.id}-title`}>{heirlooms.heading}</h2>
         <div class="family-prose">
           {heirlooms.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
+
+        {heirlooms.links?.[0] && (
+          <p class="family-context-link">
+            <a href={heirlooms.links[0].href}>{heirlooms.links[0].label}</a>
+          </p>
+        )}
       </div>
 
       {heirlooms.secondaryImage && (
-        <div class="family-heirlooms__prints" data-family-overlap>
-          <figure class="family-print family-heirlooms__print family-heirlooms__print--rear" aria-hidden="true" data-family-photo>
-            <Picture
-              src={reviews.image || heirlooms.secondaryImage}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              optimizedMobileWidth={400}
-              optimizedDesktopWidth={640}
-              imgClass="family-heirlooms__rear-image"
-            />
-          </figure>
-          <figure class="family-print family-heirlooms__print family-heirlooms__print--front" data-family-photo>
+        <div class="family-heirlooms__media" data-family-overlap>
+          <span
+            class="family-heirlooms__line"
+            data-construction-line
+            aria-hidden="true"
+          ></span>
+          <figure
+            class="family-print family-heirlooms__print"
+            data-family-photo
+          >
             <span class="family-tape" aria-hidden="true"></span>
             <Picture
               src={heirlooms.secondaryImage}
@@ -282,121 +493,6 @@ const faqSchema = (questions.items || [])
   </section>
 
   <section
-    class="family-locations"
-    aria-labelledby={`${locations.id}-title`}
-  >
-    <div class="family-shell family-locations__inner">
-      <div class="family-locations__copy">
-        <span class="family-section-number" aria-hidden="true">05</span>
-        <h2 id={`${locations.id}-title`}>
-          <span>{locationsHeadingLead}{locationsHeadingRest && " —"}</span>
-          {" "}
-          {locationsHeadingMiddle && <span>{locationsHeadingMiddle}</span>}
-          {" "}
-          {locationsHeadingTail && <span>Around {locationsHeadingTail}</span>}
-        </h2>
-        <div class="family-prose">
-          {locations.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-        </div>
-        {locations.links?.map((link) => (
-          <a class="family-text-link" href={link.href}>{link.label}</a>
-        ))}
-      </div>
-
-      <div class="family-locations__media">
-        {locations.image && (
-          <figure class="family-locations__landscape" data-family-photo>
-            <span class="family-tape" aria-hidden="true"></span>
-            <Picture
-              src={locations.image}
-              alt={locations.imageAlt || ""}
-              loading="lazy"
-              decoding="async"
-              responsiveSrcset
-              sizes="(max-width: 767px) 100vw, (max-width: 1050px) 72vw, 54vw"
-              imgClass="photo--editorial"
-            />
-          </figure>
-        )}
-
-        {locations.secondaryImage && (
-          <figure class="family-locations__arch" data-family-photo>
-            <Picture
-              src={locations.secondaryImage}
-              alt={locations.secondaryImageAlt || ""}
-              loading="lazy"
-              decoding="async"
-              optimizedMobileWidth={640}
-              imgClass="photo--editorial"
-            />
-          </figure>
-        )}
-      </div>
-    </div>
-  </section>
-
-  <section
-    class="family-reviews"
-    aria-labelledby={`${reviews.id}-title`}
-    data-line-target="reviews-section"
-  >
-    <span
-      class="family-reviews__boundary family-reviews__boundary--top"
-      data-construction-line
-      data-line-anchor="section"
-      data-anchor-target="reviews-section"
-      aria-hidden="true"
-    ></span>
-    <span
-      class="family-reviews__boundary family-reviews__boundary--bottom"
-      data-construction-line
-      data-line-anchor="section"
-      data-anchor-target="reviews-section"
-      aria-hidden="true"
-    ></span>
-
-    <div class="family-shell family-reviews__inner">
-      <div class="family-reviews__copy">
-        <h2 id={`${reviews.id}-title`}>{reviews.heading}</h2>
-        {reviewQuote && <blockquote><p>{reviewQuote}</p></blockquote>}
-        {reviews.links?.map((link) => (
-          <a class="family-text-link" href={link.href}>{link.label}</a>
-        ))}
-      </div>
-
-      {reviews.image && (
-        <div class="family-reviews__prints" data-family-overlap>
-          {reviews.secondaryImage && (
-            <figure class="family-print family-reviews__print family-reviews__print--rear" aria-hidden="true" data-family-photo>
-              <Picture
-                src={reviews.secondaryImage}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                optimizedMobileWidth={400}
-                optimizedDesktopWidth={640}
-                imgClass="photo--editorial"
-              />
-            </figure>
-          )}
-          <figure class="family-print family-reviews__print family-reviews__print--front" data-family-photo>
-            <span class="family-tape" aria-hidden="true"></span>
-            <Picture
-              src={reviews.image}
-              alt={reviews.imageAlt || ""}
-              loading="lazy"
-              decoding="async"
-              optimizedMobileWidth={640}
-              optimizedDesktopWidth={960}
-              imgClass="family-reviews__monochrome"
-            />
-          </figure>
-        </div>
-      )}
-    </div>
-  </section>
-
-  <section
     class="family-faq"
     aria-labelledby={`${questions.id}-title`}
   >
@@ -404,6 +500,7 @@ const faqSchema = (questions.items || [])
       <div class="family-faq__content">
         <header class="family-faq__heading">
           <span class="family-faq__title-rule" aria-hidden="true"></span>
+          <span class="family-section-number" aria-hidden="true">08</span>
           <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
         </header>
 
@@ -431,6 +528,7 @@ const faqSchema = (questions.items || [])
 
       {page.finalCta && (
         <aside
+          id="family-final-cta"
           class="family-faq__note"
           aria-labelledby="family-faq-note-title"
         >
