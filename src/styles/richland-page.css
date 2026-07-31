@@ -1,0 +1,1184 @@
+.richland-page {
+  --richland-line-dark: color-mix(in srgb, var(--color-walnut) 52%, transparent);
+  --richland-line-light: color-mix(in srgb, var(--color-warm-ivory) 56%, transparent);
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
+  overflow-x: clip;
+}
+
+.richland-page :where(h1, h2, h3, p, figure) {
+  margin: 0;
+}
+
+.richland-page :where(h1, h2, h3) {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: var(--font-weight-regular);
+}
+
+.richland-page picture,
+.richland-page picture img {
+  display: block;
+  width: 100%;
+}
+
+.richland-page picture img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.richland-shell {
+  position: relative;
+  width: min(calc(100% - 5rem), 78rem);
+  margin-inline: auto;
+}
+
+.richland-eyebrow,
+.richland-ledger-number {
+  font-family: var(--font-utility);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.22em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.richland-eyebrow::before {
+  display: block;
+  width: 3.75rem;
+  height: 1px;
+  margin-bottom: 1.4rem;
+  background: currentColor;
+  content: "";
+  opacity: 0.7;
+}
+
+.richland-prose {
+  display: grid;
+  gap: 1.25rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.45vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.58;
+}
+
+.richland-print {
+  padding: 0.65rem 0.65rem 1.45rem;
+  background: var(--color-warm-ivory);
+}
+
+.richland-tape {
+  position: absolute;
+  z-index: 5;
+  display: block;
+  width: 6.75rem;
+  height: 1.65rem;
+  background: color-mix(in srgb, var(--color-weathered-sand) 74%, transparent);
+  clip-path: polygon(2% 8%, 98% 0, 100% 87%, 3% 100%, 0 56%);
+  transform-origin: center;
+}
+
+.richland-text-link {
+  display: inline-flex;
+  min-height: var(--minimum-hit-area);
+  align-items: center;
+  border-bottom: 1px solid currentColor;
+  color: inherit;
+  font-family: var(--font-utility);
+  font-size: var(--font-size-button);
+  letter-spacing: var(--tracking-button);
+  line-height: 1.35;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Local introduction — the linework is tied to the two photograph edges. */
+
+.richland-intro {
+  position: relative;
+  padding: 8rem 0 9.5rem;
+  background: var(--color-weathered-sand);
+}
+
+.richland-intro__inner {
+  display: grid;
+  grid-template-columns: minmax(25rem, 1.03fr) minmax(24rem, 0.97fr);
+  gap: clamp(4.5rem, 8vw, 8.5rem);
+  align-items: center;
+}
+
+.richland-intro__media {
+  position: relative;
+  min-height: 43rem;
+}
+
+.richland-intro__arch {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  width: 79%;
+  height: 37rem;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+}
+
+.richland-intro__arch img {
+  object-position: 50% 48%;
+}
+
+.richland-intro__print {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  left: 0;
+  width: 52%;
+  transform: rotate(-1.7deg);
+}
+
+.richland-intro__print picture,
+.richland-intro__print img {
+  aspect-ratio: 4 / 5;
+}
+
+.richland-intro__print img {
+  object-position: 50% 46%;
+}
+
+.richland-tape--intro {
+  top: -0.8rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+.richland-intro__line {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  background: var(--richland-line-dark);
+  pointer-events: none;
+}
+
+.richland-intro__line--horizontal {
+  top: 51%;
+  left: 0;
+  width: calc(50% + 2.5rem);
+  height: 1px;
+}
+
+.richland-intro__line--vertical {
+  top: -3.25rem;
+  bottom: -3.25rem;
+  left: 61%;
+  width: 1px;
+}
+
+.richland-intro__copy {
+  position: relative;
+  z-index: 3;
+  max-width: 35rem;
+}
+
+.richland-intro__copy h2 {
+  max-width: 12ch;
+  margin: 1.4rem 0 2.15rem;
+  font-size: clamp(3.3rem, 5vw, 5.35rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.94;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Richland spots — triptych and ledger share one continuous baseline. */
+
+.richland-spots {
+  padding: 8.5rem 0 8.75rem;
+  background: var(--color-warm-ivory);
+}
+
+.richland-spots > .richland-shell {
+  position: relative;
+}
+
+.richland-spots__heading {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  width: 34%;
+}
+
+.richland-spots__heading h2 {
+  max-width: 12ch;
+  font-size: clamp(3.25rem, 5.3vw, 5.6rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.richland-spots__composition {
+  position: relative;
+  display: grid;
+  min-height: 43rem;
+  grid-template-columns: 0.82fr 1.1fr 0.82fr;
+  gap: clamp(1rem, 2vw, 2rem);
+  align-items: end;
+  border-bottom: 1px solid var(--richland-line-dark);
+}
+
+.richland-spots__composition::before {
+  position: absolute;
+  z-index: 0;
+  top: 29%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--richland-line-dark);
+  content: "";
+}
+
+.richland-spots__photo {
+  position: relative;
+  z-index: 2;
+}
+
+.richland-spots__photo--left {
+  margin-bottom: 0;
+  transform: translateX(0.75rem) rotate(-1.4deg);
+}
+
+.richland-spots__photo--left picture,
+.richland-spots__photo--left img,
+.richland-spots__photo--right picture,
+.richland-spots__photo--right img {
+  aspect-ratio: 4 / 5;
+}
+
+.richland-spots__photo--left img {
+  object-position: 52% 48%;
+}
+
+.richland-spots__photo--arch {
+  align-self: stretch;
+  height: 43rem;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+}
+
+.richland-spots__photo--arch img {
+  object-position: 50% 45%;
+}
+
+.richland-spots__photo--right {
+  transform: translateX(-0.75rem) rotate(1.25deg);
+}
+
+.richland-spots__photo--right img {
+  object-position: 50% 46%;
+}
+
+.richland-tape--left {
+  top: -0.65rem;
+  right: 1.8rem;
+  transform: rotate(12deg);
+}
+
+.richland-spots__ledger {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--richland-line-dark);
+  list-style: none;
+}
+
+.richland-spots__ledger > li {
+  min-width: 0;
+  padding: 2.5rem clamp(1.5rem, 3vw, 2.75rem) 3rem;
+  border-right: 1px solid var(--richland-line-dark);
+}
+
+.richland-spots__ledger .richland-ledger-number {
+  color: var(--color-clay);
+}
+
+.richland-spots__ledger h3 {
+  margin: 1.15rem 0 1.25rem;
+  font-size: clamp(1.7rem, 2.5vw, 2.45rem);
+  line-height: 1.02;
+}
+
+.richland-spots__ledger p {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.richland-spots__guide {
+  margin-top: 2.75rem;
+}
+
+/* Service directory — text ledger reaches into an overlapping print cluster. */
+
+.richland-services {
+  padding: 9rem 0 9.5rem;
+  color: var(--color-warm-ivory);
+  background: var(--color-muted-olive);
+}
+
+.richland-services__inner {
+  display: grid;
+  grid-template-columns: minmax(24rem, 0.82fr) minmax(30rem, 1.18fr);
+  gap: clamp(4.5rem, 8vw, 8.5rem);
+  align-items: center;
+}
+
+.richland-services__copy h2 {
+  max-width: 12ch;
+  margin: 1.4rem 0 3.5rem;
+  font-size: clamp(3.2rem, 5vw, 5.2rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.93;
+  text-transform: uppercase;
+}
+
+.richland-services__copy h2 span {
+  display: block;
+}
+
+.richland-services__list {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--richland-line-light);
+  border-left: 1px solid var(--richland-line-light);
+  list-style: none;
+}
+
+.richland-services__list li {
+  display: grid;
+  min-height: 4.85rem;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  align-items: center;
+  border-top: 1px solid var(--richland-line-light);
+}
+
+.richland-services__list li > span {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid var(--richland-line-light);
+  color: var(--color-warm-ivory);
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+}
+
+.richland-services__list :where(a, strong) {
+  display: flex;
+  min-height: 4.85rem;
+  align-items: center;
+  padding: 0.9rem 1.35rem;
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.richland-services__list a {
+  transition: color 220ms var(--ease-ui), transform 220ms var(--ease-ui);
+}
+
+.richland-services__media {
+  position: relative;
+  min-height: 43rem;
+}
+
+.richland-services__rule {
+  position: absolute;
+  z-index: 0;
+  top: 44%;
+  right: -4rem;
+  left: -5rem;
+  height: 1px;
+  background: var(--richland-line-light);
+}
+
+.richland-services__photo {
+  position: absolute;
+}
+
+.richland-services__photo--rear {
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 84%;
+  height: 33rem;
+}
+
+.richland-services__photo--rear img {
+  object-position: 50% 47%;
+}
+
+.richland-services__photo--front {
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 43%;
+  transform: rotate(-2deg);
+}
+
+.richland-services__photo--front picture,
+.richland-services__photo--front img {
+  aspect-ratio: 4 / 5;
+}
+
+.richland-services__photo--front img {
+  object-position: 50% 36%;
+}
+
+.richland-tape--service {
+  top: -0.85rem;
+  right: 1rem;
+  transform: rotate(20deg);
+}
+
+/* An unlabeled contact sheet keeps the rhythm without claiming pending local evidence. */
+
+.richland-interlude {
+  padding: 6.75rem 0 0;
+  background: var(--color-walnut);
+}
+
+.richland-interlude__contact-sheet {
+  display: grid;
+  height: 38rem;
+  grid-template-columns: 0.9fr 1.12fr 0.88fr;
+  gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  align-items: end;
+}
+
+.richland-interlude__contact-sheet::before {
+  position: absolute;
+  z-index: 0;
+  top: 35%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--richland-line-light);
+  content: "";
+}
+
+.richland-interlude__print,
+.richland-interlude__arch {
+  position: relative;
+  z-index: 2;
+}
+
+.richland-interlude__print picture,
+.richland-interlude__print img {
+  aspect-ratio: 4 / 5;
+}
+
+.richland-interlude__print--one {
+  transform: translateY(2rem) rotate(-2deg);
+}
+
+.richland-interlude__arch {
+  align-self: stretch;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+}
+
+.richland-interlude__arch img {
+  object-position: 50% 36%;
+}
+
+.richland-interlude__print--three {
+  transform: translateY(1rem) rotate(1.8deg);
+}
+
+.richland-tape--interlude {
+  top: -0.65rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-7deg);
+}
+
+/* FAQ — all horizontal rules terminate at a real vertical ledger edge. */
+
+.richland-faq {
+  padding: 9rem 0 9.5rem;
+  background: var(--color-warm-ivory);
+}
+
+.richland-faq__inner {
+  display: grid;
+  grid-template-columns: minmax(29rem, 1.14fr) minmax(23rem, 0.86fr);
+  gap: clamp(4.5rem, 8vw, 8rem);
+  align-items: start;
+}
+
+.richland-faq__questions > header {
+  margin-bottom: 3.5rem;
+}
+
+.richland-faq__questions h2 {
+  max-width: 8ch;
+  margin-top: 1.35rem;
+  font-size: clamp(3.25rem, 5vw, 5.1rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.richland-faq__ledger {
+  border-bottom: 1px solid var(--richland-line-dark);
+  border-left: 1px solid var(--richland-line-dark);
+}
+
+.richland-faq__ledger details {
+  border-top: 1px solid var(--richland-line-dark);
+}
+
+.richland-faq__ledger summary {
+  display: grid;
+  min-height: 6.6rem;
+  grid-template-columns: 4.5rem minmax(0, 1fr) 4rem;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+
+.richland-faq__ledger summary::-webkit-details-marker {
+  display: none;
+}
+
+.richland-faq__number {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid var(--richland-line-dark);
+  color: var(--color-clay);
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+.richland-faq__ledger h3 {
+  padding: 1.3rem 1.5rem;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1.12;
+}
+
+.richland-faq__mark {
+  position: relative;
+  align-self: stretch;
+  border-left: 1px solid var(--richland-line-dark);
+}
+
+.richland-faq__mark::before,
+.richland-faq__mark::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.richland-faq__mark::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform 220ms var(--ease-ui);
+}
+
+.richland-faq__ledger details[open] .richland-faq__mark::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.richland-faq__answer {
+  padding: 0 4rem 2rem 6rem;
+}
+
+.richland-faq__answer p {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.richland-faq__note {
+  position: relative;
+  min-height: 42rem;
+  aspect-ratio: 2 / 3;
+  color: var(--color-warm-ivory);
+  isolation: isolate;
+}
+
+.richland-faq__paper-frame {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.richland-faq__paper-art {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.richland-faq__note-copy {
+  display: flex;
+  height: 100%;
+  padding: 23% 13% 12%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.richland-faq__note-number {
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+}
+
+.richland-faq__note h3 {
+  max-width: 10ch;
+  margin: 1.5rem 0 2rem;
+  font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.richland-faq__note p {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.45vw, 1.2rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+/* Final invitation — the single construction line is the text frame itself. */
+
+.richland-final {
+  --color-focus-ring: var(--color-focus-ring-light);
+  position: relative;
+  display: grid;
+  min-height: 45rem;
+  place-items: center;
+  color: var(--color-warm-ivory);
+  background: var(--color-deep-umber);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.richland-final__background,
+.richland-final__background picture,
+.richland-final__background img,
+.richland-final__wash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.richland-final__background-image {
+  object-position: 50% 48%;
+  filter: saturate(0.84) brightness(0.66) sepia(0.08);
+}
+
+.richland-final__wash {
+  background: color-mix(in srgb, var(--color-deep-umber) 70%, transparent);
+}
+
+.richland-final__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding-block: 7rem;
+}
+
+.richland-final__frame {
+  width: min(100%, 55rem);
+  padding: clamp(3rem, 6vw, 5.5rem);
+  border: 1px solid var(--richland-line-light);
+  text-align: center;
+}
+
+.richland-final__script {
+  margin-bottom: -0.08em;
+  color: var(--color-weathered-sand);
+  font-family: var(--font-script);
+  font-size: clamp(2.7rem, 4.8vw, 4.7rem);
+  line-height: 0.92;
+  transform: rotate(-2deg);
+}
+
+.richland-final h2 {
+  margin-inline: auto;
+  font-size: clamp(3.35rem, 6.3vw, 6.5rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.92;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.richland-final__frame > p:not(.richland-final__script) {
+  max-width: 38rem;
+  margin: 2rem auto 0;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.richland-final .outline-button {
+  margin-top: 2.5rem;
+  border-color: var(--color-warm-ivory);
+  color: var(--color-warm-ivory);
+  background: color-mix(in srgb, var(--color-deep-umber) 42%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .richland-services__list a:hover {
+    color: var(--color-warm-ivory);
+    transform: translateX(0.25rem);
+  }
+
+  .richland-text-link:hover {
+    color: var(--color-clay);
+  }
+
+  .richland-final .outline-button:hover {
+    border-color: var(--color-warm-ivory);
+    color: var(--color-deep-umber);
+    background: var(--color-warm-ivory);
+  }
+}
+
+@media (max-width: 1250px) {
+  .richland-shell {
+    width: min(calc(100% - 4rem), 69rem);
+  }
+
+  .richland-intro__inner {
+    grid-template-columns: minmax(22rem, 0.95fr) minmax(23rem, 1.05fr);
+    gap: 4rem;
+  }
+
+  .richland-intro__media {
+    min-height: 38rem;
+  }
+
+  .richland-intro__arch {
+    height: 33rem;
+  }
+
+  .richland-spots__composition {
+    min-height: 37rem;
+  }
+
+  .richland-spots__photo--arch {
+    height: 37rem;
+  }
+
+  .richland-services__inner {
+    grid-template-columns: minmax(22rem, 0.92fr) minmax(25rem, 1.08fr);
+    gap: 4rem;
+  }
+
+  .richland-services__media {
+    min-height: 37rem;
+  }
+
+  .richland-services__photo--rear {
+    height: 29rem;
+  }
+
+  .richland-faq__inner {
+    grid-template-columns: minmax(26rem, 1.08fr) minmax(21rem, 0.92fr);
+    gap: 4rem;
+  }
+
+  .richland-faq__note {
+    min-height: 38rem;
+  }
+}
+
+@media (max-width: 1050px) {
+  .richland-shell {
+    width: min(calc(100% - 3rem), 58rem);
+  }
+
+  .richland-intro,
+  .richland-spots,
+  .richland-services,
+  .richland-faq {
+    padding-block: 7rem;
+  }
+
+  .richland-intro__inner {
+    grid-template-columns: minmax(19rem, 0.92fr) minmax(22rem, 1.08fr);
+    gap: 3rem;
+  }
+
+  .richland-intro__media {
+    min-height: 34rem;
+  }
+
+  .richland-intro__arch {
+    height: 29rem;
+  }
+
+  .richland-intro__copy h2 {
+    font-size: clamp(2.8rem, 5.6vw, 4.2rem);
+  }
+
+  .richland-spots__composition {
+    min-height: 31rem;
+  }
+
+  .richland-spots__photo--arch {
+    height: 31rem;
+  }
+
+  .richland-spots__ledger > li {
+    padding-inline: 1.35rem;
+  }
+
+  .richland-services__inner {
+    grid-template-columns: minmax(21rem, 0.98fr) minmax(21rem, 1.02fr);
+    gap: 3rem;
+  }
+
+  .richland-services__media {
+    min-height: 34rem;
+  }
+
+  .richland-services__photo--rear {
+    width: 90%;
+    height: 27rem;
+  }
+
+  .richland-services__photo--front {
+    width: 48%;
+  }
+
+  .richland-interlude__contact-sheet {
+    height: 32rem;
+  }
+
+  .richland-faq__inner {
+    grid-template-columns: minmax(24rem, 1fr) minmax(19rem, 0.88fr);
+    gap: 3rem;
+  }
+
+  .richland-faq__ledger summary {
+    grid-template-columns: 3.75rem minmax(0, 1fr) 3.5rem;
+  }
+
+  .richland-faq__answer {
+    padding-inline: 4.75rem 2rem;
+  }
+
+  .richland-faq__note {
+    min-height: 34rem;
+  }
+
+  .richland-faq__note-copy {
+    padding-inline: 14%;
+  }
+}
+
+@media (max-width: 767px) {
+  .richland-shell {
+    width: min(calc(100% - 2rem), 36rem);
+  }
+
+  .richland-intro,
+  .richland-spots,
+  .richland-services,
+  .richland-faq {
+    padding-block: 5.75rem;
+  }
+
+  .richland-eyebrow,
+  .richland-ledger-number {
+    font-size: 0.75rem;
+  }
+
+  .richland-intro__inner,
+  .richland-services__inner,
+  .richland-faq__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .richland-intro__inner {
+    gap: 4rem;
+  }
+
+  .richland-intro__media {
+    min-height: 34rem;
+  }
+
+  .richland-intro__arch {
+    right: 0;
+    width: 79%;
+    height: 29rem;
+  }
+
+  .richland-intro__print {
+    width: 51%;
+  }
+
+  .richland-intro__line--horizontal {
+    top: 24rem;
+    width: 100%;
+  }
+
+  .richland-intro__line--vertical {
+    top: -2rem;
+    bottom: -1.5rem;
+    left: 63%;
+  }
+
+  .richland-intro__copy h2 {
+    max-width: 11ch;
+    font-size: clamp(2.8rem, 13vw, 4.25rem);
+  }
+
+  .richland-spots__heading {
+    position: static;
+    display: block;
+    width: auto;
+    margin-bottom: 3rem;
+  }
+
+  .richland-spots__heading h2 {
+    font-size: clamp(2.8rem, 13vw, 4.35rem);
+  }
+
+  .richland-spots__composition {
+    display: block;
+    min-height: 32rem;
+  }
+
+  .richland-spots__composition::before {
+    top: 65%;
+  }
+
+  .richland-spots__photo--arch {
+    position: absolute;
+    top: 0;
+    right: 10%;
+    width: 70%;
+    height: 29rem;
+  }
+
+  .richland-spots__photo--left,
+  .richland-spots__photo--right {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    width: 42%;
+  }
+
+  .richland-spots__photo--left {
+    left: -0.25rem;
+  }
+
+  .richland-spots__photo--right {
+    right: -0.25rem;
+  }
+
+  .richland-spots__ledger {
+    grid-template-columns: minmax(0, 1fr);
+    border-top: 0;
+  }
+
+  .richland-spots__ledger > li {
+    padding: 2rem 1.4rem 2.25rem;
+    border-top: 1px solid var(--richland-line-dark);
+  }
+
+  .richland-spots__guide {
+    margin-top: 2.25rem;
+  }
+
+  .richland-services__inner {
+    gap: 4.5rem;
+  }
+
+  .richland-services__copy h2 {
+    max-width: 12ch;
+    font-size: clamp(2.8rem, 13vw, 4.35rem);
+  }
+
+  .richland-services__list {
+    width: 100%;
+  }
+
+  .richland-services__list li {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+  }
+
+  .richland-services__list :where(a, strong) {
+    font-size: clamp(1.4rem, 6vw, 1.85rem);
+  }
+
+  .richland-services__media {
+    min-height: 32rem;
+  }
+
+  .richland-services__rule {
+    right: 0;
+    left: 0;
+  }
+
+  .richland-services__photo--rear {
+    width: 82%;
+    height: 25rem;
+  }
+
+  .richland-services__photo--front {
+    width: 46%;
+  }
+
+  .richland-interlude {
+    padding-top: 4.5rem;
+  }
+
+  .richland-interlude__contact-sheet {
+    height: 28rem;
+    grid-template-columns: 0.82fr 1.16fr 0.82fr;
+    gap: 0.4rem;
+  }
+
+  .richland-interlude__print {
+    padding: 0.35rem 0.35rem 0.85rem;
+  }
+
+  .richland-faq__inner {
+    gap: 4.5rem;
+  }
+
+  .richland-faq__questions h2 {
+    font-size: clamp(2.8rem, 13vw, 4.25rem);
+  }
+
+  .richland-faq__ledger summary {
+    min-height: 6rem;
+    grid-template-columns: 3.4rem minmax(0, 1fr) 3.4rem;
+  }
+
+  .richland-faq__ledger h3 {
+    padding-inline: 1rem;
+    font-size: clamp(1.4rem, 6vw, 1.75rem);
+  }
+
+  .richland-faq__answer {
+    padding: 0 1.25rem 1.75rem 4.4rem;
+  }
+
+  .richland-faq__note {
+    width: min(100%, 28rem);
+    min-height: 0;
+    margin-inline: auto;
+  }
+
+  .richland-faq__note h3 {
+    font-size: clamp(2.15rem, 10vw, 3.1rem);
+  }
+
+  .richland-final {
+    min-height: 41rem;
+  }
+
+  .richland-final__background-image {
+    object-position: 52% 50%;
+  }
+
+  .richland-final__inner {
+    padding-block: 5rem;
+  }
+
+  .richland-final__frame {
+    padding: 3.25rem 1.35rem;
+  }
+
+  .richland-final h2 {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+  }
+}
+
+@media (max-width: 479px) {
+  .richland-shell {
+    width: min(calc(100% - 1.5rem), 32rem);
+  }
+
+  .richland-intro__media {
+    min-height: 31rem;
+  }
+
+  .richland-intro__arch {
+    height: 26rem;
+  }
+
+  .richland-intro__line--horizontal {
+    top: 21.5rem;
+  }
+
+  .richland-spots__composition {
+    min-height: 29rem;
+  }
+
+  .richland-spots__photo--arch {
+    height: 26rem;
+  }
+
+  .richland-spots__guide {
+    max-width: 100%;
+    font-size: 0.75rem;
+  }
+
+  .richland-services__media {
+    min-height: 29rem;
+  }
+
+  .richland-services__photo--rear {
+    height: 23rem;
+  }
+
+  .richland-interlude__contact-sheet {
+    height: 24rem;
+  }
+
+  .richland-faq__note-copy {
+    padding: 22% 12% 11%;
+  }
+
+  .richland-faq__note p {
+    font-size: 1rem;
+    line-height: 1.48;
+  }
+
+  .richland-final__frame {
+    padding-inline: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .richland-page *,
+  .richland-page *::before,
+  .richland-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

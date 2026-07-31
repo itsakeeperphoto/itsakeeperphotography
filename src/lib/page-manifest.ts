@@ -104,8 +104,9 @@ export const pageManifest = [
     llms: true,
     primaryRoute: true,
     signature: "crossing-line",
-    title: "Photography Session Investment | It's A Keeper Photography",
-    summary: "What to expect before, during and after a portrait session with Lisa.",
+    title: "Investment & Experience | It's A Keeper Photography",
+    summary:
+      "Session coverage, photo collections and what to expect before, during and after a portrait session with Lisa.",
   },
   {
     id: "about",
@@ -149,8 +150,9 @@ export const pageManifest = [
     llms: true,
     primaryRoute: true,
     signature: "overlap",
-    title: "Contact It's A Keeper Photography | Plan Your Session",
-    summary: "Start planning a portrait session with Lisa in the Tri-Cities.",
+    title: "Session Pricing Estimate | It's A Keeper Photography",
+    summary:
+      "Build a personalized photography session pricing estimate, then plan the details with Lisa.",
   },
   {
     id: "richland",

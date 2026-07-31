@@ -10,57 +10,145 @@
   "hero": {
     "tone": "earth",
     "heading": "Your Richland, WA Photographer",
-    "intro": "Senior pictures, family sessions, newborns and branding photography in Richland — from a photographer who's been chasing this town's golden hour for twenty years."
+    "intro": "Senior pictures, family sessions, newborns and branding photography in Richland — from a photographer who's been chasing this town's golden hour for twenty years.",
+    "scriptLine": "right here in Richland",
+    "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
+    "imageAlt": "High school senior photographed beside the river in warm evening light in the Tri-Cities",
+    "secondaryImage": "/uploads/headshot-warm-portrait-tricities.jpg",
+    "secondaryImageAlt": "Warm golden-hour portrait among flowers in the Tri-Cities"
   },
   "sections": [
     {
       "id": "i-live-here",
-      "kind": "prose",
-      "tone": "ivory",
+      "kind": "split",
+      "tone": "sand",
       "heading": "I Don't Just Work in Richland — I Live Here",
       "paragraphs": [
         "It's A Keeper Photography is based right here in Richland. This is where I raised my family, where my business grew from a mom with a point-and-shoot into twenty years of professional photography, and where I know — down to the week — when the light turns gold along the river.",
         "That matters more than it sounds. When you book a Richland session with me, you're not getting a photographer guessing at locations from Google Maps. You're getting someone who knows which park empties out at dinnertime, where the trees hold their color longest in October, and exactly where the sun drops behind the ridge."
-      ]
+      ],
+      "image": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+      "imageAlt": "Family embracing outdoors during a golden-hour portrait session in the Tri-Cities",
+      "secondaryImage": "/uploads/investment-lisa-photographing-outdoors-tricities.jpg",
+      "secondaryImageAlt": "Lisa photographing a portrait session outdoors in the Tri-Cities"
     },
     {
-      "id": "richland-session-directory",
-      "kind": "services",
-      "tone": "sand",
-      "heading": "Sessions I Photograph in Richland",
+      "id": "richland-spots",
+      "kind": "locations",
+      "tone": "ivory",
+      "heading": "My Favorite Richland Session Spots",
+      "items": [
+        {
+          "heading": "Along the Columbia River",
+          "paragraphs": [
+            "Howard Amon Park and the riverfront paths give us water, willows and that soft evening glow coming off the Columbia. Perfect for families with kids who need room to run."
+          ],
+          "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
+          "imageAlt": "Golden-hour portrait beside the river in the Tri-Cities"
+        },
+        {
+          "heading": "Fields, hills and open sky",
+          "paragraphs": [
+            "The open spaces around Badger Mountain and the edges of West Richland turn amber at golden hour — my favorite backdrop for seniors and couples who want that warm, wide-open feel."
+          ],
+          "image": "/uploads/headshot-environmental-portrait-tricities.jpg",
+          "imageAlt": "Portrait in an open outdoor setting in the Tri-Cities"
+        },
+        {
+          "heading": "A place that's already yours",
+          "paragraphs": [
+            "Your backyard, grandma's orchard, the spot where he proposed. Some of my favorite Richland sessions have happened in places that already held a memory."
+          ],
+          "image": "/uploads/couples-portrait-outdoors-richland.jpg",
+          "imageAlt": "Couple sharing a quiet moment during an outdoor portrait session"
+        }
+      ],
       "links": [
         {
-          "label": "Senior Pictures",
-          "href": "/senior-photographer-tri-cities-wa/"
-        },
-        {
-          "label": "Family Photography",
-          "href": "/family-photographer-tri-cities-wa/"
-        },
-        {
-          "label": "Best places to take pictures in the Tri-Cities",
+          "label": "Read the full guide to the best places to take pictures in the Tri-Cities",
           "href": "/journal/family-photo-locations-tri-cities/"
         }
       ]
     },
     {
+      "id": "richland-session-directory",
+      "kind": "services",
+      "tone": "olive",
+      "heading": "Sessions I Photograph in Richland",
+      "items": [
+        {
+          "heading": "Senior Pictures",
+          "links": [
+            {
+              "label": "Senior Pictures",
+              "href": "/senior-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Family Photography",
+          "links": [
+            {
+              "label": "Family Photography",
+              "href": "/family-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Newborn Photography"
+        },
+        {
+          "heading": "Branding & Custom Business Photography"
+        },
+        {
+          "heading": "Professional Headshots"
+        }
+      ],
+      "image": "/uploads/extended-family-embrace-tricities.jpg",
+      "imageAlt": "Extended family gathered closely for a portrait in the Tri-Cities",
+      "secondaryImage": "/uploads/headshot-formal-portrait-stairs-tricities.jpg",
+      "secondaryImageAlt": "Portrait photographed on location in the Tri-Cities"
+    },
+    {
+      "id": "recent-richland-sessions",
+      "kind": "prose",
+      "tone": "walnut",
+      "heading": "Recent Richland Sessions"
+    },
+    {
       "id": "richland-questions",
       "kind": "faq",
-      "tone": "olive",
+      "tone": "ivory",
       "heading": "Richland Questions",
       "items": [
+        {
+          "heading": "Do you have a studio in Richland?",
+          "paragraphs": [
+            "My sessions happen outdoors in natural light — Richland's parks, river paths and open spaces are my studio."
+          ]
+        },
         {
           "heading": "What's the best time of year for photos in Richland?",
           "paragraphs": [
             "Every season has its light. October gives us autumn color along the river; summer evenings are warm and golden; spring brings blossoms. We'll match the season to your story."
           ]
+        },
+        {
+          "heading": "Do you travel outside Richland?",
+          "paragraphs": [
+            "Yes — I photograph throughout the Tri-Cities, including Kennewick and Pasco, at no extra charge."
+          ]
         }
-      ]
+      ],
+      "image": "/uploads/investment-final-torn-paper-pin.png",
+      "imageAlt": ""
     }
   ],
   "finalCta": {
     "tone": "umber",
     "heading": "Let's Find Your Light in Richland",
+    "image": "/uploads/family-newborn-sunset-tricities.jpg",
+    "imageAlt": "Family holding their newborn outdoors at sunset in the Tri-Cities",
     "link": {
       "label": "Start planning",
       "href": "/contact/"

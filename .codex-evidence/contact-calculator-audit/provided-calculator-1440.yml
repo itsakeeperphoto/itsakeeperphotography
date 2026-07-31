@@ -1,0 +1,170 @@
+- generic [active] [ref=e1] [box=0,0,1440,3620]:
+  - banner [ref=e2] [box=0,0,1440,95]:
+    - link "It's a Keeper" [ref=e3] [cursor=pointer] [box=32,30,178,35]:
+      - /url: "#"
+    - link "Book a Session" [ref=e4] [cursor=pointer] [box=1228,24,180,47]:
+      - /url: "#cta"
+  - generic [ref=e5] [box=0,95,1440,351]:
+    - img "Family portrait at golden hour in the Columbia Basin" [ref=e6] [box=-104,78,1613,393]
+    - generic [ref=e8] [box=416,159,609,223]:
+      - heading "Build Your Session" [level=1] [ref=e9] [box=416,159,609,62]
+      - paragraph [ref=e10] [box=416,208,609,61]: let's make it a keeper
+      - generic [ref=e11] [box=719,329,1,1]: Let's make it a keeper.
+      - paragraph [ref=e12] [box=416,330,609,32]: Slide, select, and see your estimate update in real time.
+  - region [ref=e13] [box=0,446,1440,2120]:
+    - generic [ref=e14] [box=120,510,1200,1992]:
+      - generic [ref=e15] [box=120,510,709,1992]:
+        - paragraph [ref=e16] [box=120,522,709,19]: Session Builder
+        - paragraph [ref=e17] [box=120,549,709,26]: Every choice updates your estimate instantly. Nothing here is a final price.
+        - group "Step 1 · Session Type" [ref=e19] [box=120,591,709,211]:
+          - paragraph [ref=e21] [box=120,631,709,26]: Choose the story we're telling. This sets the tone — not the base price.
+          - radiogroup "Session type" [ref=e22] [box=120,680,709,122]:
+            - generic [ref=e23] [box=120,680,168,64]:
+              - radio "Senior Portraits" [checked] [ref=e24] [box=205,713,1,1]
+              - generic [ref=e25] [box=137,693,134,38]: Senior Portraits
+            - generic [ref=e26] [box=300,680,168,64]:
+              - radio "Headshots" [ref=e27] [box=385,713,1,1]
+              - generic [ref=e28] [box=341,703,87,19]: Headshots
+            - generic [ref=e29] [box=480,680,168,64]:
+              - radio "Family" [ref=e30] [box=565,713,1,1]
+              - generic [ref=e31] [box=540,703,49,19]: Family
+            - generic [ref=e32] [box=661,680,168,64]:
+              - radio "Elopement" [ref=e33] [box=745,713,1,1]
+              - generic [ref=e34] [box=703,703,84,19]: Elopement
+            - generic [ref=e35] [box=120,757,168,45]:
+              - radio "Business/Branding" [ref=e36] [box=205,780,1,1]
+              - generic [ref=e37] [box=128,770,151,19]: Business/Branding
+            - generic [ref=e38] [box=300,757,168,45]:
+              - radio "Pet Session" [ref=e39] [box=385,780,1,1]
+              - generic [ref=e40] [box=338,770,93,19]: Pet Session
+        - group "Step 2 · Session Package" [ref=e42] [box=120,850,709,379]:
+          - paragraph [ref=e44] [box=120,890,709,26]: Pick your shoot time. All packages include up to 5 people.
+          - generic [ref=e45] [box=120,939,709,289]:
+            - generic [ref=e46] [box=120,939,709,88]:
+              - radio "#ONE Up to 90 minutes · 1–2 locations · 2 outfit changes $160" [checked] [ref=e47] [box=142,960,18,18]
+              - generic [ref=e48] [box=179,962,579,48]:
+                - text: "#ONE"
+                - generic [ref=e49] [box=179,987,579,24]: Up to 90 minutes · 1–2 locations · 2 outfit changes
+              - generic [ref=e50] [box=774,956,38,32]: $160
+            - generic [ref=e51] [box=120,1040,709,88]:
+              - radio "#TWO 2 hours · 1–3 locations · 2–3 outfit changes $220" [ref=e52] [box=142,1061,18,18]
+              - generic [ref=e53] [box=179,1063,579,48]:
+                - text: "#TWO"
+                - generic [ref=e54] [box=179,1087,579,24]: 2 hours · 1–3 locations · 2–3 outfit changes
+              - generic [ref=e55] [box=774,1057,38,32]: $220
+            - generic [ref=e56] [box=120,1140,709,88]:
+              - radio "#THREE Up to 3 hours · 3–4 locations · 3–4 outfit changes $330" [ref=e57] [box=142,1161,18,18]
+              - generic [ref=e58] [box=179,1163,580,48]:
+                - text: "#THREE"
+                - generic [ref=e59] [box=179,1188,580,24]: Up to 3 hours · 3–4 locations · 3–4 outfit changes
+              - generic [ref=e60] [box=775,1157,37,32]: $330
+        - group "Step 3 · Number of People" [ref=e62] [box=120,1277,709,173]:
+          - paragraph [ref=e64] [box=120,1317,709,26]: Five people are included. Each additional person is a small add.
+          - group "Number of people" [ref=e65] [box=120,1366,146,46]:
+            - button "Remove one person" [disabled] [ref=e66] [box=121,1367,44,44]: −
+            - spinbutton "Number of people" [ref=e67] [box=165,1367,56,44]: "1"
+            - button "Add one person" [ref=e68] [cursor=pointer] [box=221,1367,44,44]: +
+          - paragraph [ref=e69] [box=120,1424,709,26]: Up to 5 people included.
+        - group "Step 4 · Product Collection" [ref=e71] [box=120,1498,709,479]:
+          - paragraph [ref=e73] [box=120,1538,709,26]: Choose how you'll keep your images. You can always decide later.
+          - generic [ref=e74] [box=120,1587,709,390]:
+            - generic [ref=e75] [box=120,1587,709,88]:
+              - radio "No Collection Decide later / session only $0" [checked] [ref=e76] [box=142,1608,18,18]
+              - generic [ref=e77] [box=179,1610,597,48]:
+                - text: No Collection
+                - generic [ref=e78] [box=179,1635,597,24]: Decide later / session only
+              - generic [ref=e79] [box=792,1604,20,32]: $0
+            - generic [ref=e80] [box=120,1688,709,88]:
+              - 'radio "Collection #1 (15) 4×6 linen prints · (15) retouched downloads $495.98" [ref=e81] [box=142,1709,18,18]'
+              - generic [ref=e82] [box=179,1711,552,48]:
+                - text: "Collection #1"
+                - generic [ref=e83] [box=179,1735,552,24]: (15) 4×6 linen prints · (15) retouched downloads
+              - generic [ref=e84] [box=747,1705,65,32]: $495.98
+            - generic [ref=e85] [box=120,1788,709,88]:
+              - 'radio "Collection #2 Mini 5×5 signature album (30 images) · (30) retouched downloads $1169.48" [ref=e86] [box=142,1809,18,18]'
+              - generic [ref=e87] [box=179,1811,546,48]:
+                - text: "Collection #2"
+                - generic [ref=e88] [box=179,1835,546,24]: Mini 5×5 signature album (30 images) · (30) retouched downloads
+              - generic [ref=e89] [box=741,1805,71,32]: $1169.48
+            - generic [ref=e90] [box=120,1888,709,88]:
+              - 'radio "Collection #3 Entire gallery · (100) retouched downloads · (1) 8×10 leather album (30 images) $1799.99" [ref=e91] [box=142,1909,18,18]'
+              - generic [ref=e92] [box=179,1911,544,48]:
+                - text: "Collection #3"
+                - generic [ref=e93] [box=179,1936,544,24]: Entire gallery · (100) retouched downloads · (1) 8×10 leather album (30 images)
+              - generic [ref=e94] [box=739,1905,73,32]: $1799.99
+        - group "Step 5 · Add-Ons" [ref=e96] [box=120,2025,709,429]:
+          - paragraph [ref=e98] [box=120,2065,709,26]: Optional extras to round out your session.
+          - paragraph [ref=e99] [box=120,2114,709,23]:
+            - text: Prices marked
+            - generic [ref=e100] [box=202,2116,66,22]: Estimate
+            - text: are provisional and easy to adjust.
+          - generic [ref=e101] [box=120,2154,709,300]:
+            - generic [ref=e102] [box=120,2154,709,66]:
+              - checkbox "Extra retouched digital image Estimate $25" [ref=e103] [box=141,2175,18,18]
+              - generic [ref=e104] [box=178,2177,590,24]:
+                - text: Extra retouched digital image
+                - generic [ref=e105] [box=466,2178,66,22]: Estimate
+              - generic [ref=e106] [box=784,2171,27,32]: $25
+            - generic [ref=e107] [box=120,2232,709,66]:
+              - checkbox "Additional outfit change Estimate $20" [ref=e108] [box=141,2253,18,18]
+              - generic [ref=e109] [box=178,2255,589,24]:
+                - text: Additional outfit change
+                - generic [ref=e110] [box=422,2256,66,22]: Estimate
+              - generic [ref=e111] [box=783,2249,29,32]: $20
+            - generic [ref=e112] [box=120,2310,709,66]:
+              - checkbox "Rush delivery (48h) Estimate $75" [ref=e113] [box=141,2331,18,18]
+              - generic [ref=e114] [box=178,2333,590,24]:
+                - text: Rush delivery (48h)
+                - generic [ref=e115] [box=364,2334,66,22]: Estimate
+              - generic [ref=e116] [box=784,2327,28,32]: $75
+            - generic [ref=e117] [box=120,2388,709,66]:
+              - checkbox "Second location beyond package Estimate $40" [ref=e118] [box=141,2409,18,18]
+              - generic [ref=e119] [box=178,2411,588,24]:
+                - text: Second location beyond package
+                - generic [ref=e120] [box=490,2412,66,22]: Estimate
+              - generic [ref=e121] [box=782,2405,30,32]: $40
+      - complementary "Estimate summary" [ref=e122] [box=877,510,443,703]:
+        - img "Preview of a Senior Portraits session" [ref=e123] [box=910,543,377,180]
+        - heading "Your Estimate" [level=2] [ref=e124] [box=910,747,377,26]
+        - list [ref=e125] [box=910,796,377,141]:
+          - listitem [ref=e126] [box=910,796,377,35]:
+            - generic [ref=e127] [box=910,804,121,19]: Senior Portraits
+            - generic [ref=e128] [box=1222,804,65,19]: Included
+          - listitem [ref=e129] [box=910,832,377,35]:
+            - generic [ref=e130] [box=910,840,37,19]: "#ONE"
+            - generic [ref=e131] [box=1257,840,30,19]: $160
+          - listitem [ref=e132] [box=910,867,377,35]:
+            - generic [ref=e133] [box=910,875,60,19]: 1 person
+            - generic [ref=e134] [box=1222,875,65,19]: Included
+          - listitem [ref=e135] [box=910,902,377,35]:
+            - generic [ref=e136] [box=910,910,103,19]: No Collection
+            - generic [ref=e137] [box=1270,910,17,19]: $0
+        - separator [ref=e138] [box=910,961,377,1]
+        - generic [ref=e139] [box=910,978,377,70]:
+          - generic [ref=e140] [box=910,1013,128,19]: Estimated Total
+          - generic [ref=e141] [box=1209,978,78,70]: $160
+        - paragraph [ref=e142] [box=909,1064,1,1]: "Estimated total: $160"
+        - paragraph [ref=e143] [box=910,1065,377,45]: This is an estimate to help you plan. Final pricing is confirmed when we book your session.
+        - link "Request This Quote" [ref=e144] [cursor=pointer] [box=910,1133,377,47]:
+          - /url: "#cta"
+  - region [ref=e145] [box=0,2566,1440,973]:
+    - generic [ref=e146] [box=360,2642,720,821]:
+      - paragraph [ref=e147] [box=360,2642,720,19]: Ready when you are
+      - heading "Request This Quote" [level=2] [ref=e148] [box=360,2669,720,42]
+      - paragraph [ref=e149] [box=360,2727,720,102]: $160
+      - paragraph [ref=e150] [box=360,2861,720,26]: Send your configuration straight to Lisa. She'll confirm details and lock in your date.
+      - generic [ref=e151] [box=360,2927,720,476]:
+        - generic [ref=e152] [box=360,2927,720,74]:
+          - generic [ref=e153] [box=360,2927,720,19]: Your Name
+          - textbox "Your Name" [ref=e154] [box=360,2954,720,47]
+        - generic [ref=e155] [box=360,3017,720,74]:
+          - generic [ref=e156] [box=360,3017,720,19]: Your Email
+          - textbox "Your Email" [ref=e157] [box=360,3044,720,47]
+        - generic [ref=e158] [box=360,3107,720,236]:
+          - generic [ref=e159] [box=360,3107,720,19]: Your Session Breakdown
+          - textbox "Your Session Breakdown" [ref=e160] [box=360,3134,720,180]: "IT'S A KEEPER — SESSION ESTIMATE Session type: Senior Portraits Package: #ONE ($160) People: 1 Collection: No Collection ($0) ESTIMATED TOTAL: $160 Note: Estimate only. Final pricing is confirmed at booking."
+          - generic [ref=e161] [box=360,3322,720,21]: Auto-filled from your selections — edit freely before sending.
+        - button "Send My Request" [ref=e162] [cursor=pointer] [box=360,3359,194,44]
+      - paragraph [ref=e163] [box=360,3443,720,19]: Estimates only. Final pricing is confirmed at booking.
+  - link "www.itsakeeperphotography.com" [ref=e164] [cursor=pointer] [box=0,3538,1440,82]:
+    - /url: https://www.itsakeeperphotography.com

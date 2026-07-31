@@ -1,0 +1,451 @@
+---
+import type {
+  EditorialPageData,
+  PageSection,
+} from "../../content/page-types";
+import {
+  EXTRA_PERSON_PRICE_CENTS,
+  formatUsd,
+  PEOPLE_INCLUDED,
+  PHOTO_COLLECTIONS,
+  SESSION_PACKAGES,
+} from "../../lib/session-pricing";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+import "../../styles/investment-page.css";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+  inquiry?: any;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) {
+    throw new Error(`Investment page is missing the required section: ${id}`);
+  }
+  return section;
+};
+
+const value = requireSection("what-youre-really-investing-in");
+const includes = requireSection("every-session-includes");
+const experience = requireSection("the-experience-step-by-step");
+const pricing = requireSection("a-note-about-pricing");
+const policies = requireSection("good-to-know-policies");
+const questions = requireSection("investment-questions");
+
+const sessionPackages = Object.values(SESSION_PACKAGES);
+const photoCollections = Object.values(PHOTO_COLLECTIONS).filter(
+  (collection) => collection.id !== "none",
+);
+const faqItems = questions.items || [];
+const faqSchema = faqItems.map((item) => ({
+  "@type": "Question",
+  name: item.heading,
+  acceptedAnswer: {
+    "@type": "Answer",
+    text: (item.paragraphs || []).join(" "),
+  },
+}));
+
+const valueArch =
+  value.image ||
+  "/uploads/investment-lisa-photographing-outdoors-tricities.jpg";
+const valuePrint =
+  value.secondaryImage ||
+  "/uploads/investment-lisa-reviewing-camera-black-white.jpg";
+const finalImage =
+  page.finalCta?.image ||
+  "/uploads/investment-lisa-studio-portrait-camera.jpg";
+const pricingPaperAssets = [
+  "/uploads/investment-pricing-paper-one.png",
+  "/uploads/investment-pricing-paper-two.png",
+  "/uploads/investment-pricing-paper-three.png",
+];
+
+// CONTENT PENDING: standard delivery turnaround, the exact contract/retainer
+// policy, print rights and normal inquiry response time remain intentionally
+// absent until Lisa confirms them.
+---
+
+<article
+  class="investment-page"
+  data-investment-page
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="investment"
+    titleId="investment-hero-title"
+    heading={page.hero.heading}
+    headingLines={["Your Session", "From First Call", "to Final Gallery"]}
+    scriptLine={page.hero.scriptLine || "the full experience"}
+    intro={page.hero.intro}
+    links={page.hero.links}
+    backgroundImage={
+      page.hero.image ||
+      "/uploads/investment-lisa-camera-studio-richland.jpg"
+    }
+    backgroundAlt={
+      page.hero.imageAlt ||
+      "Lisa Weiss holding her camera in her Richland photography studio."
+    }
+    backgroundPosition="52% 48%"
+    mobileBackgroundPosition="65% 48%"
+    leftPrint={{
+      src:
+        page.hero.secondaryImage ||
+        "/uploads/family-golden-hour-columbia-basin.jpg",
+      objectPosition: "50% 48%",
+    }}
+    rightPrint={{
+      src: "/uploads/newborn-portrait-with-mother-richland.jpg",
+      objectPosition: "50% 43%",
+    }}
+    paperEdgeColor="var(--color-muted-olive)"
+  />
+
+  <section
+    class="investment-value"
+    aria-labelledby={`${value.id}-title`}
+    data-investment-section="value"
+  >
+    <div class="investment-shell investment-value__inner">
+      <div class="investment-value__media" data-line-target="value-media">
+        <span
+          class="investment-value__line"
+          data-construction-line
+          data-line-anchor="image"
+          aria-hidden="true"
+        ></span>
+
+        <figure class="investment-value__arch" data-investment-photo="value-arch">
+          <Picture
+            src={valueArch}
+            alt={value.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 76vw, (max-width: 1050px) 42vw, 30vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure
+          class="investment-print investment-value__print"
+          data-investment-photo="value-print"
+        >
+          <span class="investment-tape" aria-hidden="true"></span>
+          <Picture
+            src={valuePrint}
+            alt={value.secondaryImageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 46vw, (max-width: 1050px) 25vw, 18vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+
+      <div class="investment-value__copy">
+        <span class="investment-eyebrow">Investment</span>
+        <h2 id={`${value.id}-title`}>{value.heading}</h2>
+        <div class="investment-prose">
+          {value.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="investment-includes"
+    aria-labelledby={`${includes.id}-title`}
+    data-investment-section="includes"
+  >
+    <div class="investment-shell investment-includes__inner">
+      <header class="investment-includes__heading">
+        <span class="investment-eyebrow">The quiet details</span>
+        <h2 id={`${includes.id}-title`}>{includes.heading}</h2>
+      </header>
+
+      <ol class="investment-includes__ledger">
+        {includes.items?.map((item, index) => (
+          <li>
+            <span class="investment-ledger-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <p>{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="investment-experience"
+    aria-labelledby={`${experience.id}-title`}
+    data-investment-section="experience"
+  >
+    <div class="investment-shell">
+      <header class="investment-experience__heading">
+        <span class="investment-eyebrow">The experience</span>
+        <h2 id={`${experience.id}-title`}>{experience.heading}</h2>
+      </header>
+
+      <ol class="investment-experience__steps">
+        {experience.items?.map((item, index) => (
+          <li>
+            <span class="investment-experience__number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3>{item.heading?.replace(/^\d+\.\s*/, "")}</h3>
+            {item.detail && <p>{item.detail}</p>}
+            {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          </li>
+        ))}
+      </ol>
+
+      <figure
+        class="investment-experience__photograph"
+        data-investment-photo="experience"
+      >
+        <Picture
+          src="/uploads/investment-lisa-photographing-outdoors-tricities.jpg"
+          alt="Lisa photographing a client outdoors during a Tri-Cities session."
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) 100vw, 88vw"
+          imgClass="photo--editorial"
+        />
+        <span
+          class="investment-experience__photo-line"
+          data-construction-line
+          data-line-anchor="image"
+          aria-hidden="true"
+        ></span>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="investment-pricing"
+    aria-labelledby={`${pricing.id}-title`}
+    data-investment-section="pricing"
+  >
+    <div class="investment-shell">
+      <div class="investment-pricing__board">
+        <header class="investment-pricing__rail">
+          <span class="investment-eyebrow">A clear starting point</span>
+          <h2 id={`${pricing.id}-title`}>{pricing.heading}</h2>
+          <div class="investment-prose">
+            {pricing.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          {pricing.links?.[0] && (
+            <a class="outline-button" href={pricing.links[0].href}>
+              {pricing.links[0].label}
+            </a>
+          )}
+        </header>
+
+        <div class="investment-pricing__papers">
+          {sessionPackages.map((sessionPackage, index) => (
+            <article
+              class="investment-price-sheet"
+              data-price-sheet={sessionPackage.id}
+            >
+              <Picture
+                src={pricingPaperAssets[index]}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) 86vw, (max-width: 1250px) 46vw, 22vw"
+                pictureClass="investment-price-sheet__texture"
+                imgClass="investment-price-sheet__texture-image"
+              />
+              <div class="investment-price-sheet__content">
+                <span class="investment-price-sheet__index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{sessionPackage.name}</h3>
+                <p class="investment-price-sheet__price">
+                  {formatUsd(sessionPackage.priceCents)}
+                </p>
+                <ul>
+                  <li>{sessionPackage.duration}</li>
+                  <li>{sessionPackage.locations}</li>
+                  <li>{sessionPackage.outfits}</li>
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <figure
+          class="investment-print investment-pricing__portrait"
+          data-investment-photo="pricing"
+        >
+          <Picture
+            src="/uploads/investment-lisa-camera-black-white-wide.jpg"
+            alt="Lisa looking down at her camera."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 62vw, (max-width: 1250px) 30vw, 18vw"
+            imgClass="photo--editorial"
+          />
+          <Picture
+            src="/uploads/investment-diagonal-masking-tape.png"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 32vw, (max-width: 1250px) 18vw, 8rem"
+            pictureClass="investment-pricing__tape-frame"
+            imgClass="investment-pricing__tape"
+          />
+        </figure>
+      </div>
+
+      <div class="investment-collections" aria-labelledby="photo-collections-title">
+        <header class="investment-collections__heading">
+          <span class="investment-eyebrow">Photographs made tangible</span>
+          <h3 id="photo-collections-title">Photo collections</h3>
+          <p>
+            Session coverage includes up to {PEOPLE_INCLUDED} people. Each
+            additional person is {formatUsd(EXTRA_PERSON_PRICE_CENTS)}.
+          </p>
+        </header>
+
+        <ol class="investment-collections__ledger">
+          {photoCollections.map((collection) => (
+            <li>
+              <div class="investment-collections__title">
+                <span>{collection.name}</span>
+                <strong>{formatUsd(collection.priceCents)}</strong>
+              </div>
+              <ul>
+                {collection.details.map((detail) => <li>{detail}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="investment-policies"
+    aria-labelledby={`${policies.id}-title`}
+    data-investment-section="policies"
+  >
+    <div class="investment-shell investment-policies__inner">
+      <header>
+        <span class="investment-eyebrow">Before we begin</span>
+        <h2 id={`${policies.id}-title`}>{policies.heading}</h2>
+      </header>
+
+      <ol class="investment-policies__ledger">
+        {policies.items?.map((item, index) => (
+          <li>
+            <span class="investment-ledger-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h3>{item.heading}</h3>
+              <p>{item.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="investment-faq"
+    aria-labelledby={`${questions.id}-title`}
+    data-investment-section="faq"
+  >
+    <div class="investment-shell investment-faq__inner">
+      <div class="investment-faq__questions">
+        <header>
+          <span class="investment-eyebrow">Good to know</span>
+          <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        </header>
+
+        <div class="investment-faq__ledger">
+          {faqItems.map((item, index) => (
+            <details open={index === 0}>
+              <summary>
+                <span class="investment-faq__number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{item.heading}</span>
+                <span class="investment-faq__mark" aria-hidden="true"></span>
+              </summary>
+              <div class="investment-faq__answer">
+                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      {page.finalCta && (
+        <aside class="investment-final" aria-labelledby="investment-final-title">
+          <figure class="investment-print investment-final__portrait">
+            <Picture
+              src={finalImage}
+              alt={page.finalCta.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 74vw, (max-width: 1050px) 34vw, 20vw"
+              imgClass="photo--editorial"
+            />
+          </figure>
+
+          <div class="investment-final__paper">
+            <Picture
+              src="/uploads/investment-final-torn-paper-pin.png"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 82vw, (max-width: 1050px) 50vw, (max-width: 1250px) 34vw, 25vw"
+              pictureClass="investment-final__paper-art-frame"
+              imgClass="investment-final__paper-art"
+            />
+            <div class="investment-final__paper-content">
+              <span class="investment-eyebrow">The next step</span>
+              <h2 id="investment-final-title">{page.finalCta.heading}</h2>
+              {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              {page.finalCta.link && (
+                <a class="outline-button" href={page.finalCta.link.href}>
+                  {page.finalCta.link.label}
+                </a>
+              )}
+            </div>
+          </div>
+        </aside>
+      )}
+    </div>
+  </section>
+
+  {faqSchema.length > 0 && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqSchema,
+      })}
+    />
+  )}
+</article>

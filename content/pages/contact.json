@@ -5,27 +5,57 @@
   "searchVisibility": "noindex",
   "schemaType": "ContactPage",
   "signature": "overlap",
-  "title": "Contact Lisa | Book Your Tri-Cities Photo Session",
-  "description": "Ready to plan your session? Tell Lisa who's in front of the camera and what this season means to you. She answers every inquiry herself.",
+  "title": "Session Pricing Estimate | It's A Keeper Photography",
+  "description": "Build a personalized photography session pricing estimate, then send your plans to Lisa. She reads every inquiry and follows up personally.",
   "hero": {
     "tone": "umber",
     "heading": "Let's Plan Your Session",
-    "intro": "This takes less than a minute — and it's the first step toward photographs your family will keep for generations. I read and answer every inquiry myself."
+    "scriptLine": "your season, your way",
+    "intro": "Build a personalized session pricing estimate around what you have in mind, then send it to me when you're ready. I read every inquiry and follow up personally — you'll hear from me, not an assistant.",
+    "image": "/uploads/family-golden-hour-columbia-basin.jpg",
+    "imageAlt": "A family held close in warm golden-hour light in the Tri-Cities",
+    "secondaryImage": "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+    "secondaryImageAlt": "A high school senior photographed in glowing garden light"
   },
   "sections": [
     {
       "id": "tell-me-about-you",
       "kind": "form",
       "tone": "ivory",
-      "heading": "Tell Me About You"
+      "heading": "Build Your Session Estimate",
+      "intro": "Choose the session, collection and details that fit what you're planning. Your estimate updates as you go."
+    },
+    {
+      "id": "what-happens-after-you-reach-out",
+      "kind": "steps",
+      "tone": "earth",
+      "heading": "What Happens Next",
+      "paragraphs": [
+        "Nothing is held before that step, so if you have a particular season in mind, it's worth reaching out sooner than you think."
+      ],
+      "items": [
+        {
+          "heading": "1. I'll write back personally.",
+          "detail": "Usually with a couple of questions, because I want to understand what you're hoping for before I start suggesting things."
+        },
+        {
+          "heading": "2. We'll set up a phone call.",
+          "detail": "This is my favorite part. We'll talk through dates, locations, wardrobe and timing — and most people get off that call a lot more excited and a lot less nervous than they got on it."
+        },
+        {
+          "heading": "3. Your date gets reserved.",
+          "detail": "Once we've found a date that works, I'll send a contract and a retainer invoice. Your date is officially yours once both are complete. The remaining balance is due the day of your session."
+        }
+      ]
     },
     {
       "id": "prefer-to-call-or-text",
       "kind": "split",
       "tone": "sand",
-      "heading": "Prefer to Call or Text?",
+      "heading": "Prefer to Talk?",
       "paragraphs": [
-        "Sometimes it's easier to just talk. Call or text me at (509) 948-7322 and tell me what you're dreaming up."
+        "Sometimes it's just easier to say it out loud. Call or text me at (509) 948-7322 and tell me what you're thinking.",
+        "Honestly? Email is the easiest way to reach me, and a phone call is the best way to plan. But use whichever one gets you to actually reach out — that's the part that matters."
       ],
       "links": [
         {
@@ -41,34 +71,10 @@
       "heading": "Where I Work",
       "paragraphs": [
         "It's A Keeper Photography",
-        "Richland, Washington · Serving Richland, Kennewick and Pasco",
         "(509) 948-7322",
-        "I photograph outdoors throughout the Tri-Cities — Richland, Kennewick, Pasco and the surrounding countryside. Sessions happen at golden hour, at a location we choose together."
-      ]
-    },
-    {
-      "id": "what-happens-after-you-reach-out",
-      "kind": "steps",
-      "tone": "earth",
-      "heading": "What Happens After You Reach Out",
-      "items": [
-        {
-          "heading": "I'll reply personally",
-          "detail": "— usually with a few questions about your story."
-        },
-        {
-          "heading": "We'll hop on a quick call",
-          "detail": "to plan your location, wardrobe and timing."
-        },
-        {
-          "heading": "Your date is reserved,",
-          "detail": "and all you have to do is show up and enjoy it."
-        }
+        "I photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the countryside around them — with no travel fee anywhere in the area. Sessions happen outdoors at golden hour, at a location we choose together, except newborn sessions, which happen in your home."
       ]
     }
   ],
-  "pending": [
-    "[PENDIENTE: plazo habitual — Q50]",
-    "[PENDIENTE: retainer/contrato — Q51]"
-  ]
+  "pending": []
 }

@@ -10,7 +10,18 @@
   "hero": {
     "tone": "walnut",
     "heading": "Your Session, From First Call to Final Gallery",
-    "intro": "More than beautiful photographs — a personal, guided experience from the first phone call to the images your family will keep for generations."
+    "intro": "More than beautiful photographs — a personal, guided experience from the first phone call to the images your family will keep for generations.",
+    "scriptLine": "the full experience",
+    "image": "/uploads/investment-lisa-camera-studio-richland.jpg",
+    "imageAlt": "Lisa Weiss holding her camera in her Richland photography studio.",
+    "secondaryImage": "/uploads/family-golden-hour-columbia-basin.jpg",
+    "secondaryImageAlt": "A family photographed together in warm Tri-Cities light.",
+    "links": [
+      {
+        "label": "Build your estimate",
+        "href": "/contact/#session-planner"
+      }
+    ]
   },
   "sections": [
     {
@@ -21,7 +32,11 @@
       "paragraphs": [
         "I'll be honest with you: if you're simply looking for the lowest price in the Tri-Cities, there are photographers who will serve you better. My clients are investing in something different — a relaxed, meaningful experience with someone who truly cares, and photographs that become more valuable with every passing year.",
         "Here's what that means in practice: personal planning before you ever step in front of the camera. Wardrobe guidance so you look and feel amazing. Gentle direction all session long, so you never have to wonder what to do. And warm, timeless editing that will still look right decades from now — because these images aren't for a trend. They're for your walls, your albums, and the people who come after you."
-      ]
+      ],
+      "image": "/uploads/investment-lisa-photographing-outdoors-tricities.jpg",
+      "imageAlt": "Lisa photographing a client outdoors in the Tri-Cities.",
+      "secondaryImage": "/uploads/investment-lisa-reviewing-camera-black-white.jpg",
+      "secondaryImageAlt": "Lisa reviewing photographs on the back of her camera."
     },
     {
       "id": "every-session-includes",
@@ -79,7 +94,14 @@
       "tone": "ivory",
       "heading": "A Note About Pricing",
       "paragraphs": [
-        "Every session is planned personally, so I share pricing during our first conversation — that way I can recommend exactly what fits your family, your goals and your walls, instead of handing you a one-size-fits-all menu. When we talk, you'll get clear, complete pricing with no surprises."
+        "Session coverage begins at $160, with three options based on time, locations and outfit changes. Photo collections and optional add-ons are selected separately, so you can build an estimate around what you want photographed and how you want to keep it.",
+        "A planning estimate, not a booking. Lisa confirms everything with you before a contract or payment."
+      ],
+      "links": [
+        {
+          "label": "Build your estimate",
+          "href": "/contact/#session-planner"
+        }
       ]
     },
     {
@@ -91,6 +113,10 @@
         {
           "heading": "Booking",
           "detail": "I reserve most sessions four to six weeks ahead."
+        },
+        {
+          "heading": "Weather",
+          "detail": "Tri-Cities weather usually cooperates — when it doesn't, we reschedule together for the next best light."
         },
         {
           "heading": "Illness & little ones",
@@ -111,7 +137,19 @@
         {
           "heading": "How much does a photography session cost in the Tri-Cities?",
           "paragraphs": [
-            "Local sessions range widely — from budget mini-sessions to luxury studio collections. My pricing sits where personal experience and heirloom quality meet, and I'll share every detail in our first call so you can decide with clarity."
+            "Session coverage is $160, $220 or $330, depending on the time, number of locations and outfit changes. Photo collections and optional add-ons are separate, and the calculator shows a planning estimate before you inquire."
+          ]
+        },
+        {
+          "heading": "Do you sell prints and albums?",
+          "paragraphs": [
+            "Yes. The current collections include linen prints, a mini 5x5 signature album and an 8x10 leather-bound album, depending on the collection you choose."
+          ]
+        },
+        {
+          "heading": "What happens after I send my estimate?",
+          "paragraphs": [
+            "Lisa reviews the details and follows up with you to confirm the session, contract, payment link and booking. The calculator is a planning estimate, not a booking or final contract."
           ]
         }
       ]
@@ -123,20 +161,20 @@
     "paragraphs": [
       "The first step is a conversation — no pressure, no obligation, just your story and my calendar."
     ],
+    "image": "/uploads/investment-lisa-studio-portrait-camera.jpg",
+    "imageAlt": "Lisa smiling with her camera in her studio.",
     "link": {
       "label": "Start planning",
-      "href": "/contact/"
+      "href": "/contact/#session-planner"
     }
   },
   "pending": [
-    "[PENDIENTE: Q49–62 — paquetes, inclusiones, políticas exactas. Los bloques marcados se completan con las respuestas de Lisa.]",
     "[PENDIENTE: entrega — nº de imágenes, galería online, derechos de impresión, plazos — Q54, Q56, Q58]",
     "[PENDIENTE: tiempo de respuesta habitual — Q50]",
     "[PENDIENTE: turnaround — Q56]",
     "[PENDIENTE: retainer/contrato — Q51]",
     "[PENDIENTE: política exacta — Q55]",
     "[PENDIENTE: detalle — Q57]",
-    "[PENDIENTE: Q51]",
-    "[PENDIENTE: Q59 — si sí, párrafo sobre productos heirloom; encaja perfecto con la filosofía \"photographs become heirlooms\"]"
+    "[PENDIENTE: Q51]"
   ]
 }

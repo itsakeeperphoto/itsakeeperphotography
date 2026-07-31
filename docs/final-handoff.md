@@ -150,17 +150,18 @@ Manifest state is 18 draft/noindex routes, two ready/index routes (`/` and `/por
 
 The fake `/api/inquiry`, simulated success behavior, and PII console logging were removed. Both the homepage planner and `/contact/` contain a statically detectable form with:
 
-- `name="session-inquiry"`
+- Homepage planner: `name="session-inquiry"`
+- Contact price estimator: `name="session-estimate"`
 - `method="post"`
 - `action="/thank-you/"`
 - `data-netlify="true"`
 - `netlify-honeypot="bot-field"`
-- hidden `form-name=session-inquiry`
+- matching hidden `form-name` value for each form
 - `session_type`, `season`, `location_preference`, `story`, `name`, `email`, and `phone`
 
 The build validator and no-JavaScript HTML inspection both pass. With JavaScript disabled, every field remains visible and submittable.
 
-External dashboard proof is not complete: this checkout has no `NETLIFY_AUTH_TOKEN` and no `.netlify/state.json` site link, so a deploy-preview submission cannot be made or verified in the client's Netlify Forms dashboard from this workspace. This is an account-access gate, not an implementation fallback. Once the repository is linked/authenticated, submit a clearly labeled QA entry on a deploy preview and confirm it appears under `session-inquiry` before launch.
+External dashboard proof is not complete: this checkout has no `NETLIFY_AUTH_TOKEN` and no `.netlify/state.json` site link, so a deploy-preview submission cannot be made or verified in the client's Netlify Forms dashboard from this workspace. This is an account-access gate, not an implementation fallback. Once the repository is linked/authenticated, submit clearly labeled QA entries on a deploy preview and confirm they appear under `session-inquiry` and `session-estimate` before launch.
 
 ## Redirects
 

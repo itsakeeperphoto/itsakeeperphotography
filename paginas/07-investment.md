@@ -1,7 +1,7 @@
 # INVESTMENT — `/investment/`
 _Página 7 de 18 · Trust & conversion · Support_
 
-> Decisión de proyecto: **sin precios publicados**. Esta página vende la experiencia y el proceso, filtra expectativas y lleva a la llamada. `[PENDIENTE: Q49–62 — paquetes, inclusiones, políticas exactas. Los bloques marcados se completan con las respuestas de Lisa.]`
+> Decisión actualizada de proyecto: **precios y estimado publicados**. La página presenta la experiencia y los precios confirmados, y lleva a la calculadora para construir un estimado de planificación. El estimado no constituye una reserva, contrato ni cobro.
 
 ---
 
@@ -80,7 +80,9 @@ Your images arrive edited with care, ready to print, frame, gift and keep. `[PEN
 
 **H2:** A Note About Pricing
 
-Every session is planned personally, so I share pricing during our first conversation — that way I can recommend exactly what fits your family, your goals and your walls, instead of handing you a one-size-fits-all menu. When we talk, you'll get clear, complete pricing with no surprises.
+Session coverage begins at $160, with three options based on time, locations and outfit changes. Photo collections and optional add-ons are selected separately, so you can build an estimate around what you want photographed and how you want to keep it.
+
+A planning estimate, not a booking. Lisa confirms everything with you before a contract or payment.
 
 ### Sección 6 — Políticas
 
@@ -96,19 +98,19 @@ Every session is planned personally, so I share pricing during our first convers
 **H2:** Investment Questions
 
 **H3: How much does a photography session cost in the Tri-Cities?**
-Local sessions range widely — from budget mini-sessions to luxury studio collections. My pricing sits where personal experience and heirloom quality meet, and I'll share every detail in our first call so you can decide with clarity.
-
-**H3: Do you offer payment plans?**
-`[PENDIENTE: Q51]`
+Session coverage is $160, $220 or $330, depending on the time, number of locations and outfit changes. Photo collections and optional add-ons are separate, and the calculator shows a planning estimate before you inquire.
 
 **H3: Do you sell prints and albums?**
-`[PENDIENTE: Q59 — si sí, párrafo sobre productos heirloom; encaja perfecto con la filosofía "photographs become heirlooms"]`
+Yes. The current collections include linen prints, a mini 5x5 signature album and an 8x10 leather-bound album, depending on the collection you choose.
+
+**H3: What happens after I send my estimate?**
+Lisa reviews the details and follows up with you to confirm the session, contract, payment link and booking. The calculator is a planning estimate, not a booking or final contract.
 
 ### CTA final
 
 **H2:** Ready When You Are
 The first step is a conversation — no pressure, no obligation, just your story and my calendar.
-**CTA:** Start planning → `/contact/`
+**CTA:** Start planning → `/contact/#session-planner`
 
 ---
 

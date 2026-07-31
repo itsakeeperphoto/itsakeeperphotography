@@ -16,7 +16,11 @@ interface Props {
     | "headshots"
     | "about"
     | "branding"
-    | "journal";
+    | "contact"
+    | "journal"
+    | "investment"
+    | "richland"
+    | "kennewick";
   titleId: string;
   heading: string;
   headingLines: string[];
@@ -30,6 +34,8 @@ interface Props {
   leftPrint?: HeroPrint;
   rightPrint?: HeroPrint;
   paperEdgeColor?: string;
+  buttonLabel?: string;
+  buttonTargetId?: string;
 }
 
 const {
@@ -47,6 +53,8 @@ const {
   leftPrint,
   rightPrint,
   paperEdgeColor = "var(--color-weathered-sand)",
+  buttonLabel,
+  buttonTargetId,
 } = Astro.props;
 
 const heroStyle = [
@@ -118,13 +126,24 @@ const heroStyle = [
     {intro && (
       <p class="editorial-hero__intro" data-hero-intro>{intro}</p>
     )}
-    {links.length > 0 && (
+    {(links.length > 0 || (buttonLabel && buttonTargetId)) && (
       <div class="editorial-hero__actions">
         {links.map((link) => (
           <a class="outline-button" data-hero-cta href={link.href}>
             {link.label}
           </a>
         ))}
+        {buttonLabel && buttonTargetId && (
+          <button
+            class="outline-button"
+            type="button"
+            data-hero-cta
+            data-hero-scroll-target={buttonTargetId}
+            aria-controls={buttonTargetId}
+          >
+            {buttonLabel}
+          </button>
+        )}
       </div>
     )}
   </div>
@@ -149,3 +168,18 @@ const heroStyle = [
 
   <div class="editorial-hero__paper-edge" data-hero-paper-edge aria-hidden="true"></div>
 </header>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-hero-scroll-target]").forEach((control) => {
+    if (control.dataset.heroScrollBound === "true") return;
+    control.dataset.heroScrollBound = "true";
+    control.addEventListener("click", () => {
+      const targetId = control.dataset.heroScrollTarget;
+      const target = targetId ? document.getElementById(targetId) : null;
+      if (!target) return;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      target.focus({ preventScroll: true });
+    });
+  });
+</script>

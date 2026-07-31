@@ -17,6 +17,7 @@ interface Props {
   searchVisibility?: SearchVisibility;
   schemaType?: SchemaType;
   additionalSchema?: Record<string, unknown>[];
+  pageSpatialCoverage?: Record<string, unknown>;
   loadEditorialMotion?: boolean;
 }
 
@@ -31,6 +32,7 @@ const {
   searchVisibility = "index",
   schemaType = "WebPage",
   additionalSchema = [],
+  pageSpatialCoverage,
   loadEditorialMotion = Boolean(homepage),
 } = Astro.props;
 const isDevelopment = import.meta.env.DEV;
@@ -129,6 +131,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
         "@type": "ImageObject",
         url: absolute(seoImage),
       },
+      ...(pageSpatialCoverage ? { spatialCoverage: pageSpatialCoverage } : {}),
       inLanguage: "en-US",
     }
   : null;

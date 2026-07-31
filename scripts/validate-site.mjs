@@ -106,11 +106,21 @@ for (const file of htmlFiles) {
 
 const homepage = await readFile(path.join(output, "index.html"), "utf8");
 const contact = await readFile(path.join(output, "contact", "index.html"), "utf8");
-for (const [label, source] of [["homepage", homepage], ["contact", contact]]) {
-  if (!/<form\b[^>]*name="session-inquiry"[^>]*method="post"[^>]*action="\/thank-you\/"[^>]*data-netlify="true"/i.test(source)) {
+for (const [label, formName, source] of [
+  ["homepage", "session-inquiry", homepage],
+  ["contact", "session-estimate", contact],
+]) {
+  const formPattern = new RegExp(
+    `<form\\b[^>]*name="${formName}"[^>]*method="post"[^>]*action="/thank-you/"[^>]*data-netlify="true"`,
+    "i",
+  );
+  if (!formPattern.test(source)) {
     failures.push(`${label}: statically detectable Netlify form is missing`);
   }
-  if (!/name="form-name" value="session-inquiry"/.test(source) || !/name="bot-field"/.test(source)) {
+  if (
+    !source.includes(`name="form-name" value="${formName}"`) ||
+    !/name="bot-field"/.test(source)
+  ) {
     failures.push(`${label}: Netlify form name or honeypot is missing`);
   }
 }

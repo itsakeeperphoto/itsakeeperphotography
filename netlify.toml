@@ -1,2 +1,3 @@
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
+  PUBLIC_INQUIRY_NOTIFICATION_EMAIL = "globalbridge360@gmail.com"

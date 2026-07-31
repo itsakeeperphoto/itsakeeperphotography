@@ -57,6 +57,64 @@ const detailedService =
             }
           : null;
 const detailedServiceId = `${canonical}#service`;
+const investmentBreadcrumbSchema =
+  entry.id === "investment"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteOrigin}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Investment",
+            item: canonical,
+          },
+        ],
+      }
+    : null;
+const cityPageDetails =
+  entry.id === "richland"
+    ? { city: "Richland", breadcrumb: "Richland Photographer" }
+    : entry.id === "kennewick"
+      ? { city: "Kennewick", breadcrumb: "Kennewick Photographer" }
+      : null;
+const citySpatialCoverage =
+  cityPageDetails
+    ? {
+        "@type": "City",
+        name: cityPageDetails.city,
+        containedInPlace: { "@type": "State", name: "Washington" },
+      }
+    : undefined;
+const cityBreadcrumbSchema =
+  cityPageDetails
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteOrigin}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: cityPageDetails.breadcrumb,
+            item: canonical,
+          },
+        ],
+      }
+    : null;
 const detailedFaqSchema =
   entry.id === "branding"
     ? {
@@ -142,7 +200,11 @@ const detailedAdditionalSchema = detailedService
         ],
       },
     ]
-  : [];
+  : investmentBreadcrumbSchema
+    ? [investmentBreadcrumbSchema]
+    : cityBreadcrumbSchema
+      ? [cityBreadcrumbSchema]
+    : [];
 ---
 
 <Base
@@ -155,6 +217,7 @@ const detailedAdditionalSchema = detailedService
   searchVisibility={entry.searchVisibility}
   schemaType={detailedService ? "WebPage" : entry.schemaType}
   additionalSchema={detailedAdditionalSchema}
+  pageSpatialCoverage={citySpatialCoverage}
   loadEditorialMotion={entry.id === "contact"}
 >
   <SiteShell settings={settings} homepage={homepage} currentPath={entry.path}>

@@ -95,6 +95,7 @@
   border-color: var(--color-warm-ivory);
   color: var(--color-warm-ivory);
   background: var(--editorial-hero-control-wash);
+  cursor: pointer;
 }
 
 .editorial-hero .outline-button:focus-visible {
