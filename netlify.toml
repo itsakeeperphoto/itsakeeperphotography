@@ -1,3 +1,27 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 [build.environment]
-  NODE_OPTIONS = "--max-old-space-size=8192"
+  NODE_OPTIONS = "--max-old-space-size=4096"
   PUBLIC_INQUIRY_NOTIFICATION_EMAIL = "globalbridge360@gmail.com"
+  SITE_MODE = "staging"
+  SITE_ORIGIN = "https://itsakeeperphotography.netlify.app"
+
+# Only the published production deploy may emit indexable metadata. Netlify's
+# context-specific values override the safe staging defaults above.
+[context.production.environment]
+  SITE_MODE = "release"
+  SITE_ORIGIN = "https://www.itsakeeperphotography.com"
+
+[context.deploy-preview.environment]
+  SITE_MODE = "staging"
+  SITE_ORIGIN = "https://itsakeeperphotography.netlify.app"
+
+[context.branch-deploy.environment]
+  SITE_MODE = "staging"
+  SITE_ORIGIN = "https://itsakeeperphotography.netlify.app"
+
+[context.dev.environment]
+  SITE_MODE = "staging"
+  SITE_ORIGIN = "https://itsakeeperphotography.netlify.app"

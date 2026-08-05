@@ -12,6 +12,17 @@ if (!new Set(["staging", "release"]).has(siteMode)) {
   throw new Error(`SITE_MODE must be "staging" or "release"; received "${siteMode}".`);
 }
 
+if (process.env.NETLIFY === "true") {
+  const expectedMode =
+    process.env.CONTEXT === "production" ? "release" : "staging";
+
+  if (siteMode !== expectedMode) {
+    throw new Error(
+      `Netlify ${process.env.CONTEXT || "unknown"} context requires SITE_MODE=${expectedMode}; received ${siteMode}.`
+    );
+  }
+}
+
 const configuredOrigin = process.env.SITE_ORIGIN?.replace(/\/$/, "");
 const siteOrigin =
   configuredOrigin ||

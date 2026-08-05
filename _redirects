@@ -1,0 +1,34 @@
+# Consolidate the apex and published Netlify hostnames into the custom primary
+# domain. Deploy Preview and immutable deploy hostnames do not match these rules.
+https://itsakeeperphotography.com/* https://www.itsakeeperphotography.com/:splat 301!
+http://itsakeeperphotography.com/* https://www.itsakeeperphotography.com/:splat 301!
+https://itsakeeperphotography.netlify.app/* https://www.itsakeeperphotography.com/:splat 301!
+http://itsakeeperphotography.netlify.app/* https://www.itsakeeperphotography.com/:splat 301!
+
+/home / 301
+/welcome / 301
+/seniors /senior-photographer-tri-cities-wa/ 301
+/dana-buckley /portfolio/ 301
+/jonathan-miller-1 /portfolio/ 301
+/heinrich-harrison /portfolio/ 301
+/emily-london /portfolio/ 301
+/sir-james-condi /portfolio/ 301
+/new-gallery-wexley /portfolio/ 301
+/info-wexley /investment/ 301
+/info-wexley/2016/3/2/man-vs-wild-x2w4a /investment/ 301
+/info /about/ 301
+/info-2 /investment/ 301
+/info-wexley/category/Photography /journal/ 301
+/info-wexley/category/richland+photographer /richland-wa-photographer/ 301
+/info-wexley/category/senior+photography /senior-photographer-tri-cities-wa/ 301
+/info-wexley/category/kennewick+photographer /kennewick-wa-photographer/ 301
+/info-wexley/category/senior+photographer /senior-photographer-tri-cities-wa/ 301
+/info-wexley/category/family+photographer /family-photographer-tri-cities-wa/ 301
+/info-wexley/tag/tri-cities+family+photographer /family-photographer-tri-cities-wa/ 301
+/info-wexley/tag/Kennewick+photographer /kennewick-wa-photographer/ 301
+/info-wexley/tag/pasco+photographer /pasco-wa-photographer/ 301
+/info-wexley/tag/nature /journal/family-photo-locations-tri-cities/ 301
+/info-wexley/tag/richland /richland-wa-photographer/ 301
+/info-wexley/tag/tri-cities+photographer /journal/ 301
+/info-wexley/tag/family+photographer /family-photographer-tri-cities-wa/ 301
+/info-wexley/tag/tri-cities+richland+washington+senior+photographer /senior-photographer-tri-cities-wa/ 301
