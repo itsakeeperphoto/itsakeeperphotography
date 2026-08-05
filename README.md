@@ -73,11 +73,20 @@ because it changes each developer's agent configuration outside the project.
 Other commands:
 
 ```bash
-npm run build:local     # local Tina index + production Astro build
-npm run build           # production build; requires TinaCloud variables
+npm run build:local     # local Tina index + safe staging/noindex Astro build
+npm run build           # uses SITE_MODE; requires TinaCloud variables
 npm run preview:static  # serve an existing production build on port 4321
 npm run audit:lighthouse # build locally, then serve production on port 4321
 ```
+
+## Sitemap and indexing
+
+`/sitemap.xml` is generated from `src/lib/page-manifest.ts`. Staging builds keep
+the sitemap empty and globally noindex the site. Release builds include only
+routes that are ready, explicitly indexable, and enabled for the sitemap; each
+published entry also carries a validated `lastmod` date. See
+[`STRUCTURE.md`](./STRUCTURE.md) for the complete route registry and publishing
+checklist.
 
 If Astro is launched by an agent or CI wrapper, set `ASTRO_DEV_BACKGROUND=0`.
 If a killed Tina process leaves ports occupied, check ports `4001` and `9000`
@@ -161,6 +170,21 @@ Create a site from the GitHub repository and use:
 
 The `NETLIFY` environment variable selects `@astrojs/netlify` automatically. The
 verified build emits the static site and the required Netlify function.
+
+Publication mode is context-controlled in `netlify.toml`:
+
+| Netlify context | `SITE_MODE` | Search behavior |
+| --- | --- | --- |
+| Production | `release` | Ready/index routes may be indexed |
+| Deploy Preview | `staging` | Global `noindex`; empty sitemap |
+| Branch deploy | `staging` | Global `noindex`; empty sitemap |
+| Netlify Dev | `staging` | Global `noindex`; empty sitemap |
+
+The build fails if a Netlify production deploy is accidentally configured as
+staging, or if a preview is configured as release. The public
+apex domain and `itsakeeperphotography.netlify.app` hostname redirect to the
+custom `www` primary domain; deploy-preview and immutable deploy hostnames
+remain available for QA.
 
 ## Images and Lighthouse
 
