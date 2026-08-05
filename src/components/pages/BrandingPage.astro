@@ -306,8 +306,14 @@ const businessHeadshotImage =
 
       {rights.items?.length && (
         <div class="branding-rights__comparison" data-line-target="usage-rights">
-          {rights.items.map((item) => (
-            <article>
+          {rights.items.map((item, index) => (
+            <article
+              class="branding-rights__item"
+              data-rights-tier={index === 1 ? "commercial" : "personal"}
+            >
+              <span class="branding-rights__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               {item.heading && <h3>{item.heading}</h3>}
               {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
             </article>
@@ -346,7 +352,7 @@ const businessHeadshotImage =
             loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 767px) 74vw, 29vw"
+            sizes="(max-width: 767px) 44vw, (max-width: 1050px) 38vw, 22vw"
             imgClass="photo--editorial"
           />
         </figure>
@@ -362,7 +368,7 @@ const businessHeadshotImage =
             loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 767px) 82vw, 29vw"
+            sizes="(max-width: 767px) 82vw, (max-width: 1050px) 48vw, 25vw"
             imgClass="photo--editorial"
           />
         </figure>
@@ -377,7 +383,7 @@ const businessHeadshotImage =
             loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 767px) 74vw, 29vw"
+            sizes="(max-width: 767px) 44vw, (max-width: 1050px) 38vw, 22vw"
             imgClass="photo--editorial"
           />
         </figure>

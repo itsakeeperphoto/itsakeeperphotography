@@ -317,16 +317,6 @@
   background: var(--color-warm-earth);
 }
 
-.journal-portfolio__line {
-  position: absolute;
-  z-index: 0;
-  top: 58%;
-  right: 0;
-  left: 0;
-  height: var(--border-hairline);
-  background: var(--journal-line-light);
-}
-
 .journal-portfolio__inner {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(32rem, 1.1fr);
@@ -669,10 +659,6 @@
 
   .journal-portfolio {
     padding-block: var(--space-28);
-  }
-
-  .journal-portfolio__line {
-    top: 55%;
   }
 
   .journal-portfolio__inner {

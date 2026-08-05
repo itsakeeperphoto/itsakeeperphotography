@@ -146,6 +146,37 @@ const initializePlanner = (planner: HTMLElement): void => {
     });
   };
 
+  let pendingAdvanceFrame: number | null = null;
+  const scheduleSelectionAdvance = (control: HTMLInputElement): void => {
+    const targetId = control.dataset.nextTarget;
+    if (!targetId || !control.checked) return;
+
+    if (pendingAdvanceFrame !== null) {
+      window.cancelAnimationFrame(pendingAdvanceFrame);
+    }
+
+    pendingAdvanceFrame = window.requestAnimationFrame(() => {
+      pendingAdvanceFrame = null;
+      const target = document.getElementById(targetId);
+      if (!target || !planner.contains(target)) return;
+
+      const targetPhase = target.closest<HTMLElement>("[data-planner-phase]");
+      const phaseName = targetPhase?.dataset.plannerPhase;
+      if (phaseName) setActivePhase(phaseName);
+
+      scrollToElement(target);
+    });
+  };
+
+  const handleSelectionAdvance = (event: Event): void => {
+    if (
+      event.target instanceof HTMLInputElement &&
+      event.target.matches('input[type="radio"][data-next-target]')
+    ) {
+      scheduleSelectionAdvance(event.target);
+    }
+  };
+
   const updateEstimate = (): void => {
     const serviceRadio = query<HTMLInputElement>(
       form,
@@ -332,6 +363,11 @@ const initializePlanner = (planner: HTMLElement): void => {
       updateEstimate();
     }
   });
+
+  // Click also covers a preselected radio, which does not dispatch `change`.
+  // The animation frame deduplicates the normal click + change event pair.
+  form.addEventListener("click", handleSelectionAdvance);
+  form.addEventListener("change", handleSelectionAdvance);
 
   decreaseButton?.addEventListener("click", () => {
     const people = normalizePeople(peopleInput);

@@ -642,7 +642,7 @@ export default defineConfig({
                 type: "string",
                 name: "reviewsLine",
                 label: "Google reviews line",
-                description: "e.g. “96 five-star reviews on Google” — update the number as reviews grow.",
+                description: "Fallback link text only. The published homepage replaces it with the current Google review count from the daily GBP sync.",
                 ui: { validate: maxChars(60) },
               },
               { type: "string", name: "buttonHref", label: "Reviews page destination" },

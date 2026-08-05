@@ -208,6 +208,7 @@ const pricingVersion = "2026-07-29";
                     data-service-radio
                     data-service-name={service.name}
                     data-service-image={service.image}
+                    data-next-target="planner-coverage"
                   />
                   <span class="service-print__paper">
                     <span class="service-print__corners" aria-hidden="true"></span>
@@ -254,6 +255,7 @@ const pricingVersion = "2026-07-29";
                     required
                     checked={index === 0 || undefined}
                     data-package-radio
+                    data-next-target="planner-people"
                   />
                   <span class="package-row__marker" aria-hidden="true"></span>
                   <span class="package-row__identity">
@@ -272,7 +274,7 @@ const pricingVersion = "2026-07-29";
               ))}
             </div>
 
-            <div class="people-control">
+            <div class="people-control" id="planner-people">
               <div>
                 <span class="people-control__label">People in the session</span>
                 <p>
@@ -341,6 +343,7 @@ const pricingVersion = "2026-07-29";
                     required
                     checked={index === 0 || undefined}
                     data-collection-radio
+                    data-next-target="planner-add-ons"
                   />
                   <span class="collection-row__marker" aria-hidden="true"></span>
                   <span class="collection-row__copy">
@@ -364,7 +367,11 @@ const pricingVersion = "2026-07-29";
               ))}
             </div>
 
-            <div class="add-on-group" aria-labelledby="add-on-title">
+            <div
+              class="add-on-group"
+              id="planner-add-ons"
+              aria-labelledby="add-on-title"
+            >
               <div class="add-on-group__heading">
                 <h3 id="add-on-title">Optional finishing touches</h3>
                 <p>These prices are confirmed and included in the live estimate.</p>

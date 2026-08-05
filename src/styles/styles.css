@@ -2138,7 +2138,7 @@ footer[id] {
   margin-top: var(--space-4);
 }
 
-/* Three reference-sized prints lead; the remaining two center on a second row. */
+/* Five session prints share one row on desktop and wrap at smaller breakpoints. */
 .portfolio {
   padding-block: var(--sessions-padding-top) var(--sessions-padding-bottom);
 }
@@ -2198,6 +2198,20 @@ footer[id] {
 
 .portfolio-card:nth-child(4) .portfolio-card__image img {
   object-position: center center;
+}
+
+@media (min-width: 1051px) {
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(var(--space-0), 1fr));
+    column-gap: clamp(1.25rem, 2vw, 2rem);
+    row-gap: var(--space-0);
+  }
+
+  .portfolio-card {
+    width: var(--full-width);
+    min-width: var(--space-0);
+  }
 }
 
 /* Process timeline */

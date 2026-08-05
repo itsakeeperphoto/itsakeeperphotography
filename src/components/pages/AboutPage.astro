@@ -237,30 +237,32 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
     class:list={["about-belief", `tone-${belief.tone}`]}
     aria-labelledby={`${belief.id}-title`}
   >
-    <div class="about-belief__image">
+    <div class="about-shell about-belief__inner">
       {belief.image && (
-        <Picture
-          src={belief.image}
-          alt={belief.imageAlt || ""}
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="about-belief__background-image photo--editorial"
-        />
+        <figure class="about-belief__media">
+          <Picture
+            src={belief.image}
+            alt={belief.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 48vw, 50vw"
+            imgClass="about-belief__portrait photo--editorial"
+          />
+        </figure>
       )}
-      <div class="about-belief__wash" aria-hidden="true"></div>
-      <div class="about-shell about-belief__heading">
+
+      <div class="about-belief__copy">
+        <header class="about-belief__heading">
         <h2 id={`${belief.id}-title`}>{belief.heading}</h2>
         {beliefQuote && <blockquote><p>{beliefQuote}</p></blockquote>}
-      </div>
-    </div>
+        </header>
 
-    <div class="about-shell about-belief__lower">
-      <div class="about-paper-note about-belief__note">
-        <span class="about-pin" aria-hidden="true"></span>
-        <div class="about-belief__prose">
-          {belief.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        <div class="about-paper-note about-belief__note">
+          <span class="about-pin" aria-hidden="true"></span>
+          <div class="about-belief__prose">
+            {belief.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
         </div>
       </div>
     </div>
@@ -346,19 +348,20 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
       class:list={["about-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="about-final-title"
     >
-      {finalImage && (
-        <Picture
-          src={finalImage}
-          alt={finalImageAlt}
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="about-final__background photo--editorial"
-        />
-      )}
-      <div class="about-final__wash" aria-hidden="true"></div>
       <div class="about-shell about-final__inner">
+        {finalImage && (
+          <figure class="about-final__media">
+            <Picture
+              src={finalImage}
+              alt={finalImageAlt}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 88vw, 76vw"
+              imgClass="about-final__photo photo--editorial"
+            />
+          </figure>
+        )}
         <div class="about-final__frame">
           <h2 id="about-final-title">{page.finalCta.heading}</h2>
           <div class="about-final__invitation">

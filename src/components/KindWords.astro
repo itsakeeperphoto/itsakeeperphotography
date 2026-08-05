@@ -137,8 +137,45 @@ const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3d
       <a
         href={kindWords.buttonHref}
         aria-label={`${kindWords.reviewsLine} for ${settings.businessName}`}
+        data-google-review-summary
+        data-google-review-summary-endpoint="/api/google-review-summary"
+        data-business-name={settings.businessName}
         data-tina-field={tinaField(kindWords, "reviewsLine")}
       >{kindWords.reviewsLine}</a>
     </p>
   )}
 </section>
+
+<script>
+  const reviewSummaryLink = document.querySelector("[data-google-review-summary]");
+
+  if (reviewSummaryLink instanceof HTMLAnchorElement) {
+    const endpoint = reviewSummaryLink.dataset.googleReviewSummaryEndpoint;
+    const businessName = reviewSummaryLink.dataset.businessName;
+
+    if (endpoint) {
+      fetch(endpoint, {
+        headers: { Accept: "application/json" },
+        credentials: "same-origin",
+      })
+        .then((response) => (response.ok ? response.json() : null))
+        .then((summary) => {
+          const totalReviewCount = summary?.totalReviewCount;
+          if (!Number.isSafeInteger(totalReviewCount) || totalReviewCount < 0) return;
+
+          const formattedCount = new Intl.NumberFormat("en-US").format(totalReviewCount);
+          const reviewNoun = totalReviewCount === 1 ? "review" : "reviews";
+          const label = `Read ${formattedCount} Google ${reviewNoun}`;
+
+          reviewSummaryLink.textContent = label;
+          reviewSummaryLink.setAttribute(
+            "aria-label",
+            businessName ? `${label} for ${businessName}` : label
+          );
+        })
+        .catch(() => {
+          // The server-rendered link remains usable when the cached summary is unavailable.
+        });
+    }
+  }
+</script>

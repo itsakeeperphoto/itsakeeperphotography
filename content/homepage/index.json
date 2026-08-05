@@ -1,7 +1,7 @@
 {
   "seo": {
     "title": "Tri-Cities WA Photographer | It's A Keeper Photography",
-    "description": "Warm, natural portraits for seniors, families, newborns and businesses in Richland, Kennewick and Pasco. 20+ years behind the camera. 96 five-star reviews."
+    "description": "Warm portraits for seniors, families, newborns and businesses in Richland, Kennewick and Pasco. 20+ years behind the camera. Read reviews on Google."
   },
   "hero": {
     "visible": true,
@@ -14,7 +14,7 @@
     "primaryCtaHref": "/contact/",
     "secondaryCtaLabel": "See How It Works",
     "secondaryCtaHref": "#how-it-works",
-    "trustBar": "20+ years behind the camera · 96 five-star Google reviews · Richland, WA — serving all of the Tri-Cities"
+    "trustBar": "20+ years behind the camera · Client reviews on Google · Richland, WA — serving all of the Tri-Cities"
   },
   "why": {
     "visible": true,
@@ -129,7 +129,7 @@
     "visible": true,
     "eyebrow": "Kind words",
     "heading": "What Tri-Cities Clients Remember",
-    "reviewsLine": "Read 96 five-star reviews",
+    "reviewsLine": "Read Google reviews",
     "buttonHref": "/reviews/"
   },
   "faq": {
