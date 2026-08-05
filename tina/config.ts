@@ -1,5 +1,5 @@
 import { defineConfig } from "tinacms";
-import type { TinaField } from "tinacms";
+import type { TinaField } from "tinacms"; 
 
 /*
  * TinaCMS schema for It's A Keeper Photography.
