@@ -11,6 +11,7 @@
 # Only the published production deploy may emit indexable metadata. Netlify's
 # context-specific values override the safe staging defaults above.
 [context.production.environment]
+  PUBLIC_INQUIRY_NOTIFICATION_EMAIL = "itsakeeperphoto@gmail.com"
   SITE_MODE = "release"
   SITE_ORIGIN = "https://www.itsakeeperphotography.com"
 

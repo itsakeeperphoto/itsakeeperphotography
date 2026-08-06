@@ -161,6 +161,8 @@ The fake `/api/inquiry`, simulated success behavior, and PII console logging wer
 
 The build validator and no-JavaScript HTML inspection both pass. With JavaScript disabled, every field remains visible and submittable.
 
+Production audit metadata resolves to `itsakeeperphoto@gmail.com`; deploy previews and local staging keep `globalbridge360@gmail.com` for testing. This field is informational and does not route email. Actual delivery for both form names must be configured in Netlify under **Project configuration → Notifications → Emails and webhooks → Form submission notifications**.
+
 External dashboard proof is not complete: this checkout has no `NETLIFY_AUTH_TOKEN` and no `.netlify/state.json` site link, so a deploy-preview submission cannot be made or verified in the client's Netlify Forms dashboard from this workspace. This is an account-access gate, not an implementation fallback. Once the repository is linked/authenticated, submit clearly labeled QA entries on a deploy preview and confirm they appear under `session-inquiry` and `session-estimate` before launch.
 
 ## Redirects
