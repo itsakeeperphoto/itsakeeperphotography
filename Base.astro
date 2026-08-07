@@ -1,0 +1,299 @@
+---
+import "../styles/styles.css";
+import "../styles/palette.css";
+import { telHref } from "../lib/content";
+import { imageMeta } from "../lib/images";
+import type { SchemaType, SearchVisibility } from "../content/page-types";
+import { absoluteUrl, robotsDirective, siteOrigin } from "../lib/site-environment";
+
+interface Props {
+  title: string;
+  description: string;
+  homepage?: any;
+  settings: any;
+  canonicalPath?: string;
+  seoImage?: string;
+  seoImageAlt?: string;
+  searchVisibility?: SearchVisibility;
+  schemaType?: SchemaType;
+  additionalSchema?: Record<string, unknown>[];
+  pageSpatialCoverage?: Record<string, unknown>;
+  pageSchemaExtra?: Record<string, unknown>;
+  loadEditorialMotion?: boolean;
+}
+
+const {
+  title,
+  description,
+  homepage,
+  settings,
+  canonicalPath = "/",
+  seoImage: pageSeoImage,
+  seoImageAlt: pageSeoImageAlt,
+  searchVisibility = "index",
+  schemaType = "WebPage",
+  additionalSchema = [],
+  pageSpatialCoverage,
+  pageSchemaExtra = {},
+  loadEditorialMotion = Boolean(homepage),
+} = Astro.props;
+const isDevelopment = import.meta.env.DEV;
+
+const normalizedCanonicalPath = canonicalPath === "/"
+  ? "/"
+  : `/${canonicalPath.replace(/^\/+|\/+$/g, "")}/`;
+const hasHomepagePreloader = normalizedCanonicalPath === "/";
+const canonical = absoluteUrl(normalizedCanonicalPath);
+const siteRoot = `${siteOrigin}/`;
+const absolute = (path: string) => new URL(path, siteRoot).toString();
+const robots = robotsDirective(searchVisibility);
+
+const seoImage = pageSeoImage || settings.seoImage;
+const seoImageAlt = pageSeoImageAlt || settings.seoImageAlt;
+const seoImageMeta = imageMeta(seoImage);
+const hero = homepage?.hero;
+const heroMeta = imageMeta(hero?.image || "");
+const preloadImage = heroMeta.webp || hero?.image;
+const preloadType = heroMeta.webp ? "image/webp" : undefined;
+const heroResponsiveSrcset = heroMeta.responsiveWebp
+  ?.map((variant) => `${variant.path} ${variant.width}w`)
+  .join(", ");
+const responsivePreloadImage =
+  heroMeta.responsiveWebp?.at(-1)?.path || preloadImage;
+const hasResponsiveHero = Boolean(
+  heroMeta.desktopAvif ||
+  heroMeta.mobileAvif ||
+  heroMeta.mobileWebp ||
+  heroMeta.desktopWebp
+);
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${siteRoot}#business`,
+  name: settings.businessName.replace(/’/g, "'"),
+  description: settings.advanced.businessDescription,
+  url: siteRoot,
+  telephone: telHref(settings.phone).replace(/^(\+1)(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3-$4"),
+  email: settings.email,
+  image: absolute(seoImage),
+  logo: absolute(settings.logo),
+  founder: {
+    "@type": "Person",
+    "@id": `${siteRoot}#lisa`,
+    name: settings.advanced.founderName,
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Richland",
+    addressRegion: "WA",
+    addressCountry: "US",
+  },
+  areaServed: settings.serviceAreas.map((city) => ({ "@type": "City", name: city })),
+  sameAs: [settings.social.instagram, settings.social.facebook].filter(Boolean),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Portrait photography sessions",
+    itemListElement: settings.advanced.services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service,
+        areaServed: "Tri-Cities, Washington",
+      },
+    })),
+  },
+};
+
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteRoot}#website`,
+  url: siteRoot,
+  name: settings.businessName.replace(/’/g, "'"),
+  description:
+    "Warm, connected portrait photography by Lisa in Richland and the Tri-Cities, Washington.",
+  publisher: {
+    "@id": `${siteRoot}#business`,
+  },
+  inLanguage: "en-US",
+};
+
+const webPageSchema = normalizedCanonicalPath !== "/"
+  ? {
+      "@context": "https://schema.org",
+      "@type": schemaType,
+      "@id": `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { "@id": `${siteRoot}#website` },
+      about: { "@id": `${siteRoot}#business` },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: absolute(seoImage),
+      },
+      ...(pageSpatialCoverage ? { spatialCoverage: pageSpatialCoverage } : {}),
+      inLanguage: "en-US",
+      ...pageSchemaExtra,
+    }
+  : null;
+---
+
+<!doctype html>
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script type="text/javascript" is:inline>
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xyqkkqom4v");
+    </script>
+
+    {hasHomepagePreloader && (
+      <script is:inline define:vars={{ isDevelopment }}>
+        (() => {
+          const root = document.documentElement;
+          const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          const supportsWaapi =
+            typeof Element.prototype.animate === "function";
+          const qaMode =
+            isDevelopment &&
+            new URLSearchParams(window.location.search).has("preloader-qa");
+
+          if (qaMode) root.classList.add("is-preloader-qa");
+
+          if (!reduceMotion && supportsWaapi && !document.hidden) {
+            root.classList.add("is-preloading");
+
+            const release = () => {
+              root.classList.remove("is-preloading", "is-preloader-qa");
+              root.removeAttribute("data-preloader-state");
+              document.querySelector("[data-site-preloader]")?.remove();
+            };
+
+            if (!qaMode) {
+              window.__sitePreloaderFailsafe = window.setTimeout(release, 4200);
+            }
+          }
+        })();
+      </script>
+    )}
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#281E10" />
+    <link rel="canonical" href={canonical} />
+    <link
+      rel="icon"
+      type="image/webp"
+      href="/uploads/its-a-keeper-photography-favicon.webp"
+    />
+    <link
+      rel="icon"
+      type="image/jpeg"
+      href="/uploads/its-a-keeper-photography-favicon.jpg"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="/uploads/its-a-keeper-photography-favicon.jpg"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={settings.businessName} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absolute(seoImage)} />
+    {seoImageMeta.width && <meta property="og:image:width" content={String(seoImageMeta.width)} />}
+    {seoImageMeta.height && <meta property="og:image:height" content={String(seoImageMeta.height)} />}
+    <meta property="og:image:alt" content={seoImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absolute(seoImage)} />
+    <meta name="twitter:image:alt" content={seoImageAlt} />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(webSiteSchema)} />
+    {webPageSchema && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(webPageSchema)} />
+    )}
+    {additionalSchema.map((schema) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+    ))}
+
+    {hero?.visible !== false && (heroMeta.mobileAvif || heroMeta.mobileWebp) && (
+      <link
+        rel="preload"
+        as="image"
+        href={heroMeta.mobileAvif || heroMeta.mobileWebp}
+        type={heroMeta.mobileAvif ? "image/avif" : "image/webp"}
+        media="(max-width: 767px)"
+        fetchpriority="high"
+      />
+    )}
+    {hero?.visible !== false && (heroMeta.desktopAvif || heroMeta.desktopWebp) && (
+      <link
+        rel="preload"
+        as="image"
+        href={heroMeta.desktopAvif || heroMeta.desktopWebp}
+        type={heroMeta.desktopAvif ? "image/avif" : "image/webp"}
+        media="(min-width: 768px)"
+        fetchpriority="high"
+      />
+    )}
+    {hero?.visible !== false && preloadImage && !hasResponsiveHero && (
+      <link
+        rel="preload"
+        as="image"
+        href={responsivePreloadImage}
+        type={preloadType}
+        imagesrcset={heroResponsiveSrcset || undefined}
+        imagesizes={heroResponsiveSrcset ? "100vw" : undefined}
+        fetchpriority="high"
+      />
+    )}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cormorant-garamond-latin-400.woff2"
+      crossorigin
+    />
+    {loadEditorialMotion && (
+      <>
+        <script src="/vendor/gsap-3.15.0.min.js" defer is:inline></script>
+        <script src="/vendor/scroll-trigger-3.15.0.min.js" defer is:inline></script>
+      </>
+    )}
+    {loadEditorialMotion ? (
+      <script
+        src={isDevelopment ? "/scripts/site.js" : "/scripts/site.min.js"}
+        defer
+        is:inline
+      ></script>
+    ) : (
+      <script
+        src={isDevelopment ? "/scripts/chrome.js" : "/scripts/chrome.min.js"}
+        defer
+        is:inline
+      ></script>
+    )}
+  </head>
+
+  <body>
+    <slot name="preloader" />
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <slot />
+  </body>
+</html>
