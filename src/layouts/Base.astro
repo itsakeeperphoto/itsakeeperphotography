@@ -18,6 +18,7 @@ interface Props {
   schemaType?: SchemaType;
   additionalSchema?: Record<string, unknown>[];
   pageSpatialCoverage?: Record<string, unknown>;
+  pageSchemaExtra?: Record<string, unknown>;
   loadEditorialMotion?: boolean;
 }
 
@@ -33,6 +34,7 @@ const {
   schemaType = "WebPage",
   additionalSchema = [],
   pageSpatialCoverage,
+  pageSchemaExtra = {},
   loadEditorialMotion = Boolean(homepage),
 } = Astro.props;
 const isDevelopment = import.meta.env.DEV;
@@ -133,6 +135,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
       },
       ...(pageSpatialCoverage ? { spatialCoverage: pageSpatialCoverage } : {}),
       inLanguage: "en-US",
+      ...pageSchemaExtra,
     }
   : null;
 ---
