@@ -38,7 +38,21 @@ if [ "$STALE" -eq 1 ]; then
   exit 1
 fi
 
-git add -A
+TRACKED_TRANSCRIPTS="$(git ls-files '.handoff/sessions/*.jsonl')"
+if [ -n "$TRACKED_TRANSCRIPTS" ]; then
+  echo "✗ Hay transcripts rastreados por git; handoff abortado:"
+  echo "$TRACKED_TRANSCRIPTS"
+  exit 1
+fi
+
+git add -A -- . ':(exclude).handoff/sessions/*.jsonl'
+STAGED_TRANSCRIPTS="$(git diff --cached --name-only --diff-filter=ACMRT | grep -E '^\.handoff/sessions/.*\.jsonl$' || true)"
+if [ -n "$STAGED_TRANSCRIPTS" ]; then
+  echo "✗ Hay transcripts preparados para commit; handoff abortado:"
+  echo "$STAGED_TRANSCRIPTS"
+  exit 1
+fi
+
 if git diff --cached --quiet; then
   echo "Nada que commitear."
 else

@@ -123,7 +123,7 @@ Mantener y completar una experiencia editorial, cálida y publicable en Netlify:
 
 ## Enlaces y fuentes
 
-- Repositorio: `https://github.com/williammelo533/itsakeeper-astro.git`
+- Repositorio oficial: `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 - Staging/fundación aprobada: `https://itsakeeperphotography.netlify.app/`
 - Dominio final previsto: `https://www.itsakeeperphotography.com/`
 - Sistema de diseño: `DESIGN.md`

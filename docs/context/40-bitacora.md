@@ -174,3 +174,41 @@
   prioridad en resolver contenido de una ruta, revalidar su QA y solo entonces
   cambiarla a ready/index. También configurar Forms/GBP en Netlify y rehacer la
   matriz completa de capturas/Lighthouse antes del cutover.
+
+### 2026-08-08 — Codex / GPT-5.6 — Repositorio oficial y tags de analítica
+
+- **Objetivo:** trasladar correctamente la intervención de analítica al repo
+  oficial `itsakeeperphoto/itsakeeperphotography` y evitar futuras confusiones
+  con `williammelo533/itsakeeper-astro`.
+- **Instrucciones:** `AGENTS.md` declara el remoto oficial, obliga a verificar
+  `git remote get-url origin` antes de editar/push y prohíbe enviar este proyecto
+  al repositorio alterno. También se corrigieron las dos referencias obsoletas
+  en la memoria.
+- **Código:** `src/layouts/Base.astro` carga Microsoft Clarity `xyqkkqom4v` y
+  Google tag/GA4 `G-0YW8M601L1` desde el `<head>` compartido de las 21 rutas.
+- **Descubrimiento:** los commits históricos de Clarity crearon y luego borraron
+  un `Base.astro` en la raíz; nunca actualizaron el layout real bajo `src/`, por
+  lo que la documentación anterior describía una integración inexistente.
+- **Verificación:** se ejecutó `npm ci`; `npm run build:local` terminó con
+  `Validated 21 public routes in staging mode.` y el HTML generado contiene
+  cada ID en las 21 rutas. El remoto inspeccionado coincide con el oficial.
+- **Incidencias:** el primer build no tenía dependencias; después el sandbox
+  bloqueó el listener Tina `::1:4001`. La misma orden autorizada fuera del
+  sandbox pasó y no dejó cambios fuente incidentales.
+- **Pendiente:** verificar recepción real tras el deploy, decidir el tratamiento
+  del tráfico de staging y considerar ambas herramientas en la revisión humana
+  de Privacy/consentimiento. Después continúa Seniors.
+
+### 2026-08-08 — Addendum — Handoff saneado y push bloqueado
+
+- El primer `scripts/handoff.sh` creó el commit local `b324fb2`, pero este clon
+  carecía de `.handoff/sessions/.gitignore` y añadió un transcript `*.jsonl`.
+- El push fue rechazado con HTTP 403 antes de transferir el commit: GitHub usó la
+  identidad `williammelo533`, que no tiene permiso en el repositorio oficial.
+  `gh auth status` además reportó que su token estaba inválido.
+- El transcript se retiró únicamente del índice y sigue disponible en la máquina
+  local. Se añadió `.gitignore`, exclusión por pathspec, validación de archivos
+  rastreados/preparados y la prohibición correspondiente en `AGENTS.md`.
+- El commit local se sanea antes del próximo intento. Para publicar, autenticar
+  `gh` con una cuenta autorizada mediante `gh auth login -h github.com`, revisar
+  `gh auth status` y retomar el push a `origin/main`.

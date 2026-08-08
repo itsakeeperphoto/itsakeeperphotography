@@ -321,3 +321,51 @@
   siendo útil como red de seguridad del dueño de la máquina.
 - **Consecuencias:** Un agente remoto recibe contexto curado y sin secretos. Un
   transcript solo puede publicarse después de revisión y autorización explícita.
+
+### ADR-026 — El repositorio oficial se verifica antes de editar o hacer push
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada
+- **Contexto:** Existen dos clones/repositorios similares y una intervención de
+  analítica se envió por error a `williammelo533/itsakeeper-astro` mientras el
+  usuario revisaba `itsakeeperphoto/itsakeeperphotography`.
+- **Decisión:** Declarar
+  `https://github.com/itsakeeperphoto/itsakeeperphotography.git` como remoto
+  oficial en `AGENTS.md` y exigir `git remote get-url origin` antes de toda
+  edición o push.
+- **Alternativas descartadas:** Confiar únicamente en el nombre de la carpeta o
+  en el contexto de conversación se descartó porque ambos ya produjeron una
+  asignación incorrecta.
+- **Consecuencias:** Un agente debe detenerse si `origin` no coincide. El repo
+  `williammelo533/itsakeeper-astro` no recibe cambios de este proyecto.
+
+### ADR-027 — Clarity y Google tag se cargan desde el head compartido
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada
+- **Contexto:** La memoria afirmaba que Clarity estaba instalado, pero los
+  commits históricos habían usado un `Base.astro` temporal en la raíz y el
+  layout real no contenía analítica. El usuario suministró ambos snippets.
+- **Decisión:** Cargar Microsoft Clarity `xyqkkqom4v` y Google tag/GA4
+  `G-0YW8M601L1` en el `<head>` de `src/layouts/Base.astro`, usando scripts
+  inline sin transformación de Astro para conservar sus bootstraps.
+- **Alternativas descartadas:** Duplicar los snippets por página o volver a
+  crear un `Base.astro` en la raíz se descartó porque el layout bajo `src/`
+  gobierna las 21 rutas. No se añadió gating porque la solicitud fue global.
+- **Consecuencias:** Ambos tags aparecen en staging y release y pueden registrar
+  tráfico de ambos entornos. Falta verificar los dashboards y completar la
+  revisión humana de Privacy/consentimiento antes del lanzamiento.
+
+### ADR-028 — El handoff excluye transcripts con controles redundantes
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada
+- **Contexto:** El script asumía que `*.jsonl` estaba ignorado, pero este clon no
+  tenía `.handoff/sessions/.gitignore`; el primer handoff preparó un transcript
+  local antes de que el push fallara por permisos.
+- **Decisión:** Mantener `*.jsonl` ignorado, excluirlo explícitamente del
+  `git add` del handoff y abortar si Git detecta cualquier transcript rastreado o
+  preparado para commit. `AGENTS.md` lo prohíbe expresamente.
+- **Alternativas descartadas:** Confiar solo en un comentario del script o solo
+  en `.gitignore` se descartó porque una configuración faltante o un archivo ya
+  rastreado puede eludir una única barrera.
+- **Consecuencias:** El backup permanece disponible en disco, pero no puede
+  entrar silenciosamente en el historial. El transcript del intento fallido se
+  retiró del índice antes de publicar y nunca llegó al remoto.

@@ -3,18 +3,28 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 09:36 -05  
-**Actualizado por:** Codex / GPT-5.6  
-**Rama:** `main`  
-**Último commit local antes del cierre final:** `6b7005b` — `agents context and tag manager ids`
-**Remoto:** `origin` → `https://github.com/williammelo533/itsakeeper-astro.git`
+**Última actualización:** 2026-08-08 11:10 -05
+
+**Actualizado por:** Codex / GPT-5.6
+
+**Rama:** `main`
+
+**Commit base de esta sesión:** `51dae23` — `update validate site`
+
+**Publicación:** commit local validado; push pendiente por autenticación GitHub
+
+**Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
 ---
 
 ## Siguiente paso concreto
 
-Resolver el registro de contenido pendiente de la siguiente ruta prioritaria
-antes de habilitar su indexación. Empezar por
+Autenticar GitHub con una cuenta que tenga acceso de escritura a
+`itsakeeperphoto/itsakeeperphotography`, confirmar `gh auth status` y publicar el
+commit local en `origin/main`. Después del deploy, verificar que Clarity y
+Google Analytics reciben una visita etiquetada y decidir si el tráfico de
+staging debe filtrarse o excluirse. Luego resolver el registro de contenido
+pendiente de Seniors empezando por
 `src/content/pending.ts` y `content/pages/senior.json`: confirmar con Lisa el
 número de imágenes incluidas por paquete, la oferta mencionada en Q54 y la fecha
 editorial; luego actualizar la entrada de Seniors en
@@ -45,6 +55,14 @@ obligatorio siga pendiente.
   todos los cambios de agosto.
 - Se instaló en la raíz el sistema de continuidad (`AGENTS.md`,
   `docs/context/`, `scripts/handoff.sh`).
+- El repositorio oficial quedó fijado en `AGENTS.md` y el protocolo ahora exige
+  validar `origin` antes de editar o hacer push.
+- Microsoft Clarity y Google tag/GA4 quedaron instalados en el `<head>` global;
+  el build generado contiene ambos IDs en las 21 rutas.
+- El primer handoff detectó que este clon no tenía la exclusión de transcripts:
+  el `.jsonl` entró en el commit local, pero el push falló con HTTP 403 y nunca
+  llegó a GitHub. Se retiró solo del índice, se preservó localmente y se añadió
+  una defensa en profundidad al script y al `.gitignore`.
 - Durante la redacción apareció el commit local `6b7005b`, creado por otro
   actor/proceso del workspace, que guardó la primera mitad del contexto. Se
   preservó íntegro y el handoff final continúa encima de ese commit.
@@ -126,8 +144,12 @@ obligatorio siga pendiente.
 
 - Netlify hosting/forms/functions/blobs están cableados en código y config.
 - TinaCMS local y producción tienen modelos y visual editing.
-- Microsoft Clarity está integrado en `src/layouts/Base.astro` con ID
+- Microsoft Clarity está integrado en `src/layouts/Base.astro` con project ID
   `xyqkkqom4v`.
+- Google tag/GA4 está integrado en el mismo `<head>` con measurement ID
+  `G-0YW8M601L1`.
+- Ambos snippets cargan en staging y release. Falta verificar recepción en sus
+  dashboards y someter su uso a la revisión humana pendiente de Privacy.
 - Agentation está disponible solo durante desarrollo.
 - Google Drive fue fuente manual de assets durante diseño; no es dependencia de
   runtime.
@@ -159,7 +181,7 @@ obligatorio siga pendiente.
 | `content/pages/richland.json` | Draft | Confirmar lugares/detalles locales, imágenes/alt, formato newborn y travel. |
 | `content/pages/kennewick.json` | Draft | Confirmar lugares/detalles, 6–10 imágenes/alt y travel. |
 | `content/pages/pasco.json` | Draft y layout genérico | Confirmar lugares, imágenes y travel; diseñar/QA cuando haya contenido real. |
-| `content/pages/privacy.json` | Draft/noindex | Revisión legal/factual humana obligatoria. |
+| `content/pages/privacy.json` | Draft/noindex | Revisión legal/factual humana obligatoria; debe contemplar Clarity y Google Analytics. |
 | `content/pages/journal-*.json` | Draft | Confirmar fechas y hechos específicos registrados en pending. |
 | `netlify/functions/refresh-gbp-review-summary.mts` | Código completo, integración no verificada | Configurar OAuth/IDs en Netlify, ejecutar refresh y confirmar cache/endpoints reales. |
 | `src/components/KindWords.astro` | Fallback funciona | Sin credenciales GBP muestra link sin número. Confirmar URL pública oficial de reseñas. |
@@ -191,17 +213,20 @@ No reemplazar estas entradas por inferencias ni datos de competidores.
 
 ## Bloqueadores externos
 
-1. **Lisa / cliente:** hechos biográficos, premios, permisos, políticas,
+1. **GitHub:** `gh auth status` reporta un token inválido y el push HTTPS se
+   autenticó como `williammelo533`, sin permiso en el repositorio oficial. Se
+   requiere `gh auth login -h github.com` con una cuenta autorizada.
+2. **Lisa / cliente:** hechos biográficos, premios, permisos, políticas,
    entregables, cantidades y conocimiento local detallados arriba.
-2. **Cuenta Netlify:** configurar y verificar notificaciones reales de ambos
+3. **Cuenta Netlify:** configurar y verificar notificaciones reales de ambos
    formularios. El correo final solicitado es `itsakeeperphoto@gmail.com`; el
    correo de pruebas previo fue `globalbridge360@gmail.com`.
-3. **Google Cloud/GBP:** crear/autorizar OAuth para una cuenta manager del perfil
+4. **Google Cloud/GBP:** crear/autorizar OAuth para una cuenta manager del perfil
    y cargar cinco variables de entorno. La implementación no permite demostrar
    el conteo dinámico sin ello.
-4. **Autorización de lanzamiento:** cambiar dominio primario/DNS y activar
+5. **Autorización de lanzamiento:** cambiar dominio primario/DNS y activar
    `SITE_MODE=release` solo por instrucción explícita.
-5. **Revisión legal:** aprobar el contenido de Privacy antes de indexarlo.
+6. **Revisión legal:** aprobar el contenido de Privacy antes de indexarlo.
 
 ## Preguntas abiertas para el humano
 
@@ -259,6 +284,25 @@ Resultado esperado:
 - Ningún cambio fuente inesperado. Si aparecen solamente IDs generados en los
   `<form>` de `GuidedInquiry.astro` o `SessionPriceCalculator.astro`, no asumir
   que son cambios deseados; revisar y restaurar antes de commitear.
+
+Última verificación ejecutada en esta sesión:
+
+```bash
+npm ci
+npm run build:local
+rg -l "xyqkkqom4v" dist/client --glob '*.html' | wc -l
+rg -l "G-0YW8M601L1" dist/client --glob '*.html' | wc -l
+git remote get-url origin
+```
+
+Resultado: dependencias instaladas desde el lockfile, build exitoso,
+`Validated 21 public routes in staging mode.`, 21 HTML con cada identificador y
+remoto oficial confirmado. El primer build falló por dependencias ausentes; el
+segundo llegó a Tina pero el sandbox bloqueó `::1:4001`; la misma orden
+autorizada fuera del sandbox pasó. El cambio validado está en
+`src/layouts/Base.astro`; la rama local queda un commit por delante de
+`origin/main` hasta resolver la autenticación. No quedaron cambios incidentales
+del build.
 
 ### QA visual requerido para una ruta que se vaya a declarar lista
 

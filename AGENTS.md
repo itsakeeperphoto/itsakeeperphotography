@@ -9,10 +9,19 @@ Este archivo lo leen automáticamente los agentes que trabajan en el repositorio
 Si algo no quedó escrito en `docs/context/` y commiteado a git, se considera
 perdido. Nunca asumas que existe una conversación previa.
 
+### Repositorio oficial
+
+- Repositorio: `https://github.com/itsakeeperphoto/itsakeeperphotography.git`.
+- Antes de cualquier edición o push, ejecutar `git remote get-url origin` y
+  confirmar que coincide exactamente con el remoto oficial.
+- No aplicar ni enviar cambios de este proyecto a
+  `williammelo533/itsakeeper-astro`.
+
 ## 1. Protocolo de arranque obligatorio
 
 Antes de tocar código, lee completos y en este orden:
 
+0. Verificar `git remote get-url origin` contra el repositorio oficial.
 1. `docs/context/00-proyecto.md`
 2. `docs/context/10-arquitectura.md`
 3. `docs/context/20-estado.md`
@@ -58,6 +67,8 @@ Un agente sin historial debe poder retomar en menos de diez minutos.
 - Terminar con `20-estado.md` desactualizado.
 - Documentar intenciones como hechos.
 - Escribir secretos, tokens, llaves o valores reales de `.env` en `docs/`.
+- Preparar, commitear o subir `.handoff/sessions/*.jsonl`; estos transcripts se
+  conservan únicamente en la máquina local.
 - Hacer `git push --force` sobre `main`.
 
 ## 5. Convenciones

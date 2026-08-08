@@ -3,9 +3,15 @@
 > El ítem #1 de “Ahora” coincide con el siguiente paso de `20-estado.md`.
 > Ningún pendiente editorial se resuelve por inferencia.
 
-## Ahora — siguiente ruta hacia producción
+## Ahora — siguiente operación y ruta hacia producción
 
-- [ ] **1. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **1. Publicar con una cuenta GitHub autorizada.** Ejecutar
+  `gh auth login -h github.com`, confirmar `gh auth status` y hacer push del
+  commit local a `itsakeeperphoto/itsakeeperphotography`.
+- [ ] **2. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
+  filtra o se excluye antes de interpretar métricas.
+- [ ] **3. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -107,9 +113,29 @@ sin reemplazar el archivo.
 ### Privacy
 
 - [ ] Revisión factual/legal por la persona autorizada.
+- [ ] Incluir Microsoft Clarity y Google Analytics en la revisión y definir
+  cualquier requisito de consentimiento antes del release.
 - [ ] Mantener noindex hasta aprobación y registrar quién/fecha aprobó.
 
 ## Integraciones y operación
+
+### GitHub y handoff
+
+- [ ] Autenticar `gh` con una cuenta que tenga permiso de escritura en
+  `itsakeeperphoto/itsakeeperphotography`; el intento con `williammelo533`
+  recibió HTTP 403.
+- [ ] Publicar el commit local pendiente y confirmar que `main` remoto avanza.
+- [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
+  abortar el handoff si un transcript aparece rastreado o preparado.
+
+### Analítica
+
+- [x] Instalar Microsoft Clarity globalmente con project ID `xyqkkqom4v`.
+- [x] Instalar Google tag/GA4 globalmente con measurement ID
+  `G-0YW8M601L1`.
+- [ ] Verificar tráfico en tiempo real en ambos dashboards desde el deploy
+  oficial.
+- [ ] Decidir y documentar si staging debe excluirse o filtrarse.
 
 ### Netlify Forms
 
@@ -225,8 +251,8 @@ sin reemplazar el archivo.
 - [ ] TODO(contexto): ¿quién aprueba formalmente Privacy y cuándo? — cliente.
 - [ ] TODO(contexto): ¿las notificaciones Netlify de ambos forms ya existen y
   fueron probadas? — administrador de Netlify.
-- [ ] TODO(contexto): ¿hay acceso a Google Search Console/Analytics además de
-  Clarity? — administrador del cliente.
+- [ ] TODO(contexto): ¿quién verificará los dashboards de Clarity y Google
+  Analytics y el acceso a Search Console? — administrador del cliente.
 - [ ] TODO(contexto): ¿existe un tablero de tareas externo? — William.
 
 ## Hecho recientemente
@@ -242,7 +268,11 @@ sin reemplazar el archivo.
 - [x] Implementado pipeline GBP diario con fallback (credenciales aún pendientes).
 - [x] Generados sitemap, robots y llms desde manifiesto/modo.
 - [x] Añadidos redirects legacy por intención.
-- [x] Integrado Microsoft Clarity.
+- [x] Integrados Microsoft Clarity y Google tag/GA4 en el layout global.
+- [x] Fijado `itsakeeperphoto/itsakeeperphotography` como repositorio oficial en
+  `AGENTS.md` y la memoria operativa.
+- [x] Endurecido `scripts/handoff.sh` para impedir que transcripts locales entren
+  en commits futuros.
 - [x] Actualizado contenido/diseño reciente de Investment y Locations Guide.
 - [x] Verificado `npm run build:local` el 2026-08-08.
 - [x] Instalado el sistema de contexto persistente en la raíz.

@@ -16,7 +16,7 @@
 | Funciones/cache | Netlify Functions + Blobs | SDK en `package.json` | Resumen diario de reseñas GBP. |
 | Imágenes | Sharp + script propio | Sharp 0.34.5 | AVIF/WebP/JPEG responsivos y metadatos explícitos. |
 | Flipbook | `page-flip` | 2.0.7 | Solo Portfolio. |
-| Analítica | Microsoft Clarity | ID en `Base.astro` | Tracking `xyqkkqom4v`. |
+| Analítica | Microsoft Clarity + Google tag (GA4) | Snippets globales en `src/layouts/Base.astro` | Clarity `xyqkkqom4v`; GA4 `G-0YW8M601L1`. |
 | Anotación dev | Agentation | 3.0.2 | Solo integración de desarrollo. |
 | Base de datos | Ninguna | — | Contenido en JSON/Markdown; cache GBP en Blobs. |
 | Auth pública | Ninguna | — | TinaCloud gestiona su propia autenticación editorial. |
@@ -142,6 +142,17 @@ Ambos usan `POST`, `data-netlify="true"`, honeypot, campo oculto `form-name` y
 acción `/thank-you/`. La entrega por correo se configura en Netlify Dashboard;
 un campo oculto de recipient no crea la notificación.
 
+### Analítica
+
+- `src/layouts/Base.astro` carga Microsoft Clarity con project ID público
+  `xyqkkqom4v` y Google tag/GA4 con measurement ID público
+  `G-0YW8M601L1` dentro del `<head>` compartido.
+- Los snippets se renderizan en las 21 rutas públicas, tanto en staging como en
+  release. No existe gating por entorno ni por consentimiento en el código
+  actual.
+- La revisión humana pendiente de Privacy debe considerar ambas herramientas;
+  este registro técnico no sustituye una evaluación legal o de consentimiento.
+
 ### Google Business Profile
 
 - `netlify/functions/refresh-gbp-review-summary.mts`: job `@daily` que solicita
@@ -264,3 +275,9 @@ No se emiten `Review` ni `AggregateRating` hasta verificar atribución y conteo.
 11. Los `*.jsonl` de `.handoff/sessions/` pueden contener datos de conversación
     y están ignorados por git. `docs/context/` es la memoria compartida; no
     forzar la inclusión de transcripts sin autorización explícita.
+12. `scripts/handoff.sh` excluye los transcripts por pathspec y aborta si alguno
+    está rastreado o preparado para commit. La presencia del comentario en el
+    script no sustituye `.handoff/sessions/.gitignore` ni este control.
+13. El push al remoto oficial requiere una sesión GitHub autenticada con acceso
+    a `itsakeeperphoto/itsakeeperphotography`; la identidad `williammelo533`
+    recibió HTTP 403 en la última prueba.
