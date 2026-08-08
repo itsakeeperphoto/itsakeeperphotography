@@ -1,0 +1,323 @@
+# 30 — Registro de decisiones (ADR)
+
+> **Append-only.** Nunca editar o borrar una entrada existente. Si una decisión
+> queda obsoleta, agregar una nueva y marcar la anterior como supersedida.
+>
+> Las entradas siguientes se registraron retrospectivamente el 2026-08-08 a
+> partir del historial de trabajo y el estado verificado del repositorio. Cuando
+> la fecha original exacta no fue verificable, se indica expresamente.
+
+---
+
+### ADR-001 — La homepage Netlify es la autoridad visual
+- **Fecha:** 2026-08-08 (registro retrospectivo; decisión previa vigente)
+- **Estado:** Aceptada
+- **Contexto:** Al inicio se interpretó el dominio personalizado como sitio base,
+  pero el usuario aclaró que estaba reconstruyendo desde cero y que este repo es
+  el deployment de `itsakeeperphotography.netlify.app`.
+- **Decisión:** El render Netlify aprobado manda sobre el dominio legado,
+  inspiración y `DESIGN.md`, en ese orden.
+- **Alternativas descartadas:** Copiar o modernizar
+  `www.itsakeeperphotography.com` se descartó porque no es la fundación; imponer
+  `DESIGN.md` sobre la homepage se descartó porque alteraría una composición ya
+  aprobada.
+- **Consecuencias:** Cambios de homepage deben ser contenidos; el dominio legado
+  solo se usa para inventario de redirects antes del cutover.
+
+### ADR-002 — Sistema editorial earth-and-gold, no template genérico
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Lisa se diferencia de la fotografía local light-and-airy; el
+  sitio debe comunicar sombras cálidas antes de leer copy.
+- **Decisión:** Usar la paleta oficial, superficies estratificadas, arcos,
+  solapes, prints y hairlines de 1px; conservar formas rectangulares y motion
+  pausado.
+- **Alternativas descartadas:** Blanco/negro puros, azul, gold gradients,
+  glassmorphism, sombras de tarjetas, bordes redondeados y grids de cards
+  repetitivas se descartaron por romper el lenguaje de marca.
+- **Consecuencias:** Cada ruta debe variar composición sin cambiar de sistema;
+  contraste se corrige ajustando superficies, no abandonando la paleta.
+
+### ADR-003 — Astro estático + TinaCMS + Netlify
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El sitio necesita velocidad fotográfica, contenido editable y
+  hosting/formularios simples.
+- **Decisión:** Mantener Astro como salida estática, Tina como capa editorial y
+  Netlify como producción, forms, functions y blobs.
+- **Alternativas descartadas:** Rehacer en otro framework o implementar backend
+  propio se descartó por no aportar valor al sitio actual y aumentar operación.
+- **Consecuencias:** El contenido es editable sin convertir todo el sitio en una
+  SPA; integraciones dinámicas puntuales viven en Functions.
+
+### ADR-004 — Manifiesto tipado de 21 rutas
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** La publicación parcial exige una fuente única para status,
+  metadata, schema y crawling.
+- **Decisión:** `src/lib/page-manifest.ts` define todas las rutas públicas y su
+  estado de contenido/búsqueda.
+- **Alternativas descartadas:** Duplicar listas en sitemap, robots, footer y
+  páginas se descartó por drift; inferir readiness por existencia de archivo se
+  descartó porque una página puede existir pero contener hechos pendientes.
+- **Consecuencias:** Toda nueva ruta o cambio de indexación debe actualizar el
+  manifiesto y pasar el validador.
+
+### ADR-005 — Gating de staging y release por entorno
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** La base Netlify es staging mientras se completan datos; Google no
+  debe indexar rutas incompletas.
+- **Decisión:** `SITE_MODE=staging` usa origen Netlify y noindex global;
+  `SITE_MODE=release` usa el dominio custom y respeta readiness por ruta.
+- **Alternativas descartadas:** Publicar páginas delgadas, indexar staging o
+  confiar solo en robots.txt se descartó por riesgo SEO y de contenido.
+- **Consecuencias:** El build valida coherencia del contexto; `/thank-you/`
+  siempre queda noindex y Privacy sigue noindex hasta aprobación.
+
+### ADR-006 — Máximo cuatro enlaces internos dentro de main
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El brief exige que cada enlace editorial tenga propósito y que
+  la CTA final a Contact siempre forme parte de la ruta.
+- **Decisión:** Contar anchors same-origin dentro de `<main>`; header, footer,
+  externos, email y teléfono no cuentan. No hay excepción para directorios.
+- **Alternativas descartadas:** Eximir hubs/directorios o enlazar todas las cards
+  se descartó porque diluye señal y contradice el límite explícito.
+- **Consecuencias:** `scripts/validate-site.mjs` falla al quinto enlace; módulos
+  pueden mostrar más opciones sin convertirlas todas en links de body.
+
+### ADR-007 — Copy literal y placeholders no inventados
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** La voz procede de Lisa y varios hechos aún necesitan aprobación.
+- **Decisión:** Conservar cada frase suministrada; registrar faltantes en
+  `src/content/pending.ts`, mantener comentarios `CONTENT PENDING` cuando
+  corresponda y no renderizar sustitutos.
+- **Alternativas descartadas:** Reescribir para “mejorar SEO”, abreviar o usar
+  stock/datos plausibles se descartó por riesgo de falsedad y pérdida de voz.
+- **Consecuencias:** Varias rutas visualmente completas permanecen draft; avanzar
+  depende de confirmaciones humanas.
+
+### ADR-008 — Tina edita contenido, no la composición
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El sitio requiere composiciones altamente art-directed que no
+  deben degradarse por combinaciones arbitrarias en CMS.
+- **Decisión:** Tina expone campos de contenido y media; layout, tokens y
+  dispositivos compositivos permanecen en componentes/CSS.
+- **Alternativas descartadas:** Page builder libre o schemas de layout universales
+  se descartaron porque producirían páginas templadas e inconsistentes.
+- **Consecuencias:** Nuevos tipos de composición requieren código; ediciones de
+  copy no lo requieren.
+
+### ADR-009 — Hero de Seniors como componente base
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Family, Newborn y About tenían aperturas visualmente distintas; el
+  usuario eligió explícitamente Seniors como estándar.
+- **Decisión:** Centralizar estructura, tipografía, espaciado y prints laterales
+  en `EditorialHero.astro`, adaptando copy/fotos por ruta.
+- **Alternativas descartadas:** Mantener héroes totalmente independientes o
+  elegir otro hero se descartó por inconsistencia y por preferencia expresa.
+- **Consecuencias:** Branding, Investment, Journal, ciudades y otras páginas
+  especializadas reutilizan el mismo lenguaje de apertura.
+
+### ADR-010 — Variación de páginas mediante motivos existentes
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Repetir cuatro secciones en 18 páginas sería genérico, pero crear
+  sistemas independientes rompería coherencia.
+- **Decisión:** Variar orden, superficie, lado del arco, solapes y whitespace
+  usando motivos de homepage/Portfolio: hero fotográfico, arch+print, ledger,
+  review bands, paper/tape y crossing hairlines anclados.
+- **Alternativas descartadas:** Cards iguales para todo o layouts ajenos se
+  descartaron. Líneas decorativas flotantes también se eliminaron/reanclaron.
+- **Consecuencias:** Cada ruta necesita criterio y QA propio; toda línea debe
+  bordear, cruzar o extender geometría real.
+
+### ADR-011 — Formularios reales con Netlify Forms
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Netlify es el host y el formulario previo simulaba éxito mediante
+  `/api/inquiry` y logging de PII.
+- **Decisión:** Usar forms HTML detectables estáticamente, honeypot, POST y
+  `/thank-you/`; mantener fallback sin JavaScript.
+- **Alternativas descartadas:** Endpoint externo, Resend/Astro propio y simulación
+  local se descartaron por complejidad o falsedad del estado enviado.
+- **Consecuencias:** El código no contiene credenciales de correo; entrega y
+  notificaciones se gestionan en Netlify Dashboard.
+
+### ADR-012 — “Session estimates”, no calculadora ni booking
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Contact se convirtió en una herramienta interactiva para que
+  cliente y Lisa compartan una estimación sin contradecir contrato/pago posterior.
+- **Decisión:** Llamarla “session estimates”; mostrar total y disclaimer de que
+  Lisa confirma antes de contrato/pago.
+- **Alternativas descartadas:** “Price calculator”, ocultar el total, presentar
+  checkout o afirmar una reserva se descartó por tono, expectativas y entidades
+  de Google.
+- **Consecuencias:** El formulario capta intención detallada pero no cierra la
+  transacción; Lisa continúa manualmente.
+
+### ADR-013 — Precios centralizados y alcance cerrado del estimador
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El HTML de referencia y las imágenes de precios debían dejar una
+  sola verdad numérica.
+- **Decisión:** `src/lib/session-pricing.ts` contiene servicios, tres coberturas,
+  tres colecciones, add-ons y cargo por personas. Los valores $25, $20, $75 y
+  $15/person son definitivos. Newborn se añade; Pet/Elopement no se publican.
+- **Alternativas descartadas:** Duplicar precios en copy/componentes, conservar
+  “second location beyond package” o publicar servicios no aprobados se descartó.
+- **Consecuencias:** Cambios de precio se hacen primero en esta librería y luego
+  se revisa copy; el usuario ve un estimado reproducible.
+
+### ADR-014 — El destinatario oculto no configura email
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** `PUBLIC_INQUIRY_NOTIFICATION_EMAIL` puede viajar en el formulario,
+  pero Netlify Forms no lo interpreta como routing de notificación.
+- **Decisión:** Conservarlo como dato/auditoría del build y configurar email para
+  ambos forms en Netlify Dashboard.
+- **Alternativas descartadas:** Suponer que el hidden field enviaría correo o
+  implementar mailer propio se descartó.
+- **Consecuencias:** Producción pretende `itsakeeperphoto@gmail.com`; pruebas
+  usaron `globalbridge360@gmail.com`; la verificación es una tarea externa.
+
+### ADR-015 — Preloader cinematográfico solo en homepage y sin wordmark intermedio
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El preloader debía aportar una apertura premium sin ralentizar la
+  navegación interna. El primer diseño mostró el logo después del flash y el
+  usuario pidió revelación directa.
+- **Decisión:** Incluir `SitePreloader.astro` solo en `/`; después del flash el
+  obturador abre directamente el sitio.
+- **Alternativas descartadas:** Mostrarlo en todas las rutas, persistir estado en
+  storage o mantener el wordmark post-flash se descartó por fricción/preferencia.
+- **Consecuencias:** Se reproduce en cada carga nueva de homepage en memoria de
+  página; otras rutas cargan normalmente; reduced motion salta la secuencia.
+
+### ADR-016 — Reviews como polaroids en loop, flip no persistente
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** La primera versión de reviews quedó estática, no giraba y usaba
+  clips cuadrados/botones que no correspondían al concepto.
+- **Decisión:** Loop continuo arqueado, clip de bronce, flip 3D por hover/focus y
+  reanudación al salir; ocultar scrollbar y botones Pause/Read note/Show photo.
+- **Alternativas descartadas:** Click que deja la tarjeta fija, pausa manual,
+  tape genérico o carrusel inmóvil en tablet/móvil se descartaron por feedback.
+- **Consecuencias:** La interacción es efímera y el movimiento se detiene solo
+  mientras se lee una card; reduced motion debe seguir siendo accesible.
+
+### ADR-017 — Conteo GBP diario con cache y fallback sin cifra
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El texto “96 five-star reviews” no debe quedar congelado ni
+  inventado.
+- **Decisión:** Job diario consulta GBP, guarda resumen en Netlify Blobs y un
+  endpoint GET/HEAD lo sirve a homepage. Si falla, mostrar link sin número.
+- **Alternativas descartadas:** Hardcode diario, scraping público o romper la UI
+  sin credenciales se descartó por fragilidad y precisión.
+- **Consecuencias:** Requiere Google Cloud/OAuth y perfil autorizado; no emitir
+  AggregateRating hasta validar datos y atribución.
+
+### ADR-018 — Portfolio se conserva y Journal es el hub de planificación
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El plan original enumeró 18 páginas, pero el deployment ya tenía
+  un Portfolio con composición de libro aprobada.
+- **Decisión:** Mantener `/portfolio/` como ruta pública adicional; `/journal/`
+  se convierte en hub editorial y enlaza Portfolio desde contexto/footer.
+- **Alternativas descartadas:** Reemplazar Portfolio por Journal o borrar el
+  flipbook se descartó por destruir una pieza aprobada.
+- **Consecuencias:** El sitio tiene 21 rutas públicas totales contando utilidades;
+  Portfolio está en sitemap pero no en llms.
+
+### ADR-019 — Dirección legada y mapa no se publican
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El JSON heredado contiene `62 Canyon St`, pero el brief pide no
+  publicar street address/map pin.
+- **Decisión:** Renderizar “Richland, Washington · Serving Richland, Kennewick
+  and Pasco”; schema solo locality/region/country.
+- **Alternativas descartadas:** Conservar map URL, pin o address completa se
+  descartó por privacidad y falta de confirmación pública.
+- **Consecuencias:** Futuros componentes deben evitar leer el campo legado sin
+  filtro explícito.
+
+### ADR-020 — Redirects uno-a-uno y cutover bajo autorización
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El dominio final ya tiene URLs históricas y no conviene perder
+  intención SEO.
+- **Decisión:** Mantener redirects relevantes uno-a-uno en `public/_redirects`;
+  no redirigir todo a homepage; no tocar DNS/dominio primario sin permiso.
+- **Alternativas descartadas:** Catch-all homepage o cutover automático se
+  descartaron por mala UX, soft-404s y riesgo operativo.
+- **Consecuencias:** Antes del lanzamiento hay que probar legacy inventory y
+  canonicals en el dominio final.
+
+### ADR-021 — Generación de crawler outputs desde manifiesto
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Sitemap, robots y llms deben cambiar juntos cuando una ruta pasa
+  de draft a ready.
+- **Decisión:** Generarlos en routes Astro desde `page-manifest.ts` y el modo de
+  deploy.
+- **Alternativas descartadas:** XML/TXT estáticos editados a mano se descartaron
+  por desincronización.
+- **Consecuencias:** El build puede fallar si la membresía no corresponde; el
+  lanzamiento solo requiere cambiar estado verificado y reconstruir.
+
+### ADR-022 — QA visual continuo y evidencia, no solo revisión de código
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** El proyecto tiene composiciones responsivas complejas y errores
+  previos de overflow, líneas, imágenes aplastadas y contraste que no se ven en
+  lectura estática.
+- **Decisión:** Playwright en cuatro breakpoints por ruta y Lighthouse mobile/
+  desktop antes de producción; guardar capturas.
+- **Alternativas descartadas:** Verificar todo al final o considerar build verde
+  como diseño terminado se descartó.
+- **Consecuencias:** La evidencia del 2026-07-21 es histórica; cambios posteriores
+  exigen una nueva corrida completa.
+
+### ADR-023 — Herramientas de desarrollo no deben filtrarse a producción
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Agentation se instaló para feedback visual y Tina/React añaden
+  tooling que no debe cargar indiscriminadamente.
+- **Decisión:** Agentation es dev-only; registrar Tina islands y scripts por ruta;
+  cargar Portfolio/inquiry/preloader únicamente donde se necesitan.
+- **Alternativas descartadas:** Bundle global de herramientas o JS común grande
+  se descartó por rendimiento.
+- **Consecuencias:** Al agregar una interacción hay que revisar import boundary y
+  bundle de homepage.
+
+### ADR-024 — Las ubicaciones locales exactas requieren confirmación
+- **Fecha:** 2026-08-08 (registro retrospectivo)
+- **Estado:** Aceptada
+- **Contexto:** Fotografías y competidores no prueban dónde Lisa trabaja ni qué
+  recomienda; inventarlo dañaría confianza y SEO local.
+- **Decisión:** La guía de lugares usa lenguaje útil sin atribuir ubicaciones no
+  verificadas; nombres/comentarios específicos quedan pending.
+- **Alternativas descartadas:** Inferir spots por imagen, reutilizar listas de
+  competidores o publicar páginas locales delgadas se descartó.
+- **Consecuencias:** Richland/Kennewick/Pasco y el artículo de locations siguen
+  draft hasta recibir conocimiento de Lisa.
+
+### ADR-025 — Los transcripts de sesión no se publican por defecto
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada
+- **Contexto:** `scripts/handoff.sh` respalda el rollout más reciente, pero un
+  transcript puede contener información sensible y el primer push fue bloqueado
+  precisamente por intentar incluirlo en el commit.
+- **Decisión:** Mantener el backup `*.jsonl` solo en la máquina local y excluirlo
+  con `.handoff/sessions/.gitignore`; `docs/context/` es la memoria compartida.
+- **Alternativas descartadas:** Subir automáticamente todo el transcript se
+  descartó por privacidad; eliminar el backup local se descartó porque sigue
+  siendo útil como red de seguridad del dueño de la máquina.
+- **Consecuencias:** Un agente remoto recibe contexto curado y sin secretos. Un
+  transcript solo puede publicarse después de revisión y autorización explícita.

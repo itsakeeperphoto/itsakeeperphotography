@@ -1,20 +1,10 @@
 .investment-page {
   --investment-shell: 81.5625rem;
-  --investment-copy: 42rem;
-  --investment-section-space: clamp(var(--space-28), 10vw, var(--space-40));
-  --investment-line-dark: color-mix(
-    in srgb,
-    var(--color-deep-umber) 42%,
-    transparent
-  );
-  --investment-line-light: color-mix(
-    in srgb,
-    var(--color-warm-ivory) 45%,
-    transparent
-  );
+  --investment-copy: 43rem;
+  --investment-section-space: clamp(7rem, 10vw, 10rem);
+  --investment-line-dark: color-mix(in srgb, var(--color-deep-umber) 42%, transparent);
+  --investment-line-light: color-mix(in srgb, var(--color-warm-ivory) 44%, transparent);
   --investment-print-mat: 0.625rem;
-  --investment-pricing-overlap: var(--space-48);
-  --investment-pricing-clearance: var(--space-24);
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
@@ -31,10 +21,7 @@
 .investment-shell {
   position: relative;
   z-index: 2;
-  width: min(
-    var(--investment-shell),
-    calc(100% - (var(--page-gutter-desktop) * 2))
-  );
+  width: min(var(--investment-shell), calc(100% - (var(--page-gutter-desktop) * 2)));
   max-width: 100%;
   margin-inline: auto;
 }
@@ -44,7 +31,6 @@
 .investment-page h3,
 .investment-page p,
 .investment-page ol,
-.investment-page ul,
 .investment-page figure {
   margin: 0;
 }
@@ -58,23 +44,23 @@
 }
 
 .investment-page h2 {
-  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-size: clamp(3rem, 5vw, 5.35rem);
   letter-spacing: var(--tracking-heading);
-  line-height: 0.96;
+  line-height: 0.97;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
 .investment-page h3 {
-  font-size: clamp(1.65rem, 2.6vw, 2.65rem);
-  line-height: 1.05;
+  font-size: clamp(1.55rem, 2.2vw, 2.35rem);
+  line-height: 1.06;
   text-wrap: balance;
 }
 
 .investment-page p,
 .investment-page li {
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.45vw, 1.25rem);
+  font-size: clamp(1.0625rem, 1.35vw, 1.2rem);
   font-style: italic;
   line-height: 1.58;
 }
@@ -86,7 +72,8 @@
 
 .investment-eyebrow,
 .investment-ledger-number,
-.investment-experience__number,
+.investment-journey__number,
+.investment-timeline__number,
 .investment-faq__number {
   display: block;
   font-family: var(--font-utility);
@@ -105,8 +92,7 @@
 .investment-print {
   position: relative;
   padding: var(--investment-print-mat);
-  border: var(--border-hairline) solid
-    color-mix(in srgb, var(--color-deep-umber) 22%, transparent);
+  border: var(--border-hairline) solid color-mix(in srgb, var(--color-deep-umber) 24%, transparent);
   background: var(--color-warm-ivory);
 }
 
@@ -119,7 +105,8 @@
   height: 100%;
 }
 
-.investment-page [data-investment-photo] img {
+.investment-page [data-investment-photo] img,
+.investment-print img {
   object-fit: cover;
 }
 
@@ -130,11 +117,7 @@
   left: 50%;
   width: 6.75rem;
   height: 1.5rem;
-  background: color-mix(
-    in srgb,
-    var(--color-weathered-sand) 78%,
-    var(--color-warm-ivory)
-  );
+  background: color-mix(in srgb, var(--color-weathered-sand) 78%, var(--color-warm-ivory));
   clip-path: polygon(2% 10%, 98% 0, 96% 92%, 3% 100%);
   opacity: 0.94;
   pointer-events: none;
@@ -155,7 +138,7 @@
   outline-offset: var(--space-1);
 }
 
-/* The shared service-page hero remains the calibration source. */
+/* The approved service-page hero remains the calibration source. */
 .investment-page .editorial-hero {
   --editorial-hero-wash: rgba(40, 30, 16, 0.44);
 }
@@ -168,7 +151,7 @@
   font-size: clamp(3.25rem, 5.15vw, 5.95rem);
 }
 
-/* Value: arched portrait, anchored line and overlapping print. */
+/* Value: an arch, an overlapping print and one line anchored to the image. */
 .investment-value {
   --color-focus-ring: var(--color-focus-ring-light);
   position: relative;
@@ -187,14 +170,14 @@
 .investment-value__media {
   position: relative;
   grid-column: 1 / 7;
-  min-height: clamp(39rem, 49vw, 48rem);
+  min-height: clamp(40rem, 49vw, 49rem);
 }
 
 .investment-value__line {
   position: absolute;
   z-index: 0;
   top: 28%;
-  right: 24%;
+  right: 20%;
   left: -50vw;
   height: var(--border-hairline);
   background: var(--investment-line-light);
@@ -205,7 +188,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  width: 72%;
+  width: 73%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 50% 50% 0 0 / 40% 40% 0 0;
@@ -219,8 +202,8 @@
 .investment-value__print {
   position: absolute;
   z-index: 2;
-  right: 2%;
-  bottom: 1%;
+  right: 1%;
+  bottom: 0;
   width: 46%;
   aspect-ratio: 4 / 5;
   transform: rotate(1deg);
@@ -244,433 +227,15 @@
   margin-top: var(--space-8);
 }
 
-/* Included details form one connected ledger rather than independent cards. */
-.investment-includes {
-  padding-block: clamp(var(--space-28), 9vw, var(--space-40));
-  color: var(--color-deep-umber);
-  background: var(--color-weathered-sand);
-}
-
-.investment-includes__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--space-8);
-  align-items: start;
-}
-
-.investment-includes__heading {
-  grid-column: 1 / 5;
-  padding-right: var(--space-8);
-}
-
-.investment-includes__heading h2 {
-  max-width: 8ch;
-  font-size: clamp(2.75rem, 4.5vw, 4.75rem);
-}
-
-.investment-includes__ledger {
-  grid-column: 5 / 13;
-  padding: 0;
-  list-style: none;
-  border-bottom: var(--border-hairline) solid var(--investment-line-dark);
-}
-
-.investment-includes__ledger > li {
-  display: grid;
-  grid-template-columns: 5.75rem minmax(0, 1fr);
-  min-height: 6.75rem;
-  border-top: var(--border-hairline) solid var(--investment-line-dark);
-}
-
-.investment-includes__ledger .investment-ledger-number {
-  padding: var(--space-8) var(--space-6) var(--space-6) 0;
-  color: var(--color-clay);
-}
-
-.investment-includes__ledger p {
-  display: flex;
-  align-items: center;
-  padding: var(--space-6) var(--space-8);
-  border-left: var(--border-hairline) solid var(--investment-line-dark);
-}
-
-/* Four-step experience with a photo interruption crossing the next section. */
-.investment-experience {
-  position: relative;
-  padding-block: var(--investment-section-space) 0;
-  color: var(--color-deep-umber);
-  background: var(--color-warm-ivory);
-}
-
-.investment-experience__heading {
-  max-width: 58rem;
-  margin-bottom: var(--space-16);
-}
-
-.investment-experience__heading h2 {
-  max-width: 12ch;
-}
-
-.investment-experience__steps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding: 0;
-  list-style: none;
-  border-block: var(--border-hairline) solid var(--investment-line-dark);
-}
-
-.investment-experience__steps > li {
-  min-height: 27rem;
-  padding: var(--space-8) var(--space-8) var(--space-10);
-}
-
-.investment-experience__steps > li + li {
-  border-left: var(--border-hairline) solid var(--investment-line-dark);
-}
-
-.investment-experience__number {
-  margin-bottom: var(--space-10);
-  color: var(--color-clay);
-}
-
-.investment-experience__steps h3 {
-  min-height: 2.25em;
-  text-transform: uppercase;
-}
-
-.investment-experience__steps p {
-  margin-top: var(--space-6);
-}
-
-.investment-experience__photograph {
-  position: relative;
-  z-index: 3;
-  width: calc(100% - var(--space-16));
-  height: clamp(23rem, 38vw, 34rem);
-  margin: var(--space-20) 0
-    calc(var(--investment-pricing-overlap) * -1) auto;
-  overflow: hidden;
-  border: var(--border-hairline) solid var(--color-warm-ivory);
-}
-
-.investment-experience__photograph img {
-  object-position: 50% 48%;
-}
-
-.investment-experience__photo-line {
-  position: absolute;
-  z-index: 2;
-  top: var(--space-10);
-  left: 0;
-  width: 34%;
-  height: var(--space-10);
-  border-top: var(--border-hairline) solid var(--color-warm-ivory);
-  border-right: var(--border-hairline) solid var(--color-warm-ivory);
-}
-
-/* Pricing is composed as a tactile editorial board, never a SaaS card grid. */
-.investment-pricing {
-  --color-focus-ring: var(--color-focus-ring-light);
-  padding-block: var(--investment-pricing-clearance)
-    var(--investment-section-space);
-  color: var(--color-warm-ivory);
-  background: var(--color-walnut);
-}
-
-.investment-pricing__board {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: center;
-  min-height: clamp(42rem, 48vw, 48rem);
-}
-
-.investment-pricing__rail {
-  position: relative;
-  z-index: 6;
-  grid-column: 1 / 4;
-  grid-row: 1;
-  align-self: center;
-  max-width: 17rem;
-  padding-right: var(--space-8);
-}
-
-.investment-pricing__rail::before {
-  display: block;
-  width: var(--space-12);
-  margin-bottom: var(--space-8);
-  border-top: 0.125rem solid var(--color-clay);
-  content: "";
-}
-
-.investment-pricing__rail h2 {
-  max-width: 6ch;
-  font-size: clamp(2.65rem, 3.7vw, 4.35rem);
-}
-
-.investment-pricing__rail .investment-prose {
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-}
-
-.investment-pricing__rail p {
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.investment-pricing__rail .outline-button {
-  margin-top: var(--space-8);
-  border-color: var(--color-warm-ivory);
-  color: var(--color-warm-ivory);
-}
-
-.investment-pricing__papers {
-  display: grid;
-  z-index: 2;
-  grid-column: 4 / 11;
-  grid-row: 1;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
-  align-items: center;
-  min-width: 0;
-}
-
-.investment-price-sheet {
-  position: relative;
-  display: grid;
-  place-items: stretch;
-  color: var(--color-deep-umber);
-  isolation: isolate;
-}
-
-.investment-price-sheet:nth-child(1) {
-  z-index: 1;
-  grid-column: 1 / 5;
-  grid-row: 1;
-  aspect-ratio: 861 / 1497;
-  transform: translateY(var(--space-5)) rotate(-0.45deg);
-}
-
-.investment-price-sheet:nth-child(2) {
-  z-index: 4;
-  grid-column: 4 / 8;
-  grid-row: 1;
-  aspect-ratio: 850 / 1415;
-  transform: translateY(calc(var(--space-8) * -1)) scale(1.055);
-}
-
-.investment-price-sheet:nth-child(3) {
-  z-index: 2;
-  grid-column: 7 / 11;
-  grid-row: 1;
-  aspect-ratio: 745 / 1165;
-  transform: translateY(var(--space-8)) rotate(0.4deg);
-}
-
-.investment-price-sheet__texture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  display: block;
-  pointer-events: none;
-}
-
-.investment-price-sheet__texture-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-}
-
-.investment-price-sheet__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  min-width: 0;
-  padding: 17% 14% 14%;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-@media (min-width: 1251px) {
-  .investment-price-sheet:nth-child(1) .investment-price-sheet__content {
-    padding-right: 23%;
-    padding-left: 11%;
-  }
-
-  .investment-price-sheet:nth-child(3) .investment-price-sheet__content {
-    padding-right: 11%;
-    padding-left: 23%;
-  }
-}
-
-.investment-price-sheet__index,
-.investment-price-sheet h3,
-.investment-price-sheet li {
-  font-family: var(--font-utility);
-  font-style: normal;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-.investment-price-sheet__index {
-  display: block;
-  margin-bottom: var(--space-4);
-  color: var(--color-clay);
-  font-size: var(--font-size-caption);
-}
-
-.investment-price-sheet h3 {
-  font-size: clamp(1.15rem, 1.45vw, 1.5rem);
-  line-height: 1.3;
-}
-
-.investment-price-sheet__price {
-  width: 100%;
-  margin-block: var(--space-6);
-  padding-block: var(--space-4);
-  border-block: var(--border-hairline) solid var(--investment-line-dark);
-  font-family: var(--font-display) !important;
-  font-size: clamp(2.75rem, 3.5vw, 4.5rem) !important;
-  font-style: normal !important;
-  line-height: 1 !important;
-}
-
-.investment-price-sheet ul {
-  display: grid;
-  gap: var(--space-4);
-  padding: 0;
-  list-style: none;
-}
-
-.investment-price-sheet li {
-  font-size: clamp(0.75rem, 0.85vw, 0.9rem);
-  line-height: 1.45;
-}
-
-.investment-pricing__portrait {
-  position: relative;
-  z-index: 5;
-  grid-column: 10 / 13;
-  grid-row: 1;
-  align-self: center;
-  width: 90%;
-  aspect-ratio: 4 / 5;
-  justify-self: end;
-  transform: translateX(var(--space-8)) rotate(2deg);
-}
-
-.investment-pricing__portrait img {
-  object-position: 44% 48%;
-  filter: saturate(0) contrast(0.96) brightness(0.84);
-}
-
-.investment-page
-  .investment-pricing__portrait
-  > .investment-pricing__tape-frame {
-  position: absolute;
-  z-index: 5;
-  top: -2.9rem;
-  right: -1.35rem;
-  display: block;
-  width: 8rem;
-  pointer-events: none;
-  transform: scaleX(-1) rotate(1.5deg);
-  transform-origin: center;
-}
-
-.investment-page
-  .investment-pricing__tape-frame
-  > .investment-pricing__tape {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-  filter: none;
-}
-
-.investment-collections {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--space-8);
-  margin-top: var(--space-20);
-  padding-top: var(--space-16);
-  border-top: var(--border-hairline) solid var(--investment-line-light);
-}
-
-.investment-collections__heading {
-  grid-column: 1 / 5;
-  padding-right: var(--space-8);
-}
-
-.investment-collections__heading h3 {
-  max-width: 9ch;
-  color: var(--color-warm-ivory);
-  font-size: clamp(2.5rem, 4vw, 4rem);
-  line-height: 0.98;
-  text-transform: uppercase;
-}
-
-.investment-collections__heading p {
-  margin-top: var(--space-6);
-}
-
-.investment-collections__ledger {
-  grid-column: 5 / 13;
-  padding: 0;
-  list-style: none;
-  border-bottom: var(--border-hairline) solid var(--investment-line-light);
-}
-
-.investment-collections__ledger > li {
-  display: grid;
-  grid-template-columns: minmax(12rem, 0.8fr) 1.2fr;
-  min-height: 8rem;
-  padding: var(--space-6) 0;
-  border-top: var(--border-hairline) solid var(--investment-line-light);
-}
-
-.investment-collections__title {
-  display: grid;
-  align-content: center;
-  padding-right: var(--space-8);
-  border-right: var(--border-hairline) solid var(--investment-line-light);
-}
-
-.investment-collections__title span {
-  font-family: var(--font-utility);
-  font-size: var(--font-size-caption);
-  font-style: normal;
-  letter-spacing: var(--tracking-label);
-}
-
-.investment-collections__title strong {
-  margin-top: var(--space-2);
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 3.5vw, 3.5rem);
-  font-weight: var(--font-weight-regular);
-  line-height: 1;
-}
-
-.investment-collections__ledger ul {
-  display: grid;
-  align-content: center;
-  gap: var(--space-2);
-  padding: 0 0 0 var(--space-8);
-  list-style: none;
-}
-
-.investment-collections__ledger li li {
-  font-size: 1rem;
-}
-
-/* Policies and FAQ retain one continuous line system. */
+/* Connected ledgers keep inclusions and policies editorial, not card-like. */
+.investment-includes,
 .investment-policies {
   padding-block: var(--investment-section-space);
   color: var(--color-deep-umber);
   background: var(--color-weathered-sand);
 }
 
+.investment-includes__inner,
 .investment-policies__inner {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -678,16 +243,28 @@
   align-items: start;
 }
 
+.investment-includes__heading,
 .investment-policies__inner > header {
   grid-column: 1 / 5;
+  align-self: start;
   padding-right: var(--space-8);
 }
 
+@media (min-width: 1051px) {
+  .investment-includes__heading,
+  .investment-policies__inner > header {
+    position: sticky;
+    top: calc(var(--header-height, 7.375rem) + var(--space-6));
+  }
+}
+
+.investment-includes__heading h2,
 .investment-policies__inner h2 {
   max-width: 8ch;
   font-size: clamp(2.75rem, 4.5vw, 4.75rem);
 }
 
+.investment-includes__ledger,
 .investment-policies__ledger {
   grid-column: 5 / 13;
   padding: 0;
@@ -695,23 +272,30 @@
   border-bottom: var(--border-hairline) solid var(--investment-line-dark);
 }
 
+.investment-includes__ledger > li,
 .investment-policies__ledger > li {
   display: grid;
   grid-template-columns: 5.75rem minmax(0, 1fr);
-  min-height: 8rem;
+  min-height: 7.75rem;
   border-top: var(--border-hairline) solid var(--investment-line-dark);
 }
 
+.investment-includes__ledger .investment-ledger-number,
 .investment-policies__ledger .investment-ledger-number {
   padding: var(--space-8) var(--space-6) var(--space-6) 0;
   color: var(--color-clay);
 }
 
+.investment-includes__ledger > li > div,
 .investment-policies__ledger > li > div {
+  display: grid;
+  gap: var(--space-3);
+  align-content: center;
   padding: var(--space-6) var(--space-8);
   border-left: var(--border-hairline) solid var(--investment-line-dark);
 }
 
+.investment-includes__ledger h3,
 .investment-policies__ledger h3 {
   font-family: var(--font-utility);
   font-size: var(--font-size-h5);
@@ -720,10 +304,389 @@
   text-transform: uppercase;
 }
 
-.investment-policies__ledger p {
-  margin-top: var(--space-3);
+/* Seven-step journey: image composition at left, one connected ledger at right. */
+.investment-journey {
+  position: relative;
+  padding-block: var(--investment-section-space);
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
 }
 
+.investment-journey__inner {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.investment-journey__lead {
+  grid-column: 1 / 5;
+  padding-right: var(--space-10);
+}
+
+.investment-journey__lead h2 {
+  max-width: 9ch;
+}
+
+.investment-journey__media {
+  position: relative;
+  min-height: 35rem;
+  margin-top: var(--space-16);
+}
+
+.investment-journey__arch {
+  position: absolute;
+  top: 0;
+  left: 4%;
+  width: 67%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+}
+
+.investment-journey__arch picture,
+.investment-journey__arch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.investment-journey__arch img {
+  object-fit: cover;
+  object-position: 48% 45%;
+}
+
+.investment-journey__print {
+  position: absolute;
+  right: 2%;
+  bottom: 0;
+  width: 43%;
+  aspect-ratio: 4 / 5;
+  transform: rotate(1.25deg);
+}
+
+.investment-journey__print img {
+  filter: saturate(0) contrast(0.95) brightness(0.86);
+}
+
+.investment-journey__steps {
+  grid-column: 6 / 13;
+  padding: 0;
+  list-style: none;
+  border-bottom: var(--border-hairline) solid var(--investment-line-dark);
+}
+
+.investment-journey__steps > li {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  border-top: var(--border-hairline) solid var(--investment-line-dark);
+}
+
+.investment-journey__number {
+  padding: var(--space-8) var(--space-6) var(--space-6) 0;
+  color: var(--color-clay);
+}
+
+.investment-journey__steps > li > div {
+  padding: var(--space-7) var(--space-8) var(--space-8);
+  border-left: var(--border-hairline) solid var(--investment-line-dark);
+}
+
+.investment-journey__steps h3 {
+  text-transform: uppercase;
+}
+
+.investment-journey__steps p {
+  margin-top: var(--space-4);
+}
+
+/* Session Estimate: one warm paper sheet, no competing public price system. */
+.investment-pricing {
+  --color-focus-ring: var(--color-focus-ring-dark);
+  padding-block: clamp(5rem, 8vw, 8rem);
+  color: var(--color-deep-umber);
+  background: var(--color-walnut);
+}
+
+.investment-pricing__sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  min-height: 42rem;
+  border: var(--border-hairline) solid var(--investment-line-light);
+  background: var(--color-warm-ivory);
+}
+
+.investment-pricing__lead,
+.investment-pricing__copy {
+  position: relative;
+  min-width: 0;
+  padding: clamp(3.5rem, 6vw, 6.5rem);
+}
+
+.investment-pricing__lead {
+  border-right: var(--border-hairline) solid var(--investment-line-dark);
+}
+
+.investment-pricing__lead h2 {
+  max-width: 8ch;
+  font-size: clamp(3rem, 4.6vw, 5rem);
+}
+
+.investment-pricing__portrait {
+  width: min(65%, 18rem);
+  aspect-ratio: 4 / 5;
+  margin: var(--space-14) 0 calc(var(--space-20) * -1) auto;
+  transform: rotate(-1deg);
+}
+
+.investment-pricing__portrait img {
+  object-position: 50% 42%;
+}
+
+.investment-pricing__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.investment-pricing__copy .investment-prose {
+  max-width: 40rem;
+}
+
+.investment-pricing__copy .outline-button {
+  align-self: flex-start;
+  margin-top: var(--space-10);
+}
+
+.investment-pricing__note {
+  margin-top: var(--space-8) !important;
+  font-family: var(--font-utility) !important;
+  font-size: var(--font-size-caption) !important;
+  font-style: normal !important;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* Printed photographs: text and tactile print collage share a hard section seam. */
+.investment-prints {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 58rem;
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
+}
+
+.investment-prints__copy,
+.investment-prints__media {
+  position: relative;
+  min-width: 0;
+}
+
+.investment-prints__copy {
+  display: grid;
+  place-items: center;
+  padding: var(--investment-section-space) max(var(--page-gutter-desktop), 7vw);
+}
+
+.investment-prints__copy-inner {
+  width: min(100%, 43rem);
+}
+
+.investment-prints__copy h2 {
+  max-width: 10ch;
+}
+
+.investment-prints__columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-10);
+}
+
+.investment-prints__columns p {
+  font-size: 1.0625rem;
+}
+
+.investment-prints__script {
+  margin-top: var(--space-10) !important;
+  color: var(--color-clay);
+  font-family: var(--font-script) !important;
+  font-size: clamp(2.25rem, 4vw, 4.25rem) !important;
+  line-height: 1 !important;
+}
+
+.investment-prints__media {
+  min-height: 58rem;
+  overflow: hidden;
+  background: var(--color-warm-earth);
+}
+
+.investment-prints__line {
+  position: absolute;
+  z-index: 0;
+  top: 53%;
+  right: 0;
+  left: 0;
+  height: var(--border-hairline);
+  background: var(--investment-line-light);
+}
+
+.investment-prints__primary,
+.investment-prints__secondary,
+.investment-prints__album {
+  position: absolute;
+  z-index: 1;
+}
+
+.investment-prints__primary {
+  top: 9%;
+  left: 9%;
+  width: 61%;
+  aspect-ratio: 4 / 5;
+  transform: rotate(-1.25deg);
+}
+
+.investment-prints__secondary {
+  z-index: 2;
+  top: 18%;
+  right: 4%;
+  width: 37%;
+  aspect-ratio: 4 / 5;
+  transform: rotate(1.5deg);
+}
+
+.investment-prints__album {
+  z-index: 3;
+  right: 12%;
+  bottom: 6%;
+  width: 54%;
+  aspect-ratio: 5 / 4;
+  transform: rotate(-0.65deg);
+}
+
+.investment-prints__album img {
+  filter: saturate(0) contrast(0.96) brightness(0.88);
+}
+
+/* Timing: a real vertical sequence with an anchored photograph and archival note. */
+.investment-timeline {
+  padding-block: var(--investment-section-space);
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
+}
+
+.investment-timeline__inner {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.investment-timeline__heading {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  padding: var(--space-8) var(--space-8) var(--space-8) 0;
+}
+
+.investment-timeline__heading h2 {
+  max-width: 8ch;
+}
+
+.investment-timeline__heading p {
+  max-width: 33rem;
+  margin-top: var(--space-8);
+}
+
+.investment-timeline__photograph {
+  grid-column: 1 / 5;
+  grid-row: 2;
+  height: clamp(18rem, 23vw, 24rem);
+  transform: rotate(0.75deg);
+}
+
+.investment-timeline__photograph img {
+  object-position: 50% 42%;
+  filter: saturate(0) contrast(0.95) brightness(0.88);
+}
+
+.investment-timeline__ledger {
+  grid-column: 6 / 13;
+  grid-row: 1 / 4;
+  padding: var(--space-4) 0 0;
+  list-style: none;
+}
+
+.investment-timeline__ledger > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  column-gap: var(--space-7);
+  min-height: 11.5rem;
+  padding: 0 0 var(--space-12) var(--space-8);
+  border-left: var(--border-hairline) solid var(--investment-line-dark);
+}
+
+.investment-timeline__ledger > li::before {
+  position: absolute;
+  top: 0.22rem;
+  left: -0.34rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border: var(--border-hairline) solid var(--color-clay);
+  border-radius: 50%;
+  background: var(--color-warm-ivory);
+  content: "";
+}
+
+.investment-timeline__ledger > li:last-child {
+  min-height: 0;
+  padding-bottom: 0;
+}
+
+.investment-timeline__number {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  margin: 0;
+  color: var(--color-clay);
+}
+
+.investment-timeline__ledger h3 {
+  grid-column: 2;
+  font-size: clamp(1.7rem, 2.3vw, 2.45rem);
+  text-transform: uppercase;
+}
+
+.investment-timeline__ledger p {
+  grid-column: 2;
+  max-width: 40rem;
+  margin-top: var(--space-4);
+}
+
+.investment-timeline__note {
+  display: grid;
+  grid-column: 1 / 5;
+  grid-row: 3;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+  padding: var(--space-8);
+  color: var(--color-warm-ivory);
+  background: var(--color-muted-olive);
+}
+
+.investment-timeline__note > span {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.investment-timeline__note > div {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* FAQ and final torn-paper note share one measured composition. */
 .investment-faq {
   padding-block: var(--investment-section-space);
   color: var(--color-deep-umber);
@@ -760,7 +723,7 @@
 
 .investment-faq summary {
   display: grid;
-  grid-template-columns: 5.75rem minmax(0, 1fr) 4rem;
+  grid-template-columns: 5.5rem minmax(0, 1fr) 4rem;
   min-height: 6.5rem;
   align-items: center;
   cursor: pointer;
@@ -774,8 +737,8 @@
 .investment-faq summary > span:nth-child(2) {
   padding: var(--space-5) var(--space-8);
   font-family: var(--font-display);
-  font-size: clamp(1.45rem, 2.1vw, 2.2rem);
-  line-height: 1.12;
+  font-size: clamp(1.4rem, 1.9vw, 2rem);
+  line-height: 1.13;
 }
 
 .investment-faq__number {
@@ -812,13 +775,13 @@
 }
 
 .investment-faq__answer {
-  padding: 0 var(--space-16) var(--space-8) 5.75rem;
+  padding: 0 var(--space-16) var(--space-8) 5.5rem;
 }
 
 .investment-final {
   position: relative;
   grid-column: 7 / 13;
-  min-height: 50rem;
+  min-height: 46rem;
 }
 
 .investment-final__portrait {
@@ -827,12 +790,10 @@
   top: 0;
   left: 0;
   width: min(58%, 22rem);
-  height: auto;
   aspect-ratio: 2 / 3;
 }
 
 .investment-final__portrait img {
-  object-fit: cover;
   object-position: 50% 42%;
 }
 
@@ -840,9 +801,9 @@
   --color-focus-ring: var(--color-focus-ring-light);
   position: absolute;
   z-index: 2;
-  top: var(--space-16);
-  right: 0;
-  width: 76%;
+  top: var(--space-20);
+  right: 2%;
+  width: 68%;
   aspect-ratio: 2 / 3;
   color: var(--color-warm-ivory);
   isolation: isolate;
@@ -863,7 +824,6 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  pointer-events: none;
 }
 
 .investment-final__paper-content {
@@ -872,7 +832,7 @@
   display: flex;
   height: 100%;
   min-width: 0;
-  padding: 18% 11% 8%;
+  padding: 18% 12% 9%;
   flex-direction: column;
 }
 
@@ -899,7 +859,6 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .investment-pricing__rail .outline-button:hover,
   .investment-final__paper .outline-button:hover {
     border-color: var(--color-warm-ivory);
     color: var(--color-deep-umber);
@@ -913,8 +872,7 @@
 
 @media (max-width: 1250px) {
   .investment-page {
-    --investment-section-space: clamp(var(--space-24), 9vw, var(--space-36));
-    --investment-pricing-clearance: var(--space-20);
+    --investment-section-space: clamp(6rem, 9vw, 8rem);
   }
 
   .investment-page .editorial-hero__copy {
@@ -925,204 +883,48 @@
     min-height: 40rem;
   }
 
-  .investment-experience__steps > li {
+  .investment-journey__lead {
+    grid-column: 1 / 5;
+  }
+
+  .investment-journey__steps {
+    grid-column: 6 / 13;
+  }
+
+  .investment-journey__media {
     min-height: 29rem;
-    padding-inline: var(--space-6);
   }
 
-  .investment-pricing__board {
-    grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
-    align-items: start;
-    min-height: 0;
+  .investment-pricing__lead,
+  .investment-pricing__copy {
+    padding: clamp(3rem, 5vw, 5rem);
   }
 
-  .investment-pricing__rail {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-row: 1;
-    grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
-    column-gap: clamp(var(--space-10), 5vw, var(--space-20));
-    max-width: none;
-    margin-bottom: var(--space-20);
-    padding-right: 0;
+  .investment-prints__copy {
+    padding-inline: var(--page-gutter-tablet);
   }
 
-  .investment-pricing__rail::before {
-    grid-column: 1 / -1;
-    margin-bottom: var(--space-6);
-  }
-
-  .investment-pricing__rail > .investment-eyebrow {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .investment-pricing__rail h2 {
-    grid-column: 1;
-    grid-row: 3 / 5;
-    max-width: 8ch;
-  }
-
-  .investment-pricing__rail .investment-prose {
-    grid-column: 2;
-    grid-row: 2 / 4;
-    align-self: start;
-    margin-top: 0;
-  }
-
-  .investment-pricing__rail .outline-button {
-    grid-column: 2;
-    grid-row: 4;
-    justify-self: start;
-    margin-top: var(--space-6);
-  }
-
-  .investment-pricing__papers {
-    grid-column: 1;
-    grid-row: 2;
+  .investment-prints__columns {
     grid-template-columns: 1fr;
-    width: min(100%, 26rem);
-    margin: 0;
-    justify-self: end;
   }
 
-  .investment-price-sheet:nth-child(n) {
-    grid-column: auto;
-    grid-row: auto;
-    width: 92%;
-    margin-top: -2.75rem;
-    justify-self: center;
-    transform: none;
-  }
-
-  .investment-price-sheet:nth-child(1) {
-    margin-top: 0;
-    margin-right: auto;
-    transform: rotate(-0.7deg);
-  }
-
-  .investment-price-sheet:nth-child(2) {
-    z-index: 3;
-    transform: rotate(0.55deg);
-  }
-
-  .investment-price-sheet:nth-child(3) {
-    margin-left: auto;
-    transform: rotate(-0.35deg);
-  }
-
-  .investment-price-sheet__content {
-    padding: 17% 14% 15%;
-  }
-
-  .investment-price-sheet h3 {
-    font-size: 1.35rem;
-  }
-
-  .investment-price-sheet__price {
-    margin-block: var(--space-6);
-    font-size: clamp(3.25rem, 6vw, 4.5rem) !important;
-  }
-
-  .investment-price-sheet li {
-    font-size: 0.875rem;
-  }
-
-  .investment-pricing__portrait {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: start;
-    width: min(88%, 20rem);
-    margin-top: clamp(12rem, 20vw, 16rem);
-    justify-self: start;
-    transform: translateX(calc(var(--space-8) * -1)) rotate(2deg);
+  .investment-prints__media {
+    min-height: 66rem;
   }
 
   .investment-final__paper {
-    top: var(--space-16);
-    width: 78%;
-  }
-
-  .investment-final__paper-content {
-    padding: 18% 11% 8%;
-  }
-
-  .investment-final__paper h2 {
-    font-size: clamp(2.05rem, 3vw, 2.8rem);
-  }
-
-  .investment-final__paper p {
-    font-size: 1rem;
-  }
-}
-
-@media (min-width: 1051px) and (max-width: 1250px) {
-  .investment-pricing__board {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    align-items: center;
-  }
-
-  .investment-pricing__papers {
-    grid-column: 1 / 11;
-    grid-row: 2;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: center;
-    width: 100%;
-    justify-self: stretch;
-  }
-
-  .investment-price-sheet:nth-child(n) {
-    grid-row: 1;
-    width: 100%;
-    margin: 0;
-  }
-
-  .investment-price-sheet:nth-child(1) {
-    grid-column: 1;
-    transform: translateY(var(--space-5)) rotate(-0.45deg);
-  }
-
-  .investment-price-sheet:nth-child(2) {
-    grid-column: 2;
-    width: 105%;
-    transform: translateX(-2.5%) translateY(calc(var(--space-8) * -1));
-  }
-
-  .investment-price-sheet:nth-child(3) {
-    grid-column: 3;
-    transform: translateY(var(--space-8)) rotate(0.4deg);
-  }
-
-  .investment-price-sheet__price {
-    font-size: clamp(2.75rem, 4vw, 3.5rem) !important;
-  }
-
-  .investment-price-sheet li {
-    font-size: 0.8125rem;
-  }
-
-  .investment-pricing__portrait {
-    grid-column: 10 / 13;
-    grid-row: 2;
-    align-self: start;
-    width: 94%;
-    margin-top: 14rem;
-    justify-self: end;
-    transform: translateX(var(--space-5)) rotate(2deg);
+    width: 72%;
   }
 }
 
 @media (max-width: 1050px) {
   .investment-shell {
-    width: min(
-      100%,
-      calc(100% - (var(--page-gutter-tablet) * 2))
-    );
+    width: min(100%, calc(100% - (var(--page-gutter-tablet) * 2)));
   }
 
   .investment-value__media {
     grid-column: 1 / 7;
-    min-height: 36rem;
+    min-height: 35rem;
   }
 
   .investment-value__copy {
@@ -1139,58 +941,44 @@
     grid-column: 4 / 13;
   }
 
-  .investment-experience__steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .investment-journey__lead {
+    grid-column: 1 / 5;
   }
 
-  .investment-experience__steps > li {
-    min-height: 22rem;
+  .investment-journey__steps {
+    grid-column: 6 / 13;
   }
 
-  .investment-experience__steps > li:nth-child(3) {
-    border-left: 0;
-  }
-
-  .investment-experience__steps > li:nth-child(n + 3) {
-    border-top: var(--border-hairline) solid var(--investment-line-dark);
-  }
-
-  .investment-pricing__board {
-    min-height: 0;
-  }
-
-  .investment-pricing__rail {
-    grid-column: 1 / -1;
-    padding-right: var(--space-5);
-  }
-
-  .investment-pricing__rail h2 {
-    font-size: clamp(2.35rem, 4.2vw, 3.5rem);
-  }
-
-  .investment-pricing__rail p {
-    font-size: 0.9375rem;
-  }
-
-  .investment-price-sheet__price {
-    margin-block: var(--space-4);
-    font-size: clamp(2.35rem, 4.8vw, 3.75rem) !important;
-  }
-
-  .investment-price-sheet li {
-    font-size: 0.875rem;
+  .investment-pricing__sheet {
+    min-height: 38rem;
   }
 
   .investment-pricing__portrait {
-    align-self: end;
+    width: min(72%, 16rem);
   }
 
-  .investment-collections__heading {
-    grid-column: 1 / 4;
+  .investment-prints {
+    min-height: 62rem;
   }
 
-  .investment-collections__ledger {
-    grid-column: 4 / 13;
+  .investment-prints__media {
+    min-height: 62rem;
+  }
+
+  .investment-timeline__heading {
+    grid-column: 1 / 5;
+  }
+
+  .investment-timeline__photograph {
+    grid-column: 1 / 5;
+  }
+
+  .investment-timeline__ledger {
+    grid-column: 5 / 13;
+  }
+
+  .investment-timeline__note {
+    grid-column: 1 / 5;
   }
 
   .investment-faq__questions {
@@ -1198,371 +986,299 @@
   }
 
   .investment-final {
-    grid-column: 3 / 11;
-    min-height: 48rem;
+    grid-column: 2 / 12;
+    min-height: 52rem;
     margin-top: var(--space-20);
-  }
-
-  .investment-final__portrait {
-    width: min(68%, 21rem);
-    height: auto;
-  }
-
-  .investment-final__paper {
-    top: var(--space-16);
-    width: 74%;
-  }
-
-  .investment-final__paper-content {
-    padding: 18% 11% 8%;
-  }
-
-  .investment-final__paper h2 {
-    font-size: clamp(2rem, 4vw, 2.45rem);
   }
 }
 
 @media (max-width: 767px) {
   .investment-page {
-    --investment-section-space: var(--space-24);
-    --investment-pricing-overlap: 7rem;
-    --investment-pricing-clearance: var(--space-16);
+    --investment-section-space: clamp(5rem, 19vw, 7rem);
+    --investment-print-mat: 0.45rem;
   }
 
   .investment-shell {
-    width: calc(100% - (var(--page-gutter-mobile) * 2));
-  }
-
-  .investment-page .editorial-hero__copy {
-    width: 100%;
-  }
-
-  .investment-page .editorial-hero__title {
-    max-width: none;
-    font-size: clamp(2.15rem, 8.9vw, 3.4rem);
-    line-height: 0.95;
-  }
-
-  .investment-page .editorial-hero__title span {
-    white-space: nowrap;
+    width: min(100%, calc(100% - (var(--page-gutter-mobile) * 2)));
   }
 
   .investment-page h2 {
-    font-size: clamp(2.6rem, 12vw, 4rem);
+    font-size: clamp(2.55rem, 12vw, 4rem);
   }
 
-  .investment-value {
-    padding-top: var(--space-24);
+  .investment-page p,
+  .investment-page li {
+    font-size: 1rem;
   }
 
-  .investment-value__inner {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-16);
+  .investment-page .editorial-hero__copy {
+    width: min(100%, calc(100% - (var(--page-gutter-mobile) * 2)));
+  }
+
+  .investment-value__inner,
+  .investment-includes__inner,
+  .investment-journey__inner,
+  .investment-policies__inner,
+  .investment-faq__inner,
+  .investment-timeline__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .investment-value__media,
+  .investment-value__copy,
+  .investment-includes__heading,
+  .investment-includes__ledger,
+  .investment-journey__lead,
+  .investment-journey__steps,
+  .investment-policies__inner > header,
+  .investment-policies__ledger,
+  .investment-faq__questions,
+  .investment-timeline__heading,
+  .investment-timeline__photograph,
+  .investment-timeline__ledger,
+  .investment-timeline__note {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .investment-value__media {
-    width: 100%;
-    min-height: 33rem;
-  }
-
-  .investment-value__line {
-    top: 25%;
-    right: 20%;
-    left: calc(var(--page-gutter-mobile) * -1);
+    min-height: clamp(30rem, 127vw, 38rem);
   }
 
   .investment-value__arch {
-    width: 76%;
+    width: 77%;
   }
 
   .investment-value__print {
     right: 0;
-    bottom: 0;
-    width: 47%;
+    width: 48%;
   }
 
   .investment-value__copy {
-    width: 100%;
     max-width: none;
-  }
-
-  .investment-value__copy h2 {
-    max-width: 9ch;
-  }
-
-  .investment-includes__inner,
-  .investment-policies__inner,
-  .investment-collections,
-  .investment-faq__inner {
-    display: block;
   }
 
   .investment-includes__heading,
   .investment-policies__inner > header,
-  .investment-collections__heading {
+  .investment-journey__lead {
     padding-right: 0;
   }
 
-  .investment-includes__heading,
-  .investment-policies__inner > header {
-    margin-bottom: var(--space-12);
+  .investment-includes__heading h2,
+  .investment-policies__inner h2 {
+    max-width: 9ch;
   }
 
   .investment-includes__ledger > li,
-  .investment-policies__ledger > li {
-    grid-template-columns: 4rem minmax(0, 1fr);
+  .investment-policies__ledger > li,
+  .investment-journey__steps > li {
+    grid-template-columns: 3.75rem minmax(0, 1fr);
   }
 
   .investment-includes__ledger .investment-ledger-number,
-  .investment-policies__ledger .investment-ledger-number {
-    padding: var(--space-6) var(--space-4) var(--space-5) 0;
+  .investment-policies__ledger .investment-ledger-number,
+  .investment-journey__number {
+    padding-right: var(--space-3);
   }
 
-  .investment-includes__ledger p,
-  .investment-policies__ledger > li > div {
-    padding: var(--space-5);
+  .investment-includes__ledger > li > div,
+  .investment-policies__ledger > li > div,
+  .investment-journey__steps > li > div {
+    padding-inline: var(--space-5) var(--space-2);
   }
 
-  .investment-experience__heading {
-    margin-bottom: var(--space-12);
-  }
-
-  .investment-experience__steps {
-    display: block;
-  }
-
-  .investment-experience__steps > li {
-    min-height: 0;
-    padding: var(--space-8) var(--space-4) var(--space-10);
-    border-left: 0 !important;
-  }
-
-  .investment-experience__steps > li + li {
-    border-top: var(--border-hairline) solid var(--investment-line-dark);
-  }
-
-  .investment-experience__steps h3 {
-    min-height: 0;
-  }
-
-  .investment-experience__number {
-    margin-bottom: var(--space-6);
-  }
-
-  .investment-experience__photograph {
-    width: calc(100% + var(--page-gutter-mobile));
-    height: 28rem;
+  .investment-journey__media {
+    min-height: clamp(28rem, 115vw, 35rem);
     margin-top: var(--space-12);
-    margin-bottom: calc(var(--investment-pricing-overlap) * -1);
   }
 
-  .investment-experience__photograph img {
-    object-position: 54% 50%;
+  .investment-journey__arch {
+    width: 72%;
   }
 
-  .investment-pricing__board {
-    display: block;
+  .investment-journey__print {
+    width: 46%;
+  }
+
+  .investment-pricing {
+    padding-block: var(--space-16);
+  }
+
+  .investment-pricing__sheet {
+    grid-template-columns: 1fr;
     min-height: 0;
   }
 
-  .investment-pricing__rail {
-    display: block;
-    max-width: 35rem;
-    padding-right: 0;
+  .investment-pricing__lead,
+  .investment-pricing__copy {
+    padding: var(--space-10) var(--space-7);
   }
 
-  .investment-pricing__rail h2 {
-    max-width: 10ch;
-  }
-
-  .investment-pricing__rail p {
-    max-width: 40rem;
-    font-size: 1rem;
-  }
-
-  .investment-pricing__papers {
-    display: grid;
-    grid-template-columns: 1fr;
-    width: min(100%, 25rem);
-    margin: var(--space-16) auto 0;
-  }
-
-  .investment-price-sheet:nth-child(n) {
-    grid-column: auto;
-    grid-row: auto;
-    width: 92%;
-    margin-top: -2.75rem;
-    justify-self: center;
-    transform: none;
-  }
-
-  .investment-price-sheet:nth-child(1) {
-    margin-top: 0;
-    margin-right: auto;
-    transform: rotate(-0.7deg);
-  }
-
-  .investment-price-sheet:nth-child(2) {
-    z-index: 3;
-    transform: rotate(0.55deg);
-  }
-
-  .investment-price-sheet:nth-child(3) {
-    margin-left: auto;
-    transform: rotate(-0.35deg);
-  }
-
-  .investment-price-sheet__content {
-    padding: 17% 14% 15%;
-  }
-
-  .investment-price-sheet h3 {
-    font-size: 1.35rem;
-  }
-
-  .investment-price-sheet__price {
-    margin-block: var(--space-6);
-    font-size: clamp(3.25rem, 15vw, 4.5rem) !important;
-  }
-
-  .investment-price-sheet li {
-    font-size: 0.875rem;
+  .investment-pricing__lead {
+    border-right: 0;
+    border-bottom: var(--border-hairline) solid var(--investment-line-dark);
   }
 
   .investment-pricing__portrait {
-    width: min(62%, 19rem);
-    margin: var(--space-16) var(--space-4) 0 auto;
-    transform: rotate(2deg);
+    width: min(70%, 16rem);
+    margin-bottom: calc(var(--space-10) * -1);
   }
 
-  .investment-collections {
-    margin-top: var(--space-20);
-    padding-top: var(--space-12);
+  .investment-prints {
+    grid-template-columns: 1fr;
+    min-height: 0;
   }
 
-  .investment-collections__heading {
-    margin-bottom: var(--space-10);
+  .investment-prints__copy {
+    padding: var(--investment-section-space) var(--page-gutter-mobile);
   }
 
-  .investment-collections__ledger > li {
-    display: block;
+  .investment-prints__columns {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .investment-prints__media {
+    min-height: clamp(39rem, 165vw, 52rem);
+  }
+
+  .investment-prints__primary {
+    left: 5%;
+    width: 69%;
+  }
+
+  .investment-prints__secondary {
+    right: 1%;
+    width: 42%;
+  }
+
+  .investment-prints__album {
+    right: 7%;
+    width: 60%;
+  }
+
+  .investment-timeline__heading {
     padding: 0;
   }
 
-  .investment-collections__title {
-    padding: var(--space-6) 0;
-    border-right: 0;
+  .investment-timeline__photograph {
+    height: clamp(16rem, 65vw, 22rem);
   }
 
-  .investment-collections__ledger ul {
-    padding: 0 0 var(--space-6);
+  .investment-timeline__ledger {
+    padding-top: var(--space-4);
   }
 
-  .investment-faq__questions > header {
-    margin-bottom: var(--space-10);
+  .investment-timeline__ledger > li {
+    grid-template-columns: 3.75rem minmax(0, 1fr);
+    min-height: 0;
+    padding: 0 0 var(--space-10) var(--space-6);
+  }
+
+  .investment-timeline__number {
+    margin-bottom: 0;
+  }
+
+  .investment-timeline__ledger h3 {
+    min-height: 0;
+  }
+
+  .investment-timeline__ledger p {
+    grid-column: 2;
+  }
+
+  .investment-timeline__note {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+    padding: var(--space-7);
   }
 
   .investment-faq summary {
-    grid-template-columns: 3.5rem minmax(0, 1fr) 3rem;
+    grid-template-columns: 3.75rem minmax(0, 1fr) 3rem;
     min-height: 5.75rem;
   }
 
   .investment-faq summary > span:nth-child(2) {
-    padding: var(--space-5) var(--space-4);
-    font-size: clamp(1.35rem, 6vw, 1.8rem);
+    padding-inline: var(--space-4);
+    font-size: 1.35rem;
   }
 
   .investment-faq__number {
-    padding: var(--space-6) var(--space-3) var(--space-5) 0;
+    padding-right: var(--space-3);
   }
 
   .investment-faq__answer {
-    padding: 0 var(--space-4) var(--space-6) 3.5rem;
+    padding: 0 var(--space-4) var(--space-7) 3.75rem;
   }
 
   .investment-final {
-    min-height: 42rem;
-    margin-top: var(--space-20);
+    grid-column: 1;
+    min-height: clamp(40rem, 176vw, 52rem);
+    margin-top: var(--space-16);
   }
 
   .investment-final__portrait {
-    width: min(68%, 20rem);
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 73%;
+    aspect-ratio: 4 / 5;
   }
 
   .investment-final__paper {
-    top: 7rem;
-    right: -2%;
-    width: min(82%, 23rem);
-  }
-
-  .investment-final__paper-content {
-    padding: 17.5% 10.5% 7%;
-  }
-
-  .investment-final__paper h2 {
-    max-width: 10ch;
-    font-size: clamp(1.9rem, 8.5vw, 2.2rem);
-    line-height: 0.98;
-  }
-
-  .investment-final__paper p {
-    margin-top: var(--space-4);
-    font-size: 0.9375rem;
-    line-height: 1.4;
-  }
-
-  .investment-final__paper .outline-button {
-    margin-top: var(--space-5);
-  }
-}
-
-@media (max-width: 479px) {
-  .investment-shell {
-    width: calc(100% - (var(--page-gutter-small) * 2));
-  }
-
-  .investment-value__media {
-    min-height: 29rem;
-  }
-
-  .investment-value__line {
-    left: calc(var(--page-gutter-small) * -1);
-  }
-
-  .investment-experience__photograph {
-    width: calc(100% + var(--page-gutter-small));
-    height: 24rem;
-  }
-
-  .investment-final {
-    min-height: 42rem;
-  }
-
-  .investment-final__portrait {
-    width: 74%;
-    height: auto;
-  }
-
-  .investment-final__paper {
-    top: 7rem;
-    right: -2%;
+    top: clamp(12rem, 49vw, 16rem);
+    right: 0;
     width: 82%;
   }
 
   .investment-final__paper-content {
-    padding: 17.5% 10.5% 7%;
+    padding: 19% 11% 8%;
   }
 
   .investment-final__paper h2 {
-    font-size: clamp(1.8rem, 8.2vw, 2.05rem);
+    max-width: none;
+    font-size: clamp(1.8rem, 8.2vw, 2.4rem);
+  }
+}
+
+@media (max-width: 479px) {
+  .investment-pricing__lead,
+  .investment-pricing__copy {
+    padding-inline: var(--space-5);
+  }
+
+  .investment-faq summary {
+    grid-template-columns: 3rem minmax(0, 1fr) 2.75rem;
+  }
+
+  .investment-faq summary > span:nth-child(2) {
+    padding-inline: var(--space-3);
+    font-size: 1.2rem;
+  }
+
+  .investment-faq__answer {
+    padding-left: 3rem;
+  }
+
+  .investment-final {
+    min-height: 43rem;
+  }
+
+  .investment-final__paper {
+    width: 88%;
+  }
+
+  .investment-final__paper-content {
+    padding: 19% 10% 8%;
   }
 
   .investment-final__paper p {
-    margin-top: var(--space-4);
-    font-size: 0.9375rem;
-    line-height: 1.4;
+    font-size: 0.95rem;
+  }
+
+  .investment-final__paper h2 {
+    font-size: 1.7rem;
   }
 
   .investment-final__paper .outline-button {
@@ -1576,6 +1292,8 @@
   .investment-page *::before,
   .investment-page *::after {
     scroll-behavior: auto !important;
-    transition-duration: 0.001ms !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

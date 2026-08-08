@@ -4,13 +4,13 @@
   "contentStatus": "draft",
   "searchVisibility": "noindex",
   "schemaType": "WebPage",
-  "signature": "crossing-line",
-  "title": "Investment & Experience | It's A Keeper Photography",
-  "description": "What it's like to work with Lisa from first call to final gallery — planning, wardrobe help, golden-hour sessions and images made to be kept for generations.",
+  "signature": "overlap",
+  "title": "The Experience & Investment | It's A Keeper Photography",
+  "description": "What it's like to work with Lisa — planning, wardrobe guidance, your golden-hour session, an in-person gallery viewing, and heirloom prints made to be kept.",
   "hero": {
     "tone": "walnut",
-    "heading": "Your Session, From First Call to Final Gallery",
-    "intro": "More than beautiful photographs — a personal, guided experience from the first phone call to the images your family will keep for generations.",
+    "heading": "The Experience & Investment",
+    "intro": "From the first phone call to the prints on your wall — here's exactly what it's like to work with me.",
     "scriptLine": "the full experience",
     "image": "/uploads/investment-lisa-camera-studio-richland.jpg",
     "imageAlt": "Lisa Weiss holding her camera in her Richland photography studio.",
@@ -18,7 +18,7 @@
     "secondaryImageAlt": "A family photographed together in warm Tri-Cities light.",
     "links": [
       {
-        "label": "Build your estimate",
+        "label": "Build your session estimate",
         "href": "/contact/#session-planner"
       }
     ]
@@ -27,11 +27,13 @@
     {
       "id": "what-youre-really-investing-in",
       "kind": "prose",
-      "tone": "ivory",
+      "tone": "olive",
       "heading": "What You're Really Investing In",
       "paragraphs": [
-        "I'll be honest with you: if you're simply looking for the lowest price in the Tri-Cities, there are photographers who will serve you better. My clients are investing in something different — a relaxed, meaningful experience with someone who truly cares, and photographs that become more valuable with every passing year.",
-        "Here's what that means in practice: personal planning before you ever step in front of the camera. Wardrobe guidance so you look and feel amazing. Gentle direction all session long, so you never have to wonder what to do. And warm, timeless editing that will still look right decades from now — because these images aren't for a trend. They're for your walls, your albums, and the people who come after you."
+        "I'll be honest with you, because I'd rather be honest early than disappoint you later.",
+        "If what you're looking for is the lowest price in the Tri-Cities, there are photographers who will serve you better than I will. My clients are investing in something different — a relaxed, personal experience with someone who genuinely cares, and photographs made to be kept.",
+        "Here's how I think about it: you're obviously expecting beautiful images, or you wouldn't be hiring a photographer at all. What I want to give you is everything around them. How well you're taken care of from the very first email. Knowing exactly what to wear so nobody's fidgeting. Being guided through every moment so you never wonder what to do with your hands. Sitting down together to look at your gallery instead of being handed a link and left to figure it out. And walking away with something you can hold.",
+        "Twenty years in, that's the part I'm proudest of."
       ],
       "image": "/uploads/investment-lisa-photographing-outdoors-tricities.jpg",
       "imageAlt": "Lisa photographing a client outdoors in the Tri-Cities.",
@@ -45,111 +47,226 @@
       "heading": "Every Session Includes",
       "items": [
         {
-          "detail": "A personal planning call with me — your story, your season, your hopes for the images"
+          "heading": "A personal phone consultation",
+          "detail": "We talk before anything is booked, about your family, your season of life, and what you're hoping to keep."
         },
         {
-          "detail": "Wardrobe guidance before your session, so everyone looks great and moves comfortably"
+          "heading": "Wardrobe guidance",
+          "detail": "Send me what you're thinking and I'll help you choose. I'll tell you kindly if something's going to distract from your face."
         },
         {
-          "detail": "Location planning around the Tri-Cities, matched to your family and the light"
+          "heading": "Location planning",
+          "detail": "Chosen for your family, your style, and where the light will actually be that evening."
         },
         {
-          "detail": "A relaxed, fully guided outdoor session at golden hour"
+          "heading": "A fully guided session",
+          "detail": "You never need to know how to pose. That's my job."
         },
         {
-          "detail": "Hand-editing of every delivered image in my warm, true-to-you style"
+          "heading": "Hand-selected, hand-edited images",
+          "detail": "Finished in my warm, film-inspired style."
+        },
+        {
+          "heading": "An in-person gallery viewing",
+          "detail": "We sit down together and I walk you through everything."
+        },
+        {
+          "heading": "A private phone album",
+          "detail": "Your images as my thank-you — with its own icon on your phone, and it never expires."
         }
       ]
     },
     {
-      "id": "the-experience-step-by-step",
+      "id": "how-it-works-start-to-finish",
       "kind": "steps",
-      "tone": "earth",
-      "heading": "The Experience, Step by Step",
+      "tone": "ivory",
+      "heading": "How It Works, Start to Finish",
       "items": [
         {
           "heading": "1. You reach out",
-          "detail": "Tell me who you want photographed and what this season means to you. I read and answer every inquiry myself — you'll hear back from me, not an assistant."
+          "detail": "Tell me who you'd like photographed and what this season means to you. I read and answer every inquiry myself — and I always mean it when I say thank you for choosing to reach out. Getting to be part of someone's story is a privilege, not a transaction."
         },
         {
-          "heading": "2. We plan together",
-          "detail": "We'll talk by phone about locations, outfits, timing and the little details that make a session feel like yours. This is where the nerves start to melt — most clients tell me the planning call is when they realized this was going to be fun."
+          "heading": "2. We talk it through",
+          "detail": "I'll suggest a phone call, and this is my favorite part of the whole process. Most people arrive at that call a little nervous — \"I don't know how to pose,\" \"I'm not photogenic,\" \"my kids will never sit still.\" By the end of it, they're excited. I'd rather build a friendship than complete a job."
         },
         {
-          "heading": "3. Session day",
-          "detail": "Golden hour, outdoors, unhurried. I guide; you connect; the light does what Tri-Cities light does best. You'll probably hear \"Oh!! The lighting!!\" at least once — I can't help it."
+          "heading": "3. Your date is reserved",
+          "detail": "We'll look at available dates together. Once we find one that works, I'll send over a contract and a retainer invoice — and your date is officially yours once both are complete. (Nothing is held until then, so if you have a season in mind, don't wait too long.) The remaining balance is due the day of your session."
         },
         {
-          "heading": "4. Your gallery comes home",
-          "paragraphs": [
-            "Your images arrive edited with care, ready to print, frame, gift and keep.",
-            "And my hope is that when you see them, you don't just see beautiful photos — you feel seen."
-          ]
+          "heading": "4. We plan the details",
+          "detail": "This is where I earn my keep. We'll talk through outfits — send me photos of what you're considering and I'll help you refine them. I'll point you to my Instagram so you can save the scenery and light you're drawn to, which tells me more about what you want than any questionnaire could. If we're visiting more than one location, I'll choose spots close together, because once the clock starts, your session time is yours — and the sun doesn't wait around for us."
+        },
+        {
+          "heading": "5. Your golden hour",
+          "detail": "We meet outdoors in that last stretch of warm light. I'll guide you the entire time with prompts, movement and a few things that will feel completely ridiculous — asking you to fake-laugh is one of them, and it works every single time, because a real laugh always follows. We'll take the posed, everyone-looking-at-the-camera photograph too. But the ones you'll frame are usually the other ones."
+        },
+        {
+          "heading": "6. We view your gallery together",
+          "detail": "About two weeks later, we sit down in person and go through your images. I'll help you choose, talk through what would look beautiful on your walls, and answer the questions that are genuinely hard to answer alone in front of a screen. You can order online if you'd rather — but almost nobody does once they've done it this way."
+        },
+        {
+          "heading": "7. Your prints come home",
+          "detail": "Once your prints, album or wall art arrive, we'll meet once more so I can hand them to you. Watching someone hold their photographs for the first time never gets old."
         }
       ]
     },
     {
       "id": "a-note-about-pricing",
       "kind": "split",
-      "tone": "ivory",
+      "tone": "walnut",
       "heading": "A Note About Pricing",
       "paragraphs": [
-        "Session coverage begins at $160, with three options based on time, locations and outfit changes. Photo collections and optional add-ons are selected separately, so you can build an estimate around what you want photographed and how you want to keep it.",
-        "A planning estimate, not a booking. Lisa confirms everything with you before a contract or payment."
+        "To help you plan before we talk, I've made a Session Estimate that gives you a useful starting number based on what you choose. It isn't a booking or a contract, and it isn't meant to replace a conversation. It's there so you can get a feel for the investment before you ever reach out.",
+        "Every session is planned individually — different families, different seasons, different walls to fill. Once we connect, I'll look at what you've selected, make sure it actually fits what you're hoping for, and confirm the complete price with nothing hidden and no pressure. From there, if it feels right, I'll walk you through the contract, retainer and payment details myself.",
+        "What I'll say now: I'm not the cheapest photographer in the Tri-Cities, and I'm not trying to be. My clients tend to be people who found my work, loved it, and decided it was worth planning for. If that's you, we're going to get along."
       ],
+      "image": "/uploads/investment-lisa-studio-portrait-camera.jpg",
+      "imageAlt": "Lisa Weiss smiling with her camera in her Richland studio.",
       "links": [
         {
-          "label": "Build your estimate",
+          "label": "Build your session estimate",
           "href": "/contact/#session-planner"
         }
       ]
     },
     {
-      "id": "good-to-know-policies",
+      "id": "printed-photographs",
+      "kind": "prose",
+      "tone": "earth",
+      "heading": "Why I Still Believe in Printed Photographs",
+      "scriptLine": "made to be held",
+      "paragraphs": [
+        "Think about the difference between an email and a letter in the mail. The email disappears into a hundred others. The letter feels considered — like someone meant it.",
+        "Photographs work the same way. It's so easy for images to end up buried in your phone or forgotten on a hard drive. Printed well and hung on your wall or bound into an album, they become something else entirely: something your family walks past every day, something your children grow up seeing themselves in, something you can put in someone's hands.",
+        "That's why I sell prints, enlargements, canvases, albums I design myself, and my wood prints — the piece I'm most known for. And it's why I'll ask, when we're planning, about the colors in your home. If we're going to make something big enough to live on your wall, it may as well belong there.",
+        "One thing I don't sell: graduation announcements and cards. You can get those beautifully and affordably on your own, and marking them up wouldn't be fair to you."
+      ],
+      "image": "/uploads/extended-family-embrace-tricities.jpg",
+      "imageAlt": "A large family photographed together during golden hour in the Tri-Cities.",
+      "secondaryImage": "/uploads/family-children-golden-hour-tricities.jpg",
+      "secondaryImageAlt": "Children photographed together in warm golden-hour light."
+    },
+    {
+      "id": "how-long-everything-takes",
+      "kind": "steps",
+      "tone": "ivory",
+      "heading": "How Long Everything Takes",
+      "intro": "I'd rather over-estimate and surprise you than promise fast and make you wait.",
+      "paragraphs": [
+        "Your online gallery stays active for about a month, and you can download your images as many times as you'd like during that time.",
+        "Please save them in more than one place — I don't guarantee long-term archiving, and photographs this important deserve a backup."
+      ],
+      "items": [
+        {
+          "heading": "Gallery viewing",
+          "detail": "About 2 weeks after your session"
+        },
+        {
+          "heading": "Final digital images",
+          "detail": "About 1 week after you choose"
+        },
+        {
+          "heading": "Prints",
+          "detail": "About 2 weeks"
+        },
+        {
+          "heading": "Albums",
+          "detail": "About 3 weeks — I design each one myself"
+        },
+        {
+          "heading": "Wood prints & large custom pieces",
+          "detail": "About 1 month — they're made to order"
+        }
+      ],
+      "image": "/uploads/investment-lisa-camera-black-white-wide.jpg",
+      "imageAlt": "Lisa Weiss reviewing her camera while working on a photography session."
+    },
+    {
+      "id": "good-to-know-before-you-book",
       "kind": "checklist",
-      "tone": "olive",
-      "heading": "Good-to-Know Policies",
+      "tone": "sand",
+      "heading": "Good to Know Before You Book",
       "items": [
         {
           "heading": "Booking",
-          "detail": "I reserve most sessions four to six weeks ahead."
+          "detail": "I reserve most sessions four to six weeks ahead. My busiest stretch is May through October, and fall dates go first — if you're picturing autumn photos, reach out in late summer."
         },
         {
           "heading": "Weather",
-          "detail": "Tri-Cities weather usually cooperates — when it doesn't, we reschedule together for the next best light."
+          "detail": "Tri-Cities weather is usually kind to us. When it isn't, I'll talk to you honestly about whether we should move — I want you to have the best possible light. Your retainer is non-refundable but transferable one time, which lets me hold your date without leaving it in limbo. Beyond that, I'll always do what's right by you."
         },
         {
-          "heading": "Illness & little ones",
-          "detail": "Sick kids and hard days happen. We'll find a new date; the photos are better when everyone feels good."
+          "heading": "Sick kids and hard days",
+          "detail": "They happen. Let me know and we'll figure it out. Photographs are better when everyone feels good."
         },
         {
-          "heading": "Editing philosophy",
-          "detail": "I retouch the temporary and keep the true. You'll look like yourselves — on a really good evening."
+          "heading": "What I can and can't control",
+          "detail": "I'll do everything in my power to bring out the best in your session — but a baby who's decided today isn't the day is a baby who's decided. I'll keep going, keep trying, and we'll still come away with something. It just helps to know that going in."
+        },
+        {
+          "heading": "What I photograph",
+          "detail": "Seniors, families, couples, newborns, small elopements, branding and headshots. I don't photograph full weddings, events or boudoir — if that's what you need, I'm always glad to point you toward someone who specializes in it."
+        },
+        {
+          "heading": "Travel",
+          "detail": "No travel fee anywhere in the Tri-Cities — Richland, Kennewick and Pasco are all home. Beyond about an hour, we'll talk about a travel fee."
         }
       ]
     },
     {
-      "id": "investment-questions",
+      "id": "common-questions",
       "kind": "faq",
-      "tone": "sand",
-      "heading": "Investment Questions",
+      "tone": "ivory",
+      "heading": "Common Questions",
       "items": [
         {
           "heading": "How much does a photography session cost in the Tri-Cities?",
           "paragraphs": [
-            "Session coverage is $160, $220 or $330, depending on the time, number of locations and outfit changes. Photo collections and optional add-ons are separate, and the calculator shows a planning estimate before you inquire."
+            "Photography pricing in the Tri-Cities ranges widely, from budget mini-sessions to luxury studio collections. My pricing sits where a personal experience and heirloom-quality prints meet. You can build a Session Estimate before we talk to get a clear planning number, and I'll personally confirm the final scope, contract and payment details with you before anything is booked."
           ]
         },
         {
-          "heading": "Do you sell prints and albums?",
+          "heading": "How long does it take to get photos back?",
           "paragraphs": [
-            "Yes. The current collections include linen prints, a mini 5x5 signature album and an 8x10 leather-bound album, depending on the collection you choose."
+            "About two weeks until we sit down together to view your gallery, and about another week for your final digital images after you've chosen. Prints take around two weeks, albums about three, and wood prints about a month since they're made to order."
           ]
         },
         {
-          "heading": "What happens after I send my estimate?",
+          "heading": "What's included in a session?",
           "paragraphs": [
-            "Lisa reviews the details and follows up with you to confirm the session, contract, payment link and booking. The calculator is a planning estimate, not a booking or final contract."
+            "A phone consultation, wardrobe guidance, location planning, your fully guided golden-hour session, hand-editing in my signature style, an in-person gallery viewing, and a private phone album of your images as a thank-you."
+          ]
+        },
+        {
+          "heading": "Do I get to keep the digital images?",
+          "paragraphs": [
+            "Yes — digital images include personal print rights, so you can print them for your home and share them on social media. Commercial use is a separate license: if images will be used to promote a business, that's booked and priced as branding photography from the start."
+          ]
+        },
+        {
+          "heading": "Where do sessions take place?",
+          "paragraphs": [
+            "Almost always outdoors at golden hour, at Tri-Cities locations we choose together. Newborn sessions usually happen in your home, and outdoors in a beautiful spot when the season allows. For headshots, I bring portable studio equipment to your workplace — I've set up in everything from a clinic waiting room to a spare office."
+          ]
+        },
+        {
+          "heading": "When is the best time of year for photos in the Tri-Cities?",
+          "paragraphs": [
+            "May through October is my busiest season for good reason, though March and April can be lovely here. I photograph year-round, and winter is genuinely underrated — a sunny winter afternoon gives some of the most beautiful light of the whole year."
+          ]
+        },
+        {
+          "heading": "Do you retouch photos?",
+          "paragraphs": [
+            "Gently, and honestly. I'll take care of the temporary things — a blemish, a shirt bunching oddly, an angle that isn't doing you justice. What I won't do is make you look like someone else. You are who you are, and my job is to show that at its best, not replace it."
+          ]
+        },
+        {
+          "heading": "How do I book?",
+          "paragraphs": [
+            "Reach out through my contact form or give me a call. We'll talk, find a date, and once your contract and retainer are complete, that date is yours."
           ]
         }
       ]
@@ -157,24 +274,18 @@
   ],
   "finalCta": {
     "tone": "umber",
-    "heading": "Ready When You Are",
+    "heading": "Let's Start With a Conversation",
     "paragraphs": [
-      "The first step is a conversation — no pressure, no obligation, just your story and my calendar."
+      "No pressure and no obligation — just your story, my calendar, and everything you need to decide."
     ],
     "image": "/uploads/investment-lisa-studio-portrait-camera.jpg",
     "imageAlt": "Lisa smiling with her camera in her studio.",
     "link": {
-      "label": "Start planning",
-      "href": "/contact/#session-planner"
+      "label": "Start planning your session",
+      "href": "/contact/"
     }
   },
   "pending": [
-    "[PENDIENTE: entrega — nº de imágenes, galería online, derechos de impresión, plazos — Q54, Q56, Q58]",
-    "[PENDIENTE: tiempo de respuesta habitual — Q50]",
-    "[PENDIENTE: turnaround — Q56]",
-    "[PENDIENTE: retainer/contrato — Q51]",
-    "[PENDIENTE: política exacta — Q55]",
-    "[PENDIENTE: detalle — Q57]",
-    "[PENDIENTE: Q51]"
+    "[PENDIENTE: número de imágenes / duración por paquete — Lisa envió el pricing por separado. Añadir aquí una línea neutral por tipo de sesión, sin cifras de dinero.]"
   ]
 }

@@ -4,68 +4,252 @@
   "contentStatus": "draft",
   "searchVisibility": "noindex",
   "schemaType": "Article",
-  "signature": "arch",
-  "title": "12 Best Places to Take Pictures in the Tri-Cities, WA (2026 Guide)",
-  "description": "A Tri-Cities photographer's honest guide to the best photo locations in Richland, Kennewick and Pasco — where the light falls, when to go, and what to expect.",
+  "signature": "overlap",
+  "title": "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
+  "description": "After 20 years photographing the Tri-Cities, here's how I choose where to shoot — the kinds of locations that work, the seasons that surprise people, and why.",
   "hero": {
-    "tone": "sand",
-    "heading": "The Best Places to Take Pictures in the Tri-Cities",
-    "intro": "After twenty years of photographing families, seniors and couples across Richland, Kennewick and Pasco, I've learned that the \"best\" location isn't the most famous one — it's the one where the light, the season and your story line up. Here's my honest local guide, including when each spot glows and who it fits best."
+    "tone": "umber",
+    "heading": "Where to Take Photos in the Tri-Cities",
+    "scriptLine": "hunt for light",
+    "image": "/uploads/journal-family-children-golden-hour-tricities.jpg",
+    "imageAlt": "Family running through an open golden field at sunset during a Tri-Cities photo session",
+    "secondaryImage": "/uploads/senior-riverside-golden-hour-tricities.jpg",
+    "secondaryImageAlt": "Evening light reflecting off the Columbia River during a portrait session in Richland, WA"
   },
   "sections": [
     {
-      "id": "how-i-choose-a-location",
+      "id": "the-short-answer",
       "kind": "prose",
       "tone": "ivory",
-      "heading": "How I Choose a Location (It's Always About the Light)",
+      "heading": "The Short Answer",
       "paragraphs": [
-        "Every location on this list earns its place for one reason: how it holds golden hour. Eastern Washington gives us dry air, low hills and long evenings — which means the last hour before sunset here is some of the most beautiful portrait light anywhere. When we plan your session, I don't just pick a pretty place; I pick where the light will be doing something special at the exact time we shoot."
+        "The best place to take photos in the Tri-Cities is wherever the light is doing something beautiful at the hour you're shooting. That sounds like a dodge, but it's the most useful thing I can tell you after twenty years here: a stunning location at the wrong time of day makes a flat photograph, and an ordinary field at the right moment makes one you'll hang on your wall.",
+        "So instead of handing you a list of addresses, let me tell you how I actually think about this — and what I'd look for if I were you."
+      ]
+    },
+    {
+      "id": "it-was-never-really-about-the-place",
+      "kind": "split",
+      "tone": "earth",
+      "heading": "It Was Never Really About the Place",
+      "paragraphs": [
+        "When people ask me where we should shoot, what they're usually asking is \"how do I make sure these photos turn out?\" And the honest answer is that the location matters much less than three other things: the hour, the season, and whether you can relax once you get there.",
+        "I've learned to hunt for light. Wherever I'm standing, that's what my eyes are doing — reading where it's falling, where it's about to fall, what it's bouncing off of. Photography has genuinely taught me how to see. I'll be out walking at sunrise and notice the way the light catches only the tips of the leaves on a tree, and I take it as a gift — a reminder to find beauty wherever I am and whatever I'm walking through.",
+        "That's the skill you're hiring. Not a list of pretty backdrops."
       ],
-      "links": [
+      "image": "/uploads/family-golden-hour-columbia-basin.jpg",
+      "imageAlt": "Couple in a small pocket of golden light just before sunset in Kennewick"
+    },
+    {
+      "id": "the-four-kinds-of-locations-that-work-here",
+      "kind": "locations",
+      "tone": "sand",
+      "heading": "The Four Kinds of Locations That Work Here",
+      "intro": "The Tri-Cities gives us a specific palette to work with: dry air, low hills, wide horizons and a river running through the middle of it. That combination makes for exceptionally warm evening light. Almost everything I shoot falls into one of four categories.",
+      "items": [
         {
-          "label": "Family Photography",
-          "href": "/family-photographer-tri-cities-wa/"
+          "heading": "Open fields and big sky",
+          "paragraphs": [
+            "Grasses that turn gold, hills in the distance, nothing cluttering the background. This is my most-used kind of location, and the reason is practical: your family can move. Walk, run, pile on top of each other, be chased — and the background stays clean the whole time. Busy backgrounds fall apart the moment anybody takes three steps."
+          ],
+          "image": "/uploads/journal-family-children-golden-hour-tricities.jpg",
+          "imageAlt": "Family running through an open golden field at sunset during a Tri-Cities photo session"
         },
         {
-          "label": "Senior Pictures",
-          "href": "/senior-photographer-tri-cities-wa/"
+          "heading": "The river",
+          "paragraphs": [
+            "The Columbia gives us water light, which is its own thing entirely — softer, brighter from below, and forgiving on faces. Late in the day it turns to sparkle. There's one park I shoot at where, in the colder months, the sun reaches a certain point and the light coming off the river bounces up through the trees. It is genuinely magic, and it happens for about twenty minutes."
+          ],
+          "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
+          "imageAlt": "Evening light reflecting off the Columbia River during a portrait session in Richland, WA"
         },
         {
-          "label": "Branding Photography",
-          "href": "/branding-photographer-tri-cities-wa/"
+          "heading": "Orchards, blossoms and rows",
+          "paragraphs": [
+            "We're surrounded by agriculture and it's underused. Rows give a photograph depth and lead your eye straight to the people in it. Spring blossoms are the obvious version; late-summer dusty gold is the one people forget about."
+          ],
+          "image": "/uploads/spring-portrait-blossoms-tricities.jpg",
+          "imageAlt": "Senior photographed among orchard rows in late summer near Pasco"
+        },
+        {
+          "heading": "Brick, murals and small-town texture",
+          "paragraphs": [
+            "For seniors and business owners who want edge rather than open country. During a senior session we'll often bounce between several of these — a park, a garden, the river, a coffee shop — because that variety is half the fun of being seventeen with a photographer for an evening."
+          ],
+          "image": "/uploads/business-branding-portrait-richland.jpg",
+          "imageAlt": "Business owner photographed against brick in the Tri-Cities"
         }
       ]
     },
     {
-      "id": "a-place-thats-yours",
-      "kind": "quote",
-      "tone": "earth",
-      "heading": "12. The Best Location of All: A Place That's Yours",
-      "paragraphs": [
-        "Some of my favorite sessions have happened in backyards, on grandparents' land, and in places you'd drive past without a second look. If a spot already holds a memory for your family, it will always beat a \"pretty\" location. Bring me somewhere that matters to you — I'll find the light when we get there."
-      ],
+      "id": "what-makes-a-location-right-for-your-session",
+      "kind": "services",
+      "tone": "olive",
+      "heading": "What Makes a Location Right for Your Session",
       "items": [
         {
-          "quote": "The best location isn't the most famous one — it's the one where the light, the season and your story line up."
+          "heading": "Families with young children",
+          "paragraphs": [
+            "Room to move, and a background that doesn't get weird when they use it. I'll take an open field over a spectacular but cramped location every time, because I'm going to give your kids activities rather than ask them to stand still — and the photographs are better for it."
+          ],
+          "image": "/uploads/journal-family-children-golden-hour-tricities.jpg",
+          "imageAlt": "Family running through an open golden field at sunset during a Tri-Cities photo session",
+          "links": [
+            {
+              "label": "activities rather than ask them to stand still",
+              "href": "/family-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Seniors",
+          "paragraphs": [
+            "Variety. We'll usually plan two or three spots close enough together that we're not spending your session time driving. What we choose depends entirely on you: some seniors want green and lush, some want dry and moody, some want brick and city."
+          ],
+          "image": "/uploads/senior-session-summer-light-richland.jpg",
+          "imageAlt": "Senior photographed among orchard rows in late summer near Pasco",
+          "links": [
+            {
+              "label": "two or three spots",
+              "href": "/senior-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Couples",
+          "paragraphs": [
+            "Somewhere you can forget I'm there. My favorite sessions of my whole career are couples who stopped performing and started actually enjoying each other's company — and then the sun dropped into that small pocket of perfect light right before it sets. That's the one that gets me every time."
+          ],
+          "image": "/uploads/couples-portrait-outdoors-richland.jpg",
+          "imageAlt": "Couple in a small pocket of golden light just before sunset in Kennewick"
+        },
+        {
+          "heading": "Newborns",
+          "paragraphs": [
+            "Your own home, almost always. The nursery you painted, the chair where you feed her, the window with the good morning light. No location in the Tri-Cities will ever mean more to your family than that one. When the season is kind, we can add something outdoors."
+          ],
+          "image": "/uploads/family-newborn-at-home-tricities.jpg",
+          "imageAlt": "Family holding a newborn at home in the Tri-Cities"
+        },
+        {
+          "heading": "Business and branding",
+          "paragraphs": [
+            "Your actual workspace first — it says more about your business than any pretty backdrop. For headshots I bring portable studio equipment to you; I've set up in a clinic waiting room and a spare office and gotten exactly what we needed."
+          ],
+          "image": "/uploads/business-branding-portrait-richland.jpg",
+          "imageAlt": "Business owner photographed in her workspace in Richland, WA"
+        }
+      ]
+    },
+    {
+      "id": "season-by-season-in-the-tri-cities",
+      "kind": "steps",
+      "tone": "ivory",
+      "heading": "Season by Season in the Tri-Cities",
+      "items": [
+        {
+          "heading": "May through October",
+          "paragraphs": [
+            "is peak season here, and it's peak for a reason: long golden evenings, warm air, everything green or gold. Fall books out first — if you want October light, ask me in summer."
+          ],
+          "image": "/uploads/journal-family-children-golden-hour-tricities.jpg",
+          "imageAlt": "Family photographed outdoors during peak season in the Tri-Cities"
+        },
+        {
+          "heading": "March and April",
+          "paragraphs": [
+            "can be genuinely beautiful. Blossoms, fresh green, mild evenings, and a much more open calendar."
+          ],
+          "image": "/uploads/spring-portrait-blossoms-tricities.jpg",
+          "imageAlt": "Senior portrait among spring blossoms in the Tri-Cities"
+        },
+        {
+          "heading": "November through February",
+          "paragraphs": [
+            "is variable. Some weeks are gray and some weeks hand you a gift."
+          ],
+          "image": "/uploads/winter-family-portrait-tricities.jpg",
+          "imageAlt": "Winter portrait session in rare sunny January light in the Tri-Cities"
+        },
+        {
+          "heading": "",
+          "paragraphs": [
+            "I photograph year-round. Every year is different here, and I'd rather watch the forecast with you than write off four months of the calendar."
+          ],
+          "image": "/uploads/family-laughter-black-white-tricities.jpg",
+          "imageAlt": "Family laughing together during a year-round Tri-Cities portrait session"
+        }
+      ]
+    },
+    {
+      "id": "the-case-for-a-winter-session",
+      "kind": "split",
+      "tone": "olive",
+      "heading": "The Case for a Winter Session",
+      "paragraphs": [
+        "Most people won't consider winter, and I understand why. It's often gloomy here, and cold is harder on little kids.",
+        "But here's what I know: you do not need flourishing trees to make a beautiful photograph. You need the right spot at the right moment. I shot a session one December on a rare sunny afternoon — the cowboy session — and the light that day was extraordinary. Bare branches, cold air, and some of the warmest light I've ever worked in.",
+        "If you get a sunny winter day in the Tri-Cities, take it. They're not common, and they're stunning."
+      ],
+      "image": "/uploads/about-story-senior-horse-tricities.jpg",
+      "imageAlt": "Winter portrait session in rare sunny January light in the Tri-Cities"
+    },
+    {
+      "id": "why-you-dont-have-to-choose",
+      "kind": "quote",
+      "tone": "sand",
+      "heading": "Why You Don't Have to Choose",
+      "intro": "Here's the part I most want you to hear: picking the location is my job, not yours.",
+      "paragraphs": [
+        "You don't need to scout anything or arrive with a plan. What helps me is much simpler — tell me what you're drawn to. I'll send you to my Instagram and ask you to like the scenery that pulls at you. That tells me more than any questionnaire ever could, and from there I'll bring you two or three options with the light already worked out, chosen for your family, your style and the time of year we're shooting.",
+        "If there's a place that already means something to you — your land, your grandparents' backyard, the field behind your church — bring me there. Those are some of my favorite sessions. I'll find the light when we arrive.",
+        "That's what you're paying me for, and honestly, it's the part I love most."
+      ],
+      "image": "/uploads/family-golden-hour-columbia-basin.jpg",
+      "imageAlt": "Family photographed in a meaningful outdoor place in the Columbia Basin",
+      "secondaryImage": "/uploads/couples-portrait-outdoors-richland.jpg",
+      "secondaryImageAlt": "Couple in a small pocket of golden light just before sunset in Kennewick",
+      "links": [
+        {
+          "label": "That's what you're paying me for",
+          "href": "/investment/"
         }
       ]
     },
     {
       "id": "location-questions",
       "kind": "faq",
-      "tone": "olive",
+      "tone": "ivory",
       "heading": "Location Questions",
       "items": [
         {
-          "heading": "What's the best season for outdoor photos in the Tri-Cities?",
+          "heading": "What is the best time of day for outdoor photos?",
           "paragraphs": [
-            "Every season works — spring blossoms, deep summer golds, October color along the river, and clean winter light. The best season is the one your story is in."
+            "Golden hour — roughly the last 60 to 90 minutes before sunset. In the Tri-Cities that window is generous in summer and short in winter, and I plan every session down to the minute around it."
           ]
         },
         {
-          "heading": "What if I can't decide on a location?",
+          "heading": "What's the best time of year for photos in the Tri-Cities?",
           "paragraphs": [
-            "That's literally my job. Tell me about your family and your style on our planning call, and I'll bring you two or three options with the light already scouted."
+            "May through October is peak season, with fall booking first. March and April are lovely and much easier to book. Winter is unpredictable but capable of extraordinary light on a clear day."
+          ]
+        },
+        {
+          "heading": "Can we use a location that's meaningful to our family?",
+          "paragraphs": [
+            "Please do. Personal locations almost always produce better photographs than famous ones, because you're relaxed the moment you arrive."
+          ]
+        },
+        {
+          "heading": "Do I need a permit for photos at Tri-Cities parks?",
+          "paragraphs": [
+            "Rules vary by city and by park, and they change. I handle this as part of planning your session, so it isn't something you need to research."
+          ]
+        },
+        {
+          "heading": "What if the weather turns on our session day?",
+          "paragraphs": [
+            "We talk it through. If the calendar allows, I'll happily move us to better light. If it doesn't, we've made beautiful photographs in worse conditions than you'd expect."
           ]
         }
       ]
@@ -73,9 +257,9 @@
   ],
   "finalCta": {
     "tone": "umber",
-    "heading": "Let's Pick Yours Together",
+    "heading": "Let's Find Your Light",
     "paragraphs": [
-      "You bring the people; I'll bring twenty years of knowing where the light lands."
+      "You bring your people. I'll bring twenty years of knowing where the light lands in this valley."
     ],
     "link": {
       "label": "Plan your session",
@@ -83,11 +267,6 @@
     }
   },
   "pending": [
-    "[VALIDAR CON LISA — CRÍTICO]",
-    "[LISA: detalle de primera mano]",
-    "[LISA: confirmar acceso/permisos de los huertos que usa]",
-    "[VALIDAR: normativa actual de City of Richland / Kennewick / Pasco parks para fotografía comercial — responder con dato verificado]",
-    "[quién] + [locación con nombre] + [luz/estación]",
     "[FECHA]"
   ]
 }

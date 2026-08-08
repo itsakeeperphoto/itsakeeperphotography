@@ -3,13 +3,7 @@ import type {
   EditorialPageData,
   PageSection,
 } from "../../content/page-types";
-import {
-  EXTRA_PERSON_PRICE_CENTS,
-  formatUsd,
-  PEOPLE_INCLUDED,
-  PHOTO_COLLECTIONS,
-  SESSION_PACKAGES,
-} from "../../lib/session-pricing";
+import { absoluteUrl, siteOrigin } from "../../lib/site-environment";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/investment-page.css";
@@ -32,25 +26,16 @@ const requireSection = (id: string): PageSection => {
 
 const value = requireSection("what-youre-really-investing-in");
 const includes = requireSection("every-session-includes");
-const experience = requireSection("the-experience-step-by-step");
+const journey = requireSection("how-it-works-start-to-finish");
 const pricing = requireSection("a-note-about-pricing");
-const policies = requireSection("good-to-know-policies");
-const questions = requireSection("investment-questions");
+const printed = requireSection("printed-photographs");
+const timeline = requireSection("how-long-everything-takes");
+const policies = requireSection("good-to-know-before-you-book");
+const questions = requireSection("common-questions");
 
-const sessionPackages = Object.values(SESSION_PACKAGES);
-const photoCollections = Object.values(PHOTO_COLLECTIONS).filter(
-  (collection) => collection.id !== "none",
-);
 const faqItems = questions.items || [];
-const faqSchema = faqItems.map((item) => ({
-  "@type": "Question",
-  name: item.heading,
-  acceptedAnswer: {
-    "@type": "Answer",
-    text: (item.paragraphs || []).join(" "),
-  },
-}));
-
+const journeyItems = journey.items || [];
+const canonical = absoluteUrl(page.route);
 const valueArch =
   value.image ||
   "/uploads/investment-lisa-photographing-outdoors-tricities.jpg";
@@ -60,15 +45,68 @@ const valuePrint =
 const finalImage =
   page.finalCta?.image ||
   "/uploads/investment-lisa-studio-portrait-camera.jpg";
-const pricingPaperAssets = [
-  "/uploads/investment-pricing-paper-one.png",
-  "/uploads/investment-pricing-paper-two.png",
-  "/uploads/investment-pricing-paper-three.png",
-];
 
-// CONTENT PENDING: standard delivery turnaround, the exact contract/retainer
-// policy, print rights and normal inquiry response time remain intentionally
-// absent until Lisa confirms them.
+const investmentSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${canonical}#service`,
+      name: "Portrait Photography Sessions",
+      provider: { "@id": `${siteOrigin}/#business` },
+      areaServed: [
+        { "@type": "City", name: "Richland" },
+        { "@type": "City", name: "Kennewick" },
+        { "@type": "City", name: "Pasco" },
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Photography Services",
+        itemListElement: [
+          ["Family Photography", "/family-photographer-tri-cities-wa/"],
+          ["Senior Pictures", "/senior-photographer-tri-cities-wa/"],
+          ["Newborn Photography", "/newborn-photographer-tri-cities-wa/"],
+          ["Branding Photography", "/branding-photographer-tri-cities-wa/"],
+          ["Professional Headshots", "/headshot-photographer-tri-cities-wa/"],
+        ].map(([name, path]) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name,
+            url: absoluteUrl(path),
+          },
+        })),
+      },
+    },
+    {
+      "@type": "HowTo",
+      "@id": `${canonical}#how-to-book`,
+      name: "How to book a photography session with It's A Keeper Photography",
+      step: journeyItems.map((item, index) => ({
+        "@type": "HowToStep",
+        position: index + 1,
+        name: item.heading?.replace(/^\d+\.\s*/, ""),
+        text: item.detail,
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.heading,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: (item.paragraphs || []).join(" "),
+        },
+      })),
+    },
+  ],
+};
+
+// CONTENT PENDING: número de imágenes / duración por paquete — Lisa envió el
+// pricing por separado. Añadir una línea neutral por tipo de sesión, sin cifras
+// de dinero, cuando Lisa apruebe el wording final.
 ---
 
 <article
@@ -81,7 +119,7 @@ const pricingPaperAssets = [
     pageKey="investment"
     titleId="investment-hero-title"
     heading={page.hero.heading}
-    headingLines={["Your Session", "From First Call", "to Final Gallery"]}
+    headingLines={["The Experience", "& Investment"]}
     scriptLine={page.hero.scriptLine || "the full experience"}
     intro={page.hero.intro}
     links={page.hero.links}
@@ -152,7 +190,7 @@ const pricingPaperAssets = [
       </div>
 
       <div class="investment-value__copy">
-        <span class="investment-eyebrow">Investment</span>
+        <span class="investment-eyebrow">Twenty years in</span>
         <h2 id={`${value.id}-title`}>{value.heading}</h2>
         <div class="investment-prose">
           {value.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
@@ -168,7 +206,7 @@ const pricingPaperAssets = [
   >
     <div class="investment-shell investment-includes__inner">
       <header class="investment-includes__heading">
-        <span class="investment-eyebrow">The quiet details</span>
+        <span class="investment-eyebrow">Care, from beginning to end</span>
         <h2 id={`${includes.id}-title`}>{includes.heading}</h2>
       </header>
 
@@ -178,7 +216,10 @@ const pricingPaperAssets = [
             <span class="investment-ledger-number">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <p>{item.detail}</p>
+            <div>
+              <h3>{item.heading}</h3>
+              <p>{item.detail}</p>
+            </div>
           </li>
         ))}
       </ol>
@@ -186,49 +227,53 @@ const pricingPaperAssets = [
   </section>
 
   <section
-    class="investment-experience"
-    aria-labelledby={`${experience.id}-title`}
-    data-investment-section="experience"
+    class="investment-journey"
+    aria-labelledby={`${journey.id}-title`}
+    data-investment-section="journey"
   >
-    <div class="investment-shell">
-      <header class="investment-experience__heading">
-        <span class="investment-eyebrow">The experience</span>
-        <h2 id={`${experience.id}-title`}>{experience.heading}</h2>
-      </header>
+    <div class="investment-shell investment-journey__inner">
+      <div class="investment-journey__lead">
+        <h2 id={`${journey.id}-title`}>{journey.heading}</h2>
 
-      <ol class="investment-experience__steps">
-        {experience.items?.map((item, index) => (
+        <div class="investment-journey__media" aria-hidden="true">
+          <figure class="investment-journey__arch">
+            <Picture
+              src="/uploads/family-with-baby-golden-hour-embrace-tricities.jpg"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 68vw, (max-width: 1050px) 35vw, 25vw"
+              imgClass="photo--editorial"
+            />
+          </figure>
+          <figure class="investment-print investment-journey__print">
+            <Picture
+              src="/uploads/lisa-photographer-at-work-black-white.jpg"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 42vw, (max-width: 1050px) 22vw, 15vw"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        </div>
+      </div>
+
+      <ol class="investment-journey__steps">
+        {journeyItems.map((item, index) => (
           <li>
-            <span class="investment-experience__number">
+            <span class="investment-journey__number">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3>{item.heading?.replace(/^\d+\.\s*/, "")}</h3>
-            {item.detail && <p>{item.detail}</p>}
-            {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            <div>
+              <h3>{item.heading?.replace(/^\d+\.\s*/, "")}</h3>
+              {item.detail && <p>{item.detail}</p>}
+            </div>
           </li>
         ))}
       </ol>
-
-      <figure
-        class="investment-experience__photograph"
-        data-investment-photo="experience"
-      >
-        <Picture
-          src="/uploads/investment-lisa-photographing-outdoors-tricities.jpg"
-          alt="Lisa photographing a client outdoors during a Tri-Cities session."
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="(max-width: 767px) 100vw, 88vw"
-          imgClass="photo--editorial"
-        />
-        <span
-          class="investment-experience__photo-line"
-          data-construction-line
-          data-line-anchor="image"
-          aria-hidden="true"
-        ></span>
-      </figure>
     </div>
   </section>
 
@@ -237,105 +282,138 @@ const pricingPaperAssets = [
     aria-labelledby={`${pricing.id}-title`}
     data-investment-section="pricing"
   >
-    <div class="investment-shell">
-      <div class="investment-pricing__board">
-        <header class="investment-pricing__rail">
-          <span class="investment-eyebrow">A clear starting point</span>
-          <h2 id={`${pricing.id}-title`}>{pricing.heading}</h2>
-          <div class="investment-prose">
-            {pricing.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-          </div>
-          {pricing.links?.[0] && (
-            <a class="outline-button" href={pricing.links[0].href}>
-              {pricing.links[0].label}
-            </a>
-          )}
-        </header>
-
-        <div class="investment-pricing__papers">
-          {sessionPackages.map((sessionPackage, index) => (
-            <article
-              class="investment-price-sheet"
-              data-price-sheet={sessionPackage.id}
-            >
-              <Picture
-                src={pricingPaperAssets[index]}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                responsiveSrcset
-                sizes="(max-width: 767px) 86vw, (max-width: 1250px) 46vw, 22vw"
-                pictureClass="investment-price-sheet__texture"
-                imgClass="investment-price-sheet__texture-image"
-              />
-              <div class="investment-price-sheet__content">
-                <span class="investment-price-sheet__index">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{sessionPackage.name}</h3>
-                <p class="investment-price-sheet__price">
-                  {formatUsd(sessionPackage.priceCents)}
-                </p>
-                <ul>
-                  <li>{sessionPackage.duration}</li>
-                  <li>{sessionPackage.locations}</li>
-                  <li>{sessionPackage.outfits}</li>
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <figure
-          class="investment-print investment-pricing__portrait"
-          data-investment-photo="pricing"
-        >
+    <div class="investment-shell investment-pricing__sheet">
+      <header class="investment-pricing__lead">
+        <h2 id={`${pricing.id}-title`}>{pricing.heading}</h2>
+        <figure class="investment-print investment-pricing__portrait">
+          <span class="investment-tape investment-tape--reverse" aria-hidden="true"></span>
           <Picture
-            src="/uploads/investment-lisa-camera-black-white-wide.jpg"
-            alt="Lisa looking down at her camera."
+            src={pricing.image || "/uploads/investment-lisa-studio-portrait-camera.jpg"}
+            alt={pricing.imageAlt || ""}
             loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 767px) 62vw, (max-width: 1250px) 30vw, 18vw"
+            sizes="(max-width: 767px) 62vw, (max-width: 1050px) 34vw, 22vw"
             imgClass="photo--editorial"
           />
-          <Picture
-            src="/uploads/investment-diagonal-masking-tape.png"
-            alt=""
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 32vw, (max-width: 1250px) 18vw, 8rem"
-            pictureClass="investment-pricing__tape-frame"
-            imgClass="investment-pricing__tape"
-          />
         </figure>
-      </div>
+      </header>
 
-      <div class="investment-collections" aria-labelledby="photo-collections-title">
-        <header class="investment-collections__heading">
-          <span class="investment-eyebrow">Photographs made tangible</span>
-          <h3 id="photo-collections-title">Photo collections</h3>
-          <p>
-            Session coverage includes up to {PEOPLE_INCLUDED} people. Each
-            additional person is {formatUsd(EXTRA_PERSON_PRICE_CENTS)}.
+      <div class="investment-pricing__copy">
+        <div class="investment-prose">
+          {pricing.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        {pricing.links?.[0] && (
+          <a class="outline-button" href={pricing.links[0].href}>
+            {pricing.links[0].label}
+          </a>
+        )}
+        <p class="investment-pricing__note">
+          A planning estimate — not a booking or contract
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="investment-prints"
+    aria-labelledby={`${printed.id}-title`}
+    data-investment-section="prints"
+  >
+    <div class="investment-prints__copy">
+      <div class="investment-prints__copy-inner">
+        <h2 id={`${printed.id}-title`}>{printed.heading}</h2>
+        <div class="investment-prints__columns">
+          {printed.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        {printed.scriptLine && (
+          <p class="investment-prints__script" aria-hidden="true">
+            {printed.scriptLine}
           </p>
-        </header>
-
-        <ol class="investment-collections__ledger">
-          {photoCollections.map((collection) => (
-            <li>
-              <div class="investment-collections__title">
-                <span>{collection.name}</span>
-                <strong>{formatUsd(collection.priceCents)}</strong>
-              </div>
-              <ul>
-                {collection.details.map((detail) => <li>{detail}</li>)}
-              </ul>
-            </li>
-          ))}
-        </ol>
+        )}
       </div>
+    </div>
+
+    <div class="investment-prints__media" aria-hidden="true">
+      <span class="investment-prints__line" data-construction-line></span>
+      <figure class="investment-print investment-prints__primary">
+        <span class="investment-tape" aria-hidden="true"></span>
+        <Picture
+          src={printed.image || "/uploads/extended-family-embrace-tricities.jpg"}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) 72vw, (max-width: 1050px) 42vw, 33vw"
+          imgClass="photo--editorial"
+        />
+      </figure>
+      <figure class="investment-print investment-prints__secondary">
+        <Picture
+          src={printed.secondaryImage || "/uploads/family-children-golden-hour-tricities.jpg"}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) 42vw, (max-width: 1050px) 24vw, 17vw"
+          imgClass="photo--editorial"
+        />
+      </figure>
+      <figure class="investment-print investment-prints__album">
+        <Picture
+          src="/uploads/family-laughter-black-white-tricities.jpg"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) 58vw, (max-width: 1050px) 34vw, 26vw"
+          imgClass="photo--editorial"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="investment-timeline"
+    aria-labelledby={`${timeline.id}-title`}
+    data-investment-section="timeline"
+  >
+    <div class="investment-shell investment-timeline__inner">
+      <header class="investment-timeline__heading">
+        <h2 id={`${timeline.id}-title`}>{timeline.heading}</h2>
+        {timeline.intro && <p>{timeline.intro}</p>}
+      </header>
+
+      <figure class="investment-print investment-timeline__photograph">
+        <Picture
+          src={timeline.image || "/uploads/investment-lisa-camera-black-white-wide.jpg"}
+          alt={timeline.imageAlt || ""}
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) 88vw, (max-width: 1050px) 62vw, 48vw"
+          imgClass="photo--editorial"
+        />
+      </figure>
+
+      <ol class="investment-timeline__ledger">
+        {timeline.items?.map((item, index) => (
+          <li>
+            <span class="investment-timeline__number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3>{item.heading}</h3>
+            <p>{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+
+      <aside class="investment-timeline__note">
+        <span>Keep them safe</span>
+        <div>
+          {timeline.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -346,7 +424,6 @@ const pricingPaperAssets = [
   >
     <div class="investment-shell investment-policies__inner">
       <header>
-        <span class="investment-eyebrow">Before we begin</span>
         <h2 id={`${policies.id}-title`}>{policies.heading}</h2>
       </header>
 
@@ -374,7 +451,6 @@ const pricingPaperAssets = [
     <div class="investment-shell investment-faq__inner">
       <div class="investment-faq__questions">
         <header>
-          <span class="investment-eyebrow">Good to know</span>
           <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
         </header>
 
@@ -437,15 +513,9 @@ const pricingPaperAssets = [
     </div>
   </section>
 
-  {faqSchema.length > 0 && (
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faqSchema,
-      })}
-    />
-  )}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(investmentSchema)}
+  />
 </article>

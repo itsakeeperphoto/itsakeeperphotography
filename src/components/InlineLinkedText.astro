@@ -1,0 +1,16 @@
+---
+interface Props {
+  text: string;
+  phrase?: string;
+  href?: string;
+}
+
+const { text, phrase, href } = Astro.props;
+const index = phrase && href ? text.indexOf(phrase) : -1;
+const before = index >= 0 ? text.slice(0, index) : text;
+const after = index >= 0 && phrase ? text.slice(index + phrase.length) : "";
+---
+
+{index >= 0 && phrase && href ? (
+  <>{before}<a href={href}>{phrase}</a>{after}</>
+) : text}

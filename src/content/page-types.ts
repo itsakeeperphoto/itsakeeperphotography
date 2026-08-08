@@ -111,6 +111,11 @@ export interface PageManifestEntry {
   schemaType: SchemaType;
   sitemap: boolean;
   llms: boolean;
+  /**
+   * Date of the most recent substantial change to the published page.
+   * Required by the sitemap generator whenever a route becomes indexable.
+   */
+  lastModified?: `${number}-${number}-${number}`;
   primaryRoute: boolean;
   signature: SignatureDevice;
   title: string;

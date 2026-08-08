@@ -144,7 +144,7 @@ Exact unresolved placeholders are preserved as 58 `CONTENT PENDING` comments in 
 
 The unresolved groups are: approved personal/credential details; current review-count freshness, attributed reviews, and Google links; exact packages, deliverables, turnaround, retainer, rescheduling, travel, and product policies; newborn/branding/headshot formats and licensing; verified local spots, access/permit facts, district dates, and first-hand details; route-specific real city imagery and alt text; article dates; and approved legal privacy copy. `/journal/` has no literal placeholder but remains draft while its linked guides are gated.
 
-Manifest state is 18 draft/noindex routes, two ready/index routes (`/` and `/portfolio/`), and one ready/permanent-noindex utility (`/thank-you/`). The homepage's supplied “96” copy is preserved exactly, but its freshness check is registered for cutover. No `Review` or `AggregateRating` schema is emitted.
+Manifest state is 17 draft/noindex routes, three ready/index routes (`/`, `/family-photographer-tri-cities-wa/`, and `/portfolio/`), and one ready/permanent-noindex utility (`/thank-you/`). The homepage review link uses the cached Google Business Profile summary when available and a number-free fallback otherwise. No `Review` or `AggregateRating` schema is emitted.
 
 ## Netlify Forms
 
@@ -161,11 +161,13 @@ The fake `/api/inquiry`, simulated success behavior, and PII console logging wer
 
 The build validator and no-JavaScript HTML inspection both pass. With JavaScript disabled, every field remains visible and submittable.
 
+Production audit metadata resolves to `itsakeeperphoto@gmail.com`; deploy previews and local staging keep `globalbridge360@gmail.com` for testing. This field is informational and does not route email. Actual delivery for both form names must be configured in Netlify under **Project configuration → Notifications → Emails and webhooks → Form submission notifications**.
+
 External dashboard proof is not complete: this checkout has no `NETLIFY_AUTH_TOKEN` and no `.netlify/state.json` site link, so a deploy-preview submission cannot be made or verified in the client's Netlify Forms dashboard from this workspace. This is an account-access gate, not an implementation fallback. Once the repository is linked/authenticated, submit clearly labeled QA entries on a deploy preview and confirm they appear under `session-inquiry` and `session-estimate` before launch.
 
 ## Redirects
 
-`public/_redirects` contains 27 intent-matched 301 redirects based on the Firecrawl legacy-URL map. There is no catch-all homepage redirect. The source mapping and the two intentionally unmapped low-confidence archives are documented in `docs/legacy-redirect-inventory.md`.
+`public/_redirects` contains 27 intent-matched legacy 301 redirects based on the Firecrawl URL map, plus four hostname rules that consolidate the apex and public Netlify subdomain into the HTTPS `www` primary domain. Deploy Preview and immutable deploy hostnames do not match those hostname rules. There is no catch-all homepage redirect. The source mapping and the two intentionally unmapped low-confidence archives are documented in `docs/legacy-redirect-inventory.md`.
 
 ## Crawler-output membership
 
@@ -181,14 +183,14 @@ External dashboard proof is not complete: this checkout has no `NETLIFY_AUTH_TOK
 ### Release-mode output
 
 - Canonical origin: `https://www.itsakeeperphotography.com`
-- `sitemap.xml`: `/` and `/portfolio/` only
-- `llms.txt`: `/` only
+- `sitemap.xml`: `/`, `/family-photographer-tri-cities-wa/`, and `/portfolio/`
+- `llms.txt`: `/` and `/family-photographer-tri-cities-wa/`
 - `robots.txt`: allows public crawling, disallows `/admin/` and `/tina-island/`, and advertises the custom-domain sitemap
 - Drafts, `/privacy/`, and `/thank-you/`: excluded from sitemap/`llms.txt` and protected by metadata plus route-specific `X-Robots-Tag`
 - Versioned Astro/font/vendor assets: one-year immutable cache
 - Mutable uploads: one-day cache with seven-day stale-while-revalidate
 
-Use `SITE_MODE=staging` until the content registry is resolved. At authorized cutover, use `SITE_MODE=release`, verify the custom domain as Netlify's primary domain, confirm every canonical, regenerate the three crawler files, enable only newly ready routes, and only then redirect the Netlify subdomain to the custom primary domain.
+`netlify.toml` now selects publication mode by deploy context: the published production deploy uses `release`, while Deploy Previews, branch deploys, and Netlify Dev use `staging`. Astro fails the build when those modes are inverted. The custom primary domain must remain `www.itsakeeperphotography.com`, matching the release canonical origin. Only newly approved manifest routes should be moved from draft/noindex into the release sitemap.
 
 ## Verification commands
 

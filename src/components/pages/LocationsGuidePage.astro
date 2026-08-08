@@ -1,0 +1,368 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import InlineLinkedText from "../InlineLinkedText.astro";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+import "../../styles/journal-locations-page.css";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) throw new Error(`Locations guide is missing the required section: ${id}`);
+  return section;
+};
+
+const shortAnswer = requireSection("the-short-answer");
+const lightThesis = requireSection("it-was-never-really-about-the-place");
+const locationKinds = requireSection("the-four-kinds-of-locations-that-work-here");
+const sessionFit = requireSection("what-makes-a-location-right-for-your-session");
+const seasons = requireSection("season-by-season-in-the-tri-cities");
+const winter = requireSection("the-case-for-a-winter-session");
+const choosing = requireSection("why-you-dont-have-to-choose");
+const questions = requireSection("location-questions");
+
+const heroHeadingLines = ["Where to Take Photos", "in the Tri-Cities"];
+const heroLeftImage = "/uploads/family-golden-light-richland.jpg";
+const heroRightImage = page.hero.secondaryImage;
+const chooseLink = choosing.links?.find((link) => link.href === "/investment/");
+---
+
+<article
+  class="locations-guide-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="journal"
+    titleId="locations-guide-hero-title"
+    heading={page.hero.heading}
+    headingLines={heroHeadingLines}
+    scriptLine={page.hero.scriptLine || "hunt for light"}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 42%"
+    mobileBackgroundPosition="51% 45%"
+    leftPrint={{ src: heroLeftImage, objectPosition: "50% 45%" }}
+    rightPrint={{ src: heroRightImage, objectPosition: "67% 50%" }}
+    paperEdgeColor="var(--color-warm-ivory)"
+  />
+
+  <div class="locations-guide__byline" aria-label="Article author">
+    <span>By Lisa Weiss</span>
+    <span aria-hidden="true">·</span>
+    <span>It's A Keeper Photography</span>
+    <span aria-hidden="true">·</span>
+    <span>Richland, WA</span>
+  </div>
+
+  <section
+    class="locations-answer tone-ivory"
+    id={shortAnswer.id}
+    aria-labelledby={`${shortAnswer.id}-title`}
+  >
+    <div class="locations-shell locations-answer__inner">
+      <header class="locations-answer__heading">
+        <p class="locations-eyebrow">The useful truth</p>
+        <h2 id={`${shortAnswer.id}-title`}>{shortAnswer.heading}</h2>
+      </header>
+      <div class="locations-prose locations-answer__copy">
+        {shortAnswer.paragraphs?.map((paragraph, index) => (
+          <p class:list={{ "locations-answer__lead": index === 0 }}>{paragraph}</p>
+        ))}
+      </div>
+      <p class="locations-answer__margin-note" aria-hidden="true">twenty years of watching the light</p>
+    </div>
+  </section>
+
+  <section
+    class="locations-thesis tone-earth"
+    id={lightThesis.id}
+    aria-labelledby={`${lightThesis.id}-title`}
+  >
+    <div class="locations-thesis__rule" aria-hidden="true"></div>
+    <div class="locations-shell locations-thesis__inner">
+      <div class="locations-thesis__copy">
+        <p class="locations-eyebrow">A photographer's eye</p>
+        <h2 id={`${lightThesis.id}-title`}>{lightThesis.heading}</h2>
+        <div class="locations-prose">
+          {lightThesis.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+      {lightThesis.image && (
+        <figure class="locations-thesis__arch">
+          <Picture
+            src={lightThesis.image}
+            alt={lightThesis.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 84vw, (max-width: 1050px) 43vw, 35rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+      <p class="locations-script locations-thesis__script" aria-hidden="true">photography taught me to see</p>
+    </div>
+  </section>
+
+  <section
+    class="locations-kinds tone-sand"
+    id={locationKinds.id}
+    aria-labelledby={`${locationKinds.id}-title`}
+  >
+    <div class="locations-shell locations-kinds__inner">
+      <header class="locations-kinds__header">
+        <p class="locations-eyebrow">The local field guide</p>
+        <h2 id={`${locationKinds.id}-title`}>{locationKinds.heading}</h2>
+        {locationKinds.intro && <p class="locations-kinds__intro">{locationKinds.intro}</p>}
+      </header>
+
+      <div class="locations-kinds__folio">
+        {locationKinds.items?.map((item, index) => (
+          <article class:list={["location-kind", `location-kind--${index + 1}`]}>
+            {item.image && (
+              <figure class="location-kind__print">
+                <Picture
+                  src={item.image}
+                  alt={item.imageAlt || ""}
+                  loading="lazy"
+                  decoding="async"
+                  responsiveSrcset
+                  sizes={index === 0
+                    ? "(max-width: 767px) 88vw, (max-width: 1050px) 62vw, 58rem"
+                    : "(max-width: 767px) 78vw, (max-width: 1050px) 34vw, 27rem"}
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+            <div class="location-kind__label">
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{item.heading}</h3>
+            </div>
+            {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="locations-fit tone-olive"
+    id={sessionFit.id}
+    aria-labelledby={`${sessionFit.id}-title`}
+  >
+    <div class="locations-shell locations-fit__inner">
+      <header class="locations-fit__header">
+        <p class="locations-eyebrow">Made for your story</p>
+        <h2 id={`${sessionFit.id}-title`}>{sessionFit.heading}</h2>
+        <p class="locations-script" aria-hidden="true">the people lead</p>
+      </header>
+
+      <ol class="locations-fit__ledger">
+        {sessionFit.items?.map((item, index) => {
+          const paragraph = item.paragraphs?.[0] || "";
+          const link = item.links?.[0];
+          return (
+            <li>
+              <span class="locations-fit__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              {item.image && (
+                <figure class:list={["locations-fit__print", { "locations-fit__print--arch": index === 0 }]}>
+                  <Picture
+                    src={item.image}
+                    alt={item.imageAlt || ""}
+                    loading="lazy"
+                    decoding="async"
+                    optimizedMobileWidth={400}
+                    optimizedDesktopWidth={640}
+                    imgClass="photo--editorial"
+                  />
+                </figure>
+              )}
+              <div class="locations-fit__copy">
+                <h3>{item.heading}</h3>
+                <p>
+                  <InlineLinkedText text={paragraph} phrase={link?.label} href={link?.href} />
+                </p>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="locations-seasons tone-ivory"
+    id={seasons.id}
+    aria-labelledby={`${seasons.id}-title`}
+  >
+    <div class="locations-seasons__heading">
+      <div>
+        <p class="locations-eyebrow">The light changes</p>
+        <h2 id={`${seasons.id}-title`}>{seasons.heading}</h2>
+      </div>
+      <p class="locations-script" aria-hidden="true">some weeks hand you a gift</p>
+    </div>
+    <div class="locations-seasons__timeline">
+      {seasons.items?.map((item, index) => (
+        <article class:list={["season-stop", `season-stop--${index + 1}`]}>
+          <div class="season-stop__marker" aria-hidden="true"></div>
+          {item.image && (
+            <figure class:list={["season-stop__print", { "season-stop__print--arch": index === 3 }]}>
+              <Picture
+                src={item.image}
+                alt={item.imageAlt || ""}
+                loading="lazy"
+                decoding="async"
+                optimizedMobileWidth={640}
+                optimizedDesktopWidth={960}
+                imgClass="photo--editorial"
+              />
+            </figure>
+          )}
+          {item.paragraphs?.map((paragraph) => (
+            <p>
+              {item.heading && <strong>{item.heading}</strong>}
+              {item.heading && " "}
+              {paragraph}
+            </p>
+          ))}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section
+    class="locations-winter tone-olive"
+    id={winter.id}
+    aria-labelledby={`${winter.id}-title`}
+  >
+    <div class="locations-shell locations-winter__inner">
+      {winter.image && (
+        <figure class="locations-winter__print">
+          <Picture
+            src={winter.image}
+            alt={winter.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 45vw, 40rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+      <div class="locations-winter__copy">
+        <p class="locations-eyebrow">The quiet season</p>
+        <h2 id={`${winter.id}-title`}>{winter.heading}</h2>
+        <div class="locations-prose">
+          {winter.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="locations-choosing tone-sand"
+    id={choosing.id}
+    aria-labelledby={`${choosing.id}-title`}
+  >
+    <div class="locations-shell locations-choosing__inner">
+      <div class="locations-choosing__copy">
+        <p class="locations-eyebrow">The part you can release</p>
+        <h2 id={`${choosing.id}-title`}>{choosing.heading}</h2>
+        {choosing.intro && <p class="locations-choosing__statement">{choosing.intro}</p>}
+        <div class="locations-prose">
+          {choosing.paragraphs?.map((paragraph) => (
+            <p>
+              <InlineLinkedText text={paragraph} phrase={chooseLink?.label} href={chooseLink?.href} />
+            </p>
+          ))}
+        </div>
+      </div>
+      <div class="locations-choosing__prints">
+        {choosing.image && (
+          <figure class="locations-choosing__arch">
+            <Picture
+              src={choosing.image}
+              alt={choosing.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              optimizedMobileWidth={640}
+              optimizedDesktopWidth={960}
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {choosing.secondaryImage && (
+          <figure class="locations-choosing__front-print">
+            <span class="locations-tape" aria-hidden="true"></span>
+            <Picture
+              src={choosing.secondaryImage}
+              alt={choosing.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              optimizedMobileWidth={400}
+              optimizedDesktopWidth={640}
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        <p class="locations-script" aria-hidden="true">I'll find the light</p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="locations-faq tone-ivory"
+    id={questions.id}
+    aria-labelledby={`${questions.id}-title`}
+  >
+    <div class="locations-shell locations-faq__inner">
+      <header class="locations-faq__header">
+        <p class="locations-eyebrow">Planning, answered</p>
+        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+      </header>
+      <div class="locations-faq__list">
+        {questions.items?.map((item, index) => (
+          <details open={index === 0}>
+            <summary>
+              <h3>
+                <span class="locations-faq__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="locations-faq__question">{item.heading}</span>
+                <span class="locations-faq__toggle" aria-hidden="true"></span>
+              </h3>
+            </summary>
+            <div class="locations-faq__answer">
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {page.finalCta && (
+    <section class="locations-final tone-umber" aria-labelledby="locations-final-title">
+      <div class="locations-final__inner">
+        <div>
+          <p class="locations-eyebrow">The next step</p>
+          <h2 id="locations-final-title">{page.finalCta.heading}</h2>
+        </div>
+        <div class="locations-final__action">
+          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {page.finalCta.link && (
+            <a class="outline-button" href={page.finalCta.link.href}>{page.finalCta.link.label}</a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+</article>
