@@ -369,3 +369,24 @@
 - **Consecuencias:** El backup permanece disponible en disco, pero no puede
   entrar silenciosamente en el historial. El transcript del intento fallido se
   retiró del índice antes de publicar y nunca llegó al remoto.
+
+### ADR-029 — La guía de localizaciones enseña el criterio sin revelar spots
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada; precisa y supersede parcialmente las consecuencias de
+  ADR-024 para esta ruta, no para las páginas de ciudad.
+- **Contexto:** Lisa entregó una versión v2 que sustituye la lista de doce
+  lugares por una guía sobre luz, estación y tipo de sesión. La implementación
+  ya renderizaba ese copy, pero `paginas/15-journal-locations.md` conservaba la
+  versión antigua y podía reintroducir ubicaciones explícitas en una edición
+  futura.
+- **Decisión:** Tratar el documento v2 como fuente editorial de
+  `/journal/family-photo-locations-tri-cities/`, mantener anónimos los spots y
+  no añadir fotografías ni hechos no aprobados. La ruta permanece
+  `draft/noindex` mientras `[FECHA]` siga pendiente.
+- **Alternativas descartadas:** Fusionar la lista v1, nombrar Chamna por
+  inferencia o marcar la ruta lista sin fecha se descartó por confidencialidad,
+  exactitud editorial y gating SEO.
+- **Consecuencias:** El artículo queda completo salvo la fecha editorial; las
+  páginas Richland, Kennewick y Pasco conservan sus propios pendientes de
+  conocimiento local. Cualquier autorización futura para nombrar un spot debe
+  documentarse en un ADR nuevo.

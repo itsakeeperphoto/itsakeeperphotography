@@ -1259,7 +1259,7 @@
     grid-template-columns: minmax(6.5rem, 0.44fr) minmax(0, 1fr);
     gap: var(--space-5);
     min-height: 14rem;
-    padding: var(--space-7) 0;
+    padding: var(--space-8) 0;
   }
 
   .locations-fit__ledger li:nth-child(even) .locations-fit__print,
@@ -1309,7 +1309,7 @@
   .season-stop--2,
   .season-stop--4 {
     margin: 0;
-    padding: var(--space-7) 0 var(--space-12) var(--space-8);
+    padding: var(--space-8) 0 var(--space-12) var(--space-8);
   }
 
   .season-stop__marker {

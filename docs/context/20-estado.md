@@ -3,15 +3,16 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 11:10 -05
+**Última actualización:** 2026-08-08 12:14 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit base de esta sesión:** `51dae23` — `update validate site`
+**Commit base de esta sesión:** `5a5a063` — `feat(analytics): add Clarity and Google tag`
 
-**Publicación:** commit local validado; push pendiente por autenticación GitHub
+**Publicación:** `main` estaba sincronizada con `origin/main` al iniciar; este
+handoff crea y publica el commit de la guía de localizaciones
 
 **Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
@@ -19,17 +20,14 @@
 
 ## Siguiente paso concreto
 
-Autenticar GitHub con una cuenta que tenga acceso de escritura a
-`itsakeeperphoto/itsakeeperphotography`, confirmar `gh auth status` y publicar el
-commit local en `origin/main`. Después del deploy, verificar que Clarity y
-Google Analytics reciben una visita etiquetada y decidir si el tráfico de
-staging debe filtrarse o excluirse. Luego resolver el registro de contenido
-pendiente de Seniors empezando por
-`src/content/pending.ts` y `content/pages/senior.json`: confirmar con Lisa el
-número de imágenes incluidas por paquete, la oferta mencionada en Q54 y la fecha
-editorial; luego actualizar la entrada de Seniors en
-`src/lib/page-manifest.ts`, ejecutar `npm run build:local` y hacer QA Playwright
-en 1440×1000, 1200×900, 900×900 y 390×844.
+Confirmar con Lisa la fecha editorial real de
+`/journal/family-photo-locations-tri-cities/`. Después, sustituir `[FECHA]` en
+`content/pages/journal-family-locations.json`, `src/content/pending.ts` y el
+schema del artículo, revisar `lastModified`, cambiar la ruta a `ready/index`
+solo si corresponde y repetir build/QA. En paralelo sigue pendiente comprobar
+en el deploy que Clarity y Google Analytics reciben tráfico y definir si
+staging debe filtrarse. Después continúa Seniors con sus cantidades, Q54 y
+fecha editorial pendientes.
 
 No cambiar una ruta a `ready/index` mientras alguno de sus hechos, media o QA
 obligatorio siga pendiente.
@@ -59,6 +57,10 @@ obligatorio siga pendiente.
   validar `origin` antes de editar o hacer push.
 - Microsoft Clarity y Google tag/GA4 quedaron instalados en el `<head>` global;
   el build generado contiene ambos IDs en las 21 rutas.
+- La guía de localizaciones quedó sincronizada con el documento editorial v2,
+  que protege los spots exactos; se verificó en 1440, 1200, 900 y 390 px sin
+  overflow, imágenes rotas ni errores de consola. Sigue `draft/noindex` solo
+  porque falta `[FECHA]`.
 - El primer handoff detectó que este clon no tenía la exclusión de transcripts:
   el `.jsonl` entró en el commit local, pero el push falló con HTTP 403 y nunca
   llegó a GitHub. Se retiró solo del índice, se preservó localmente y se añadió
@@ -107,8 +109,11 @@ obligatorio siga pendiente.
   de localizaciones.
 - `ContentPage.astro` sigue sirviendo rutas genéricas/draft.
 - Investment incorpora copy ampliado y composiciones de precios/timeline/papel.
-- La guía `/journal/family-photo-locations-tri-cities/` incorpora el documento
-  actualizado y evita inventar nombres de lugares.
+- La guía `/journal/family-photo-locations-tri-cities/` renderiza el copy v2 y
+  su fuente `paginas/15-journal-locations.md` es idéntica al documento aprobado.
+  No nombra spots exactos, usa solo fotografías existentes y mantiene cuatro
+  enlaces internos. `src/styles/journal-locations-page.css` ya no referencia el
+  token móvil inexistente `--space-7`.
 - El Portfolio conserva el libro/flipbook desplegado y su carga especializada.
 
 ### Session estimates y contacto
@@ -182,7 +187,8 @@ obligatorio siga pendiente.
 | `content/pages/kennewick.json` | Draft | Confirmar lugares/detalles, 6–10 imágenes/alt y travel. |
 | `content/pages/pasco.json` | Draft y layout genérico | Confirmar lugares, imágenes y travel; diseñar/QA cuando haya contenido real. |
 | `content/pages/privacy.json` | Draft/noindex | Revisión legal/factual humana obligatoria; debe contemplar Clarity y Google Analytics. |
-| `content/pages/journal-*.json` | Draft | Confirmar fechas y hechos específicos registrados en pending. |
+| `content/pages/journal-family-locations.json` | Draft | Copy v2 y QA completos; falta únicamente confirmar `[FECHA]` antes de evaluar `ready/index`. |
+| Otros `content/pages/journal-*.json` | Draft | Confirmar fechas y hechos específicos registrados en pending. |
 | `netlify/functions/refresh-gbp-review-summary.mts` | Código completo, integración no verificada | Configurar OAuth/IDs en Netlify, ejecutar refresh y confirmar cache/endpoints reales. |
 | `src/components/KindWords.astro` | Fallback funciona | Sin credenciales GBP muestra link sin número. Confirmar URL pública oficial de reseñas. |
 | Netlify Form notifications | No verificadas desde repo | Configurar notificación email para `session-inquiry` y `session-estimate`; probar envío etiquetado en deploy preview y producción. |
@@ -213,20 +219,18 @@ No reemplazar estas entradas por inferencias ni datos de competidores.
 
 ## Bloqueadores externos
 
-1. **GitHub:** `gh auth status` reporta un token inválido y el push HTTPS se
-   autenticó como `williammelo533`, sin permiso en el repositorio oficial. Se
-   requiere `gh auth login -h github.com` con una cuenta autorizada.
-2. **Lisa / cliente:** hechos biográficos, premios, permisos, políticas,
-   entregables, cantidades y conocimiento local detallados arriba.
-3. **Cuenta Netlify:** configurar y verificar notificaciones reales de ambos
+1. **Lisa / cliente:** fecha editorial de la guía de localizaciones, hechos
+   biográficos, premios, permisos, políticas, entregables, cantidades y
+   conocimiento local detallados arriba.
+2. **Cuenta Netlify:** configurar y verificar notificaciones reales de ambos
    formularios. El correo final solicitado es `itsakeeperphoto@gmail.com`; el
    correo de pruebas previo fue `globalbridge360@gmail.com`.
-4. **Google Cloud/GBP:** crear/autorizar OAuth para una cuenta manager del perfil
+3. **Google Cloud/GBP:** crear/autorizar OAuth para una cuenta manager del perfil
    y cargar cinco variables de entorno. La implementación no permite demostrar
    el conteo dinámico sin ello.
-5. **Autorización de lanzamiento:** cambiar dominio primario/DNS y activar
+4. **Autorización de lanzamiento:** cambiar dominio primario/DNS y activar
    `SITE_MODE=release` solo por instrucción explícita.
-6. **Revisión legal:** aprobar el contenido de Privacy antes de indexarlo.
+5. **Revisión legal:** aprobar el contenido de Privacy antes de indexarlo.
 
 ## Preguntas abiertas para el humano
 
@@ -288,21 +292,18 @@ Resultado esperado:
 Última verificación ejecutada en esta sesión:
 
 ```bash
-npm ci
 npm run build:local
-rg -l "xyqkkqom4v" dist/client --glob '*.html' | wc -l
-rg -l "G-0YW8M601L1" dist/client --glob '*.html' | wc -l
-git remote get-url origin
+playwright-cli -s=locationsqa run-code "<matriz 1440/1200/900/390>"
+playwright-cli -s=locationsqa console
+playwright-cli -s=locationsqa requests
 ```
 
-Resultado: dependencias instaladas desde el lockfile, build exitoso,
-`Validated 21 public routes in staging mode.`, 21 HTML con cada identificador y
-remoto oficial confirmado. El primer build falló por dependencias ausentes; el
-segundo llegó a Tina pero el sandbox bloqueó `::1:4001`; la misma orden
-autorizada fuera del sandbox pasó. El cambio validado está en
-`src/layouts/Base.astro`; la rama local queda un commit por delante de
-`origin/main` hasta resolver la autenticación. No quedaron cambios incidentales
-del build.
+Resultado: build exitoso con `Validated 21 public routes in staging mode.`; la
+guía prerenderizó. En los cuatro viewports: ancho de documento igual al viewport,
+20/20 imágenes cargadas, cero errores/advertencias, cuatro enlaces internos,
+cinco FAQs operativas, foco visible y `noindex, nofollow, noarchive`. El primer
+build falló porque el sandbox bloqueó `::1:4001`; la misma orden autorizada fuera
+del sandbox pasó. No quedaron cambios fuente incidentales del build.
 
 ### QA visual requerido para una ruta que se vaya a declarar lista
 
@@ -354,6 +355,7 @@ No usar los resultados del 2026-07-21 como sustituto de una corrida actual.
   Kennewick, reviews y preloader.
 - `.artifacts/`: About, Branding, Headshot, centralización de heroes, homepage y
   Newborn.
-- `.codex-evidence/`: iteraciones recientes de Contact, Investment y Richland.
+- `.codex-evidence/`: iteraciones recientes de Contact, Investment, Richland y
+  cuatro capturas finales comprimidas de la guía de localizaciones.
 
 Estas evidencias prueban iteraciones concretas, no la release actual completa.

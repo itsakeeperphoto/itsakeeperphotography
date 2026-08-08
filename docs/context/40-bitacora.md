@@ -212,3 +212,37 @@
 - El commit local se sanea antes del próximo intento. Para publicar, autenticar
   `gh` con una cuenta autorizada mediante `gh auth login -h github.com`, revisar
   `gh auth status` y retomar el push a `origin/main`.
+
+### 2026-08-08 — Codex / GPT-5.6 — Guía de localizaciones v2
+
+- **Objetivo:** actualizar
+  `/journal/family-photo-locations-tri-cities/` con el documento editorial v2,
+  usando la homepage y `DESIGN.md` como autoridad visual, sin inventar imágenes
+  ni datos.
+- **Contraste:** `content/pages/journal-family-locations.json` ya renderizaba el
+  copy v2; la contradicción estaba en `paginas/15-journal-locations.md`, que aún
+  contenía la lista v1 de doce lugares y marcadores de validación.
+- **Contenido:** se sustituyó la fuente v1 por el adjunto exacto, verificado con
+  `cmp`. No se modificó el copy renderizado, el schema, las fotografías ni los
+  cuatro enlaces internos. `[FECHA]` sigue registrado y la ruta permanece
+  `draft/noindex`.
+- **Diseño:** se conservaron la composición, paleta, tipografías, arcos y
+  fotografías existentes. Se corrigieron dos usos móviles de `--space-7`, token
+  inexistente, por el token oficial `--space-8`.
+- **Herramientas de diseño:** `frontend-design` y `emil-design-eng` fijaron una
+  dirección de lectura editorial sin rediseño; `impeccable` devolvió cero
+  hallazgos en su detector final; `playwright-cli` cubrió 1440×1000, 1200×900,
+  900×900 y 390×844.
+- **Verificación:** `npm run build:local` terminó con 21 rutas validadas. En los
+  cuatro viewports no hubo overflow; cargaron 20/20 imágenes, aparecieron
+  exactamente cuatro enlaces internos y cinco FAQs, el primer foco de teclado
+  tuvo outline visible y la consola quedó en cero errores/advertencias.
+- **Evidencia:** cuatro capturas full-page JPEG quedaron en
+  `.codex-evidence/journal-locations-2026-08-08/`. Los PNG temporales de QA se
+  movieron a `/private/tmp/itsakeeper-journal-locations-png.GtzYXx/` y no se
+  incluyen en git.
+- **Incidencia:** el primer build dentro del sandbox falló con `listen EPERM
+  ::1:4001`; la misma orden autorizada fuera del sandbox pasó sin cambios fuente
+  incidentales.
+- **Pendiente:** Lisa debe confirmar la fecha editorial real. Solo después se
+  puede retirar `[FECHA]` y evaluar `ready/index` con un nuevo build y QA.

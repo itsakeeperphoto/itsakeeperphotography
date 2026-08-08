@@ -5,9 +5,9 @@
 
 ## Ahora — siguiente operación y ruta hacia producción
 
-- [ ] **1. Publicar con una cuenta GitHub autorizada.** Ejecutar
-  `gh auth login -h github.com`, confirmar `gh auth status` y hacer push del
-  commit local a `itsakeeperphoto/itsakeeperphotography`.
+- [ ] **1. Cerrar la fecha de Family Photo Locations.** Confirmar con Lisa la
+  fecha editorial real, retirar `[FECHA]` de JSON/pending/schema y solo entonces
+  evaluar `ready/index`, `lastModified`, build y QA final de la ruta.
 - [ ] **2. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -121,10 +121,11 @@ sin reemplazar el archivo.
 
 ### GitHub y handoff
 
-- [ ] Autenticar `gh` con una cuenta que tenga permiso de escritura en
-  `itsakeeperphoto/itsakeeperphotography`; el intento con `williammelo533`
-  recibió HTTP 403.
-- [ ] Publicar el commit local pendiente y confirmar que `main` remoto avanza.
+- [x] Publicado el commit de analítica en
+  `itsakeeperphoto/itsakeeperphotography`; al iniciar esta sesión
+  `main...origin/main` estaba sincronizado en `5a5a063`.
+- [ ] Confirmar que el handoff de la guía de localizaciones también avanza
+  `origin/main`.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -172,6 +173,10 @@ sin reemplazar el archivo.
 
 ## QA y rendimiento
 
+- [x] Verificada `/journal/family-photo-locations-tri-cities/` en 1440×1000,
+  1200×900, 900×900 y 390×844: sin overflow, 20/20 imágenes, cuatro body links,
+  cinco FAQs, foco visible y consola limpia. Evidencia en
+  `.codex-evidence/journal-locations-2026-08-08/`.
 - [ ] Rehacer 84 capturas actuales: 18 rutas primarias × 4 breakpoints y
   Portfolio/Privacy/Thank-you × 4. No reutilizar como prueba final las del
   2026-07-21.
@@ -274,5 +279,9 @@ sin reemplazar el archivo.
 - [x] Endurecido `scripts/handoff.sh` para impedir que transcripts locales entren
   en commits futuros.
 - [x] Actualizado contenido/diseño reciente de Investment y Locations Guide.
+- [x] Sincronizada la fuente editorial v2 de Locations Guide sin revelar spots,
+  inventar fotografías ni resolver `[FECHA]` por inferencia.
+- [x] Corregidos dos usos móviles del token inexistente `--space-7` y verificada
+  la guía con build local y Playwright en cuatro breakpoints.
 - [x] Verificado `npm run build:local` el 2026-08-08.
 - [x] Instalado el sistema de contexto persistente en la raíz.
