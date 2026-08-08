@@ -215,8 +215,10 @@ Formato: `[quién] + [tipo de locación, sin nombrar el spot] + [luz/estación] 
       "headline": "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
       "author": {"@id": "https://www.itsakeeperphotography.com/#lisa"},
       "publisher": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "datePublished": "[FECHA]",
-      "dateModified": "[FECHA]",
+      "datePublished": "2026-08-08",
+      "dateModified": "2026-08-08",
+      "image": "https://www.itsakeeperphotography.com/uploads/journal-family-children-golden-hour-tricities.jpg",
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/"},
       "url": "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
       "about": [
         {"@type": "Place", "name": "Tri-Cities, Washington"},
@@ -261,4 +263,4 @@ Formato: `[quién] + [tipo de locación, sin nombrar el spot] + [luz/estación] 
 
 **Voz:** conserva sus frases textuales — "you learn to hunt for light", "photography has taught me how to see", "that small little pocket of perfect light right before the sun sets", "it just hits my heart". La sección de parejas es casi literal de su nota de voz sobre su sesión favorita.
 
-**Único cambio pendiente:** si Lisa autoriza nombrar Chamna explícitamente, se añade en una línea. Por defecto queda anónimo.
+**Criterio editorial cerrado:** los spots permanecen anónimos por diseño. La guía enseña a elegir luz, entorno y estación sin publicar la mecánica de una ubicación concreta.

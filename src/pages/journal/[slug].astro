@@ -22,6 +22,11 @@ const page = getContentPage(entry.contentPath);
 const shared = getStaticHomepagePage();
 const { homepage, settings } = shared.data;
 const isLocationsGuide = entry.id === "locations-guide";
+const locationsCanonical = absoluteUrl(entry.path);
+const locationsArticleImage = new URL(
+  page.hero.image || settings.seoImage,
+  `${siteOrigin}/`,
+).toString();
 
 const locationsQuestions = isLocationsGuide
   ? page.sections.find((section) => section.id === "location-questions")?.items || []
@@ -42,6 +47,13 @@ const locationsArticleSchemaExtra = {
   headline: page.title,
   author: { "@id": `${siteOrigin}/#lisa` },
   publisher: { "@id": `${siteOrigin}/#business` },
+  datePublished: "2026-08-08",
+  dateModified: "2026-08-08",
+  image: locationsArticleImage,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": locationsCanonical,
+  },
   about: [
     { "@type": "Place", name: "Tri-Cities, Washington" },
     { "@type": "Thing", name: "Outdoor portrait photography" },
@@ -55,8 +67,6 @@ const locationsArticleSchemaExtra = {
     { "@type": "City", name: "Kennewick" },
     { "@type": "City", name: "Pasco" },
   ],
-  // CONTENT PENDING [/journal/family-photo-locations-tri-cities/]: [FECHA]
-  // Add datePublished and dateModified here once Lisa approves the publication date.
 };
 const locationsBreadcrumbSchema = {
   "@context": "https://schema.org",

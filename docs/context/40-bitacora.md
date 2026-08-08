@@ -257,3 +257,39 @@
 - El usuario había publicado `5a5a063` por otro método autorizado; repetir ese
   método para los commits locales pendientes y confirmar que `main` queda
   sincronizada con `origin/main`.
+
+### 2026-08-08 — Codex / GPT-5.6 — Locations Guide lista para producción
+
+- **Objetivo:** retirar todos los pendientes de
+  `/journal/family-photo-locations-tri-cities/`, usar la fecha aprobada
+  `2026-08-08`, aplicar seis correcciones visuales, añadir una foto autorizada y
+  habilitar `ready/index`, sitemap, llms y schema completo.
+- **Contenido/gating:** el JSON y ambos manifiestos quedaron `ready/index`; se
+  eliminó `[FECHA]` de pending y del documento fuente. El criterio de spots
+  anónimos quedó cerrado, no pendiente. El release header dejó de bloquear todo
+  `/journal/*` y ahora protege de forma explícita el hub y los tres artículos
+  draft canónicos.
+- **Schema/crawlers:** Article incluye fechas, imagen, `mainEntityOfPage`, autor
+  y publisher. El artefacto contiene cinco JSON-LD parseables: LocalBusiness,
+  WebSite, Article, FAQPage y BreadcrumbList. Sitemap incluye la guía con
+  `lastmod 2026-08-08`; llms la incluye y Portfolio permanece excluido.
+- **Diseño:** “Four Kinds” pasó de offsets irregulares a una retícula desktop /
+  tablet / móvil contenida; se retiraron las líneas de session fit y winter; se
+  redujeron las escalas de Seasons para eliminar el solapamiento; “I’ll find the
+  light” cambió a deep umber con contraste 7.10:1.
+- **Asset:** mediante Google Drive se seleccionó `010A6353 copy.jpg` del folder
+  autorizado “Family Session - Richland”. Se importó como
+  `journal-locations-final-family-richland-tricities.jpg` a 2400×1600; el build
+  genera WebP 400/640/960/1440. Desktop usa fondo con wash y móvil conserva el
+  encuadre 3:2 completo.
+- **Herramientas:** `frontend-design`, `emil-design-eng` y `DESIGN.md` fijaron la
+  dirección; `impeccable` devolvió `[]`; `playwright-cli` verificó 1728×963,
+  1440×1000, 1200×1000, 900×1000 y 390×844.
+- **Verificación:** overflow horizontal 0, Seasons overlap 0, línea fit 0 px,
+  pseudo winter `none`, consola sin errores. Los builds release y staging
+  terminaron con `Validated 21 public routes` y mantuvieron sus gates opuestos.
+- **Incidencias:** Tina no permite un build mientras `npm run dev` ocupa 9000;
+  se detuvo el servidor local antes de las dos corridas. No se ejecutó deploy,
+  DNS ni cambio externo de Netlify.
+- **Siguiente paso:** crear el commit de handoff, publicar con identidad GitHub
+  autorizada y verificar el artefacto desplegado en el dominio final.

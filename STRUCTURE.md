@@ -28,6 +28,7 @@ entry when that date is missing.
 | --- | --- | --- |
 | `/` | Homepage | 2026-08-04 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
+| `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/portfolio/` | Portfolio | 2026-07-21 |
 
 ## Planned public architecture
@@ -59,7 +60,7 @@ threshold. Each must retain genuinely city-specific content before it is approve
 ### Journal
 
 - `/journal/` — draft; excluded
-- `/journal/family-photo-locations-tri-cities/` — draft; excluded
+- `/journal/family-photo-locations-tri-cities/` — ready and indexable
 - `/journal/when-to-book-senior-pictures-tri-cities/` — draft; excluded
 - `/journal/in-home-vs-studio-newborn-photography/` — draft; excluded
 - `/journal/branding-photos-vs-headshots/` — draft; excluded

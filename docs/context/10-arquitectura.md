@@ -226,14 +226,18 @@ indexación/build Tina según el entorno de deploy.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para solo tres rutas:
+En `release`, el manifiesto actualmente permite sitemap para cuatro rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
+- `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye homepage y Family; Portfolio está excluido de llms. Las otras
-17 rutas siguen `draft/noindex`. `/thank-you/` es noindex permanente. En
+`llms.txt` incluye Homepage, Family y Family Photo Locations; Portfolio está
+excluido de llms. Las otras 16 rutas siguen `draft/noindex`. `/thank-you/` es
+noindex permanente. Los headers release de Journal deben enumerar las rutas
+draft explícitamente; un wildcard `/journal/*` bloquearía también los artículos
+publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
 
 `Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.

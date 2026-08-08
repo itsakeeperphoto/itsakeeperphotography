@@ -390,3 +390,33 @@
   páginas Richland, Kennewick y Pasco conservan sus propios pendientes de
   conocimiento local. Cualquier autorización futura para nombrar un spot debe
   documentarse en un ADR nuevo.
+- **SUPERSEDIDA POR ADR-030:** solo la consecuencia que mantenía esta guía en
+  `draft/noindex` por falta de fecha. El criterio de spots anónimos sigue
+  vigente.
+
+### ADR-030 — Family Photo Locations se publica con gates explícitos
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada; supersede el gate temporal de ADR-029 para esta ruta.
+- **Contexto:** El usuario aprobó `2026-08-08` como fecha editorial y pidió
+  terminar la guía para producción. Aunque el manifiesto podía pasarla a
+  `ready/index`, `config/netlify-headers/release` mantenía un wildcard
+  `/journal/*` que habría enviado `X-Robots-Tag: noindex` al artículo publicado.
+  También pidió seis correcciones visuales y una foto autorizada para el cierre.
+- **Decisión:** Marcar únicamente
+  `/journal/family-photo-locations-tri-cities/` como `ready/index`, usar
+  `2026-08-08` en Article y `lastModified`, incluirla en sitemap/llms y sustituir
+  el wildcard de Journal por reglas noindex explícitas para el hub y los tres
+  artículos draft. Mantener los spots anónimos como criterio final, no como
+  pendiente. Usar como cierre decorativo la fotografía `010A6353 copy.jpg` del
+  folder autorizado “Family Session - Richland”, con crop completo en móvil.
+- **Alternativas descartadas:** Cambiar solo meta/sitemap se descartó porque el
+  header HTTP lo contradecía; conservar `/journal/*` se descartó porque bloquea
+  cualquier artículo publicado; nombrar Chamna o inventar datos se descartó por
+  el criterio editorial aprobado; usar una imagen ajena al folder autorizado se
+  descartó por trazabilidad.
+- **Consecuencias:** El sitemap release contiene cuatro URLs y `llms.txt` tres.
+  La guía emite LocalBusiness, WebSite, Article, FAQPage y BreadcrumbList
+  parseables; FAQPage es válido pero no promete rich results de Google para un
+  sitio comercial. Las páginas de ciudad y los otros artículos conservan sus
+  propios gates. Todo futuro artículo de Journal debe recibir una regla header
+  explícita o eliminar la que le corresponda al pasar a producción.

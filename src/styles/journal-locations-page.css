@@ -259,23 +259,25 @@
 
 .locations-kinds {
   position: relative;
-  padding: clamp(7rem, 10vw, 10rem) 0 clamp(8rem, 11vw, 11rem);
+  padding: clamp(6rem, 8vw, 8rem) 0;
 }
 
 .locations-kinds__header {
   display: grid;
   grid-template-columns: minmax(20rem, 1fr) minmax(22rem, 0.8fr);
-  gap: clamp(4rem, 9vw, 10rem);
+  column-gap: clamp(3rem, 5vw, 6rem);
+  row-gap: var(--space-6);
   align-items: end;
 }
 
 .locations-kinds__header .locations-eyebrow {
   grid-column: 1 / -1;
-  margin-bottom: calc(var(--space-8) * -1);
 }
 
 .locations-kinds__header h2 {
-  max-width: 11ch;
+  max-width: 16ch;
+  font-size: clamp(3.25rem, 3.8vw, 4.5rem);
+  line-height: 0.98;
 }
 
 .locations-kinds__intro {
@@ -287,7 +289,9 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  margin-top: clamp(5rem, 8vw, 8rem);
+  column-gap: var(--space-8);
+  row-gap: clamp(4rem, 6vw, 6rem);
+  margin-top: clamp(4rem, 6vw, 6rem);
 }
 
 .locations-kinds__folio::before {
@@ -359,11 +363,12 @@
 }
 
 .location-kind--1 {
-  grid-column: 5 / -1;
+  grid-row: 1;
+  grid-column: 6 / -1;
 }
 
 .location-kind--1 .location-kind__print {
-  height: clamp(24rem, 38vw, 38rem);
+  height: clamp(22rem, 30vw, 32rem);
   padding: 0.55rem;
   border: 1px solid rgba(40, 30, 16, 0.42);
 }
@@ -382,12 +387,13 @@
 }
 
 .location-kind--2 {
+  grid-row: 2;
   grid-column: 1 / span 4;
-  margin-top: -19rem;
+  margin: 0;
 }
 
 .location-kind--2 .location-kind__print {
-  aspect-ratio: 0.74;
+  aspect-ratio: 0.82;
   border-radius: 999px 999px 0 0;
 }
 
@@ -400,8 +406,9 @@
 }
 
 .location-kind--3 {
+  grid-row: 2;
   grid-column: 5 / span 4;
-  margin-top: clamp(5rem, 8vw, 8rem);
+  margin: 0;
 }
 
 .location-kind--3 .location-kind__print,
@@ -412,8 +419,9 @@
 }
 
 .location-kind--4 {
+  grid-row: 2;
   grid-column: 9 / -1;
-  margin: clamp(10rem, 15vw, 15rem) 0 0 var(--space-6);
+  margin: 0;
 }
 
 .location-kind--4 .location-kind__print img {
@@ -437,7 +445,6 @@
   top: calc(var(--header-height) + var(--space-8));
   min-height: 31rem;
   padding: var(--space-8) var(--space-8) var(--space-8) 0;
-  border-right: 1px solid rgba(242, 232, 215, 0.35);
 }
 
 .locations-fit__header h2 {
@@ -555,6 +562,7 @@
 .locations-seasons__heading h2 {
   max-width: 8ch;
   margin-top: var(--space-6);
+  font-size: clamp(3.25rem, 3.8vw, 4.5rem);
 }
 
 .locations-seasons__heading .locations-script {
@@ -563,6 +571,7 @@
   bottom: clamp(4rem, 8vw, 8rem);
   left: var(--space-8);
   color: var(--color-clay);
+  font-size: clamp(2.75rem, 3vw, 3.5rem);
   text-align: center;
 }
 
@@ -661,16 +670,6 @@
   margin: 0;
   padding: var(--space-3);
   border: 1px solid rgba(242, 232, 215, 0.45);
-}
-
-.locations-winter__print::after {
-  position: absolute;
-  top: -1px;
-  right: -12vw;
-  width: 12vw;
-  height: 1px;
-  background: rgba(242, 232, 215, 0.45);
-  content: "";
 }
 
 .locations-winter__print picture,
@@ -787,7 +786,7 @@
   z-index: 3;
   right: 3%;
   bottom: 4%;
-  color: var(--color-clay);
+  color: var(--color-deep-umber);
   white-space: nowrap;
 }
 
@@ -891,17 +890,44 @@
 }
 
 .locations-final {
+  position: relative;
+  min-height: clamp(38rem, 45vw, 44rem);
+  isolation: isolate;
+  overflow: hidden;
   color: var(--color-warm-ivory);
+  background: var(--color-deep-umber);
+}
+
+.locations-final__background,
+.locations-final__background picture,
+.locations-final__background img,
+.locations-final__wash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.locations-final__background-image {
+  object-fit: cover;
+  object-position: 50% 42%;
+  filter: saturate(0.8) contrast(0.96) brightness(0.7) sepia(0.08);
+}
+
+.locations-final__wash {
+  background: rgba(40, 30, 16, 0.62);
 }
 
 .locations-final__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(25rem, 1fr) minmax(26rem, 1fr);
   width: min(
     var(--container-wide),
     calc(100% - var(--page-gutter-desktop) - var(--page-gutter-desktop))
   );
-  min-height: 25rem;
+  min-height: inherit;
   margin-inline: auto;
   align-items: center;
 }
@@ -962,10 +988,6 @@
     column-gap: var(--space-5);
   }
 
-  .location-kind--2 {
-    margin-top: -14rem;
-  }
-
   .locations-fit__inner {
     grid-template-columns: minmax(17rem, 0.55fr) minmax(27rem, 1.45fr);
   }
@@ -1009,24 +1031,42 @@
   }
 
   .locations-kinds__header .locations-eyebrow {
-    margin-bottom: calc(var(--space-4) * -1);
+    margin-bottom: 0;
+  }
+
+  .locations-kinds__folio {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+    row-gap: var(--space-16);
   }
 
   .location-kind--1 {
-    grid-column: 4 / -1;
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .location-kind--1 .location-kind__print {
+    height: clamp(20rem, 42vw, 25rem);
   }
 
   .location-kind--2 {
-    grid-column: 1 / span 3;
-    margin-top: -10rem;
+    grid-row: auto;
+    grid-column: 1;
+    margin: 0;
   }
 
   .location-kind--3 {
-    grid-column: 4 / span 4;
+    grid-row: auto;
+    grid-column: 2;
+    margin: 0;
   }
 
   .location-kind--4 {
-    grid-column: 8 / -1;
+    grid-row: auto;
+    grid-column: 1 / -1;
+    width: calc(50% - var(--space-4));
+    margin: 0;
+    justify-self: center;
   }
 
   .locations-fit__inner {
@@ -1228,19 +1268,6 @@
     width: 92%;
   }
 
-  .location-kind--2 {
-    width: 84%;
-  }
-
-  .location-kind--3 {
-    width: 86%;
-    margin-left: auto;
-  }
-
-  .location-kind--4 {
-    width: 90%;
-  }
-
   .location-kind__label h3 {
     font-size: 0.78rem;
   }
@@ -1331,14 +1358,6 @@
     order: 2;
   }
 
-  .locations-winter__print::after {
-    right: auto;
-    bottom: -4rem;
-    left: var(--space-8);
-    width: 1px;
-    height: 4rem;
-  }
-
   .locations-choosing__prints {
     min-height: 37rem;
     margin-top: var(--space-4);
@@ -1389,6 +1408,25 @@
   .locations-final__inner {
     width: 100%;
     min-height: 0;
+  }
+
+  .locations-final {
+    min-height: 0;
+  }
+
+  .locations-final__background {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 3 / 2;
+    height: auto;
+  }
+
+  .locations-final__background-image {
+    object-position: 50% 44%;
+  }
+
+  .locations-final__wash {
+    background: rgba(40, 30, 16, 0.18);
   }
 
   .locations-final__inner > div {

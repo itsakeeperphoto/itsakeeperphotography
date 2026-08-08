@@ -49,6 +49,7 @@ const internalTargetExists = (href) => {
 const indexableReleaseFiles = new Set([
   "index.html",
   `family-photographer-tri-cities-wa${path.sep}index.html`,
+  `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
   `portfolio${path.sep}index.html`,
 ]);
 
@@ -145,6 +146,7 @@ if (mode === "staging") {
   const expectedSitemapUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
     "https://www.itsakeeperphotography.com/portfolio/",
   ];
   if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) {
@@ -153,20 +155,36 @@ if (mode === "staging") {
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");
   }
-  if (
-    !/https:\/\/www\.itsakeeperphotography\.com\//.test(llms) ||
-    !/https:\/\/www\.itsakeeperphotography\.com\/family-photographer-tri-cities-wa\//.test(llms) ||
-    /\/portfolio\//.test(llms)
-  ) {
-    failures.push("llms.txt: release membership is incorrect");
+  const llmsUrls = [...llms.matchAll(/\]\((https:\/\/www\.itsakeeperphotography\.com\/[^)]*)\)/g)]
+    .map((match) => match[1]);
+  const expectedLlmsUrls = [
+    "https://www.itsakeeperphotography.com/",
+    "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
+  ];
+  if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
+    failures.push(`llms.txt: release membership is ${llmsUrls.join(", ") || "empty"}`);
+  }
+  if (/^\/journal\/\*\s*$/m.test(headers)) {
+    failures.push("_headers: broad /journal/* noindex rule must not block the published guide");
   }
   for (const route of [
     "/contact/*",
-    "/journal/*",
+    "/journal/",
+    "/journal/when-to-book-senior-pictures-tri-cities/*",
+    "/journal/in-home-vs-studio-newborn-photography/*",
+    "/journal/branding-photos-vs-headshots/*",
     "/privacy/*",
     "/thank-you/*",
   ]) {
-    if (!headers.includes(route)) failures.push(`_headers: release noindex rule missing for ${route}`);
+    const escapedRoute = route.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const noindexRule = new RegExp(
+      `^${escapedRoute}\\n  X-Robots-Tag: noindex, nofollow, noarchive$`,
+      "m",
+    );
+    if (!noindexRule.test(headers)) {
+      failures.push(`_headers: release noindex rule missing for ${route}`);
+    }
   }
 }
 

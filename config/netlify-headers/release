@@ -50,7 +50,16 @@
 /pasco-wa-photographer/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/journal/*
+/journal/
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/journal/when-to-book-senior-pictures-tri-cities/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/journal/in-home-vs-studio-newborn-photography/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/journal/branding-photos-vs-headshots/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
 /_astro/*

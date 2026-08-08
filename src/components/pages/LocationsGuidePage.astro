@@ -351,6 +351,20 @@ const chooseLink = choosing.links?.find((link) => link.href === "/investment/");
 
   {page.finalCta && (
     <section class="locations-final tone-umber" aria-labelledby="locations-final-title">
+      {page.finalCta.image && (
+        <div class="locations-final__background" aria-hidden="true">
+          <Picture
+            src={page.finalCta.image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="100vw"
+            imgClass="locations-final__background-image"
+          />
+          <span class="locations-final__wash"></span>
+        </div>
+      )}
       <div class="locations-final__inner">
         <div>
           <p class="locations-eyebrow">The next step</p>

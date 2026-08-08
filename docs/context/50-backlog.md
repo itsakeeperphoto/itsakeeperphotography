@@ -9,9 +9,9 @@
   escritura en `itsakeeperphoto/itsakeeperphotography`; esta terminal recibió
   HTTP 403 como `williammelo533`. Confirmar después que `main...origin/main`
   queda sincronizado.
-- [ ] **2. Cerrar la fecha de Family Photo Locations.** Confirmar con Lisa la
-  fecha editorial real, retirar `[FECHA]` de JSON/pending/schema y solo entonces
-  evaluar `ready/index`, `lastModified`, build y QA final de la ruta.
+- [x] **2. Publicar Family Photo Locations en el gate de producción.** Fecha
+  aprobada `2026-08-08`; `[FECHA]` retirado, ruta `ready/index`, schema completo,
+  sitemap/llms/headers verificados y QA responsive final aprobado.
 - [ ] **3. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -78,7 +78,7 @@ sin reemplazar el archivo.
 ### Journal
 
 - [ ] Fecha editorial para Branding Photos vs Headshots.
-- [ ] Fecha editorial para Family Photo Locations.
+- [x] Fecha editorial para Family Photo Locations: `2026-08-08`.
 - [ ] Datos de distritos/fechas escolares para Senior timing.
 - [ ] Respuesta/offer de Lisa referida en Q54 para Senior timing.
 - [ ] Fecha editorial para Senior timing.
@@ -181,6 +181,10 @@ sin reemplazar el archivo.
   1200×900, 900×900 y 390×844: sin overflow, 20/20 imágenes, cuatro body links,
   cinco FAQs, foco visible y consola limpia. Evidencia en
   `.codex-evidence/journal-locations-2026-08-08/`.
+- [x] Revalidada la guía tras las correcciones de producción en 1728×963,
+  1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
+  de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto
+  responsive y consola sin errores.
 - [ ] Rehacer 84 capturas actuales: 18 rutas primarias × 4 breakpoints y
   Portfolio/Privacy/Thank-you × 4. No reutilizar como prueba final las del
   2026-07-21.
@@ -287,5 +291,8 @@ sin reemplazar el archivo.
   inventar fotografías ni resolver `[FECHA]` por inferencia.
 - [x] Corregidos dos usos móviles del token inexistente `--space-7` y verificada
   la guía con build local y Playwright en cuatro breakpoints.
+- [x] Publicada Family Photo Locations en el manifiesto release con fecha
+  `2026-08-08`; validada en builds release y staging sin placeholders ni gates
+  contradictorios.
 - [x] Verificado `npm run build:local` el 2026-08-08.
 - [x] Instalado el sistema de contexto persistente en la raíz.

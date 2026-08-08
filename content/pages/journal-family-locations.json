@@ -1,8 +1,8 @@
 {
   "route": "/journal/family-photo-locations-tri-cities/",
   "family": "article",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Article",
   "signature": "overlap",
   "title": "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
@@ -261,12 +261,12 @@
     "paragraphs": [
       "You bring your people. I'll bring twenty years of knowing where the light lands in this valley."
     ],
+    "image": "/uploads/journal-locations-final-family-richland-tricities.jpg",
+    "imageAlt": "Family gathered together in warm evening light.",
     "link": {
       "label": "Plan your session",
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[FECHA]"
-  ]
+  "pending": []
 }
