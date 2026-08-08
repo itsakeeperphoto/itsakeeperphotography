@@ -11,8 +11,9 @@
 
 **Commit base de esta sesión:** `5a5a063` — `feat(analytics): add Clarity and Google tag`
 
-**Publicación:** `main` estaba sincronizada con `origin/main` al iniciar; este
-handoff crea y publica el commit de la guía de localizaciones
+**Publicación:** commit local `72bd789` creado y validado; el push falló con
+HTTP 403 porque GitHub autenticó esta terminal como `williammelo533`. La rama
+local está por delante de `origin/main`.
 
 **Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
@@ -20,14 +21,14 @@ handoff crea y publica el commit de la guía de localizaciones
 
 ## Siguiente paso concreto
 
-Confirmar con Lisa la fecha editorial real de
-`/journal/family-photo-locations-tri-cities/`. Después, sustituir `[FECHA]` en
+Publicar los commits locales con una identidad que tenga escritura en
+`itsakeeperphoto/itsakeeperphotography` y confirmar que `origin/main` avanza.
+Después, confirmar con Lisa la fecha editorial real de
+`/journal/family-photo-locations-tri-cities/`, sustituir `[FECHA]` en
 `content/pages/journal-family-locations.json`, `src/content/pending.ts` y el
-schema del artículo, revisar `lastModified`, cambiar la ruta a `ready/index`
-solo si corresponde y repetir build/QA. En paralelo sigue pendiente comprobar
-en el deploy que Clarity y Google Analytics reciben tráfico y definir si
-staging debe filtrarse. Después continúa Seniors con sus cantidades, Q54 y
-fecha editorial pendientes.
+schema del artículo, revisar `lastModified` y evaluar `ready/index` con un nuevo
+build/QA. También siguen pendientes la verificación de analítica en el deploy y
+los hechos editoriales de Seniors.
 
 No cambiar una ruta a `ready/index` mientras alguno de sus hechos, media o QA
 obligatorio siga pendiente.
@@ -219,18 +220,21 @@ No reemplazar estas entradas por inferencias ni datos de competidores.
 
 ## Bloqueadores externos
 
-1. **Lisa / cliente:** fecha editorial de la guía de localizaciones, hechos
+1. **GitHub:** el push de `72bd789` recibió HTTP 403; la terminal usa la
+   identidad `williammelo533`, sin escritura en el remoto oficial. El usuario
+   pudo publicar el commit anterior por otro método autorizado.
+2. **Lisa / cliente:** fecha editorial de la guía de localizaciones, hechos
    biográficos, premios, permisos, políticas, entregables, cantidades y
    conocimiento local detallados arriba.
-2. **Cuenta Netlify:** configurar y verificar notificaciones reales de ambos
+3. **Cuenta Netlify:** configurar y verificar notificaciones reales de ambos
    formularios. El correo final solicitado es `itsakeeperphoto@gmail.com`; el
    correo de pruebas previo fue `globalbridge360@gmail.com`.
-3. **Google Cloud/GBP:** crear/autorizar OAuth para una cuenta manager del perfil
+4. **Google Cloud/GBP:** crear/autorizar OAuth para una cuenta manager del perfil
    y cargar cinco variables de entorno. La implementación no permite demostrar
    el conteo dinámico sin ello.
-4. **Autorización de lanzamiento:** cambiar dominio primario/DNS y activar
+5. **Autorización de lanzamiento:** cambiar dominio primario/DNS y activar
    `SITE_MODE=release` solo por instrucción explícita.
-5. **Revisión legal:** aprobar el contenido de Privacy antes de indexarlo.
+6. **Revisión legal:** aprobar el contenido de Privacy antes de indexarlo.
 
 ## Preguntas abiertas para el humano
 

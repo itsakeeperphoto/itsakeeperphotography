@@ -246,3 +246,14 @@
   incidentales.
 - **Pendiente:** Lisa debe confirmar la fecha editorial real. Solo después se
   puede retirar `[FECHA]` y evaluar `ready/index` con un nuevo build y QA.
+
+### 2026-08-08 — Addendum — Commit creado, push rechazado
+
+- `./scripts/handoff.sh "actualiza guia de localizaciones v2"` creó el commit
+  local `72bd789` con código, contexto y cuatro capturas finales.
+- El push a `itsakeeperphoto/itsakeeperphotography` falló con HTTP 403 porque
+  GitHub autenticó esta terminal como `williammelo533`, que no tiene permiso de
+  escritura. No se transfirió el commit.
+- El usuario había publicado `5a5a063` por otro método autorizado; repetir ese
+  método para los commits locales pendientes y confirmar que `main` queda
+  sincronizada con `origin/main`.

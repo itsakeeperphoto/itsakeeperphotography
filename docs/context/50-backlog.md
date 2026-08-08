@@ -5,13 +5,17 @@
 
 ## Ahora — siguiente operación y ruta hacia producción
 
-- [ ] **1. Cerrar la fecha de Family Photo Locations.** Confirmar con Lisa la
+- [ ] **1. Publicar los commits locales pendientes.** Usar una identidad con
+  escritura en `itsakeeperphoto/itsakeeperphotography`; esta terminal recibió
+  HTTP 403 como `williammelo533`. Confirmar después que `main...origin/main`
+  queda sincronizado.
+- [ ] **2. Cerrar la fecha de Family Photo Locations.** Confirmar con Lisa la
   fecha editorial real, retirar `[FECHA]` de JSON/pending/schema y solo entonces
   evaluar `ready/index`, `lastModified`, build y QA final de la ruta.
-- [ ] **2. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **3. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **3. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **4. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -124,8 +128,8 @@ sin reemplazar el archivo.
 - [x] Publicado el commit de analítica en
   `itsakeeperphoto/itsakeeperphotography`; al iniciar esta sesión
   `main...origin/main` estaba sincronizado en `5a5a063`.
-- [ ] Confirmar que el handoff de la guía de localizaciones también avanza
-  `origin/main`.
+- [ ] Publicar el handoff local `72bd789` de la guía de localizaciones; el primer
+  intento recibió HTTP 403 autenticado como `williammelo533`.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
