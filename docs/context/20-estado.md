@@ -3,28 +3,29 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 18:36 -05
+**Última actualización:** 2026-08-08 18:39 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit base de esta sesión:** `eaa68d1` — `docs: handoff 2026-08-08 — documenta push bloqueado`
+**Commit de implementación/handoff:** `8d5d84f` — `docs: handoff 2026-08-08 — publica guia de localizaciones lista para produccion`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado git previo al cierre:** `main` estaba dos commits por delante de
-`origin/main`; los cambios de esta sesión quedan preparados para el commit que
-crea `./scripts/handoff.sh`. No se ejecutó ningún deploy ni cambio de DNS.
+**Publicación:** `./scripts/handoff.sh` creó `8d5d84f`, pero `git push` fue
+rechazado con HTTP 403 porque GitHub autenticó la terminal como
+`williammelo533`. Este addendum documental deja `main` cuatro commits por
+delante de `origin/main` una vez commiteado. No se ejecutó ningún deploy ni
+cambio de DNS.
 
 ---
 
 ## Siguiente paso concreto
 
-Ejecutar el handoff, publicar los commits locales con una identidad que tenga
-escritura en `itsakeeperphoto/itsakeeperphotography` y comprobar en el deploy
-release que:
+Publicar los cuatro commits locales con una identidad que tenga escritura en
+`itsakeeperphoto/itsakeeperphotography` y comprobar en el deploy release que:
 
 1. la guía responde 200 y mantiene canonical `www` + `index, follow`;
 2. `/sitemap.xml` contiene la guía con `lastmod 2026-08-08`;
@@ -183,9 +184,10 @@ git diff --check
 
 ## Bloqueadores externos
 
-1. **GitHub:** antes de este cierre, `main` estaba dos commits por delante de
-   `origin/main`; la última sesión autenticada como `williammelo533` recibió
-   HTTP 403. El usuario puede publicar con su método autorizado.
+1. **GitHub:** el handoff creó `8d5d84f`, pero el push recibió HTTP 403 con la
+   identidad `williammelo533`. Después del addendum local, `main` queda cuatro
+   commits por delante de `origin/main`; el usuario puede publicarlos con su
+   método autorizado.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
 3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.

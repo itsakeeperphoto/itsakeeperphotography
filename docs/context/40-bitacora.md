@@ -293,3 +293,14 @@
   DNS ni cambio externo de Netlify.
 - **Siguiente paso:** crear el commit de handoff, publicar con identidad GitHub
   autorizada y verificar el artefacto desplegado en el dominio final.
+
+### 2026-08-08 — Addendum — Handoff de producción creado, push rechazado
+
+- `./scripts/handoff.sh "publica guia de localizaciones lista para produccion"`
+  creó el commit local `8d5d84f` con código, contenido, asset y memoria.
+- El push al remoto oficial fue rechazado con HTTP 403: GitHub autenticó esta
+  terminal como `williammelo533`, sin escritura en
+  `itsakeeperphoto/itsakeeperphotography`.
+- No se transfirieron cambios ni se ejecutó deploy. Este addendum se commitea
+  localmente para que el próximo agente vea el bloqueo exacto; el usuario puede
+  publicar los cuatro commits adelantados con su método autorizado.

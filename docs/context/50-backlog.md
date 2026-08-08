@@ -128,8 +128,9 @@ sin reemplazar el archivo.
 - [x] Publicado el commit de analítica en
   `itsakeeperphoto/itsakeeperphotography`; al iniciar esta sesión
   `main...origin/main` estaba sincronizado en `5a5a063`.
-- [ ] Publicar el handoff local `72bd789` de la guía de localizaciones; el primer
-  intento recibió HTTP 403 autenticado como `williammelo533`.
+- [ ] Publicar los commits locales `72bd789`, `eaa68d1`, `8d5d84f` y el addendum
+  de contexto; el último intento recibió HTTP 403 autenticado como
+  `williammelo533`.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
