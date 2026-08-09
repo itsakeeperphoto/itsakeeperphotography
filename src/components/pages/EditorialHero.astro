@@ -24,7 +24,7 @@ interface Props {
   titleId: string;
   heading: string;
   headingLines: string[];
-  scriptLine: string;
+  scriptLine?: string;
   intro?: string;
   links?: PageLink[];
   backgroundImage?: string;
@@ -108,20 +108,26 @@ const heroStyle = [
   )}
 
   <div class="editorial-hero__copy" data-hero-copy>
-    <p
-      class="editorial-hero__script"
-      data-hero-script
-      aria-hidden="true"
-    >
-      {scriptLine}
-    </p>
+    {scriptLine && (
+      <p
+        class="editorial-hero__script"
+        data-hero-script
+        aria-hidden="true"
+      >
+        {scriptLine}
+      </p>
+    )}
     <h1
       class="editorial-hero__title"
       id={titleId}
       data-hero-title
       aria-label={heading}
     >
-      {headingLines.map((line) => <span aria-hidden="true">{line}</span>)}
+      {headingLines.map((line, index) => (
+        <span aria-hidden="true">
+          {line}{index < headingLines.length - 1 ? " " : ""}
+        </span>
+      ))}
     </h1>
     {intro && (
       <p class="editorial-hero__intro" data-hero-intro>{intro}</p>

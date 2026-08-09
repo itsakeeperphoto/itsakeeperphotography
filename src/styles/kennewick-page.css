@@ -17,8 +17,8 @@
 }
 
 .kennewick-page :where(h1, h2) {
-  letter-spacing: var(--tracking-heading);
-  line-height: 0.92;
+  letter-spacing: max(var(--tracking-heading), -0.04em);
+  line-height: 0.94;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -42,18 +42,19 @@
 
 .kennewick-prose {
   display: grid;
+  max-width: 70ch;
   gap: 1.35rem;
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.32vw, 1.25rem);
+  font-size: clamp(1.0625rem, 1.3vw, 1.22rem);
   font-style: italic;
   line-height: 1.62;
 }
 
 .kennewick-page :where(
-  .kennewick-hero__copy,
   .kennewick-intro__copy,
   .kennewick-style__copy,
   .kennewick-setting__copy,
+  .kennewick-directory__content,
   .kennewick-directory__row,
   .kennewick-faq__list,
   .kennewick-final__copy
@@ -66,7 +67,9 @@
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.22em;
-  transition: color 200ms var(--ease-ui), text-underline-offset 200ms var(--ease-ui);
+  transition:
+    color 220ms var(--ease-ui),
+    text-underline-offset 220ms var(--ease-ui);
 }
 
 .kennewick-prose em {
@@ -78,129 +81,93 @@
   outline-offset: var(--outline-focus-offset);
 }
 
-/* The first view is one clear choice: exact copy beside a complete vertical portrait. */
+/* Kennewick uses the same first-view grammar as the Seniors, Newborn, and Family services. */
 
-.kennewick-hero {
-  --color-focus-ring: var(--color-focus-ring-light);
-  color: var(--color-warm-ivory);
-  background: var(--color-deep-umber);
+.editorial-hero[data-editorial-hero-page="kennewick"] {
+  --editorial-hero-wash: rgba(40, 30, 16, 0.55);
+  --editorial-hero-control-wash: rgba(40, 30, 16, 0.38);
 }
 
-.kennewick-hero__grid {
-  display: grid;
-  min-height: calc(100svh - var(--header-height));
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gutter);
-  align-items: center;
-  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+.editorial-hero[data-editorial-hero-page="kennewick"] .editorial-hero__background-image {
+  filter: saturate(0.9) contrast(1.02) brightness(0.76) sepia(0.04);
 }
 
-.kennewick-hero__copy {
-  z-index: 2;
-  grid-column: 1 / 7;
-  padding-right: clamp(1rem, 4vw, 4rem);
+.editorial-hero[data-editorial-hero-page="kennewick"] .editorial-hero__title {
+  max-width: 15ch;
 }
 
-.kennewick-hero__copy h1 {
-  max-width: 9ch;
-  font-size: clamp(3.6rem, 6.2vw, 6.6rem);
+.editorial-hero[data-editorial-hero-page="kennewick"] .editorial-hero__title span {
+  white-space: nowrap;
 }
 
-.kennewick-hero__copy > p {
-  max-width: 35rem;
-  margin-top: 2.15rem;
-  font-family: var(--font-body);
-  font-size: clamp(1.1rem, 1.55vw, 1.35rem);
-  font-style: italic;
-  line-height: 1.55;
-}
-
-.kennewick-hero__cta {
-  display: inline-flex;
-  min-height: var(--minimum-hit-area);
-  align-items: center;
-  gap: 1.1rem;
-  margin-top: 2.5rem;
-  padding: 0.75rem 1.15rem;
-  border: 1px solid var(--color-warm-ivory);
-  border-radius: 0;
-  color: inherit;
-  background: transparent;
-  font-family: var(--font-utility);
-  font-size: var(--font-size-button);
-  letter-spacing: var(--tracking-button);
-  line-height: 1;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 200ms var(--ease-ui), background-color 200ms var(--ease-ui);
-}
-
-.kennewick-hero__cta svg {
-  flex: 0 0 auto;
-  transition: transform 200ms var(--ease-ui);
-}
-
-.kennewick-hero__media {
-  width: min(100%, 29rem);
-  grid-column: 8 / 13;
-  justify-self: end;
-  padding: 0.625rem;
-  border: 1px solid var(--kennewick-line-light);
-}
-
-.kennewick-hero__media picture,
-.kennewick-hero__media img {
-  aspect-ratio: 7 / 10;
-}
-
-.kennewick-hero__media img {
-  object-position: 50% 50%;
-}
-
-/* Local context stays grounded and spacious; the photograph supports Lisa, not a location claim. */
+/* Lisa anchors the local introduction; the hairlines extend the arch into the copy field. */
 
 .kennewick-intro {
-  padding-block: clamp(7.5rem, 10vw, 10rem);
+  position: relative;
+  padding-block: clamp(8rem, 11vw, 11rem);
   background: var(--color-weathered-sand);
+  overflow: hidden;
+}
+
+.kennewick-intro__rule {
+  position: absolute;
+  top: 54%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--kennewick-line-dark);
 }
 
 .kennewick-intro__grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gutter);
-  align-items: start;
-}
-
-.kennewick-intro__copy {
-  grid-column: 1 / 6;
-}
-
-.kennewick-intro__copy h2 {
-  max-width: 10.5ch;
-  margin-bottom: 2.25rem;
-  font-size: clamp(3.25rem, 5.25vw, 5.5rem);
+  align-items: center;
 }
 
 .kennewick-intro__media {
-  grid-column: 7 / 13;
-  margin-top: 5rem;
-  padding: 0.625rem;
-  border: 1px solid var(--kennewick-line-dark);
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / 5;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  background: var(--color-warm-ivory);
 }
 
 .kennewick-intro__media picture,
 .kennewick-intro__media img {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 4 / 5;
 }
 
 .kennewick-intro__media img {
-  object-position: 50% 45%;
+  object-position: 50% 42%;
 }
 
-/* Signature device: one panorama makes controlled contact with one arch. */
+.kennewick-intro__line {
+  width: 1px;
+  height: min(34rem, 82%);
+  grid-column: 6;
+  justify-self: center;
+  background: var(--kennewick-line-dark);
+}
+
+.kennewick-intro__copy {
+  position: relative;
+  z-index: 2;
+  grid-column: 7 / 13;
+  padding-block: 1.5rem;
+}
+
+.kennewick-intro__copy h2 {
+  max-width: 100%;
+  margin-bottom: 2.25rem;
+  font-size: clamp(3.3rem, 5.1vw, 5.65rem);
+}
+
+/* One restrained overlap demonstrates the richer edit without turning into a gallery. */
 
 .kennewick-style {
-  padding-block: clamp(8rem, 11vw, 11rem);
+  padding-block: clamp(8.5rem, 12vw, 12rem);
   background: var(--color-warm-ivory);
 }
 
@@ -208,13 +175,13 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gutter);
-  margin-bottom: clamp(4rem, 6vw, 6.5rem);
+  margin-bottom: clamp(4.5rem, 7vw, 7rem);
 }
 
 .kennewick-style__header h2 {
-  max-width: 12ch;
-  grid-column: 1 / 10;
-  font-size: clamp(3.5rem, 6.25vw, 6.6rem);
+  max-width: 18ch;
+  grid-column: 1 / 11;
+  font-size: clamp(3.6rem, 6vw, 6rem);
 }
 
 .kennewick-style__grid {
@@ -225,22 +192,24 @@
 }
 
 .kennewick-style__copy {
+  position: relative;
   z-index: 4;
+  max-width: 36ch;
   grid-column: 1 / 5;
 }
 
 .kennewick-style__media {
   position: relative;
-  min-height: 39rem;
+  min-height: clamp(35rem, 46vw, 43rem);
   grid-column: 6 / 13;
 }
 
 .kennewick-style__panorama {
   position: absolute;
   z-index: 2;
-  top: 4.5rem;
+  top: 0;
   right: 0;
-  left: 0;
+  left: 8%;
   padding: 0.55rem;
   border: 1px solid var(--kennewick-line-dark);
   background: var(--color-warm-ivory);
@@ -248,7 +217,7 @@
 
 .kennewick-style__panorama picture,
 .kennewick-style__panorama img {
-  aspect-ratio: 5 / 2;
+  aspect-ratio: 3 / 2;
 }
 
 .kennewick-style__panorama img {
@@ -258,10 +227,11 @@
 .kennewick-style__arch {
   position: absolute;
   z-index: 3;
-  top: 13.75rem;
-  right: 6%;
-  width: 42%;
+  bottom: 0;
+  left: 0;
+  width: 38%;
   overflow: hidden;
+  border: 0.5rem solid var(--color-warm-ivory);
   border-radius: 999px 999px 0 0;
 }
 
@@ -277,18 +247,18 @@
 .kennewick-style__line {
   position: absolute;
   z-index: 1;
-  top: 58%;
+  top: 61%;
   right: -2rem;
   left: -2rem;
   height: 1px;
   background: var(--kennewick-line-dark);
 }
 
-/* The practical setting section is intentionally text-led: no generic image stands in as local proof. */
+/* Location guidance remains text-led so general portfolio work never becomes implied proof. */
 
 .kennewick-setting {
   --color-focus-ring: var(--color-focus-ring-light);
-  padding-block: clamp(8rem, 11vw, 11rem);
+  padding-block: clamp(8.5rem, 12vw, 12rem);
   color: var(--color-warm-ivory);
   background: var(--color-warm-earth);
 }
@@ -304,11 +274,13 @@
   position: sticky;
   top: calc(var(--header-height) + 2rem);
   grid-column: 1 / 6;
+  padding-right: clamp(2rem, 4vw, 4rem);
+  border-right: 1px solid var(--kennewick-line-light);
 }
 
 .kennewick-setting__header h2 {
-  max-width: 10ch;
-  font-size: clamp(3.3rem, 5.5vw, 5.8rem);
+  max-width: 100%;
+  font-size: clamp(3.3rem, 5vw, 5.25rem);
 }
 
 .kennewick-setting__copy {
@@ -318,26 +290,44 @@
 }
 
 .kennewick-setting__copy p {
-  padding-block: 1.75rem;
+  padding-block: clamp(1.75rem, 2.6vw, 2.5rem);
   border-bottom: 1px solid var(--kennewick-line-light);
 }
 
-/* Service navigation is a single editorial ledger, not a grid of cards. */
+.kennewick-setting .kennewick-prose a {
+  color: var(--color-warm-ivory);
+}
+
+/* The services remain native full-row links; one verified portrait anchors the ledger. */
 
 .kennewick-directory {
   --color-focus-ring: var(--color-focus-ring-light);
-  padding-block: clamp(8rem, 10vw, 10rem);
+  padding-block: clamp(8.5rem, 11vw, 11rem);
   color: var(--color-warm-ivory);
   background: var(--color-muted-olive);
+  overflow: hidden;
+}
+
+.kennewick-directory__layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: end;
+}
+
+.kennewick-directory__content {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / 8;
 }
 
 .kennewick-directory__header {
-  margin-bottom: clamp(3.5rem, 6vw, 6rem);
+  margin-bottom: clamp(3.5rem, 5vw, 5rem);
 }
 
 .kennewick-directory__header h2 {
-  max-width: 12ch;
-  font-size: clamp(3.4rem, 6vw, 6.25rem);
+  max-width: 100%;
+  font-size: clamp(3.5rem, 5.75vw, 5.9rem);
 }
 
 .kennewick-directory__list {
@@ -353,25 +343,14 @@
 
 .kennewick-directory__row {
   display: grid;
-  min-height: 6.25rem;
-  grid-template-columns: 4.5rem minmax(14rem, 0.85fr) minmax(18rem, 1.15fr) 4rem;
+  min-height: 6.4rem;
+  grid-template-columns: minmax(14rem, 0.95fr) minmax(13rem, 1.05fr) 3.75rem;
   align-items: stretch;
   color: inherit;
   text-decoration: none;
-  transition: background-color 200ms var(--ease-ui);
-}
-
-.kennewick-directory__number,
-.kennewick-directory__arrow {
-  display: grid;
-  place-items: center;
-}
-
-.kennewick-directory__number {
-  border-right: 1px solid var(--kennewick-line-light);
-  font-family: var(--font-utility);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  transition:
+    color 220ms var(--ease-ui),
+    background-color 220ms var(--ease-ui);
 }
 
 .kennewick-directory__name,
@@ -379,29 +358,61 @@
   display: flex;
   min-width: 0;
   align-items: center;
-  padding: 1.25rem clamp(1rem, 2vw, 1.75rem);
+  padding: 1.2rem clamp(1rem, 1.7vw, 1.5rem);
 }
 
 .kennewick-directory__name {
+  padding-left: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 2.5vw, 2.55rem);
-  line-height: 1.02;
+  font-size: clamp(1.65rem, 2.15vw, 2.35rem);
+  line-height: 1.04;
 }
 
 .kennewick-directory__detail {
   border-left: 1px solid var(--kennewick-line-light);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  font-size: clamp(0.98rem, 1.15vw, 1.12rem);
   font-style: italic;
-  line-height: 1.35;
+  line-height: 1.38;
 }
 
 .kennewick-directory__arrow {
+  display: grid;
+  place-items: center;
   border-left: 1px solid var(--kennewick-line-light);
 }
 
 .kennewick-directory__arrow svg {
-  transition: transform 200ms var(--ease-ui);
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kennewick-directory__media {
+  position: relative;
+  z-index: 2;
+  grid-column: 8 / 13;
+  align-self: center;
+  padding: 0.55rem;
+  border: 1px solid var(--kennewick-line-light);
+  background: var(--color-muted-olive);
+}
+
+.kennewick-directory__media picture,
+.kennewick-directory__media img {
+  aspect-ratio: 4 / 5;
+}
+
+.kennewick-directory__media img {
+  object-position: 51% 47%;
+}
+
+.kennewick-directory__line {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  left: calc(58.333% + (var(--grid-gutter) / 2));
+  z-index: 1;
+  width: 1px;
+  background: var(--kennewick-line-light);
 }
 
 /* The optional gallery has no footprint until every supplied image is verified. */
@@ -414,7 +425,7 @@
 
 .kennewick-recent h2 {
   max-width: 11ch;
-  font-size: clamp(3.4rem, 6vw, 6.25rem);
+  font-size: clamp(3.4rem, 6vw, 6rem);
 }
 
 .kennewick-recent__gallery {
@@ -430,11 +441,11 @@
   aspect-ratio: 4 / 5;
 }
 
-/* Questions use the same disciplined ledger vocabulary, on a deeper tonal field. */
+/* Questions use the same hairline ledger on a deeper tonal field. */
 
 .kennewick-faq {
   --color-focus-ring: var(--color-focus-ring-light);
-  padding-block: clamp(8rem, 10vw, 10rem);
+  padding-block: clamp(8.5rem, 11vw, 11rem);
   color: var(--color-warm-ivory);
   background: var(--color-walnut);
 }
@@ -450,11 +461,13 @@
   position: sticky;
   top: calc(var(--header-height) + 2rem);
   grid-column: 1 / 5;
+  padding-right: clamp(2rem, 4vw, 4rem);
+  border-right: 1px solid var(--kennewick-line-light);
 }
 
 .kennewick-faq__header h2 {
-  max-width: 9ch;
-  font-size: clamp(3.3rem, 5.35vw, 5.6rem);
+  max-width: 100%;
+  font-size: clamp(3.2rem, 4.7vw, 5.2rem);
 }
 
 .kennewick-faq__list {
@@ -469,7 +482,7 @@
 .kennewick-faq summary {
   display: grid;
   min-height: 6.5rem;
-  grid-template-columns: 4rem minmax(0, 1fr) 3.75rem;
+  grid-template-columns: minmax(0, 1fr) 4rem;
   align-items: stretch;
   cursor: pointer;
   list-style: none;
@@ -479,28 +492,13 @@
   display: none;
 }
 
-.kennewick-faq__number,
-.kennewick-faq__mark {
-  display: grid;
-  place-items: center;
-}
-
-.kennewick-faq__number {
-  border-right: 1px solid var(--kennewick-line-light);
-  color: var(--color-weathered-sand);
-  font-family: var(--font-utility);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-}
-
 .kennewick-faq__question {
   display: flex;
   min-width: 0;
   align-items: center;
-  padding: 1.25rem 1.5rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 2.45vw, 2.5rem);
-  line-height: 1.06;
+  padding: 1.25rem 1.5rem 1.25rem 0;
+  font-size: clamp(1.7rem, 2.35vw, 2.4rem);
+  line-height: 1.08;
 }
 
 .kennewick-faq__mark {
@@ -518,7 +516,7 @@
   background: currentColor;
   content: "";
   transform: translate(-50%, -50%);
-  transition: transform 200ms var(--ease-ui);
+  transition: transform 220ms var(--ease-ui);
 }
 
 .kennewick-faq__mark::after {
@@ -530,70 +528,105 @@
 }
 
 .kennewick-faq__answer {
-  padding: 0 3.75rem 2rem 5.5rem;
+  padding: 0 4rem 2.15rem 0;
 }
 
 .kennewick-faq__answer p {
-  max-width: 42rem;
+  max-width: 65ch;
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.32vw, 1.2rem);
+  font-size: clamp(1.0625rem, 1.28vw, 1.18rem);
   font-style: italic;
   line-height: 1.62;
 }
 
-/* Final invitation keeps the photograph complete and the action singular. */
+/* The final invitation is one full-bleed photograph and one decisive action. */
 
 .kennewick-final {
   --color-focus-ring: var(--color-focus-ring-light);
-  padding-block: clamp(7rem, 10vw, 10rem);
+  position: relative;
+  display: grid;
+  min-height: clamp(42rem, 66vw, 58rem);
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
   color: var(--color-warm-ivory);
   background: var(--color-deep-umber);
 }
 
-.kennewick-final__grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gutter);
-  align-items: center;
+.kennewick-final__background,
+.kennewick-final__background picture,
+.kennewick-final__background img,
+.kennewick-final__wash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.kennewick-final__media {
-  grid-column: 1 / 8;
-  padding: 0.625rem;
-  border: 1px solid var(--kennewick-line-light);
+.kennewick-final__background {
+  z-index: -3;
 }
 
-.kennewick-final__media picture,
-.kennewick-final__media img {
-  aspect-ratio: 3 / 2;
-}
-
-.kennewick-final__media img {
+.kennewick-final__background-image {
   object-position: 50% 50%;
 }
 
+.kennewick-final__wash {
+  z-index: -2;
+  background: rgba(40, 30, 16, 0.64);
+}
+
+.kennewick-final__frame {
+  position: absolute;
+  z-index: -1;
+  inset: clamp(1.25rem, 3.1vw, 3rem);
+  border: 1px solid var(--kennewick-line-light);
+  pointer-events: none;
+}
+
+.kennewick-final__grid {
+  display: grid;
+  min-height: inherit;
+  place-items: center;
+  padding-block: clamp(7rem, 12vw, 11rem);
+}
+
 .kennewick-final__copy {
-  grid-column: 9 / 13;
+  max-width: 48rem;
+  text-align: center;
 }
 
 .kennewick-final__copy h2 {
-  max-width: 8ch;
-  font-size: clamp(3.3rem, 5.5vw, 5.8rem);
+  font-size: clamp(3.5rem, 6vw, 6rem);
 }
 
 .kennewick-final__copy > p {
-  max-width: 31rem;
-  margin-top: 2rem;
+  max-width: 39rem;
+  margin: 2rem auto 0;
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.35vw, 1.22rem);
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1.58;
 }
 
 .kennewick-final .outline-button {
   margin-top: 2.5rem;
   border-color: var(--color-warm-ivory);
   color: var(--color-warm-ivory);
+  background: rgba(40, 30, 16, 0.34);
+}
+
+.kennewick-final:focus-visible {
+  outline: 2px solid var(--color-warm-ivory);
+  outline-offset: -0.75rem;
+}
+
+.kennewick-directory__row:active {
+  background: color-mix(in srgb, var(--color-warm-ivory) 12%, transparent);
+}
+
+.kennewick-directory__row:active .kennewick-directory__arrow svg {
+  transform: scale(0.94);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -604,15 +637,6 @@
 
   .kennewick-setting .kennewick-prose a:hover {
     color: var(--color-warm-ivory);
-  }
-
-  .kennewick-hero__cta:hover {
-    color: var(--color-deep-umber);
-    background: var(--color-warm-ivory);
-  }
-
-  .kennewick-hero__cta:hover svg {
-    transform: translateY(0.2rem);
   }
 
   .kennewick-directory__row:hover {
@@ -641,22 +665,12 @@
     width: min(calc(100% - 3.5rem), 70rem);
   }
 
-  .kennewick-hero__copy {
-    grid-column: 1 / 7;
-    padding-right: 1.5rem;
-  }
-
-  .kennewick-hero__media {
-    width: min(100%, 27rem);
-    grid-column: 8 / 13;
-  }
-
   .kennewick-style__media {
     min-height: 35rem;
   }
 
   .kennewick-directory__row {
-    grid-template-columns: 4rem minmax(13rem, 0.9fr) minmax(17rem, 1.1fr) 3.75rem;
+    grid-template-columns: minmax(12rem, 0.92fr) minmax(12rem, 1.08fr) 3.5rem;
   }
 }
 
@@ -665,64 +679,41 @@
     width: calc(100% - 5rem);
   }
 
-  .kennewick-hero__grid,
   .kennewick-intro__grid,
   .kennewick-style__grid,
   .kennewick-setting__grid,
-  .kennewick-faq__grid,
-  .kennewick-final__grid {
+  .kennewick-directory__layout,
+  .kennewick-faq__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .kennewick-hero__grid {
-    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-  }
-
-  .kennewick-hero__grid {
-    min-height: auto;
-    padding-block: 6.5rem;
-  }
-
-  .kennewick-hero__copy,
-  .kennewick-hero__media,
-  .kennewick-intro__copy,
   .kennewick-intro__media,
+  .kennewick-intro__copy,
   .kennewick-style__copy,
   .kennewick-style__media,
   .kennewick-setting__header,
   .kennewick-setting__copy,
+  .kennewick-directory__content,
+  .kennewick-directory__media,
   .kennewick-faq__header,
-  .kennewick-faq__list,
-  .kennewick-final__media,
-  .kennewick-final__copy {
+  .kennewick-faq__list {
     grid-column: auto;
   }
 
-  .kennewick-hero__copy {
-    padding-right: 0;
-  }
-
-  .kennewick-hero__copy h1 {
-    max-width: none;
-    font-size: clamp(3.1rem, 5.8vw, 3.75rem);
-  }
-
-  .kennewick-hero__media {
-    width: min(100%, 23rem);
-  }
-
-  .kennewick-intro,
-  .kennewick-style,
-  .kennewick-setting,
-  .kennewick-directory,
-  .kennewick-faq,
-  .kennewick-final {
-    padding-block: 7rem;
+  .kennewick-intro__line,
+  .kennewick-directory__line {
+    display: none;
   }
 
   .kennewick-intro__media {
-    margin-top: 3rem;
+    align-self: center;
+  }
+
+  .kennewick-intro__copy h2,
+  .kennewick-setting__header h2,
+  .kennewick-faq__header h2 {
+    max-width: none;
   }
 
   .kennewick-style__header {
@@ -735,16 +726,7 @@
   }
 
   .kennewick-style__media {
-    min-height: 29rem;
-  }
-
-  .kennewick-style__panorama {
-    top: 3rem;
-  }
-
-  .kennewick-style__arch {
-    top: 10.5rem;
-    width: 45%;
+    min-height: 31rem;
   }
 
   .kennewick-setting__header,
@@ -752,12 +734,42 @@
     position: static;
   }
 
-  .kennewick-directory__row {
-    grid-template-columns: 3.75rem minmax(12rem, 0.82fr) minmax(15rem, 1.18fr) 3.5rem;
+  .kennewick-setting__header {
+    padding-right: 2.5rem;
   }
 
-  .kennewick-faq__header h2 {
-    max-width: 10ch;
+  .kennewick-directory__layout {
+    align-items: center;
+  }
+
+  .kennewick-directory__row {
+    min-height: 7rem;
+    grid-template-columns: minmax(0, 1fr) 3.5rem;
+    grid-template-rows: auto auto;
+  }
+
+  .kennewick-directory__name {
+    grid-row: 1;
+    grid-column: 1;
+    align-items: end;
+    padding: 1rem 1rem 0.25rem 0;
+  }
+
+  .kennewick-directory__detail {
+    grid-row: 2;
+    grid-column: 1;
+    align-items: start;
+    padding: 0.2rem 1rem 1rem 0;
+    border-left: 0;
+  }
+
+  .kennewick-directory__arrow {
+    grid-row: 1 / 3;
+    grid-column: 2;
+  }
+
+  .kennewick-faq__header {
+    padding-right: 2.5rem;
   }
 }
 
@@ -766,46 +778,46 @@
     width: calc(100% - 2rem);
   }
 
-  .kennewick-hero__grid,
-  .kennewick-intro__grid,
-  .kennewick-style__grid,
-  .kennewick-setting__grid,
-  .kennewick-faq__grid,
-  .kennewick-final__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 3.5rem;
+  .editorial-hero[data-editorial-hero-page="kennewick"] .editorial-hero__copy {
+    padding-inline: var(--page-gutter-small);
   }
 
-  .kennewick-hero__grid {
-    padding-block: 4.75rem;
-  }
-
-  .kennewick-hero__copy h1 {
-    max-width: none;
-    font-size: clamp(2rem, 10.25vw, 2.6rem);
-  }
-
-  .kennewick-hero__copy > p {
-    margin-top: 1.75rem;
-    font-size: 1.125rem;
-  }
-
-  .kennewick-hero__cta {
-    margin-top: 2rem;
-  }
-
-  .kennewick-hero__media {
+  .editorial-hero[data-editorial-hero-page="kennewick"] .editorial-hero__title {
     width: 100%;
-    max-width: none;
+    max-width: 100%;
+    font-size: clamp(2.25rem, 9.4vw, 3.35rem);
+    letter-spacing: -0.035em;
   }
 
   .kennewick-intro,
   .kennewick-style,
   .kennewick-setting,
   .kennewick-directory,
-  .kennewick-faq,
-  .kennewick-final {
-    padding-block: 5.5rem;
+  .kennewick-faq {
+    padding-block: 5.75rem;
+  }
+
+  .kennewick-intro__grid,
+  .kennewick-style__grid,
+  .kennewick-setting__grid,
+  .kennewick-directory__layout,
+  .kennewick-faq__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3.5rem;
+  }
+
+  .kennewick-intro__rule {
+    display: none;
+  }
+
+  .kennewick-intro__media {
+    width: min(82vw, 25rem);
+    grid-row: 2;
+    justify-self: center;
+  }
+
+  .kennewick-intro__copy {
+    grid-row: 1;
   }
 
   .kennewick-intro__copy h2,
@@ -814,11 +826,10 @@
   .kennewick-directory__header h2,
   .kennewick-faq__header h2,
   .kennewick-final__copy h2 {
-    font-size: clamp(2.8rem, 13.5vw, 4rem);
-  }
-
-  .kennewick-intro__media {
-    margin-top: 0;
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(2.75rem, 12.2vw, 4rem);
+    overflow-wrap: normal;
   }
 
   .kennewick-style__header {
@@ -827,6 +838,10 @@
 
   .kennewick-style__grid {
     gap: 3.75rem;
+  }
+
+  .kennewick-style__copy {
+    max-width: none;
   }
 
   .kennewick-style__media {
@@ -841,8 +856,13 @@
     inset: auto;
   }
 
+  .kennewick-style__panorama {
+    grid-row: 1;
+  }
+
   .kennewick-style__arch {
-    width: 62%;
+    width: 58%;
+    grid-row: 2;
     justify-self: end;
   }
 
@@ -850,8 +870,21 @@
     display: none;
   }
 
-  .kennewick-setting__grid {
+  .kennewick-setting__grid,
+  .kennewick-faq__grid {
     gap: 3rem;
+  }
+
+  .kennewick-setting__header,
+  .kennewick-faq__header {
+    padding-right: 0;
+    padding-bottom: 2.75rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--kennewick-line-light);
+  }
+
+  .kennewick-directory__layout {
+    gap: 4rem;
   }
 
   .kennewick-directory__header {
@@ -860,64 +893,56 @@
 
   .kennewick-directory__row {
     min-height: 7rem;
-    grid-template-columns: 3.25rem minmax(0, 1fr) 3.25rem;
-    grid-template-rows: auto auto;
-  }
-
-  .kennewick-directory__number {
-    grid-row: 1 / 3;
-    grid-column: 1;
   }
 
   .kennewick-directory__name {
-    grid-row: 1;
-    grid-column: 2;
-    align-items: end;
-    padding: 1.1rem 0.9rem 0.35rem;
-    font-size: clamp(1.45rem, 7.5vw, 1.8rem);
+    font-size: clamp(1.55rem, 7vw, 1.85rem);
     overflow-wrap: anywhere;
   }
 
   .kennewick-directory__detail {
-    grid-row: 2;
-    grid-column: 2;
-    align-items: start;
-    padding: 0.2rem 0.9rem 1.1rem;
-    border-left: 0;
     font-size: 1rem;
     overflow-wrap: anywhere;
   }
 
-  .kennewick-directory__arrow {
-    grid-row: 1 / 3;
-    grid-column: 3;
+  .kennewick-directory__media {
+    width: min(100%, 29rem);
+    justify-self: center;
   }
 
   .kennewick-recent__gallery {
     grid-template-columns: 1fr;
   }
 
-  .kennewick-faq__grid {
-    gap: 3.25rem;
-  }
-
   .kennewick-faq summary {
     min-height: 5.75rem;
-    grid-template-columns: 3.15rem minmax(0, 1fr) 3.15rem;
+    grid-template-columns: minmax(0, 1fr) 3.25rem;
   }
 
   .kennewick-faq__question {
-    padding: 1.1rem 0.9rem;
-    font-size: clamp(1.45rem, 7.5vw, 1.8rem);
+    padding: 1.1rem 0.8rem 1.1rem 0;
+    font-size: clamp(1.5rem, 7vw, 1.85rem);
     overflow-wrap: anywhere;
   }
 
   .kennewick-faq__answer {
-    padding: 0 1rem 1.75rem 4.05rem;
+    padding: 0 3.25rem 1.75rem 0;
+  }
+
+  .kennewick-final {
+    min-height: 42rem;
+  }
+
+  .kennewick-final__background-image {
+    object-position: 52% 50%;
+  }
+
+  .kennewick-final__frame {
+    inset: 1rem;
   }
 
   .kennewick-final__grid {
-    gap: 3.5rem;
+    padding: 6.5rem 1.5rem;
   }
 
   .kennewick-final__copy > p {
@@ -937,7 +962,6 @@
     transition-duration: 0.01ms !important;
   }
 
-  .kennewick-hero__cta svg,
   .kennewick-directory__arrow svg {
     transform: none !important;
   }

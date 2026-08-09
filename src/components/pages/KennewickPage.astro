@@ -5,6 +5,7 @@ import type {
   PageSection,
 } from "../../content/page-types";
 import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
 import "../../styles/kennewick-page.css";
 
 interface Props {
@@ -45,6 +46,9 @@ const hasVerifiedRecentGallery =
   recentItems.length > 0 &&
   recentItems.every((item) => item.image && item.imageAlt);
 const heroAction = page.hero.links?.[0];
+const heroHeadingLines = ["Kennewick, WA", "Photographer"];
+const heroLeftPrint = "/uploads/kennewick-senior-riverside-portrait.jpg";
+const heroRightPrint = "/uploads/kennewick-senior-wood-wall-portrait.jpg";
 
 if (!heroAction?.label) {
   throw new Error("Kennewick hero is missing its local scroll action label");
@@ -126,63 +130,47 @@ const faqSchema = faqItems.map((item) => ({
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
-  <!-- THESIS: warm photographic proof organized as a tonal contact sheet. OWN-WORLD: the homepage palette, typography, square geometry, and hairlines. STORY: dark split hero, local context, honest style contrast, practical fit, linked services, questions, invitation. FIRST VIEWPORT: exact H1 and opening copy beside one complete vertical family portrait. FORM: pinned established-world extension; key kennewick-warm-proof-v2. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md. -->
-  <section
-    class:list={["kennewick-hero", `tone-${page.hero.tone}`]}
-    aria-labelledby="kennewick-hero-title"
-  >
-    <div class="kennewick-shell kennewick-hero__grid">
-      <div class="kennewick-hero__copy">
-        <h1 id="kennewick-hero-title">{page.hero.heading}</h1>
-        {page.hero.intro && <p>{page.hero.intro}</p>}
-        <button
-          class="kennewick-hero__cta"
-          type="button"
-          data-kennewick-scroll="#kennewick-final"
-        >
-          <span>{heroAction.label}</span>
-          <svg
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            fill="none"
-            focusable="false"
-            aria-hidden="true"
-          >
-            <path
-              d="M12 4v15m0 0 6-6m-6 6-6-6"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </button>
-      </div>
-
-      {page.hero.image && page.hero.imageAlt && (
-        <figure class="kennewick-hero__media">
-          <Picture
-            src={page.hero.image}
-            alt={page.hero.imageAlt}
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 48vw, 42rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
-    </div>
-  </section>
+  <!-- THESIS: verified Kennewick portrait work moves from atmosphere to local context, style, practical fit, services, questions, and one invitation. OWN-WORLD: the established editorial hero, warm tonal surfaces, square prints, arches, and hairlines. FIRST VIEWPORT: the shared service-page hero with exact H1, local intro, one scroll action, and two restrained prints. -->
+  <EditorialHero
+    pageKey="kennewick"
+    titleId="kennewick-hero-title"
+    heading={page.hero.heading}
+    headingLines={heroHeadingLines}
+    intro={page.hero.intro}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 50%"
+    mobileBackgroundPosition="50% 48%"
+    leftPrint={{ src: heroLeftPrint, objectPosition: "50% 40%" }}
+    rightPrint={{ src: heroRightPrint, objectPosition: "58% 40%" }}
+    paperEdgeColor="var(--color-weathered-sand)"
+    buttonLabel={heroAction.label}
+    buttonTargetId="kennewick-final"
+  />
 
   <section
     id={introduction.id}
     class:list={["kennewick-intro", `tone-${introduction.tone}`]}
     aria-labelledby={`${introduction.id}-title`}
   >
+    <div class="kennewick-intro__rule" aria-hidden="true"></div>
     <div class="kennewick-shell kennewick-intro__grid">
+      {introduction.image && introduction.imageAlt && (
+        <figure class="kennewick-intro__media">
+          <Picture
+            src={introduction.image}
+            alt={introduction.imageAlt}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) min(82vw, 25rem), (max-width: 1050px) 40vw, 29rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+
+      <span class="kennewick-intro__line" aria-hidden="true"></span>
+
       <div class="kennewick-intro__copy">
         <h2 id={`${introduction.id}-title`}>{introduction.heading}</h2>
         <div class="kennewick-prose">
@@ -202,19 +190,6 @@ const faqSchema = faqItems.map((item) => ({
         </div>
       </div>
 
-      {introduction.image && introduction.imageAlt && (
-        <figure class="kennewick-intro__media">
-          <Picture
-            src={introduction.image}
-            alt={introduction.imageAlt}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 48vw, 42rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
     </div>
   </section>
 
@@ -312,21 +287,19 @@ const faqSchema = faqItems.map((item) => ({
     class:list={["kennewick-directory", `tone-${directory.tone}`]}
     aria-labelledby={`${directory.id}-title`}
   >
-    <div class="kennewick-shell">
-      <header class="kennewick-directory__header">
-        <h2 id={`${directory.id}-title`}>{directory.heading}</h2>
-      </header>
+    <div class="kennewick-shell kennewick-directory__layout">
+      <div class="kennewick-directory__content">
+        <header class="kennewick-directory__header">
+          <h2 id={`${directory.id}-title`}>{directory.heading}</h2>
+        </header>
 
-      <nav aria-labelledby={`${directory.id}-title`}>
-        <ol class="kennewick-directory__list">
-          {serviceItems.map((item, index) => {
+        <nav aria-labelledby={`${directory.id}-title`}>
+          <ul class="kennewick-directory__list">
+          {serviceItems.map((item) => {
             const link = item.links![0];
             return (
               <li>
                 <a class="kennewick-directory__row" href={link.href}>
-                  <span class="kennewick-directory__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <span class="kennewick-directory__name">{item.heading}</span>
                   <span class="kennewick-directory__detail">{item.detail}</span>
                   <span class="kennewick-directory__arrow" aria-hidden="true">
@@ -350,8 +323,25 @@ const faqSchema = faqItems.map((item) => ({
               </li>
             );
           })}
-        </ol>
-      </nav>
+          </ul>
+        </nav>
+      </div>
+
+      {directory.image && directory.imageAlt && (
+        <figure class="kennewick-directory__media">
+          <Picture
+            src={directory.image}
+            alt={directory.imageAlt}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 42vw, 34rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+
+      <span class="kennewick-directory__line" aria-hidden="true"></span>
     </div>
   </section>
 
@@ -396,12 +386,7 @@ const faqSchema = faqItems.map((item) => ({
         {faqItems.map((item, index) => (
           <details open={index === 0}>
             <summary>
-              <span class="kennewick-faq__number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span class="kennewick-faq__question" role="heading" aria-level="3">
-                {item.heading}
-              </span>
+              <h3 class="kennewick-faq__question">{item.heading}</h3>
               <span class="kennewick-faq__mark" aria-hidden="true"></span>
             </summary>
             <div class="kennewick-faq__answer">
@@ -420,20 +405,22 @@ const faqSchema = faqItems.map((item) => ({
       aria-labelledby="kennewick-final-title"
       tabindex="-1"
     >
-      <div class="kennewick-shell kennewick-final__grid">
-        {page.finalCta.image && page.finalCta.imageAlt && (
-          <figure class="kennewick-final__media">
+      {page.finalCta.image && page.finalCta.imageAlt && (
+          <figure class="kennewick-final__background">
             <Picture
               src={page.finalCta.image}
               alt={page.finalCta.imageAlt}
               loading="lazy"
               decoding="async"
               responsiveSrcset
-              sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 52vw, 45rem"
-              imgClass="photo--editorial"
+              sizes="100vw"
+              imgClass="kennewick-final__background-image"
             />
           </figure>
-        )}
+      )}
+      <div class="kennewick-final__wash" aria-hidden="true"></div>
+      <div class="kennewick-final__frame" aria-hidden="true"></div>
+      <div class="kennewick-shell kennewick-final__grid">
         <div class="kennewick-final__copy">
           <h2 id="kennewick-final-title">{page.finalCta.heading}</h2>
           {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
@@ -458,23 +445,3 @@ const faqSchema = faqItems.map((item) => ({
     })}
   />
 </article>
-
-<script>
-  const bindKennewickScroll = () => {
-    document.querySelectorAll<HTMLElement>("[data-kennewick-scroll]").forEach((button) => {
-      if (button.dataset.kennewickBound === "true") return;
-      button.dataset.kennewickBound = "true";
-      button.addEventListener("click", () => {
-        const selector = button.dataset.kennewickScroll;
-        const target = selector ? document.querySelector<HTMLElement>(selector) : null;
-        if (!target) return;
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-        target.focus({ preventScroll: true });
-      });
-    });
-  };
-
-  bindKennewickScroll();
-  document.addEventListener("astro:page-load", bindKennewickScroll);
-</script>

@@ -129,13 +129,19 @@ El `<main>` contiene exactamente nueve anchors: tres contextuales, cinco de serv
 
 ## Fotografías y alt texts publicados
 
-Las fotografías funcionan como portafolio general de Tri-Cities y no prueban una locación Kennewick. Los alt texts son descripciones visuales literales:
+Las seis fotografías nuevas proceden directamente de las carpetas Drive
+`Couples - Kennewick` y `Senior Session - Kennewick`. Esa procedencia permite
+usarlas como portafolio editorial de la página, pero no atribuirles un spot
+exacto ni presentarlas como una galería diversa de sesiones. Los dos prints del
+hero son decorativos y conservan alt vacío. Los alt texts visibles son
+descripciones literales:
 
-- `Two adults embracing their baby beneath a glowing evening sky.`
+- `A couple embracing in warm sunset light among open hills.`
 - `Lisa holding a camera to her eye and a takeaway cup while photographing outdoors.`
-- `Two adults holding a young child in warm backlight.`
-- `Young woman in a black dress standing against blurred autumn foliage.`
-- `A couple laughing together in backlit evening light beside a rocky bluff.`
+- `A couple laughing together while walking through an open field at golden hour.`
+- `A senior wearing a cowboy hat and holding a rope in warm evening light.`
+- `A senior leaning from behind a weathered wooden post in a white sweatshirt.`
+- `A couple holding hands while walking through a sunlit field.`
 
 ## Schema JSON-LD
 

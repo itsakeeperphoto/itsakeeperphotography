@@ -1,0 +1,109 @@
+{
+  "route": "/kennewick-wa-photographer/",
+  "title": "Kennewick v3 editorial local-service journey",
+  "approved": true,
+  "canonical": true,
+  "approvedAt": "2026-08-09",
+  "purpose": "Section-by-section geometry and hierarchy authority for implementation; generated photographic pixels are never production assets.",
+  "brandAuthority": [
+    "Current It's A Keeper Photography design system",
+    "Approved Seniors, Newborn, and Family EditorialHero pattern"
+  ],
+  "referencePolicy": "The supplied inspiration contributes layout geometry, scale, overlap, and pacing only; its branding, colors, copy, decoration, and imagery are excluded.",
+  "productionImagePolicy": "Use only real repository photographs or verified, locally optimized images from the Kennewick Drive folders. Preserve all production photographs and do not infer location or session diversity from generated previews.",
+  "contentContract": {
+    "copy": "Approved repository copy is verbatim authority; text in previews is illustrative when abbreviated.",
+    "h1": "Kennewick, WA Photographer",
+    "h2Order": [
+      "Ten Minutes From My Front Door",
+      "If Light and Airy Isn't What You Pictured",
+      "What Works Well in Kennewick",
+      "What I Photograph in Kennewick",
+      "Kennewick Questions",
+      "Let's Plan Yours"
+    ],
+    "mainAnchorCount": 9,
+    "heroAction": "Native button scrolling to and focusing the final invitation",
+    "faqCount": 4,
+    "galleryGate": "No gallery DOM until 6–10 distinct Kennewick sessions are verified"
+  },
+  "previews": [
+    {
+      "order": 1,
+      "file": "kennewick-01-editorial-hero.png",
+      "section": "hero",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-575b6c87-e461-49e0-bdf5-3b280ced1ee8",
+      "pixelSize": [1487, 1058],
+      "promptIntent": "Match the established EditorialHero of the Seniors, Newborn, and Family pages with a full-bleed golden photograph, centered two-line H1, intro, outlined scroll button, two edge prints, paper edge, and no script phrase.",
+      "geometry": "Full viewport-width hero; centered copy stack; supporting prints enter from opposite lateral edges; paper transition closes the section."
+    },
+    {
+      "order": 2,
+      "file": "kennewick-02-proximity-intro.png",
+      "section": "proximity-intro",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-91df9df6-2a8d-439f-a300-5d53cf7355a5",
+      "pixelSize": [1487, 1058],
+      "promptIntent": "Pair Lisa's existing portrait in a tall left arch with one vertical rule and the exact proximity heading and approved copy on the right.",
+      "geometry": "Airy two-column Ivory field; image occupies the left editorial third; hairline separates it from a compact right copy column."
+    },
+    {
+      "order": 3,
+      "file": "kennewick-03-style-collage.png",
+      "section": "style-differentiation",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-721a86a8-ceb2-4277-98c4-415f9e534b30",
+      "pixelSize": [1487, 1058],
+      "promptIntent": "Keep the light-and-airy contrast copy dominant on the left and create one restrained right-side collage from a framed landscape and a smaller overlapping portrait.",
+      "geometry": "Asymmetric two-column section; dominant landscape sits right; one smaller portrait crosses its lower edge; overlap dissolves on mobile."
+    },
+    {
+      "order": 4,
+      "file": "kennewick-04-setting-text-led.png",
+      "section": "setting",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-ab0bbe5e-e11b-4bd1-8fd5-b195ae59da0f",
+      "pixelSize": [1586, 992],
+      "promptIntent": "Make What Works Well in Kennewick a confident text-led tonal field with an overscale left heading and three readable right-side copy blocks separated by rules.",
+      "geometry": "Broad flat section; heading anchors the left grid; three stacked prose blocks form the right ledger; no required image."
+    },
+    {
+      "order": 5,
+      "file": "kennewick-05-services-ledger.png",
+      "section": "service-directory",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-77f6f961-1b01-4ae0-933c-6e23b6d9afb1",
+      "pixelSize": [1520, 1035],
+      "promptIntent": "Present the five services as full-width ledger links and cross the directory with one tall verified photograph, without converting rows into cards; preview numbering is decorative, not binding.",
+      "geometry": "Heading and five ruled rows own most of the grid; one tall portrait anchors the opposite side and supplies the sole directory signature gesture."
+    },
+    {
+      "order": 6,
+      "file": "kennewick-06-faq-ledger.png",
+      "section": "faq",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-1b1cbe34-4d62-4090-a79d-8c7d186db1cc",
+      "pixelSize": [1586, 992],
+      "promptIntent": "Use a deep Walnut field, left-side Kennewick Questions heading, and four native disclosure rows at right with one answer shown to establish rhythm.",
+      "geometry": "Two-column dark ledger; fixed visual heading anchor at left; ruled disclosure stack occupies the wider right column."
+    },
+    {
+      "order": 7,
+      "file": "kennewick-07-final-full-bleed.png",
+      "section": "final-invitation",
+      "approved": true,
+      "canonical": true,
+      "sourceGeneration": "exec-7b6f7b1b-3282-4568-9fed-e292034e846d",
+      "pixelSize": [1569, 1002],
+      "promptIntent": "Close with a full-bleed verified Kennewick photograph, controlled dark wash, exact final heading and copy, and one centered Contact CTA.",
+      "geometry": "Full-width closing field; centered compact content stack; single CTA; no secondary conversion path."
+    }
+  ]
+}
