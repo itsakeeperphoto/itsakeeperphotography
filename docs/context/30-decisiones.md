@@ -307,6 +307,9 @@
   competidores o publicar páginas locales delgadas se descartó.
 - **Consecuencias:** Richland/Kennewick/Pasco y el artículo de locations siguen
   draft hasta recibir conocimiento de Lisa.
+- **SUPERSEDIDA POR ADR-035:** únicamente la consecuencia que mantenía
+  Kennewick en draft por falta de conocimiento local; la prohibición de inferir
+  spots o atribuciones visuales sigue vigente.
 
 ### ADR-025 — Los transcripts de sesión no se publican por defecto
 - **Fecha:** 2026-08-08
@@ -527,3 +530,29 @@
   `llms.txt` de tres a cuatro. `src/content/pending.ts` deja de registrar la
   galería; el backlog la conserva como mejora opcional. Richland debe emitir
   meta robots index y no recibir un header HTTP noindex en release.
+
+### ADR-035 — Kennewick v2 se publica sin galería y con directorio navegable
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada; precisa ADR-024 para Kennewick y crea una excepción
+  limitada a ADR-006.
+- **Contexto:** El usuario declaró definitivo el documento Kennewick v2. Este
+  reemplaza los spots exactos de v1 por conocimiento local general y por el
+  contraste entre la edición cálida/moody de Lisa y el estilo light and airy.
+  El usuario decidió añadir después la galería de sesiones y autorizó terminar
+  ahora la ruta como `ready/index` en sitemap.
+- **Decisión:** Tratar v2 como única fuente editorial, retirar v1 y no atribuir
+  fotografías Tri-Cities a Kennewick sin evidencia. La galería condicional no
+  se renderiza y queda como mejora opcional. Publicar Kennewick `ready/index`
+  después de QA con `lastModified: 2026-08-08`, sitemap/llms y headers
+  coherentes. El directorio de cinco servicios se renderiza como navegación
+  nativa porque el documento lo define así; autorizar únicamente en esta ruta
+  nueve anchors same-origin dentro de `<main>`: tres enlaces de prosa, cinco de
+  servicio y la CTA final. El CTA del hero desplaza al cierre.
+- **Alternativas descartadas:** Conservar Columbia Park u otros spots de v1,
+  inventar una galería con portfolio genérico, escribir alt text Kennewick a
+  partir de filenames o mantener la ruta noindex después de la autorización se
+  descartó por exactitud y por contradecir el copy aprobado.
+- **Consecuencias:** La página debe conservar solo el pendiente opcional de la
+  galería fuera del gate de publicación. ADR-006 sigue siendo la regla general;
+  cualquier otro directorio con más de cuatro enlaces requiere aprobación y
+  ADR propios.

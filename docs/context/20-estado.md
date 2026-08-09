@@ -3,36 +3,33 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 22:21 -05
+**Última actualización:** 2026-08-08 22:40 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit base al iniciar la publicación Richland:** `ae6bd0d` —
-`docs(context): record Richland service navigation`
-
-**Commit de publicación Richland:** `04c93ae` —
-`feat(richland): publish city page in sitemap`
+**Commit base al iniciar Kennewick v2:** `fca4196` —
+`docs(context): record Richland publication`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** al registrar este cierre, `main` queda ocho commits por delante
-de `origin/main`: los seis previos, `04c93ae` y este cierre documental. Por
-instrucción expresa del usuario, Codex crea commits locales y no ejecuta pushes.
-No se ejecutó deploy ni cambio de DNS.
+**Publicación:** al iniciar Kennewick v2, `main` y `origin/main` coinciden en
+`fca4196`; el usuario sincronizó los ocho commits anteriores fuera de Codex. Por
+instrucción expresa vigente, Codex crea commits locales y no ejecuta pushes. No
+se ejecutó deploy ni cambio de DNS desde esta sesión.
 
 ---
 
 ## Siguiente paso concreto
 
-Después del próximo push autorizado por el usuario, verificar en el dominio
-desplegado que Richland conserva meta robots index, no recibe header HTTP
-noindex y aparece en sitemap/llms. La galería de 6–10 sesiones queda como mejora
-opcional posterior; cuando llegue, cada fotografía requerirá procedencia
-Richland y alt literal verificados. Los agentes crean solo commits locales y no
-hacen push.
+Implementar el documento Kennewick v2 como fuente definitiva, retirar el copy
+v1 que publica spots exactos y conservar la galería real como mejora posterior
+no bloqueante. Tras QA de contenido, diseño, schema y los cuatro viewports,
+publicar `/kennewick-wa-photographer/` como `ready/index` en sitemap/llms y sin
+header noindex específico. Los agentes crean solo commits locales y no hacen
+push.
 
 ---
 
@@ -242,9 +239,9 @@ git diff --check
 ## Bloqueadores externos
 
 1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
-   commits locales. La tarea empezó `ahead 6`; tras `04c93ae` y este cierre
-   documental termina `ahead 8`. No se ejecuta `./scripts/handoff.sh` porque su
-   protocolo incluye push y contradice esa orden explícita.
+   commits locales. Kennewick v2 empieza sincronizada en `fca4196`. No se
+   ejecuta `./scripts/handoff.sh` porque su protocolo incluye push y contradice
+   esa orden explícita.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
 3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.
@@ -269,8 +266,8 @@ cp .env.example .env
 npm run dev
 ```
 
-El servidor de desarrollo se detuvo para liberar los puertos de Tina durante
-los builds. Para validar publicación:
+El servidor de desarrollo y Tina están activos en `localhost:4321` y `:9000`.
+Para validar publicación:
 
 ```bash
 SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local

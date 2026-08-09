@@ -15,13 +15,17 @@
 - [x] **3. Publicar Richland sin esperar la galería opcional.** Ruta
   `ready/index`, `lastModified: 2026-08-08`, sitemap/llms/meta/headers/schema
   verificados en release y aislamiento staging conservado.
-- [ ] **4. Verificar Richland después del próximo push autorizado.** Confirmar
+- [ ] **4. Implementar y publicar Kennewick v2.** Reemplazar v1 por el copy
+  definitivo centrado en estilo, mantener la galería como mejora opcional,
+  verificar diseño/schema en cuatro viewports y pasar la ruta a `ready/index`
+  con sitemap/llms/header coherentes.
+- [ ] **5. Verificar Richland después del próximo push autorizado.** Confirmar
   en el dominio final meta index, canonical, ausencia de header noindex,
   membresía del sitemap y `lastmod 2026-08-08`.
-- [ ] **5. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **6. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **6. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **7. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin

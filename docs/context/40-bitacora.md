@@ -434,3 +434,16 @@
 - **Git:** implementación en `04c93ae`; el cierre se registra en un segundo
   commit local. No se ejecutó push, deploy, DNS ni `./scripts/handoff.sh` porque
   el usuario ordenó commits locales únicamente.
+
+### 2026-08-08 — Codex / GPT-5.6 — Arranque reconciliado de Kennewick v2
+
+- **Objetivo confirmado:** el documento externo Kennewick v2 reemplaza v1; la
+  galería se añadirá después y no bloquea `ready/index` ni sitemap.
+- **Estado Git real:** `main` y `origin/main` coinciden en `fca4196`; el usuario
+  publicó fuera de Codex los ocho commits que la memoria anterior registraba
+  como locales. Worktree limpio al iniciar.
+- **Entorno:** dev y Tina continúan activos en `localhost:4321` y `:9000`; se
+  corrigió la frase final de `20-estado.md` que los describía como detenidos.
+- **Decisión:** ADR-035 fija la fuente v2, mantiene la galería opcional, prohíbe
+  atribuir portfolio genérico a Kennewick y limita a esta ruta la excepción de
+  nueve enlaces internos. No se modificó código ni se ejecutó push.
