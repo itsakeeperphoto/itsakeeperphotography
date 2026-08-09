@@ -3,14 +3,14 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-09 08:36 -05
+**Última actualización:** 2026-08-09 15:07 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit base de esta intervención:** `9ca7b7e` —
-`docs(design): add Kennewick image-to-code comps`
+**Commit base de esta intervención:** `ff736c6` —
+`docs(context): record bandwidth optimization`
 
 **Commit funcional verificado:** `bd833f6` —
 `perf(images): cut deploy weight and build time`
@@ -18,22 +18,21 @@
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al terminar:** antes del cierre documental, `main` está seis
-commits delante de `origin/main`; el commit documental que contiene este
-archivo será el séptimo. Se preservaron los commits paralelos de dirección
-visual de Kennewick. Por instrucción expresa vigente, Codex no ejecutó push,
-deploy, DNS ni otro cambio externo.
+**Estado Git al iniciar:** `main` y `origin/main` coinciden en `ff736c6`. El
+usuario confirmó que publicó los siete commits locales de la intervención
+anterior; Git verifica el worktree limpio y sincronizado. Codex no ejecutó ese
+push y mantiene la instrucción vigente de no publicar cambios externos.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario debe publicar `main` con su identidad autorizada y observar el build
-Netlify. Verificar que el guard de JPEG y las variantes terminan, que
-`/uploads/journal-family-children-golden-hour-tricities.jpg` baja de
-15,291,345 a ~530,418 bytes y que las 21 rutas siguen respondiendo. Después,
-vigilar bandwidth por asset durante 48 horas. Resolver por separado si el host
-primario será apex o `www`; no cambiar DNS/canonicals por inferencia.
+Rediseñar `/kennewick-wa-photographer/` según ADR-036: auditar primero el copy,
+las fotografías locales y las nuevas carpetas Kennewick de Google Drive;
+generar y revisar composiciones image-first; implementar el lenguaje visual de
+Seniors sin alterar sus contratos SEO; y verificar 1440, 1200, 900 y 390 px.
+En paralelo operativo, observar el build/bandwidth del deploy ya publicado y
+resolver por separado si el host primario será apex o `www`.
 
 ---
 
@@ -206,11 +205,13 @@ Kennewick ni Family Photo Locations.
 
 ## Bloqueadores externos
 
-1. **Git/deploy:** el usuario prohibió pushes desde Codex. El cierre queda siete
-   commits delante de `origin/main`; no se ejecuta `./scripts/handoff.sh`
-   porque incorpora un push incondicional.
-2. **Producción:** el artefacto release local pasa, pero producción continúa con
-   el JPG Open Graph de 15,291,345 bytes hasta el push/deploy autorizado.
+1. **Git/deploy:** el usuario publicó los siete commits pendientes y
+   `main...origin/main` coincide en `ff736c6`. Codex conserva la prohibición de
+   hacer pushes; no se ejecutará `./scripts/handoff.sh` porque incorpora un push
+   incondicional.
+2. **Producción:** el artefacto release local pasa y el push ya ocurrió, pero el
+   deploy resultante aún no fue verificado. Confirmar status, crawler gates y
+   que el JPG Open Graph publicado bajó de 15,291,345 a ~530,418 bytes.
 3. **Netlify/GBP/analítica/legal:** permanecen las verificaciones externas del
    backlog; no se inventaron como resueltas.
 4. **Dominio canónico:** el 2026-08-09 el deploy real redirige tanto la

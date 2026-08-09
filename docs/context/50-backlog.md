@@ -19,13 +19,18 @@
   definitivo centrado en estilo, mantener la galería como mejora opcional,
   verificar diseño/schema en cuatro viewports y pasar la ruta a `ready/index`
   con sitemap/llms/header coherentes.
-- [ ] **5. Verificar Richland y Kennewick después del próximo push autorizado.**
+- [ ] **5. Rediseñar Kennewick según ADR-036.** Auditar la ruta, el copy y la
+  media; revisar las referencias con `image-to-code`; generar composiciones
+  frescas antes del código; adoptar `EditorialHero` y la gramática de Seniors;
+  conservar los contratos SEO/anchors/schema; y verificar 1440, 1200, 900 y
+  390 px.
+- [ ] **6. Verificar Richland y Kennewick después del push del usuario.**
   Confirmar en el dominio final status 200, meta index, canonical, ausencia de
   header noindex, membresía del sitemap/llms y `lastmod 2026-08-08`.
-- [ ] **6. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **7. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **7. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **8. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -154,10 +159,10 @@ sin reemplazar el archivo.
   `8d5d84f`, `aae3812` y `c663d68` al cierre de implementación.
 - [ ] Mantener la instrucción operativa actual: ningún agente hace push; cada
   intervención termina en commits locales que el usuario administra.
-- [ ] Publicar `main` con una identidad autorizada; al cierre queda siete
-  commits delante de `origin/main`, incluidos Kennewick, sus composiciones y
-  `bd833f6` con la optimización de imágenes. Después ejecutar el chequeo remoto
-  del ítem 5 y la observación de bandwidth de QA.
+- [x] El usuario publicó los siete commits locales pendientes, incluidos
+  Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
+  `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
+  ítem 6 y la observación de bandwidth de QA.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
