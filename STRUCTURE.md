@@ -29,6 +29,7 @@ entry when that date is missing.
 | `/` | Homepage | 2026-08-04 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
 | `/richland-wa-photographer/` | Service area | 2026-08-08 |
+| `/kennewick-wa-photographer/` | Service area | 2026-08-08 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/portfolio/` | Portfolio | 2026-07-21 |
 
@@ -52,7 +53,7 @@ entry when that date is missing.
 ### Service areas
 
 - `/richland-wa-photographer/` — ready and indexable
-- `/kennewick-wa-photographer/` — draft; excluded
+- `/kennewick-wa-photographer/` — ready and indexable
 - `/pasco-wa-photographer/` — draft; excluded
 
 These are three distinct city pages, below the location-page quality warning
@@ -83,6 +84,8 @@ threshold. Each must retain genuinely city-specific content before it is approve
 - Release `robots.txt` advertises the custom-domain sitemap; staging does not.
 - Validation compares sitemap membership with the canonical URLs of every
   indexable release page, so a mismatch fails the build.
+- Body content uses at most four internal links except the approved Richland and
+  Kennewick service directories, which each use exactly nine.
 
 ## Publishing a draft route
 

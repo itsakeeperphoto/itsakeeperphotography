@@ -1,72 +1,78 @@
 {
   "route": "/kennewick-wa-photographer/",
   "family": "city",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "WebPage",
-  "signature": "crossing-line",
+  "signature": "overlap",
   "title": "Kennewick WA Photographer | It's A Keeper Photography",
-  "description": "Golden-hour photography in Kennewick, WA — seniors, families, newborns and branding. Sessions at Columbia Park, the riverfront and the spots locals love.",
+  "description": "Warm, golden-toned portrait photography in Kennewick — seniors, families, newborns and branding. A richer, moodier alternative to light and airy, from Lisa.",
   "hero": {
     "tone": "umber",
-    "heading": "Your Kennewick, WA Photographer",
-    "intro": "Senior pictures, family sessions, newborns and branding photography in Kennewick — photographed in the warm evening light this side of the river does so well.",
-    "scriptLine": "this side of the river",
-    "image": "/uploads/family-children-golden-hour-tricities.jpg",
-    "imageAlt": "Children photographed outdoors in warm golden-hour light during a Tri-Cities family session",
-    "secondaryImage": "/uploads/autumn-senior-portrait-tricities.jpg",
-    "secondaryImageAlt": "Senior portrait photographed outdoors in warm autumn light in the Tri-Cities"
+    "heading": "Kennewick, WA Photographer",
+    "intro": "Senior pictures, families, newborns and branding photography in Kennewick — photographed warm, golden and unhurried, the way this valley's evening light actually looks.",
+    "image": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+    "imageAlt": "Two adults embracing their baby beneath a glowing evening sky.",
+    "links": [
+      {
+        "label": "Plan Your Session",
+        "href": "/contact/"
+      }
+    ]
   },
   "sections": [
     {
       "id": "minutes-away",
       "kind": "split",
       "tone": "sand",
-      "eyebrow": "Just across the river",
-      "heading": "Minutes Away, Twenty Years Familiar",
+      "heading": "Ten Minutes From My Front Door",
       "paragraphs": [
-        "I'm based in Richland, just across the river — which means Kennewick families get a local photographer, not a visitor. I've photographed seniors, families and business owners here for two decades: sessions in Columbia Park as the sun drops over the water, branding shoots in downtown Kennewick's shops, and family evenings in the hills where the grass turns to gold."
+        "I'm based in Richland, just across the river — which means Kennewick clients get a local photographer, not a visitor with a GPS. I've been photographing families, seniors and business owners on this side of the water for two decades.",
+        "There's no travel fee anywhere in the Tri-Cities. Kennewick is home turf."
       ],
-      "image": "/uploads/family-golden-hour-columbia-basin.jpg",
-      "imageAlt": "Family photographed outdoors in the Columbia Basin during golden hour",
-      "secondaryImage": "/uploads/investment-lisa-photographing-outdoors-tricities.jpg",
-      "secondaryImageAlt": "Lisa photographing a portrait session outdoors in the Tri-Cities"
+      "image": "/uploads/investment-lisa-photographing-outdoors-tricities.jpg",
+      "imageAlt": "Lisa holding a camera to her eye and a takeaway cup while photographing outdoors."
     },
     {
-      "id": "kennewick-spots",
-      "kind": "locations",
+      "id": "kennewick-style",
+      "kind": "split",
       "tone": "ivory",
-      "heading": "My Favorite Kennewick Session Spots",
-      "items": [
+      "heading": "If Light and Airy Isn't What You Pictured",
+      "paragraphs": [
+        "Here's something worth saying plainly, because it saves everybody time.",
+        "A lot of beautiful photography in this area is shot light and airy — pale, bright, soft. It's a lovely style and there are photographers here who do it very well. If that's the look you've been picturing for your family, you have wonderful options and I'd genuinely encourage you to book one of them.",
+        "My work is the other thing. Warm, rich, golden, a little moody. Deep shadows and honeyed light. There's a film quality to how I edit — vibrant but never harsh, and it doesn't chase whatever's trending this year. If you've scrolled through Kennewick photographers and kept thinking *\"this is pretty, but it's not quite me\"* — that's usually why, and that's usually the point at which people find me.",
+        "The right photographer isn't the best one. It's the one whose work already looks like what you're imagining on your wall."
+      ],
+      "image": "/uploads/family-golden-hour-columbia-basin.jpg",
+      "imageAlt": "Two adults holding a young child in warm backlight.",
+      "secondaryImage": "/uploads/autumn-senior-portrait-tricities.jpg",
+      "secondaryImageAlt": "Young woman in a black dress standing against blurred autumn foliage.",
+      "links": [
         {
-          "heading": "Columbia Park and the riverfront",
-          "paragraphs": [
-            "Miles of shoreline, big trees, open lawns and river light — room for kids to run and for golden hour to do its thing."
-          ],
-          "image": "/uploads/family-with-baby-golden-hour-tricities.jpg",
-          "imageAlt": "Family with a baby photographed outside in warm Tri-Cities light"
-        },
-        {
-          "heading": "Vineyards, hills and golden edges",
-          "paragraphs": [
-            "The edges of Kennewick toward the hills give us dry grasses, long shadows and that warm eastern-Washington glow that photographs like honey."
-          ],
-          "image": "/uploads/journal-senior-golden-hour-tricities.jpg",
-          "imageAlt": "Senior portrait photographed in a dry golden landscape in the Tri-Cities"
-        },
-        {
-          "heading": "A place that's already yours",
-          "paragraphs": [
-            "Your neighborhood park, your grandparents' backyard, the field behind your church. Bring me somewhere that already holds a memory."
-          ],
-          "image": "/uploads/family-laughter-black-white-tricities.jpg",
-          "imageAlt": "Family sharing a candid laugh during a black-and-white portrait session"
+          "label": "My work is the other thing",
+          "href": "/about/"
         }
+      ]
+    },
+    {
+      "id": "kennewick-light",
+      "kind": "prose",
+      "tone": "earth",
+      "heading": "What Works Well in Kennewick",
+      "paragraphs": [
+        "Kennewick gives us long stretches of shoreline, wide-open lawns, big trees, dry hills at the edges that go gold in the evening, and enough brick and downtown texture for seniors and business owners who want something with an edge.",
+        "What I won't do is publish my exact locations — a photographer's spots are earned over years and I'd like to keep a few. But the honest truth is that the specific place matters less than the hour we shoot. What I bring is knowing which kind of location fits your family, and exactly when to be standing there.",
+        "For families, I lean toward open space over spectacular-but-cramped, every time. I'm going to give your kids things to *do* rather than ask them to stand still, and that needs room to move without the background falling apart."
       ],
       "links": [
         {
-          "label": "Best places to take pictures in the Tri-Cities",
+          "label": "the specific place matters less than the hour",
           "href": "/journal/family-photo-locations-tri-cities/"
+        },
+        {
+          "label": "For families",
+          "href": "/family-photographer-tri-cities-wa/"
         }
       ]
     },
@@ -74,14 +80,11 @@
       "id": "kennewick-session-directory",
       "kind": "services",
       "tone": "olive",
-      "heading": "Sessions I Photograph in Kennewick",
-      "image": "/uploads/maternity-waiting-to-welcome-tricities.jpg",
-      "imageAlt": "Expecting mother photographed outside during a Tri-Cities portrait session",
-      "secondaryImage": "/uploads/headshot-professional-formal-stairs-tricities.jpg",
-      "secondaryImageAlt": "Professional portrait photographed on location in the Tri-Cities",
+      "heading": "What I Photograph in Kennewick",
       "items": [
         {
           "heading": "Senior Pictures",
+          "detail": "several locations in one evening, planned around your style",
           "links": [
             {
               "label": "Senior Pictures",
@@ -91,6 +94,7 @@
         },
         {
           "heading": "Family Photography",
+          "detail": "open, golden, activity-driven",
           "links": [
             {
               "label": "Family Photography",
@@ -99,21 +103,43 @@
           ]
         },
         {
-          "heading": "Newborn Photography"
+          "heading": "Newborn Photography",
+          "detail": "in your Kennewick home",
+          "links": [
+            {
+              "label": "Newborn Photography",
+              "href": "/newborn-photographer-tri-cities-wa/"
+            }
+          ]
         },
         {
-          "heading": "Branding & Custom Business Photography"
+          "heading": "Branding Photography",
+          "detail": "at your business or shop",
+          "links": [
+            {
+              "label": "Branding Photography",
+              "href": "/branding-photographer-tri-cities-wa/"
+            }
+          ]
         },
         {
-          "heading": "Professional Headshots"
+          "heading": "Professional Headshots",
+          "detail": "portable studio brought to your office",
+          "links": [
+            {
+              "label": "Professional Headshots",
+              "href": "/headshot-photographer-tri-cities-wa/"
+            }
+          ]
         }
       ]
     },
     {
       "id": "recent-kennewick-sessions",
       "kind": "locations",
-      "tone": "earth",
-      "heading": "Recent Kennewick Sessions"
+      "tone": "walnut",
+      "heading": "Recent Kennewick Sessions",
+      "items": []
     },
     {
       "id": "kennewick-questions",
@@ -122,9 +148,27 @@
       "heading": "Kennewick Questions",
       "items": [
         {
-          "heading": "What time are Kennewick sessions?",
+          "heading": "Do you charge a travel fee to Kennewick?",
           "paragraphs": [
-            "Golden hour — roughly the last hour before sunset, when the light over the Columbia turns warm and soft."
+            "No. Richland, Kennewick and Pasco are all home coverage — no travel fee anywhere in the Tri-Cities."
+          ]
+        },
+        {
+          "heading": "What's your editing style?",
+          "paragraphs": [
+            "Warm, vibrant, with a film feel. I adjust white balance and apply my signature edit to every image, and final retouching goes on the ones you choose. I'll take care of the temporary things — a blemish, a shirt bunching oddly — but I won't make you look like someone else."
+          ]
+        },
+        {
+          "heading": "What time of day do Kennewick sessions happen?",
+          "paragraphs": [
+            "Golden hour — the last stretch of warm light before sunset. Exact timing shifts with the season, and I plan each session to the minute."
+          ]
+        },
+        {
+          "heading": "When should I book?",
+          "paragraphs": [
+            "Four to six weeks ahead for most sessions. May through October is peak season here and fall dates go first."
           ]
         }
       ]
@@ -132,18 +176,16 @@
   ],
   "finalCta": {
     "tone": "umber",
-    "heading": "Let's Find Your Light in Kennewick",
-    "image": "/uploads/family-portrait-outdoors-tricities.jpg",
-    "imageAlt": "Family portrait photographed outside in warm Tri-Cities evening light",
+    "heading": "Let's Plan Yours",
+    "paragraphs": [
+      "If the warm, golden version is the one you've been picturing, I'd love to hear about your session."
+    ],
+    "image": "/uploads/about-final-couple-golden-hour-tricities.jpg",
+    "imageAlt": "A couple laughing together in backlit evening light beside a rocky bluff.",
     "link": {
       "label": "Start planning",
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[VALIDAR CON LISA: sus spots reales de Kennewick + 1–2 detalles de primera mano por locación]",
-    "[PENDIENTE: 6–10 imágenes de sesiones reales en Kennewick con alt text de locación]",
-    "[PENDIENTE: al menos 1 reseña genuina atribuible a un cliente de Kennewick]",
-    "[VALIDAR — Q53]"
-  ]
+  "pending": []
 }

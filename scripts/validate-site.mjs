@@ -50,8 +50,13 @@ const indexableReleaseFiles = new Set([
   "index.html",
   `family-photographer-tri-cities-wa${path.sep}index.html`,
   `richland-wa-photographer${path.sep}index.html`,
+  `kennewick-wa-photographer${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
   `portfolio${path.sep}index.html`,
+]);
+const expandedDirectoryFiles = new Set([
+  `richland-wa-photographer${path.sep}index.html`,
+  `kennewick-wa-photographer${path.sep}index.html`,
 ]);
 
 for (const file of htmlFiles) {
@@ -70,6 +75,13 @@ for (const file of htmlFiles) {
     failures.push(
       `${relative}: broken internal body links (${brokenInternalAnchors.join(", ")})`
     );
+  }
+  if (expandedDirectoryFiles.has(relative)) {
+    if (internalAnchors.length !== 9) {
+      failures.push(
+        `${relative}: expected exactly 9 internal body links; found ${internalAnchors.length}`
+      );
+    }
   }
   if (/\[(?:PENDIENTE|VALIDAR|FECHA)|CONTENT PENDING/i.test(withoutComments)) {
     failures.push(`${relative}: unresolved placeholder leaked into rendered HTML`);
@@ -96,6 +108,58 @@ for (const file of htmlFiles) {
     }
     if (!/href="https:\/\/www\.itsakeeperphotography\.com(?:\/|[^\"]*\/)"/i.test(source)) {
       failures.push(`${relative}: release canonical does not use the custom-domain origin`);
+    }
+  }
+  if (
+    [
+      `richland-wa-photographer${path.sep}index.html`,
+      `kennewick-wa-photographer${path.sep}index.html`,
+    ].includes(relative)
+  ) {
+    const schemas = [];
+    for (const match of source.matchAll(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    )) {
+      try {
+        schemas.push(JSON.parse(match[1]));
+      } catch {
+        failures.push(`${relative}: JSON-LD must be valid JSON`);
+      }
+    }
+    const serviceSchemas = schemas.filter((schema) => schema?.["@type"] === "Service");
+    const unsafeSchema = schemas.some((schema) => {
+      const serialized = JSON.stringify(schema);
+      return (
+        serialized.includes('"streetAddress"') ||
+        /"@type":"(?:Review|AggregateRating)"/.test(serialized)
+      );
+    });
+    if (unsafeSchema) {
+      failures.push(
+        `${relative}: city schema must not expose a street address, Review, or AggregateRating`
+      );
+    }
+    if (relative === `richland-wa-photographer${path.sep}index.html` && serviceSchemas.length) {
+      failures.push(
+        `${relative}: Service schema is reserved for the published Kennewick page`
+      );
+    }
+    if (relative === `kennewick-wa-photographer${path.sep}index.html`) {
+      const service = serviceSchemas[0];
+      const expectedOrigin = mode === "release"
+        ? "https://www.itsakeeperphotography.com"
+        : "https://itsakeeperphotography.netlify.app";
+      if (
+        serviceSchemas.length !== 1 ||
+        service?.serviceType !== "Portrait photography" ||
+        service?.provider?.["@id"] !== `${expectedOrigin}/#business` ||
+        service?.areaServed?.["@type"] !== "City" ||
+        service?.areaServed?.name !== "Kennewick" ||
+        service?.areaServed?.containedInPlace?.["@type"] !== "State" ||
+        service?.areaServed?.containedInPlace?.name !== "Washington"
+      ) {
+        failures.push(`${relative}: Kennewick Service schema does not match the approved local scope`);
+      }
     }
   }
   if (
@@ -148,6 +212,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
+    "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
     "https://www.itsakeeperphotography.com/portfolio/",
   ];
@@ -163,6 +228,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
+    "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
   ];
   if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
@@ -173,6 +239,9 @@ if (mode === "staging") {
   }
   if (/^\/richland-wa-photographer\/\*\s*$/m.test(headers)) {
     failures.push("_headers: Richland noindex rule must not block the published city page");
+  }
+  if (/^\/kennewick-wa-photographer\/\*\s*$/m.test(headers)) {
+    failures.push("_headers: Kennewick noindex rule must not block the published city page");
   }
   for (const route of [
     "/contact/*",

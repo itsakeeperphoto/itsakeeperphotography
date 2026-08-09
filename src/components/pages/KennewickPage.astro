@@ -1,13 +1,22 @@
 ---
-import type { EditorialPageData, PageSection } from "../../content/page-types";
+import type {
+  EditorialPageData,
+  PageLink,
+  PageSection,
+} from "../../content/page-types";
 import Picture from "../Picture.astro";
-import EditorialHero from "./EditorialHero.astro";
 import "../../styles/kennewick-page.css";
 
 interface Props {
   page: EditorialPageData;
   settings: any;
   inquiry?: any;
+}
+
+interface RichPart {
+  text: string;
+  link?: PageLink;
+  emphasis?: boolean;
 }
 
 const { page } = Astro.props;
@@ -19,41 +28,97 @@ const requireSection = (id: string): PageSection => {
 };
 
 const introduction = requireSection("minutes-away");
-const spots = requireSection("kennewick-spots");
+const style = requireSection("kennewick-style");
+const setting = requireSection("kennewick-light");
 const directory = requireSection("kennewick-session-directory");
-requireSection("recent-kennewick-sessions");
 const questions = requireSection("kennewick-questions");
-
-const spotItems = spots.items || [];
-const serviceItems = directory.items || [];
-const faqItems = questions.items || [];
-const guideLink = spots.links?.find((link) =>
-  link.href.includes("family-photo-locations-tri-cities"),
+const recent = page.sections.find(
+  (section) => section.id === "recent-kennewick-sessions",
 );
 
-const faqSchema = faqItems
-  .filter((item) => item.heading && item.paragraphs?.length)
-  .map((item) => ({
-    "@type": "Question",
-    name: item.heading,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.paragraphs?.join(" "),
-    },
-  }));
+const serviceItems = directory.items || [];
+const faqItems = (questions.items || []).filter(
+  (item) => item.heading && item.paragraphs?.length,
+);
+const recentItems = recent?.items || [];
+const hasVerifiedRecentGallery =
+  recentItems.length > 0 &&
+  recentItems.every((item) => item.image && item.imageAlt);
+const heroAction = page.hero.links?.[0];
 
-const introLandscape =
-  introduction.image || "/uploads/family-golden-hour-columbia-basin.jpg";
-const introPrint =
-  introduction.secondaryImage ||
-  "/uploads/investment-lisa-photographing-outdoors-tricities.jpg";
-const serviceArch =
-  directory.image || "/uploads/maternity-waiting-to-welcome-tricities.jpg";
-const servicePrint =
-  directory.secondaryImage ||
-  "/uploads/headshot-professional-formal-stairs-tricities.jpg";
-const finalImage =
-  page.finalCta?.image || "/uploads/family-portrait-outdoors-tricities.jpg";
+if (!heroAction?.label) {
+  throw new Error("Kennewick hero is missing its local scroll action label");
+}
+
+if (
+  serviceItems.length !== 5 ||
+  serviceItems.some(
+    (item) =>
+      !item.heading ||
+      !item.detail ||
+      !item.links?.[0]?.href,
+  )
+) {
+  throw new Error("Kennewick service directory requires five complete linked rows");
+}
+
+if (faqItems.length !== 4) {
+  throw new Error("Kennewick FAQ requires four complete questions and answers");
+}
+
+const richParts = (paragraph: string, links: PageLink[] = []): RichPart[] => {
+  const availableLinks = links.filter(
+    (link) => link.label && paragraph.includes(link.label),
+  );
+  const parts: RichPart[] = [];
+  let cursor = 0;
+
+  while (cursor < paragraph.length) {
+    const nextLink = availableLinks
+      .map((link) => ({
+        index: paragraph.indexOf(link.label, cursor),
+        end: paragraph.indexOf(link.label, cursor) + link.label.length,
+        part: { text: link.label, link } satisfies RichPart,
+      }))
+      .filter(({ index }) => index >= cursor)
+      .sort((a, b) => a.index - b.index)[0];
+
+    const emphasisMatch = paragraph.slice(cursor).match(/\*([^*]+)\*/);
+    const nextEmphasis = emphasisMatch && emphasisMatch.index !== undefined
+      ? {
+          index: cursor + emphasisMatch.index,
+          end: cursor + emphasisMatch.index + emphasisMatch[0].length,
+          part: { text: emphasisMatch[1], emphasis: true } satisfies RichPart,
+        }
+      : undefined;
+
+    const next = [nextLink, nextEmphasis]
+      .filter((candidate): candidate is NonNullable<typeof candidate> => Boolean(candidate))
+      .sort((a, b) => a.index - b.index)[0];
+
+    if (!next) {
+      parts.push({ text: paragraph.slice(cursor) });
+      break;
+    }
+
+    if (next.index > cursor) {
+      parts.push({ text: paragraph.slice(cursor, next.index) });
+    }
+    parts.push(next.part);
+    cursor = next.end;
+  }
+
+  return parts;
+};
+
+const faqSchema = faqItems.map((item) => ({
+  "@type": "Question",
+  name: item.heading,
+  acceptedAnswer: {
+    "@type": "Answer",
+    text: item.paragraphs?.join(" "),
+  },
+}));
 ---
 
 <article
@@ -61,210 +126,282 @@ const finalImage =
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
-  <EditorialHero
-    pageKey="kennewick"
-    titleId="kennewick-hero-title"
-    heading={page.hero.heading}
-    headingLines={["Your Kennewick, WA", "Photographer"]}
-    scriptLine={page.hero.scriptLine || "this side of the river"}
-    intro={page.hero.intro}
-    backgroundImage={page.hero.image}
-    backgroundAlt={page.hero.imageAlt}
-    backgroundPosition="50% 54%"
-    mobileBackgroundPosition="52% 49%"
-    leftPrint={{
-      src: "/uploads/family-with-baby-black-white-tricities.jpg",
-      objectPosition: "50% 43%",
-    }}
-    rightPrint={{
-      src: page.hero.secondaryImage || "/uploads/autumn-senior-portrait-tricities.jpg",
-      objectPosition: "50% 41%",
-    }}
-    buttonLabel="Plan Your Kennewick Session"
-    buttonTargetId="kennewick-final"
-    paperEdgeColor="var(--color-weathered-sand)"
-  />
+  <!-- THESIS: warm photographic proof organized as a tonal contact sheet. OWN-WORLD: the homepage palette, typography, square geometry, and hairlines. STORY: dark split hero, local context, honest style contrast, practical fit, linked services, questions, invitation. FIRST VIEWPORT: exact H1 and opening copy beside one complete vertical family portrait. FORM: pinned established-world extension; key kennewick-warm-proof-v2. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md. -->
+  <section
+    class:list={["kennewick-hero", `tone-${page.hero.tone}`]}
+    aria-labelledby="kennewick-hero-title"
+  >
+    <div class="kennewick-shell kennewick-hero__grid">
+      <div class="kennewick-hero__copy">
+        <h1 id="kennewick-hero-title">{page.hero.heading}</h1>
+        {page.hero.intro && <p>{page.hero.intro}</p>}
+        <button
+          class="kennewick-hero__cta"
+          type="button"
+          data-kennewick-scroll="#kennewick-final"
+        >
+          <span>{heroAction.label}</span>
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            focusable="false"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 4v15m0 0 6-6m-6 6-6-6"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      {page.hero.image && page.hero.imageAlt && (
+        <figure class="kennewick-hero__media">
+          <Picture
+            src={page.hero.image}
+            alt={page.hero.imageAlt}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 48vw, 42rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+    </div>
+  </section>
 
   <section
+    id={introduction.id}
     class:list={["kennewick-intro", `tone-${introduction.tone}`]}
     aria-labelledby={`${introduction.id}-title`}
   >
-    <div class="kennewick-shell kennewick-intro__inner">
+    <div class="kennewick-shell kennewick-intro__grid">
       <div class="kennewick-intro__copy">
-        {introduction.eyebrow && (
-          <p class="kennewick-eyebrow">{introduction.eyebrow}</p>
-        )}
         <h2 id={`${introduction.id}-title`}>{introduction.heading}</h2>
         <div class="kennewick-prose">
-          {introduction.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-          {/* CONTENT PENDING: "There's never a travel fee inside the Tri-Cities. Kennewick is home turf." remains unrendered until [VALIDAR — Q53] is confirmed. */}
+          {introduction.paragraphs?.map((paragraph) => (
+            <p>
+              {richParts(paragraph, introduction.links).map((part) =>
+                part.link ? (
+                  <a href={part.link.href}>{part.text}</a>
+                ) : part.emphasis ? (
+                  <em>{part.text}</em>
+                ) : (
+                  <Fragment>{part.text}</Fragment>
+                ),
+              )}
+            </p>
+          ))}
         </div>
       </div>
 
-      <div class="kennewick-intro__media">
-        <span class="kennewick-intro__rule" aria-hidden="true"></span>
-        <figure class="kennewick-intro__landscape">
+      {introduction.image && introduction.imageAlt && (
+        <figure class="kennewick-intro__media">
           <Picture
-            src={introLandscape}
-            alt={introduction.imageAlt || "Family photographed outside during golden hour in the Columbia Basin"}
+            src={introduction.image}
+            alt={introduction.imageAlt}
             loading="lazy"
             decoding="async"
             responsiveSrcset
-            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 75vw, 45rem"
+            sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 48vw, 42rem"
             imgClass="photo--editorial"
           />
         </figure>
-
-        <figure class="kennewick-print kennewick-intro__print">
-          <span class="kennewick-tape kennewick-tape--intro" aria-hidden="true"></span>
-          <Picture
-            src={introPrint}
-            alt={introduction.secondaryImageAlt || "Lisa photographing a portrait session outdoors in the Tri-Cities"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 45vw, (max-width: 1050px) 27vw, 18rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-      </div>
+      )}
     </div>
   </section>
 
   <section
-    class:list={["kennewick-spots", `tone-${spots.tone}`]}
-    aria-labelledby={`${spots.id}-title`}
+    id={style.id}
+    class:list={["kennewick-style", `tone-${style.tone}`]}
+    aria-labelledby={`${style.id}-title`}
   >
     <div class="kennewick-shell">
-      <header class="kennewick-spots__heading">
-        <span class="kennewick-spots__index" aria-hidden="true">01—03</span>
-        <h2 id={`${spots.id}-title`}>{spots.heading}</h2>
+      <header class="kennewick-style__header">
+        <h2 id={`${style.id}-title`}>{style.heading}</h2>
       </header>
 
-      {/* CONTENT PENDING: [VALIDAR CON LISA: sus spots reales de Kennewick + 1–2 detalles de primera mano por locación]. Images are neutral Tri-Cities portfolio photographs and do not claim a Kennewick location. */}
-      {spotItems.length > 0 && (
-        <ol class="kennewick-spots__route">
-          {spotItems.map((item, index) => (
-            <li class:list={["kennewick-spot", `kennewick-spot--${index + 1}`]}>
-              {item.image && (
-                <figure class:list={["kennewick-spot__media", index === 1 && "kennewick-spot__media--arch", index === 2 && "kennewick-print"]}>
-                  {index === 2 && (
-                    <span class="kennewick-tape kennewick-tape--spot" aria-hidden="true"></span>
-                  )}
-                  <Picture
-                    src={item.image}
-                    alt={item.imageAlt || "Portrait photographed during a Tri-Cities session"}
-                    loading="lazy"
-                    decoding="async"
-                    responsiveSrcset
-                    sizes="(max-width: 767px) 82vw, (max-width: 1050px) 48vw, 36rem"
-                    imgClass="photo--editorial"
-                  />
-                  <figcaption class="sr-only">
-                    Tri-Cities portfolio photograph; exact Kennewick location attribution is pending.
-                  </figcaption>
-                </figure>
+      <div class="kennewick-style__grid">
+        <div class="kennewick-prose kennewick-style__copy">
+          {style.paragraphs?.map((paragraph) => (
+            <p>
+              {richParts(paragraph, style.links).map((part) =>
+                part.link ? (
+                  <a href={part.link.href}>{part.text}</a>
+                ) : part.emphasis ? (
+                  <em>{part.text}</em>
+                ) : (
+                  <Fragment>{part.text}</Fragment>
+                ),
               )}
-
-              <div class="kennewick-spot__copy">
-                <span class="kennewick-spot__number" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                {item.heading && <h3>{item.heading}</h3>}
-                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-              </div>
-            </li>
+            </p>
           ))}
-        </ol>
-      )}
+        </div>
 
-      {guideLink && (
-        <a class="kennewick-text-link kennewick-spots__guide" href={guideLink.href}>
-          {guideLink.label}
-        </a>
-      )}
-    </div>
-  </section>
-
-  <section
-    class:list={["kennewick-services", `tone-${directory.tone}`]}
-    aria-labelledby={`${directory.id}-title`}
-  >
-    <div class="kennewick-shell kennewick-services__inner">
-      <div class="kennewick-services__media">
-        <span class="kennewick-services__rule" aria-hidden="true"></span>
-        <figure class="kennewick-services__arch">
-          <Picture
-            src={serviceArch}
-            alt={directory.imageAlt || "Expecting mother photographed outside during a Tri-Cities portrait session"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 75vw, (max-width: 1050px) 48vw, 32rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-
-        <figure class="kennewick-print kennewick-services__print">
-          <span class="kennewick-tape kennewick-tape--services" aria-hidden="true"></span>
-          <Picture
-            src={servicePrint}
-            alt={directory.secondaryImageAlt || "Professional portrait photographed on location in the Tri-Cities"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 43vw, (max-width: 1050px) 27vw, 18rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-      </div>
-
-      <div class="kennewick-services__copy">
-        <h2 id={`${directory.id}-title`} aria-label={directory.heading}>
-          <span aria-hidden="true">Sessions I</span>
-          <span aria-hidden="true">Photograph</span>
-          <span aria-hidden="true">in Kennewick</span>
-        </h2>
-
-        {serviceItems.length > 0 && (
-          <ol class="kennewick-services__list">
-            {serviceItems.map((item, index) => {
-              const link = item.links?.[0];
-              return (
-                <li>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  {link ? <a href={link.href}>{item.heading}</a> : <strong>{item.heading}</strong>}
-                </li>
-              );
-            })}
-          </ol>
+        {(style.image || style.secondaryImage) && (
+          <div class="kennewick-style__media">
+            {style.image && style.imageAlt && (
+              <figure class="kennewick-style__panorama">
+                <Picture
+                  src={style.image}
+                  alt={style.imageAlt}
+                  loading="lazy"
+                  decoding="async"
+                  responsiveSrcset
+                  sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 56vw, 48rem"
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+            {style.secondaryImage && style.secondaryImageAlt && (
+              <figure class="kennewick-style__arch">
+                <Picture
+                  src={style.secondaryImage}
+                  alt={style.secondaryImageAlt}
+                  loading="lazy"
+                  decoding="async"
+                  responsiveSrcset
+                  sizes="(max-width: 767px) 60vw, (max-width: 1050px) 27vw, 22rem"
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+            <span class="kennewick-style__line" aria-hidden="true"></span>
+          </div>
         )}
       </div>
     </div>
   </section>
 
-  {/* CONTENT PENDING: [PENDIENTE: 6–10 imágenes de sesiones reales en Kennewick con alt text de locación]. The “Recent Kennewick Sessions” gallery is intentionally unrendered; no generic portfolio imagery substitutes for local proof. */}
+  <section
+    id={setting.id}
+    class:list={["kennewick-setting", `tone-${setting.tone}`]}
+    aria-labelledby={`${setting.id}-title`}
+  >
+    <div class="kennewick-shell kennewick-setting__grid">
+      <header class="kennewick-setting__header">
+        <h2 id={`${setting.id}-title`}>{setting.heading}</h2>
+      </header>
+      <div class="kennewick-prose kennewick-setting__copy">
+        {setting.paragraphs?.map((paragraph) => (
+          <p>
+            {richParts(paragraph, setting.links).map((part) =>
+              part.link ? (
+                <a href={part.link.href}>{part.text}</a>
+              ) : part.emphasis ? (
+                <em>{part.text}</em>
+              ) : (
+                <Fragment>{part.text}</Fragment>
+              ),
+            )}
+          </p>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <section
+    id={directory.id}
+    class:list={["kennewick-directory", `tone-${directory.tone}`]}
+    aria-labelledby={`${directory.id}-title`}
+  >
+    <div class="kennewick-shell">
+      <header class="kennewick-directory__header">
+        <h2 id={`${directory.id}-title`}>{directory.heading}</h2>
+      </header>
+
+      <nav aria-labelledby={`${directory.id}-title`}>
+        <ol class="kennewick-directory__list">
+          {serviceItems.map((item, index) => {
+            const link = item.links![0];
+            return (
+              <li>
+                <a class="kennewick-directory__row" href={link.href}>
+                  <span class="kennewick-directory__number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span class="kennewick-directory__name">{item.heading}</span>
+                  <span class="kennewick-directory__detail">{item.detail}</span>
+                  <span class="kennewick-directory__arrow" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="22"
+                      height="22"
+                      fill="none"
+                      focusable="false"
+                    >
+                      <path
+                        d="M7 17 17 7M8 7h9v9"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  {recent && hasVerifiedRecentGallery && (
+    <section
+      id={recent.id}
+      class:list={["kennewick-recent", `tone-${recent.tone}`]}
+      aria-labelledby={`${recent.id}-title`}
+    >
+      <div class="kennewick-shell">
+        <h2 id={`${recent.id}-title`}>{recent.heading}</h2>
+        <div class="kennewick-recent__gallery">
+          {recentItems.map((item) => (
+            <figure>
+              <Picture
+                src={item.image!}
+                alt={item.imageAlt!}
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 48vw, 26rem"
+                imgClass="photo--editorial"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section
+    id={questions.id}
     class:list={["kennewick-faq", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
   >
-    <div class="kennewick-shell kennewick-faq__inner">
-      <header class="kennewick-faq__heading">
-        <span class="kennewick-faq__label" aria-hidden="true">Questions · Kennewick</span>
+    <div class="kennewick-shell kennewick-faq__grid">
+      <header class="kennewick-faq__header">
         <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
       </header>
 
-      <div class="kennewick-faq__ledger">
-        {/* CONTENT PENDING [Do you charge a travel fee to Kennewick?]: answer held until [VALIDAR — Q53]. */}
-        {/* CONTENT PENDING [Where do senior sessions happen in Kennewick?]: exact locations and first-hand details require Lisa's approval. */}
+      <div class="kennewick-faq__list">
         {faqItems.map((item, index) => (
           <details open={index === 0}>
             <summary>
               <span class="kennewick-faq__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              {item.heading && <h3>{item.heading}</h3>}
+              <span class="kennewick-faq__question" role="heading" aria-level="3">
+                {item.heading}
+              </span>
               <span class="kennewick-faq__mark" aria-hidden="true"></span>
             </summary>
             <div class="kennewick-faq__answer">
@@ -283,21 +420,21 @@ const finalImage =
       aria-labelledby="kennewick-final-title"
       tabindex="-1"
     >
-      <div class="kennewick-final__background" aria-hidden="true">
-        <Picture
-          src={finalImage}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="kennewick-final__background-image"
-        />
-        <div class="kennewick-final__wash"></div>
-      </div>
-      <div class="kennewick-shell kennewick-final__inner">
-        <div class="kennewick-final__frame">
-          <p class="kennewick-final__script" aria-hidden="true">find your light</p>
+      <div class="kennewick-shell kennewick-final__grid">
+        {page.finalCta.image && page.finalCta.imageAlt && (
+          <figure class="kennewick-final__media">
+            <Picture
+              src={page.finalCta.image}
+              alt={page.finalCta.imageAlt}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 52vw, 45rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        <div class="kennewick-final__copy">
           <h2 id="kennewick-final-title">{page.finalCta.heading}</h2>
           {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
           {page.finalCta.link && (
@@ -310,15 +447,34 @@ const finalImage =
     </section>
   )}
 
-  {faqSchema.length > 0 && (
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faqSchema,
-      })}
-    />
-  )}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "https://www.itsakeeperphotography.com/kennewick-wa-photographer/#faq",
+      mainEntity: faqSchema,
+    })}
+  />
 </article>
+
+<script>
+  const bindKennewickScroll = () => {
+    document.querySelectorAll<HTMLElement>("[data-kennewick-scroll]").forEach((button) => {
+      if (button.dataset.kennewickBound === "true") return;
+      button.dataset.kennewickBound = "true";
+      button.addEventListener("click", () => {
+        const selector = button.dataset.kennewickScroll;
+        const target = selector ? document.querySelector<HTMLElement>(selector) : null;
+        if (!target) return;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        target.focus({ preventScroll: true });
+      });
+    });
+  };
+
+  bindKennewickScroll();
+  document.addEventListener("astro:page-load", bindKennewickScroll);
+</script>

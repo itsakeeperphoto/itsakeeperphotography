@@ -115,6 +115,24 @@ const cityBreadcrumbSchema =
         ],
       }
     : null;
+const kennewickServiceSchema =
+  entry.id === "kennewick"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": `${canonical}#service`,
+        name: "Kennewick Portrait Photography",
+        serviceType: "Portrait photography",
+        provider: { "@id": `${siteOrigin}/#business` },
+        areaServed: {
+          "@type": "City",
+          name: "Kennewick",
+          containedInPlace: { "@type": "State", name: "Washington" },
+        },
+        url: canonical,
+        mainEntityOfPage: { "@id": `${canonical}#webpage` },
+      }
+    : null;
 const detailedFaqSchema =
   entry.id === "branding"
     ? {
@@ -203,7 +221,7 @@ const detailedAdditionalSchema = detailedService
   : investmentBreadcrumbSchema
     ? [investmentBreadcrumbSchema]
     : cityBreadcrumbSchema
-      ? [cityBreadcrumbSchema]
+      ? [...(kennewickServiceSchema ? [kennewickServiceSchema] : []), cityBreadcrumbSchema]
     : [];
 ---
 

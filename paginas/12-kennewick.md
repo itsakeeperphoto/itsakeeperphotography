@@ -1,7 +1,9 @@
 # KENNEWICK — `/kennewick-wa-photographer/`
-_Página 12 de 18 · Service-area · Condicional (mayor demanda de las 3 ciudades; publicar solo con evidencia)_
+_Página 12 de 18 · Service-area · **v2 — lista para producción 2026-08-08**_
 
-> Regla anti-thin-page: publicar únicamente cuando exista galería real de Kennewick + al menos 1 reseña de cliente de Kennewick + detalles de locación de primera mano. Es la ciudad con más demanda (KD 22 — la más competida de las tres).
+> **Ángulo único de esta página:** Kennewick es el mercado más competido de los tres (KD 22) y está dominado por el estilo *light and airy* (Tiffany Parrish, Tawny Rochelle, Brittney Kluse). El argumento aquí no es geografía — es **estilo**. Quien busca en Kennewick tiene muchas opciones; esta página existe para la persona que quiere algo más cálido y oscuro que lo que encuentra.
+>
+> **Resolución editorial:** por decisión confirmada el 2026-08-08, la galería local deja de ser condición de publicación y queda como mejora futura opcional. No se renderiza ningún bloque vacío ni se presenta fotografía general de Tri-Cities como evidencia de una sesión en Kennewick.
 
 ---
 
@@ -13,21 +15,24 @@ _Página 12 de 18 · Service-area · Condicional (mayor demanda de las 3 ciudade
 | **Keyword primaria** | photographer kennewick wa (20/mes, KD 22) |
 | **Secundarias** | kennewick photographer (20) · photographers in kennewick wa (20) · portrait photographer kennewick (10) · family photographer kennewick wa · kennewick newborn photographer · senior photographers in kennewick wa |
 | **Title** (53) | `Kennewick WA Photographer | It's A Keeper Photography` |
-| **Meta description** (151) | `Golden-hour photography in Kennewick, WA — seniors, families, newborns and branding. Sessions at Columbia Park, the riverfront and the spots locals love.` |
+| **Meta description** (156) | `Warm, golden-toned portrait photography in Kennewick — seniors, families, newborns and branding. A richer, moodier alternative to light and airy, from Lisa.` |
 
-### Estructura de headings
+### Entidades a establecer
 
-```
-H1  Your Kennewick, WA Photographer
- H2  Minutes Away, Twenty Years Familiar
- H2  My Favorite Kennewick Session Spots
-  H3  Columbia Park and the riverfront
-  H3  Vineyards, hills and golden edges
-  H3  A place that's already yours
- H2  Sessions I Photograph in Kennewick
- H2  Recent Kennewick Sessions          (galería)
+Kennewick, WA · Columbia River · Tri-Cities · Benton County · Washington · golden hour · warm-toned photography · outdoor portraits
+
+**Relación declarada:** el negocio sirve Kennewick desde Richland, sin travel fee. A diferencia de Richland, aquí no se declara ubicación física.
+
+### Estructura de headings publicada
+
+```text
+H1  Kennewick, WA Photographer
+ H2  Ten Minutes From My Front Door
+ H2  If Light and Airy Isn't What You Pictured
+ H2  What Works Well in Kennewick
+ H2  What I Photograph in Kennewick
  H2  Kennewick Questions
- H2  Let's Find Your Light in Kennewick
+ H2  Let's Plan Yours
 ```
 
 ---
@@ -36,103 +41,108 @@ H1  Your Kennewick, WA Photographer
 
 ### Hero
 
-**H1:** Your Kennewick, WA Photographer
+**H1:** Kennewick, WA Photographer
 
-**Subhead:** Senior pictures, family sessions, newborns and branding photography in Kennewick — photographed in the warm evening light this side of the river does so well.
+**Subhead:** Senior pictures, families, newborns and branding photography in Kennewick — photographed warm, golden and unhurried, the way this valley's evening light actually looks.
 
-**CTA:** Plan Your Kennewick Session → `/contact/`
+**CTA:** Plan Your Session → desplaza a `Let's Plan Yours`
 
-### Sección 2
+---
 
-**H2:** Minutes Away, Twenty Years Familiar
+**H2: Ten Minutes From My Front Door**
 
-I'm based in Richland, just across the river — which means Kennewick families get a local photographer, not a visitor. I've photographed seniors, families and business owners here for two decades: sessions in Columbia Park as the sun drops over the water, branding shoots in downtown Kennewick's shops, and family evenings in the hills where the grass turns to gold.
+I'm based in Richland, just across the river — which means Kennewick clients get a local photographer, not a visitor with a GPS. I've been photographing families, seniors and business owners on this side of the water for two decades.
 
-There's never a travel fee inside the Tri-Cities. Kennewick is home turf.
+There's no travel fee anywhere in the Tri-Cities. Kennewick is home turf.
 
-### Sección 3 — Locaciones
+---
 
-**H2:** My Favorite Kennewick Session Spots
+**H2: If Light and Airy Isn't What You Pictured**
 
-**H3: Columbia Park and the riverfront**
-Miles of shoreline, big trees, open lawns and river light — room for kids to run and for golden hour to do its thing.
+Here's something worth saying plainly, because it saves everybody time.
 
-**H3: Vineyards, hills and golden edges**
-The edges of Kennewick toward the hills give us dry grasses, long shadows and that warm eastern-Washington glow that photographs like honey.
+A lot of beautiful photography in this area is shot light and airy — pale, bright, soft. It's a lovely style and there are photographers here who do it very well. If that's the look you've been picturing for your family, you have wonderful options and I'd genuinely encourage you to book one of them.
 
-**H3: A place that's already yours**
-Your neighborhood park, your grandparents' backyard, the field behind your church. Bring me somewhere that already holds a memory.
+My work is the other thing. Warm, rich, golden, a little moody. Deep shadows and honeyed light. There's a film quality to how I edit — vibrant but never harsh, and it doesn't chase whatever's trending this year. If you've scrolled through Kennewick photographers and kept thinking *"this is pretty, but it's not quite me"* — that's usually why, and that's usually the point at which people find me.
 
-`[VALIDAR CON LISA: sus spots reales de Kennewick + 1–2 detalles de primera mano por locación]`
+The right photographer isn't the best one. It's the one whose work already looks like what you're imagining on your wall.
 
-→ Full guide: Best places to take pictures in the Tri-Cities → `/journal/family-photo-locations-tri-cities/`
+---
 
-### Sección 4 — Servicios
+**H2: What Works Well in Kennewick**
 
-**H2:** Sessions I Photograph in Kennewick
+Kennewick gives us long stretches of shoreline, wide-open lawns, big trees, dry hills at the edges that go gold in the evening, and enough brick and downtown texture for seniors and business owners who want something with an edge.
 
-- Senior Pictures → `/senior-photographer-tri-cities-wa/`
-- Family Photography → `/family-photographer-tri-cities-wa/`
-- Newborn Photography → `/newborn-photographer-tri-cities-wa/`
-- Branding & Custom Business Photography → `/branding-photographer-tri-cities-wa/`
-- Professional Headshots → `/headshot-photographer-tri-cities-wa/`
+What I won't do is publish my exact locations — a photographer's spots are earned over years and I'd like to keep a few. But the honest truth is that the specific place matters less than the hour we shoot. What I bring is knowing which kind of location fits your family, and exactly when to be standing there.
 
-### Sección 5 — Galería
+For families, I lean toward open space over spectacular-but-cramped, every time. I'm going to give your kids things to *do* rather than ask them to stand still, and that needs room to move without the background falling apart.
 
-**H2:** Recent Kennewick Sessions
-`[PENDIENTE: 6–10 imágenes de sesiones reales en Kennewick con alt text de locación]`
+---
 
-### Sección 6 — FAQ
+**H2: What I Photograph in Kennewick**
 
-**H2:** Kennewick Questions
+- **Senior Pictures** — several locations in one evening, planned around your style
+- **Family Photography** — open, golden, activity-driven
+- **Newborn Photography** — in your Kennewick home
+- **Branding Photography** — at your business or shop
+- **Professional Headshots** — portable studio brought to your office
+
+### Galería futura, fuera de runtime
+
+`Recent Kennewick Sessions` se añadirá únicamente cuando exista una selección verificada de sesiones reales en Kennewick con alt text literal. Hasta entonces no genera heading, espacio ni imagen sustituta.
+
+---
+
+**H2: Kennewick Questions**
 
 **H3: Do you charge a travel fee to Kennewick?**
-No — I photograph throughout the Tri-Cities at no extra charge. `[VALIDAR — Q53]`
+No. Richland, Kennewick and Pasco are all home coverage — no travel fee anywhere in the Tri-Cities.
 
-**H3: Where do senior sessions happen in Kennewick?**
-Columbia Park, the riverfront, downtown murals and the golden hills at the city's edge — or anywhere that fits your style. We'll choose together during your planning call.
+**H3: What's your editing style?**
+Warm, vibrant, with a film feel. I adjust white balance and apply my signature edit to every image, and final retouching goes on the ones you choose. I'll take care of the temporary things — a blemish, a shirt bunching oddly — but I won't make you look like someone else.
 
-**H3: What time are Kennewick sessions?**
-Golden hour — roughly the last hour before sunset, when the light over the Columbia turns warm and soft.
+**H3: What time of day do Kennewick sessions happen?**
+Golden hour — the last stretch of warm light before sunset. Exact timing shifts with the season, and I plan each session to the minute.
 
-### CTA final
+**H3: When should I book?**
+Four to six weeks ahead for most sessions. May through October is peak season here and fall dates go first.
 
-**H2:** Let's Find Your Light in Kennewick
+---
+
+**H2: Let's Plan Yours**
+
+If the warm, golden version is the one you've been picturing, I'd love to hear about your session.
+
 **CTA:** Start planning → `/contact/`
 
 ---
 
-## Internal links
+## Internal links publicados
 
-- Entrantes: Home (footer), journal locations, Richland/Pasco (crosslink).
-- Salientes: 5 páginas de servicio · `/journal/family-photo-locations-tri-cities/` · `/contact/`.
+1. `/about/` — desde `My work is the other thing`
+2. `/journal/family-photo-locations-tri-cities/` — desde `the specific place matters less than the hour`
+3. `/family-photographer-tri-cities-wa/` — desde `For families`
+4. Cinco páginas de servicio — una fila enlazada por servicio
+5. `/contact/` — CTA final
 
-## Alt texts (ejemplos)
+El `<main>` contiene exactamente nueve anchors: tres contextuales, cinco de servicio y el CTA final. La acción del hero es un botón local y no añade un décimo anchor.
 
-- `Family session at golden hour in Columbia Park, Kennewick, WA`
-- `Senior pictures in the golden hills at the edge of Kennewick`
-- `Branding photography session in a downtown Kennewick shop`
+## Fotografías y alt texts publicados
+
+Las fotografías funcionan como portafolio general de Tri-Cities y no prueban una locación Kennewick. Los alt texts son descripciones visuales literales:
+
+- `Two adults embracing their baby beneath a glowing evening sky.`
+- `Lisa holding a camera to her eye and a takeaway cup while photographing outdoors.`
+- `Two adults holding a young child in warm backlight.`
+- `Young woman in a black dress standing against blurred autumn foliage.`
+- `A couple laughing together in backlit evening light beside a rocky bluff.`
 
 ## Schema JSON-LD
 
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "name": "Kennewick WA Photographer",
-      "url": "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
-      "about": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "spatialCoverage": {"@type": "City", "name": "Kennewick", "containedInPlace": {"@type": "State", "name": "Washington"}}
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itsakeeperphotography.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Kennewick Photographer", "item": "https://www.itsakeeperphotography.com/kennewick-wa-photographer/"}
-      ]
-    }
-  ]
-}
-```
+La ruta publica el grafo base compartido (`LocalBusiness`, `WebSite`, `WebPage`), más `Service`, `BreadcrumbList` y `FAQPage`. `Service.areaServed` declara Kennewick dentro de Washington; no se publican `streetAddress`, `Review` ni `AggregateRating`. Las cuatro preguntas visibles alimentan el mismo arreglo que `FAQPage`, sin paráfrasis ni omisiones.
+
+## Nota estratégica
+
+La sección "If Light and Airy Isn't What You Pictured" es el activo diferencial de esta página. Es honesta — recomienda genuinamente otras opciones cuando el estilo no encaja — y a la vez captura exactamente al cliente que sí es de Lisa.
+
+Es también la razón por la que esta página no puede confundirse con la de Richland ni con la de Pasco.

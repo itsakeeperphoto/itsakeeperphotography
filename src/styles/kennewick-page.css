@@ -1,6 +1,6 @@
 .kennewick-page {
-  --kennewick-line-dark: color-mix(in srgb, var(--color-deep-umber) 38%, transparent);
-  --kennewick-line-light: color-mix(in srgb, var(--color-warm-ivory) 48%, transparent);
+  --kennewick-line-dark: color-mix(in srgb, var(--color-deep-umber) 34%, transparent);
+  --kennewick-line-light: color-mix(in srgb, var(--color-warm-ivory) 42%, transparent);
   color: var(--color-deep-umber);
   background: var(--color-warm-ivory);
   overflow-x: clip;
@@ -16,6 +16,13 @@
   font-weight: var(--font-weight-regular);
 }
 
+.kennewick-page :where(h1, h2) {
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.92;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
 .kennewick-page picture,
 .kennewick-page picture img {
   display: block;
@@ -29,463 +36,430 @@
 
 .kennewick-shell {
   position: relative;
-  width: min(calc(100% - 5rem), 78rem);
+  width: min(calc(100% - 5rem), 82.5rem);
   margin-inline: auto;
-}
-
-.kennewick-eyebrow,
-.kennewick-spots__index,
-.kennewick-spot__number,
-.kennewick-faq__label,
-.kennewick-faq__number {
-  font-family: var(--font-utility);
-  font-size: 0.8125rem;
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.22em;
-  line-height: 1.25;
-  text-transform: uppercase;
-}
-
-.kennewick-eyebrow::before,
-.kennewick-faq__label::before {
-  display: block;
-  width: 3.75rem;
-  height: 1px;
-  margin-bottom: 1.4rem;
-  background: currentColor;
-  content: "";
-  opacity: 0.72;
 }
 
 .kennewick-prose {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.35rem;
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  font-size: clamp(1.0625rem, 1.32vw, 1.25rem);
   font-style: italic;
   line-height: 1.62;
 }
 
-.kennewick-print {
-  padding: 0.65rem 0.65rem 1.4rem;
-  background: var(--color-warm-ivory);
+.kennewick-page :where(
+  .kennewick-hero__copy,
+  .kennewick-intro__copy,
+  .kennewick-style__copy,
+  .kennewick-setting__copy,
+  .kennewick-directory__row,
+  .kennewick-faq__list,
+  .kennewick-final__copy
+) {
+  min-width: 0;
 }
 
-.kennewick-tape {
-  position: absolute;
-  z-index: 5;
-  display: block;
-  width: 6.5rem;
-  height: 1.55rem;
-  background: color-mix(in srgb, var(--color-weathered-sand) 78%, transparent);
-  clip-path: polygon(2% 8%, 98% 0, 100% 86%, 3% 100%, 0 57%);
-  transform-origin: center;
+.kennewick-prose a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color 200ms var(--ease-ui), text-underline-offset 200ms var(--ease-ui);
 }
 
-.kennewick-text-link {
+.kennewick-prose em {
+  font-weight: var(--font-weight-medium);
+}
+
+.kennewick-page :where(a, button, summary):focus-visible {
+  outline: var(--outline-focus-width) solid var(--color-focus-ring);
+  outline-offset: var(--outline-focus-offset);
+}
+
+/* The first view is one clear choice: exact copy beside a complete vertical portrait. */
+
+.kennewick-hero {
+  --color-focus-ring: var(--color-focus-ring-light);
+  color: var(--color-warm-ivory);
+  background: var(--color-deep-umber);
+}
+
+.kennewick-hero__grid {
+  display: grid;
+  min-height: calc(100svh - var(--header-height));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: center;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.kennewick-hero__copy {
+  z-index: 2;
+  grid-column: 1 / 7;
+  padding-right: clamp(1rem, 4vw, 4rem);
+}
+
+.kennewick-hero__copy h1 {
+  max-width: 9ch;
+  font-size: clamp(3.6rem, 6.2vw, 6.6rem);
+}
+
+.kennewick-hero__copy > p {
+  max-width: 35rem;
+  margin-top: 2.15rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 1.55vw, 1.35rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.kennewick-hero__cta {
   display: inline-flex;
   min-height: var(--minimum-hit-area);
   align-items: center;
-  border-bottom: 1px solid currentColor;
+  gap: 1.1rem;
+  margin-top: 2.5rem;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid var(--color-warm-ivory);
+  border-radius: 0;
   color: inherit;
+  background: transparent;
   font-family: var(--font-utility);
   font-size: var(--font-size-button);
   letter-spacing: var(--tracking-button);
-  line-height: 1.35;
-  text-decoration: none;
+  line-height: 1;
   text-transform: uppercase;
-  transition: color 220ms var(--ease-ui), transform 220ms var(--ease-ui);
+  cursor: pointer;
+  transition: color 200ms var(--ease-ui), background-color 200ms var(--ease-ui);
 }
 
-/* Local introduction: the crossing rule is held by the panorama and front print. */
+.kennewick-hero__cta svg {
+  flex: 0 0 auto;
+  transition: transform 200ms var(--ease-ui);
+}
+
+.kennewick-hero__media {
+  width: min(100%, 29rem);
+  grid-column: 8 / 13;
+  justify-self: end;
+  padding: 0.625rem;
+  border: 1px solid var(--kennewick-line-light);
+}
+
+.kennewick-hero__media picture,
+.kennewick-hero__media img {
+  aspect-ratio: 7 / 10;
+}
+
+.kennewick-hero__media img {
+  object-position: 50% 50%;
+}
+
+/* Local context stays grounded and spacious; the photograph supports Lisa, not a location claim. */
 
 .kennewick-intro {
-  padding: 8rem 0 9.5rem;
+  padding-block: clamp(7.5rem, 10vw, 10rem);
   background: var(--color-weathered-sand);
 }
 
-.kennewick-intro__inner {
+.kennewick-intro__grid {
   display: grid;
-  grid-template-columns: minmax(23rem, 0.78fr) minmax(34rem, 1.22fr);
-  gap: clamp(4rem, 7vw, 7.5rem);
-  align-items: center;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
 }
 
 .kennewick-intro__copy {
-  position: relative;
-  z-index: 3;
+  grid-column: 1 / 6;
 }
 
 .kennewick-intro__copy h2 {
-  max-width: 11ch;
-  margin: 1.4rem 0 2.15rem;
-  font-size: clamp(3.15rem, 4.6vw, 5rem);
-  letter-spacing: var(--tracking-heading);
-  line-height: 0.94;
-  text-transform: uppercase;
-  text-wrap: balance;
+  max-width: 10.5ch;
+  margin-bottom: 2.25rem;
+  font-size: clamp(3.25rem, 5.25vw, 5.5rem);
 }
 
 .kennewick-intro__media {
-  position: relative;
-  min-height: 40rem;
-}
-
-.kennewick-intro__rule {
-  position: absolute;
-  z-index: 0;
-  top: 47%;
-  right: -4rem;
-  left: -4rem;
-  height: 1px;
-  background: var(--kennewick-line-dark);
-}
-
-.kennewick-intro__landscape {
-  position: absolute;
-  z-index: 1;
-  top: 1.5rem;
-  right: 0;
-  width: 93%;
-  padding: 0.7rem;
+  grid-column: 7 / 13;
+  margin-top: 5rem;
+  padding: 0.625rem;
   border: 1px solid var(--kennewick-line-dark);
 }
 
-.kennewick-intro__landscape picture,
-.kennewick-intro__landscape img {
-  aspect-ratio: 16 / 10;
+.kennewick-intro__media picture,
+.kennewick-intro__media img {
+  aspect-ratio: 3 / 2;
 }
 
-.kennewick-intro__landscape img {
-  object-position: 50% 54%;
+.kennewick-intro__media img {
+  object-position: 50% 45%;
 }
 
-.kennewick-intro__print {
+/* Signature device: one panorama makes controlled contact with one arch. */
+
+.kennewick-style {
+  padding-block: clamp(8rem, 11vw, 11rem);
+  background: var(--color-warm-ivory);
+}
+
+.kennewick-style__header {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  margin-bottom: clamp(4rem, 6vw, 6.5rem);
+}
+
+.kennewick-style__header h2 {
+  max-width: 12ch;
+  grid-column: 1 / 10;
+  font-size: clamp(3.5rem, 6.25vw, 6.6rem);
+}
+
+.kennewick-style__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
+}
+
+.kennewick-style__copy {
+  z-index: 4;
+  grid-column: 1 / 5;
+}
+
+.kennewick-style__media {
+  position: relative;
+  min-height: 39rem;
+  grid-column: 6 / 13;
+}
+
+.kennewick-style__panorama {
+  position: absolute;
+  z-index: 2;
+  top: 4.5rem;
+  right: 0;
+  left: 0;
+  padding: 0.55rem;
+  border: 1px solid var(--kennewick-line-dark);
+  background: var(--color-warm-ivory);
+}
+
+.kennewick-style__panorama picture,
+.kennewick-style__panorama img {
+  aspect-ratio: 5 / 2;
+}
+
+.kennewick-style__panorama img {
+  object-position: 50% 52%;
+}
+
+.kennewick-style__arch {
   position: absolute;
   z-index: 3;
-  bottom: 0;
-  left: 0;
-  width: 39%;
-  transform: rotate(-2deg);
-}
-
-.kennewick-intro__print picture,
-.kennewick-intro__print img {
-  aspect-ratio: 4 / 5;
-}
-
-.kennewick-intro__print img {
-  object-position: 50% 44%;
-}
-
-.kennewick-tape--intro {
-  top: -0.8rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(-7deg);
-}
-
-/* Kennewick field notes: three places, three image geometries, one connected route. */
-
-.kennewick-spots {
-  padding: 8.75rem 0 9rem;
-  background: var(--color-warm-ivory);
-}
-
-.kennewick-spots__heading {
-  display: grid;
-  max-width: 63rem;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  align-items: start;
-  margin-bottom: 5.5rem;
-}
-
-.kennewick-spots__index {
-  padding-top: 1rem;
-  color: var(--color-clay);
-}
-
-.kennewick-spots__heading h2 {
-  max-width: 12ch;
-  font-size: clamp(3.5rem, 6.2vw, 6.4rem);
-  letter-spacing: var(--tracking-heading);
-  line-height: 0.9;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-
-.kennewick-spots__route {
-  position: relative;
-  display: grid;
-  gap: 7.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.kennewick-spots__route::before {
-  position: absolute;
-  z-index: 0;
-  top: 2rem;
-  bottom: 2rem;
-  left: 50%;
-  width: 1px;
-  background: var(--kennewick-line-dark);
-  content: "";
-}
-
-.kennewick-spot {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.88fr);
-  gap: clamp(3.5rem, 8vw, 8rem);
-  align-items: center;
-}
-
-.kennewick-spot--2 {
-  grid-template-columns: minmax(20rem, 0.88fr) minmax(0, 1.12fr);
-}
-
-.kennewick-spot--2 .kennewick-spot__media {
-  grid-column: 2;
-}
-
-.kennewick-spot--2 .kennewick-spot__copy {
-  grid-row: 1;
-  grid-column: 1;
-  justify-self: end;
-}
-
-.kennewick-spot__media {
-  position: relative;
-  width: 100%;
-  background: var(--color-warm-ivory);
-}
-
-.kennewick-spot--1 .kennewick-spot__media {
-  height: 27rem;
-  padding: 0.7rem;
-  border: 1px solid var(--kennewick-line-dark);
-}
-
-.kennewick-spot--1 .kennewick-spot__media img {
-  object-position: 50% 46%;
-}
-
-.kennewick-spot__media--arch {
-  width: 80%;
-  height: 39rem;
-  justify-self: end;
+  top: 13.75rem;
+  right: 6%;
+  width: 42%;
   overflow: hidden;
   border-radius: 999px 999px 0 0;
 }
 
-.kennewick-spot__media--arch img {
-  object-position: 50% 42%;
+.kennewick-style__arch picture,
+.kennewick-style__arch img {
+  aspect-ratio: 3 / 4;
 }
 
-.kennewick-spot--3 .kennewick-spot__media {
-  width: 78%;
-  justify-self: end;
-  transform: rotate(-1.5deg);
+.kennewick-style__arch img {
+  object-position: 50% 36%;
 }
 
-.kennewick-spot--3 .kennewick-spot__media picture,
-.kennewick-spot--3 .kennewick-spot__media img {
-  aspect-ratio: 4 / 5;
+.kennewick-style__line {
+  position: absolute;
+  z-index: 1;
+  top: 58%;
+  right: -2rem;
+  left: -2rem;
+  height: 1px;
+  background: var(--kennewick-line-dark);
 }
 
-.kennewick-spot--3 .kennewick-spot__media img {
-  object-position: 50% 45%;
+/* The practical setting section is intentionally text-led: no generic image stands in as local proof. */
+
+.kennewick-setting {
+  --color-focus-ring: var(--color-focus-ring-light);
+  padding-block: clamp(8rem, 11vw, 11rem);
+  color: var(--color-warm-ivory);
+  background: var(--color-warm-earth);
 }
 
-.kennewick-tape--spot {
-  top: -0.75rem;
-  right: 1.25rem;
-  transform: rotate(13deg);
+.kennewick-setting__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
 }
 
-.kennewick-spot__copy {
-  position: relative;
-  width: min(100%, 27rem);
-  padding: 2.25rem 0;
-  background: var(--color-warm-ivory);
+.kennewick-setting__header {
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+  grid-column: 1 / 6;
 }
 
-.kennewick-spot__number {
-  color: var(--color-clay);
+.kennewick-setting__header h2 {
+  max-width: 10ch;
+  font-size: clamp(3.3rem, 5.5vw, 5.8rem);
 }
 
-.kennewick-spot__copy h3 {
-  margin: 1.2rem 0 1.4rem;
-  font-size: clamp(2.05rem, 3.4vw, 3.4rem);
-  line-height: 0.98;
-  text-wrap: balance;
+.kennewick-setting__copy {
+  grid-column: 7 / 13;
+  gap: 0;
+  border-top: 1px solid var(--kennewick-line-light);
 }
 
-.kennewick-spot__copy p {
-  font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.35vw, 1.2rem);
-  font-style: italic;
-  line-height: 1.6;
+.kennewick-setting__copy p {
+  padding-block: 1.75rem;
+  border-bottom: 1px solid var(--kennewick-line-light);
 }
 
-.kennewick-spots__guide {
-  margin: 5rem 0 0 50%;
-}
+/* Service navigation is a single editorial ledger, not a grid of cards. */
 
-/* Service directory: the horizontal rule belongs to both photographs. */
-
-.kennewick-services {
-  padding: 9rem 0 9.5rem;
+.kennewick-directory {
+  --color-focus-ring: var(--color-focus-ring-light);
+  padding-block: clamp(8rem, 10vw, 10rem);
   color: var(--color-warm-ivory);
   background: var(--color-muted-olive);
 }
 
-.kennewick-services__inner {
-  display: grid;
-  grid-template-columns: minmax(31rem, 1.08fr) minmax(25rem, 0.92fr);
-  gap: clamp(4.5rem, 8vw, 8.5rem);
-  align-items: center;
+.kennewick-directory__header {
+  margin-bottom: clamp(3.5rem, 6vw, 6rem);
 }
 
-.kennewick-services__media {
-  position: relative;
-  min-height: 45rem;
-}
-
-.kennewick-services__rule {
-  position: absolute;
-  z-index: 0;
-  top: 54%;
-  right: -5rem;
-  left: -4rem;
-  height: 1px;
-  background: var(--kennewick-line-light);
-}
-
-.kennewick-services__arch {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 78%;
-  height: 39rem;
-  overflow: hidden;
-  border-radius: 999px 999px 0 0;
-}
-
-.kennewick-services__arch img {
-  object-position: 50% 42%;
-}
-
-.kennewick-services__print {
-  position: absolute;
-  z-index: 3;
-  right: 0;
-  bottom: 0;
-  width: 43%;
-  transform: rotate(1.7deg);
-}
-
-.kennewick-services__print picture,
-.kennewick-services__print img {
-  aspect-ratio: 4 / 5;
-}
-
-.kennewick-services__print img {
-  object-position: 50% 35%;
-}
-
-.kennewick-tape--services {
-  top: -0.8rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(-6deg);
-}
-
-.kennewick-services__copy h2 {
+.kennewick-directory__header h2 {
   max-width: 12ch;
-  margin-bottom: 3.4rem;
-  font-size: clamp(3.2rem, 5vw, 5.2rem);
-  letter-spacing: var(--tracking-heading);
-  line-height: 0.93;
-  text-transform: uppercase;
+  font-size: clamp(3.4rem, 6vw, 6.25rem);
 }
 
-.kennewick-services__copy h2 span {
-  display: block;
-}
-
-.kennewick-services__list {
+.kennewick-directory__list {
   margin: 0;
   padding: 0;
   border-bottom: 1px solid var(--kennewick-line-light);
-  border-left: 1px solid var(--kennewick-line-light);
   list-style: none;
 }
 
-.kennewick-services__list li {
-  display: grid;
-  min-height: 4.75rem;
-  grid-template-columns: 3.8rem minmax(0, 1fr);
-  align-items: center;
+.kennewick-directory__list li {
   border-top: 1px solid var(--kennewick-line-light);
 }
 
-.kennewick-services__list li > span {
-  align-self: stretch;
+.kennewick-directory__row {
+  display: grid;
+  min-height: 6.25rem;
+  grid-template-columns: 4.5rem minmax(14rem, 0.85fr) minmax(18rem, 1.15fr) 4rem;
+  align-items: stretch;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 200ms var(--ease-ui);
+}
+
+.kennewick-directory__number,
+.kennewick-directory__arrow {
   display: grid;
   place-items: center;
+}
+
+.kennewick-directory__number {
   border-right: 1px solid var(--kennewick-line-light);
   font-family: var(--font-utility);
   font-size: 0.75rem;
   letter-spacing: 0.18em;
 }
 
-.kennewick-services__list :where(a, strong) {
+.kennewick-directory__name,
+.kennewick-directory__detail {
   display: flex;
-  min-height: 4.75rem;
+  min-width: 0;
   align-items: center;
-  padding: 0.9rem 1.35rem;
-  color: inherit;
+  padding: 1.25rem clamp(1rem, 2vw, 1.75rem);
+}
+
+.kennewick-directory__name {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 1.8vw, 1.85rem);
-  font-weight: var(--font-weight-regular);
-  line-height: 1.08;
-  text-decoration: none;
+  font-size: clamp(1.7rem, 2.5vw, 2.55rem);
+  line-height: 1.02;
 }
 
-.kennewick-services__list a {
-  transition: color 220ms var(--ease-ui), transform 220ms var(--ease-ui);
+.kennewick-directory__detail {
+  border-left: 1px solid var(--kennewick-line-light);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  font-style: italic;
+  line-height: 1.35;
 }
 
-/* FAQ: every horizontal rule terminates at the left ledger line. */
+.kennewick-directory__arrow {
+  border-left: 1px solid var(--kennewick-line-light);
+}
 
-.kennewick-faq {
-  padding: 8.75rem 0 9rem;
+.kennewick-directory__arrow svg {
+  transition: transform 200ms var(--ease-ui);
+}
+
+/* The optional gallery has no footprint until every supplied image is verified. */
+
+.kennewick-recent {
+  padding-block: clamp(8rem, 10vw, 10rem);
   color: var(--color-warm-ivory);
   background: var(--color-walnut);
 }
 
-.kennewick-faq__inner {
+.kennewick-recent h2 {
+  max-width: 11ch;
+  font-size: clamp(3.4rem, 6vw, 6.25rem);
+}
+
+.kennewick-recent__gallery {
   display: grid;
-  grid-template-columns: minmax(22rem, 0.8fr) minmax(34rem, 1.2fr);
-  gap: clamp(4rem, 8vw, 8rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  margin-top: 4rem;
+}
+
+.kennewick-recent__gallery figure,
+.kennewick-recent__gallery picture,
+.kennewick-recent__gallery img {
+  aspect-ratio: 4 / 5;
+}
+
+/* Questions use the same disciplined ledger vocabulary, on a deeper tonal field. */
+
+.kennewick-faq {
+  --color-focus-ring: var(--color-focus-ring-light);
+  padding-block: clamp(8rem, 10vw, 10rem);
+  color: var(--color-warm-ivory);
+  background: var(--color-walnut);
+}
+
+.kennewick-faq__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
   align-items: start;
 }
 
-.kennewick-faq__heading h2 {
-  max-width: 9ch;
-  margin-top: 1.5rem;
-  font-size: clamp(3.35rem, 5.6vw, 5.7rem);
-  letter-spacing: var(--tracking-heading);
-  line-height: 0.92;
-  text-transform: uppercase;
+.kennewick-faq__header {
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+  grid-column: 1 / 5;
 }
 
-.kennewick-faq__ledger {
+.kennewick-faq__header h2 {
+  max-width: 9ch;
+  font-size: clamp(3.3rem, 5.35vw, 5.6rem);
+}
+
+.kennewick-faq__list {
+  grid-column: 6 / 13;
   border-bottom: 1px solid var(--kennewick-line-light);
-  border-left: 1px solid var(--kennewick-line-light);
 }
 
 .kennewick-faq details {
@@ -496,7 +470,7 @@
   display: grid;
   min-height: 6.5rem;
   grid-template-columns: 4rem minmax(0, 1fr) 3.75rem;
-  align-items: center;
+  align-items: stretch;
   cursor: pointer;
   list-style: none;
 }
@@ -505,23 +479,32 @@
   display: none;
 }
 
-.kennewick-faq__number {
-  align-self: stretch;
+.kennewick-faq__number,
+.kennewick-faq__mark {
   display: grid;
   place-items: center;
-  border-right: 1px solid var(--kennewick-line-light);
-  color: var(--color-weathered-sand);
 }
 
-.kennewick-faq summary h3 {
+.kennewick-faq__number {
+  border-right: 1px solid var(--kennewick-line-light);
+  color: var(--color-weathered-sand);
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+}
+
+.kennewick-faq__question {
+  display: flex;
+  min-width: 0;
+  align-items: center;
   padding: 1.25rem 1.5rem;
-  font-size: clamp(1.75rem, 2.7vw, 2.65rem);
-  line-height: 1.04;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.45vw, 2.5rem);
+  line-height: 1.06;
 }
 
 .kennewick-faq__mark {
   position: relative;
-  align-self: stretch;
   border-left: 1px solid var(--kennewick-line-light);
 }
 
@@ -535,7 +518,7 @@
   background: currentColor;
   content: "";
   transform: translate(-50%, -50%);
-  transition: transform 220ms var(--ease-ui);
+  transition: transform 200ms var(--ease-ui);
 }
 
 .kennewick-faq__mark::after {
@@ -551,107 +534,99 @@
 }
 
 .kennewick-faq__answer p {
-  max-width: 40rem;
+  max-width: 42rem;
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.35vw, 1.2rem);
+  font-size: clamp(1.0625rem, 1.32vw, 1.2rem);
   font-style: italic;
   line-height: 1.62;
 }
 
-/* Final invitation: one square construction frame over warm portrait light. */
+/* Final invitation keeps the photograph complete and the action singular. */
 
 .kennewick-final {
-  position: relative;
-  min-height: 46rem;
+  --color-focus-ring: var(--color-focus-ring-light);
+  padding-block: clamp(7rem, 10vw, 10rem);
   color: var(--color-warm-ivory);
   background: var(--color-deep-umber);
-  overflow: hidden;
 }
 
-.kennewick-final__background,
-.kennewick-final__background picture,
-.kennewick-final__background img,
-.kennewick-final__wash {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.kennewick-final__background-image {
-  object-position: 50% 46%;
-}
-
-.kennewick-final__wash {
-  background: color-mix(in srgb, var(--color-deep-umber) 68%, transparent);
-}
-
-.kennewick-final__inner {
-  position: relative;
-  z-index: 2;
+.kennewick-final__grid {
   display: grid;
-  min-height: 46rem;
-  place-items: center;
-  padding-block: 6rem;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: center;
 }
 
-.kennewick-final__frame {
-  width: min(100%, 58rem);
-  padding: clamp(3rem, 6vw, 5.5rem);
+.kennewick-final__media {
+  grid-column: 1 / 8;
+  padding: 0.625rem;
   border: 1px solid var(--kennewick-line-light);
-  text-align: center;
 }
 
-.kennewick-final__script {
-  margin-bottom: 0.55rem;
-  color: var(--color-weathered-sand);
-  font-family: var(--font-script);
-  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
-  line-height: 0.85;
+.kennewick-final__media picture,
+.kennewick-final__media img {
+  aspect-ratio: 3 / 2;
 }
 
-.kennewick-final__frame h2 {
-  max-width: 10ch;
-  margin-inline: auto;
-  font-size: clamp(3.3rem, 6.5vw, 6.6rem);
-  letter-spacing: var(--tracking-heading);
-  line-height: 0.9;
-  text-transform: uppercase;
-  text-wrap: balance;
+.kennewick-final__media img {
+  object-position: 50% 50%;
 }
 
-.kennewick-final__frame > p:not(.kennewick-final__script) {
-  max-width: 42rem;
-  margin: 2rem auto 0;
+.kennewick-final__copy {
+  grid-column: 9 / 13;
+}
+
+.kennewick-final__copy h2 {
+  max-width: 8ch;
+  font-size: clamp(3.3rem, 5.5vw, 5.8rem);
+}
+
+.kennewick-final__copy > p {
+  max-width: 31rem;
+  margin-top: 2rem;
   font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.35vw, 1.2rem);
+  font-size: clamp(1.0625rem, 1.35vw, 1.22rem);
   font-style: italic;
   line-height: 1.6;
 }
 
 .kennewick-final .outline-button {
-  margin-top: 2.75rem;
+  margin-top: 2.5rem;
   border-color: var(--color-warm-ivory);
   color: var(--color-warm-ivory);
 }
 
-.kennewick-page :where(a, button, summary):focus-visible {
-  outline: var(--outline-focus-width) solid var(--color-focus-ring);
-  outline-offset: var(--outline-focus-offset);
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .kennewick-text-link:hover {
+  .kennewick-prose a:hover {
     color: var(--color-clay);
-    transform: translateX(0.25rem);
+    text-underline-offset: 0.34em;
   }
 
-  .kennewick-services__list a:hover {
+  .kennewick-setting .kennewick-prose a:hover {
     color: var(--color-warm-ivory);
+  }
+
+  .kennewick-hero__cta:hover {
+    color: var(--color-deep-umber);
+    background: var(--color-warm-ivory);
+  }
+
+  .kennewick-hero__cta:hover svg {
+    transform: translateY(0.2rem);
+  }
+
+  .kennewick-directory__row:hover {
+    background: color-mix(in srgb, var(--color-warm-ivory) 8%, transparent);
+  }
+
+  .kennewick-directory__row:hover .kennewick-directory__name {
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.3em;
-    transform: translateX(0.3rem);
+    text-underline-offset: 0.25em;
+  }
+
+  .kennewick-directory__row:hover .kennewick-directory__arrow svg {
+    transform: translate(0.2rem, -0.2rem);
   }
 
   .kennewick-final .outline-button:hover {
@@ -666,91 +641,123 @@
     width: min(calc(100% - 3.5rem), 70rem);
   }
 
-  .kennewick-intro__inner,
-  .kennewick-services__inner,
-  .kennewick-faq__inner {
-    gap: 4rem;
+  .kennewick-hero__copy {
+    grid-column: 1 / 7;
+    padding-right: 1.5rem;
   }
 
-  .kennewick-spots__route {
-    gap: 6.5rem;
+  .kennewick-hero__media {
+    width: min(100%, 27rem);
+    grid-column: 8 / 13;
   }
 
-  .kennewick-spot {
-    gap: 5rem;
+  .kennewick-style__media {
+    min-height: 35rem;
+  }
+
+  .kennewick-directory__row {
+    grid-template-columns: 4rem minmax(13rem, 0.9fr) minmax(17rem, 1.1fr) 3.75rem;
   }
 }
 
 @media (max-width: 1050px) {
+  .kennewick-shell {
+    width: calc(100% - 5rem);
+  }
+
+  .kennewick-hero__grid,
+  .kennewick-intro__grid,
+  .kennewick-style__grid,
+  .kennewick-setting__grid,
+  .kennewick-faq__grid,
+  .kennewick-final__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .kennewick-hero__grid {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  }
+
+  .kennewick-hero__grid {
+    min-height: auto;
+    padding-block: 6.5rem;
+  }
+
+  .kennewick-hero__copy,
+  .kennewick-hero__media,
+  .kennewick-intro__copy,
+  .kennewick-intro__media,
+  .kennewick-style__copy,
+  .kennewick-style__media,
+  .kennewick-setting__header,
+  .kennewick-setting__copy,
+  .kennewick-faq__header,
+  .kennewick-faq__list,
+  .kennewick-final__media,
+  .kennewick-final__copy {
+    grid-column: auto;
+  }
+
+  .kennewick-hero__copy {
+    padding-right: 0;
+  }
+
+  .kennewick-hero__copy h1 {
+    max-width: none;
+    font-size: clamp(3.1rem, 5.8vw, 3.75rem);
+  }
+
+  .kennewick-hero__media {
+    width: min(100%, 23rem);
+  }
+
   .kennewick-intro,
-  .kennewick-spots,
-  .kennewick-services,
-  .kennewick-faq {
+  .kennewick-style,
+  .kennewick-setting,
+  .kennewick-directory,
+  .kennewick-faq,
+  .kennewick-final {
     padding-block: 7rem;
   }
 
-  .kennewick-intro__inner,
-  .kennewick-services__inner,
-  .kennewick-faq__inner {
-    grid-template-columns: 1fr;
-  }
-
-  .kennewick-intro__copy {
-    width: min(100%, 42rem);
-  }
-
-  .kennewick-intro__copy h2 {
-    max-width: 13ch;
-  }
-
   .kennewick-intro__media {
-    width: min(100%, 49rem);
-    min-height: 38rem;
-    justify-self: end;
+    margin-top: 3rem;
   }
 
-  .kennewick-spots__heading {
-    grid-template-columns: 5.5rem minmax(0, 1fr);
+  .kennewick-style__header {
+    grid-template-columns: 1fr;
+    margin-bottom: 4.5rem;
   }
 
-  .kennewick-spots__route::before {
-    left: 48%;
+  .kennewick-style__header h2 {
+    grid-column: 1;
   }
 
-  .kennewick-spot,
-  .kennewick-spot--2 {
-    grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.82fr);
-    gap: 4rem;
+  .kennewick-style__media {
+    min-height: 29rem;
   }
 
-  .kennewick-spot--2 {
-    grid-template-columns: minmax(17rem, 0.82fr) minmax(0, 1fr);
+  .kennewick-style__panorama {
+    top: 3rem;
   }
 
-  .kennewick-spot--1 .kennewick-spot__media {
-    height: 23rem;
+  .kennewick-style__arch {
+    top: 10.5rem;
+    width: 45%;
   }
 
-  .kennewick-spot__media--arch {
-    height: 34rem;
+  .kennewick-setting__header,
+  .kennewick-faq__header {
+    position: static;
   }
 
-  .kennewick-services__media {
-    width: min(100%, 48rem);
-    min-height: 42rem;
-    justify-self: center;
+  .kennewick-directory__row {
+    grid-template-columns: 3.75rem minmax(12rem, 0.82fr) minmax(15rem, 1.18fr) 3.5rem;
   }
 
-  .kennewick-services__copy {
-    width: min(100%, 45rem);
-  }
-
-  .kennewick-faq__heading {
-    width: min(100%, 39rem);
-  }
-
-  .kennewick-faq__heading h2 {
-    max-width: 12ch;
+  .kennewick-faq__header h2 {
+    max-width: 10ch;
   }
 }
 
@@ -759,219 +766,179 @@
     width: calc(100% - 2rem);
   }
 
+  .kennewick-hero__grid,
+  .kennewick-intro__grid,
+  .kennewick-style__grid,
+  .kennewick-setting__grid,
+  .kennewick-faq__grid,
+  .kennewick-final__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3.5rem;
+  }
+
+  .kennewick-hero__grid {
+    padding-block: 4.75rem;
+  }
+
+  .kennewick-hero__copy h1 {
+    max-width: none;
+    font-size: clamp(2rem, 10.25vw, 2.6rem);
+  }
+
+  .kennewick-hero__copy > p {
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+  }
+
+  .kennewick-hero__cta {
+    margin-top: 2rem;
+  }
+
+  .kennewick-hero__media {
+    width: 100%;
+    max-width: none;
+  }
+
   .kennewick-intro,
-  .kennewick-spots,
-  .kennewick-services,
-  .kennewick-faq {
-    padding-block: 5.25rem;
+  .kennewick-style,
+  .kennewick-setting,
+  .kennewick-directory,
+  .kennewick-faq,
+  .kennewick-final {
+    padding-block: 5.5rem;
   }
 
   .kennewick-intro__copy h2,
-  .kennewick-spots__heading h2,
-  .kennewick-services__copy h2,
-  .kennewick-faq__heading h2 {
-    font-size: clamp(2.85rem, 14vw, 4.3rem);
+  .kennewick-style__header h2,
+  .kennewick-setting__header h2,
+  .kennewick-directory__header h2,
+  .kennewick-faq__header h2,
+  .kennewick-final__copy h2 {
+    font-size: clamp(2.8rem, 13.5vw, 4rem);
   }
 
   .kennewick-intro__media {
-    min-height: 30rem;
+    margin-top: 0;
   }
 
-  .kennewick-intro__rule {
-    top: 48%;
-    right: 0;
-    left: 0;
+  .kennewick-style__header {
+    margin-bottom: 3.5rem;
   }
 
-  .kennewick-intro__landscape {
-    top: 1rem;
-    width: 92%;
+  .kennewick-style__grid {
+    gap: 3.75rem;
   }
 
-  .kennewick-intro__print {
-    width: 43%;
+  .kennewick-style__media {
+    display: grid;
+    min-height: 0;
+    gap: 1rem;
   }
 
-  .kennewick-spots__heading {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-bottom: 4rem;
+  .kennewick-style__panorama,
+  .kennewick-style__arch {
+    position: relative;
+    inset: auto;
   }
 
-  .kennewick-spots__index {
-    padding-top: 0;
-  }
-
-  .kennewick-spots__route {
-    gap: 5.25rem;
-    padding-left: 1.15rem;
-  }
-
-  .kennewick-spots__route::before {
-    top: 0;
-    bottom: 0;
-    left: 1.15rem;
-  }
-
-  .kennewick-spot,
-  .kennewick-spot--2 {
-    grid-template-columns: 1fr;
-    gap: 2.25rem;
-  }
-
-  .kennewick-spot--2 .kennewick-spot__media,
-  .kennewick-spot--2 .kennewick-spot__copy {
-    grid-row: auto;
-    grid-column: 1;
-  }
-
-  .kennewick-spot__media {
-    z-index: 2;
-    width: calc(100% - 1.15rem);
-    margin-left: 1.15rem;
-  }
-
-  .kennewick-spot--1 .kennewick-spot__media {
-    height: auto;
-  }
-
-  .kennewick-spot--1 .kennewick-spot__media picture,
-  .kennewick-spot--1 .kennewick-spot__media img {
-    aspect-ratio: 4 / 3;
-  }
-
-  .kennewick-spot__media--arch {
-    width: 78%;
-    height: 30rem;
+  .kennewick-style__arch {
+    width: 62%;
     justify-self: end;
   }
 
-  .kennewick-spot--3 .kennewick-spot__media {
-    width: 72%;
-    justify-self: start;
+  .kennewick-style__line {
+    display: none;
   }
 
-  .kennewick-spot__copy {
-    z-index: 2;
-    width: calc(100% - 1.15rem);
-    margin-left: 1.15rem;
-    padding: 1rem 0;
+  .kennewick-setting__grid {
+    gap: 3rem;
   }
 
-  .kennewick-spots__guide {
-    margin: 4rem 0 0 2.3rem;
+  .kennewick-directory__header {
+    margin-bottom: 3.25rem;
   }
 
-  .kennewick-services__media {
-    min-height: 33rem;
+  .kennewick-directory__row {
+    min-height: 7rem;
+    grid-template-columns: 3.25rem minmax(0, 1fr) 3.25rem;
+    grid-template-rows: auto auto;
   }
 
-  .kennewick-services__rule {
-    right: 0;
-    left: 0;
+  .kennewick-directory__number {
+    grid-row: 1 / 3;
+    grid-column: 1;
   }
 
-  .kennewick-services__arch {
-    width: 76%;
-    height: 29rem;
+  .kennewick-directory__name {
+    grid-row: 1;
+    grid-column: 2;
+    align-items: end;
+    padding: 1.1rem 0.9rem 0.35rem;
+    font-size: clamp(1.45rem, 7.5vw, 1.8rem);
+    overflow-wrap: anywhere;
   }
 
-  .kennewick-services__print {
-    width: 45%;
+  .kennewick-directory__detail {
+    grid-row: 2;
+    grid-column: 2;
+    align-items: start;
+    padding: 0.2rem 0.9rem 1.1rem;
+    border-left: 0;
+    font-size: 1rem;
+    overflow-wrap: anywhere;
   }
 
-  .kennewick-services__copy h2 {
-    margin-bottom: 2.5rem;
+  .kennewick-directory__arrow {
+    grid-row: 1 / 3;
+    grid-column: 3;
   }
 
-  .kennewick-services__list li {
-    grid-template-columns: 3.15rem minmax(0, 1fr);
+  .kennewick-recent__gallery {
+    grid-template-columns: 1fr;
   }
 
-  .kennewick-services__list :where(a, strong) {
-    padding-inline: 1rem;
-    font-size: 1.35rem;
-  }
-
-  .kennewick-faq__ledger {
-    margin-top: 0.5rem;
+  .kennewick-faq__grid {
+    gap: 3.25rem;
   }
 
   .kennewick-faq summary {
     min-height: 5.75rem;
-    grid-template-columns: 3.2rem minmax(0, 1fr) 3.2rem;
+    grid-template-columns: 3.15rem minmax(0, 1fr) 3.15rem;
   }
 
-  .kennewick-faq summary h3 {
+  .kennewick-faq__question {
     padding: 1.1rem 0.9rem;
-    font-size: 1.55rem;
+    font-size: clamp(1.45rem, 7.5vw, 1.8rem);
+    overflow-wrap: anywhere;
   }
 
   .kennewick-faq__answer {
-    padding: 0 1.25rem 1.75rem 4.1rem;
+    padding: 0 1rem 1.75rem 4.05rem;
   }
 
-  .kennewick-final,
-  .kennewick-final__inner {
-    min-height: 40rem;
+  .kennewick-final__grid {
+    gap: 3.5rem;
   }
 
-  .kennewick-final__background-image {
-    object-position: 55% 48%;
+  .kennewick-final__copy > p {
+    margin-top: 1.5rem;
   }
 
-  .kennewick-final__inner {
-    padding-block: 4rem;
-  }
-
-  .kennewick-final__frame {
-    width: calc(100% - 1rem);
-    padding: 3rem 1.25rem;
-  }
-
-  .kennewick-final__frame h2 {
-    font-size: clamp(3rem, 14vw, 4.5rem);
-  }
-}
-
-@media (max-width: 479px) {
-  .kennewick-intro__media {
-    min-height: 26rem;
-  }
-
-  .kennewick-intro__landscape {
-    width: 96%;
-    padding: 0.5rem;
-  }
-
-  .kennewick-intro__print {
-    width: 46%;
-    padding: 0.45rem 0.45rem 1rem;
-  }
-
-  .kennewick-spot__media--arch {
-    height: 25rem;
-  }
-
-  .kennewick-services__media {
-    min-height: 28rem;
-  }
-
-  .kennewick-services__arch {
-    height: 25rem;
-  }
-
-  .kennewick-services__print {
-    padding: 0.45rem 0.45rem 1rem;
-  }
-
-  .kennewick-final__frame h2 {
-    font-size: clamp(2.8rem, 13.5vw, 4rem);
+  .kennewick-final .outline-button {
+    margin-top: 2rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kennewick-page :where(a, .kennewick-faq__mark::before, .kennewick-faq__mark::after) {
+  .kennewick-page *,
+  .kennewick-page *::before,
+  .kennewick-page *::after {
+    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .kennewick-hero__cta svg,
+  .kennewick-directory__arrow svg {
+    transform: none !important;
   }
 }

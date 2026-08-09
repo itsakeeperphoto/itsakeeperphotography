@@ -127,7 +127,11 @@ Componentes especializados existentes:
   Privacy, Thank-you y algunos artículos.
 
 `EditorialHero.astro` materializa la estructura de hero basada en Seniors y es
-compartido por las páginas especializadas anteriores.
+compartido por varias páginas especializadas. Kennewick usa un hero split
+propio dentro de `KennewickPage.astro`: el CTA es un botón de desplazamiento al
+cierre, no un anchor adicional. Su componente exige cinco filas completas de
+servicio, cuatro FAQ y deja la galería futura completamente fuera del DOM
+mientras no todos sus ítems tengan imagen y alt verificados.
 
 ## Contratos externos
 
@@ -226,23 +230,28 @@ indexación/build Tina según el entorno de deploy.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para cinco rutas:
+En `release`, el manifiesto actualmente permite sitemap para seis rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
 - `/richland-wa-photographer/`
+- `/kennewick-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family, Richland y Family Photo Locations;
-Portfolio está excluido de llms. Las otras 15 rutas siguen `draft/noindex`.
+`llms.txt` incluye Homepage, Family, Richland, Kennewick y Family Photo
+Locations; Portfolio está excluido de llms. Las otras 14 rutas siguen
+`draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
 
 `Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.
-No se emiten `Review` ni `AggregateRating` hasta verificar atribución y conteo.
+`src/pages/[slug].astro` añade para Kennewick un `Service` de portrait
+photography con `areaServed` Kennewick/WA y provider enlazado al negocio; no
+declara ubicación física en esa ciudad. No se emiten `Review`,
+`AggregateRating` ni `streetAddress` sin evidencia y autorización.
 
 ## Assets y rendimiento
 

@@ -39,6 +39,10 @@ async (page) => {
     "/reviews/",
     "/contact/",
   ]);
+  const expandedDirectoryPaths = new Set([
+    "/richland-wa-photographer/",
+    "/kennewick-wa-photographer/",
+  ]);
   const report = [];
 
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -190,7 +194,9 @@ async (page) => {
   const failures = report.filter((result) =>
     result.status !== 200 ||
     result.overflow > 0 ||
-    result.internalBodyLinkCount > 4 ||
+    (expandedDirectoryPaths.has(result.pathname)
+      ? result.internalBodyLinkCount !== 9
+      : result.internalBodyLinkCount > 4) ||
     (result.minBodyFontPx !== null && result.minBodyFontPx < 16) ||
     !result.signature ||
     result.placeholderLeak ||
