@@ -420,3 +420,26 @@
   sitio comercial. Las páginas de ciudad y los otros artículos conservan sus
   propios gates. Todo futuro artículo de Journal debe recibir una regla header
   explícita o eliminar la que le corresponda al pasar a producción.
+
+### ADR-031 — “Four Kinds” usa un contact sheet asimétrico y verificable
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada.
+- **Contexto:** El usuario pidió rediseñar la sección con dos referencias de
+  fotografía editorial. La retícula anterior ya era estable, pero seguía
+  leyendo como una imagen principal seguida por tres cards equivalentes y no
+  expresaba la jerarquía, los offsets ni el vacío de las referencias.
+- **Decisión:** Mantener copy y cuatro assets, pero componerlos en 12 columnas:
+  01 dominante 3:2, 02 horizontal desplazada, 03 como único arco y 04 como
+  única impresión con mat marfil. A 768–1050 px se usa 2×2 y a ≤767 px una
+  columna sin offsets. No se fuerzan los paisajes a retrato. Los alt texts se
+  describen literalmente y cada artículo referencia su `h3` con
+  `aria-labelledby`.
+- **Alternativas descartadas:** Copiar cinta, papel rasgado, salpicaduras,
+  rotaciones o sombras de las referencias se descartó por contradecir
+  `DESIGN.md`; conservar cuatro cards equivalentes se descartó por falta de
+  jerarquía; recortar las dos fotos 3:2 como arcos se descartó porque elimina
+  personas o el contexto del río.
+- **Consecuencias:** Esta sección depende de los ratios y safe crops actuales;
+  un reemplazo de asset exige nueva revisión de `object-position`. El QA mínimo
+  queda fijado en 1728, 1440, 1200, 900 y 390 px, con orden 01–04, imágenes
+  completas, cero overflow y cero solapamiento con la sección siguiente.

@@ -3,37 +3,39 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 18:39 -05
+**Última actualización:** 2026-08-08 19:43 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit de implementación/handoff:** `8d5d84f` — `docs: handoff 2026-08-08 — publica guia de localizaciones lista para produccion`
+**Commit de implementación visual:** `c663d68` — `locations updated`
+
+**Commit de accesibilidad/editorial:** `fe1602d` —
+`fix(locations): use literal image descriptions`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** `./scripts/handoff.sh` creó `8d5d84f`, pero `git push` fue
-rechazado con HTTP 403 porque GitHub autenticó la terminal como
-`williammelo533`. Este addendum documental deja `main` cuatro commits por
-delante de `origin/main` una vez commiteado. No se ejecutó ningún deploy ni
-cambio de DNS.
+**Publicación:** la referencia local `origin/main` coincidía con `c663d68` al
+cerrar la implementación visual. Por instrucción expresa del usuario, Codex no
+ejecuta pushes: `fe1602d` y este cierre de contexto quedan como commits locales.
+No se ejecutó deploy ni cambio de DNS.
 
 ---
 
 ## Siguiente paso concreto
 
-Publicar los cuatro commits locales con una identidad que tenga escritura en
-`itsakeeperphoto/itsakeeperphotography` y comprobar en el deploy release que:
+Revisar el rediseño de “Four Kinds” del commit `c663d68` en el entorno que el
+usuario decida desplegar y comprobar que mantiene:
 
-1. la guía responde 200 y mantiene canonical `www` + `index, follow`;
-2. `/sitemap.xml` contiene la guía con `lastmod 2026-08-08`;
-3. el header HTTP no añade `X-Robots-Tag: noindex` a la guía;
-4. Clarity y GA4 reciben una visita real sin contaminar métricas con staging.
+1. la retícula asimétrica completa sobre 1050 px;
+2. el 2×2 de tablet y la columna única móvil sin overflow;
+3. los cuatro encuadres y el orden semántico 01–04;
+4. canonical `www`, `index, follow` y la membresía de sitemap ya aprobados.
 
-Después, priorizar Seniors o la siguiente ruta que Lisa complete. No cambiar
-otra ruta a `ready/index` mientras conserve pendientes o QA incompleto.
+Después, priorizar Seniors o la siguiente ruta que Lisa complete. Los agentes
+deben seguir creando solo commits locales y no hacer push.
 
 ---
 
@@ -54,9 +56,10 @@ otra ruta a `ready/index` mientras conserve pendientes o QA incompleto.
   WebSite, FAQPage y BreadcrumbList.
 - FAQPage es verdadero y válido Schema.org, pero un sitio comercial no debe
   esperar el rich result FAQ restringido por Google.
-- Las seis correcciones visuales solicitadas quedaron aplicadas. Playwright
-  cubrió 1728×963, 1440×1000, 1200×1000, 900×1000 y 390×844 sin overflow ni
-  errores de consola.
+- “Four Kinds” recibió un segundo rediseño basado en las referencias aportadas:
+  contact sheet asimétrico, una sola foto arqueada y una sola impresión con mat.
+  Playwright cubrió 1728×963, 1440×1000, 1200×1000, 900×1000 y 390×844 sin
+  overflow, solapamientos ni errores de consola.
 - La foto del cierre proviene del folder autorizado de Drive
   “Family Session - Richland”; se importó a 2400×1600 y el build genera WebP de
   400, 640, 960 y 1440 px.
@@ -84,8 +87,12 @@ otra ruta a `ready/index` mientras conserve pendientes o QA incompleto.
   `ready/index` con `lastModified: 2026-08-08`.
 - Los spots permanecen anónimos por criterio editorial cerrado; no existe
   pendiente de nombrar Chamna ni se añadieron datos por inferencia.
-- “Four Kinds” usa una retícula medida: una imagen principal y tres columnas
-  iguales en desktop, dos columnas en tablet y una columna uniforme en móvil.
+- “Four Kinds” usa una retícula editorial de 12 columnas: 01 domina a la
+  izquierda, 02 se desplaza a la derecha, 03 es el único arco y 04 la única
+  impresión con mat marfil. Tablet usa 2×2 y móvil conserva 01–04 en una sola
+  columna con paisajes 3:2.
+- Cada `article` queda asociado a su `h3` mediante `aria-labelledby`; el deep
+  link de la sección reserva además el alto del header sticky.
 - Se eliminaron la línea vertical junto al título de session fit y la línea que
   salía del marco de winter.
 - El título y script de Seasons ya no se solapan: la medición fue 0 px en los
@@ -145,6 +152,10 @@ otra ruta a `ready/index` mientras conserve pendientes o QA incompleto.
 - Asset:
   `public/uploads/journal-locations-final-family-richland-tricities.jpg`;
   variantes WebP se regeneran mediante `npm run optimize:images`.
+- Rediseño más reciente: `src/components/pages/LocationsGuidePage.astro`,
+  `src/styles/journal-locations-page.css`,
+  `content/pages/journal-family-locations.json` y
+  `paginas/15-journal-locations.md`.
 
 ## Qué está a medias
 
@@ -169,6 +180,7 @@ npm run optimize:images
 SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
 SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local
 node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json \
+  --scope layout \
   src/components/pages/LocationsGuidePage.astro \
   src/styles/journal-locations-page.css
 git diff --check
@@ -177,17 +189,17 @@ git diff --check
 - Release: `Validated 21 public routes in release mode.`
 - Staging: `Validated 21 public routes in staging mode.`
 - Detector Impeccable: `[]`.
-- Playwright: cinco viewports, overflow horizontal 0, Seasons overlap 0,
-  `fit` border-right 0, pseudo de winter `none`, consola 0 errores.
+- Playwright del rediseño: cinco viewports; overflow de documento y sección 0,
+  solapamiento con la sección siguiente 0, cuatro imágenes completas, labels
+  contenidos, encabezados en orden y consola 0 errores.
 - Artefacto release: cinco JSON-LD parsean; Article y sitemap usan
   `2026-08-08`; la foto final incluye srcset 400/640/960/1440.
 
 ## Bloqueadores externos
 
-1. **GitHub:** el handoff creó `8d5d84f`, pero el push recibió HTTP 403 con la
-   identidad `williammelo533`. Después del addendum local, `main` queda cuatro
-   commits por delante de `origin/main`; el usuario puede publicarlos con su
-   método autorizado.
+1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
+   commits locales. `main...origin/main` estaba sincronizado en `c663d68` antes
+   de este commit documental.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
 3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.

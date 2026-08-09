@@ -304,3 +304,34 @@
 - No se transfirieron cambios ni se ejecutó deploy. Este addendum se commitea
   localmente para que el próximo agente vea el bloqueo exacto; el usuario puede
   publicar los cuatro commits adelantados con su método autorizado.
+
+### 2026-08-08 — Codex / GPT-5.6 — Rediseño editorial de “Four Kinds”
+
+- **Objetivo:** rediseñar únicamente
+  `#the-four-kinds-of-locations-that-work-here` siguiendo dos referencias
+  adjuntas, con homepage y `DESIGN.md` como autoridades y sin inventar fotos ni
+  copy.
+- **Dirección:** se tradujeron las referencias a un contact sheet de 12
+  columnas: 01 dominante, 02 horizontal desplazada, 03 como único arco y 04
+  como única impresión con mat. Se rechazaron tape, rasgados, speckles,
+  rotaciones, sombras y texturas añadidas.
+- **Contenido y semántica:** se conservaron los cuatro párrafos y fotografías;
+  se corrigieron dos alt texts que afirmaban movimiento/orchard no visibles, se
+  sincronizó la fuente editorial y cada card quedó asociada a su `h3` mediante
+  `aria-labelledby`.
+- **Responsive:** desktop mantiene la asimetría; 900 px usa 2×2; 390 px usa una
+  columna con ambos paisajes 3:2. El fragmento reserva el header sticky mediante
+  `scroll-margin-top`.
+- **Verificación:** Playwright aprobó 1728×963, 1440×1000, 1200×1000, 900×1000
+  y 390×844: overflow de documento/sección 0, solapamiento siguiente 0, cuatro
+  imágenes completas, labels contenidos, orden de headings correcto y consola
+  sin errores. Impeccable layout devolvió `[]`.
+- **Build:**
+  `SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local`
+  terminó con `Validated 21 public routes in release mode.` El primer intento
+  dentro del sandbox falló por el listener Tina; se detuvo solo el proceso local
+  obsoleto y la corrida autorizada pasó.
+- **Git:** la implementación visual quedó en `c663d68` (`locations updated`) y
+  la sincronización de descripciones literales en `fe1602d`. Al iniciar este
+  cierre `main...origin/main` estaba sincronizado; por orden del usuario no se
+  ejecutó push y el contexto se cierra con otro commit local.

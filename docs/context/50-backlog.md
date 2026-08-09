@@ -5,10 +5,9 @@
 
 ## Ahora — siguiente operación y ruta hacia producción
 
-- [ ] **1. Publicar los commits locales pendientes.** Usar una identidad con
-  escritura en `itsakeeperphoto/itsakeeperphotography`; esta terminal recibió
-  HTTP 403 como `williammelo533`. Confirmar después que `main...origin/main`
-  queda sincronizado.
+- [x] **1. Resolver la divergencia Git anterior.** Al cerrar la implementación
+  visual, `main...origin/main` coincide en `c663d68`. Política vigente del
+  usuario: Codex crea commits locales y no ejecuta pushes.
 - [x] **2. Publicar Family Photo Locations en el gate de producción.** Fecha
   aprobada `2026-08-08`; `[FECHA]` retirado, ruta `ready/index`, schema completo,
   sitemap/llms/headers verificados y QA responsive final aprobado.
@@ -128,9 +127,10 @@ sin reemplazar el archivo.
 - [x] Publicado el commit de analítica en
   `itsakeeperphoto/itsakeeperphotography`; al iniciar esta sesión
   `main...origin/main` estaba sincronizado en `5a5a063`.
-- [ ] Publicar los commits locales `72bd789`, `eaa68d1`, `8d5d84f` y el addendum
-  de contexto; el último intento recibió HTTP 403 autenticado como
-  `williammelo533`.
+- [x] La referencia local `origin/main` ya contiene `72bd789`, `eaa68d1`,
+  `8d5d84f`, `aae3812` y `c663d68` al cierre de implementación.
+- [ ] Mantener la instrucción operativa actual: ningún agente hace push; cada
+  intervención termina en commits locales que el usuario administra.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -186,6 +186,10 @@ sin reemplazar el archivo.
   1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
   de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto
   responsive y consola sin errores.
+- [x] Rediseñada “Four Kinds” con las dos referencias aportadas y la homepage
+  como autoridad: retícula 12 columnas / 2×2 / una columna, paisajes 3:2, un
+  arco, un mat, alt text literal y asociación `aria-labelledby`. En los cinco
+  viewports: overflow 0, solapamientos 0, imágenes completas y consola limpia.
 - [ ] Rehacer 84 capturas actuales: 18 rutas primarias × 4 breakpoints y
   Portfolio/Privacy/Thank-you × 4. No reutilizar como prueba final las del
   2026-07-21.
