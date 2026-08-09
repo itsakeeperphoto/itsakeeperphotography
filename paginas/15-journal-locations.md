@@ -196,11 +196,12 @@ You bring your people. I'll bring twenty years of knowing where the light lands 
 
 ## Alt texts
 
-Formato: `[quién] + [tipo de locación, sin nombrar el spot] + [luz/estación] + [ciudad]`
+Formato: descripción literal de lo visible; no inferir acción, spot, estación o
+ciudad cuando la fotografía no lo demuestra.
 
-- `Family running through an open golden field at sunset during a Tri-Cities photo session`
+- `Six children gathered together in golden grass at sunset`
 - `Evening light reflecting off the Columbia River during a portrait session in Richland, WA`
-- `Senior photographed among orchard rows in late summer near Pasco`
+- `Young woman in a white dress photographed among white blossoms`
 - `Winter portrait session in rare sunny January light in the Tri-Cities`
 - `Couple in a small pocket of golden light just before sunset in Kennewick`
 
