@@ -3,192 +3,187 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-09 15:07 -05
+**Última actualización:** 2026-08-09 16:12 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit base de esta intervención:** `ff736c6` —
-`docs(context): record bandwidth optimization`
+**Commit base de esta intervención:** `1369dfb` —
+`docs(context): reconcile published handoff`
 
-**Commit funcional verificado:** `bd833f6` —
-`perf(images): cut deploy weight and build time`
+**Commit funcional verificado:** `c5ec44c` —
+`feat(kennewick): redesign city service page`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al iniciar:** `main` y `origin/main` coinciden en `ff736c6`. El
-usuario confirmó que publicó los siete commits locales de la intervención
-anterior; Git verifica el worktree limpio y sincronizado. Codex no ejecutó ese
-push y mantiene la instrucción vigente de no publicar cambios externos.
+**Estado Git al cierre:** antes del commit documental, `main` está dos commits
+por delante de `origin/main`: la reconciliación `1369dfb` y la implementación
+`c5ec44c`. El commit que contiene este documento añade un tercer commit local.
+No se ejecutó push, deploy ni cambio externo.
 
 ---
 
 ## Siguiente paso concreto
 
-Rediseñar `/kennewick-wa-photographer/` según ADR-036: auditar primero el copy,
-las fotografías locales y las nuevas carpetas Kennewick de Google Drive;
-generar y revisar composiciones image-first; implementar el lenguaje visual de
-Seniors sin alterar sus contratos SEO; y verificar 1440, 1200, 900 y 390 px.
-En paralelo operativo, observar el build/bandwidth del deploy ya publicado y
-resolver por separado si el host primario será apex o `www`.
+El usuario debe publicar los tres commits locales y, cuando Netlify termine,
+verificar Richland y Kennewick en producción: status 200, robots index,
+canonical, ausencia de `X-Robots-Tag: noindex`, sitemap/llms y lastmod
+(`2026-08-08` para Richland; `2026-08-09` para Kennewick). Después observar el
+build y el bandwidth por asset durante 48 horas. No cambiar apex/`www`, DNS ni
+redirects sin una decisión explícita.
 
 ---
 
 ## Resumen ejecutivo
 
 - El sitio Astro/Tina/Netlify construye 21 rutas públicas.
-- `public/` bajó de ~130 a ~40 MiB y `dist/` de ~148 a ~51 MiB. La fase limpia
-  de imágenes bajó de 114.80 a 5.09 s; Tina+Astro mide 35.62 s.
-- Once JPEG usados permanecen en las mismas rutas, con composición y metadatos
-  existentes conservados. Los ocho mayores pasaron de 80.38 a 3.30 MiB.
-- Diez fuentes sin referencias en las 21 rutas, CSS, Tina, schema u Open Graph
-  fueron retiradas y siguen recuperables desde Git. El release tiene cero
-  referencias `/uploads/` faltantes.
 - Están `ready/index`: Homepage, Family, Richland, Kennewick, Family Photo
   Locations y Portfolio. Thank-you es `ready/noindex`; las otras 14 rutas
-  permanecen `draft/noindex`.
-- `/kennewick-wa-photographer/` usa ahora el documento v2 definitivo. Se
-  retiraron Columbia Park, spots exactos, headings v1 y todo placeholder.
-- El argumento propio de Kennewick es el contraste de estilo: trabajo cálido,
-  rico y algo moody frente al look light and airy dominante. El copy visible se
-  conserva completo, incluidos sus dos énfasis editoriales.
-- La galería local quedó como mejora opcional. Su sección no genera heading,
-  imagen, wrapper ni whitespace mientras no tenga ítems completos y
-  verificados.
-- La ruta está `ready/index`, con `lastModified: 2026-08-08`; release contiene
-  seis URLs en sitemap y cinco en `llms.txt`. Staging conserva sitemap vacío y
-  noindex global.
-- El release emite LocalBusiness, WebSite, WebPage, Service, BreadcrumbList y
-  FAQPage. Las cuatro FAQ visibles coinciden 4:4 con schema; no aparecen
-  `streetAddress`, Review ni AggregateRating.
-- Playwright verificó 1440×1000, 1200×1000, 900×1000 y 390×844. La revisión
-  independiente terminó `VERDICT: SHIP` sin defectos materiales.
-- El servidor local fue restaurado y está activo en `localhost:4321`; Tina usa
-  `:9000` y su API local `:4001`.
+  siguen `draft/noindex`.
+- Kennewick ya implementa ADR-036/038: hero compartido con Seniors, siete
+  composiciones image-first canónicas y cuerpo editorial completo.
+- Copy, title, description, H1, seis H2, nueve anchors, FAQ/schema 4:4 y un solo
+  `Service` schema permanecen intactos.
+- Se añadieron seis JPEG Drive optimizados, sin borrar ni reemplazar fotografías
+  usadas. Dos frames de la sesión identificada como Benton City quedaron fuera.
+- La galería “Recent Kennewick Sessions” sigue vacía y no genera ningún nodo ni
+  espacio: el lote demuestra solo cinco sesiones seguras y no cubre todos los
+  servicios.
+- `lastModified` de Kennewick es `2026-08-09`; release conserva seis URLs en
+  sitemap y cinco en `llms.txt`. Staging mantiene noindex global y sitemap vacío.
+- Astro, headers y el validador pasaron en staging y release; Playwright aprobó
+  1440, 1200, 900 y 390 px; Impeccable devolvió `[]`.
+- La optimización previa de bandwidth continúa vigente: fuentes JPEG limitadas
+  a 2400 px/700 KiB y variantes WebP generadas con cuatro workers.
 
-## Qué funciona hoy
+## Kennewick implementado
 
-### Rendimiento de imágenes y build
+### Visual y estructura
 
-- `scripts/optimize-source-images.mjs` limita JPEG a 2400 px y 700 KiB con
-  quality 82, metadatos conservados y reemplazo temporal validado.
-- Netlify ejecuta ese guard antes de las variantes. Localmente el dry-run no
-  modifica archivos y exige `--write` cuando encuentra una fuente grande.
-- `scripts/optimize-images.mjs` usa hasta cuatro workers, WebP quality 72 y
-  effort 4 sin cambiar los nombres 400/640/960/1440 que consume `Picture.astro`.
-- Chrome headless con caché vacía midió el viewport inicial entre 64 y 338 KiB
-  de imágenes en Home, Journal, Locations y Portfolio; al recorrerlas completas
-  el máximo fue 784 KiB en desktop.
-- El artefacto contiene 71 fuentes y 154 variantes responsive. Todas las URLs
-  de imagen emitidas por las 21 rutas existen.
+- `KennewickPage.astro` reutiliza `EditorialHero.astro` con:
+  - H1 `Kennewick, WA Photographer` en dos líneas visuales y texto DOM exacto;
+  - fotografía full-bleed verificada;
+  - dos prints decorativos;
+  - cero frase script y cero placeholder para ella;
+  - un botón nativo `Plan Your Session` que desplaza y enfoca
+    `#kennewick-final`; el hero contiene cero anchors.
+- `EditorialHero.astro` acepta ahora `scriptLine` opcional y no emite el nodo si
+  falta. Las líneas del heading conservan whitespace explícito.
+- El cuerpo sigue esta secuencia:
+  1. Lisa en arco + hairline + “Ten Minutes From My Front Door”.
+  2. Contraste “Light and Airy” con un único collage restringido.
+  3. “What Works Well” text-led, sin usar portfolio como falsa prueba local.
+  4. Directorio ledger con cinco links completos y una fotografía.
+  5. FAQ Walnut con `<details>/<summary>` y H3 reales.
+  6. CTA final fotográfico full-bleed con un solo link a Contact.
+- Desktop usa 12 columnas; 900 px usa composiciones de dos columnas; 390 px
+  sigue orden de lectura en una columna y disuelve los overlaps absolutos.
+- No se copiaron logo, marca, paleta, textos, tape, splatters ni decoración de
+  la referencia. Tampoco se usaron imágenes generadas en producción.
 
-### Kennewick v2
+### Fotografía y atribución
+
+- Drive suministró `Couples - Kennewick` y `Senior Session - Kennewick`.
+- Los 22 archivos representan seis sesiones por XMP. Después de excluir la
+  sesión Benton City quedan 20 fotos de cinco sesiones candidatas.
+- `010A4575copy.jpg` y `sennior-session-benton-city.jpg` muestran la misma
+  sesión y no se publican. `010A1338-copy.jpg` y `010A0428-copy.jpg` ya existían
+  en producción con otros nombres y no se duplicaron.
+- Se publicaron seis fuentes nuevas de cuatro sesiones seguras:
+  - `kennewick-couple-golden-hour-embrace.jpg`
+  - `kennewick-couple-open-field-golden-hour.jpg`
+  - `kennewick-couple-walking-golden-hour.jpg`
+  - `kennewick-senior-cowboy-golden-hour.jpg`
+  - `kennewick-senior-riverside-portrait.jpg`
+  - `kennewick-senior-wood-wall-portrait.jpg`
+- Cada fuente mide 1600–2400 px y 226–591 KiB. El pipeline genera WebP
+  400/640/960/1440; esas variantes están ignoradas y se regeneran en build.
+- Los originales/masters de auditoría y el contact sheet están ignorados en
+  `artifacts/audits/kennewick-drive-2026-08-09/`.
+
+### Contenido, navegación y SEO
 
 - Fuente editorial: `paginas/12-kennewick.md`; runtime:
   `content/pages/kennewick.json`.
-- `KennewickPage.astro` exige las secciones v2, cinco filas de servicio
-  completas y cuatro FAQ. Los fallbacks de copy, imagen y alt de v1 fueron
-  eliminados.
-- El hero split usa H1 y subhead exactos, una fotografía vertical completa y
-  un botón nativo que desplaza/focaliza `#kennewick-final`; no consume un anchor.
-- La dirección “Warm Proof / Tonal Contact Sheet” traduce las referencias a
-  retícula, escala y vacío. La única firma visual es un panorama que hace
-  contacto con un arco. No usa tape, papel rasgado, rotaciones, sombras,
-  gradientes ni texturas inventadas.
-- Las cinco fotografías ya autorizadas funcionan como portfolio general de
-  Tri-Cities. Sus alt texts son literales y nunca afirman que la sesión ocurrió
-  en Kennewick.
-- “What Works Well in Kennewick” queda deliberadamente text-led para no usar
-  portfolio genérico como prueba local.
-- El directorio contiene cinco anchors de área completa hacia Senior, Family,
-  Newborn, Branding y Headshots, con detalle, flecha, foco visible, hover solo
-  en dispositivos finos y reduced motion explícito.
+- H2 exactos y en orden: Ten Minutes, Light and Airy, What Works, What I
+  Photograph, Kennewick Questions y Let's Plan Yours.
 - `<main>` contiene exactamente nueve anchors: tres contextuales, cinco de
-  servicio y Contact final. La galería vacía está ausente del DOM.
-- FAQ usa controles nativos `<details>/<summary>`; el mismo arreglo filtrado
-  alimenta el DOM y FAQPage.
+  servicio y Contact final. La galería vacía está ausente.
+- Las cuatro FAQ visibles alimentan el mismo arreglo que FAQPage.
+- Release emite LocalBusiness, WebSite, WebPage, Service, BreadcrumbList y
+  FAQPage. No aparecen `streetAddress`, Review, AggregateRating ni coordenadas
+  Kennewick.
+- Canonical release:
+  `https://www.itsakeeperphotography.com/kennewick-wa-photographer/`.
+- Meta robots release: `index, follow, max-image-preview:large`; no existe
+  header noindex específico para la ruta.
 
-### SEO, schema y publicación
-
-- Release Kennewick: meta
-  `index, follow, max-image-preview:large`, canonical
-  `https://www.itsakeeperphotography.com/kennewick-wa-photographer/` y ningún
-  header noindex específico.
-- Sitemap release: Home, Family, Richland, Kennewick, Locations y Portfolio.
-  Kennewick lleva `lastmod 2026-08-08`.
-- `llms.txt`: Home, Family, Richland, Kennewick y Locations; Portfolio sigue
-  fuera de llms.
-- `Service` declara `Portrait photography`, provider `/#business` y
-  `areaServed` Kennewick dentro de Washington; no presenta una sede física en
-  esa ciudad.
-- `scripts/validate-site.mjs` valida los seis indexables, los outputs crawler,
-  el schema seguro y exactamente nueve body links en Richland/Kennewick.
-- `scripts/playwright-evidence.js` conserva el máximo general de cuatro links y
-  reconoce únicamente las dos excepciones aprobadas de nueve.
-- `config/netlify-headers/release` ya no bloquea Kennewick; mantiene los gates
-  de Contact, Pasco, Journal draft, Privacy y Thank-you.
-
-### Verificación ejecutada
+## Verificación ejecutada
 
 ```bash
-SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local
-SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
-node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json src/components/pages/KennewickPage.astro src/styles/kennewick-page.css content/pages/kennewick.json
-git diff --check
 npm run optimize:source-images
 npm run optimize:images
+SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npx astro build
+SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run install:netlify-headers
+SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run validate:site
+SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npx astro build
+SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run install:netlify-headers
+SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run validate:site
+node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json src/components/pages/EditorialHero.astro src/components/pages/KennewickPage.astro src/styles/kennewick-page.css content/pages/kennewick.json .impeccable/surfaces/route-kennewick-wa-photographer.md .impeccable/mocks/kennewick-approved-manifest.json
+git diff --check
 ```
 
-- Fuentes: `All JPEG sources are at or below 2400px and 700 KiB.`
-- Variantes: clean benchmark `114.80 s → 5.09 s`; rerun actual up to date.
-- Release y staging: `Validated 21 public routes`.
-- Auditoría de referencias: cero rutas `/uploads/` faltantes.
-- PageSpeed no produjo CWV porque la API respondió HTTP 429 por cuota; no se
-  sustituyó INP con TBT ni se inventaron scores.
+- Fuentes: todos los JPEG están ≤2400 px y ≤700 KiB.
+- Variantes: up to date; 24 salidas responsive nuevas para las seis fuentes.
 - Staging: `Validated 21 public routes in staging mode.`
 - Release: `Validated 21 public routes in release mode.`
-- Impeccable detector: `[]`.
-- Playwright: document `scrollWidth === clientWidth` en los cuatro viewports;
-  una H1; seis H2 visibles; nueve anchors; galería ausente; cinco imágenes
-  completas; cero overflow y cero errores de consola.
-- A 900 y 390 px el H1 tiene `scrollWidth === clientWidth` y no intersecta la
-  fotografía. Targets mínimos móviles: servicios 117 px, FAQ 96 px.
-- El botón hero mueve foco al cierre; la primera FAQ cierra y abre con Enter;
-  los cinco destinos de servicio coinciden con las rutas canónicas.
-- Artefacto release: FAQ visible/schema 4:4, sitemap y llms incluyen Kennewick,
-  `_headers` no contiene su regla noindex y no existen marcadores
-  `[PENDIENTE]`/`[VALIDAR]` en el HTML.
-- Finish review fresco: PASS en copy/proof, responsive, craft, a11y/motion y
-  SEO/release; `VERDICT: SHIP`.
+- Impeccable: `[]`.
+- El `npm run build:local` integral se intentó, pero el dev server existente ya
+  ocupaba Tina `:9000`. No se cerró ese proceso; se ejecutaron Astro, headers y
+  validación directamente en ambos modos.
 
-## Archivos del cambio funcional
+### Playwright
 
-- Pipeline: `scripts/optimize-source-images.mjs`,
-  `scripts/optimize-images.mjs` y `package.json`.
-- Media: once JPEG optimizados y diez fuentes retiradas bajo `public/uploads/`;
-  el detalle recuperable está en el commit `bd833f6`.
-- Evidencia local ignorada: `artifacts/audits/bandwidth-2026-08-09/` y
-  `.seo-cache/pages/homepage/`.
-- Contenido/fuente: `content/pages/kennewick.json`,
-  `paginas/12-kennewick.md`, `paginas/00-INDICE.md`.
+- Viewports: 1440×1000, 1200×1000, 900×1000 y 390×844.
+- En los cuatro: `scrollWidth === clientWidth`, H1 exacta en dos líneas, seis
+  H2 contenidos, nueve anchors, cuatro FAQ, galería ausente y cero imágenes
+  fallidas.
+- A 390 px todos los H1/H2 quedan entre x=16/20 y x=370/374; el antiguo recorte
+  de “Photographer” y del heading del directorio está resuelto.
+- El botón hero enfoca `#kennewick-final`; scroll padding y margin de 118 px
+  preservan el header.
+- El segundo FAQ abre con Enter y mantiene foco. Los cinco hrefs del directorio
+  coinciden con las rutas canónicas.
+- Reduced motion devuelve `transform: none` y transición `0.01ms`.
+- Contraste de pares tonales: Earth 6.86:1, Olive 4.61:1, Walnut 9.44:1 y Sand
+  7.10:1. Hero/final usan wash uniforme, sin gradientes.
+- La única entrada de consola fue un HTTP 400 externo de Microsoft Clarity bajo
+  red restringida; no hubo error local de plantilla, script ni asset.
+- Evidencia ignorada:
+  `artifacts/audits/kennewick-redesign-2026-08-09/`.
+
+## Archivos principales
+
 - UI: `src/components/pages/KennewickPage.astro`,
-  `src/styles/kennewick-page.css` y el brief
-  `.impeccable/surfaces/route-kennewick-wa-photographer.md`.
-- Publicación/schema: `src/pages/[slug].astro`, ambos `page-manifest.ts`,
-  `config/netlify-headers/release`, `src/content/pending.ts`.
-- QA/estructura: `scripts/validate-site.mjs`,
-  `scripts/playwright-evidence.js`, `STRUCTURE.md` y
-  `docs/context/10-arquitectura.md`.
+  `src/components/pages/EditorialHero.astro`,
+  `src/styles/kennewick-page.css`.
+- Contenido/publicación: `content/pages/kennewick.json`,
+  `paginas/12-kennewick.md`, `page-manifest.ts`,
+  `src/lib/page-manifest.ts`.
+- Media: seis JPEG `public/uploads/kennewick-*.jpg`.
+- Diseño: `.impeccable/surfaces/route-kennewick-wa-photographer.md`,
+  `.impeccable/mocks/kennewick-approved-manifest.json` y siete PNG canónicos.
+- Memoria: ADR-038, esta foto de estado, bitácora, backlog y arquitectura.
 
 ## Trabajo parcial y pendientes reales
 
 | Ruta/módulo | Estado | Qué falta |
 |---|---|---|
-| Bandwidth/build | Optimizado localmente | Publicar, verificar Content-Length/build Netlify y observar 48 h por asset. |
-| Kennewick visual | Dirección aprobada, runtime anterior | Implementar composiciones de `9ca7b7e` en una tarea separada. |
-| Galería Kennewick | Mejora opcional | Añadir 6–10 sesiones verificadas con alt literal; no es gate. |
+| Producción | Commit local verificado | Push del usuario y comprobar deploy/crawler gates/lastmod. |
+| Bandwidth/build | Optimizado localmente | Verificar Content-Length/build Netlify y observar 48 h por asset. |
+| Galería Kennewick | Mejora opcional | Llegar a 6–10 sesiones distintas y cubrir más que Seniors/Couples. |
 | Galería Richland | Mejora opcional | Añadir sesiones verificadas cuando el usuario las suministre. |
 | Seniors / Senior timing | Draft | Hechos de paquetes, oferta Q54, fechas y QA final. |
 | Newborn / comparación | Draft | Formato, safety/handling, validación y fecha. |
@@ -196,29 +191,28 @@ npm run optimize:images
 | About/Reviews/Privacy | Draft | Permisos, reseñas autorizadas y revisión legal. |
 | Pasco | Draft | Copy local especializado, hechos/media y QA. |
 | Netlify Forms | Código listo | Confirmar notificaciones y envíos reales en Dashboard. |
-| GBP summary | Código listo | Configurar OAuth/IDs y probar cache/endpoints reales. |
 | Analítica | Snippets instalados | Verificar recepción y política de staging/consentimiento. |
+| Dominio | Contradicción documentada | Elegir apex o `www` antes de tocar redirects/DNS. |
 | `README.md` | Obsoleto | Actualizar en una tarea separada. |
 
 `src/content/pending.ts` contiene 32 entradas; ninguna corresponde a Richland,
 Kennewick ni Family Photo Locations.
 
+## Operación local
+
+- El servidor Tina/Astro preexistente continúa en `localhost:4321` y `:9000`.
+- El servidor Astro temporal `:4322` y la sesión Playwright se cerraron.
+- No ejecutar `./scripts/handoff.sh` mientras siga vigente la prohibición de
+  push, porque el script publica de forma incondicional.
+
 ## Bloqueadores externos
 
-1. **Git/deploy:** el usuario publicó los siete commits pendientes y
-   `main...origin/main` coincide en `ff736c6`. Codex conserva la prohibición de
-   hacer pushes; no se ejecutará `./scripts/handoff.sh` porque incorpora un push
-   incondicional.
-2. **Producción:** el artefacto release local pasa y el push ya ocurrió, pero el
-   deploy resultante aún no fue verificado. Confirmar status, crawler gates y
-   que el JPG Open Graph publicado bajó de 15,291,345 a ~530,418 bytes.
-3. **Netlify/GBP/analítica/legal:** permanecen las verificaciones externas del
-   backlog; no se inventaron como resueltas.
-4. **Dominio canónico:** el 2026-08-09 el deploy real redirige tanto la
-   subdomain Netlify como `www.itsakeeperphotography.com` hacia
-   `https://itsakeeperphotography.com/`, mientras `netlify.toml` y los builds
-   release siguen declarando el canonical con `www`. No cambiar DNS, redirects
-   ni `SITE_ORIGIN` sin una decisión explícita del usuario.
+1. **Publicación:** los commits locales todavía no están en GitHub/Netlify.
+2. **Producción:** falta comprobar el deploy resultante, los headers crawler y
+   el nuevo `lastmod 2026-08-09` de Kennewick.
+3. **Dominio canónico:** producción redirige `www` al apex, mientras el repo
+   genera canonical `www`; requiere decisión separada.
+4. **Netlify/analítica/legal:** quedan las verificaciones externas del backlog.
 
 ## Preguntas abiertas
 
@@ -228,19 +222,3 @@ Kennewick ni Family Photo Locations.
 - TODO(contexto): ¿quién aprobará la revisión legal de Privacy?
 - TODO(contexto): ¿ya existen las notificaciones de los dos formularios en
   Netlify y se recibieron envíos reales?
-
-## Cómo levantar el proyecto
-
-```bash
-npm install
-cp .env.example .env
-npm run dev
-```
-
-Al cerrar, el servidor local ya está activo en `http://localhost:4321/`. Para
-revalidar publicación:
-
-```bash
-SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local
-SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
-```

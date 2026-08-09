@@ -127,11 +127,17 @@ Componentes especializados existentes:
   Privacy, Thank-you y algunos artículos.
 
 `EditorialHero.astro` materializa la estructura de hero basada en Seniors y es
-compartido por varias páginas especializadas. Kennewick usa un hero split
-propio dentro de `KennewickPage.astro`: el CTA es un botón de desplazamiento al
-cierre, no un anchor adicional. Su componente exige cinco filas completas de
-servicio, cuatro FAQ y deja la galería futura completamente fuera del DOM
-mientras no todos sus ítems tengan imagen y alt verificados.
+compartido por varias páginas especializadas, incluida Kennewick. Su frase
+script es opcional: cuando no existe contenido aprobado, el nodo no se emite.
+Admite CTA como enlaces o como botón de desplazamiento; Kennewick usa solo el
+botón hacia `#kennewick-final`, por lo que no añade un anchor. Su título en
+líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
+
+`KennewickPage.astro` exige cinco filas enlazadas de servicio y cuatro FAQ. El
+cuerpo usa arco+hairline, un único collage restringido, sección local
+text-led, directorio ledger con una fotografía, FAQ nativo y cierre fotográfico
+full-bleed. La galería futura permanece completamente fuera del DOM mientras
+no todos sus ítems tengan imagen y alt verificados.
 
 ## Contratos externos
 
@@ -268,10 +274,13 @@ declara ubicación física en esa ciudad. No se emiten `Review`,
 - `scripts/optimize-images.mjs` genera las variantes 400/640/960/1440 con hasta
   cuatro workers, WebP quality 72 y effort 4. En la medición limpia del
   2026-08-09 pasó de 114.80 s a 5.09 s.
-- El inventario publicado contiene 71 fuentes y 154 variantes responsive. Diez
-  assets sin referencias en ninguna de las 21 rutas, CSS, Tina, schema u Open
-  Graph fueron retirados en `bd833f6`; cualquier restauración debe añadir
+- Diez assets sin referencias en ninguna de las 21 rutas, CSS, Tina, schema u
+  Open Graph fueron retirados en `bd833f6`; cualquier restauración debe añadir
   primero una referencia verificable.
+- Kennewick incorpora seis JPEG fuente optimizados procedentes de las carpetas
+  Drive `Couples - Kennewick` y `Senior Session - Kennewick`, más sus variantes
+  WebP generadas. `010A4575copy.jpg` y `sennior-session-benton-city.jpg` no se
+  publican porque pertenecen a la misma sesión identificada como Benton City.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

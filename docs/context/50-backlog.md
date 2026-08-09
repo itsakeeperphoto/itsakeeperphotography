@@ -19,14 +19,14 @@
   definitivo centrado en estilo, mantener la galería como mejora opcional,
   verificar diseño/schema en cuatro viewports y pasar la ruta a `ready/index`
   con sitemap/llms/header coherentes.
-- [ ] **5. Rediseñar Kennewick según ADR-036.** Auditar la ruta, el copy y la
-  media; revisar las referencias con `image-to-code`; generar composiciones
-  frescas antes del código; adoptar `EditorialHero` y la gramática de Seniors;
-  conservar los contratos SEO/anchors/schema; y verificar 1440, 1200, 900 y
-  390 px.
+- [x] **5. Rediseñar Kennewick según ADR-036.** Auditoría de ruta/copy/media,
+  siete composiciones image-first, `EditorialHero`, seis fuentes Drive
+  optimizadas, contratos SEO intactos y QA 1440/1200/900/390 completados. La
+  galería sigue correctamente ausente por falta de 6–10 sesiones diversas.
 - [ ] **6. Verificar Richland y Kennewick después del push del usuario.**
   Confirmar en el dominio final status 200, meta index, canonical, ausencia de
-  header noindex, membresía del sitemap/llms y `lastmod 2026-08-08`.
+  header noindex, membresía del sitemap/llms y lastmod: Richland `2026-08-08`,
+  Kennewick `2026-08-09`.
 - [ ] **7. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -121,8 +121,15 @@ sin reemplazar el archivo.
   outputs verificados localmente.
 - [x] Directorio de cinco servicios enlazado; excepción de nueve anchors
   limitada por ADR-035.
+- [x] Rediseñada según ADR-036/038 con `EditorialHero`, siete composiciones
+  canónicas, seis JPEG Drive optimizados y QA Playwright en cuatro viewports.
+- [x] Excluidos ambos frames de la sesión identificada como Benton City y las
+  dos capturas duplicadas de producción; ninguna fotografía existente fue
+  borrada.
 - [ ] Mejora opcional: añadir después 6–10 sesiones reales con procedencia
-  Kennewick y alt contextual literal, sin nombrar el spot exacto.
+  Kennewick y alt contextual literal, sin nombrar el spot exacto. El inventario
+  actual demuestra solo cinco sesiones seguras y no cubre Family, Newborn,
+  Branding ni Headshots.
 
 ### Pasco
 

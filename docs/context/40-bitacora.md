@@ -527,3 +527,52 @@
   `artifacts/audits/bandwidth-2026-08-09/` y `.seo-cache/`.
 - **Operación:** no se hizo push ni deploy. Netlify redirige hoy `www` al apex
   mientras el repo genera canonical `www`; se documentó sin tocar DNS.
+
+### 2026-08-09 — Codex / GPT-5 — Rediseño editorial Kennewick implementado
+
+- **Objetivo:** reemplazar el hero split rechazado de
+  `/kennewick-wa-photographer/` por el lenguaje visual aprobado de Seniors,
+  incorporar media Drive verificada y conservar sin cambios el copy y los
+  contratos SEO de la service page.
+- **Auditoría de media:** las dos carpetas Kennewick contenían 22 fotografías
+  pero solo seis sesiones según XMP. Se excluyeron `010A4575copy.jpg` y
+  `sennior-session-benton-city.jpg` por pertenecer a la misma sesión identificada
+  como Benton City; dos capturas restantes ya existían en producción. Quedan
+  cinco sesiones candidatas, sin Family/Newborn/Branding/Headshots, por lo que
+  la galería sigue ausente. Los originales de auditoría bajaron de ~264 MiB a
+  ~8.9 MiB y permanecen ignorados.
+- **Image-first:** antes del código se generaron y revisaron siete composiciones
+  —hero, introducción, estilo, setting, servicios, FAQ y cierre—. Se registran
+  como canónicas en `.impeccable/mocks/`; sus píxeles generados no se usan en
+  producción. El brief local ya no describe la dirección split anterior.
+- **Implementación:** Kennewick reutiliza `EditorialHero` con H1 en dos líneas,
+  cero script y botón hacia `#kennewick-final`; el componente compartido omite
+  ahora el nodo script cuando no hay contenido y conserva whitespace explícito
+  entre líneas. El cuerpo usa arco de Lisa, un solo collage, bloque local
+  text-led, directorio con cinco links y retrato, FAQ `<details>/<summary>` con
+  H3 reales y cierre full-bleed.
+- **Fotografía:** se añadieron seis JPEG fuente nuevos, todos de 1600–2400 px y
+  226–591 KiB, más variantes WebP 400/640/960/1440. Las seis tomas representan
+  cuatro sesiones seguras. No se borró ni reemplazó ninguna fotografía ya usada
+  en producción.
+- **SEO/publicación:** copy, title, description, H1, seis H2, tres enlaces de
+  prosa, cinco servicios, Contact final, FAQ/schema 4:4 y un solo `Service`
+  permanecen intactos. `<main>` tiene nueve anchors y el hero cero. La galería
+  vacía no genera DOM. Kennewick continúa `ready/index` y `lastModified` pasa a
+  `2026-08-09` en ambos manifiestos.
+- **QA visual:** Playwright aprobó 1440×1000, 1200×1000, 900×1000 y 390×844 con
+  `scrollWidth === clientWidth`, H1 exacta en dos líneas, seis H2 contenidos,
+  nueve anchors y todas las imágenes cargadas. El CTA del hero mueve foco al
+  cierre respetando header/scroll margin; el segundo FAQ abre con Enter; los
+  cinco destinos son canónicos. Reduced motion deja transforms en `none` y
+  transiciones en `0.01ms`. Los pares tonales principales miden 4.61:1–9.44:1.
+- **Build:** `npx astro build`, instalación de headers y
+  `scripts/validate-site.mjs` pasan en staging y release con 21 rutas. El build
+  Tina integral no se duplicó porque el dev server del usuario ya ocupaba
+  `:9000`; se dejó activo y se compiló Astro directamente. El detector final de
+  Impeccable devuelve `[]` y `git diff --check` pasa. La única consola externa
+  fue un HTTP 400 de Clarity bajo la red restringida; no hubo errores locales.
+- **Operación:** se cerraron únicamente el navegador de QA y el servidor Astro
+  temporal `:4322`; Tina/Astro del usuario en `:4321/:9000` quedó intacto. No se
+  ejecutó push, deploy, DNS ni `./scripts/handoff.sh`; este cierre queda en un
+  commit local para que el usuario lo publique.

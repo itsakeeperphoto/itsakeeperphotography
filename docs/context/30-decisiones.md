@@ -611,3 +611,35 @@
   limpia de variantes tarda 5.09 s y el build limpio esperado ronda 41 s.
   Cualquier fotografía futura que exceda el contrato debe optimizarse antes de
   quedar persistida; restaurar un asset retirado exige nueva referencia y QA.
+
+### ADR-038 — Kennewick usa media verificada sin convertirla en una galería falsa
+- **Fecha:** 2026-08-09
+- **Estado:** Aceptada; implementa ADR-036 y conserva los contratos de ADR-035.
+- **Contexto:** El usuario pidió ejecutar el rediseño image-first de Kennewick y
+  suministró dos carpetas Drive tituladas `Couples - Kennewick` y
+  `Senior Session - Kennewick`. Los 22 archivos descargados representan seis
+  sesiones según XMP; `010A4575copy.jpg` y
+  `sennior-session-benton-city.jpg` pertenecen a la misma sesión identificada
+  como Benton City. Al excluirla quedan cinco sesiones candidatas, casi todas
+  Seniors/Couples y ninguna Family, Newborn, Branding o Headshots. Dos tomas
+  adicionales ya existían en producción con otro nombre.
+- **Decisión:** Registrar siete composiciones image-first como autoridad visual
+  canónica y traducirlas al sistema actual: `EditorialHero` compartido sin
+  script, botón local hacia el cierre, arco de Lisa, un solo collage
+  restringido, bloque local text-led, directorio ledger con fotografía, FAQ
+  nativo y CTA final full-bleed. Publicar seis JPEG nuevos optimizados elegidos
+  entre cuatro sesiones seguras; describir literalmente sus sujetos y no
+  atribuir un spot exacto. Mantener vacía y fuera del DOM la galería “Recent
+  Kennewick Sessions” hasta contar con 6–10 sesiones distintas y una mezcla que
+  sostenga la amplitud de servicios. Actualizar `lastModified` a `2026-08-09`.
+- **Alternativas descartadas:** activar la galería con varios frames de una
+  misma sesión, usar los dos archivos asociados a Benton City, reutilizar
+  portfolio Tri-Cities como evidencia local, convertir imágenes generadas en
+  assets de producción o copiar marca, colores, tape y decoración de la
+  referencia se descartó por atribución, SEO local y coherencia de marca.
+- **Consecuencias:** La ruta conserva H1/copy exactos, seis H2, nueve anchors,
+  cinco links de servicio, FAQ visible/schema 4:4 y un solo `Service` schema.
+  Los seis JPEG cumplen 2400 px/700 KiB y generan variantes responsive. Las
+  previsualizaciones quedan bajo `.impeccable/mocks/`; la media fuente de Drive
+  usada entra en `public/uploads/`, pero los originales de auditoría permanecen
+  ignorados. El gate futuro es diversidad de sesiones, no cantidad de archivos.
