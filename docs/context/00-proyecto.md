@@ -70,7 +70,8 @@ Mantener y completar una experiencia editorial, cálida y publicable en Netlify:
 - Máximo cuatro enlaces internos dentro de `<main>` por ruta como regla general.
   Header y footer no cuentan; la CTA final a Contact consume uno de los cuatro.
   Una excepción solo existe si el usuario aprueba un directorio navegable y un
-  ADR limita sus rutas y alcance; Richland tiene esa excepción en ADR-033.
+  ADR limita sus rutas y alcance; Richland tiene esa excepción en ADR-033 y
+  Kennewick en ADR-035.
 - Staging completo debe emitir `noindex,nofollow,noarchive`.
 - En release, solo las rutas `ready` pueden indexarse; `/thank-you/` nunca.
 - Paleta oficial: Deep Umber `#281E10`, Walnut `#493621`, Warm Earth `#604A31`,

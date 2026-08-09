@@ -488,3 +488,18 @@
   están en `8a0e467`. Este cierre crea un tercer commit local. No se ejecutó
   push, deploy, DNS ni `./scripts/handoff.sh` por instrucción del usuario. El
   servidor Tina/Astro se restauró en `http://localhost:4321/`.
+
+### 2026-08-09 — Codex / GPT-5.6 — Dirección visual Kennewick reconciliada
+
+- **Feedback:** el usuario rechazó el hero split y pidió que Kennewick adopte
+  fielmente el lenguaje de `/senior-photographer-tri-cities-wa/`, con revisión
+  previa obligatoria mediante `image-to-code` y las referencias suministradas.
+- **Decisión:** ADR-036 fija `EditorialHero`, la gramática editorial de Seniors
+  y la ausencia de una frase script inventada. Copy v2, nueve anchors, schema,
+  galería opcional y gates de publicación permanecen intactos.
+- **Reconciliación:** `00-proyecto.md` ya registra correctamente que Richland y
+  Kennewick son las dos excepciones aprobadas al máximo general de cuatro
+  enlaces en `<main>`.
+- **Estado:** no se modificó runtime. La implementación queda deliberadamente
+  pausada hasta generar y aprobar tres composiciones frescas según
+  `image-to-code`/Impeccable. No se ejecutó push.

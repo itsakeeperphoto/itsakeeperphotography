@@ -556,3 +556,30 @@
   galería fuera del gate de publicación. ADR-006 sigue siendo la regla general;
   cualquier otro directorio con más de cuatro enlaces requiere aprobación y
   ADR propios.
+
+### ADR-036 — Kennewick adopta el lenguaje visual de Seniors
+- **Fecha:** 2026-08-09
+- **Estado:** Aceptada; conserva íntegros los contratos editoriales, de
+  publicación y navegación de ADR-035.
+- **Contexto:** El usuario rechazó el hero split y la dirección “Warm Proof /
+  Tonal Contact Sheet” implementados en Kennewick. Fijó como autoridad visual
+  directa `/senior-photographer-tri-cities-wa/`, mantuvo Homepage y `DESIGN.md`
+  como autoridades del sistema y pidió revisar las referencias con
+  `image-to-code` antes de cualquier implementación.
+- **Decisión:** Reutilizar en Kennewick la gramática comprobada de Seniors:
+  `EditorialHero` full-bleed con título centrado, CTA de scroll, dos prints
+  decorativos y paper edge; secciones editoriales con arcos, impresiones,
+  hairlines, superficies tonales, FAQ ledger y cierre fotográfico. No añadir
+  una frase script si el contenido aprobado no la suministra. Antes de editar
+  Astro/CSS se deben generar y aprobar composiciones frescas con
+  `image-to-code`; después se implementará contra ellas usando solo fotografías
+  existentes con descripción literal.
+- **Alternativas descartadas:** Pulir el hero split, convertir las referencias
+  en una copia literal, presentar fotografías genéricas como prueba de una
+  sesión Kennewick o inventar una frase manuscrita se descartó por contradecir
+  la instrucción visual, la trazabilidad de media y el copy v2.
+- **Consecuencias:** Copy, nueve anchors, FAQ/schema 4:4, galería opcional,
+  `ready/index`, sitemap, `llms.txt` y headers no cambian. El brief local y la
+  arquitectura deben reemplazar la dirección anterior en el mismo commit que
+  implemente el rediseño. El QA mínimo conserva 1440, 1200, 900 y 390 px,
+  además de contraste, foco, reduced motion, crops y cero overflow.
