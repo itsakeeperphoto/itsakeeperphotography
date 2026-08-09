@@ -268,17 +268,52 @@ const faqSchema = faqItems.map((item) => ({
 
       {serviceItems.length > 0 && (
         <ol class="richland-directory__list">
-          {serviceItems.map((item, index) => (
-            <li>
-              <span class="richland-directory__number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <div class="richland-directory__name">
-                <strong>{item.heading || item.links?.[0]?.label}</strong>
-              </div>
-              {item.detail && <p>{item.detail}</p>}
-            </li>
-          ))}
+          {serviceItems.map((item, index) => {
+            const link = item.links?.[0];
+            const label = item.heading || link?.label;
+            const Row = link ? "a" : "div";
+
+            return (
+              <li>
+                <Row
+                  class:list={[
+                    "richland-directory__row",
+                    link && "richland-directory__link",
+                  ]}
+                  href={link?.href}
+                >
+                  <span class="richland-directory__number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span class="richland-directory__name">
+                    <strong>{label}</strong>
+                    {link && (
+                      <span class="richland-directory__arrow" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="20"
+                          height="20"
+                          fill="none"
+                          focusable="false"
+                        >
+                          <path
+                            d="M7 17 17 7M8 7h9v9"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </svg>
+                      </span>
+                    )}
+                  </span>
+                  {item.detail && (
+                    <span class="richland-directory__detail">{item.detail}</span>
+                  )}
+                </Row>
+              </li>
+            );
+          })}
         </ol>
       )}
 

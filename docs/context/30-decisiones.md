@@ -474,3 +474,27 @@
   ruta según la fuente aprobada. Cualquier cambio a `ready/index` exige 6–10
   sesiones verificadas, nuevo QA responsive/schema y revisión explícita de los
   crawler gates. No cambian routing, tipos, Tina, manifiesto ni headers.
+
+### ADR-033 — El directorio Richland enlaza sus cinco servicios
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada; excepción limitada a ADR-006 y a la decisión de
+  directorio informativo de ADR-032.
+- **Contexto:** El usuario pidió que cada fila de “What I Photograph in
+  Richland” redirija a la página del servicio y comunique esa acción con
+  animación. Los cinco destinos ya estaban suministrados en el contenido, pero
+  ADR-006 impedía renderizarlos como anchors y dejaba el listado sin navegación.
+- **Decisión:** Convertir las cinco filas completas en anchors nativos hacia
+  Senior, Family, Newborn, Branding y Headshots. Autorizar exclusivamente en
+  `/richland-wa-photographer/` nueve anchors same-origin dentro de `<main>`:
+  tres enlaces de prosa, cinco del directorio y la CTA final. El CTA del hero
+  continúa como botón de scroll. La respuesta visual usa un barrido horizontal
+  y desplazamientos de título/flecha SVG de 180–220 ms; el foco es inmediato y
+  `prefers-reduced-motion` elimina transforms.
+- **Alternativas descartadas:** Redirigir con `onclick` desde botones se
+  descartó por semántica, teclado y comportamiento nativo; enlazar solo el
+  título se descartó porque reduce el target; aplicar la excepción a todos los
+  hubs se descartó porque diluiría el límite editorial global.
+- **Consecuencias:** ADR-006 sigue siendo la regla por defecto; esta única ruta
+  tiene una excepción trazable y no cambia sitemap, indexación ni el gate de la
+  galería Richland. Cualquier nuevo directorio enlazado requiere aprobación y
+  ADR propios.

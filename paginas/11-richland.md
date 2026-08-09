@@ -46,9 +46,9 @@ H1  Richland, WA Photographer
 
 **Subhead:** Senior pictures, families, newborns and branding photography in Richland — from someone who's lived here since 2005 and spent twenty years learning where the light lands.
 
-**CTA visible:** Plan Your Session — botón que desplaza al CTA final; el único
-anchor de Contact permanece allí para respetar el máximo de cuatro enlaces
-internos en `<main>`.
+**CTA visible:** Plan Your Session — botón que desplaza al CTA final. Contact
+permanece como CTA primaria; el directorio de servicios aplica la excepción de
+navegación específica de ADR-033.
 
 ---
 
@@ -74,13 +74,13 @@ There's one park here where, in the colder months, the sun hits a certain point 
 
 **H2: What I Photograph in Richland**
 
-_(Grid de tarjetas — componente de navegación, no links de prosa)_
+_(Directorio editorial — cada fila completa enlaza su servicio)_
 
-- **Senior Pictures** — multiple locations across town in one evening
-- **Family Photography** — open spaces where your kids can actually move
-- **Newborn Photography** — in your own home, in your own light
-- **Branding Photography** — at your Richland business or workspace
-- **Professional Headshots** — I bring portable studio equipment to you
+- **Senior Pictures** — multiple locations across town in one evening → `/senior-photographer-tri-cities-wa/`
+- **Family Photography** — open spaces where your kids can actually move → `/family-photographer-tri-cities-wa/`
+- **Newborn Photography** — in your own home, in your own light → `/newborn-photographer-tri-cities-wa/`
+- **Branding Photography** — at your Richland business or workspace → `/branding-photographer-tri-cities-wa/`
+- **Professional Headshots** — I bring portable studio equipment to you → `/headshot-photographer-tri-cities-wa/`
 
 ---
 
@@ -122,12 +122,19 @@ You bring your people. I'll bring twenty years of knowing this town.
 
 ---
 
-## Internal links (4 en prosa — el grid de servicios es componente, no cuenta)
+## Internal links (9 — excepción de directorio limitada por ADR-033)
 
-1. `/journal/family-photo-locations-tri-cities/` — en "Twenty Years of Watching This Light", desde "the location matters far less than the hour"
-2. `/about/` — en la sección de vivir aquí, desde "photographing my own children"
-3. `/investment/` — en "Planning a Session Here", desde "your planning call"
-4. `/contact/` — CTA final
+1. `/about/` — en la sección de vivir aquí, desde "photographing my own children"
+2. `/journal/family-photo-locations-tri-cities/` — en "Twenty Years of Watching This Light", desde "the location matters far less than the hour"
+3. `/senior-photographer-tri-cities-wa/` — fila completa Senior Pictures
+4. `/family-photographer-tri-cities-wa/` — fila completa Family Photography
+5. `/newborn-photographer-tri-cities-wa/` — fila completa Newborn Photography
+6. `/branding-photographer-tri-cities-wa/` — fila completa Branding Photography
+7. `/headshot-photographer-tri-cities-wa/` — fila completa Professional Headshots
+8. `/investment/` — en "Planning a Session Here", desde "your planning call"
+9. `/contact/` — CTA final
+
+El CTA del hero sigue siendo un botón de scroll y no añade un décimo anchor.
 
 ## Alt texts
 

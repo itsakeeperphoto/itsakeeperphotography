@@ -13,4 +13,6 @@ Proof and content: the supplied Richland v2 copy, residence since 2005, twenty y
 
 Direction: an editorial light ledger derived from the homepage and DESIGN.md—warm flat fields, one strong arch, wide landscape photographs, asymmetrical print-scale offsets, and construction lines that terminate at real media edges. The memorable moment is the wide Richland-family landscape paired with the arched senior portrait under “Twenty Years of Watching This Light.”
 
+Navigation: the five service-ledger rows are native, full-width links to their existing service routes. A short left-to-right wash and restrained title/arrow response communicate the click area; keyboard focus is immediate and reduced motion removes transforms.
+
 Unresolved: do not render “Recent Richland Sessions” or publish/index the route until 6–10 session photographs have verified Richland provenance and contextual alt text.

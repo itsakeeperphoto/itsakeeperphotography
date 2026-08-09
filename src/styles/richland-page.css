@@ -299,42 +299,64 @@
 }
 
 .richland-directory__list > li {
+  border-top: 1px solid var(--richland-rule-light);
+}
+
+.richland-directory__row {
+  position: relative;
   display: grid;
   min-height: 7.25rem;
   grid-template-columns: 4.5rem minmax(17rem, 0.85fr) minmax(20rem, 1.15fr);
   align-items: stretch;
-  border-top: 1px solid var(--richland-rule-light);
+  isolation: isolate;
+  color: inherit;
+  text-decoration: none;
+}
+
+.richland-directory__link {
+  overflow: clip;
+}
+
+.richland-directory__link::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: color-mix(in srgb, var(--color-warm-ivory) 10%, transparent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 220ms var(--ease-interaction);
 }
 
 .richland-directory__number {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   border-right: 1px solid var(--richland-rule-light);
-  color: var(--color-weathered-sand);
+  color: var(--color-warm-ivory);
 }
 
 .richland-directory__name {
-  min-width: 0;
-  border-right: 1px solid var(--richland-rule-light);
-}
-
-.richland-directory__name :where(a, strong) {
+  position: relative;
+  z-index: 1;
   display: flex;
+  min-width: 0;
   min-height: 7.25rem;
   align-items: center;
   justify-content: space-between;
   gap: 1.25rem;
   padding: 1.15rem clamp(1.25rem, 2.4vw, 2.25rem);
-  color: inherit;
+  border-right: 1px solid var(--richland-rule-light);
   font-family: var(--font-display);
   font-size: clamp(1.7rem, 2.4vw, 2.45rem);
-  font-weight: var(--font-weight-regular);
   line-height: 1.05;
-  text-decoration: none;
 }
 
-.richland-directory__name a {
-  transition: color 180ms var(--ease-ui);
+.richland-directory__name strong {
+  min-width: 0;
+  font-weight: var(--font-weight-regular);
+  transition: transform 180ms var(--ease-interaction);
 }
 
 .richland-directory__arrow {
@@ -344,12 +366,19 @@
   height: 2.75rem;
   place-items: center;
   border: 1px solid var(--richland-rule-light);
-  font-family: var(--font-utility);
-  font-size: 1rem;
-  transition: color 180ms var(--ease-ui), background 180ms var(--ease-ui), transform 180ms var(--ease-ui);
+  transition:
+    color 180ms var(--ease-interaction),
+    background-color 180ms var(--ease-interaction),
+    transform 180ms var(--ease-interaction);
 }
 
-.richland-directory__list > li > p {
+.richland-directory__arrow svg {
+  display: block;
+}
+
+.richland-directory__detail {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   padding: 1.2rem clamp(1.25rem, 2.8vw, 2.5rem);
@@ -357,6 +386,29 @@
   font-size: 1.0625rem;
   font-style: italic;
   line-height: 1.5;
+}
+
+.richland-directory__link:focus-visible::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition-duration: 0s;
+}
+
+.richland-directory__link:focus-visible .richland-directory__name strong {
+  transform: translateX(0.35rem);
+  transition-duration: 0s;
+}
+
+.richland-directory__link:focus-visible .richland-directory__arrow {
+  color: var(--color-muted-olive);
+  background-color: var(--color-warm-ivory);
+  transform: translate(2px, -2px);
+  transition-duration: 0s;
+}
+
+.richland-directory__link:active .richland-directory__arrow {
+  transform: translate(1px, -1px) scale(0.96);
+  transition-duration: 100ms;
 }
 
 .richland-directory__media {
@@ -708,9 +760,18 @@
     text-decoration-color: currentColor;
   }
 
-  .richland-directory__name a:hover .richland-directory__arrow {
+  .richland-directory__link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .richland-directory__link:hover .richland-directory__name strong {
+    transform: translateX(0.35rem);
+  }
+
+  .richland-directory__link:hover .richland-directory__arrow {
     color: var(--color-muted-olive);
-    background: var(--color-warm-ivory);
+    background-color: var(--color-warm-ivory);
     transform: translate(2px, -2px);
   }
 
@@ -734,7 +795,7 @@
     min-height: 34rem;
   }
 
-  .richland-directory__list > li {
+  .richland-directory__row {
     grid-template-columns: 4rem minmax(16rem, 0.85fr) minmax(17rem, 1.15fr);
   }
 
@@ -862,12 +923,12 @@
     grid-column: auto;
   }
 
-  .richland-directory__list > li {
+  .richland-directory__row {
     grid-template-columns: 3.75rem minmax(15rem, 0.9fr) minmax(16rem, 1.1fr);
   }
 
-  .richland-directory__name :where(a, strong),
-  .richland-directory__list > li {
+  .richland-directory__name,
+  .richland-directory__row {
     min-height: 6.75rem;
   }
 
@@ -1049,7 +1110,7 @@
     font-size: 1.0625rem;
   }
 
-  .richland-directory__list > li {
+  .richland-directory__row {
     min-height: 0;
     grid-template-columns: 3.5rem minmax(0, 1fr);
   }
@@ -1062,13 +1123,13 @@
     border-right: 0;
   }
 
-  .richland-directory__name :where(a, strong) {
+  .richland-directory__name {
     min-height: 5.75rem;
     padding: 1rem 1.1rem;
     font-size: clamp(1.55rem, 7vw, 2rem);
   }
 
-  .richland-directory__list > li > p {
+  .richland-directory__detail {
     min-height: 4.5rem;
     padding: 0 1.1rem 1.35rem;
     font-size: 1rem;
@@ -1184,7 +1245,7 @@
     padding: 0.35rem 0.35rem 0.8rem;
   }
 
-  .richland-directory__list > li {
+  .richland-directory__row {
     grid-template-columns: 3.25rem minmax(0, 1fr);
   }
 
@@ -1208,5 +1269,11 @@
   .richland-page *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .richland-directory__link::before,
+  .richland-directory__name strong,
+  .richland-directory__arrow {
+    transform: none !important;
   }
 }
