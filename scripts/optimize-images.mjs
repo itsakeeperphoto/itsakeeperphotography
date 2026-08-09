@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -21,34 +22,47 @@ for (const file of sourceFiles) {
   }
 }
 
-let generated = 0;
+const jobs = [];
 
 for (const [base, file] of byBase) {
   const input = path.join(uploadsDir, file);
-  const metadata = await sharp(input).metadata();
+  const [metadata, inputStat] = await Promise.all([
+    sharp(input).metadata(),
+    fs.stat(input),
+  ]);
   if (!metadata.width) continue;
 
   for (const width of widths) {
     if (width > metadata.width) continue;
 
     const output = path.join(uploadsDir, `${base}-${width}.webp`);
-    const [inputStat, outputStat] = await Promise.all([
-      fs.stat(input),
-      fs.stat(output).catch(() => null),
-    ]);
+    const outputStat = await fs.stat(output).catch(() => null);
 
     if (outputStat && outputStat.mtimeMs >= inputStat.mtimeMs) continue;
 
-    await sharp(input)
-      .resize({ width, withoutEnlargement: true })
-      .webp({ quality: 72, effort: 6, smartSubsample: true })
-      .toFile(output);
-    generated += 1;
+    jobs.push({ input, output, width });
   }
 }
 
+const workerCount = Math.min(4, os.availableParallelism(), jobs.length || 1);
+let nextJob = 0;
+
+async function runWorker() {
+  while (nextJob < jobs.length) {
+    const job = jobs[nextJob];
+    nextJob += 1;
+
+    await sharp(job.input)
+      .resize({ width: job.width, withoutEnlargement: true })
+      .webp({ quality: 72, effort: 4, smartSubsample: true })
+      .toFile(job.output);
+  }
+}
+
+await Promise.all(Array.from({ length: workerCount }, () => runWorker()));
+
 console.log(
-  generated
-    ? `Generated ${generated} responsive image variants.`
+  jobs.length
+    ? `Generated ${jobs.length} responsive image variants with ${workerCount} workers.`
     : "Responsive image variants are up to date."
 );
