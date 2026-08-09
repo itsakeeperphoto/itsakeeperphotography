@@ -371,8 +371,9 @@
   ese proceso; las dos corridas autorizadas pasaron y no dejaron cambios fuente
   incidentales.
 - **Git:** la tarea comenzó en `7032ead`, con `main` dos commits delante de
-  `origin/main`. Por orden del usuario se crearán solo commits locales; no se
-  ejecutó push, deploy ni cambio externo.
+  `origin/main`. La implementación quedó en `f23ae47`; este cierre documental
+  añade un segundo commit local. Por orden del usuario no se ejecutó push,
+  deploy ni cambio externo y `main` termina cuatro commits delante del remoto.
 - **Finish review:** la primera revisión independiente detectó dos gates que la
   métrica del contenedor no mostraba: “Photographer” se recortaba a 390 px y el
   directorio convertía `<main>` en diez anchors. Se redujo únicamente la escala

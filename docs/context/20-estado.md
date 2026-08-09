@@ -3,7 +3,7 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 20:27 -05
+**Última actualización:** 2026-08-08 20:44 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
@@ -12,15 +12,16 @@
 **Commit base al iniciar Richland v2:** `7032ead` —
 `docs(context): record locations section redesign`
 
-**Implementación Richland v2:** build y QA completos; el hash se registrará en
-el commit documental posterior al commit local de implementación.
+**Commit de implementación Richland v2:** `f23ae47` —
+`feat(richland): implement local photographer page v2`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** al iniciar, `main` estaba dos commits por delante de
-`origin/main` y apuntaba a `7032ead`. Por instrucción expresa del usuario, Codex
-crea commits locales y no ejecuta pushes. No se ejecutó deploy ni cambio de DNS.
+**Publicación:** al cerrar, `main` queda cuatro commits por delante de
+`origin/main`: dos previos, `f23ae47` y este cierre documental. Por instrucción
+expresa del usuario, Codex crea commits locales y no ejecuta pushes. No se
+ejecutó deploy ni cambio de DNS.
 
 ---
 
@@ -234,8 +235,8 @@ git diff --check
 ## Bloqueadores externos
 
 1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
-   commits locales. Al iniciar esta tarea `main...origin/main` estaba `ahead 2`
-   en `7032ead`.
+   commits locales. La tarea empezó `ahead 2`; tras `f23ae47` y este cierre
+   documental termina `ahead 4`.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
 3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.
