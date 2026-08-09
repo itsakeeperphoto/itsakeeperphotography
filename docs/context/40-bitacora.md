@@ -382,3 +382,28 @@
   exactos, foco movido a `#richland-final`, overflow 0 y consola limpia en los
   cuatro viewports. Un finish reviewer fresco posterior devolvió `PASS` sin
   hallazgos materiales.
+
+### 2026-08-08 — Codex / GPT-5.6 — Directorio Richland enlazado y animado
+
+- **Objetivo:** responder al feedback de convertir el listado “What I
+  Photograph in Richland” en navegación real hacia las cinco páginas de
+  servicio y añadir una animación que comunique la interacción.
+- **Implementación:** cada fila completa es un anchor nativo alimentado por los
+  hrefs ya presentes en `content/pages/richland.json`. El indicador es una
+  flecha SVG; hover usa un barrido horizontal, desplazamiento mínimo del título
+  y la flecha, y press reduce la flecha. No se añadió JavaScript ni dependencia.
+- **Accesibilidad:** el nombre accesible conserva servicio y detalle, las filas
+  superan 44 px, el foco se muestra de inmediato y Enter navega. Reduced motion
+  reduce la duración a `0.01ms` y elimina transforms. Los números cambiaron de
+  Weathered Sand (2.43:1) a Warm Ivory (4.61:1) tras revisión independiente.
+- **Decisión:** ADR-033 permite nueve anchors internos solo en esta ruta: tres
+  de prosa, cinco del directorio y Contact final. ADR-006 permanece como regla
+  general; el hero sigue siendo botón de scroll.
+- **Verificación:** Playwright confirmó 1728×963 y 390×844 con cinco destinos
+  exactos, targets 1344×116 y 366×164 px, overflow 0, foco de 2 px, navegación
+  con Enter y movimiento reducido. Release y staging terminaron con
+  `Validated 21 public routes`; un release adicional confirmó el contraste.
+- **Operación:** implementación en `1ddd9ba`; el cierre queda en un segundo
+  commit local. Por orden del usuario no se ejecutó push, deploy ni cambio
+  externo. Tampoco se ejecutó `./scripts/handoff.sh`, porque su push incorporado
+  contradice la instrucción vigente de crear solo commits locales.

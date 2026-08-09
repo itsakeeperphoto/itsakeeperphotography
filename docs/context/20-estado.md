@@ -3,25 +3,25 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 20:44 -05
+**Última actualización:** 2026-08-08 22:04 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit base al iniciar Richland v2:** `7032ead` —
-`docs(context): record locations section redesign`
+**Commit base al iniciar este feedback Richland:** `4eab2fa` —
+`docs(context): record Richland v2 handoff`
 
-**Commit de implementación Richland v2:** `f23ae47` —
-`feat(richland): implement local photographer page v2`
+**Commit de navegación del directorio:** `1ddd9ba` —
+`feat(richland): link animated service directory`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** al cerrar, `main` queda cuatro commits por delante de
-`origin/main`: dos previos, `f23ae47` y este cierre documental. Por instrucción
-expresa del usuario, Codex crea commits locales y no ejecuta pushes. No se
-ejecutó deploy ni cambio de DNS.
+**Publicación:** al registrar este cierre, `main` queda seis commits por delante
+de `origin/main`: los cuatro previos, `1ddd9ba` y este cierre documental. Por
+instrucción expresa del usuario, Codex crea commits locales y no ejecuta pushes.
+No se ejecutó deploy ni cambio de DNS.
 
 ---
 
@@ -47,8 +47,9 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
   privada. Conserva una sola condición editorial: la galería real de 6–10
   sesiones.
 - La superficie Richland es un “light ledger” editorial: retícula de 12
-  columnas, un arco, directorio de cinco servicios, ratios naturales, planning,
-  FAQ y cierre fotográfico. La galería no se renderiza mientras esté vacía.
+  columnas, un arco, directorio navegable de cinco servicios, ratios naturales,
+  planning, FAQ y cierre fotográfico. La galería no se renderiza mientras esté
+  vacía.
 - `/journal/family-photo-locations-tri-cities/` quedó terminada para
   producción con fecha editorial `2026-08-08`, sin placeholders, en sitemap y
   en `llms.txt`.
@@ -116,14 +117,18 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
 - La página renderiza residencia, Twenty Years, un directorio visual de cinco
   servicios, planning, cuatro FAQ y CTA. “Recent Richland Sessions” queda
   condicional y no existe en DOM sin fotografías verificadas.
+- Las cinco filas del directorio son anchors nativos de área completa hacia las
+  rutas existentes de Senior, Family, Newborn, Branding y Headshots. Un barrido
+  horizontal, el título y una flecha SVG responden en 180–220 ms; foco visible
+  y movimiento reducido tienen estados explícitos.
 - Se usan fotografías reales ya autorizadas con alt literal; ningún filename
   por sí solo se trató como prueba local. Paisajes y retratos mantienen sus
   ratios 3:2, 9:5, 3:4 y 15:19 en vez de recortes verticales arbitrarios.
-- Playwright release aprobó 1440×1000, 1200×1000, 900×1000 y 390×844: overflow
-  0, gaps 0, 11/11 imágenes, H1 única, controles principales ≥44 px, focus
-  visible, FAQ por teclado, reduced motion y consola limpia. Tras el finish
-  review, la línea “Photographer” quedó contenida a 390 px y `<main>` conserva
-  exactamente cuatro anchors internos.
+- La matriz anterior sigue aprobada en 1440, 1200, 900 y 390 px. Para este
+  cambio Playwright release confirmó 1728×963 y 390×844: cinco destinos
+  exactos, filas de 1344×116 y 366×164 px, overflow 0, activación con Enter,
+  focus visible y transforms anulados con reduced motion. `<main>` contiene
+  nueve anchors por la excepción de ruta ADR-033.
 - Sigue `draft/noindex`; no se tocó manifiesto, header fuente, sitemap ni llms.
   El artefacto release confirma meta/header noindex y exclusión de crawlers.
 
@@ -171,17 +176,15 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
 
 ## Archivos cambiados en esta sesión
 
-- Contenido/runtime: `content/pages/richland.json`,
-  `src/content/pending.ts`.
-- Render/schema: `src/components/pages/RichlandPage.astro`.
-- Diseño: `src/styles/richland-page.css`.
-- Fuente/editorial: `paginas/11-richland.md`, `paginas/00-INDICE.md`.
+- Render: `src/components/pages/RichlandPage.astro`.
+- Diseño e interacción: `src/styles/richland-page.css`.
+- Fuente/editorial: `paginas/11-richland.md`.
 - Dirección de superficie:
   `.impeccable/surfaces/route-richland-wa-photographer.md`.
-- Memoria: `docs/context/20-estado.md`, `30-decisiones.md`,
-  `40-bitacora.md` y `50-backlog.md`.
-- No cambiaron assets, routing, Tina, tipos, manifiestos, headers ni crawler
-  outputs fuente.
+- Memoria: `docs/context/00-proyecto.md`, `20-estado.md`,
+  `30-decisiones.md`, `40-bitacora.md` y `50-backlog.md`.
+- No cambiaron copy runtime, assets, routing, Tina, tipos, schema, manifiestos,
+  headers ni crawler outputs fuente.
 
 ## Qué está a medias
 
@@ -205,38 +208,31 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
 ```bash
 SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local
 SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
-node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json \
-  --scope layout \
-  src/components/pages/RichlandPage.astro \
-  src/styles/richland-page.css
 git diff --check
 ```
 
 - Release: `Validated 21 public routes in release mode.`
 - Staging: `Validated 21 public routes in staging mode.`
-- Detector Impeccable: `[]`.
-- Playwright release: 1440×1000, 1200×1000, 900×1000 y 390×844; overflow 0,
-  gaps 0, 11/11 imágenes, una H1, seis H2 en orden, galería ausente, controles
-  principales ≥44 px, H1 móvil completa y consola 0 errores/advertencias.
-- `<main>` contiene exactamente cuatro anchors internos: About, Locations
-  Guide, Investment y Contact final. “Plan Your Session” es un botón que
-  desplaza y mueve foco a `#richland-final`.
-- La segunda FAQ abre/cierra con Enter; el focus usa outline 2 px/offset 4 px;
-  reduced motion reduce las transiciones a `0.01ms`.
-- Artefacto Richland: cinco JSON-LD parsean; FAQ visible/schema 4:4;
-  LocalBusiness sin `streetAddress`; canonical `www`; meta/header noindex; sin
-  Howard Amon, Badger Mountain, Canyon Street ni “Recent Richland Sessions”.
-- El primer build dentro del sandbox falló por `listen EPERM ::1:4001`; un
-  proceso hijo de Tina quedó ocupando 9000. Se identificó y detuvo solo ese
-  proceso, y las dos corridas autorizadas pasaron sin cambios incidentales.
-- Finish reviewer fresco posterior a las correcciones: `PASS` sin hallazgos
-  materiales.
+- Playwright release: 1728×963 y 390×844; cinco anchors `<a>` con hrefs exactos,
+  targets 1344×116 y 366×164 px, overflow 0 y navegación con Enter al servicio
+  Senior. Foco: outline 2 px; reduced motion: `0.01ms` y transform `none`.
+- Hover desktop: barrido `scaleX(0→1)`, título `translateX(5.6px)` y flecha
+  `translate(2px,-2px)` en 180–220 ms.
+- La revisión independiente detectó contraste 2.43:1 en `01–05`; se cambió a
+  Warm Ivory y la confirmación calculó 4.61:1 sobre Muted Olive en ambos
+  viewports.
+- La única consola externa fue un 400 de Microsoft Clarity en localhost; no
+  hubo errores de la aplicación.
+- El primer build dentro del sandbox falló por `listen EPERM ::1:4001`; se
+  identificó y detuvo el dev server previo que ocupaba 9000. Release y staging,
+  más el release de confirmación, pasaron sin cambios incidentales.
 
 ## Bloqueadores externos
 
 1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
-   commits locales. La tarea empezó `ahead 2`; tras `f23ae47` y este cierre
-   documental termina `ahead 4`.
+   commits locales. La tarea empezó `ahead 4`; tras `1ddd9ba` y este cierre
+   documental termina `ahead 6`. No se ejecuta `./scripts/handoff.sh` porque su
+   protocolo incluye push y contradice esa orden explícita.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
 3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.

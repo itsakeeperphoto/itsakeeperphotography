@@ -93,6 +93,8 @@ sin reemplazar el archivo.
   por Lisa, sin publicar nombres ni dirección privada.
 - [x] Incorporados al copy v2 el formato newborn in-home y la política de viaje
   Tri-Cities suministrados en el documento aprobado.
+- [x] Enlazadas las cinco filas del directorio a sus servicios con estados
+  hover, focus y reduced motion; excepción limitada por ADR-033.
 - [ ] Completar la única condición restante: 6–10 imágenes de sesiones reales
   en Richland con procedencia verificable y alt contextual literal, sin nombrar
   el spot exacto.
