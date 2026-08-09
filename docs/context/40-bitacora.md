@@ -503,3 +503,27 @@
 - **Estado:** no se modificó runtime. La implementación queda deliberadamente
   pausada hasta generar y aprobar tres composiciones frescas según
   `image-to-code`/Impeccable. No se ejecutó push.
+
+### 2026-08-09 — Codex / GPT-5 — Optimización de bandwidth y build
+
+- **Objetivo:** reducir consumo de transferencia y duración del build Netlify
+  sin borrar fotografías usadas en producción.
+- **Diagnóstico:** `public/` ~130 MiB, `dist/` ~148 MiB y cuatro JPEG de 24 MP
+  entre 14.6 y 28.1 MiB. Producción servía el Open Graph de Locations con
+  15,291,345 bytes; su variante WebP era 139,936 bytes. El pipeline Sharp limpio
+  tardaba 114.80 s por procesar 172 salidas secuenciales con effort 6.
+- **Implementación:** `bd833f6` optimiza once JPEG usados con máximo 2400 px y
+  700 KiB, preserva metadatos existentes, paraleliza variantes con cuatro
+  workers/effort 4 e integra el guard en ambos builds. Se retiraron diez assets
+  sin referencias verificadas; siguen recuperables desde Git.
+- **Resultado:** `public/` ~40 MiB, `dist/` ~51 MiB, fase limpia 5.09 s y
+  Tina+Astro 35.62 s. Chrome headless midió entre 64–338 KiB de imágenes en el
+  viewport inicial de cuatro rutas críticas y máximo 784 KiB al recorrer una
+  ruta completa en desktop.
+- **QA:** release y staging validan 21 rutas; cero referencias `/uploads/`
+  faltantes; dry-run confirma todos los JPEG dentro del límite; `git diff
+  --check` pasa. PageSpeed respondió 429 por cuota, por lo que no se inventaron
+  CWV. Evidencia local ignorada en
+  `artifacts/audits/bandwidth-2026-08-09/` y `.seo-cache/`.
+- **Operación:** no se hizo push ni deploy. Netlify redirige hoy `www` al apex
+  mientras el repo genera canonical `www`; se documentó sin tocar DNS.

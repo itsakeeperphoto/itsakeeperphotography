@@ -154,9 +154,10 @@ sin reemplazar el archivo.
   `8d5d84f`, `aae3812` y `c663d68` al cierre de implementación.
 - [ ] Mantener la instrucción operativa actual: ningún agente hace push; cada
   intervención termina en commits locales que el usuario administra.
-- [ ] Publicar los tres commits locales de Kennewick (`8a0e467`, `b65c3c5` y
-  su cierre documental) con una identidad autorizada; después ejecutar el
-  chequeo remoto descrito en el ítem 5.
+- [ ] Publicar `main` con una identidad autorizada; al cierre queda siete
+  commits delante de `origin/main`, incluidos Kennewick, sus composiciones y
+  `bd833f6` con la optimización de imágenes. Después ejecutar el chequeo remoto
+  del ítem 5 y la observación de bandwidth de QA.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -204,6 +205,21 @@ sin reemplazar el archivo.
 
 ## QA y rendimiento
 
+- [x] Reducir originales web usados: once JPEG optimizados, incluidos los ocho
+  mayores de 80.38 MiB a 3.30 MiB, sin eliminar ninguna foto referenciada.
+- [x] Retirar diez fuentes sin uso demostrado en las 21 rutas/CSS/Tina/schema y
+  confirmar cero referencias `/uploads/` faltantes en release.
+- [x] Paralelizar Sharp y bajar effort 6→4: generación limpia 114.80 s→5.09 s;
+  `public` ~130→40 MiB y `dist` ~148→51 MiB.
+- [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
+  guard de fuentes y las variantes terminan, comprobar que
+  `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a
+  ~530,418 bytes y observar bandwidth por asset durante 48 horas.
+- [ ] Si el consumo sigue alto tras el deploy, revisar Netlify Analytics/logs
+  para distinguir tráfico real, previews activos, hotlinking y bots antes de
+  añadir rate limiting o migrar transformaciones a Netlify Image CDN.
+- [ ] Repetir PageSpeed/Lighthouse cuando la cuota deje de responder HTTP 429;
+  no inferir LCP/INP/CLS desde el peso del artefacto.
 - [x] Verificada `/journal/family-photo-locations-tri-cities/` en 1440×1000,
   1200×900, 900×900 y 390×844: sin overflow, 20/20 imágenes, cuatro body links,
   cinco FAQs, foco visible y consola limpia. Evidencia en
@@ -236,6 +252,10 @@ sin reemplazar el archivo.
 
 ## SEO, indexación y lanzamiento
 
+- [ ] Resolver con el usuario la divergencia de host observada el 2026-08-09:
+  Netlify redirige `www` al apex, pero `SITE_ORIGIN` release y los canonicals
+  locales usan `www`. Alinear solo después de confirmar cuál será el dominio
+  primario; no cambiar DNS por inferencia.
 - [ ] Mantener staging globalmente noindex mientras haya rutas draft.
 - [ ] Para cada ruta completada, actualizar status/fecha en
   `src/lib/page-manifest.ts` y comprobar membership de sitemap/llms.

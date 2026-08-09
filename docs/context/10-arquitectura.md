@@ -206,13 +206,18 @@ npm run dev
 npm run build:local
 npm run build
 npm run preview
+npm run optimize:source-images
 npm run optimize:images
 npm run audit:lighthouse
 ```
 
-`npm run build:local` inicia Tina local, compila Astro, instala headers de
-staging y ejecuta `scripts/validate-site.mjs`. `npm run build` realiza además
-indexación/build Tina según el entorno de deploy.
+`npm run build:local` valida primero que los JPEG fuente no excedan 2400 px ni
+700 KiB, genera variantes responsive, inicia Tina local, compila Astro, instala
+headers de staging y ejecuta `scripts/validate-site.mjs`. `npm run build`
+realiza la misma disciplina de assets y además indexación/build Tina según el
+entorno de deploy. En Netlify el guard puede optimizar una fuente grande en el
+checkout efímero; localmente exige `npm run optimize:source-images -- --write`
+para evitar cambios silenciosos al repositorio.
 
 ## Despliegue
 
@@ -258,6 +263,15 @@ declara ubicación física en esa ciudad. No se emiten `Review`,
 - Fuentes WOFF2 locales en `public/fonts/`; no se depende de Google Fonts en
   runtime.
 - Fotografías optimizadas en AVIF/WebP/JPEG con dimensiones y `sizes`.
+- `scripts/optimize-source-images.mjs` limita JPEG web a 2400 px y 700 KiB,
+  conserva metadatos existentes y reemplaza solo después de validar el temporal.
+- `scripts/optimize-images.mjs` genera las variantes 400/640/960/1440 con hasta
+  cuatro workers, WebP quality 72 y effort 4. En la medición limpia del
+  2026-08-09 pasó de 114.80 s a 5.09 s.
+- El inventario publicado contiene 71 fuentes y 154 variantes responsive. Diez
+  assets sin referencias en ninguna de las 21 rutas, CSS, Tina, schema u Open
+  Graph fueron retirados en `bd833f6`; cualquier restauración debe añadir
+  primero una referencia verificable.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

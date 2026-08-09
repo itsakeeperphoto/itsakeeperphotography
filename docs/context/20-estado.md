@@ -3,41 +3,50 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 23:38 -05
+**Última actualización:** 2026-08-09 08:36 -05
 
-**Actualizado por:** Codex / GPT-5.6
+**Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit base al iniciar Kennewick v2:** `fca4196` —
-`docs(context): record Richland publication`
+**Commit base de esta intervención:** `9ca7b7e` —
+`docs(design): add Kennewick image-to-code comps`
 
-**Commit funcional verificado:** `b65c3c5` —
-`feat(kennewick): publish v2 city page`
+**Commit funcional verificado:** `bd833f6` —
+`perf(images): cut deploy weight and build time`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al terminar:** este cierre deja `main` tres commits delante de
-`origin/main`: `8a0e467`, `b65c3c5` y el commit documental que contiene este
-archivo. Por instrucción expresa vigente, Codex no ejecutó push, deploy ni
-cambio externo.
+**Estado Git al terminar:** antes del cierre documental, `main` está seis
+commits delante de `origin/main`; el commit documental que contiene este
+archivo será el séptimo. Se preservaron los commits paralelos de dirección
+visual de Kennewick. Por instrucción expresa vigente, Codex no ejecutó push,
+deploy, DNS ni otro cambio externo.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario debe publicar los tres commits locales con su identidad autorizada.
-Después, verificar en el dominio oficial Richland y Kennewick: status 200,
-canonical `www`, meta index, ausencia de `X-Robots-Tag: noindex`, membresía de
-sitemap/`llms.txt` y `lastmod 2026-08-08`. No añadir la galería Kennewick hasta
-recibir sesiones con procedencia local y alt literal verificados.
+El usuario debe publicar `main` con su identidad autorizada y observar el build
+Netlify. Verificar que el guard de JPEG y las variantes terminan, que
+`/uploads/journal-family-children-golden-hour-tricities.jpg` baja de
+15,291,345 a ~530,418 bytes y que las 21 rutas siguen respondiendo. Después,
+vigilar bandwidth por asset durante 48 horas. Resolver por separado si el host
+primario será apex o `www`; no cambiar DNS/canonicals por inferencia.
 
 ---
 
 ## Resumen ejecutivo
 
 - El sitio Astro/Tina/Netlify construye 21 rutas públicas.
+- `public/` bajó de ~130 a ~40 MiB y `dist/` de ~148 a ~51 MiB. La fase limpia
+  de imágenes bajó de 114.80 a 5.09 s; Tina+Astro mide 35.62 s.
+- Once JPEG usados permanecen en las mismas rutas, con composición y metadatos
+  existentes conservados. Los ocho mayores pasaron de 80.38 a 3.30 MiB.
+- Diez fuentes sin referencias en las 21 rutas, CSS, Tina, schema u Open Graph
+  fueron retiradas y siguen recuperables desde Git. El release tiene cero
+  referencias `/uploads/` faltantes.
 - Están `ready/index`: Homepage, Family, Richland, Kennewick, Family Photo
   Locations y Portfolio. Thank-you es `ready/noindex`; las otras 14 rutas
   permanecen `draft/noindex`.
@@ -61,6 +70,20 @@ recibir sesiones con procedencia local y alt literal verificados.
   `:9000` y su API local `:4001`.
 
 ## Qué funciona hoy
+
+### Rendimiento de imágenes y build
+
+- `scripts/optimize-source-images.mjs` limita JPEG a 2400 px y 700 KiB con
+  quality 82, metadatos conservados y reemplazo temporal validado.
+- Netlify ejecuta ese guard antes de las variantes. Localmente el dry-run no
+  modifica archivos y exige `--write` cuando encuentra una fuente grande.
+- `scripts/optimize-images.mjs` usa hasta cuatro workers, WebP quality 72 y
+  effort 4 sin cambiar los nombres 400/640/960/1440 que consume `Picture.astro`.
+- Chrome headless con caché vacía midió el viewport inicial entre 64 y 338 KiB
+  de imágenes en Home, Journal, Locations y Portfolio; al recorrerlas completas
+  el máximo fue 784 KiB en desktop.
+- El artefacto contiene 71 fuentes y 154 variantes responsive. Todas las URLs
+  de imagen emitidas por las 21 rutas existen.
 
 ### Kennewick v2
 
@@ -115,8 +138,16 @@ SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run 
 SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
 node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json src/components/pages/KennewickPage.astro src/styles/kennewick-page.css content/pages/kennewick.json
 git diff --check
+npm run optimize:source-images
+npm run optimize:images
 ```
 
+- Fuentes: `All JPEG sources are at or below 2400px and 700 KiB.`
+- Variantes: clean benchmark `114.80 s → 5.09 s`; rerun actual up to date.
+- Release y staging: `Validated 21 public routes`.
+- Auditoría de referencias: cero rutas `/uploads/` faltantes.
+- PageSpeed no produjo CWV porque la API respondió HTTP 429 por cuota; no se
+  sustituyó INP con TBT ni se inventaron scores.
 - Staging: `Validated 21 public routes in staging mode.`
 - Release: `Validated 21 public routes in release mode.`
 - Impeccable detector: `[]`.
@@ -135,6 +166,12 @@ git diff --check
 
 ## Archivos del cambio funcional
 
+- Pipeline: `scripts/optimize-source-images.mjs`,
+  `scripts/optimize-images.mjs` y `package.json`.
+- Media: once JPEG optimizados y diez fuentes retiradas bajo `public/uploads/`;
+  el detalle recuperable está en el commit `bd833f6`.
+- Evidencia local ignorada: `artifacts/audits/bandwidth-2026-08-09/` y
+  `.seo-cache/pages/homepage/`.
 - Contenido/fuente: `content/pages/kennewick.json`,
   `paginas/12-kennewick.md`, `paginas/00-INDICE.md`.
 - UI: `src/components/pages/KennewickPage.astro`,
@@ -150,6 +187,8 @@ git diff --check
 
 | Ruta/módulo | Estado | Qué falta |
 |---|---|---|
+| Bandwidth/build | Optimizado localmente | Publicar, verificar Content-Length/build Netlify y observar 48 h por asset. |
+| Kennewick visual | Dirección aprobada, runtime anterior | Implementar composiciones de `9ca7b7e` en una tarea separada. |
 | Galería Kennewick | Mejora opcional | Añadir 6–10 sesiones verificadas con alt literal; no es gate. |
 | Galería Richland | Mejora opcional | Añadir sesiones verificadas cuando el usuario las suministre. |
 | Seniors / Senior timing | Draft | Hechos de paquetes, oferta Q54, fechas y QA final. |
@@ -167,13 +206,18 @@ Kennewick ni Family Photo Locations.
 
 ## Bloqueadores externos
 
-1. **Git/deploy:** el usuario prohibió pushes desde Codex. Los tres commits
-   locales todavía no están en `origin/main`; no se ejecutó
-   `./scripts/handoff.sh` porque incorpora push.
-2. **Producción:** el artefacto release local pasa, pero falta comprobar la
-   respuesta HTTP real después del push/deploy autorizado.
+1. **Git/deploy:** el usuario prohibió pushes desde Codex. El cierre queda siete
+   commits delante de `origin/main`; no se ejecuta `./scripts/handoff.sh`
+   porque incorpora un push incondicional.
+2. **Producción:** el artefacto release local pasa, pero producción continúa con
+   el JPG Open Graph de 15,291,345 bytes hasta el push/deploy autorizado.
 3. **Netlify/GBP/analítica/legal:** permanecen las verificaciones externas del
    backlog; no se inventaron como resueltas.
+4. **Dominio canónico:** el 2026-08-09 el deploy real redirige tanto la
+   subdomain Netlify como `www.itsakeeperphotography.com` hacia
+   `https://itsakeeperphotography.com/`, mientras `netlify.toml` y los builds
+   release siguen declarando el canonical con `www`. No cambiar DNS, redirects
+   ni `SITE_ORIGIN` sin una decisión explícita del usuario.
 
 ## Preguntas abiertas
 

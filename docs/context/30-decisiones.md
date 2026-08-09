@@ -583,3 +583,31 @@
   arquitectura deben reemplazar la dirección anterior en el mismo commit que
   implemente el rediseño. El QA mínimo conserva 1440, 1200, 900 y 390 px,
   además de contraste, foco, reduced motion, crops y cero overflow.
+
+### ADR-037 — Los originales web se limitan y las variantes se generan en paralelo
+- **Fecha:** 2026-08-09
+- **Estado:** Aceptada.
+- **Contexto:** `public/` pesaba ~130 MiB y `dist/` ~148 MiB. Cuatro JPEG de
+  24 MP sumaban 76.7 MiB; uno se publicaba además como Open Graph de un artículo
+  listo y producción lo servía con 15,291,345 bytes. La regeneración limpia de
+  172 variantes tardaba 114.80 s porque Sharp usaba effort 6 de forma
+  secuencial. El usuario autorizó optimizar residuos con la condición de no
+  borrar fotografías usadas en producción.
+- **Decisión:** conservar y optimizar en sitio los JPEG usados que excedan
+  2400 px o 700 KiB, con quality 82, `mozjpeg`, salida progresiva, metadatos y
+  reemplazo temporal validado. Generar WebP 400/640/960/1440 con quality 72,
+  effort 4 y hasta cuatro workers. Ejecutar el guard antes de variantes tanto
+  en build local como Netlify; Netlify puede corregir el checkout efímero y el
+  entorno local requiere `--write`. Retirar solo diez fuentes cuya ausencia de
+  referencias quedó demostrada contra las 21 rutas, CSS, contenido, Tina,
+  schema y Open Graph; Git conserva su recuperación.
+- **Alternativas descartadas:** borrar originales todavía usados, migrar de
+  inmediato todo el sitio a Netlify Image CDN, conservar JPEG de 24 MP como
+  fallback o depender únicamente de caché se descartó por compatibilidad,
+  alcance y porque no resolvía simultáneamente peso de deploy, bots sociales y
+  tiempo de build.
+- **Consecuencias:** `public/` queda en ~40 MiB y `dist/` en ~51 MiB; once JPEG
+  usados mantienen composición y presencia de metadatos preexistentes. La fase
+  limpia de variantes tarda 5.09 s y el build limpio esperado ronda 41 s.
+  Cualquier fotografía futura que exceda el contrato debe optimizarse antes de
+  quedar persistida; restaurar un asset retirado exige nueva referencia y QA.
