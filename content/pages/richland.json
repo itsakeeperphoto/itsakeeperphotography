@@ -6,66 +6,62 @@
   "schemaType": "WebPage",
   "signature": "arch",
   "title": "Richland WA Photographer | It's A Keeper Photography",
-  "description": "Lisa lives and photographs in Richland, WA — golden-hour sessions at Howard Amon Park, Badger Mountain, the river paths and the corners only locals know.",
+  "description": "Based in Richland since 2005 — senior pictures, family, newborn and branding photography by Lisa Weiss, photographed in the evening light she knows by heart.",
   "hero": {
     "tone": "earth",
-    "heading": "Your Richland, WA Photographer",
-    "intro": "Senior pictures, family sessions, newborns and branding photography in Richland — from a photographer who's been chasing this town's golden hour for twenty years.",
+    "heading": "Richland, WA Photographer",
+    "intro": "Senior pictures, families, newborns and branding photography in Richland — from someone who's lived here since 2005 and spent twenty years learning where the light lands.",
     "scriptLine": "right here in Richland",
-    "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
-    "imageAlt": "High school senior photographed beside the river in warm evening light in the Tri-Cities",
-    "secondaryImage": "/uploads/headshot-warm-portrait-tricities.jpg",
-    "secondaryImageAlt": "Warm golden-hour portrait among flowers in the Tri-Cities"
+    "image": "/uploads/hero-couple-golden-hour-richland.jpg",
+    "imageAlt": "A couple sharing a quiet embrace beneath autumn trees during a golden-hour session in Richland, WA",
+    "secondaryImage": "/uploads/senior-portrait-golden-hour-richland.jpg",
+    "secondaryImageAlt": "High school senior in a black dress photographed at golden hour in Richland",
+    "links": [
+      {
+        "label": "Plan Your Session",
+        "href": "/contact/"
+      }
+    ]
   },
   "sections": [
     {
       "id": "i-live-here",
       "kind": "split",
       "tone": "sand",
-      "heading": "I Don't Just Work in Richland — I Live Here",
+      "heading": "This Isn't a City I Travel To — It's Where I Live",
       "paragraphs": [
-        "It's A Keeper Photography is based right here in Richland. This is where I raised my family, where my business grew from a mom with a point-and-shoot into twenty years of professional photography, and where I know — down to the week — when the light turns gold along the river.",
-        "That matters more than it sounds. When you book a Richland session with me, you're not getting a photographer guessing at locations from Google Maps. You're getting someone who knows which park empties out at dinnertime, where the trees hold their color longest in October, and exactly where the sun drops behind the ridge."
+        "It's A Keeper Photography is based in Richland. Not \"serving Richland\" — based here.",
+        "I moved here from Wisconsin in 2005 and raised my family in this town. My kids grew up here. My church is here. The business that started with me photographing my own children in our backyard has grown into twenty years of photographing hundreds of families across the Tri-Cities — and it grew up in Richland.",
+        "I mention it because it changes what you get. When we plan your session, I'm not pulling up a map and guessing. I know when the trees along the river turn and roughly how long they hold. I know which places empty out at dinnertime and which fill up on weekends. I know what the light does here in February versus June, because I've been standing in it for two decades."
       ],
-      "image": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
-      "imageAlt": "Family embracing outdoors during a golden-hour portrait session in the Tri-Cities",
+      "image": "/uploads/family-golden-light-richland.jpg",
+      "imageAlt": "A couple holding their baby close in golden autumn light near Richland",
       "secondaryImage": "/uploads/investment-lisa-photographing-outdoors-tricities.jpg",
-      "secondaryImageAlt": "Lisa photographing a portrait session outdoors in the Tri-Cities"
-    },
-    {
-      "id": "richland-spots",
-      "kind": "locations",
-      "tone": "ivory",
-      "heading": "My Favorite Richland Session Spots",
-      "items": [
-        {
-          "heading": "Along the Columbia River",
-          "paragraphs": [
-            "Howard Amon Park and the riverfront paths give us water, willows and that soft evening glow coming off the Columbia. Perfect for families with kids who need room to run."
-          ],
-          "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
-          "imageAlt": "Golden-hour portrait beside the river in the Tri-Cities"
-        },
-        {
-          "heading": "Fields, hills and open sky",
-          "paragraphs": [
-            "The open spaces around Badger Mountain and the edges of West Richland turn amber at golden hour — my favorite backdrop for seniors and couples who want that warm, wide-open feel."
-          ],
-          "image": "/uploads/headshot-environmental-portrait-tricities.jpg",
-          "imageAlt": "Portrait in an open outdoor setting in the Tri-Cities"
-        },
-        {
-          "heading": "A place that's already yours",
-          "paragraphs": [
-            "Your backyard, grandma's orchard, the spot where he proposed. Some of my favorite Richland sessions have happened in places that already held a memory."
-          ],
-          "image": "/uploads/couples-portrait-outdoors-richland.jpg",
-          "imageAlt": "Couple sharing a quiet moment during an outdoor portrait session"
-        }
-      ],
+      "secondaryImageAlt": "Lisa Weiss photographing a portrait session outdoors",
       "links": [
         {
-          "label": "Read the full guide to the best places to take pictures in the Tri-Cities",
+          "label": "photographing my own children",
+          "href": "/about/"
+        }
+      ]
+    },
+    {
+      "id": "richland-light",
+      "kind": "split",
+      "tone": "ivory",
+      "heading": "Twenty Years of Watching This Light",
+      "paragraphs": [
+        "Richland gives us a few things that are genuinely good for photographs: the river running along the length of it, open spaces at the edges before the hills start, dry air that makes evening light go warm and gold, and enough parks and quiet corners that we're never fighting a crowd.",
+        "I'm not going to publish my exact locations — a photographer's spots are hard-won and I'd like to keep a few of them. But here's what I'll tell you honestly: the location matters far less than the hour. I've made beautiful photographs in ordinary places at the right moment, and flat ones in spectacular places at the wrong one. What I bring to your session is knowing the difference.",
+        "There's one park here where, in the colder months, the sun hits a certain point and the light coming off the river bounces up through the trees. It lasts about twenty minutes. That's the kind of thing you only learn by being somewhere for a very long time."
+      ],
+      "image": "/uploads/journal-locations-final-family-richland-tricities.jpg",
+      "imageAlt": "Family gathered together in warm evening light",
+      "secondaryImage": "/uploads/senior-portrait-golden-hour-richland.jpg",
+      "secondaryImageAlt": "High school senior in a black dress photographed in warm natural light in Richland",
+      "links": [
+        {
+          "label": "the location matters far less than the hour",
           "href": "/journal/family-photo-locations-tri-cities/"
         }
       ]
@@ -74,10 +70,11 @@
       "id": "richland-session-directory",
       "kind": "services",
       "tone": "olive",
-      "heading": "Sessions I Photograph in Richland",
+      "heading": "What I Photograph in Richland",
       "items": [
         {
           "heading": "Senior Pictures",
+          "detail": "multiple locations across town in one evening",
           "links": [
             {
               "label": "Senior Pictures",
@@ -87,6 +84,7 @@
         },
         {
           "heading": "Family Photography",
+          "detail": "open spaces where your kids can actually move",
           "links": [
             {
               "label": "Family Photography",
@@ -95,25 +93,66 @@
           ]
         },
         {
-          "heading": "Newborn Photography"
+          "heading": "Newborn Photography",
+          "detail": "in your own home, in your own light",
+          "links": [
+            {
+              "label": "Newborn Photography",
+              "href": "/newborn-photographer-tri-cities-wa/"
+            }
+          ]
         },
         {
-          "heading": "Branding & Custom Business Photography"
+          "heading": "Branding Photography",
+          "detail": "at your Richland business or workspace",
+          "links": [
+            {
+              "label": "Branding Photography",
+              "href": "/branding-photographer-tri-cities-wa/"
+            }
+          ]
         },
         {
-          "heading": "Professional Headshots"
+          "heading": "Professional Headshots",
+          "detail": "I bring portable studio equipment to you",
+          "links": [
+            {
+              "label": "Professional Headshots",
+              "href": "/headshot-photographer-tri-cities-wa/"
+            }
+          ]
         }
       ],
-      "image": "/uploads/extended-family-embrace-tricities.jpg",
-      "imageAlt": "Extended family gathered closely for a portrait in the Tri-Cities",
-      "secondaryImage": "/uploads/headshot-formal-portrait-stairs-tricities.jpg",
-      "secondaryImageAlt": "Portrait photographed on location in the Tri-Cities"
+      "image": "/uploads/senior-session-summer-light-richland.jpg",
+      "imageAlt": "High school senior standing in a sunlit field near the end of the day",
+      "secondaryImage": "/uploads/business-branding-portrait-richland.jpg",
+      "secondaryImageAlt": "Business owner photographed in her workspace"
     },
     {
       "id": "recent-richland-sessions",
       "kind": "prose",
       "tone": "walnut",
       "heading": "Recent Richland Sessions"
+    },
+    {
+      "id": "richland-planning",
+      "kind": "split",
+      "tone": "sand",
+      "heading": "Planning a Session Here",
+      "paragraphs": [
+        "Most Richland sessions happen outdoors at golden hour, at a location we choose together during your planning call. If there's somewhere in town that already means something to your family — your street, your backyard, the park where your kids learned to ride bikes — bring me there. Those tend to be my favorites.",
+        "Peak season here runs May through October, and fall books out first. But I photograph year-round, and a clear winter afternoon in Richland can hand you some of the most beautiful light of the entire year."
+      ],
+      "image": "/uploads/family-newborn-sunset-tricities.jpg",
+      "imageAlt": "Family gathered around their baby in warm sunset light in the Tri-Cities",
+      "secondaryImage": "/uploads/newborn-portrait-with-mother-richland.jpg",
+      "secondaryImageAlt": "A mother kissing her newborn during a gentle in-home newborn session in Richland",
+      "links": [
+        {
+          "label": "your planning call",
+          "href": "/investment/"
+        }
+      ]
     },
     {
       "id": "richland-questions",
@@ -124,40 +163,46 @@
         {
           "heading": "Do you have a studio in Richland?",
           "paragraphs": [
-            "My sessions happen outdoors in natural light — Richland's parks, river paths and open spaces are my studio."
+            "No — and it's a deliberate choice. My work is outdoors in natural light, and the Tri-Cities gives us better light than any studio I could build. Newborn sessions happen in your home, and for headshots I bring portable studio equipment to your workplace."
           ]
         },
         {
-          "heading": "What's the best time of year for photos in Richland?",
+          "heading": "Do you photograph in West Richland too?",
           "paragraphs": [
-            "Every season has its light. October gives us autumn color along the river; summer evenings are warm and golden; spring brings blossoms. We'll match the season to your story."
+            "Yes. West Richland, north Richland, the whole area — there's no travel fee anywhere in the Tri-Cities."
           ]
         },
         {
-          "heading": "Do you travel outside Richland?",
+          "heading": "Where's the best place to take photos in Richland?",
           "paragraphs": [
-            "Yes — I photograph throughout the Tri-Cities, including Kennewick and Pasco, at no extra charge."
+            "Honestly, it depends on the season, the time of day and who's in front of the camera. That's what your planning call is for — I'll bring you options with the light already worked out."
+          ]
+        },
+        {
+          "heading": "How far ahead should I book?",
+          "paragraphs": [
+            "Four to six weeks for most sessions. If you want autumn light, reach out in late summer — those dates go first every single year."
           ]
         }
       ],
-      "image": "/uploads/investment-final-torn-paper-pin.png",
-      "imageAlt": ""
+      "image": "/uploads/investment-lisa-camera-studio-richland.jpg",
+      "imageAlt": "Lisa Weiss smiling with her camera"
     }
   ],
   "finalCta": {
     "tone": "umber",
-    "heading": "Let's Find Your Light in Richland",
-    "image": "/uploads/family-newborn-sunset-tricities.jpg",
-    "imageAlt": "Family holding their newborn outdoors at sunset in the Tri-Cities",
+    "heading": "Let's Find Your Light",
+    "paragraphs": [
+      "You bring your people. I'll bring twenty years of knowing this town."
+    ],
+    "image": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+    "imageAlt": "Parents holding their baby close in warm evening light",
     "link": {
       "label": "Start planning",
       "href": "/contact/"
     }
   },
   "pending": [
-    "[VALIDAR CON LISA: confirmar que estos son SUS spots reales y añadir 1–2 detalles de primera mano por locación (p. ej. \"la luz cae detrás de X a las Y\"). Ese detalle es lo que ninguna otra página puede copiar.]",
-    "[PENDIENTE: 6–10 imágenes de sesiones reales en Richland, cada una con alt text que nombre la locación]",
-    "[VALIDAR: formato newborn]",
-    "[VALIDAR: política de viaje — Q2/Q53]"
+    "[PENDIENTE: 6–10 imágenes de sesiones reales en Richland. Alt text describiendo tipo de locación y estación, sin nombrar el spot exacto.]"
   ]
 }

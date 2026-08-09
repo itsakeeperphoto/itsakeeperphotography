@@ -13,7 +13,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 8 | 08-about.md | `/about/` | ⚠️ Credenciales por verificar (Grammy, MOM, premio) |
 | 9 | 09-reviews.md | `/reviews/` | ⚠️ Necesita las 8–12 reseñas reales (Q47) |
 | 10 | 10-contact.md | `/contact/` | ✅ Completo (plazos de respuesta pendientes) |
-| 11 | 11-richland.md | `/richland-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
+| 11 | 11-richland.md | `/richland-wa-photographer/` | ⚠️ Condicional: falta galería real de 6–10 sesiones |
 | 12 | 12-kennewick.md | `/kennewick-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
 | 13 | 13-pasco.md | `/pasco-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
 | 14 | 14-journal-hub.md | `/journal/` | ✅ Completo |

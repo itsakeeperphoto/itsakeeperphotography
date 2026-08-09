@@ -3,39 +3,35 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 19:43 -05
+**Última actualización:** 2026-08-08 20:27 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit de implementación visual:** `c663d68` — `locations updated`
+**Commit base al iniciar Richland v2:** `7032ead` —
+`docs(context): record locations section redesign`
 
-**Commit de accesibilidad/editorial:** `fe1602d` —
-`fix(locations): use literal image descriptions`
+**Implementación Richland v2:** build y QA completos; el hash se registrará en
+el commit documental posterior al commit local de implementación.
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** la referencia local `origin/main` coincidía con `c663d68` al
-cerrar la implementación visual. Por instrucción expresa del usuario, Codex no
-ejecuta pushes: `fe1602d` y este cierre de contexto quedan como commits locales.
-No se ejecutó deploy ni cambio de DNS.
+**Publicación:** al iniciar, `main` estaba dos commits por delante de
+`origin/main` y apuntaba a `7032ead`. Por instrucción expresa del usuario, Codex
+crea commits locales y no ejecuta pushes. No se ejecutó deploy ni cambio de DNS.
 
 ---
 
 ## Siguiente paso concreto
 
-Revisar el rediseño de “Four Kinds” del commit `c663d68` en el entorno que el
-usuario decida desplegar y comprobar que mantiene:
-
-1. la retícula asimétrica completa sobre 1050 px;
-2. el 2×2 de tablet y la columna única móvil sin overflow;
-3. los cuatro encuadres y el orden semántico 01–04;
-4. canonical `www`, `index, follow` y la membresía de sitemap ya aprobados.
-
-Después, priorizar Seniors o la siguiente ruta que Lisa complete. Los agentes
-deben seguir creando solo commits locales y no hacer push.
+Completar la única condición restante de
+`/richland-wa-photographer/`: seleccionar 6–10 sesiones reales con procedencia
+Richland verificada y alt text literal sin revelar el spot exacto. Solo después
+se puede evaluar `ready/index`, retirar su header noindex e incluirla en
+sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
+`draft/noindex`. Los agentes crean solo commits locales y no hacen push.
 
 ---
 
@@ -45,6 +41,13 @@ deben seguir creando solo commits locales y no hacer push.
 - Están `ready/index`: Homepage, Family, Family Photo Locations y Portfolio.
   Thank-you es `ready/noindex`; las otras 16 rutas permanecen
   `draft/noindex`.
+- `/richland-wa-photographer/` usa ahora el copy v2 centrado en que Lisa vive en
+  Richland desde 2005; retiró Howard Amon, Badger Mountain y la dirección
+  privada. Conserva una sola condición editorial: la galería real de 6–10
+  sesiones.
+- La superficie Richland es un “light ledger” editorial: retícula de 12
+  columnas, un arco, directorio de cinco servicios, ratios naturales, planning,
+  FAQ y cierre fotográfico. La galería no se renderiza mientras esté vacía.
 - `/journal/family-photo-locations-tri-cities/` quedó terminada para
   producción con fecha editorial `2026-08-08`, sin placeholders, en sitemap y
   en `llms.txt`.
@@ -63,8 +66,8 @@ deben seguir creando solo commits locales y no hacer push.
 - La foto del cierre proviene del folder autorizado de Drive
   “Family Session - Richland”; se importó a 2400×1600 y el build genera WebP de
   400, 640, 960 y 1440 px.
-- `src/content/pending.ts` contiene ahora 39 entradas; ninguna corresponde a
-  esta guía.
+- `src/content/pending.ts` contiene ahora 36 entradas; una corresponde a la
+  galería Richland.
 
 ## Qué funciona hoy
 
@@ -102,6 +105,27 @@ deben seguir creando solo commits locales y no hacer push.
 - El cierre usa la nueva foto como fondo editorial en desktop y como imagen 3:2
   completa en móvil para no recortar a la familia.
 
+### Richland v2
+
+- Fuente editorial: `paginas/11-richland.md`; runtime:
+  `content/pages/richland.json`.
+- La residencia de Lisa y su conocimiento de la luz sustituyen los spots
+  nominales de v1. El copy conserva todo el documento aprobado salvo Canyon
+  Street/dirección completa, omitidas por ADR-019 y ADR-032.
+- La página renderiza residencia, Twenty Years, un directorio visual de cinco
+  servicios, planning, cuatro FAQ y CTA. “Recent Richland Sessions” queda
+  condicional y no existe en DOM sin fotografías verificadas.
+- Se usan fotografías reales ya autorizadas con alt literal; ningún filename
+  por sí solo se trató como prueba local. Paisajes y retratos mantienen sus
+  ratios 3:2, 9:5, 3:4 y 15:19 en vez de recortes verticales arbitrarios.
+- Playwright release aprobó 1440×1000, 1200×1000, 900×1000 y 390×844: overflow
+  0, gaps 0, 11/11 imágenes, H1 única, controles principales ≥44 px, focus
+  visible, FAQ por teclado, reduced motion y consola limpia. Tras el finish
+  review, la línea “Photographer” quedó contenida a 390 px y `<main>` conserva
+  exactamente cuatro anchors internos.
+- Sigue `draft/noindex`; no se tocó manifiesto, header fuente, sitemap ni llms.
+  El artefacto release confirma meta/header noindex y exclusión de crawlers.
+
 ### SEO y schema
 
 - Meta robots release: `index, follow, max-image-preview:large`.
@@ -116,6 +140,12 @@ deben seguir creando solo commits locales y no hacer push.
 - JSON-LD verificado: LocalBusiness, WebSite, Article, FAQPage y
   BreadcrumbList; cinco FAQs visibles y tres breadcrumbs.
 - No se emiten Review/AggregateRating sin evidencia verificada.
+- Richland release conserva canonical
+  `https://www.itsakeeperphotography.com/richland-wa-photographer/`, meta robots
+  `noindex, nofollow, noarchive` y el mismo valor en `X-Robots-Tag`.
+- Sus cinco JSON-LD parsean como LocalBusiness, WebSite, WebPage,
+  BreadcrumbList y FAQPage. Las cuatro FAQ visibles coinciden 4:4 con schema;
+  LocalBusiness publica solo Richland/WA/US, sin `streetAddress`.
 
 ### Integraciones
 
@@ -135,38 +165,34 @@ deben seguir creando solo commits locales y no hacer push.
 | `/journal/family-photo-locations-tri-cities/` | ready/index | Sí | Fecha y QA final completos. |
 | `/portfolio/` | ready/index | Sí | Excluido de llms. |
 | `/thank-you/` | ready/noindex | No | Destino de formularios. |
-| Otras 16 rutas | draft/noindex | No | Conservar gates hasta resolver hechos/media/QA. |
+| `/richland-wa-photographer/` | draft/noindex | No | Copy/UI v2 completos; falta galería verificada. |
+| Otras 15 rutas | draft/noindex | No | Conservar gates hasta resolver hechos/media/QA. |
 
 ## Archivos cambiados en esta sesión
 
-- Contenido/publicación: `content/pages/journal-family-locations.json`,
-  `src/lib/page-manifest.ts`, `page-manifest.ts`,
+- Contenido/runtime: `content/pages/richland.json`,
   `src/content/pending.ts`.
-- Render/schema: `src/pages/journal/[slug].astro`,
-  `src/components/pages/LocationsGuidePage.astro`.
-- Diseño: `src/styles/journal-locations-page.css`.
-- Crawler gates: `config/netlify-headers/release`,
-  `scripts/validate-site.mjs`.
-- Fuente/docs: `paginas/15-journal-locations.md`,
-  `paginas/00-INDICE.md`, `STRUCTURE.md`, `docs/context/`.
-- Asset:
-  `public/uploads/journal-locations-final-family-richland-tricities.jpg`;
-  variantes WebP se regeneran mediante `npm run optimize:images`.
-- Rediseño más reciente: `src/components/pages/LocationsGuidePage.astro`,
-  `src/styles/journal-locations-page.css`,
-  `content/pages/journal-family-locations.json` y
-  `paginas/15-journal-locations.md`.
+- Render/schema: `src/components/pages/RichlandPage.astro`.
+- Diseño: `src/styles/richland-page.css`.
+- Fuente/editorial: `paginas/11-richland.md`, `paginas/00-INDICE.md`.
+- Dirección de superficie:
+  `.impeccable/surfaces/route-richland-wa-photographer.md`.
+- Memoria: `docs/context/20-estado.md`, `30-decisiones.md`,
+  `40-bitacora.md` y `50-backlog.md`.
+- No cambiaron assets, routing, Tina, tipos, manifiestos, headers ni crawler
+  outputs fuente.
 
 ## Qué está a medias
 
 | Archivo / módulo | Estado | Qué falta |
 |---|---|---|
-| `src/content/pending.ts` | 39 entradas | Resolver hechos/media de las rutas draft con Lisa. |
+| `src/content/pending.ts` | 36 entradas | Resolver hechos/media de las rutas draft con Lisa. |
 | Seniors y Senior timing | Draft | Número de imágenes, offer Q54, fechas/distritos y QA final. |
 | Newborn y comparación | Draft | Formato, handling/safety, validación editorial y fecha. |
 | Branding/Headshots/Investment | Draft | Entregables, cantidades/duración y QA según cada ruta. |
 | About/Reviews/Privacy | Draft | Hechos/permisos, reseñas autorizadas y revisión legal. |
-| Richland/Kennewick/Pasco | Draft | Conocimiento local, imágenes/alt y travel confirmados. |
+| Richland | Draft | Falta solo la galería verificada de 6–10 sesiones. |
+| Kennewick/Pasco | Draft | Conocimiento local, imágenes/alt y travel confirmados. |
 | Netlify Forms | Código listo | Configurar/verificar notificaciones reales en Dashboard. |
 | GBP summary | Código listo | Configurar OAuth/IDs y probar cache/endpoints reales. |
 | Analítica | Snippets instalados | Verificar recepción real y política de staging/consentimiento. |
@@ -176,30 +202,40 @@ deben seguir creando solo commits locales y no hacer push.
 ## Verificación ejecutada
 
 ```bash
-npm run optimize:images
-SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
 SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local
+SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
 node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json \
   --scope layout \
-  src/components/pages/LocationsGuidePage.astro \
-  src/styles/journal-locations-page.css
+  src/components/pages/RichlandPage.astro \
+  src/styles/richland-page.css
 git diff --check
 ```
 
 - Release: `Validated 21 public routes in release mode.`
 - Staging: `Validated 21 public routes in staging mode.`
 - Detector Impeccable: `[]`.
-- Playwright del rediseño: cinco viewports; overflow de documento y sección 0,
-  solapamiento con la sección siguiente 0, cuatro imágenes completas, labels
-  contenidos, encabezados en orden y consola 0 errores.
-- Artefacto release: cinco JSON-LD parsean; Article y sitemap usan
-  `2026-08-08`; la foto final incluye srcset 400/640/960/1440.
+- Playwright release: 1440×1000, 1200×1000, 900×1000 y 390×844; overflow 0,
+  gaps 0, 11/11 imágenes, una H1, seis H2 en orden, galería ausente, controles
+  principales ≥44 px, H1 móvil completa y consola 0 errores/advertencias.
+- `<main>` contiene exactamente cuatro anchors internos: About, Locations
+  Guide, Investment y Contact final. “Plan Your Session” es un botón que
+  desplaza y mueve foco a `#richland-final`.
+- La segunda FAQ abre/cierra con Enter; el focus usa outline 2 px/offset 4 px;
+  reduced motion reduce las transiciones a `0.01ms`.
+- Artefacto Richland: cinco JSON-LD parsean; FAQ visible/schema 4:4;
+  LocalBusiness sin `streetAddress`; canonical `www`; meta/header noindex; sin
+  Howard Amon, Badger Mountain, Canyon Street ni “Recent Richland Sessions”.
+- El primer build dentro del sandbox falló por `listen EPERM ::1:4001`; un
+  proceso hijo de Tina quedó ocupando 9000. Se identificó y detuvo solo ese
+  proceso, y las dos corridas autorizadas pasaron sin cambios incidentales.
+- Finish reviewer fresco posterior a las correcciones: `PASS` sin hallazgos
+  materiales.
 
 ## Bloqueadores externos
 
 1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
-   commits locales. `main...origin/main` estaba sincronizado en `c663d68` antes
-   de este commit documental.
+   commits locales. Al iniciar esta tarea `main...origin/main` estaba `ahead 2`
+   en `7032ead`.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
 3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.
@@ -209,8 +245,8 @@ git diff --check
 
 ## Preguntas abiertas
 
-- TODO(contexto): ¿qué ruta draft debe priorizarse ahora: Seniors, Investment u
-  otra?
+- TODO(contexto): ¿cuáles son las 6–10 sesiones con procedencia Richland
+  verificable que deben formar la galería de publicación?
 - TODO(contexto): ¿qué fotografía autorizada debe ocupar la card Headshots de
   `content/homepage/index.json`?
 - TODO(contexto): ¿cuál es el link público definitivo de Google Reviews?

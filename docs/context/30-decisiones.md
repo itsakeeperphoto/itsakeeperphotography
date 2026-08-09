@@ -443,3 +443,34 @@
   un reemplazo de asset exige nueva revisión de `object-position`. El QA mínimo
   queda fijado en 1728, 1440, 1200, 900 y 390 px, con orden 01–04, imágenes
   completas, cero overflow y cero solapamiento con la sección siguiente.
+
+### ADR-032 — Richland v2 prueba residencia y mantiene una única condición de publicación
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada.
+- **Contexto:** El documento v2 suministrado para
+  `/richland-wa-photographer/` reemplaza el inventario de spots por conocimiento
+  local de primera mano, declara el formato newborn in-home y la política de
+  viaje Tri-Cities, y deja pendiente solo una galería de 6–10 sesiones reales.
+  También incluía Canyon Street y una dirección completa, en conflicto con la
+  privacidad fijada por ADR-019.
+- **Decisión:** Tratar v2 como fuente editorial y publicar todo su copy salvo la
+  calle/dirección privada; conservar solo locality/region/country en schema.
+  No renderizar “Recent Richland Sessions” hasta que cada ítem tenga fotografía
+  con procedencia Richland y alt literal verificados. Mantener la ruta
+  `draft/noindex`, fuera de sitemap/llms y con header HTTP noindex hasta cerrar
+  esa galería. Traducir las referencias a un “light ledger” asimétrico de 12
+  columnas, un solo arco y ratios fotográficos naturales; no copiar tape,
+  rotaciones, rasgados, sombras ni falsos prints. Para cumplir ADR-006, el CTA
+  del hero es un botón que desplaza al CTA final y el directorio de cinco
+  servicios es informativo; los cuatro anchors de `<main>` son About, Locations
+  Guide, Investment y Contact final.
+- **Alternativas descartadas:** Publicar la dirección, reintroducir Howard Amon
+  o Badger Mountain, completar la galería con filenames no verificados, forzar
+  paisajes dentro de marcos verticales o marcar la ruta indexable solo porque el
+  copy está completo se descartó por privacidad, exactitud y riesgo de página
+  local sin evidencia suficiente.
+- **Consecuencias:** Richland conserva una sola entrada en
+  `src/content/pending.ts`; Newborn y travel dejan de ser preguntas para esta
+  ruta según la fuente aprobada. Cualquier cambio a `ready/index` exige 6–10
+  sesiones verificadas, nuevo QA responsive/schema y revisión explícita de los
+  crawler gates. No cambian routing, tipos, Tina, manifiesto ni headers.

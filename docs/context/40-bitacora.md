@@ -335,3 +335,49 @@
   la sincronización de descripciones literales en `fe1602d`. Al iniciar este
   cierre `main...origin/main` estaba sincronizado; por orden del usuario no se
   ejecutó push y el contexto se cierra con otro commit local.
+
+### 2026-08-08 — Codex / GPT-5.6 — Richland v2 con gate fotográfico intacto
+
+- **Objetivo:** reemplazar `/richland-wa-photographer/` con el documento v2,
+  contrastarlo con runtime, respetar homepage/`DESIGN.md` y las dos referencias
+  editoriales, y verificar 1440, 1200, 900 y 390 px sin inventar datos o fotos.
+- **Contenido:** v2 sustituye Howard Amon/Badger Mountain por la residencia de
+  Lisa y veinte años observando la luz. Se conservaron hero, residencia,
+  Twenty Years, cinco servicios, planning, cuatro FAQ y CTA. Canyon Street y la
+  dirección completa se omitieron conforme a ADR-019/032.
+- **Gate:** la única entrada Richland en `src/content/pending.ts` es la galería
+  de 6–10 sesiones reales. “Recent Richland Sessions” no se renderiza sin
+  image+alt verificados; la ruta continúa `draft/noindex`, fuera de sitemap y
+  llms, con meta y `X-Robots-Tag` noindex.
+- **Diseño:** `frontend-design` y `emil-design-eng` fijaron una superficie
+  Persuade/Read; `impeccable` condujo el “light ledger” de 12 columnas, un arco,
+  grandes paisajes, directorio lineal y whitespace. Se retiraron tape,
+  rotaciones, papel rasgado, sombras y recortes verticales de paisajes.
+- **Fotografía:** se reutilizaron únicamente assets existentes autorizados; los
+  alts locales se limitaron a fotografías con evidencia Richland previa y el
+  resto quedó literal/genérico. Los marcos conservan ratios 3:2, 9:5, 3:4 y
+  15:19; no se creó ni importó ningún asset.
+- **Schema/SEO:** release contiene LocalBusiness, WebSite, WebPage,
+  BreadcrumbList y FAQPage parseables. FAQ visible/schema coincide 4:4;
+  LocalBusiness publica Richland/WA/US sin `streetAddress`; no aparecen Howard
+  Amon, Badger Mountain, Canyon Street ni una galería falsa.
+- **Verificación:** builds staging y release terminaron con
+  `Validated 21 public routes`; detector Impeccable layout devolvió `[]`.
+  Playwright release aprobó 1440×1000, 1200×1000, 900×1000 y 390×844: overflow
+  0, gaps 0, 11/11 imágenes, H1 única, controles principales ≥44 px, focus
+  visible, FAQ por teclado, reduced motion y consola sin mensajes.
+- **Incidencias:** el sandbox bloqueó el listener Tina `::1:4001`; además un
+  hijo del dev server quedó en 9000 tras `Ctrl-C`. Se identificó y detuvo solo
+  ese proceso; las dos corridas autorizadas pasaron y no dejaron cambios fuente
+  incidentales.
+- **Git:** la tarea comenzó en `7032ead`, con `main` dos commits delante de
+  `origin/main`. Por orden del usuario se crearán solo commits locales; no se
+  ejecutó push, deploy ni cambio externo.
+- **Finish review:** la primera revisión independiente detectó dos gates que la
+  métrica del contenedor no mostraba: “Photographer” se recortaba a 390 px y el
+  directorio convertía `<main>` en diez anchors. Se redujo únicamente la escala
+  móvil Richland, el hero pasó a botón de scroll y el directorio a índice
+  visual. La nueva evidencia confirma la palabra completa, cuatro anchors
+  exactos, foco movido a `#richland-final`, overflow 0 y consola limpia en los
+  cuatro viewports. Un finish reviewer fresco posterior devolvió `PASS` sin
+  hallazgos materiales.

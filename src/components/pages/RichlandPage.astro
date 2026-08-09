@@ -1,5 +1,9 @@
 ---
-import type { EditorialPageData, PageSection } from "../../content/page-types";
+import type {
+  EditorialPageData,
+  PageLink,
+  PageSection,
+} from "../../content/page-types";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/richland-page.css";
@@ -8,6 +12,11 @@ interface Props {
   page: EditorialPageData;
   settings: any;
   inquiry?: any;
+}
+
+interface LinkedPart {
+  text: string;
+  link?: PageLink;
 }
 
 const { page } = Astro.props;
@@ -19,39 +28,65 @@ const requireSection = (id: string): PageSection => {
 };
 
 const introduction = requireSection("i-live-here");
-const spots = requireSection("richland-spots");
+const light = requireSection("richland-light");
 const directory = requireSection("richland-session-directory");
-const recent = requireSection("recent-richland-sessions");
+const planning = requireSection("richland-planning");
 const questions = requireSection("richland-questions");
+const recent = page.sections.find((section) => section.id === "recent-richland-sessions");
 
-const spotItems = spots.items || [];
 const serviceItems = directory.items || [];
-const faqItems = questions.items || [];
-const featuredQuestionIndex = faqItems.length > 1 ? 1 : 0;
-const featuredQuestion = faqItems[featuredQuestionIndex];
-const ledgerQuestions = faqItems
-  .map((item, index) => ({ item, index }))
-  .filter(({ index }) => index !== featuredQuestionIndex);
-const guideLink = spots.links?.find((link) =>
-  link.href.includes("family-photo-locations-tri-cities"),
+const faqItems = (questions.items || []).filter(
+  (item) => item.heading && item.paragraphs?.length,
+);
+const recentItems = (recent?.items || []).filter(
+  (item) => item.image && item.imageAlt,
 );
 
-const faqSchema = faqItems
-  .filter((item) => item.heading && item.paragraphs?.length)
-  .map((item) => ({
-    "@type": "Question",
-    name: item.heading,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.paragraphs?.join(" "),
-    },
-  }));
+const headingLines = (heading: string): string[] => {
+  const words = heading.trim().split(/\s+/);
+  const lastWord = words.at(-1);
+  if (words.length > 1 && lastWord?.toLowerCase() === "photographer") {
+    return [words.slice(0, -1).join(" "), lastWord];
+  }
+  return [heading];
+};
 
-const introArch = introduction.image || "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg";
-const introPrint = introduction.secondaryImage || "/uploads/investment-lisa-photographing-outdoors-tricities.jpg";
-const serviceRear = directory.image || "/uploads/extended-family-embrace-tricities.jpg";
-const serviceFront = directory.secondaryImage || "/uploads/headshot-formal-portrait-stairs-tricities.jpg";
-const finalImage = page.finalCta?.image || "/uploads/family-newborn-sunset-tricities.jpg";
+const linkedParts = (paragraph: string, links: PageLink[] = []): LinkedPart[] => {
+  const available = links.filter((link) => link.label && paragraph.includes(link.label));
+  if (!available.length) return [{ text: paragraph }];
+
+  const parts: LinkedPart[] = [];
+  let cursor = 0;
+
+  while (cursor < paragraph.length) {
+    const next = available
+      .map((link) => ({ link, index: paragraph.indexOf(link.label, cursor) }))
+      .filter(({ index }) => index >= cursor)
+      .sort((a, b) => a.index - b.index)[0];
+
+    if (!next) {
+      parts.push({ text: paragraph.slice(cursor) });
+      break;
+    }
+
+    if (next.index > cursor) {
+      parts.push({ text: paragraph.slice(cursor, next.index) });
+    }
+    parts.push({ text: next.link.label, link: next.link });
+    cursor = next.index + next.link.label.length;
+  }
+
+  return parts;
+};
+
+const faqSchema = faqItems.map((item) => ({
+  "@type": "Question",
+  name: item.heading,
+  acceptedAnswer: {
+    "@type": "Answer",
+    text: item.paragraphs?.join(" "),
+  },
+}));
 ---
 
 <article
@@ -59,305 +94,354 @@ const finalImage = page.finalCta?.image || "/uploads/family-newborn-sunset-trici
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
 >
+  <!-- Direction contract: editorial heirloom; persuade + read; Richland residence, local light knowledge, and an asymmetrical photographic rhythm. -->
   <EditorialHero
     pageKey="richland"
     titleId="richland-hero-title"
     heading={page.hero.heading}
-    headingLines={["Your Richland, WA", "Photographer"]}
-    scriptLine={page.hero.scriptLine || "right here in Richland"}
+    headingLines={headingLines(page.hero.heading)}
+    scriptLine={page.hero.scriptLine || ""}
     intro={page.hero.intro}
+    buttonLabel={page.hero.links?.[0]?.label}
+    buttonTargetId="richland-final"
     backgroundImage={page.hero.image}
     backgroundAlt={page.hero.imageAlt}
-    backgroundPosition="50% 53%"
-    mobileBackgroundPosition="53% 50%"
-    leftPrint={{
-      src: "/uploads/family-newborn-sunset-tricities.jpg",
-      objectPosition: "50% 44%",
-    }}
-    rightPrint={{
-      src: page.hero.secondaryImage || "/uploads/headshot-warm-portrait-tricities.jpg",
-      objectPosition: "50% 42%",
-    }}
-    buttonLabel="Plan Your Richland Session"
-    buttonTargetId="richland-final"
+    backgroundPosition="50% 52%"
+    mobileBackgroundPosition="52% 50%"
+    rightPrint={page.hero.secondaryImage
+      ? {
+          src: page.hero.secondaryImage,
+          objectPosition: "50% 44%",
+        }
+      : undefined}
     paperEdgeColor="var(--color-weathered-sand)"
   />
 
   <section
-    class:list={["richland-intro", `tone-${introduction.tone}`]}
+    id={introduction.id}
+    class:list={["richland-residence", `tone-${introduction.tone}`]}
     aria-labelledby={`${introduction.id}-title`}
   >
-    <div class="richland-intro__line richland-intro__line--horizontal" aria-hidden="true"></div>
-    <div class="richland-shell richland-intro__inner">
-      <div class="richland-intro__media">
-        <span class="richland-intro__line richland-intro__line--vertical" aria-hidden="true"></span>
-        <figure class="richland-intro__arch">
-          <Picture
-            src={introArch}
-            alt={introduction.imageAlt || "Family embracing outdoors during a golden-hour portrait session"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 74vw, (max-width: 1050px) 41vw, 30rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
+    <div class="richland-shell richland-residence__grid">
+      <div class="richland-residence__media">
+        {introduction.image && (
+          <figure class="richland-residence__arch">
+            <Picture
+              src={introduction.image}
+              alt={introduction.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 78vw, (max-width: 1050px) 43vw, 31rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
 
-        <figure class="richland-print richland-intro__print">
-          <span class="richland-tape richland-tape--intro" aria-hidden="true"></span>
-          <Picture
-            src={introPrint}
-            alt={introduction.secondaryImageAlt || "Lisa photographing a portrait session outdoors"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 48vw, (max-width: 1050px) 26vw, 19rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
+        {introduction.secondaryImage && (
+          <figure class="richland-photo-frame richland-residence__print">
+            <Picture
+              src={introduction.secondaryImage}
+              alt={introduction.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 48vw, (max-width: 1050px) 27vw, 19rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+
+        {(introduction.image || introduction.secondaryImage) && (
+          <span class="richland-media-rule richland-residence__rule" aria-hidden="true"></span>
+        )}
       </div>
 
-      <div class="richland-intro__copy">
+      <div class="richland-residence__copy">
         {introduction.eyebrow && <p class="richland-eyebrow">{introduction.eyebrow}</p>}
         <h2 id={`${introduction.id}-title`}>{introduction.heading}</h2>
         <div class="richland-prose">
-          {introduction.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {introduction.paragraphs?.map((paragraph) => (
+            <p>
+              {linkedParts(paragraph, introduction.links).map((part) =>
+                part.link ? (
+                  <a
+                    href={part.link.href}
+                    target={part.link.external ? "_blank" : undefined}
+                    rel={part.link.external ? "noreferrer" : undefined}
+                  >
+                    {part.text}
+                  </a>
+                ) : (
+                  <Fragment>{part.text}</Fragment>
+                ),
+              )}
+            </p>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
   <section
-    class:list={["richland-spots", `tone-${spots.tone}`]}
-    aria-labelledby={`${spots.id}-title`}
+    id={light.id}
+    class:list={["richland-light", `tone-${light.tone}`]}
+    aria-labelledby={`${light.id}-title`}
   >
     <div class="richland-shell">
-      <header class="richland-spots__heading">
-        {spots.eyebrow && <p class="richland-eyebrow">{spots.eyebrow}</p>}
-        <h2 id={`${spots.id}-title`}>{spots.heading}</h2>
+      <header class="richland-light__header">
+        {light.eyebrow && <p class="richland-eyebrow">{light.eyebrow}</p>}
+        <h2 id={`${light.id}-title`}>{light.heading}</h2>
       </header>
 
-      {spotItems.length > 0 && (
-        <div class="richland-spots__composition">
-          {spotItems[0]?.image && (
-            <figure class="richland-print richland-spots__photo richland-spots__photo--left">
-              <span class="richland-tape richland-tape--left" aria-hidden="true"></span>
+      <div class="richland-light__layout">
+        <div class="richland-prose richland-light__copy">
+          {light.paragraphs?.map((paragraph) => (
+            <p>
+              {linkedParts(paragraph, light.links).map((part) =>
+                part.link ? (
+                  <a
+                    href={part.link.href}
+                    target={part.link.external ? "_blank" : undefined}
+                    rel={part.link.external ? "noreferrer" : undefined}
+                  >
+                    {part.text}
+                  </a>
+                ) : (
+                  <Fragment>{part.text}</Fragment>
+                ),
+              )}
+            </p>
+          ))}
+        </div>
+
+        <div class="richland-light__media">
+          {light.image && (
+            <figure class="richland-light__panorama">
               <Picture
-                src={spotItems[0].image}
-                alt={spotItems[0].imageAlt || "Portrait beside the river in warm evening light"}
+                src={light.image}
+                alt={light.imageAlt || ""}
                 loading="lazy"
                 decoding="async"
                 responsiveSrcset
-                sizes="(max-width: 767px) 48vw, (max-width: 1050px) 29vw, 22rem"
+                sizes="(max-width: 767px) 100vw, (max-width: 1050px) 58vw, 50rem"
                 imgClass="photo--editorial"
               />
             </figure>
           )}
 
-          {spotItems[1]?.image && (
-            <figure class="richland-spots__photo richland-spots__photo--arch">
+          {light.secondaryImage && (
+            <figure class="richland-light__portrait">
               <Picture
-                src={spotItems[1].image}
-                alt={spotItems[1].imageAlt || "Portrait in an open outdoor setting"}
+                src={light.secondaryImage}
+                alt={light.secondaryImageAlt || ""}
                 loading="lazy"
                 decoding="async"
                 responsiveSrcset
-                sizes="(max-width: 767px) 68vw, (max-width: 1050px) 38vw, 29rem"
+                sizes="(max-width: 767px) 64vw, (max-width: 1050px) 31vw, 22rem"
                 imgClass="photo--editorial"
               />
             </figure>
           )}
 
-          {spotItems[2]?.image && (
-            <figure class="richland-print richland-spots__photo richland-spots__photo--right">
-              <Picture
-                src={spotItems[2].image}
-                alt={spotItems[2].imageAlt || "Couple sharing a quiet moment during an outdoor portrait session"}
-                loading="lazy"
-                decoding="async"
-                responsiveSrcset
-                sizes="(max-width: 767px) 44vw, (max-width: 1050px) 27vw, 20rem"
-                imgClass="photo--editorial"
-              />
-            </figure>
+          {(light.image || light.secondaryImage) && (
+            <span class="richland-media-rule richland-light__rule" aria-hidden="true"></span>
           )}
         </div>
-      )}
+      </div>
+    </div>
+  </section>
 
-      {/* CONTENT PENDING: [VALIDAR CON LISA: confirmar que estos son SUS spots reales y añadir 1–2 detalles de primera mano por locación (p. ej. "la luz cae detrás de X a las Y"). Ese detalle es lo que ninguna otra página puede copiar.] */}
-      {spotItems.length > 0 && (
-        <ol class="richland-spots__ledger">
-          {spotItems.map((item, index) => (
+  <section
+    id={directory.id}
+    class:list={["richland-directory", `tone-${directory.tone}`]}
+    aria-labelledby={`${directory.id}-title`}
+  >
+    <div class="richland-shell">
+      <header class="richland-directory__header">
+        <div>
+          {directory.eyebrow && <p class="richland-eyebrow">{directory.eyebrow}</p>}
+          <h2 id={`${directory.id}-title`}>{directory.heading}</h2>
+        </div>
+        {directory.intro && <p class="richland-directory__intro">{directory.intro}</p>}
+      </header>
+
+      {serviceItems.length > 0 && (
+        <ol class="richland-directory__list">
+          {serviceItems.map((item, index) => (
             <li>
-              <span class="richland-ledger-number" aria-hidden="true">
+              <span class="richland-directory__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              {item.heading && <h3>{item.heading}</h3>}
-              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              <div class="richland-directory__name">
+                <strong>{item.heading || item.links?.[0]?.label}</strong>
+              </div>
+              {item.detail && <p>{item.detail}</p>}
             </li>
           ))}
         </ol>
       )}
 
-      {guideLink && (
-        <a class="richland-text-link richland-spots__guide" href={guideLink.href}>
-          {guideLink.label}
-        </a>
+      {(directory.image || directory.secondaryImage) && (
+        <div class="richland-directory__media">
+          {directory.image && (
+            <figure class="richland-directory__landscape">
+              <Picture
+                src={directory.image}
+                alt={directory.imageAlt || ""}
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) 100vw, (max-width: 1050px) 58vw, 48rem"
+                imgClass="photo--editorial"
+              />
+            </figure>
+          )}
+          {directory.secondaryImage && (
+            <figure class="richland-photo-frame richland-directory__portrait">
+              <Picture
+                src={directory.secondaryImage}
+                alt={directory.secondaryImageAlt || ""}
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) 52vw, (max-width: 1050px) 28vw, 20rem"
+                imgClass="photo--editorial"
+              />
+            </figure>
+          )}
+        </div>
       )}
     </div>
   </section>
 
-  <section
-    class:list={["richland-services", `tone-${directory.tone}`]}
-    aria-labelledby={`${directory.id}-title`}
-  >
-    <div class="richland-shell richland-services__inner">
-      <div class="richland-services__copy">
-        {directory.eyebrow && <p class="richland-eyebrow">{directory.eyebrow}</p>}
-        <h2 id={`${directory.id}-title`} aria-label={directory.heading}>
-          <span aria-hidden="true">Sessions I</span>
-          <span aria-hidden="true">Photograph</span>
-          <span aria-hidden="true">in Richland</span>
-        </h2>
+  {/* CONTENT PENDING: Recent Richland Sessions remains absent until every rendered item has a real image and literal alt text. */}
+  {recent && recentItems.length > 0 && (
+    <section
+      id={recent.id}
+      class:list={["richland-recent", `tone-${recent.tone}`]}
+      aria-labelledby={`${recent.id}-title`}
+    >
+      <div class="richland-shell">
+        <header class="richland-recent__header">
+          {recent.eyebrow && <p class="richland-eyebrow">{recent.eyebrow}</p>}
+          <h2 id={`${recent.id}-title`}>{recent.heading}</h2>
+          {recent.intro && <p>{recent.intro}</p>}
+        </header>
+        <div class="richland-recent__gallery">
+          {recentItems.map((item, index) => (
+            <figure class:list={["richland-recent__photo", `richland-recent__photo--${(index % 4) + 1}`]}>
+              <Picture
+                src={item.image}
+                alt={item.imageAlt || ""}
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) 100vw, (max-width: 1050px) 48vw, 30rem"
+                imgClass="photo--editorial"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
-        {serviceItems.length > 0 && (
-          <ol class="richland-services__list">
-            {serviceItems.map((item, index) => {
-              const link = item.links?.[0];
-              return (
-                <li>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  {link ? <a href={link.href}>{item.heading}</a> : <strong>{item.heading}</strong>}
-                </li>
-              );
-            })}
-          </ol>
-        )}
+  <section
+    id={planning.id}
+    class:list={["richland-planning", `tone-${planning.tone}`]}
+    aria-labelledby={`${planning.id}-title`}
+  >
+    <div class="richland-shell richland-planning__grid">
+      <div class="richland-planning__copy">
+        {planning.eyebrow && <p class="richland-eyebrow">{planning.eyebrow}</p>}
+        <h2 id={`${planning.id}-title`}>{planning.heading}</h2>
+        <div class="richland-prose">
+          {planning.paragraphs?.map((paragraph) => (
+            <p>
+              {linkedParts(paragraph, planning.links).map((part) =>
+                part.link ? (
+                  <a
+                    href={part.link.href}
+                    target={part.link.external ? "_blank" : undefined}
+                    rel={part.link.external ? "noreferrer" : undefined}
+                  >
+                    {part.text}
+                  </a>
+                ) : (
+                  <Fragment>{part.text}</Fragment>
+                ),
+              )}
+            </p>
+          ))}
+        </div>
       </div>
 
-      <div class="richland-services__media">
-        <span class="richland-services__rule" aria-hidden="true"></span>
-        <figure class="richland-services__photo richland-services__photo--rear">
-          <Picture
-            src={serviceRear}
-            alt={directory.imageAlt || "Extended family gathered closely for a portrait"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 78vw, (max-width: 1050px) 48vw, 34rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-
-        <figure class="richland-print richland-services__photo richland-services__photo--front">
-          <span class="richland-tape richland-tape--service" aria-hidden="true"></span>
-          <Picture
-            src={serviceFront}
-            alt={directory.secondaryImageAlt || "Professional portrait photographed on location"}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 43vw, (max-width: 1050px) 25vw, 18rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
+      <div class="richland-planning__media">
+        {planning.image && (
+          <figure class="richland-planning__primary">
+            <Picture
+              src={planning.image}
+              alt={planning.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 72vw, (max-width: 1050px) 40vw, 28rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {planning.secondaryImage && (
+          <figure class="richland-photo-frame richland-planning__secondary">
+            <Picture
+              src={planning.secondaryImage}
+              alt={planning.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 54vw, (max-width: 1050px) 29vw, 21rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {(planning.image || planning.secondaryImage) && (
+          <span class="richland-media-rule richland-planning__rule" aria-hidden="true"></span>
+        )}
       </div>
     </div>
   </section>
 
-  {/* CONTENT PENDING: [PENDIENTE: 6–10 imágenes de sesiones reales en Richland, cada una con alt text que nombre la locación]. The claimed Recent Richland Sessions gallery remains unrendered until the local media is supplied. */}
-  <div class:list={["richland-interlude", `tone-${recent.tone}`]} aria-hidden="true">
-    <div class="richland-shell richland-interlude__contact-sheet">
-      <figure class="richland-print richland-interlude__print richland-interlude__print--one">
-        <Picture
-          src="/uploads/extended-family-embrace-tricities.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="(max-width: 767px) 47vw, (max-width: 1050px) 32vw, 23rem"
-          imgClass="photo--editorial"
-        />
-      </figure>
-      <figure class="richland-interlude__arch">
-        <Picture
-          src="/uploads/headshot-warm-portrait-tricities.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="(max-width: 767px) 62vw, (max-width: 1050px) 36vw, 26rem"
-          imgClass="photo--editorial"
-        />
-      </figure>
-      <figure class="richland-print richland-interlude__print richland-interlude__print--three">
-        <span class="richland-tape richland-tape--interlude" aria-hidden="true"></span>
-        <Picture
-          src="/uploads/family-newborn-sunset-tricities.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="(max-width: 767px) 44vw, (max-width: 1050px) 30vw, 21rem"
-          imgClass="photo--editorial"
-        />
-      </figure>
-    </div>
-  </div>
-
   <section
+    id={questions.id}
     class:list={["richland-faq", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
   >
-    <div class="richland-shell richland-faq__inner">
-      <div class="richland-faq__questions">
-        <header>
-          {questions.eyebrow && <p class="richland-eyebrow">{questions.eyebrow}</p>}
-          <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
-        </header>
+    <div class="richland-shell richland-faq__grid">
+      <header class="richland-faq__header">
+        {questions.eyebrow && <p class="richland-eyebrow">{questions.eyebrow}</p>}
+        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        {questions.intro && <p>{questions.intro}</p>}
+      </header>
 
-        {/* CONTENT PENDING [Do you have a studio in Richland?]: [VALIDAR: formato newborn] */}
-        {/* CONTENT PENDING [Do you travel outside Richland?]: [VALIDAR: política de viaje — Q2/Q53] */}
-        {ledgerQuestions.length > 0 && (
-          <div class="richland-faq__ledger">
-            {ledgerQuestions.map(({ item, index }) => (
-              <details open={index === 0}>
-                <summary>
-                  <span class="richland-faq__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  {item.heading && <h3>{item.heading}</h3>}
-                  <span class="richland-faq__mark" aria-hidden="true"></span>
-                </summary>
-                <div class="richland-faq__answer">
-                  {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-                </div>
-              </details>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {featuredQuestion && (
-        <article class="richland-faq__note" aria-labelledby="richland-featured-question">
-          <Picture
-            src={questions.image || "/uploads/investment-final-torn-paper-pin.png"}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 88vw, (max-width: 1050px) 44vw, 27rem"
-            pictureClass="richland-faq__paper-frame"
-            imgClass="richland-faq__paper-art"
-          />
-          <div class="richland-faq__note-copy">
-            <span class="richland-faq__note-number" aria-hidden="true">
-              {String(featuredQuestionIndex + 1).padStart(2, "0")}
-            </span>
-            <h3 id="richland-featured-question">{featuredQuestion.heading}</h3>
-            {featuredQuestion.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-          </div>
-        </article>
+      {faqItems.length > 0 && (
+        <div class="richland-faq__list">
+          {faqItems.map((item, index) => (
+            <details open={index === 0}>
+              <summary>
+                <span class="richland-faq__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="richland-faq__question" role="heading" aria-level="3">
+                  {item.heading}
+                </span>
+                <span class="richland-faq__mark" aria-hidden="true"></span>
+              </summary>
+              <div class="richland-faq__answer">
+                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            </details>
+          ))}
+        </div>
       )}
     </div>
   </section>
@@ -369,21 +453,23 @@ const finalImage = page.finalCta?.image || "/uploads/family-newborn-sunset-trici
       aria-labelledby="richland-final-title"
       tabindex="-1"
     >
-      <div class="richland-final__background" aria-hidden="true">
-        <Picture
-          src={finalImage}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="richland-final__background-image"
-        />
-        <div class="richland-final__wash"></div>
-      </div>
+      {page.finalCta.image && (
+        <div class="richland-final__background" aria-hidden="true">
+          <Picture
+            src={page.finalCta.image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="100vw"
+            imgClass="richland-final__background-image"
+          />
+          <span class="richland-final__wash"></span>
+        </div>
+      )}
       <div class="richland-shell richland-final__inner">
         <div class="richland-final__frame">
-          <p class="richland-final__script" aria-hidden="true">find your light</p>
+          {page.finalCta.eyebrow && <p class="richland-eyebrow">{page.finalCta.eyebrow}</p>}
           <h2 id="richland-final-title">{page.finalCta.heading}</h2>
           {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
           {page.finalCta.link && (

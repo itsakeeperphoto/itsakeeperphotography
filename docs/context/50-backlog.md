@@ -11,10 +11,14 @@
 - [x] **2. Publicar Family Photo Locations en el gate de producción.** Fecha
   aprobada `2026-08-08`; `[FECHA]` retirado, ruta `ready/index`, schema completo,
   sitemap/llms/headers verificados y QA responsive final aprobado.
-- [ ] **3. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **3. Completar la galería Richland.** Seleccionar 6–10 sesiones reales
+  cuya procedencia Richland esté verificada, redactar alt text literal sin
+  revelar el spot exacto y repetir build/schema/Playwright. Solo después se
+  evalúa `ready/index` para `/richland-wa-photographer/`.
+- [ ] **4. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **4. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **5. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -85,10 +89,13 @@ sin reemplazar el archivo.
 
 ### Richland
 
-- [ ] Lugares reales y comentario detallado de Lisa.
-- [ ] Seleccionar imágenes reales con alt contextual.
-- [ ] Confirmar formato de sesiones newborn en Richland.
-- [ ] Confirmar política/costo de travel.
+- [x] Sustituido el inventario de spots por el conocimiento local v2 aportado
+  por Lisa, sin publicar nombres ni dirección privada.
+- [x] Incorporados al copy v2 el formato newborn in-home y la política de viaje
+  Tri-Cities suministrados en el documento aprobado.
+- [ ] Completar la única condición restante: 6–10 imágenes de sesiones reales
+  en Richland con procedencia verificable y alt contextual literal, sin nombrar
+  el spot exacto.
 
 ### Kennewick
 

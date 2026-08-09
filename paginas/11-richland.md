@@ -1,7 +1,11 @@
 # RICHLAND — `/richland-wa-photographer/`
-_Página 11 de 18 · Service-area · Condicional (la más fácil de sustentar: es la base de Lisa)_
+_Página 11 de 18 · Service-area · **v2 — reescrita 2026-07** sin publicar spots exactos (restricción de Lisa)_
 
-> Regla anti-thin-page: esta página SOLO se publica con evidencia local real — galería de sesiones en Richland, locaciones concretas con conocimiento de primera mano, y al menos 1 reseña de cliente de Richland. Nada de texto genérico intercambiable entre ciudades.
+> **Ángulo único de esta página:** Richland no es una ciudad que Lisa cubre — es donde vive. Ese es el diferenciador y ninguna de las otras dos páginas puede reclamarlo. Todo lo demás se subordina a eso.
+>
+> **Condición de publicación:** requiere galería real de sesiones en Richland. Sin fotos propias de aquí, no se publica.
+>
+> **Privacidad:** el copy público declara que el negocio está basado en Richland, pero no publica calle, número ni map pin, conforme a ADR-019.
 
 ---
 
@@ -11,23 +15,25 @@ _Página 11 de 18 · Service-area · Condicional (la más fácil de sustentar: e
 |---|---|
 | **URL** | `/richland-wa-photographer/` |
 | **Keyword primaria** | photographers richland wa (30/mes) |
-| **Secundarias** | richland wa photographers (20) · richland photographer (10) · portrait photographer richland (10) · richland senior photographer · photographer west richland wa |
-| **Title** (52) | `Richland WA Photographer | It's A Keeper Photography` |
-| **Meta description** (150) | `Lisa lives and photographs in Richland, WA — golden-hour sessions at Howard Amon Park, Badger Mountain, the river paths and the corners only locals know.` |
+| **Secundarias** | richland wa photographers (20) · richland photographer (10) · portrait photographer richland (10) · photographer richland wa (KD 15) · richland senior photographer · photographer west richland wa |
+| **Title** (54) | `Richland WA Photographer | It's A Keeper Photography` |
+| **Meta description** (152) | `Based in Richland since 2005 — senior pictures, family, newborn and branding photography by Lisa Weiss, photographed in the evening light she knows by heart.` |
+
+### Entidades a establecer
+Richland, WA · West Richland · Columbia River · Tri-Cities · Benton County · Washington · Lisa Weiss · golden hour · outdoor portrait photography
+**Relación clave a declarar:** el negocio *está ubicado en* Richland (no solo "sirve" Richland). Es la única de las tres ciudades donde eso es cierto y debe quedar explícito en copy y schema, sin publicar la dirección legada.
 
 ### Estructura de headings
 
 ```
-H1  Your Richland, WA Photographer
- H2  I Don't Just Work in Richland — I Live Here
- H2  My Favorite Richland Session Spots
-  H3  Along the Columbia River
-  H3  Fields, hills and open sky
-  H3  A place that's already yours
- H2  Sessions I Photograph in Richland
- H2  Recent Richland Sessions           (galería)
+H1  Richland, WA Photographer
+ H2  This Isn't a City I Travel To — It's Where I Live
+ H2  Twenty Years of Watching This Light
+ H2  What I Photograph in Richland
+ H2  Recent Richland Sessions        (galería)
+ H2  Planning a Session Here
  H2  Richland Questions
- H2  Let's Find Your Light in Richland
+ H2  Let's Find Your Light
 ```
 
 ---
@@ -36,82 +42,102 @@ H1  Your Richland, WA Photographer
 
 ### Hero
 
-**H1:** Your Richland, WA Photographer
+**H1:** Richland, WA Photographer
 
-**Subhead:** Senior pictures, family sessions, newborns and branding photography in Richland — from a photographer who's been chasing this town's golden hour for twenty years.
+**Subhead:** Senior pictures, families, newborns and branding photography in Richland — from someone who's lived here since 2005 and spent twenty years learning where the light lands.
 
-**CTA:** Plan Your Richland Session → `/contact/`
+**CTA visible:** Plan Your Session — botón que desplaza al CTA final; el único
+anchor de Contact permanece allí para respetar el máximo de cuatro enlaces
+internos en `<main>`.
 
-### Sección 2
+---
 
-**H2:** I Don't Just Work in Richland — I Live Here
+**H2: This Isn't a City I Travel To — It's Where I Live**
 
-It's A Keeper Photography is based right here in Richland. This is where I raised my family, where my business grew from a mom with a point-and-shoot into twenty years of professional photography, and where I know — down to the week — when the light turns gold along the river.
+It's A Keeper Photography is based in Richland. Not "serving Richland" — *based* here.
 
-That matters more than it sounds. When you book a Richland session with me, you're not getting a photographer guessing at locations from Google Maps. You're getting someone who knows which park empties out at dinnertime, where the trees hold their color longest in October, and exactly where the sun drops behind the ridge.
+I moved here from Wisconsin in 2005 and raised my family in this town. My kids grew up here. My church is here. The business that started with me photographing my own children in our backyard has grown into twenty years of photographing hundreds of families across the Tri-Cities — and it grew up in Richland.
 
-### Sección 3 — Locaciones (E-E-A-T local)
+I mention it because it changes what you get. When we plan your session, I'm not pulling up a map and guessing. I know when the trees along the river turn and roughly how long they hold. I know which places empty out at dinnertime and which fill up on weekends. I know what the light does here in February versus June, because I've been standing in it for two decades.
 
-**H2:** My Favorite Richland Session Spots
+---
 
-**H3: Along the Columbia River**
-Howard Amon Park and the riverfront paths give us water, willows and that soft evening glow coming off the Columbia. Perfect for families with kids who need room to run.
+**H2: Twenty Years of Watching This Light**
 
-**H3: Fields, hills and open sky**
-The open spaces around Badger Mountain and the edges of West Richland turn amber at golden hour — my favorite backdrop for seniors and couples who want that warm, wide-open feel.
+Richland gives us a few things that are genuinely good for photographs: the river running along the length of it, open spaces at the edges before the hills start, dry air that makes evening light go warm and gold, and enough parks and quiet corners that we're never fighting a crowd.
 
-**H3: A place that's already yours**
-Your backyard, grandma's orchard, the spot where he proposed. Some of my favorite Richland sessions have happened in places that already held a memory.
+I'm not going to publish my exact locations — a photographer's spots are hard-won and I'd like to keep a few of them. But here's what I'll tell you honestly: the location matters far less than the hour. I've made beautiful photographs in ordinary places at the right moment, and flat ones in spectacular places at the wrong one. What I bring to your session is knowing the difference.
 
-`[VALIDAR CON LISA: confirmar que estos son SUS spots reales y añadir 1–2 detalles de primera mano por locación (p. ej. "la luz cae detrás de X a las Y"). Ese detalle es lo que ninguna otra página puede copiar.]`
+There's one park here where, in the colder months, the sun hits a certain point and the light coming off the river bounces up through the trees. It lasts about twenty minutes. That's the kind of thing you only learn by being somewhere for a very long time.
 
-→ Full guide: Best places to take pictures in the Tri-Cities → `/journal/family-photo-locations-tri-cities/`
+---
 
-### Sección 4 — Servicios
+**H2: What I Photograph in Richland**
 
-**H2:** Sessions I Photograph in Richland
+_(Grid de tarjetas — componente de navegación, no links de prosa)_
 
-- Senior Pictures → `/senior-photographer-tri-cities-wa/`
-- Family Photography → `/family-photographer-tri-cities-wa/`
-- Newborn Photography → `/newborn-photographer-tri-cities-wa/`
-- Branding & Custom Business Photography → `/branding-photographer-tri-cities-wa/`
-- Professional Headshots → `/headshot-photographer-tri-cities-wa/`
+- **Senior Pictures** — multiple locations across town in one evening
+- **Family Photography** — open spaces where your kids can actually move
+- **Newborn Photography** — in your own home, in your own light
+- **Branding Photography** — at your Richland business or workspace
+- **Professional Headshots** — I bring portable studio equipment to you
 
-### Sección 5 — Galería
+---
 
-**H2:** Recent Richland Sessions
-`[PENDIENTE: 6–10 imágenes de sesiones reales en Richland, cada una con alt text que nombre la locación]`
+**H2: Recent Richland Sessions**
 
-### Sección 6 — FAQ
+`[PENDIENTE: 6–10 imágenes de sesiones reales en Richland. Alt text describiendo tipo de locación y estación, sin nombrar el spot exacto.]`
 
-**H2:** Richland Questions
+---
+
+**H2: Planning a Session Here**
+
+Most Richland sessions happen outdoors at golden hour, at a location we choose together during your planning call. If there's somewhere in town that already means something to your family — your street, your backyard, the park where your kids learned to ride bikes — bring me there. Those tend to be my favorites.
+
+Peak season here runs May through October, and fall books out first. But I photograph year-round, and a clear winter afternoon in Richland can hand you some of the most beautiful light of the entire year.
+
+---
+
+**H2: Richland Questions**
 
 **H3: Do you have a studio in Richland?**
-My sessions happen outdoors in natural light — Richland's parks, river paths and open spaces are my studio. `[VALIDAR: formato newborn]`
+No — and it's a deliberate choice. My work is outdoors in natural light, and the Tri-Cities gives us better light than any studio I could build. Newborn sessions happen in your home, and for headshots I bring portable studio equipment to your workplace.
 
-**H3: What's the best time of year for photos in Richland?**
-Every season has its light. October gives us autumn color along the river; summer evenings are warm and golden; spring brings blossoms. We'll match the season to your story.
+**H3: Do you photograph in West Richland too?**
+Yes. West Richland, north Richland, the whole area — there's no travel fee anywhere in the Tri-Cities.
 
-**H3: Do you travel outside Richland?**
-Yes — I photograph throughout the Tri-Cities, including Kennewick and Pasco, at no extra charge. `[VALIDAR: política de viaje — Q2/Q53]`
+**H3: Where's the best place to take photos in Richland?**
+Honestly, it depends on the season, the time of day and who's in front of the camera. That's what your planning call is for — I'll bring you options with the light already worked out.
 
-### CTA final
+**H3: How far ahead should I book?**
+Four to six weeks for most sessions. If you want autumn light, reach out in late summer — those dates go first every single year.
 
-**H2:** Let's Find Your Light in Richland
+---
+
+**H2: Let's Find Your Light**
+
+You bring your people. I'll bring twenty years of knowing this town.
+
 **CTA:** Start planning → `/contact/`
 
 ---
 
-## Internal links
+## Internal links (4 en prosa — el grid de servicios es componente, no cuenta)
 
-- Entrantes: Home (footer), journal locations.
-- Salientes: 5 páginas de servicio · `/journal/family-photo-locations-tri-cities/` · `/contact/` · páginas de Kennewick y Pasco (crosslink "also serving").
+1. `/journal/family-photo-locations-tri-cities/` — en "Twenty Years of Watching This Light", desde "the location matters far less than the hour"
+2. `/about/` — en la sección de vivir aquí, desde "photographing my own children"
+3. `/investment/` — en "Planning a Session Here", desde "your planning call"
+4. `/contact/` — CTA final
 
-## Alt texts (ejemplos — ajustar a imágenes reales)
+## Alt texts
 
-- `Family walking the riverfront path at Howard Amon Park during a golden-hour session in Richland, WA`
-- `High school senior photographed in an open field near Badger Mountain, Richland`
-- `Couple embracing under autumn trees along the Columbia River in Richland`
+- `Family session in golden evening light along the river in Richland, WA`
+- `High school senior photographed in an open field at the edge of Richland`
+- `Newborn photographed at home in soft window light in Richland, Washington`
+- `Autumn family portraits under turning trees in Richland`
+- `Winter portrait session in clear January light in Richland, WA`
+
+Usar cada alt solo cuando la fotografía real correspondiente esté verificada; la lista no autoriza a asignar localización o estación a una imagen distinta.
 
 ## Schema JSON-LD
 
@@ -124,7 +150,33 @@ Yes — I photograph throughout the Tri-Cities, including Kennewick and Pasco, a
       "name": "Richland WA Photographer",
       "url": "https://www.itsakeeperphotography.com/richland-wa-photographer/",
       "about": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "spatialCoverage": {"@type": "City", "name": "Richland", "containedInPlace": {"@type": "State", "name": "Washington"}}
+      "spatialCoverage": {
+        "@type": "City",
+        "name": "Richland",
+        "containedInPlace": {"@type": "State", "name": "Washington"}
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.itsakeeperphotography.com/#business",
+      "name": "It's A Keeper Photography",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Richland",
+        "addressRegion": "WA",
+        "addressCountry": "US"
+      },
+      "telephone": "+15099487322",
+      "founder": {"@id": "https://www.itsakeeperphotography.com/#lisa"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Do you have a studio in Richland?", "acceptedAnswer": {"@type": "Answer", "text": "No — and it's a deliberate choice. My work is outdoors in natural light, and the Tri-Cities gives us better light than any studio I could build. Newborn sessions happen in your home, and for headshots I bring portable studio equipment to your workplace."}},
+        {"@type": "Question", "name": "Do you photograph in West Richland too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. West Richland, north Richland, the whole area — there's no travel fee anywhere in the Tri-Cities."}},
+        {"@type": "Question", "name": "Where's the best place to take photos in Richland?", "acceptedAnswer": {"@type": "Answer", "text": "Honestly, it depends on the season, the time of day and who's in front of the camera. That's what your planning call is for — I'll bring you options with the light already worked out."}},
+        {"@type": "Question", "name": "How far ahead should I book?", "acceptedAnswer": {"@type": "Answer", "text": "Four to six weeks for most sessions. If you want autumn light, reach out in late summer — those dates go first every single year."}}
+      ]
     },
     {
       "@type": "BreadcrumbList",
@@ -136,3 +188,7 @@ Yes — I photograph throughout the Tri-Cities, including Kennewick and Pasco, a
   ]
 }
 ```
+
+## Nota de diferenciación
+
+El argumento de esta página es **residencia**: "aquí vivo". Kennewick usa el argumento de proximidad y estilo; Pasco el de luz subestimada. Ningún párrafo debe poder copiarse de una página a otra cambiando el nombre de la ciudad — si se puede, está mal escrito.
