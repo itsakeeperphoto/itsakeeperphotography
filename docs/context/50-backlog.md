@@ -15,13 +15,13 @@
 - [x] **3. Publicar Richland sin esperar la galería opcional.** Ruta
   `ready/index`, `lastModified: 2026-08-08`, sitemap/llms/meta/headers/schema
   verificados en release y aislamiento staging conservado.
-- [ ] **4. Implementar y publicar Kennewick v2.** Reemplazar v1 por el copy
+- [x] **4. Implementar y publicar Kennewick v2.** Reemplazar v1 por el copy
   definitivo centrado en estilo, mantener la galería como mejora opcional,
   verificar diseño/schema en cuatro viewports y pasar la ruta a `ready/index`
   con sitemap/llms/header coherentes.
-- [ ] **5. Verificar Richland después del próximo push autorizado.** Confirmar
-  en el dominio final meta index, canonical, ausencia de header noindex,
-  membresía del sitemap y `lastmod 2026-08-08`.
+- [ ] **5. Verificar Richland y Kennewick después del próximo push autorizado.**
+  Confirmar en el dominio final status 200, meta index, canonical, ausencia de
+  header noindex, membresía del sitemap/llms y `lastmod 2026-08-08`.
 - [ ] **6. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -109,9 +109,15 @@ sin reemplazar el archivo.
 
 ### Kennewick
 
-- [ ] Lugares reales y detalles locales de Lisa.
-- [ ] Seleccionar 6–10 imágenes reales y alt contextual.
-- [ ] Confirmar política/costo de travel (Q53).
+- [x] Sustituido v1 por el copy v2 aprobado, sin publicar spots exactos ni
+  presentar portfolio general como prueba local.
+- [x] Política de travel Tri-Cities y argumento de estilo incorporados desde el
+  documento definitivo; ruta publicada `ready/index` con schema y crawler
+  outputs verificados localmente.
+- [x] Directorio de cinco servicios enlazado; excepción de nueve anchors
+  limitada por ADR-035.
+- [ ] Mejora opcional: añadir después 6–10 sesiones reales con procedencia
+  Kennewick y alt contextual literal, sin nombrar el spot exacto.
 
 ### Pasco
 
@@ -148,6 +154,9 @@ sin reemplazar el archivo.
   `8d5d84f`, `aae3812` y `c663d68` al cierre de implementación.
 - [ ] Mantener la instrucción operativa actual: ningún agente hace push; cada
   intervención termina en commits locales que el usuario administra.
+- [ ] Publicar los tres commits locales de Kennewick (`8a0e467`, `b65c3c5` y
+  su cierre documental) con una identidad autorizada; después ejecutar el
+  chequeo remoto descrito en el ítem 5.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 

@@ -3,7 +3,7 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 22:40 -05
+**Última actualización:** 2026-08-08 23:38 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
@@ -12,242 +12,168 @@
 **Commit base al iniciar Kennewick v2:** `fca4196` —
 `docs(context): record Richland publication`
 
+**Commit funcional verificado:** `b65c3c5` —
+`feat(kennewick): publish v2 city page`
+
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** al iniciar Kennewick v2, `main` y `origin/main` coinciden en
-`fca4196`; el usuario sincronizó los ocho commits anteriores fuera de Codex. Por
-instrucción expresa vigente, Codex crea commits locales y no ejecuta pushes. No
-se ejecutó deploy ni cambio de DNS desde esta sesión.
+**Estado Git al terminar:** este cierre deja `main` tres commits delante de
+`origin/main`: `8a0e467`, `b65c3c5` y el commit documental que contiene este
+archivo. Por instrucción expresa vigente, Codex no ejecutó push, deploy ni
+cambio externo.
 
 ---
 
 ## Siguiente paso concreto
 
-Implementar el documento Kennewick v2 como fuente definitiva, retirar el copy
-v1 que publica spots exactos y conservar la galería real como mejora posterior
-no bloqueante. Tras QA de contenido, diseño, schema y los cuatro viewports,
-publicar `/kennewick-wa-photographer/` como `ready/index` en sitemap/llms y sin
-header noindex específico. Los agentes crean solo commits locales y no hacen
-push.
+El usuario debe publicar los tres commits locales con su identidad autorizada.
+Después, verificar en el dominio oficial Richland y Kennewick: status 200,
+canonical `www`, meta index, ausencia de `X-Robots-Tag: noindex`, membresía de
+sitemap/`llms.txt` y `lastmod 2026-08-08`. No añadir la galería Kennewick hasta
+recibir sesiones con procedencia local y alt literal verificados.
 
 ---
 
 ## Resumen ejecutivo
 
 - El sitio Astro/Tina/Netlify construye 21 rutas públicas.
-- Están `ready/index`: Homepage, Family, Richland, Family Photo Locations y
-  Portfolio. Thank-you es `ready/noindex`; las otras 15 rutas permanecen
-  `draft/noindex`.
-- `/richland-wa-photographer/` está `ready/index` con `lastModified:
-  2026-08-08`. Usa el copy v2 centrado en que Lisa vive en Richland desde 2005;
-  retiró Howard Amon, Badger Mountain y la dirección privada. La galería queda
-  como mejora opcional y no se renderiza mientras esté vacía.
-- La superficie Richland es un “light ledger” editorial: retícula de 12
-  columnas, un arco, directorio navegable de cinco servicios, ratios naturales,
-  planning, FAQ y cierre fotográfico. La galería no se renderiza mientras esté
-  vacía.
-- `/journal/family-photo-locations-tri-cities/` quedó terminada para
-  producción con fecha editorial `2026-08-08`, sin placeholders, en sitemap y
-  en `llms.txt`.
-- El build release y el build staging terminaron con
-  `Validated 21 public routes`. Release publica cinco URLs en sitemap y cuatro
-  en `llms.txt`; staging conserva sitemap vacío y noindex global.
-- El Article schema contiene fecha de publicación/modificación, imagen,
-  `mainEntityOfPage`, autor y publisher. También parsean LocalBusiness,
-  WebSite, FAQPage y BreadcrumbList.
-- FAQPage es verdadero y válido Schema.org, pero un sitio comercial no debe
-  esperar el rich result FAQ restringido por Google.
-- “Four Kinds” recibió un segundo rediseño basado en las referencias aportadas:
-  contact sheet asimétrico, una sola foto arqueada y una sola impresión con mat.
-  Playwright cubrió 1728×963, 1440×1000, 1200×1000, 900×1000 y 390×844 sin
-  overflow, solapamientos ni errores de consola.
-- La foto del cierre proviene del folder autorizado de Drive
-  “Family Session - Richland”; se importó a 2400×1600 y el build genera WebP de
-  400, 640, 960 y 1440 px.
-- `src/content/pending.ts` contiene ahora 35 entradas y ninguna corresponde a
-  Richland.
+- Están `ready/index`: Homepage, Family, Richland, Kennewick, Family Photo
+  Locations y Portfolio. Thank-you es `ready/noindex`; las otras 14 rutas
+  permanecen `draft/noindex`.
+- `/kennewick-wa-photographer/` usa ahora el documento v2 definitivo. Se
+  retiraron Columbia Park, spots exactos, headings v1 y todo placeholder.
+- El argumento propio de Kennewick es el contraste de estilo: trabajo cálido,
+  rico y algo moody frente al look light and airy dominante. El copy visible se
+  conserva completo, incluidos sus dos énfasis editoriales.
+- La galería local quedó como mejora opcional. Su sección no genera heading,
+  imagen, wrapper ni whitespace mientras no tenga ítems completos y
+  verificados.
+- La ruta está `ready/index`, con `lastModified: 2026-08-08`; release contiene
+  seis URLs en sitemap y cinco en `llms.txt`. Staging conserva sitemap vacío y
+  noindex global.
+- El release emite LocalBusiness, WebSite, WebPage, Service, BreadcrumbList y
+  FAQPage. Las cuatro FAQ visibles coinciden 4:4 con schema; no aparecen
+  `streetAddress`, Review ni AggregateRating.
+- Playwright verificó 1440×1000, 1200×1000, 900×1000 y 390×844. La revisión
+  independiente terminó `VERDICT: SHIP` sin defectos materiales.
+- El servidor local fue restaurado y está activo en `localhost:4321`; Tina usa
+  `:9000` y su API local `:4001`.
 
 ## Qué funciona hoy
 
-### Build y publicación
+### Kennewick v2
 
-- `SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local`
-  valida las 21 rutas y genera los crawler outputs de producción.
-- `SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local`
-  valida las mismas 21 rutas con canonical Netlify, sitemap vacío y noindex
-  global.
-- `scripts/validate-site.mjs` comprueba la membresía exacta de sitemap/llms,
-  indexabilidad por ruta y reglas noindex explícitas de los drafts de Journal.
-- Los dos formularios Netlify siguen siendo detectables estáticamente.
+- Fuente editorial: `paginas/12-kennewick.md`; runtime:
+  `content/pages/kennewick.json`.
+- `KennewickPage.astro` exige las secciones v2, cinco filas de servicio
+  completas y cuatro FAQ. Los fallbacks de copy, imagen y alt de v1 fueron
+  eliminados.
+- El hero split usa H1 y subhead exactos, una fotografía vertical completa y
+  un botón nativo que desplaza/focaliza `#kennewick-final`; no consume un anchor.
+- La dirección “Warm Proof / Tonal Contact Sheet” traduce las referencias a
+  retícula, escala y vacío. La única firma visual es un panorama que hace
+  contacto con un arco. No usa tape, papel rasgado, rotaciones, sombras,
+  gradientes ni texturas inventadas.
+- Las cinco fotografías ya autorizadas funcionan como portfolio general de
+  Tri-Cities. Sus alt texts son literales y nunca afirman que la sesión ocurrió
+  en Kennewick.
+- “What Works Well in Kennewick” queda deliberadamente text-led para no usar
+  portfolio genérico como prueba local.
+- El directorio contiene cinco anchors de área completa hacia Senior, Family,
+  Newborn, Branding y Headshots, con detalle, flecha, foco visible, hover solo
+  en dispositivos finos y reduced motion explícito.
+- `<main>` contiene exactamente nueve anchors: tres contextuales, cinco de
+  servicio y Contact final. La galería vacía está ausente del DOM.
+- FAQ usa controles nativos `<details>/<summary>`; el mismo arreglo filtrado
+  alimenta el DOM y FAQPage.
 
-### Family Photo Locations
+### SEO, schema y publicación
 
-- Fuente editorial: `paginas/15-journal-locations.md`.
-- Contenido runtime: `content/pages/journal-family-locations.json`.
-- Ruta, manifiesto principal y copia raíz del manifiesto están sincronizados en
-  `ready/index` con `lastModified: 2026-08-08`.
-- Los spots permanecen anónimos por criterio editorial cerrado; no existe
-  pendiente de nombrar Chamna ni se añadieron datos por inferencia.
-- “Four Kinds” usa una retícula editorial de 12 columnas: 01 domina a la
-  izquierda, 02 se desplaza a la derecha, 03 es el único arco y 04 la única
-  impresión con mat marfil. Tablet usa 2×2 y móvil conserva 01–04 en una sola
-  columna con paisajes 3:2.
-- Cada `article` queda asociado a su `h3` mediante `aria-labelledby`; el deep
-  link de la sección reserva además el alto del header sticky.
-- Se eliminaron la línea vertical junto al título de session fit y la línea que
-  salía del marco de winter.
-- El título y script de Seasons ya no se solapan: la medición fue 0 px en los
-  cinco viewports.
-- “I’ll find the light” usa `--color-deep-umber`; contraste calculado sobre
-  sand: 7.10:1.
-- El cierre usa la nueva foto como fondo editorial en desktop y como imagen 3:2
-  completa en móvil para no recortar a la familia.
+- Release Kennewick: meta
+  `index, follow, max-image-preview:large`, canonical
+  `https://www.itsakeeperphotography.com/kennewick-wa-photographer/` y ningún
+  header noindex específico.
+- Sitemap release: Home, Family, Richland, Kennewick, Locations y Portfolio.
+  Kennewick lleva `lastmod 2026-08-08`.
+- `llms.txt`: Home, Family, Richland, Kennewick y Locations; Portfolio sigue
+  fuera de llms.
+- `Service` declara `Portrait photography`, provider `/#business` y
+  `areaServed` Kennewick dentro de Washington; no presenta una sede física en
+  esa ciudad.
+- `scripts/validate-site.mjs` valida los seis indexables, los outputs crawler,
+  el schema seguro y exactamente nueve body links en Richland/Kennewick.
+- `scripts/playwright-evidence.js` conserva el máximo general de cuatro links y
+  reconoce únicamente las dos excepciones aprobadas de nueve.
+- `config/netlify-headers/release` ya no bloquea Kennewick; mantiene los gates
+  de Contact, Pasco, Journal draft, Privacy y Thank-you.
 
-### Richland v2
-
-- Fuente editorial: `paginas/11-richland.md`; runtime:
-  `content/pages/richland.json`.
-- La residencia de Lisa y su conocimiento de la luz sustituyen los spots
-  nominales de v1. El copy conserva todo el documento aprobado salvo Canyon
-  Street/dirección completa, omitidas por ADR-019 y ADR-032.
-- La página renderiza residencia, Twenty Years, un directorio visual de cinco
-  servicios, planning, cuatro FAQ y CTA. “Recent Richland Sessions” queda
-  como mejora condicional y no existe en DOM sin fotografías verificadas.
-- Las cinco filas del directorio son anchors nativos de área completa hacia las
-  rutas existentes de Senior, Family, Newborn, Branding y Headshots. Un barrido
-  horizontal, el título y una flecha SVG responden en 180–220 ms; foco visible
-  y movimiento reducido tienen estados explícitos.
-- Se usan fotografías reales ya autorizadas con alt literal; ningún filename
-  por sí solo se trató como prueba local. Paisajes y retratos mantienen sus
-  ratios 3:2, 9:5, 3:4 y 15:19 en vez de recortes verticales arbitrarios.
-- La matriz anterior sigue aprobada en 1440, 1200, 900 y 390 px. Para este
-  cambio Playwright release confirmó 1728×963 y 390×844: cinco destinos
-  exactos, filas de 1344×116 y 366×164 px, overflow 0, activación con Enter,
-  focus visible y transforms anulados con reduced motion. `<main>` contiene
-  nueve anchors por la excepción de ruta ADR-033.
-- Está `ready/index` en contenido y ambos manifiestos, con `lastModified:
-  2026-08-08`. El artefacto release confirma meta index, canonical `www`,
-  membresía en sitemap/llms y ausencia del header noindex específico. Staging
-  conserva canonical Netlify y noindex global.
-
-### SEO y schema
-
-- Meta robots release: `index, follow, max-image-preview:large`.
-- Canonical release:
-  `https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/`.
-- Sitemap release: cinco URLs en orden Home, Family, Richland, Locations y
-  Portfolio. Richland y Locations llevan `lastmod 2026-08-08`.
-- `llms.txt`: Home, Family, Richland y Locations; Portfolio permanece excluido.
-- `config/netlify-headers/release` ya no contiene el wildcard
-  `/journal/*`. Conserva noindex explícito para `/journal/` y los tres
-  artículos draft canónicos.
-- JSON-LD verificado: LocalBusiness, WebSite, Article, FAQPage y
-  BreadcrumbList; cinco FAQs visibles y tres breadcrumbs.
-- No se emiten Review/AggregateRating sin evidencia verificada.
-- Richland release conserva canonical
-  `https://www.itsakeeperphotography.com/richland-wa-photographer/`, meta robots
-  `index, follow, max-image-preview:large` y no recibe `X-Robots-Tag: noindex`.
-- Sus cinco JSON-LD parsean como LocalBusiness, WebSite, WebPage,
-  BreadcrumbList y FAQPage. Las cuatro FAQ visibles coinciden 4:4 con schema;
-  LocalBusiness publica solo Richland/WA/US, sin `streetAddress`.
-
-### Integraciones
-
-- Microsoft Clarity `xyqkkqom4v` y Google tag/GA4 `G-0YW8M601L1` cargan en
-  el `<head>` compartido.
-- TinaCMS mantiene el modelo `finalCta.image`; la foto nueva no requirió
-  cambios de types, query ni schema de contenido.
-- Google Drive fue fuente manual autorizada del asset; no es dependencia de
-  runtime.
-
-## Estado de publicación por ruta
-
-| Ruta | Estado | Sitemap release | Observación |
-|---|---|---:|---|
-| `/` | ready/index | Sí | Homepage, autoridad visual. |
-| `/family-photographer-tri-cities-wa/` | ready/index | Sí | Servicio Family. |
-| `/richland-wa-photographer/` | ready/index | Sí | Galería posterior opcional; copy/UI/schema completos. |
-| `/journal/family-photo-locations-tri-cities/` | ready/index | Sí | Fecha y QA final completos. |
-| `/portfolio/` | ready/index | Sí | Excluido de llms. |
-| `/thank-you/` | ready/noindex | No | Destino de formularios. |
-| Otras 15 rutas | draft/noindex | No | Conservar gates hasta resolver hechos/media/QA. |
-
-## Archivos cambiados en esta sesión
-
-- Publicación: `content/pages/richland.json`, `src/lib/page-manifest.ts` y la
-  copia raíz `page-manifest.ts`.
-- Gates: `config/netlify-headers/release`, `scripts/validate-site.mjs`,
-  `src/content/pending.ts` y `src/components/pages/RichlandPage.astro`.
-- Arquitectura/editorial: `STRUCTURE.md`, `paginas/00-INDICE.md`,
-  `paginas/11-richland.md` y el brief de superficie Richland.
-- Memoria: `docs/context/10-arquitectura.md`, `20-estado.md`,
-  `30-decisiones.md`, `40-bitacora.md` y `50-backlog.md`.
-- No cambiaron copy visible, fotografías, CSS, routing, Tina, tipos ni schema.
-
-## Qué está a medias
-
-| Archivo / módulo | Estado | Qué falta |
-|---|---|---|
-| `src/content/pending.ts` | 35 entradas | Resolver hechos/media de las rutas draft con Lisa. |
-| Seniors y Senior timing | Draft | Número de imágenes, offer Q54, fechas/distritos y QA final. |
-| Newborn y comparación | Draft | Formato, handling/safety, validación editorial y fecha. |
-| Branding/Headshots/Investment | Draft | Entregables, cantidades/duración y QA según cada ruta. |
-| About/Reviews/Privacy | Draft | Hechos/permisos, reseñas autorizadas y revisión legal. |
-| Galería Richland | Mejora opcional | Añadir 6–10 sesiones verificadas cuando el usuario las suministre. |
-| Kennewick/Pasco | Draft | Conocimiento local, imágenes/alt y travel confirmados. |
-| Netlify Forms | Código listo | Configurar/verificar notificaciones reales en Dashboard. |
-| GBP summary | Código listo | Configurar OAuth/IDs y probar cache/endpoints reales. |
-| Analítica | Snippets instalados | Verificar recepción real y política de staging/consentimiento. |
-| `README.md` | Obsoleto | Actualizar en una tarea separada. |
-| `page-manifest.ts` raíz | Duplicado no consumido | Se sincronizó esta guía; eliminar/consolidar en refactor separado. |
-
-## Verificación ejecutada
+### Verificación ejecutada
 
 ```bash
 SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local
 SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run build:local
+node /Users/williammelo/.agents/skills/impeccable/scripts/detect.mjs --json src/components/pages/KennewickPage.astro src/styles/kennewick-page.css content/pages/kennewick.json
 git diff --check
 ```
 
-- Release: `Validated 21 public routes in release mode.`
 - Staging: `Validated 21 public routes in staging mode.`
-- Release Richland: meta `index, follow, max-image-preview:large`, canonical
-  `www`, `data-content-status="ready"`, sin header noindex ni placeholders.
-- Sitemap release: cinco canonicals; Richland ocupa la tercera posición con
-  `lastmod 2026-08-08`. `llms.txt` contiene cuatro páginas y robots anuncia el
-  sitemap `www`.
-- Staging Richland: meta `noindex, nofollow, noarchive`, canonical Netlify,
-  sitemap vacío, `llms.txt` de preview y header global noindex.
-- JSON-LD release: LocalBusiness, WebSite, WebPage, BreadcrumbList y FAQPage
-  parseables; FAQ 4:4, breadcrumb 2 ítems, sin `streetAddress`, Review ni
-  AggregateRating.
-- Playwright release: 1728×963 y 390×844; cinco anchors `<a>` con hrefs exactos,
-  targets 1344×116 y 366×164 px, overflow 0 y navegación con Enter al servicio
-  Senior. Foco: outline 2 px; reduced motion: `0.01ms` y transform `none`.
-- Hover desktop: barrido `scaleX(0→1)`, título `translateX(5.6px)` y flecha
-  `translate(2px,-2px)` en 180–220 ms.
-- La revisión independiente detectó contraste 2.43:1 en `01–05`; se cambió a
-  Warm Ivory y la confirmación calculó 4.61:1 sobre Muted Olive en ambos
-  viewports.
-- La única consola externa fue un 400 de Microsoft Clarity en localhost; no
-  hubo errores de la aplicación.
-- El dev server existente se detuvo temporalmente para liberar Tina durante los
-  builds; release y staging pasaron sin cambios incidentales y `npm run dev` se
-  restauró en `http://localhost:4321/` al cierre.
+- Release: `Validated 21 public routes in release mode.`
+- Impeccable detector: `[]`.
+- Playwright: document `scrollWidth === clientWidth` en los cuatro viewports;
+  una H1; seis H2 visibles; nueve anchors; galería ausente; cinco imágenes
+  completas; cero overflow y cero errores de consola.
+- A 900 y 390 px el H1 tiene `scrollWidth === clientWidth` y no intersecta la
+  fotografía. Targets mínimos móviles: servicios 117 px, FAQ 96 px.
+- El botón hero mueve foco al cierre; la primera FAQ cierra y abre con Enter;
+  los cinco destinos de servicio coinciden con las rutas canónicas.
+- Artefacto release: FAQ visible/schema 4:4, sitemap y llms incluyen Kennewick,
+  `_headers` no contiene su regla noindex y no existen marcadores
+  `[PENDIENTE]`/`[VALIDAR]` en el HTML.
+- Finish review fresco: PASS en copy/proof, responsive, craft, a11y/motion y
+  SEO/release; `VERDICT: SHIP`.
+
+## Archivos del cambio funcional
+
+- Contenido/fuente: `content/pages/kennewick.json`,
+  `paginas/12-kennewick.md`, `paginas/00-INDICE.md`.
+- UI: `src/components/pages/KennewickPage.astro`,
+  `src/styles/kennewick-page.css` y el brief
+  `.impeccable/surfaces/route-kennewick-wa-photographer.md`.
+- Publicación/schema: `src/pages/[slug].astro`, ambos `page-manifest.ts`,
+  `config/netlify-headers/release`, `src/content/pending.ts`.
+- QA/estructura: `scripts/validate-site.mjs`,
+  `scripts/playwright-evidence.js`, `STRUCTURE.md` y
+  `docs/context/10-arquitectura.md`.
+
+## Trabajo parcial y pendientes reales
+
+| Ruta/módulo | Estado | Qué falta |
+|---|---|---|
+| Galería Kennewick | Mejora opcional | Añadir 6–10 sesiones verificadas con alt literal; no es gate. |
+| Galería Richland | Mejora opcional | Añadir sesiones verificadas cuando el usuario las suministre. |
+| Seniors / Senior timing | Draft | Hechos de paquetes, oferta Q54, fechas y QA final. |
+| Newborn / comparación | Draft | Formato, safety/handling, validación y fecha. |
+| Branding/Headshots/Investment | Draft | Entregables, duración/cantidades y QA. |
+| About/Reviews/Privacy | Draft | Permisos, reseñas autorizadas y revisión legal. |
+| Pasco | Draft | Copy local especializado, hechos/media y QA. |
+| Netlify Forms | Código listo | Confirmar notificaciones y envíos reales en Dashboard. |
+| GBP summary | Código listo | Configurar OAuth/IDs y probar cache/endpoints reales. |
+| Analítica | Snippets instalados | Verificar recepción y política de staging/consentimiento. |
+| `README.md` | Obsoleto | Actualizar en una tarea separada. |
+
+`src/content/pending.ts` contiene 32 entradas; ninguna corresponde a Richland,
+Kennewick ni Family Photo Locations.
 
 ## Bloqueadores externos
 
-1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
-   commits locales. Kennewick v2 empieza sincronizada en `fca4196`. No se
-   ejecuta `./scripts/handoff.sh` porque su protocolo incluye push y contradice
-   esa orden explícita.
-2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
-   artefacto release local.
-3. **Netlify:** faltan notificaciones reales de Forms y prueba end-to-end.
-4. **Google/GBP:** faltan credenciales/IDs y prueba del resumen dinámico.
-5. **Legal/privacidad:** Privacy requiere revisión humana, incluyendo Clarity y
-   Google Analytics.
+1. **Git/deploy:** el usuario prohibió pushes desde Codex. Los tres commits
+   locales todavía no están en `origin/main`; no se ejecutó
+   `./scripts/handoff.sh` porque incorpora push.
+2. **Producción:** el artefacto release local pasa, pero falta comprobar la
+   respuesta HTTP real después del push/deploy autorizado.
+3. **Netlify/GBP/analítica/legal:** permanecen las verificaciones externas del
+   backlog; no se inventaron como resueltas.
 
 ## Preguntas abiertas
 
@@ -266,8 +192,8 @@ cp .env.example .env
 npm run dev
 ```
 
-El servidor de desarrollo y Tina están activos en `localhost:4321` y `:9000`.
-Para validar publicación:
+Al cerrar, el servidor local ya está activo en `http://localhost:4321/`. Para
+revalidar publicación:
 
 ```bash
 SITE_MODE=staging SITE_ORIGIN=https://itsakeeperphotography.netlify.app npm run build:local

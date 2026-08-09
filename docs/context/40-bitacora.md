@@ -447,3 +447,44 @@
 - **Decisión:** ADR-035 fija la fuente v2, mantiene la galería opcional, prohíbe
   atribuir portfolio genérico a Kennewick y limita a esta ruta la excepción de
   nueve enlaces internos. No se modificó código ni se ejecutó push.
+
+### 2026-08-08 — Codex / GPT-5.6 — Kennewick v2 publicada y verificada
+
+- **Objetivo:** reemplazar `/kennewick-wa-photographer/` con el documento v2
+  definitivo, diferenciar la página por estilo, posponer la galería local sin
+  bloquear producción y terminarla `ready/index` con sitemap, schema y QA.
+- **Contenido:** se retiraron v1, Columbia Park, spots exactos, fallbacks y
+  placeholders. Se conservaron hero, Ten Minutes, Light and Airy, What Works,
+  cinco servicios, cuatro FAQ y CTA con el copy aprobado completo. Los dos
+  énfasis con asteriscos se convierten a `<em>` sin alterar el texto visible.
+- **Prueba fotográfica:** se reutilizaron cinco fotografías autorizadas como
+  portfolio general de Tri-Cities, con alt literal. Ninguna se atribuye a
+  Kennewick. La galería futura no renderiza heading, wrapper ni espacio hasta
+  recibir ítems completos con procedencia y alt verificados.
+- **Diseño:** `frontend-design` y `emil-design-eng` fijaron “Warm Proof / Tonal
+  Contact Sheet”; `impeccable` preservó la homepage y `DESIGN.md`. El hero es
+  split oscuro y la única firma es un panorama que hace contacto con un arco;
+  no se copiaron tape, rasgados, rotaciones, sombras, gradientes ni texturas de
+  las referencias. El detector final devolvió `[]`.
+- **Navegación/a11y:** `<main>` contiene exactamente nueve anchors — tres de
+  prosa, cinco filas de servicio y CTA final—; el hero usa un botón de scroll.
+  FAQ usa controles nativos y comparte datos 4:4 con FAQPage. Foco, Enter,
+  targets y reduced motion tienen estados verificados.
+- **Publicación/schema:** ambos manifiestos y el contenido quedaron
+  `ready/index`, `lastModified: 2026-08-08`; release elimina su header noindex y
+  publica seis URLs en sitemap y cinco en llms. Parsean LocalBusiness, WebSite,
+  WebPage, Service, BreadcrumbList y FAQPage, sin `streetAddress`, Review ni
+  AggregateRating.
+- **Playwright:** 1440×1000, 1200×1000, 900×1000 y 390×844 aprobaron overflow
+  0, cinco imágenes completas, H1 contenida, galería ausente, targets móviles
+  ≥96 px y consola sin errores. La primera ronda reveló recorte/colisión de
+  “Photographer” a 900/390; se ajustó la retícula/escala y la segunda confirmó
+  `scrollWidth === clientWidth` e intersección 0.
+- **Build y revisión:** staging y release terminaron con
+  `Validated 21 public routes`; el finish reviewer independiente devolvió PASS
+  en copy/proof, responsive, craft, a11y/motion y SEO/release, con
+  `VERDICT: SHIP` y ningún defecto material.
+- **Git/operación:** la implementación quedó en `b65c3c5`; ADR-035 y el arranque
+  están en `8a0e467`. Este cierre crea un tercer commit local. No se ejecutó
+  push, deploy, DNS ni `./scripts/handoff.sh` por instrucción del usuario. El
+  servidor Tina/Astro se restauró en `http://localhost:4321/`.
