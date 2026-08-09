@@ -13,7 +13,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 8 | 08-about.md | `/about/` | ⚠️ Credenciales por verificar (Grammy, MOM, premio) |
 | 9 | 09-reviews.md | `/reviews/` | ⚠️ Necesita las 8–12 reseñas reales (Q47) |
 | 10 | 10-contact.md | `/contact/` | ✅ Completo (plazos de respuesta pendientes) |
-| 11 | 11-richland.md | `/richland-wa-photographer/` | ⚠️ Condicional: falta galería real de 6–10 sesiones |
+| 11 | 11-richland.md | `/richland-wa-photographer/` | ✅ Completo · ready/index (galería posterior opcional) |
 | 12 | 12-kennewick.md | `/kennewick-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
 | 13 | 13-pasco.md | `/pasco-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
 | 14 | 14-journal-hub.md | `/journal/` | ✅ Completo |
@@ -32,7 +32,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 4. Family + journal locations
 5. Newborn + journal newborn (tras confirmar servicio con Lisa)
 6. Investment + Reviews (cuando lleguen respuestas Q47/Q54)
-7. Richland → Kennewick → Pasco (solo con galerías reales)
+7. Richland publicado; Kennewick → Pasco solo con contenido y galerías reales
 
 ## Lo que falta de Lisa (bloqueos)
 
@@ -40,5 +40,5 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 - **Q54/Q56/Q58:** inclusiones de paquetes, turnaround, derechos (afecta Investment + FAQs)
 - **Q42–43:** links/permisos de MOM Magazine y sesión Grammy (afecta About + Home)
 - **Newborn:** confirmar que se ofrece y en qué formato (afecta páginas 4 y 17)
-- **Locaciones de ciudad:** validar los spots reales + 1 detalle de primera mano por lugar (afecta 11–13)
+- **Locaciones de ciudad:** validar los spots reales + 1 detalle de primera mano por lugar (afecta 12–13)
 - **Hija/health challenges:** confirmar si se publica (Home/About)

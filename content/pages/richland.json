@@ -1,8 +1,8 @@
 {
   "route": "/richland-wa-photographer/",
   "family": "city",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "WebPage",
   "signature": "arch",
   "title": "Richland WA Photographer | It's A Keeper Photography",
@@ -202,7 +202,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE: 6–10 imágenes de sesiones reales en Richland. Alt text describiendo tipo de locación y estación, sin nombrar el spot exacto.]"
-  ]
+  "pending": []
 }

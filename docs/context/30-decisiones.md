@@ -474,6 +474,9 @@
   ruta según la fuente aprobada. Cualquier cambio a `ready/index` exige 6–10
   sesiones verificadas, nuevo QA responsive/schema y revisión explícita de los
   crawler gates. No cambian routing, tipos, Tina, manifiesto ni headers.
+- **SUPERSEDIDA POR ADR-034:** únicamente la galería como requisito de
+  publicación; la privacidad, exactitud y condición de no inventar media siguen
+  vigentes.
 
 ### ADR-033 — El directorio Richland enlaza sus cinco servicios
 - **Fecha:** 2026-08-08
@@ -498,3 +501,29 @@
   tiene una excepción trazable y no cambia sitemap, indexación ni el gate de la
   galería Richland. Cualquier nuevo directorio enlazado requiere aprobación y
   ADR propios.
+- **SUPERSEDIDA POR ADR-034:** únicamente la consecuencia que no cambiaba
+  sitemap/indexación; la excepción de nueve anchors sigue vigente.
+
+### ADR-034 — Richland se publica sin esperar la galería opcional
+- **Fecha:** 2026-08-08
+- **Estado:** Aceptada; supersede únicamente el gate de publicación de ADR-032
+  y la consecuencia de indexación de ADR-033.
+- **Contexto:** El usuario decidió añadir la galería después y autorizó ahora
+  que `/richland-wa-photographer/` pase a producción. El copy local, diseño,
+  privacidad, enlaces, FAQ y schema ya estaban completos y verificados; la
+  sección “Recent Richland Sessions” no se renderiza mientras no tenga media
+  real.
+- **Decisión:** Tratar la galería como mejora posterior no bloqueante. Marcar
+  Richland `ready/index` en contenido y manifiestos, usar `2026-08-08` como
+  `lastModified`, incluir la canonical en sitemap y `llms.txt`, y retirar su
+  `X-Robots-Tag` noindex de release. Staging conserva noindex global. Mantener
+  la galería condicional: cuando se añada, cada fotografía debe tener
+  procedencia Richland y alt literal verificados sin revelar el spot exacto.
+- **Alternativas descartadas:** Dejar `ready/noindex` se descartó porque no
+  cumple la autorización de indexar; añadir ítems vacíos o completar la galería
+  con filenames se descartó porque inventaría evidencia; editar directamente
+  el XML generado se descartó porque el manifiesto es la fuente canónica.
+- **Consecuencias:** El sitemap release pasa de cuatro a cinco URLs y
+  `llms.txt` de tres a cuatro. `src/content/pending.ts` deja de registrar la
+  galería; el backlog la conserva como mejora opcional. Richland debe emitir
+  meta robots index y no recibir un header HTTP noindex en release.

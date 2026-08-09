@@ -3,7 +3,7 @@ _Página 11 de 18 · Service-area · **v2 — reescrita 2026-07** sin publicar s
 
 > **Ángulo único de esta página:** Richland no es una ciudad que Lisa cubre — es donde vive. Ese es el diferenciador y ninguna de las otras dos páginas puede reclamarlo. Todo lo demás se subordina a eso.
 >
-> **Condición de publicación:** requiere galería real de sesiones en Richland. Sin fotos propias de aquí, no se publica.
+> **Estado de publicación:** `ready/index` aprobado el 2026-08-08. La galería se añadirá después como mejora y su ausencia no bloquea esta versión.
 >
 > **Privacidad:** el copy público declara que el negocio está basado en Richland, pero no publica calle, número ni map pin, conforme a ADR-019.
 
@@ -86,7 +86,7 @@ _(Directorio editorial — cada fila completa enlaza su servicio)_
 
 **H2: Recent Richland Sessions**
 
-`[PENDIENTE: 6–10 imágenes de sesiones reales en Richland. Alt text describiendo tipo de locación y estación, sin nombrar el spot exacto.]`
+`[MEJORA POSTERIOR: 6–10 imágenes de sesiones reales en Richland. Cuando se añadan, usar alt text literal sin nombrar el spot exacto.]`
 
 ---
 

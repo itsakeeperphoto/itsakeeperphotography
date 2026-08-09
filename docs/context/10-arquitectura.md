@@ -222,22 +222,23 @@ indexación/build Tina según el entorno de deploy.
   adaptador Netlify, Vercel o Node; la salida pública es estática.
 - `scripts/install-netlify-headers.mjs` instala el set de headers correcto.
 - `scripts/validate-site.mjs` valida las 21 rutas, canonicals, crawler outputs,
-  formularios, placeholders y el máximo de cuatro enlaces internos de body.
+  formularios, placeholders, enlaces internos rotos y gates de publicación.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para cuatro rutas:
+En `release`, el manifiesto actualmente permite sitemap para cinco rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
+- `/richland-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family y Family Photo Locations; Portfolio está
-excluido de llms. Las otras 16 rutas siguen `draft/noindex`. `/thank-you/` es
-noindex permanente. Los headers release de Journal deben enumerar las rutas
-draft explícitamente; un wildcard `/journal/*` bloquearía también los artículos
-publicados. En
+`llms.txt` incluye Homepage, Family, Richland y Family Photo Locations;
+Portfolio está excluido de llms. Las otras 15 rutas siguen `draft/noindex`.
+`/thank-you/` es noindex permanente. Los headers release de Journal deben
+enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
+también los artículos publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
 
 `Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.

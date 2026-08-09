@@ -15,4 +15,4 @@ Direction: an editorial light ledger derived from the homepage and DESIGN.md—w
 
 Navigation: the five service-ledger rows are native, full-width links to their existing service routes. A short left-to-right wash and restrained title/arrow response communicate the click area; keyboard focus is immediate and reduced motion removes transforms.
 
-Unresolved: do not render “Recent Richland Sessions” or publish/index the route until 6–10 session photographs have verified Richland provenance and contextual alt text.
+Publication: ready/index approved on 2026-08-08. “Recent Richland Sessions” remains an optional future enhancement and stays absent until 6–10 photographs have verified Richland provenance and literal contextual alt text; its absence does not block the current route.

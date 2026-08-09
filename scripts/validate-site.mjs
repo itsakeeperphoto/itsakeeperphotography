@@ -49,6 +49,7 @@ const internalTargetExists = (href) => {
 const indexableReleaseFiles = new Set([
   "index.html",
   `family-photographer-tri-cities-wa${path.sep}index.html`,
+  `richland-wa-photographer${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
   `portfolio${path.sep}index.html`,
 ]);
@@ -146,6 +147,7 @@ if (mode === "staging") {
   const expectedSitemapUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
     "https://www.itsakeeperphotography.com/portfolio/",
   ];
@@ -160,6 +162,7 @@ if (mode === "staging") {
   const expectedLlmsUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
   ];
   if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
@@ -167,6 +170,9 @@ if (mode === "staging") {
   }
   if (/^\/journal\/\*\s*$/m.test(headers)) {
     failures.push("_headers: broad /journal/* noindex rule must not block the published guide");
+  }
+  if (/^\/richland-wa-photographer\/\*\s*$/m.test(headers)) {
+    failures.push("_headers: Richland noindex rule must not block the published city page");
   }
   for (const route of [
     "/contact/*",

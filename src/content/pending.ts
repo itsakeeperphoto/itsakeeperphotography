@@ -32,5 +32,4 @@
 // CONTENT PENDING [/reviews/]: [PENDIENTE: reseñas newborn]
 // CONTENT PENDING [/reviews/]: [PENDIENTE: reseñas de branding/headshots]
 // CONTENT PENDING [/reviews/]: [link externo]
-// CONTENT PENDING [/richland-wa-photographer/]: [PENDIENTE: 6–10 imágenes de sesiones reales en Richland. Alt text describiendo tipo de locación y estación, sin nombrar el spot exacto.]
 // CONTENT PENDING [/senior-photographer-tri-cities-wa/]: [PENDIENTE: número por paquete]

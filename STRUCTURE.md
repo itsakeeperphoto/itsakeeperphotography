@@ -28,6 +28,7 @@ entry when that date is missing.
 | --- | --- | --- |
 | `/` | Homepage | 2026-08-04 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
+| `/richland-wa-photographer/` | Service area | 2026-08-08 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/portfolio/` | Portfolio | 2026-07-21 |
 
@@ -50,7 +51,7 @@ entry when that date is missing.
 
 ### Service areas
 
-- `/richland-wa-photographer/` — draft; excluded
+- `/richland-wa-photographer/` — ready and indexable
 - `/kennewick-wa-photographer/` — draft; excluded
 - `/pasco-wa-photographer/` — draft; excluded
 
