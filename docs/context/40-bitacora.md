@@ -407,3 +407,30 @@
   commit local. Por orden del usuario no se ejecutó push, deploy ni cambio
   externo. Tampoco se ejecutó `./scripts/handoff.sh`, porque su push incorporado
   contradice la instrucción vigente de crear solo commits locales.
+
+### 2026-08-08 — Codex / GPT-5.6 — Richland publicada sin gate de galería
+
+- **Objetivo:** aplicar la decisión del usuario de añadir la galería más tarde
+  y publicar ahora `/richland-wa-photographer/` como `ready/index` con entrada
+  en sitemap.
+- **Gates:** contenido y manifiestos pasan a `ready/index` con `lastModified:
+  2026-08-08`; release elimina el `X-Robots-Tag` específico de Richland. El
+  validador espera ahora cinco URLs en sitemap, cuatro en `llms.txt` y falla si
+  reaparece ese header noindex.
+- **Galería:** `pending` del JSON queda vacío y se elimina la entrada Richland de
+  `src/content/pending.ts`. “Recent Richland Sessions” permanece condicional y
+  ausente; el backlog la conserva como mejora opcional con procedencia y alt
+  literal obligatorios cuando se añada.
+- **Release:** `Validated 21 public routes`; meta robots index, canonical `www`,
+  Richland tercera en sitemap con `lastmod 2026-08-08`, cuatro URLs en llms y
+  ningún header noindex para la ruta.
+- **Schema:** parsean LocalBusiness, WebSite, WebPage, BreadcrumbList y FAQPage;
+  FAQ visible/schema 4:4, breadcrumb 2 ítems, sin `streetAddress`, Review ni
+  AggregateRating.
+- **Staging:** `Validated 21 public routes`; meta/header global noindex,
+  canonical Netlify, sitemap vacío y llms de preview.
+- **Entorno local:** el dev server existente se detuvo solo para liberar Tina y
+  quedó restaurado en `http://localhost:4321/` después de los builds.
+- **Git:** implementación en `04c93ae`; el cierre se registra en un segundo
+  commit local. No se ejecutó push, deploy, DNS ni `./scripts/handoff.sh` porque
+  el usuario ordenó commits locales únicamente.

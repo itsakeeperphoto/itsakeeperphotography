@@ -1,6 +1,7 @@
 # 50 — Backlog y preguntas abiertas
 
-> El ítem #1 de “Ahora” coincide con el siguiente paso de `20-estado.md`.
+> El primer ítem abierto de “Ahora” coincide con el siguiente paso de
+> `20-estado.md`.
 > Ningún pendiente editorial se resuelve por inferencia.
 
 ## Ahora — siguiente operación y ruta hacia producción
@@ -11,14 +12,16 @@
 - [x] **2. Publicar Family Photo Locations en el gate de producción.** Fecha
   aprobada `2026-08-08`; `[FECHA]` retirado, ruta `ready/index`, schema completo,
   sitemap/llms/headers verificados y QA responsive final aprobado.
-- [ ] **3. Completar la galería Richland.** Seleccionar 6–10 sesiones reales
-  cuya procedencia Richland esté verificada, redactar alt text literal sin
-  revelar el spot exacto y repetir build/schema/Playwright. Solo después se
-  evalúa `ready/index` para `/richland-wa-photographer/`.
-- [ ] **4. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [x] **3. Publicar Richland sin esperar la galería opcional.** Ruta
+  `ready/index`, `lastModified: 2026-08-08`, sitemap/llms/meta/headers/schema
+  verificados en release y aislamiento staging conservado.
+- [ ] **4. Verificar Richland después del próximo push autorizado.** Confirmar
+  en el dominio final meta index, canonical, ausencia de header noindex,
+  membresía del sitemap y `lastmod 2026-08-08`.
+- [ ] **5. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **5. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **6. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -95,9 +98,10 @@ sin reemplazar el archivo.
   Tri-Cities suministrados en el documento aprobado.
 - [x] Enlazadas las cinco filas del directorio a sus servicios con estados
   hover, focus y reduced motion; excepción limitada por ADR-033.
-- [ ] Completar la única condición restante: 6–10 imágenes de sesiones reales
-  en Richland con procedencia verificable y alt contextual literal, sin nombrar
-  el spot exacto.
+- [x] Publicada `ready/index` por aprobación explícita; la galería dejó de ser
+  gate y se retiró de `src/content/pending.ts`.
+- [ ] Mejora opcional: añadir después 6–10 sesiones reales con procedencia
+  Richland y alt contextual literal, sin nombrar el spot exacto.
 
 ### Kennewick
 

@@ -3,23 +3,23 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-08 22:04 -05
+**Última actualización:** 2026-08-08 22:21 -05
 
 **Actualizado por:** Codex / GPT-5.6
 
 **Rama:** `main`
 
-**Commit base al iniciar este feedback Richland:** `4eab2fa` —
-`docs(context): record Richland v2 handoff`
+**Commit base al iniciar la publicación Richland:** `ae6bd0d` —
+`docs(context): record Richland service navigation`
 
-**Commit de navegación del directorio:** `1ddd9ba` —
-`feat(richland): link animated service directory`
+**Commit de publicación Richland:** `04c93ae` —
+`feat(richland): publish city page in sitemap`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Publicación:** al registrar este cierre, `main` queda seis commits por delante
-de `origin/main`: los cuatro previos, `1ddd9ba` y este cierre documental. Por
+**Publicación:** al registrar este cierre, `main` queda ocho commits por delante
+de `origin/main`: los seis previos, `04c93ae` y este cierre documental. Por
 instrucción expresa del usuario, Codex crea commits locales y no ejecuta pushes.
 No se ejecutó deploy ni cambio de DNS.
 
@@ -27,25 +27,25 @@ No se ejecutó deploy ni cambio de DNS.
 
 ## Siguiente paso concreto
 
-Completar la única condición restante de
-`/richland-wa-photographer/`: seleccionar 6–10 sesiones reales con procedencia
-Richland verificada y alt text literal sin revelar el spot exacto. Solo después
-se puede evaluar `ready/index`, retirar su header noindex e incluirla en
-sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
-`draft/noindex`. Los agentes crean solo commits locales y no hacen push.
+Después del próximo push autorizado por el usuario, verificar en el dominio
+desplegado que Richland conserva meta robots index, no recibe header HTTP
+noindex y aparece en sitemap/llms. La galería de 6–10 sesiones queda como mejora
+opcional posterior; cuando llegue, cada fotografía requerirá procedencia
+Richland y alt literal verificados. Los agentes crean solo commits locales y no
+hacen push.
 
 ---
 
 ## Resumen ejecutivo
 
 - El sitio Astro/Tina/Netlify construye 21 rutas públicas.
-- Están `ready/index`: Homepage, Family, Family Photo Locations y Portfolio.
-  Thank-you es `ready/noindex`; las otras 16 rutas permanecen
+- Están `ready/index`: Homepage, Family, Richland, Family Photo Locations y
+  Portfolio. Thank-you es `ready/noindex`; las otras 15 rutas permanecen
   `draft/noindex`.
-- `/richland-wa-photographer/` usa ahora el copy v2 centrado en que Lisa vive en
-  Richland desde 2005; retiró Howard Amon, Badger Mountain y la dirección
-  privada. Conserva una sola condición editorial: la galería real de 6–10
-  sesiones.
+- `/richland-wa-photographer/` está `ready/index` con `lastModified:
+  2026-08-08`. Usa el copy v2 centrado en que Lisa vive en Richland desde 2005;
+  retiró Howard Amon, Badger Mountain y la dirección privada. La galería queda
+  como mejora opcional y no se renderiza mientras esté vacía.
 - La superficie Richland es un “light ledger” editorial: retícula de 12
   columnas, un arco, directorio navegable de cinco servicios, ratios naturales,
   planning, FAQ y cierre fotográfico. La galería no se renderiza mientras esté
@@ -54,8 +54,8 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
   producción con fecha editorial `2026-08-08`, sin placeholders, en sitemap y
   en `llms.txt`.
 - El build release y el build staging terminaron con
-  `Validated 21 public routes`. Release publica cuatro URLs en sitemap;
-  staging conserva sitemap vacío y noindex global.
+  `Validated 21 public routes`. Release publica cinco URLs en sitemap y cuatro
+  en `llms.txt`; staging conserva sitemap vacío y noindex global.
 - El Article schema contiene fecha de publicación/modificación, imagen,
   `mainEntityOfPage`, autor y publisher. También parsean LocalBusiness,
   WebSite, FAQPage y BreadcrumbList.
@@ -68,8 +68,8 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
 - La foto del cierre proviene del folder autorizado de Drive
   “Family Session - Richland”; se importó a 2400×1600 y el build genera WebP de
   400, 640, 960 y 1440 px.
-- `src/content/pending.ts` contiene ahora 36 entradas; una corresponde a la
-  galería Richland.
+- `src/content/pending.ts` contiene ahora 35 entradas y ninguna corresponde a
+  Richland.
 
 ## Qué funciona hoy
 
@@ -116,7 +116,7 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
   Street/dirección completa, omitidas por ADR-019 y ADR-032.
 - La página renderiza residencia, Twenty Years, un directorio visual de cinco
   servicios, planning, cuatro FAQ y CTA. “Recent Richland Sessions” queda
-  condicional y no existe en DOM sin fotografías verificadas.
+  como mejora condicional y no existe en DOM sin fotografías verificadas.
 - Las cinco filas del directorio son anchors nativos de área completa hacia las
   rutas existentes de Senior, Family, Newborn, Branding y Headshots. Un barrido
   horizontal, el título y una flecha SVG responden en 180–220 ms; foco visible
@@ -129,17 +129,19 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
   exactos, filas de 1344×116 y 366×164 px, overflow 0, activación con Enter,
   focus visible y transforms anulados con reduced motion. `<main>` contiene
   nueve anchors por la excepción de ruta ADR-033.
-- Sigue `draft/noindex`; no se tocó manifiesto, header fuente, sitemap ni llms.
-  El artefacto release confirma meta/header noindex y exclusión de crawlers.
+- Está `ready/index` en contenido y ambos manifiestos, con `lastModified:
+  2026-08-08`. El artefacto release confirma meta index, canonical `www`,
+  membresía en sitemap/llms y ausencia del header noindex específico. Staging
+  conserva canonical Netlify y noindex global.
 
 ### SEO y schema
 
 - Meta robots release: `index, follow, max-image-preview:large`.
 - Canonical release:
   `https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/`.
-- Sitemap release: cuatro URLs en orden Home, Family, Locations, Portfolio; la
-  guía lleva `lastmod 2026-08-08`.
-- `llms.txt`: Home, Family y Locations; Portfolio permanece excluido.
+- Sitemap release: cinco URLs en orden Home, Family, Richland, Locations y
+  Portfolio. Richland y Locations llevan `lastmod 2026-08-08`.
+- `llms.txt`: Home, Family, Richland y Locations; Portfolio permanece excluido.
 - `config/netlify-headers/release` ya no contiene el wildcard
   `/journal/*`. Conserva noindex explícito para `/journal/` y los tres
   artículos draft canónicos.
@@ -148,7 +150,7 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
 - No se emiten Review/AggregateRating sin evidencia verificada.
 - Richland release conserva canonical
   `https://www.itsakeeperphotography.com/richland-wa-photographer/`, meta robots
-  `noindex, nofollow, noarchive` y el mismo valor en `X-Robots-Tag`.
+  `index, follow, max-image-preview:large` y no recibe `X-Robots-Tag: noindex`.
 - Sus cinco JSON-LD parsean como LocalBusiness, WebSite, WebPage,
   BreadcrumbList y FAQPage. Las cuatro FAQ visibles coinciden 4:4 con schema;
   LocalBusiness publica solo Richland/WA/US, sin `streetAddress`.
@@ -168,34 +170,34 @@ sitemap/llms con un nuevo build y QA. Hasta entonces debe permanecer
 |---|---|---:|---|
 | `/` | ready/index | Sí | Homepage, autoridad visual. |
 | `/family-photographer-tri-cities-wa/` | ready/index | Sí | Servicio Family. |
+| `/richland-wa-photographer/` | ready/index | Sí | Galería posterior opcional; copy/UI/schema completos. |
 | `/journal/family-photo-locations-tri-cities/` | ready/index | Sí | Fecha y QA final completos. |
 | `/portfolio/` | ready/index | Sí | Excluido de llms. |
 | `/thank-you/` | ready/noindex | No | Destino de formularios. |
-| `/richland-wa-photographer/` | draft/noindex | No | Copy/UI v2 completos; falta galería verificada. |
 | Otras 15 rutas | draft/noindex | No | Conservar gates hasta resolver hechos/media/QA. |
 
 ## Archivos cambiados en esta sesión
 
-- Render: `src/components/pages/RichlandPage.astro`.
-- Diseño e interacción: `src/styles/richland-page.css`.
-- Fuente/editorial: `paginas/11-richland.md`.
-- Dirección de superficie:
-  `.impeccable/surfaces/route-richland-wa-photographer.md`.
-- Memoria: `docs/context/00-proyecto.md`, `20-estado.md`,
+- Publicación: `content/pages/richland.json`, `src/lib/page-manifest.ts` y la
+  copia raíz `page-manifest.ts`.
+- Gates: `config/netlify-headers/release`, `scripts/validate-site.mjs`,
+  `src/content/pending.ts` y `src/components/pages/RichlandPage.astro`.
+- Arquitectura/editorial: `STRUCTURE.md`, `paginas/00-INDICE.md`,
+  `paginas/11-richland.md` y el brief de superficie Richland.
+- Memoria: `docs/context/10-arquitectura.md`, `20-estado.md`,
   `30-decisiones.md`, `40-bitacora.md` y `50-backlog.md`.
-- No cambiaron copy runtime, assets, routing, Tina, tipos, schema, manifiestos,
-  headers ni crawler outputs fuente.
+- No cambiaron copy visible, fotografías, CSS, routing, Tina, tipos ni schema.
 
 ## Qué está a medias
 
 | Archivo / módulo | Estado | Qué falta |
 |---|---|---|
-| `src/content/pending.ts` | 36 entradas | Resolver hechos/media de las rutas draft con Lisa. |
+| `src/content/pending.ts` | 35 entradas | Resolver hechos/media de las rutas draft con Lisa. |
 | Seniors y Senior timing | Draft | Número de imágenes, offer Q54, fechas/distritos y QA final. |
 | Newborn y comparación | Draft | Formato, handling/safety, validación editorial y fecha. |
 | Branding/Headshots/Investment | Draft | Entregables, cantidades/duración y QA según cada ruta. |
 | About/Reviews/Privacy | Draft | Hechos/permisos, reseñas autorizadas y revisión legal. |
-| Richland | Draft | Falta solo la galería verificada de 6–10 sesiones. |
+| Galería Richland | Mejora opcional | Añadir 6–10 sesiones verificadas cuando el usuario las suministre. |
 | Kennewick/Pasco | Draft | Conocimiento local, imágenes/alt y travel confirmados. |
 | Netlify Forms | Código listo | Configurar/verificar notificaciones reales en Dashboard. |
 | GBP summary | Código listo | Configurar OAuth/IDs y probar cache/endpoints reales. |
@@ -213,6 +215,16 @@ git diff --check
 
 - Release: `Validated 21 public routes in release mode.`
 - Staging: `Validated 21 public routes in staging mode.`
+- Release Richland: meta `index, follow, max-image-preview:large`, canonical
+  `www`, `data-content-status="ready"`, sin header noindex ni placeholders.
+- Sitemap release: cinco canonicals; Richland ocupa la tercera posición con
+  `lastmod 2026-08-08`. `llms.txt` contiene cuatro páginas y robots anuncia el
+  sitemap `www`.
+- Staging Richland: meta `noindex, nofollow, noarchive`, canonical Netlify,
+  sitemap vacío, `llms.txt` de preview y header global noindex.
+- JSON-LD release: LocalBusiness, WebSite, WebPage, BreadcrumbList y FAQPage
+  parseables; FAQ 4:4, breadcrumb 2 ítems, sin `streetAddress`, Review ni
+  AggregateRating.
 - Playwright release: 1728×963 y 390×844; cinco anchors `<a>` con hrefs exactos,
   targets 1344×116 y 366×164 px, overflow 0 y navegación con Enter al servicio
   Senior. Foco: outline 2 px; reduced motion: `0.01ms` y transform `none`.
@@ -223,15 +235,15 @@ git diff --check
   viewports.
 - La única consola externa fue un 400 de Microsoft Clarity en localhost; no
   hubo errores de la aplicación.
-- El primer build dentro del sandbox falló por `listen EPERM ::1:4001`; se
-  identificó y detuvo el dev server previo que ocupaba 9000. Release y staging,
-  más el release de confirmación, pasaron sin cambios incidentales.
+- El dev server existente se detuvo temporalmente para liberar Tina durante los
+  builds; release y staging pasaron sin cambios incidentales y `npm run dev` se
+  restauró en `http://localhost:4321/` al cierre.
 
 ## Bloqueadores externos
 
 1. **Operación Git:** el usuario prohibió pushes desde Codex; solo se crean
-   commits locales. La tarea empezó `ahead 4`; tras `1ddd9ba` y este cierre
-   documental termina `ahead 6`. No se ejecuta `./scripts/handoff.sh` porque su
+   commits locales. La tarea empezó `ahead 6`; tras `04c93ae` y este cierre
+   documental termina `ahead 8`. No se ejecuta `./scripts/handoff.sh` porque su
    protocolo incluye push y contradice esa orden explícita.
 2. **Deploy:** no se lanzó producción ni se cambió DNS. La validación es sobre
    artefacto release local.
@@ -242,8 +254,6 @@ git diff --check
 
 ## Preguntas abiertas
 
-- TODO(contexto): ¿cuáles son las 6–10 sesiones con procedencia Richland
-  verificable que deben formar la galería de publicación?
 - TODO(contexto): ¿qué fotografía autorizada debe ocupar la card Headshots de
   `content/homepage/index.json`?
 - TODO(contexto): ¿cuál es el link público definitivo de Google Reviews?
