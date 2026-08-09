@@ -31,6 +31,12 @@ const heroHeadingLines = ["Where to Take Photos", "in the Tri-Cities"];
 const heroLeftImage = "/uploads/family-golden-light-richland.jpg";
 const heroRightImage = page.hero.secondaryImage;
 const chooseLink = choosing.links?.find((link) => link.href === "/investment/");
+const locationKindSizes = [
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), (max-width: 1250px) 54vw, 52rem",
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), (max-width: 1250px) 31vw, 29rem",
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), 24rem",
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), 24rem",
+];
 ---
 
 <article
@@ -125,7 +131,10 @@ const chooseLink = choosing.links?.find((link) => link.href === "/investment/");
 
       <div class="locations-kinds__folio">
         {locationKinds.items?.map((item, index) => (
-          <article class:list={["location-kind", `location-kind--${index + 1}`]}>
+          <article
+            class:list={["location-kind", `location-kind--${index + 1}`]}
+            aria-labelledby={`${locationKinds.id}-kind-${index + 1}`}
+          >
             {item.image && (
               <figure class="location-kind__print">
                 <Picture
@@ -134,16 +143,14 @@ const chooseLink = choosing.links?.find((link) => link.href === "/investment/");
                   loading="lazy"
                   decoding="async"
                   responsiveSrcset
-                  sizes={index === 0
-                    ? "(max-width: 767px) 88vw, (max-width: 1050px) 62vw, 58rem"
-                    : "(max-width: 767px) 78vw, (max-width: 1050px) 34vw, 27rem"}
+                  sizes={locationKindSizes[index]}
                   imgClass="photo--editorial"
                 />
               </figure>
             )}
             <div class="location-kind__label">
               <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{item.heading}</h3>
+              <h3 id={`${locationKinds.id}-kind-${index + 1}`}>{item.heading}</h3>
             </div>
             {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
           </article>
