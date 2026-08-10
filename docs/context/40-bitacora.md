@@ -576,3 +576,45 @@
   temporal `:4322`; Tina/Astro del usuario en `:4321/:9000` quedó intacto. No se
   ejecutó push, deploy, DNS ni `./scripts/handoff.sh`; este cierre queda en un
   commit local para que el usuario lo publique.
+
+### 2026-08-09 — Codex / GPT-5 — Pasco A+C publicado con media verificada
+
+- **Objetivo:** rediseñar `/pasco-wa-photographer/` como service-area page SEO,
+  conservar la marca actual, usar el hero de Seniors/Newborn/Family, generar la
+  dirección visual antes del código y revisar las carpetas Drive Pasco.
+- **Auditoría:** la versión anterior era thin —~128 palabras, tres links, una
+  FAQ y cero fotografías en `<main>`— y seguía `draft/noindex`. El lote Drive
+  contenía 23 originales de once sesiones según folder, XMP e identidad visual.
+  Se eligieron diez sesiones distintas; `010A6962copy.jpg` se excluyó por
+  colisión visual con producción.
+- **Image-first:** el usuario aprobó A+C. A aporta Open Horizon, hero/paper edge
+  y arco introductorio; C aporta Long Horizon Archive, ledger y ritmo de
+  galería. Se generaron tres comps y nueve referencias de sección, registradas
+  en `.impeccable/`; ninguna imagen generada se usa en producción.
+- **Implementación:** `PascoPage.astro` compone hero compartido sin script,
+  intro, rivers, farmland, cinco servicios, galería 10/10, seasons, FAQ 4:4 y
+  CTA full-bleed. El hero es botón hacia `#pasco-final`; `<main>` contiene ocho
+  anchors exactos. La primera FAQ se corrigió de “No” a “Yes” para responder
+  coherentemente si Lisa viaja a Pasco.
+- **Fotografía:** se añadieron diez JPEG de 321–709 KB, todos ≤2400 px/700 KiB,
+  y 40 WebP 400/640/960/1440. Representan tres family/large-family y siete
+  senior. No se borró, reemplazó ni renombró ninguna foto existente; alts y
+  claims no revelan landmarks ni meeting points.
+- **SEO/publicación:** Pasco pasó a `ready/index`, `lastModified: 2026-08-09`,
+  sitemap/llms y headers release coherentes. Emite WebPage con spatialCoverage,
+  un Service Pasco, BreadcrumbList y FAQPage, sin dirección Pasco, coordenadas,
+  Review ni AggregateRating. Release contiene siete URLs en sitemap y seis en
+  `llms.txt`.
+- **Bandwidth:** el import CSS inicial se filtraba por el router compartido.
+  Se cambió a un asset Vite `?url` enlazado desde `Base.astro` solo para Pasco:
+  desaparecen ~19,957 bytes de HTML en cada ruta editorial ajena y el validador
+  bloquea futuros leaks o links rotos.
+- **QA:** Tina completo pasó en puertos alternos 4002/9001. Staging y release
+  terminaron con `Validated 21 public routes`; Impeccable devolvió `[]`.
+  Playwright aprobó 1440, 1200, 900 y 390 px: overflow 0, H1 + ocho H2, ocho
+  anchors, diez figuras, cuatro FAQ, texto de lectura ≥16 px, cero imágenes
+  rotas, foco marfil de 3 px, reduced motion y consola local limpia.
+- **Git/operación:** implementación en `2a5adcd`; este cierre añade un commit
+  documental. Los previews y navegadores temporales se cerraron y el Tina
+  preexistente en `:9000` no se tocó. No hubo push, deploy ni cambio de DNS;
+  el usuario mantiene la publicación de los commits locales.

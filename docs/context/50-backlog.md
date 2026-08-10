@@ -23,14 +23,17 @@
   siete composiciones image-first, `EditorialHero`, seis fuentes Drive
   optimizadas, contratos SEO intactos y QA 1440/1200/900/390 completados. La
   galería sigue correctamente ausente por falta de 6–10 sesiones diversas.
-- [ ] **6. Verificar Richland y Kennewick después del push del usuario.**
+- [x] **6. Rediseñar y publicar Pasco según ADR-039.** Dirección A+C aprobada,
+  `EditorialHero`, diez fotografías de diez sesiones Drive verificadas, copy
+  local, ocho anchors, schema/crawler gates y QA 1440/1200/900/390 completos.
+- [ ] **7. Verificar Richland, Kennewick y Pasco después del push del usuario.**
   Confirmar en el dominio final status 200, meta index, canonical, ausencia de
   header noindex, membresía del sitemap/llms y lastmod: Richland `2026-08-08`,
-  Kennewick `2026-08-09`.
-- [ ] **7. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  Kennewick/Pasco `2026-08-09`.
+- [ ] **8. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **8. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **9. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -133,11 +136,17 @@ sin reemplazar el archivo.
 
 ### Pasco
 
-- [ ] Lugares reales y detalles locales de Lisa.
-- [ ] Seleccionar imágenes reales y alt contextual.
-- [ ] Confirmar política/costo de travel.
-- [ ] Diseñar una página especializada y hacer QA cuando exista contenido; hoy
-  permanece en `ContentPage.astro`.
+- [x] Sustituido el copy thin por contenido local específico sobre luz abierta,
+  agricultura, ríos, temporadas y planificación, sin publicar meeting points.
+- [x] Seleccionadas diez fotografías de diez sesiones Pasco verificadas, con alt
+  literal; tres family/large-family y siete senior.
+- [x] Confirmada en la fuente aprobada la cobertura Tri-Cities sin travel fee.
+- [x] Implementada `PascoPage.astro` con dirección A+C, hero compartido,
+  directorio de cinco servicios, galería 10/10, FAQ 4:4 y cierre full-bleed.
+- [x] Publicada `ready/index`, `lastModified: 2026-08-09`, sitemap/llms/header,
+  Service/spatialCoverage/breadcrumb y QA en cuatro viewports.
+- [ ] Mejora opcional: incorporar en el futuro sesiones Pasco verificadas de
+  Newborn, Branding y Headshots para ampliar la prueba visual de servicios.
 
 ### Reviews
 
@@ -169,7 +178,10 @@ sin reemplazar el archivo.
 - [x] El usuario publicó los siete commits locales pendientes, incluidos
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
-  ítem 6 y la observación de bandwidth de QA.
+  ítem 7 y la observación de bandwidth de QA.
+- [ ] Publicar los cinco commits creados después de `ff736c6`: reconciliación,
+  rediseño/cierre Kennewick y los commits funcional/documental de Pasco. La
+  implementación Pasco está en `2a5adcd`; Codex no ejecutó push.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -223,6 +235,9 @@ sin reemplazar el archivo.
   confirmar cero referencias `/uploads/` faltantes en release.
 - [x] Paralelizar Sharp y bajar effort 6→4: generación limpia 114.80 s→5.09 s;
   `public` ~130→40 MiB y `dist` ~148→51 MiB.
+- [x] Aislar el CSS nuevo de Pasco como asset Vite enlazado solo en esa ruta;
+  evita ~20 KiB sin comprimir en cada HTML editorial ajeno y tiene gate contra
+  futuros leaks.
 - [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
   guard de fuentes y las variantes terminan, comprobar que
   `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a
@@ -244,6 +259,9 @@ sin reemplazar el archivo.
   como autoridad: retícula 12 columnas / 2×2 / una columna, paisajes 3:2, un
   arco, un mat, alt text literal y asociación `aria-labelledby`. En los cinco
   viewports: overflow 0, solapamientos 0, imágenes completas y consola limpia.
+- [x] Verificada Pasco en 1440×1000, 1200×1000, 900×1000 y 390×844: overflow 0,
+  diez sesiones, H1 + ocho H2 contenidos, ocho anchors, cuatro FAQ, texto de
+  lectura ≥16 px, foco marfil, reduced motion y cero imágenes rotas.
 - [ ] Rehacer 84 capturas actuales: 18 rutas primarias × 4 breakpoints y
   Portfolio/Privacy/Thank-you × 4. No reutilizar como prueba final las del
   2026-07-21.
@@ -271,6 +289,8 @@ sin reemplazar el archivo.
 - [ ] Mantener staging globalmente noindex mientras haya rutas draft.
 - [ ] Para cada ruta completada, actualizar status/fecha en
   `src/lib/page-manifest.ts` y comprobar membership de sitemap/llms.
+- [x] Pasco actualizado a `ready/index`, añadido a sitemap/llms con canonical y
+  `lastModified: 2026-08-09`; release contiene siete URLs.
 - [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
   contenido visible actual; no crear ratings no verificados.
 - [ ] Actualizar `README.md` para reflejar las 21 rutas, forms reales, modos de
@@ -294,8 +314,8 @@ sin reemplazar el archivo.
   móvil.
 - [ ] Completar una página Reviews especializada cuando haya testimonios reales;
   no reutilizar una grilla genérica.
-- [ ] Completar Pasco con composición propia cuando Lisa proporcione conocimiento
-  local.
+- [x] Completar Pasco con composición A+C propia, conocimiento local y diez
+  sesiones verificadas.
 - [ ] Evaluar composición individual de Privacy/Thank-you sin afectar su noindex;
   Thank-you debe permanecer simple y cálida.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,
@@ -314,6 +334,11 @@ sin reemplazar el archivo.
 - [ ] Evaluar si eliminar/migrar del JSON la dirección legada una vez confirmado
   que Tina/editorial no la necesita; mientras tanto mantenerla no publicada.
 - [ ] Mantener `src/content/pending.ts` y este backlog sincronizados.
+- [ ] Auditar los ~196 MiB/200 archivos ya rastreados bajo `.artifacts/` antes
+  de retirarlos del índice. El directorio local completo ocupa ~628 MiB porque
+  también contiene originales/evidencia ignorados. La regla nueva de
+  `.gitignore` protege evidencia nueva, pero no elimina archivos existentes; no
+  borrar sin clasificar recuperabilidad y valor documental.
 - [ ] No forzar `git add` de `.handoff/sessions/*.jsonl`; revisar y obtener
   autorización explícita antes de compartir cualquier transcript.
 
