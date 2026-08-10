@@ -28,7 +28,7 @@ entry when that date is missing.
 | --- | --- | --- |
 | `/` | Homepage | 2026-08-04 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
-| `/richland-wa-photographer/` | Service area | 2026-08-08 |
+| `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |

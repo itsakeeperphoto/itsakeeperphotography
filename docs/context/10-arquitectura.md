@@ -1,7 +1,7 @@
 # 10 — Arquitectura
 
 > Solo describe lo que existe y fue inspeccionado o construido con éxito el
-> 2026-08-08. Lo planeado está en `50-backlog.md`.
+> 2026-08-09. Lo planeado está en `50-backlog.md`.
 
 ## Stack
 
@@ -133,11 +133,18 @@ Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
 botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
+`RichlandPage.astro` exige cinco filas enlazadas de servicio, cuatro FAQ y,
+cuando la galería no está vacía, exactamente diez fotografías con heading,
+imagen y alt completos, fuentes únicas y cero links. Las diez actuales proceden
+de diez sesiones Richland distintas y se muestran en retícula editorial 4/2/1.
+
 `KennewickPage.astro` exige cinco filas enlazadas de servicio y cuatro FAQ. El
 cuerpo usa arco+hairline, un único collage restringido, sección local
 text-led, directorio ledger con una fotografía, FAQ nativo y cierre fotográfico
-full-bleed. La galería futura permanece completamente fuera del DOM mientras
-no todos sus ítems tengan imagen y alt verificados.
+full-bleed. Cuando la galería no está vacía, exige exactamente cinco fotografías
+con heading, imagen y alt completos, fuentes únicas y cero links. Las cinco
+actuales representan cinco sesiones seguras; la sesión Benton City permanece
+excluida y no se inventa una sexta.
 
 `PascoPage.astro` exige cinco servicios enlazados, diez fotografías verificadas
 de diez sesiones, cuatro FAQ y ocho anchors exactos. Su secuencia A+C combina
@@ -246,6 +253,9 @@ para evitar cambios silenciosos al repositorio.
 - `scripts/install-netlify-headers.mjs` instala el set de headers correcto.
 - `scripts/validate-site.mjs` valida las 21 rutas, canonicals, crawler outputs,
   formularios, placeholders, enlaces internos rotos y gates de publicación.
+  Para las galerías Richland/Kennewick compara allowlists literales de `src` y
+  alt, cuenta 10/5 tríos figure/image/caption, prohíbe duplicados y anchors, y
+  conserva siete H2 y nueve anchors de `<main>` en ambas rutas.
 
 ## SEO/indexación actual
 
@@ -286,10 +296,15 @@ declara ubicación física en esas ciudades. No se emiten `Review`,
 - Diez assets sin referencias en ninguna de las 21 rutas, CSS, Tina, schema u
   Open Graph fueron retirados en `bd833f6`; cualquier restauración debe añadir
   primero una referencia verificable.
-- Kennewick incorpora seis JPEG fuente optimizados procedentes de las carpetas
-  Drive `Couples - Kennewick` y `Senior Session - Kennewick`, más sus variantes
-  WebP generadas. `010A4575copy.jpg` y `sennior-session-benton-city.jpg` no se
-  publican porque pertenecen a la misma sesión identificada como Benton City.
+- Richland incorpora diez JPEG fuente optimizados de diez sesiones distintas
+  verificadas por folder, XMP, `OriginalDocumentID` e identidad visual. Sus
+  variantes WebP 400/640/960/1440 se regeneran durante el build.
+- Kennewick incorpora nueve JPEG fuente optimizados procedentes de las carpetas
+  Drive `Couples - Kennewick` y `Senior Session - Kennewick`: los seis del
+  rediseño y tres frames alternativos para la galería. La galería activa usa
+  esos tres y reutiliza dos fuentes de producción de sesiones distintas.
+  `010A4575copy.jpg` y `sennior-session-benton-city.jpg` no se publican porque
+  pertenecen a la misma sesión identificada como Benton City.
 - Pasco incorpora diez JPEG fuente optimizados de diez sesiones distintas
   verificadas por folder, XMP e identidad visual: tres family/large-family y
   siete senior. Sus originales de auditoría permanecen ignorados; producción

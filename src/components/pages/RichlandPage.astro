@@ -38,9 +38,31 @@ const serviceItems = directory.items || [];
 const faqItems = (questions.items || []).filter(
   (item) => item.heading && item.paragraphs?.length,
 );
-const recentItems = (recent?.items || []).filter(
-  (item) => item.image && item.imageAlt,
-);
+const recentItems = recent?.items || [];
+const hasRecentGallery = recentItems.length > 0;
+const recentImagePaths = recentItems
+  .map((item) => item.image?.trim())
+  .filter((image): image is string => Boolean(image));
+
+if (
+  hasRecentGallery &&
+  (
+    recentItems.length !== 10 ||
+    !recent?.heading?.trim() ||
+    recentItems.some(
+      (item) =>
+        !item.heading?.trim() ||
+        !item.image?.trim() ||
+        !item.imageAlt?.trim() ||
+        Boolean(item.links?.length),
+    ) ||
+    new Set(recentImagePaths).size !== recentItems.length
+  )
+) {
+  throw new Error(
+    "Richland recent gallery requires exactly ten complete items with unique images and no links",
+  );
+}
 
 const headingLines = (heading: string): string[] => {
   const words = heading.trim().split(/\s+/);
@@ -350,8 +372,8 @@ const faqSchema = faqItems.map((item) => ({
     </div>
   </section>
 
-  {/* Optional future gallery: render only when every item has a verified image and literal alt text. */}
-  {recent && recentItems.length > 0 && (
+  {/* A nonempty gallery is validated above before any item reaches this contact sheet. */}
+  {recent && hasRecentGallery && (
     <section
       id={recent.id}
       class:list={["richland-recent", `tone-${recent.tone}`]}
@@ -365,16 +387,23 @@ const faqSchema = faqItems.map((item) => ({
         </header>
         <div class="richland-recent__gallery">
           {recentItems.map((item, index) => (
-            <figure class:list={["richland-recent__photo", `richland-recent__photo--${(index % 4) + 1}`]}>
+            <figure
+              class:list={[
+                "richland-recent__photo",
+                `richland-recent__photo--${(index % 4) + 1}`,
+                index === 4 && "richland-recent__photo--landscape",
+              ]}
+            >
               <Picture
-                src={item.image}
-                alt={item.imageAlt || ""}
+                src={item.image!}
+                alt={item.imageAlt!}
                 loading="lazy"
                 decoding="async"
                 responsiveSrcset
-                sizes="(max-width: 767px) 100vw, (max-width: 1050px) 48vw, 30rem"
+                sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1050px) 46vw, 21rem"
                 imgClass="photo--editorial"
               />
+              <figcaption>{item.heading}</figcaption>
             </figure>
           ))}
         </div>

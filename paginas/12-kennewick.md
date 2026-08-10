@@ -3,7 +3,12 @@ _Página 12 de 18 · Service-area · **v2 — lista para producción 2026-08-08*
 
 > **Ángulo único de esta página:** Kennewick es el mercado más competido de los tres (KD 22) y está dominado por el estilo *light and airy* (Tiffany Parrish, Tawny Rochelle, Brittney Kluse). El argumento aquí no es geografía — es **estilo**. Quien busca en Kennewick tiene muchas opciones; esta página existe para la persona que quiere algo más cálido y oscuro que lo que encuentra.
 >
-> **Resolución editorial:** por decisión confirmada el 2026-08-08, la galería local deja de ser condición de publicación y queda como mejora futura opcional. No se renderiza ningún bloque vacío ni se presenta fotografía general de Tri-Cities como evidencia de una sesión en Kennewick.
+> **Resolución editorial:** la ruta se publicó sin galería el 2026-08-08. Tras
+> el feedback explícito del 2026-08-09, `Recent Kennewick Sessions` se activa con
+> las cinco sesiones seguras que existen —una pareja y cuatro seniors—, sin
+> fabricar una sexta ni representar amplitud de servicios inexistente. La
+> sesión identificada como Benton City continúa excluida; ADR-040 sustituye
+> únicamente el mínimo anterior de seis sesiones.
 
 ---
 
@@ -31,6 +36,7 @@ H1  Kennewick, WA Photographer
  H2  If Light and Airy Isn't What You Pictured
  H2  What Works Well in Kennewick
  H2  What I Photograph in Kennewick
+ H2  Recent Kennewick Sessions
  H2  Kennewick Questions
  H2  Let's Plan Yours
 ```
@@ -87,9 +93,26 @@ For families, I lean toward open space over spectacular-but-cramped, every time.
 - **Branding Photography** — at your business or shop
 - **Professional Headshots** — portable studio brought to your office
 
-### Galería futura, fuera de runtime
+---
 
-`Recent Kennewick Sessions` se añadirá únicamente cuando exista una selección verificada de sesiones reales en Kennewick con alt text literal. Hasta entonces no genera heading, espacio ni imagen sustituta.
+**H2: Recent Kennewick Sessions**
+
+Galería publicada con una fotografía por cada una de las cinco sesiones seguras
+verificadas en Drive. Tres son frames alternativos que no aparecían antes en el
+cuerpo; dos reutilizan la única fotografía segura disponible de su sesión para
+no duplicar bytes bajo otro nombre.
+
+| Servicio | Archivo web | Alt literal |
+|---|---|---|
+| Couples | `kennewick-couple-laughing-golden-hour.jpg` | `Couple laughing together in warm evening light beneath bare trees.` |
+| Senior | `kennewick-senior-seated-autumn-portrait.jpg` | `High school senior with glasses seated in dry grass beneath autumn trees.` |
+| Senior | `kennewick-senior-cowboy-rope-golden-hour.jpg` | `High school senior in a cowboy hat holding a rope in a golden field.` |
+| Senior | `kennewick-senior-wood-wall-portrait.jpg` | `High school senior in a white sweatshirt leaning beside a weathered wooden post.` |
+| Senior | `review-isabella-senior-golden-hour-tricities.jpg` | `High school senior surrounded by roses in warm evening light.` |
+
+No se nombra el spot exacto. `010A4575copy.jpg` y
+`Sennior Session - Benton City.jpg` permanecen fuera de producción porque son
+la misma sesión identificada como Benton City.
 
 ---
 

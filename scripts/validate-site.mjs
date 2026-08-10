@@ -104,6 +104,132 @@ const expandedDirectoryLinkCounts = new Map([
   [`pasco-wa-photographer${path.sep}index.html`, 8],
 ]);
 const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
+const activeCityGalleryContracts = new Map([
+  [
+    `richland-wa-photographer${path.sep}index.html`,
+    {
+      city: "Richland",
+      pageKey: "richland",
+      galleryId: "recent-richland-sessions",
+      finalId: "richland-final",
+      figureCount: 10,
+      h2Texts: [
+        "This Isn't a City I Travel To — It's Where I Live",
+        "Twenty Years of Watching This Light",
+        "What I Photograph in Richland",
+        "Recent Richland Sessions",
+        "Planning a Session Here",
+        "Richland Questions",
+        "Let's Find Your Light",
+      ],
+      internalAnchors: [
+        "/about/",
+        "/journal/family-photo-locations-tri-cities/",
+        "/senior-photographer-tri-cities-wa/",
+        "/family-photographer-tri-cities-wa/",
+        "/newborn-photographer-tri-cities-wa/",
+        "/branding-photographer-tri-cities-wa/",
+        "/headshot-photographer-tri-cities-wa/",
+        "/investment/",
+        "/contact/",
+      ],
+      images: [
+        {
+          src: "/uploads/richland-couple-river-portrait.jpg",
+          alt: "Couple standing together in shallow river water beneath leafy trees.",
+        },
+        {
+          src: "/uploads/richland-couple-winter-field.jpg",
+          alt: "Couple embracing in dry winter grass.",
+        },
+        {
+          src: "/uploads/richland-mother-newborn-at-home.jpg",
+          alt: "Mother holding a sleeping newborn beside a bed.",
+        },
+        {
+          src: "/uploads/richland-family-field-black-white.jpg",
+          alt: "Family of three standing together in a field in a black-and-white portrait.",
+        },
+        {
+          src: "/uploads/richland-family-embrace-black-white.jpg",
+          alt: "Family laughing together beneath bare trees in a black-and-white portrait.",
+        },
+        {
+          src: "/uploads/richland-maternity-field-portrait.jpg",
+          alt: "Expectant couple standing together in a sunlit field.",
+        },
+        {
+          src: "/uploads/richland-senior-suit-portrait.jpg",
+          alt: "High school senior in a dark suit leaning against a concrete column.",
+        },
+        {
+          src: "/uploads/richland-senior-autumn-dress.jpg",
+          alt: "High school senior in a dark dress standing among autumn leaves.",
+        },
+        {
+          src: "/uploads/richland-senior-seated-golden-hour.jpg",
+          alt: "High school senior with glasses seated in warm evening grass.",
+        },
+        {
+          src: "/uploads/richland-senior-autumn-portrait.jpg",
+          alt: "High school senior standing in front of golden autumn foliage.",
+        },
+      ],
+    },
+  ],
+  [
+    `kennewick-wa-photographer${path.sep}index.html`,
+    {
+      city: "Kennewick",
+      pageKey: "kennewick",
+      galleryId: "recent-kennewick-sessions",
+      finalId: "kennewick-final",
+      figureCount: 5,
+      h2Texts: [
+        "Ten Minutes From My Front Door",
+        "If Light and Airy Isn't What You Pictured",
+        "What Works Well in Kennewick",
+        "What I Photograph in Kennewick",
+        "Recent Kennewick Sessions",
+        "Kennewick Questions",
+        "Let's Plan Yours",
+      ],
+      internalAnchors: [
+        "/about/",
+        "/journal/family-photo-locations-tri-cities/",
+        "/family-photographer-tri-cities-wa/",
+        "/senior-photographer-tri-cities-wa/",
+        "/family-photographer-tri-cities-wa/",
+        "/newborn-photographer-tri-cities-wa/",
+        "/branding-photographer-tri-cities-wa/",
+        "/headshot-photographer-tri-cities-wa/",
+        "/contact/",
+      ],
+      images: [
+        {
+          src: "/uploads/kennewick-couple-laughing-golden-hour.jpg",
+          alt: "Couple laughing together in warm evening light beneath bare trees.",
+        },
+        {
+          src: "/uploads/kennewick-senior-seated-autumn-portrait.jpg",
+          alt: "High school senior with glasses seated in dry grass beneath autumn trees.",
+        },
+        {
+          src: "/uploads/kennewick-senior-cowboy-rope-golden-hour.jpg",
+          alt: "High school senior in a cowboy hat holding a rope in a golden field.",
+        },
+        {
+          src: "/uploads/kennewick-senior-wood-wall-portrait.jpg",
+          alt: "High school senior in a white sweatshirt leaning beside a weathered wooden post.",
+        },
+        {
+          src: "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+          alt: "High school senior surrounded by roses in warm evening light.",
+        },
+      ],
+    },
+  ],
+]);
 
 for (const file of htmlFiles) {
   const relative = path.relative(output, file);
@@ -220,6 +346,84 @@ for (const file of htmlFiles) {
       ) {
         failures.push(
           `${relative}: ${expectedServiceCity} Service schema does not match the approved local scope`,
+        );
+      }
+    }
+
+    const activeCityGallery = activeCityGalleryContracts.get(relative);
+    if (activeCityGallery) {
+      const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+        .map((match) => normalizedText(match[1]));
+      if (JSON.stringify(h2Texts) !== JSON.stringify(activeCityGallery.h2Texts)) {
+        failures.push(
+          `${relative}: expected the approved seven ${activeCityGallery.city} H2 headings in order`,
+        );
+      }
+      const mainAnchorHrefs = [...main.matchAll(
+        /<a\b[^>]*href=["']([^"']+)["']/gi,
+      )].map((match) => match[1]);
+      if (
+        JSON.stringify(mainAnchorHrefs) !==
+          JSON.stringify(activeCityGallery.internalAnchors)
+      ) {
+        failures.push(
+          `${relative}: internal body links differ from the approved nine-link map`,
+        );
+      }
+
+      const hero = main.match(
+        new RegExp(
+          `<header\\b(?=[^>]*data-editorial-hero-page=["']${activeCityGallery.pageKey}["'])[^>]*>([\\s\\S]*?)<\\/header>`,
+          "i",
+        ),
+      )?.[1] || "";
+      const heroButtons = hero.match(/<button\b[^>]*data-hero-cta[^>]*>/gi) || [];
+      if (
+        heroButtons.length !== 1 ||
+        !new RegExp(
+          `data-hero-scroll-target=["']${activeCityGallery.finalId}["']`,
+          "i",
+        ).test(heroButtons[0]) ||
+        !new RegExp(
+          `aria-controls=["']${activeCityGallery.finalId}["']`,
+          "i",
+        ).test(heroButtons[0]) ||
+        /<a\b/i.test(hero)
+      ) {
+        failures.push(
+          `${relative}: hero must preserve one local-scroll button to #${activeCityGallery.finalId} and no anchor`,
+        );
+      }
+
+      const gallery = sectionById(main, activeCityGallery.galleryId);
+      const galleryFigures = [...gallery.matchAll(
+        /<figure\b[^>]*>([\s\S]*?)<\/figure>/gi,
+      )].map((match) => match[1]);
+      const galleryImages = [...gallery.matchAll(/<img\b[^>]*>/gi)].map((match) => ({
+        src: match[0].match(/\bsrc=["']([^"']+)["']/i)?.[1] || "",
+        alt: decodeHtml(match[0].match(/\balt=["']([^"']*)["']/i)?.[1] || "").trim(),
+      }));
+      const galleryCaptions = [...gallery.matchAll(
+        /<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/gi,
+      )].map((match) => normalizedText(match[1]));
+      const figuresHaveOneImageAndCaption = galleryFigures.every((figure) =>
+        (figure.match(/<img\b/gi) || []).length === 1 &&
+        (figure.match(/<figcaption\b/gi) || []).length === 1
+      );
+      if (
+        galleryFigures.length !== activeCityGallery.figureCount ||
+        galleryImages.length !== activeCityGallery.figureCount ||
+        galleryCaptions.length !== activeCityGallery.figureCount ||
+        galleryCaptions.some((caption) => !caption) ||
+        !figuresHaveOneImageAndCaption ||
+        (gallery.match(/<a\b/gi) || []).length !== 0 ||
+        new Set(galleryImages.map((image) => image.src)).size !==
+          activeCityGallery.figureCount ||
+        galleryImages.some((image) => !image.alt) ||
+        JSON.stringify(galleryImages) !== JSON.stringify(activeCityGallery.images)
+      ) {
+        failures.push(
+          `${relative}: recent gallery must render exactly ${activeCityGallery.figureCount} approved figure/image/caption triples, unique literal src+alt pairs, and zero anchors`,
         );
       }
     }

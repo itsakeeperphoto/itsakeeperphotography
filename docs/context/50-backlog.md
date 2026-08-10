@@ -12,24 +12,25 @@
 - [x] **2. Publicar Family Photo Locations en el gate de producción.** Fecha
   aprobada `2026-08-08`; `[FECHA]` retirado, ruta `ready/index`, schema completo,
   sitemap/llms/headers verificados y QA responsive final aprobado.
-- [x] **3. Publicar Richland sin esperar la galería opcional.** Ruta
-  `ready/index`, `lastModified: 2026-08-08`, sitemap/llms/meta/headers/schema
-  verificados en release y aislamiento staging conservado.
+- [x] **3. Publicar Richland y completar su galería verificada.** Ruta
+  `ready/index`, sitemap/llms/meta/headers/schema verificados en release y
+  aislamiento staging conservado; el 2026-08-09 se añadieron diez fotografías
+  de diez sesiones Richland distintas y se actualizó `lastModified`.
 - [x] **4. Implementar y publicar Kennewick v2.** Reemplazar v1 por el copy
   definitivo centrado en estilo, mantener la galería como mejora opcional,
   verificar diseño/schema en cuatro viewports y pasar la ruta a `ready/index`
   con sitemap/llms/header coherentes.
-- [x] **5. Rediseñar Kennewick según ADR-036.** Auditoría de ruta/copy/media,
+- [x] **5. Rediseñar Kennewick y completar su galería según ADR-036/040.** Auditoría de ruta/copy/media,
   siete composiciones image-first, `EditorialHero`, seis fuentes Drive
-  optimizadas, contratos SEO intactos y QA 1440/1200/900/390 completados. La
-  galería sigue correctamente ausente por falta de 6–10 sesiones diversas.
+  optimizadas, cinco sesiones seguras en galería, contratos SEO intactos y QA
+  1440/1200/900/390 completados. Benton City permanece excluida.
 - [x] **6. Rediseñar y publicar Pasco según ADR-039.** Dirección A+C aprobada,
   `EditorialHero`, diez fotografías de diez sesiones Drive verificadas, copy
   local, ocho anchors, schema/crawler gates y QA 1440/1200/900/390 completos.
 - [ ] **7. Verificar Richland, Kennewick y Pasco después del push del usuario.**
   Confirmar en el dominio final status 200, meta index, canonical, ausencia de
-  header noindex, membresía del sitemap/llms y lastmod: Richland `2026-08-08`,
-  Kennewick/Pasco `2026-08-09`.
+  header noindex, membresía del sitemap/llms y lastmod: Richland, Kennewick y
+  Pasco `2026-08-09`.
 - [ ] **8. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -112,8 +113,8 @@ sin reemplazar el archivo.
   hover, focus y reduced motion; excepción limitada por ADR-033.
 - [x] Publicada `ready/index` por aprobación explícita; la galería dejó de ser
   gate y se retiró de `src/content/pending.ts`.
-- [ ] Mejora opcional: añadir después 6–10 sesiones reales con procedencia
-  Richland y alt contextual literal, sin nombrar el spot exacto.
+- [x] Añadidas diez sesiones reales con procedencia Richland, diez fechas XMP y
+  `OriginalDocumentID` distintos, alt literal y cero nombres de spot exacto.
 
 ### Kennewick
 
@@ -129,10 +130,11 @@ sin reemplazar el archivo.
 - [x] Excluidos ambos frames de la sesión identificada como Benton City y las
   dos capturas duplicadas de producción; ninguna fotografía existente fue
   borrada.
-- [ ] Mejora opcional: añadir después 6–10 sesiones reales con procedencia
-  Kennewick y alt contextual literal, sin nombrar el spot exacto. El inventario
-  actual demuestra solo cinco sesiones seguras y no cubre Family, Newborn,
-  Branding ni Headshots.
+- [x] Añadida `Recent Kennewick Sessions` con cinco sesiones seguras, alt
+  literal y cero anchors; no se fabricó una sexta sesión.
+- [ ] Mejora opcional: ampliar la galería solo cuando exista una sesión
+  Kennewick nueva y verificable, idealmente Family, Newborn, Branding o
+  Headshots; no reutilizar otra toma de las cinco sesiones actuales.
 
 ### Pasco
 
@@ -179,9 +181,9 @@ sin reemplazar el archivo.
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
   ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los cinco commits creados después de `ff736c6`: reconciliación,
-  rediseño/cierre Kennewick y los commits funcional/documental de Pasco. La
-  implementación Pasco está en `2a5adcd`; Codex no ejecutó push.
+- [ ] Publicar los commits locales creados después de `ff736c6`: reconciliación,
+  rediseño/cierre Kennewick, implementación/cierre Pasco y galerías locales de
+  Richland/Kennewick. Codex no ejecuta push.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -238,6 +240,9 @@ sin reemplazar el archivo.
 - [x] Aislar el CSS nuevo de Pasco como asset Vite enlazado solo en esa ruta;
   evita ~20 KiB sin comprimir en cada HTML editorial ajeno y tiene gate contra
   futuros leaks.
+- [x] Añadir galerías de sesiones verificadas a Richland (10) y Kennewick (5):
+  13 JPEG nuevos optimizados de 165.81 a 5.92 MiB, 52 variantes WebP, cero
+  duplicados nuevos, cero anchors y QA responsive en ocho combinaciones.
 - [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
   guard de fuentes y las variantes terminan, comprobar que
   `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a

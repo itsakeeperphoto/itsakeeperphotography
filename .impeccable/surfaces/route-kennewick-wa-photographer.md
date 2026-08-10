@@ -37,8 +37,9 @@ approved_mock_manifest: "../mocks/kennewick-approved-manifest.json"
   2. `If Light and Airy Isn't What You Pictured`
   3. `What Works Well in Kennewick`
   4. `What I Photograph in Kennewick`
-  5. `Kennewick Questions`
-  6. `Let's Plan Yours`
+  5. `Recent Kennewick Sessions`
+  6. `Kennewick Questions`
+  7. `Let's Plan Yours`
 - Preserve exactly nine anchors inside `<main>`: three contextual prose links, five service-directory links, and the final Contact CTA.
 - The hero action remains a native button, not an anchor, and scrolls to the final section. Do not introduce navigation links in the hero.
 - Preserve the four approved FAQ questions in both visible DOM and FAQ schema, with one-to-one parity.
@@ -80,13 +81,20 @@ approved_mock_manifest: "../mocks/kennewick-approved-manifest.json"
 - The photograph is not an additional link. It balances the ledger and supplies a single signature gesture, not a card.
 - Every row remains at least 44px high and has explicit hover, focus-visible, active, and reduced-motion behavior.
 
-### 06 — FAQ ledger
+### 06 — Recent-session proof
+
+- Render `Recent Kennewick Sessions` between the service directory and FAQ with exactly five photographs from the five safe, distinct sessions currently verified.
+- Use one featured panorama followed by an editorial three/two/one-column grid. Captions are visible and direct; alt text describes only the literal subject.
+- The gallery contains no anchors and does not change the approved total of nine anchors inside `<main>`.
+- Do not add a sixth item until a genuinely new Kennewick session has verified provenance. Multiple frames of one session, a generic Tri-Cities photograph, or the excluded Benton City session do not satisfy this gate.
+
+### 07 — FAQ ledger
 
 - Use a flat Walnut/Umber field with the H2 as the left-side anchor and four native disclosure rows on the right.
 - One question may be open in the visual preview to establish answer rhythm; runtime semantics must remain native `<details>/<summary>` and keyboard operable.
 - Hairlines and typography carry the hierarchy. No decorative media is required.
 
-### 07 — Final invitation
+### 08 — Final invitation
 
 - Use a full-bleed verified Kennewick photograph with a controlled deep wash and centered approved H2, copy, and single Contact CTA.
 - Keep the CTA visually distinct and keyboard-visible. Do not add a second conversion link.
@@ -96,7 +104,8 @@ approved_mock_manifest: "../mocks/kennewick-approved-manifest.json"
 
 - Verified Google Drive sources are `Couples - Kennewick` and `Senior Session - Kennewick`; use selected, optimized photographs only where their literal subject and provenance support the section.
 - Do not present editorial selections as six or more distinct sessions when they are not.
-- The `Recent Kennewick Sessions` gallery remains entirely absent from the DOM until 6–10 distinct Kennewick sessions are verified. Do not render a fallback heading, empty wrapper, placeholder, or whitespace block.
+- The production-authorized gallery contains exactly five safe sessions: one couples session and four senior sessions. This is an explicit Page Feedback addendum to the earlier six-session minimum; it does not authorize a fabricated sixth session.
+- Keep `010A4575copy.jpg` and `sennior-session-benton-city.jpg` excluded because both identify the same Benton City session. Do not relabel, duplicate, or use either as Kennewick proof.
 - Do not use or delete production photographs merely because they are absent from this route.
 
 ## Responsive and interaction constraints
@@ -119,3 +128,5 @@ approved_mock_manifest: "../mocks/kennewick-approved-manifest.json"
 7. `kennewick-07-final-full-bleed.png`
 
 Interpret these previews section by section. Preserve their geometry and visual hierarchy while using the approved copy, shared components, real photographs, responsive behavior, and accessibility contract of the production site.
+
+The seven generated previews remain the canonical authority for the original redesign sections. The production `Recent Kennewick Sessions` gallery is a later user-authorized Page Feedback addendum grounded in verified real media; it does not require or retroactively alter a generated preview.

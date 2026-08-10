@@ -1,5 +1,5 @@
 async (page) => {
-  const baseUrl = "http://127.0.0.1:4321";
+  const baseUrl = process.env.QA_BASE_URL || "http://127.0.0.1:4321";
   const routes = [
     ["home", "/"],
     ["family", "/family-photographer-tri-cities-wa/"],
@@ -44,12 +44,135 @@ async (page) => {
     ["/kennewick-wa-photographer/", 9],
     ["/pasco-wa-photographer/", 8],
   ]);
+  const activeCityGalleryContracts = {
+    "/richland-wa-photographer/": {
+      city: "Richland",
+      pageKey: "richland",
+      galleryId: "recent-richland-sessions",
+      gallerySelector: ".richland-recent__gallery",
+      finalId: "richland-final",
+      figureCount: 10,
+      h2Texts: [
+        "This Isn't a City I Travel To — It's Where I Live",
+        "Twenty Years of Watching This Light",
+        "What I Photograph in Richland",
+        "Recent Richland Sessions",
+        "Planning a Session Here",
+        "Richland Questions",
+        "Let's Find Your Light",
+      ],
+      internalAnchors: [
+        "/about/",
+        "/journal/family-photo-locations-tri-cities/",
+        "/senior-photographer-tri-cities-wa/",
+        "/family-photographer-tri-cities-wa/",
+        "/newborn-photographer-tri-cities-wa/",
+        "/branding-photographer-tri-cities-wa/",
+        "/headshot-photographer-tri-cities-wa/",
+        "/investment/",
+        "/contact/",
+      ],
+      images: [
+        {
+          src: "/uploads/richland-couple-river-portrait.jpg",
+          alt: "Couple standing together in shallow river water beneath leafy trees.",
+        },
+        {
+          src: "/uploads/richland-couple-winter-field.jpg",
+          alt: "Couple embracing in dry winter grass.",
+        },
+        {
+          src: "/uploads/richland-mother-newborn-at-home.jpg",
+          alt: "Mother holding a sleeping newborn beside a bed.",
+        },
+        {
+          src: "/uploads/richland-family-field-black-white.jpg",
+          alt: "Family of three standing together in a field in a black-and-white portrait.",
+        },
+        {
+          src: "/uploads/richland-family-embrace-black-white.jpg",
+          alt: "Family laughing together beneath bare trees in a black-and-white portrait.",
+        },
+        {
+          src: "/uploads/richland-maternity-field-portrait.jpg",
+          alt: "Expectant couple standing together in a sunlit field.",
+        },
+        {
+          src: "/uploads/richland-senior-suit-portrait.jpg",
+          alt: "High school senior in a dark suit leaning against a concrete column.",
+        },
+        {
+          src: "/uploads/richland-senior-autumn-dress.jpg",
+          alt: "High school senior in a dark dress standing among autumn leaves.",
+        },
+        {
+          src: "/uploads/richland-senior-seated-golden-hour.jpg",
+          alt: "High school senior with glasses seated in warm evening grass.",
+        },
+        {
+          src: "/uploads/richland-senior-autumn-portrait.jpg",
+          alt: "High school senior standing in front of golden autumn foliage.",
+        },
+      ],
+    },
+    "/kennewick-wa-photographer/": {
+      city: "Kennewick",
+      pageKey: "kennewick",
+      galleryId: "recent-kennewick-sessions",
+      gallerySelector: ".kennewick-recent__gallery",
+      finalId: "kennewick-final",
+      figureCount: 5,
+      h2Texts: [
+        "Ten Minutes From My Front Door",
+        "If Light and Airy Isn't What You Pictured",
+        "What Works Well in Kennewick",
+        "What I Photograph in Kennewick",
+        "Recent Kennewick Sessions",
+        "Kennewick Questions",
+        "Let's Plan Yours",
+      ],
+      internalAnchors: [
+        "/about/",
+        "/journal/family-photo-locations-tri-cities/",
+        "/family-photographer-tri-cities-wa/",
+        "/senior-photographer-tri-cities-wa/",
+        "/family-photographer-tri-cities-wa/",
+        "/newborn-photographer-tri-cities-wa/",
+        "/branding-photographer-tri-cities-wa/",
+        "/headshot-photographer-tri-cities-wa/",
+        "/contact/",
+      ],
+      images: [
+        {
+          src: "/uploads/kennewick-couple-laughing-golden-hour.jpg",
+          alt: "Couple laughing together in warm evening light beneath bare trees.",
+        },
+        {
+          src: "/uploads/kennewick-senior-seated-autumn-portrait.jpg",
+          alt: "High school senior with glasses seated in dry grass beneath autumn trees.",
+        },
+        {
+          src: "/uploads/kennewick-senior-cowboy-rope-golden-hour.jpg",
+          alt: "High school senior in a cowboy hat holding a rope in a golden field.",
+        },
+        {
+          src: "/uploads/kennewick-senior-wood-wall-portrait.jpg",
+          alt: "High school senior in a white sweatshirt leaning beside a weathered wooden post.",
+        },
+        {
+          src: "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+          alt: "High school senior surrounded by roses in warm evening light.",
+        },
+      ],
+    },
+  };
   const report = [];
 
   await page.emulateMedia({ reducedMotion: "reduce" });
 
   for (const [id, pathname] of routes) {
     for (const [viewport, width, height] of viewports) {
+      const activeCityGallery = activeCityGalleryContracts[pathname] || null;
       const consoleErrors = [];
       const failedRequests = [];
       const onConsole = (message) => {
@@ -124,7 +247,7 @@ async (page) => {
         };
       });
 
-      const checks = await page.evaluate(() => {
+      const checks = await page.evaluate((activeCityGallery) => {
         const origin = location.origin;
         const normalize = (value) => value?.replace(/\s+/g, " ").trim() || "";
         const internalBodyLinks = [...document.querySelectorAll("main a[href]")].filter((anchor) => {
@@ -159,6 +282,91 @@ async (page) => {
           complete: image.complete,
         }));
         const content = document.querySelector("[data-signature-device]");
+        let activeCityGalleryContract = null;
+        if (activeCityGallery) {
+          const main = document.querySelector("main");
+          const hero = main?.querySelector(
+            `[data-editorial-hero-page="${activeCityGallery.pageKey}"]`,
+          );
+          const heroButtons = [...(hero?.querySelectorAll("button[data-hero-cta]") || [])];
+          const gallerySection = document.getElementById(activeCityGallery.galleryId);
+          const gallery = gallerySection?.querySelector(activeCityGallery.gallerySelector);
+          const figures = [...(gallery?.querySelectorAll(":scope > figure") || [])];
+          const galleryImages = [...(gallery?.querySelectorAll("img") || [])];
+          const galleryCaptions = [...(gallery?.querySelectorAll("figcaption") || [])];
+          const h2Texts = [...(main?.querySelectorAll("h2") || [])]
+            .map((heading) => normalize(heading.textContent));
+          const bodyHrefs = [...(main?.querySelectorAll("a[href]") || [])]
+            .map((anchor) => anchor.getAttribute("href"));
+          const imagePairs = galleryImages.map((image) => ({
+            src: image.getAttribute("src") || "",
+            alt: image.getAttribute("alt")?.trim() || "",
+          }));
+          const figuresHaveDirectMediaAndCaption = figures.every((figure) =>
+            figure.querySelectorAll(":scope > picture").length === 1 &&
+            figure.querySelectorAll(":scope > figcaption").length === 1 &&
+            figure.querySelectorAll("img").length === 1
+          );
+          const galleryImagesLoaded = galleryImages.every((image) =>
+            image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
+          );
+          const galleryImagesHaveDimensions = galleryImages.every((image) =>
+            Number.parseInt(image.getAttribute("width") || "", 10) > 0 &&
+            Number.parseInt(image.getAttribute("height") || "", 10) > 0
+          );
+          const overflow =
+            document.documentElement.scrollWidth - document.documentElement.clientWidth;
+          const heroButton = heroButtons[0];
+
+          activeCityGalleryContract = {
+            city: activeCityGallery.city,
+            h2Texts,
+            internalAnchors: bodyHrefs,
+            heroButtonCount: heroButtons.length,
+            heroScrollTarget:
+              heroButton?.getAttribute("data-hero-scroll-target") || null,
+            heroAriaControls: heroButton?.getAttribute("aria-controls") || null,
+            heroAnchorCount: hero?.querySelectorAll("a").length || 0,
+            galleryFigureCount: figures.length,
+            galleryImageCount: galleryImages.length,
+            galleryCaptionCount: galleryCaptions.length,
+            galleryAnchorCount: gallerySection?.querySelectorAll("a").length || 0,
+            uniqueGalleryImageCount:
+              new Set(galleryImages.map((image) => image.getAttribute("src"))).size,
+            galleryCaptionsPass: galleryCaptions.every(
+              (caption) => Boolean(normalize(caption.textContent)),
+            ),
+            figuresHaveDirectMediaAndCaption,
+            galleryImagesLoaded,
+            galleryImagesHaveDimensions,
+            imagePairs,
+            overflow,
+            pass:
+              JSON.stringify(h2Texts) === JSON.stringify(activeCityGallery.h2Texts) &&
+              JSON.stringify(bodyHrefs) ===
+                JSON.stringify(activeCityGallery.internalAnchors) &&
+              heroButtons.length === 1 &&
+              heroButton?.getAttribute("data-hero-scroll-target") ===
+                activeCityGallery.finalId &&
+              heroButton?.getAttribute("aria-controls") === activeCityGallery.finalId &&
+              (hero?.querySelectorAll("a").length || 0) === 0 &&
+              figures.length === activeCityGallery.figureCount &&
+              galleryImages.length === activeCityGallery.figureCount &&
+              galleryCaptions.length === activeCityGallery.figureCount &&
+              galleryCaptions.every(
+                (caption) => Boolean(normalize(caption.textContent)),
+              ) &&
+              figuresHaveDirectMediaAndCaption &&
+              (gallerySection?.querySelectorAll("a").length || 0) === 0 &&
+              new Set(galleryImages.map((image) => image.getAttribute("src"))).size ===
+                activeCityGallery.figureCount &&
+              imagePairs.every((image) => Boolean(image.alt)) &&
+              JSON.stringify(imagePairs) === JSON.stringify(activeCityGallery.images) &&
+              galleryImagesLoaded &&
+              galleryImagesHaveDimensions &&
+              overflow <= 0,
+          };
+        }
         let pascoContract = null;
         if (location.pathname === "/pasco-wa-photographer/") {
           const main = document.querySelector("main");
@@ -279,9 +487,59 @@ async (page) => {
           brokenImages: images.filter((image) => !image.complete || image.naturalWidth === 0 || image.naturalHeight === 0),
           imagesWithoutDimensions: images.filter((image) => !image.width || !image.height).map((image) => image.src),
           currentNavLinks: [...document.querySelectorAll('.primary-nav a[aria-current="page"]')].map((anchor) => anchor.getAttribute("href")),
+          activeCityGalleryContract,
           pascoContract,
         };
-      });
+      }, activeCityGallery);
+
+      let activeCityHeroBehavior = null;
+      if (activeCityGallery) {
+        const heroButton = page.locator(
+          `[data-editorial-hero-page="${activeCityGallery.pageKey}"] button[data-hero-cta]`,
+        );
+        const finalTarget = page.locator(`#${activeCityGallery.finalId}`);
+        const heroButtonCount = await heroButton.count();
+        const finalTargetCount = await finalTarget.count();
+        let clickError = null;
+        let state = null;
+
+        if (heroButtonCount === 1 && finalTargetCount === 1) {
+          try {
+            await heroButton.click();
+            state = await finalTarget.evaluate((target) => {
+              const rect = target.getBoundingClientRect();
+              return {
+                focused: document.activeElement === target,
+                visibleAfterClick: rect.bottom > 0 && rect.top < window.innerHeight,
+                targetTop: rect.top,
+                scrollY: window.scrollY,
+              };
+            });
+          } catch (error) {
+            clickError = error instanceof Error ? error.message : String(error);
+          }
+        }
+
+        activeCityHeroBehavior = {
+          heroButtonCount,
+          finalTargetCount,
+          clickError,
+          ...state,
+          pass:
+            heroButtonCount === 1 &&
+            finalTargetCount === 1 &&
+            !clickError &&
+            state?.focused === true &&
+            state?.visibleAfterClick === true,
+        };
+
+        await page.evaluate(() => {
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
+          window.scrollTo(0, 0);
+        });
+      }
 
       report.push({
         id,
@@ -298,6 +556,7 @@ async (page) => {
         ),
         menu,
         focus,
+        activeCityHeroBehavior,
         consoleErrors,
         failedRequests,
       });
@@ -313,6 +572,8 @@ async (page) => {
     (expandedDirectoryLinkCounts.has(result.pathname)
       ? result.internalBodyLinkCount !== expandedDirectoryLinkCounts.get(result.pathname)
       : result.internalBodyLinkCount > 4) ||
+    (activeCityGalleryContracts[result.pathname] &&
+      (!result.activeCityGalleryContract?.pass || !result.activeCityHeroBehavior?.pass)) ||
     (result.pathname === "/pasco-wa-photographer/" && !result.pascoContract?.pass) ||
     (result.minBodyFontPx !== null && result.minBodyFontPx < 16) ||
     !result.signature ||

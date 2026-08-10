@@ -419,6 +419,7 @@
 
 .kennewick-recent {
   padding-block: clamp(8rem, 10vw, 10rem);
+  border-bottom: clamp(0.75rem, 1.2vw, 1rem) solid var(--color-weathered-sand);
   color: var(--color-warm-ivory);
   background: var(--color-walnut);
 }
@@ -432,13 +433,57 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--grid-gutter);
+  align-items: start;
   margin-top: 4rem;
 }
 
-.kennewick-recent__gallery figure,
-.kennewick-recent__gallery picture,
-.kennewick-recent__gallery img {
+.kennewick-recent__photo {
+  display: grid;
+  min-width: 0;
+  gap: 0.95rem;
+}
+
+.kennewick-recent__photo picture,
+.kennewick-recent__photo img {
   aspect-ratio: 4 / 5;
+}
+
+.kennewick-recent__photo--featured {
+  grid-column: span 2;
+}
+
+.kennewick-recent__photo--featured picture,
+.kennewick-recent__photo--featured img {
+  aspect-ratio: 3 / 2;
+}
+
+.kennewick-recent__photo:nth-child(2) img {
+  object-position: 62% 50%;
+}
+
+.kennewick-recent__photo:nth-child(4) img {
+  object-position: 58% 50%;
+}
+
+.kennewick-recent__photo figcaption {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.kennewick-recent__photo figcaption::before {
+  width: 2rem;
+  height: 1px;
+  flex: 0 0 auto;
+  background: var(--kennewick-line-light);
+  content: "";
 }
 
 /* Questions use the same hairline ledger on a deeper tonal field. */
@@ -771,6 +816,14 @@
   .kennewick-faq__header {
     padding-right: 2.5rem;
   }
+
+  .kennewick-recent__gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kennewick-recent__photo--featured {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 767px) {
@@ -793,6 +846,7 @@
   .kennewick-style,
   .kennewick-setting,
   .kennewick-directory,
+  .kennewick-recent,
   .kennewick-faq {
     padding-block: 5.75rem;
   }
@@ -824,6 +878,7 @@
   .kennewick-style__header h2,
   .kennewick-setting__header h2,
   .kennewick-directory__header h2,
+  .kennewick-recent h2,
   .kennewick-faq__header h2,
   .kennewick-final__copy h2 {
     width: 100%;
@@ -912,6 +967,12 @@
 
   .kennewick-recent__gallery {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .kennewick-recent__photo--featured {
+    grid-column: auto;
   }
 
   .kennewick-faq summary {

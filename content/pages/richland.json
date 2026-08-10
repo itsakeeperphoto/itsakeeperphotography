@@ -130,9 +130,61 @@
     },
     {
       "id": "recent-richland-sessions",
-      "kind": "prose",
+      "kind": "locations",
       "tone": "walnut",
-      "heading": "Recent Richland Sessions"
+      "heading": "Recent Richland Sessions",
+      "items": [
+        {
+          "heading": "Couples Session",
+          "image": "/uploads/richland-couple-river-portrait.jpg",
+          "imageAlt": "Couple standing together in shallow river water beneath leafy trees."
+        },
+        {
+          "heading": "Couples Session",
+          "image": "/uploads/richland-couple-winter-field.jpg",
+          "imageAlt": "Couple embracing in dry winter grass."
+        },
+        {
+          "heading": "Newborn Session",
+          "image": "/uploads/richland-mother-newborn-at-home.jpg",
+          "imageAlt": "Mother holding a sleeping newborn beside a bed."
+        },
+        {
+          "heading": "Family Session",
+          "image": "/uploads/richland-family-field-black-white.jpg",
+          "imageAlt": "Family of three standing together in a field in a black-and-white portrait."
+        },
+        {
+          "heading": "Family Session",
+          "image": "/uploads/richland-family-embrace-black-white.jpg",
+          "imageAlt": "Family laughing together beneath bare trees in a black-and-white portrait."
+        },
+        {
+          "heading": "Maternity Session",
+          "image": "/uploads/richland-maternity-field-portrait.jpg",
+          "imageAlt": "Expectant couple standing together in a sunlit field."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/richland-senior-suit-portrait.jpg",
+          "imageAlt": "High school senior in a dark suit leaning against a concrete column."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/richland-senior-autumn-dress.jpg",
+          "imageAlt": "High school senior in a dark dress standing among autumn leaves."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/richland-senior-seated-golden-hour.jpg",
+          "imageAlt": "High school senior with glasses seated in warm evening grass."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/richland-senior-autumn-portrait.jpg",
+          "imageAlt": "High school senior standing in front of golden autumn foliage."
+        }
+      ]
     },
     {
       "id": "richland-planning",

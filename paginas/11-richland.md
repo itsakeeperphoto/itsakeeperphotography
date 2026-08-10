@@ -86,7 +86,23 @@ _(Directorio editorial — cada fila completa enlaza su servicio)_
 
 **H2: Recent Richland Sessions**
 
-`[MEJORA POSTERIOR: 6–10 imágenes de sesiones reales en Richland. Cuando se añadan, usar alt text literal sin nombrar el spot exacto.]`
+Galería publicada con diez fotografías de diez sesiones distintas verificadas
+en las carpetas Drive tituladas Richland. La procedencia se cruzó por carpeta,
+fecha XMP, `OriginalDocumentID` e identidad visual; los alts son literales y no
+nombran el spot exacto.
+
+| Servicio | Archivo web | Alt literal |
+|---|---|---|
+| Couples | `richland-couple-river-portrait.jpg` | `Couple standing together in shallow river water beneath leafy trees.` |
+| Couples | `richland-couple-winter-field.jpg` | `Couple embracing in dry winter grass.` |
+| Newborn | `richland-mother-newborn-at-home.jpg` | `Mother holding a sleeping newborn beside a bed.` |
+| Family | `richland-family-field-black-white.jpg` | `Family of three standing together in a field in a black-and-white portrait.` |
+| Family | `richland-family-embrace-black-white.jpg` | `Family laughing together beneath bare trees in a black-and-white portrait.` |
+| Maternity | `richland-maternity-field-portrait.jpg` | `Expectant couple standing together in a sunlit field.` |
+| Senior | `richland-senior-suit-portrait.jpg` | `High school senior in a dark suit leaning against a concrete column.` |
+| Senior | `richland-senior-autumn-dress.jpg` | `High school senior in a dark dress standing among autumn leaves.` |
+| Senior | `richland-senior-seated-golden-hour.jpg` | `High school senior with glasses seated in warm evening grass.` |
+| Senior | `richland-senior-autumn-portrait.jpg` | `High school senior standing in front of golden autumn foliage.` |
 
 ---
 

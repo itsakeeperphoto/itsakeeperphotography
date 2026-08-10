@@ -15,4 +15,6 @@ Direction: an editorial light ledger derived from the homepage and DESIGN.md—w
 
 Navigation: the five service-ledger rows are native, full-width links to their existing service routes. A short left-to-right wash and restrained title/arrow response communicate the click area; keyboard focus is immediate and reduced motion removes transforms.
 
-Publication: ready/index approved on 2026-08-08. “Recent Richland Sessions” remains an optional future enhancement and stays absent until 6–10 photographs have verified Richland provenance and literal contextual alt text; its absence does not block the current route.
+Recent-session proof: `Recent Richland Sessions` is active with exactly ten photographs from ten visually and metadata-distinct Richland sessions verified through the approved Drive folders. The section uses an editorial 4/2/1-column grid, direct visible captions, literal subject-only alt text, and zero links. Do not name or infer an exact session spot. A nonempty gallery must keep all ten complete, unique source paths; partial or duplicate evidence fails the build contract.
+
+Publication: ready/index approved on 2026-08-08; the verified gallery addendum was approved and implemented on 2026-08-09. `lastModified` is `2026-08-09`.

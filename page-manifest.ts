@@ -166,7 +166,7 @@ export const pageManifest = [
     schemaType: "WebPage",
     sitemap: true,
     llms: true,
-    lastModified: "2026-08-08",
+    lastModified: "2026-08-09",
     primaryRoute: true,
     signature: "arch",
     title: "Richland WA Photographer | It's A Keeper Photography",

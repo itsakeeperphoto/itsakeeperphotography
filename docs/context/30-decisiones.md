@@ -614,7 +614,8 @@
 
 ### ADR-038 — Kennewick usa media verificada sin convertirla en una galería falsa
 - **Fecha:** 2026-08-09
-- **Estado:** Aceptada; implementa ADR-036 y conserva los contratos de ADR-035.
+- **Estado:** Parcialmente supersedida por ADR-040 únicamente en el mínimo de
+  sesiones requerido para activar la galería; el resto permanece vigente.
 - **Contexto:** El usuario pidió ejecutar el rediseño image-first de Kennewick y
   suministró dos carpetas Drive tituladas `Couples - Kennewick` y
   `Senior Session - Kennewick`. Los 22 archivos descargados representan seis
@@ -678,3 +679,35 @@
   ~20 KiB sin comprimir en cada ruta editorial ajena. Cualquier cambio futuro
   debe conservar diversidad de sesiones, alts literales, privacidad, canonical
   exacta y los gates de release.
+
+### ADR-040 — Richland y Kennewick publican galerías con evidencia local estricta
+- **Fecha:** 2026-08-09
+- **Estado:** Aceptada; supersede ADR-034 y ADR-038 únicamente en sus gates de
+  galería y conserva sus contratos restantes.
+- **Contexto:** El usuario pidió añadir a Richland y Kennewick una sección como
+  `Recent Pasco Sessions` y autorizó auditar nuevas imágenes de Drive. Los diez
+  seleccionados de Richland pertenecen a diez sesiones distintas según carpeta,
+  fecha XMP, `OriginalDocumentID` e identidad visual. En Kennewick continúan
+  existiendo solo cinco sesiones seguras al excluir los dos archivos de Benton
+  City; la galería usa una imagen de cada una, incluidas tres tomas alternativas
+  optimizadas y dos fuentes ya presentes en producción.
+- **Decisión:** Activar `Recent Richland Sessions` con exactamente diez ítems y
+  `Recent Kennewick Sessions` con exactamente cinco. Cada ítem requiere imagen
+  única, alt literal y caption visible, sin nombrar el spot ni añadir anchors.
+  Los componentes rechazan galerías no vacías parciales, duplicadas o
+  incompletas; los validadores comparan allowlists literales y preservan siete
+  H2 y nueve anchors en ambas rutas. La autorización expresa de cinco sesiones
+  Kennewick reemplaza solo el mínimo previo de seis: no autoriza inventar una
+  sexta ni reutilizar otra toma de una sesión ya contada. Richland actualiza
+  `lastModified` a `2026-08-09`.
+- **Alternativas descartadas:** Contar varios frames de una sesión como sesiones
+  distintas, usar Benton City, tratar West Richland o portfolio genérico
+  Tri-Cities como prueba Richland/Kennewick, renombrar bytes duplicados o dejar
+  ausente una sección solicitada pese a disponer de evidencia suficiente se
+  descartó por atribución, SEO local y trazabilidad.
+- **Consecuencias:** Se incorporan trece JPEG optimizados (10 Richland y 3
+  Kennewick) de 5.92 MiB y 52 variantes WebP regenerables. Richland usa retícula
+  4/2/1; Kennewick usa panorama destacado y retícula 3/2/1. Las rutas mantienen
+  sus nueve anchors, FAQ/schema y estado `ready/index`. Cualquier expansión
+  futura exige una sesión nueva verificable y debe pasar build release/staging,
+  allowlists y QA responsive antes de publicación.

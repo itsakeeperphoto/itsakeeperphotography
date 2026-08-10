@@ -141,7 +141,33 @@
       "kind": "locations",
       "tone": "walnut",
       "heading": "Recent Kennewick Sessions",
-      "items": []
+      "items": [
+        {
+          "heading": "Couples Session",
+          "image": "/uploads/kennewick-couple-laughing-golden-hour.jpg",
+          "imageAlt": "Couple laughing together in warm evening light beneath bare trees."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/kennewick-senior-seated-autumn-portrait.jpg",
+          "imageAlt": "High school senior with glasses seated in dry grass beneath autumn trees."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/kennewick-senior-cowboy-rope-golden-hour.jpg",
+          "imageAlt": "High school senior in a cowboy hat holding a rope in a golden field."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/kennewick-senior-wood-wall-portrait.jpg",
+          "imageAlt": "High school senior in a white sweatshirt leaning beside a weathered wooden post."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+          "imageAlt": "High school senior surrounded by roses in warm evening light."
+        }
+      ]
     },
     {
       "id": "kennewick-questions",
