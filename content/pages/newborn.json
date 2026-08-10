@@ -1,12 +1,12 @@
 {
   "route": "/newborn-photographer-tri-cities-wa/",
   "family": "service",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Service",
   "signature": "crossing-line",
   "title": "Newborn Photographer Tri-Cities WA | In-Home Sessions",
-  "description": "Gentle, unhurried newborn photography in the Tri-Cities. Relaxed in-home sessions in Richland, Kennewick and Pasco that preserve how small they started.",
+  "description": "Gentle in-home newborn photography in Richland, Kennewick and Pasco. Unhurried sessions at your baby's pace, in your own light — no props, no production.",
   "hero": {
     "tone": "ivory",
     "heading": "Newborn Photographer in the Tri-Cities, WA",
@@ -25,30 +25,31 @@
   },
   "sections": [
     {
-      "id": "those-first-days",
-      "kind": "prose",
-      "tone": "sand",
-      "heading": "Those First Days Pass So Quickly",
-      "image": "/uploads/family-newborn-at-home-tricities.jpg",
-      "imageAlt": "Parents and big sister holding their sleeping newborn together at home",
+      "id": "baby-led-sessions",
+      "kind": "split",
+      "tone": "ivory",
+      "heading": "The Short Answer: I Come to You",
+      "image": "/uploads/richland-mother-newborn-at-home.jpg",
+      "imageAlt": "Mother holding her newborn in soft window light at home",
+      "secondaryImage": "/uploads/family-newborn-connection-richland.jpg",
+      "secondaryImageAlt": "Parents and an older sibling gathered closely around their baby outdoors",
       "paragraphs": [
-        "Everyone tells you the newborn days are a blur — and they're right. The tiny fingers curled around yours, the weight of them asleep on your chest, the way the whole house goes quiet when they finally do. These are the details you'll ache to remember, and the ones that slip away first.",
-        "I became a photographer because of my own children. I know from experience how fast this season moves, and I know the value of the photographs on the other side of it. They begin as beautiful images; over the years they become something closer to treasure."
+        "Most of my newborn sessions happen inside your home. Not a studio, not a set — your nursery, your window light, the chair where you feed her at two in the morning.",
+        "There's no rigid posing schedule to keep up with and no props your baby will never see again. We leave room for feeding, changing and settling, and follow your baby's rhythm throughout the session. When the season is kind, we can add something outdoors in a beautiful spot nearby.",
+        "That's the whole approach, and everything below is just the detail."
       ]
     },
     {
-      "id": "baby-led-sessions",
-      "kind": "split",
-      "tone": "olive",
-      "heading": "Gentle, Unhurried, Baby-Led Sessions",
-      "image": "/uploads/newborn-portrait-with-mother-richland.jpg",
-      "imageAlt": "Mother kissing her newborn during a quiet in-home session",
-      "secondaryImage": "/uploads/family-newborn-connection-richland.jpg",
-      "secondaryImageAlt": "Parents and an older sibling gathered closely around their baby outdoors",
-      "scriptLine": "baby sets the pace",
+      "id": "those-first-days",
+      "kind": "prose",
+      "tone": "ivory",
+      "heading": "These Days Go So Fast",
+      "image": "/uploads/newborn-family-at-home-west-richland.jpg",
+      "imageAlt": "Parents and an older sister gathered around a sleeping newborn at home",
       "paragraphs": [
-        "My newborn sessions are relaxed and unforced. No rigid schedule, no elaborate props your baby will never wear again — just your family, soft natural light, and time enough for feeding, soothing and snuggling whenever baby needs it.",
-        "I photograph the real story of these days: baby in your arms, in the nursery you prepared, wrapped in the blanket that will someday live in a keepsake box. Big siblings and pets are always welcome — they're part of this chapter too."
+        "Everyone tells you the newborn days are a blur, and they're right. The weight of her asleep on your chest. The tiny fingers curled around yours. How quiet the house goes when she finally settles.",
+        "I became a photographer because of my own children. Before this was my work, I was a mom at home with two little ones, and those years taught me exactly how fast childhood moves — how the ordinary moments are the ones you'd give anything to hold onto later. That's the whole reason this business exists.",
+        "So when I photograph your baby, I'm not thinking about a pretty picture for this month. I'm thinking about what these images will mean to you in twenty years, when the house is quiet for entirely different reasons."
       ]
     },
     {
@@ -89,16 +90,47 @@
       ]
     },
     {
+      "id": "when-to-book",
+      "kind": "prose",
+      "tone": "sand",
+      "heading": "When to Book — and Why It's Probably Not Too Late",
+      "image": "/uploads/newborn-portrait-with-mother-richland.jpg",
+      "imageAlt": "Mother holding her newborn close during a quiet portrait",
+      "items": [
+        {
+          "heading": "No hard deadline",
+          "paragraphs": [
+            "But if you're reading this with a three-week-old asleep on you, wondering whether you missed the window: you almost certainly didn't. That famous two-week deadline belongs to studio posing, where babies need to be sleepy enough to curl into shapes. An in-home session doesn't depend on that at all. At six weeks she's still brand new. At two months she's still impossibly small, and now she's starting to look at you.",
+            "I've never once had a family regret photographing their baby \"late.\" I've had plenty regret not photographing at all."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "An honest comparison of in-home versus studio newborn photography",
+          "href": "/journal/in-home-vs-studio-newborn-photography/"
+        }
+      ]
+    },
+    {
       "id": "growing-families",
       "kind": "services",
       "tone": "earth",
-      "heading": "Growing Families Stay With Me",
+      "heading": "Twenty Years of Watching Them Grow Up",
       "image": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
       "imageAlt": "Parents holding their growing baby together at golden hour",
       "secondaryImage": "/uploads/family-with-baby-black-white-tricities.jpg",
       "secondaryImageAlt": "Parents embracing their growing baby in a black-and-white family portrait",
       "paragraphs": [
-        "Many of the families I photograph began with a newborn session — and came back for first birthdays, family sessions, and eventually senior pictures. It's one of the greatest privileges of twenty years in the Tri-Cities: watching the babies I photographed grow up in front of my camera."
+        "Here's something I didn't expect when I started: many of the families I photograph now began with a newborn session. Then a first birthday. Then ",
+        ". And then, eventually, senior pictures for the same child I photographed asleep in someone's arms.",
+        "That's the real privilege of twenty years in one place. I'm not photographing a moment — I'm keeping a record of a family, and I take that seriously."
+      ],
+      "links": [
+        {
+          "label": "family sessions every fall",
+          "href": "/family-photographer-tri-cities-wa/"
+        }
       ]
     },
     {
@@ -108,56 +140,68 @@
       "heading": "Newborn Session Questions",
       "items": [
         {
+          "heading": "Where do newborn sessions take place?",
+          "paragraphs": [
+            "Usually in your own home, anywhere in the Tri-Cities — Richland, Kennewick, Pasco and the surrounding areas. Depending on the time of year, we can also photograph outdoors in a beautiful spot nearby. There's no travel fee within the Tri-Cities."
+          ]
+        },
+        {
           "heading": "When should newborn photos be taken?",
           "paragraphs": [
-            "There's no single \"right\" window. The classic sleepy-curled look happens in the first two weeks, but lifestyle sessions at home are beautiful anytime in the first couple of months. If your baby is already here, it's not too late — reach out and we'll plan it."
+            "Reach out during pregnancy so we can plan ahead, but there's no hard deadline. In-home sessions are beautiful anywhere in the first couple of months, because they don't depend on posing a sleeping newborn."
           ]
         },
         {
-          "heading": "Should we do the session at home or outdoors?",
+          "heading": "Do you use props or a studio setup?",
           "paragraphs": [
-            "Both can be beautiful, and it depends on your comfort and the season."
-          ],
-          "links": [
-            {
-              "label": "My honest comparison: In-home vs. studio newborn photography",
-              "href": "/journal/in-home-vs-studio-newborn-photography/"
-            }
+            "No. No baskets, no themed sets, no wardrobe closet. Your baby, your family and your home — that's the session. If elaborate styled portraits are what you're picturing, there are wonderful studio photographers in the area and I'm always glad to point you toward one."
           ]
         },
         {
-          "heading": "What if baby cries the whole time?",
+          "heading": "What if my baby cries the whole time?",
           "paragraphs": [
-            "Then we pause, feed, snuggle and try again. Sessions are unhurried on purpose. Babies set the pace — that's the whole philosophy."
+            "Then we pause, feed, snuggle, and pick back up. That's not a session going badly — that's just a session with a newborn in it. Nothing about my approach requires your baby to cooperate."
           ]
         },
         {
-          "heading": "Can siblings and pets be included?",
+          "heading": "Is my house too small or too dark?",
           "paragraphs": [
-            "Always. This chapter belongs to them too."
+            "Almost certainly not. One decent window is enough. Finding and using the light is my job, not something you need to solve before I arrive."
           ]
-        }
-      ],
-      "links": [
+        },
         {
-          "label": "Reviews",
-          "href": "/reviews/"
+          "heading": "Can we include siblings, grandparents or pets?",
+          "paragraphs": [
+            "Always, and I'd encourage it. They're part of this story too."
+          ]
+        },
+        {
+          "heading": "What should we wear?",
+          "paragraphs": [
+            "We'll plan it together before your session — comfortable, simple, in colors that work with your home. Nothing that requires you to think about it while holding a newborn."
+          ]
+        },
+        {
+          "heading": "How long until we see the photos?",
+          "paragraphs": [
+            "About two weeks, and then we sit down together in person to go through your gallery. Final images follow about a week after you choose."
+          ]
         }
       ]
     }
   ],
   "finalCta": {
-    "tone": "walnut",
+    "tone": "sand",
     "heading": "Expecting? Let's Talk Early",
     "paragraphs": [
-      "Due dates fill my calendar differently than any other session — reach out during pregnancy and we'll hold space for your baby's arrival."
+      "Due dates fill my calendar differently than anything else I photograph — I hold space around them rather than booking a fixed day. Reach out while you're still pregnant and we'll get everything planned before the sleepless part starts."
     ],
+    "image": "/uploads/maternity-waiting-to-welcome-tricities.jpg",
+    "imageAlt": "Expectant mother standing in soft evening light before her baby's arrival",
     "link": {
       "label": "Start planning",
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE: confirmar con Lisa formato exacto (in-home / lifestyle / outdoor para familias con newborn), y si menciona seguridad/posing seguro — Q41, Q63+]"
-  ]
+  "pending": []
 }

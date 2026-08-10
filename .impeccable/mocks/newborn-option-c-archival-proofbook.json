@@ -1,0 +1,16 @@
+{
+  "surface": "/newborn-photographer-tri-cities-wa/",
+  "option": "C",
+  "name": "Archival proofbook",
+  "viewport": "1440px desktop long page",
+  "approved": true,
+  "canonical": false,
+  "approvedOn": "2026-08-10",
+  "approvedRole": "Donor for booking spread and master-detail FAQ only",
+  "protected": [
+    "Existing EditorialHero remains unchanged",
+    "What Your Newborn Session Looks Like remains unchanged"
+  ],
+  "prompt": "Long desktop service-page comp below a protected hero: olive direct answer with four-point proof ledger and arch, asymmetric photo essay, protected process band, giant No hard deadline spread, twenty-year vertical record, indexed FAQ with selected answer and sand final CTA. Warm ivory, walnut, muted olive and sand; editorial serif, sans-serif body, square edges and hairlines. No generated people: neutral PHOTO placeholders only. No copied brand, tape, splatters, handwriting, gradients, rounded cards, pills, shadows or SaaS patterns.",
+  "assetPolicy": "Generated placeholders describe geometry only; production uses verified Lisa Weiss photographs."
+}

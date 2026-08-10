@@ -1,7 +1,6 @@
 .newborn-page {
   --newborn-umber: var(--color-canvas);
   --newborn-walnut: var(--color-surface-decorative);
-  --newborn-earth: var(--color-surface-sand);
   --newborn-olive: var(--color-surface-sage);
   --newborn-sand: var(--color-surface-oatmeal);
   --newborn-ivory: var(--color-header);
@@ -46,12 +45,6 @@
   line-height: 1.55;
 }
 
-.newborn-script {
-  font-family: var(--font-script);
-  font-weight: var(--font-weight-regular);
-  line-height: 0.9;
-}
-
 .newborn-rule {
   display: block;
   width: 3.75rem;
@@ -59,23 +52,6 @@
   margin-bottom: 1.5rem;
   background: currentColor;
   opacity: 0.58;
-}
-
-.newborn-print {
-  padding: 0.625rem 0.625rem 1.65rem;
-  background: var(--newborn-ivory);
-}
-
-.newborn-tape {
-  position: absolute;
-  z-index: 4;
-  top: -1.05rem;
-  right: 2.25rem;
-  width: 7.1rem;
-  height: 1.75rem;
-  background: rgba(182, 169, 151, 0.72);
-  transform: rotate(24deg);
-  transform-origin: center;
 }
 
 .newborn-text-link {
@@ -90,119 +66,6 @@
   line-height: 1.25;
   text-decoration: none;
   text-transform: uppercase;
-}
-
-/* Those first days */
-
-.newborn-first-days {
-  position: relative;
-  z-index: 2;
-  padding: 6.75rem 0 7.75rem;
-  background: var(--newborn-ivory);
-}
-
-.newborn-first-days__inner {
-  display: grid;
-  grid-template-columns: minmax(20rem, 25rem) minmax(0, 1fr);
-  gap: clamp(4rem, 8vw, 7.75rem);
-  align-items: center;
-}
-
-.newborn-first-days__arch {
-  position: relative;
-  z-index: 3;
-  align-self: center;
-  width: 100%;
-  height: 29.5rem;
-  overflow: hidden;
-  border-radius: 999px 999px 0 0;
-  outline: 1px solid rgba(73, 54, 33, 0.52);
-  outline-offset: 0.75rem;
-  transform: none;
-}
-
-.newborn-first-days__arch img {
-  object-position: 50% 50%;
-}
-
-.newborn-first-days__copy {
-  max-width: 36rem;
-}
-
-.newborn-first-days h2 {
-  max-width: 34rem;
-  margin-bottom: 1.5rem;
-  font-size: clamp(2.8rem, 4.3vw, 4rem);
-}
-
-/* Baby-led */
-
-.newborn-baby-led {
-  position: relative;
-  padding: 9.25rem 0 8.5rem;
-  color: var(--newborn-ivory);
-  background: var(--newborn-olive);
-}
-
-.newborn-baby-led__inner {
-  display: grid;
-  grid-template-columns: minmax(17rem, 0.78fr) minmax(30rem, 1.35fr);
-  gap: clamp(4rem, 7vw, 7.5rem);
-  align-items: center;
-}
-
-.newborn-baby-led__copy {
-  max-width: 31rem;
-}
-
-.newborn-baby-led h2 {
-  margin-bottom: 1.65rem;
-  font-size: clamp(2.85rem, 4.4vw, 4.15rem);
-}
-
-.newborn-baby-led__media {
-  position: relative;
-  min-height: 31rem;
-}
-
-.newborn-baby-led__primary {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(100%, 36rem);
-}
-
-.newborn-baby-led__primary picture,
-.newborn-baby-led__primary img {
-  aspect-ratio: 4 / 3;
-}
-
-.newborn-baby-led__primary img {
-  object-position: 50% 42%;
-}
-
-.newborn-baby-led__secondary {
-  position: absolute;
-  z-index: 3;
-  right: -1.5rem;
-  bottom: -0.5rem;
-  width: 11.75rem;
-  padding-bottom: 1.35rem;
-  transform: rotate(3deg);
-}
-
-.newborn-baby-led__secondary picture,
-.newborn-baby-led__secondary img {
-  aspect-ratio: 3 / 4;
-}
-
-.newborn-baby-led__script {
-  position: absolute;
-  z-index: 4;
-  right: 9.75rem;
-  bottom: 0.4rem;
-  font-size: clamp(2.6rem, 4vw, 3.75rem);
-  white-space: nowrap;
 }
 
 /* Process */
@@ -320,289 +183,6 @@
   line-height: 1.45;
 }
 
-/* Growing families */
-
-.newborn-growing {
-  position: relative;
-  min-height: 40rem;
-  color: var(--newborn-ivory);
-  background: var(--newborn-umber);
-  isolation: isolate;
-}
-
-.newborn-growing__background,
-.newborn-growing__background picture,
-.newborn-growing__background img,
-.newborn-growing__wash {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.newborn-growing__background {
-  z-index: -2;
-}
-
-.newborn-growing__background-image {
-  object-position: 50% 62%;
-  filter:
-    saturate(var(--photo-banner-saturation))
-    contrast(var(--photo-banner-contrast))
-    brightness(0.82)
-    sepia(var(--photo-banner-sepia));
-}
-
-.newborn-growing__wash {
-  background: rgba(40, 30, 16, 0.55);
-}
-
-.newborn-growing__inner {
-  display: grid;
-  grid-template-columns: minmax(20rem, 0.86fr) minmax(27rem, 1.14fr);
-  gap: clamp(4rem, 7vw, 7rem);
-  align-items: center;
-  min-height: 40rem;
-  padding-block: 5.25rem 6.75rem;
-}
-
-.newborn-growing__copy {
-  position: relative;
-  z-index: 3;
-  max-width: 32rem;
-}
-
-.newborn-growing h2 {
-  margin-bottom: 1.45rem;
-  font-size: clamp(3rem, 4.7vw, 4.35rem);
-}
-
-.newborn-growing .newborn-text-link {
-  margin-top: 1.5rem;
-}
-
-.newborn-growing__prints {
-  position: relative;
-  z-index: 3;
-  min-height: 30rem;
-}
-
-.newborn-growing__print {
-  position: absolute;
-}
-
-.newborn-growing__print--rear {
-  top: 0;
-  right: 0;
-  width: min(18.5rem, 58%);
-  transform: rotate(2deg);
-}
-
-.newborn-growing__print--rear picture,
-.newborn-growing__print--rear img {
-  aspect-ratio: 3 / 4;
-}
-
-.newborn-growing__print--rear img {
-  object-position: 50% 61%;
-}
-
-.newborn-growing__print--front {
-  bottom: 0.4rem;
-  left: 0;
-  width: min(22rem, 69%);
-  padding-bottom: 1.35rem;
-  transform: rotate(-2deg);
-}
-
-.newborn-growing__print--front picture,
-.newborn-growing__print--front img {
-  aspect-ratio: 3 / 2;
-}
-
-.newborn-growing__paper-edge {
-  position: absolute;
-  z-index: 5;
-  right: -1%;
-  bottom: -1px;
-  left: -1%;
-  height: 1.6rem;
-  background: var(--newborn-ivory);
-  clip-path: polygon(
-    0 54%,
-    5% 39%,
-    11% 57%,
-    17% 36%,
-    23% 51%,
-    29% 33%,
-    35% 58%,
-    41% 38%,
-    47% 55%,
-    53% 32%,
-    59% 50%,
-    65% 35%,
-    71% 58%,
-    77% 36%,
-    83% 53%,
-    89% 34%,
-    95% 55%,
-    100% 39%,
-    100% 100%,
-    0 100%
-  );
-}
-
-/* FAQ + pinned closing note */
-
-.newborn-faq {
-  padding: 7.5rem 0 8.5rem;
-  background: var(--newborn-ivory);
-}
-
-.newborn-faq__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.72fr);
-  gap: clamp(4rem, 7vw, 7.5rem);
-  align-items: start;
-}
-
-.newborn-faq__heading {
-  margin-bottom: 2.25rem;
-}
-
-.newborn-faq h2 {
-  font-size: clamp(2.85rem, 4.4vw, 4rem);
-}
-
-.newborn-faq__list {
-  border-bottom: 1px solid rgba(73, 54, 33, 0.58);
-}
-
-.newborn-faq__item {
-  border-top: 1px solid rgba(73, 54, 33, 0.58);
-}
-
-.newborn-faq__item summary {
-  display: grid;
-  grid-template-columns: 2.3rem 1fr 1.5rem;
-  gap: 0.75rem;
-  align-items: center;
-  min-height: 4.75rem;
-  padding-block: 1rem;
-  cursor: pointer;
-  list-style: none;
-}
-
-.newborn-faq__item summary::-webkit-details-marker {
-  display: none;
-}
-
-.newborn-faq__item summary:focus-visible {
-  outline: 2px solid var(--color-focus-ring-dark);
-  outline-offset: 0.25rem;
-}
-
-.newborn-faq__number {
-  color: var(--newborn-clay);
-  font-family: var(--font-utility);
-  font-size: var(--font-size-caption);
-  letter-spacing: var(--tracking-caption);
-}
-
-.newborn-faq__question {
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2vw, 1.75rem);
-  line-height: 1.15;
-}
-
-.newborn-faq__mark {
-  position: relative;
-  width: 1rem;
-  height: 1rem;
-  justify-self: end;
-}
-
-.newborn-faq__mark::before,
-.newborn-faq__mark::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1rem;
-  height: 1px;
-  background: currentColor;
-  content: "";
-  transform: translate(-50%, -50%);
-}
-
-.newborn-faq__mark::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.newborn-faq__item[open] .newborn-faq__mark::after {
-  display: none;
-}
-
-.newborn-faq__answer {
-  max-width: 42rem;
-  padding: 0 2.25rem 1.75rem 3.05rem;
-}
-
-.newborn-faq__answer p {
-  font-family: var(--font-body);
-  font-size: 1.125rem;
-  font-style: italic;
-  line-height: 1.5;
-}
-
-.newborn-faq__answer .newborn-text-link {
-  margin-top: 0.9rem;
-}
-
-.newborn-faq__links {
-  margin-top: 1.5rem;
-}
-
-.newborn-note {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  width: 100%;
-  aspect-ratio: 5 / 7;
-  align-items: center;
-  margin-top: 2.5rem;
-  padding: 4.4rem 3.25rem 3.75rem;
-  color: var(--newborn-ivory);
-  background: transparent;
-}
-
-.newborn-note__paper {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-}
-
-.newborn-note__paper picture,
-.newborn-note__paper img {
-  width: 100%;
-  height: 100%;
-}
-
-.newborn-note__paper picture img {
-  object-fit: fill;
-}
-
-.newborn-note__content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-}
-
-.newborn-note h2 {
-  margin-bottom: 1.25rem;
-  font-size: clamp(2.35rem, 3.4vw, 3.05rem);
-}
-
 /* Match the established Seniors display-heading voice across every Newborn H2. */
 .newborn-page h2 {
   font-family: var(--font-display);
@@ -614,27 +194,9 @@
   text-wrap: balance;
 }
 
-.newborn-note p {
-  font-family: var(--font-body);
-  font-size: 1.1875rem;
-  font-style: italic;
-  line-height: 1.5;
-}
-
-.newborn-note .outline-button {
-  margin-top: 1.8rem;
-  border-color: currentColor;
-  color: var(--newborn-ivory);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .newborn-text-link:hover {
     color: var(--newborn-clay);
-  }
-
-  .newborn-note .outline-button:hover {
-    color: var(--newborn-umber);
-    background: var(--newborn-ivory);
   }
 }
 
@@ -642,61 +204,11 @@
   .newborn-shell {
     width: min(calc(100% - 8rem), 67rem);
   }
-
-  .newborn-first-days__inner {
-    grid-template-columns: minmax(19rem, 22.5rem) minmax(0, 1fr);
-    gap: 5rem;
-  }
-
-  .newborn-first-days__arch {
-    height: 27rem;
-  }
-
-  .newborn-baby-led__inner {
-    grid-template-columns: minmax(17rem, 0.8fr) minmax(26rem, 1.2fr);
-    gap: 4.5rem;
-  }
 }
 
 @media (max-width: 65.625rem) {
   .newborn-shell {
     width: min(calc(100% - 4.5rem), 58rem);
-  }
-
-  .newborn-first-days {
-    padding: 5.5rem 0 6.5rem;
-  }
-
-  .newborn-first-days__inner {
-    grid-template-columns: minmax(16rem, 18rem) minmax(0, 1fr);
-    gap: 3.4rem;
-  }
-
-  .newborn-first-days__arch {
-    height: 22rem;
-  }
-
-  .newborn-baby-led {
-    padding-block: 7.5rem 6.75rem;
-  }
-
-  .newborn-baby-led__inner {
-    grid-template-columns: minmax(15.5rem, 0.8fr) minmax(22rem, 1.2fr);
-    gap: 2.75rem;
-  }
-
-  .newborn-baby-led__media {
-    min-height: 25rem;
-  }
-
-  .newborn-baby-led__secondary {
-    right: -1rem;
-    width: 9rem;
-  }
-
-  .newborn-baby-led__script {
-    right: 11rem;
-    font-size: 2.65rem;
   }
 
   .newborn-process {
@@ -723,36 +235,6 @@
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
-
-  .newborn-growing,
-  .newborn-growing__inner {
-    min-height: 36rem;
-  }
-
-  .newborn-growing__inner {
-    grid-template-columns: minmax(17rem, 0.85fr) minmax(21rem, 1.15fr);
-    gap: 3rem;
-  }
-
-  .newborn-growing__prints {
-    min-height: 25rem;
-  }
-
-  .newborn-faq {
-    padding-block: 6.5rem 7rem;
-  }
-
-  .newborn-faq__inner {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
-
-  .newborn-note {
-    width: min(100%, 26.5rem);
-    justify-self: center;
-    margin: 1rem auto 0;
-    padding-inline: 3.5rem;
-  }
 }
 
 @media (max-width: 47.9375rem) {
@@ -764,78 +246,8 @@
     font-size: 1.125rem;
   }
 
-  .newborn-first-days {
-    padding: 4.75rem 0 5.75rem;
-  }
-
-  .newborn-first-days__inner,
-  .newborn-baby-led__inner,
-  .newborn-growing__inner,
-  .newborn-faq__inner {
-    grid-template-columns: 1fr;
-  }
-
-  .newborn-first-days__inner {
-    gap: 4.75rem;
-  }
-
-  .newborn-first-days__arch {
-    width: min(18rem, 84vw);
-    height: 22rem;
-    margin-inline: auto;
-    transform: none;
-  }
-
-  .newborn-first-days__copy {
-    max-width: 35rem;
-  }
-
-  .newborn-first-days h2,
-  .newborn-baby-led h2,
-  .newborn-process h2,
-  .newborn-growing h2,
-  .newborn-faq h2 {
+  .newborn-process h2 {
     font-size: clamp(2.55rem, 11vw, 3.2rem);
-  }
-
-  .newborn-baby-led {
-    padding-block: 5.75rem 6.5rem;
-  }
-
-  .newborn-baby-led__inner {
-    gap: 3.75rem;
-  }
-
-  .newborn-baby-led__copy {
-    max-width: 35rem;
-  }
-
-  .newborn-baby-led__media {
-    min-height: 25.5rem;
-  }
-
-  .newborn-baby-led__primary {
-    right: auto;
-    left: 0;
-    width: calc(100% - 1rem);
-  }
-
-  .newborn-baby-led__secondary {
-    right: -0.65rem;
-    bottom: -0.5rem;
-    width: 8.25rem;
-  }
-
-  .newborn-baby-led__script {
-    right: 9.25rem;
-    bottom: 0.3rem;
-    font-size: 2.25rem;
-  }
-
-  .newborn-tape {
-    right: 1.4rem;
-    width: 5.25rem;
-    height: 1.3rem;
   }
 
   .newborn-process {
@@ -880,63 +292,6 @@
   .newborn-process__copy {
     grid-template-columns: auto 1fr;
   }
-
-  .newborn-growing {
-    min-height: 51rem;
-  }
-
-  .newborn-growing__background-image {
-    object-position: 50% 58%;
-  }
-
-  .newborn-growing__inner {
-    gap: 3.25rem;
-    align-content: start;
-    min-height: 51rem;
-    padding-block: 5rem 6.5rem;
-  }
-
-  .newborn-growing__copy {
-    max-width: 32rem;
-  }
-
-  .newborn-growing__prints {
-    min-height: 22rem;
-  }
-
-  .newborn-growing__print--rear {
-    right: 0.6rem;
-    width: min(13rem, 56%);
-  }
-
-  .newborn-growing__print--front {
-    bottom: 0;
-    width: min(17rem, 72%);
-  }
-
-  .newborn-faq {
-    padding-block: 5.75rem 6.5rem;
-  }
-
-  .newborn-faq__inner {
-    gap: 3rem;
-  }
-
-  .newborn-faq__item summary {
-    grid-template-columns: 1.8rem 1fr 1.25rem;
-    min-height: 4.5rem;
-  }
-
-  .newborn-faq__answer {
-    padding-right: 1rem;
-    padding-left: 2.55rem;
-  }
-
-  .newborn-note {
-    width: min(100%, 26.5rem);
-    margin: 1rem auto 0;
-    padding: 4.4rem 3.25rem 3.5rem;
-  }
 }
 
 @media (max-width: 29.9375rem) {
@@ -944,42 +299,8 @@
     width: calc(100% - 2.5rem);
   }
 
-  .newborn-first-days__inner {
-    gap: 3.75rem;
-  }
-
-  .newborn-first-days {
-    padding-bottom: 5rem;
-  }
-
-  .newborn-baby-led__media {
-    min-height: 22.5rem;
-  }
-
-  .newborn-baby-led__script {
-    right: 8.5rem;
-    font-size: 2rem;
-  }
-
   .newborn-process__copy {
     grid-template-columns: 1fr;
-  }
-
-  .newborn-growing,
-  .newborn-growing__inner {
-    min-height: 49rem;
-  }
-
-  .newborn-growing__prints {
-    min-height: 20rem;
-  }
-
-  .newborn-faq__question {
-    font-size: 1.25rem;
-  }
-
-  .newborn-note {
-    padding: 4.1rem 2rem 2.75rem;
   }
 }
 
@@ -991,5 +312,628 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* 2026 storybook-ledger redesign: protected hero and process rules above remain intact. */
+
+.newborn-short-answer {
+  padding: clamp(6.5rem, 9vw, 9rem) 0;
+  background: var(--newborn-ivory);
+}
+
+.newborn-short-answer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(22rem, 1.08fr);
+  gap: clamp(3.5rem, 7vw, 7.25rem);
+  align-items: center;
+}
+
+.newborn-short-answer__copy {
+  max-width: 35rem;
+}
+
+.newborn-short-answer h2,
+.newborn-these-days h2,
+.newborn-booking h2,
+.newborn-archive h2,
+.newborn-questions h2,
+.newborn-final h2 {
+  overflow-wrap: break-word;
+}
+
+.newborn-short-answer h2 {
+  max-width: 11ch;
+  margin-bottom: 1.75rem;
+  font-size: clamp(3rem, 4.7vw, 4.5rem);
+}
+
+.newborn-short-answer__photo {
+  width: min(100%, 34rem);
+  justify-self: end;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--newborn-walnut) 24%, transparent);
+  aspect-ratio: 4 / 5;
+}
+
+.newborn-short-answer__photo picture,
+.newborn-short-answer__photo img {
+  height: 100%;
+}
+
+.newborn-short-answer__photo img {
+  object-position: 69% 50%;
+}
+
+.newborn-these-days {
+  padding: clamp(7rem, 10vw, 10rem) 0;
+  background: var(--newborn-ivory);
+  border-top: 1px solid color-mix(in srgb, var(--newborn-walnut) 20%, transparent);
+}
+
+.newborn-these-days__inner {
+  display: grid;
+  grid-template-columns: minmax(18rem, 25rem) minmax(0, 1fr);
+  gap: clamp(4rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.newborn-these-days__arch {
+  width: 100%;
+  height: 35rem;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  outline: 1px solid color-mix(in srgb, var(--newborn-walnut) 45%, transparent);
+  outline-offset: 0.75rem;
+}
+
+.newborn-these-days__arch picture,
+.newborn-these-days__arch img {
+  height: 100%;
+}
+
+.newborn-these-days__arch img {
+  object-position: 50% 47%;
+}
+
+.newborn-these-days__copy {
+  max-width: 41rem;
+}
+
+.newborn-these-days h2 {
+  max-width: 13ch;
+  margin-bottom: 1.75rem;
+  font-size: clamp(3rem, 4.8vw, 4.6rem);
+}
+
+.newborn-booking {
+  padding: clamp(6.75rem, 9vw, 9rem) 0 clamp(7.75rem, 10vw, 10rem);
+  background: var(--newborn-sand);
+}
+
+.newborn-booking__heading {
+  width: min(100%, 50rem);
+  margin-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.newborn-booking h2 {
+  font-size: clamp(2.75rem, 4.2vw, 4rem);
+}
+
+.newborn-booking__spread {
+  display: grid;
+  grid-template-columns: minmax(20rem, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(3.5rem, 8vw, 8rem);
+  align-items: center;
+  padding-top: clamp(2.75rem, 4vw, 4.25rem);
+  border-top: 1px solid color-mix(in srgb, var(--newborn-walnut) 48%, transparent);
+}
+
+.newborn-booking__statement h3 {
+  position: relative;
+  z-index: 2;
+  max-width: 9ch;
+  color: var(--newborn-olive);
+  font-size: clamp(4rem, 7.2vw, 6rem);
+  letter-spacing: -0.035em;
+  line-height: 0.86;
+  text-wrap: balance;
+}
+
+.newborn-booking__photo {
+  width: min(62%, 22rem);
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  aspect-ratio: 4 / 5;
+}
+
+.newborn-booking__photo picture,
+.newborn-booking__photo img {
+  height: 100%;
+}
+
+.newborn-booking__photo img {
+  object-position: 50% 44%;
+}
+
+.newborn-booking__copy {
+  max-width: 34rem;
+}
+
+.newborn-booking .newborn-text-link {
+  margin-top: 2rem;
+}
+
+.newborn-booking .newborn-text-link::after {
+  margin-left: 0.75rem;
+  content: "→";
+}
+
+.newborn-archive {
+  padding: clamp(7.5rem, 10vw, 10rem) 0;
+  color: var(--newborn-ivory);
+  background: var(--newborn-olive);
+}
+
+.newborn-archive__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(24rem, 1.12fr);
+  gap: clamp(4rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.newborn-archive__copy {
+  max-width: 34rem;
+}
+
+.newborn-archive h2 {
+  max-width: 12ch;
+  margin-bottom: 1.75rem;
+  font-size: clamp(3rem, 4.8vw, 4.6rem);
+}
+
+.newborn-archive__copy a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.newborn-archive__media {
+  position: relative;
+  min-height: 35rem;
+}
+
+.newborn-archive__photo {
+  position: absolute;
+  overflow: hidden;
+  border: 0.625rem solid var(--newborn-ivory);
+  background: var(--newborn-ivory);
+}
+
+.newborn-archive__photo picture,
+.newborn-archive__photo img {
+  height: 100%;
+}
+
+.newborn-archive__photo--primary {
+  top: 0;
+  right: 0;
+  width: min(72%, 23rem);
+  aspect-ratio: 3 / 4;
+}
+
+.newborn-archive__photo--primary img {
+  object-position: 50% 55%;
+}
+
+.newborn-archive__photo--secondary {
+  bottom: 0;
+  left: 0;
+  width: min(49%, 15.5rem);
+  aspect-ratio: 4 / 5;
+}
+
+.newborn-archive__photo--secondary img {
+  object-position: 50% 50%;
+}
+
+.newborn-questions {
+  padding: clamp(7rem, 9vw, 9rem) 0 clamp(7.5rem, 10vw, 10rem);
+  background: var(--newborn-ivory);
+}
+
+.newborn-questions__inner,
+.newborn-questions__heading,
+.newborn-questions__list,
+.newborn-questions__item,
+.newborn-questions__item summary,
+.newborn-questions__answer {
+  min-width: 0;
+}
+
+.newborn-questions__heading {
+  width: min(100%, 48rem);
+  margin-bottom: 3.25rem;
+}
+
+.newborn-questions h2 {
+  font-size: clamp(3rem, 4.8vw, 4.6rem);
+}
+
+.newborn-questions__list {
+  border-bottom: 1px solid color-mix(in srgb, var(--newborn-walnut) 52%, transparent);
+}
+
+.newborn-questions__item {
+  display: grid;
+  grid-template-columns: minmax(17.5rem, 0.82fr) minmax(0, 1.18fr);
+  column-gap: clamp(2.5rem, 5vw, 5rem);
+  border-top: 1px solid color-mix(in srgb, var(--newborn-walnut) 52%, transparent);
+}
+
+.newborn-questions__item summary {
+  display: grid;
+  grid-column: 1;
+  grid-template-columns: 2.3rem minmax(0, 1fr) 1.5rem;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 4.75rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.newborn-questions__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.newborn-questions__item summary:focus-visible,
+.newborn-booking a:focus-visible,
+.newborn-archive a:focus-visible,
+.newborn-final a:focus-visible {
+  outline: 2px solid var(--color-focus-ring-dark);
+  outline-offset: 0.25rem;
+}
+
+.newborn-archive a:focus-visible {
+  outline-color: var(--color-focus-ring-light);
+}
+
+.newborn-questions__number {
+  color: var(--newborn-clay);
+  font-family: var(--font-utility);
+  font-size: var(--font-size-caption);
+  letter-spacing: var(--tracking-caption);
+}
+
+.newborn-questions__question {
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.8vw, 1.65rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.newborn-questions__mark {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  justify-self: end;
+}
+
+.newborn-questions__mark::before,
+.newborn-questions__mark::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.newborn-questions__mark::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.newborn-questions__item[open] .newborn-questions__mark::after {
+  display: none;
+}
+
+.newborn-questions__answer {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 1.2rem 0 1.75rem clamp(2rem, 4vw, 4rem);
+  border-left: 1px solid color-mix(in srgb, var(--newborn-walnut) 32%, transparent);
+}
+
+.newborn-questions__answer p {
+  max-width: 38rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  font-style: italic;
+  line-height: 1.58;
+  overflow-wrap: anywhere;
+}
+
+.newborn-final {
+  background: var(--newborn-sand);
+}
+
+.newborn-final__inner {
+  display: grid;
+  grid-template-columns: minmax(19rem, 0.82fr) minmax(0, 1.18fr);
+  min-height: 39rem;
+}
+
+.newborn-final__copy {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  width: min(100%, 32rem);
+  margin-left: max(2.5rem, calc((100vw - 73.75rem) / 2));
+  padding: 5rem 4rem 5rem 0;
+}
+
+.newborn-final h2 {
+  max-width: 10ch;
+  margin-bottom: 1.5rem;
+  font-size: clamp(3rem, 4.8vw, 4.6rem);
+}
+
+.newborn-final p {
+  max-width: 29rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.58;
+}
+
+.newborn-final .outline-button {
+  margin-top: 2rem;
+  border-color: currentColor;
+  color: currentColor;
+}
+
+.newborn-final__photo {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 39rem;
+  overflow: hidden;
+}
+
+.newborn-final__photo picture,
+.newborn-final__photo img {
+  height: 100%;
+}
+
+.newborn-final__photo img {
+  object-position: 50% 46%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .newborn-archive__copy a:hover {
+    color: var(--newborn-sand);
+  }
+
+  .newborn-final .outline-button:hover {
+    color: var(--newborn-ivory);
+    background: var(--newborn-umber);
+  }
+}
+
+@media (max-width: 78.125rem) {
+  .newborn-these-days__arch {
+    height: 31rem;
+  }
+
+  .newborn-final__copy {
+    margin-left: 4rem;
+  }
+}
+
+@media (max-width: 65.625rem) {
+  .newborn-short-answer__inner {
+    grid-template-columns: minmax(0, 0.94fr) minmax(20rem, 1.06fr);
+    gap: 3.5rem;
+  }
+
+  .newborn-these-days__inner {
+    grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+    gap: 4rem;
+  }
+
+  .newborn-these-days__arch {
+    height: 27rem;
+  }
+
+  .newborn-booking__spread {
+    grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.1fr);
+    gap: 3.5rem;
+  }
+
+  .newborn-archive__inner {
+    grid-template-columns: minmax(0, 0.9fr) minmax(21rem, 1.1fr);
+    gap: 3.5rem;
+  }
+
+  .newborn-archive__media {
+    min-height: 29rem;
+  }
+
+  .newborn-questions__item {
+    grid-template-columns: minmax(16rem, 0.82fr) minmax(0, 1.18fr);
+    column-gap: 2rem;
+  }
+
+  .newborn-final__copy {
+    margin-left: 2.25rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .newborn-short-answer,
+  .newborn-these-days,
+  .newborn-booking,
+  .newborn-archive,
+  .newborn-questions {
+    padding-block: 5.75rem;
+  }
+
+  .newborn-short-answer__inner,
+  .newborn-these-days__inner,
+  .newborn-booking__spread,
+  .newborn-archive__inner,
+  .newborn-final__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .newborn-short-answer__inner {
+    gap: 3.75rem;
+  }
+
+  .newborn-short-answer h2,
+  .newborn-these-days h2,
+  .newborn-booking h2,
+  .newborn-archive h2,
+  .newborn-questions h2,
+  .newborn-final h2 {
+    font-size: clamp(2.55rem, 11vw, 3.2rem);
+  }
+
+  .newborn-short-answer__photo {
+    width: 100%;
+    justify-self: stretch;
+    aspect-ratio: 4 / 5;
+  }
+
+  .newborn-these-days__inner {
+    gap: 4.75rem;
+  }
+
+  .newborn-these-days__arch {
+    width: min(22rem, 84vw);
+    height: min(29rem, 110vw);
+    margin-inline: auto;
+  }
+
+  .newborn-booking__heading {
+    margin-bottom: 2.75rem;
+  }
+
+  .newborn-booking__spread {
+    gap: 3.5rem;
+  }
+
+  .newborn-booking__statement h3 {
+    font-size: clamp(3.85rem, 18vw, 5.25rem);
+  }
+
+  .newborn-booking__photo {
+    width: min(76vw, 21rem);
+  }
+
+  .newborn-archive__inner {
+    gap: 3.75rem;
+  }
+
+  .newborn-archive__media {
+    min-height: 26rem;
+  }
+
+  .newborn-questions__heading {
+    margin-bottom: 2.5rem;
+  }
+
+  .newborn-questions__item {
+    display: block;
+  }
+
+  .newborn-questions__item summary {
+    grid-template-columns: 1.8rem minmax(0, 1fr) 1.25rem;
+    min-height: 4.5rem;
+  }
+
+  .newborn-questions__answer {
+    padding: 0 1rem 1.75rem 2.55rem;
+    border-left: 0;
+  }
+
+  .newborn-final__inner {
+    min-height: 0;
+  }
+
+  .newborn-final__copy,
+  .newborn-final__photo {
+    grid-column: 1;
+  }
+
+  .newborn-final__copy {
+    grid-row: 1;
+    width: min(calc(100% - 3rem), 35rem);
+    margin-inline: auto;
+    padding: 5.75rem 0;
+  }
+
+  .newborn-final__photo {
+    grid-row: 2;
+    min-height: 31rem;
+  }
+}
+
+@media (max-width: 29.9375rem) {
+  .newborn-short-answer,
+  .newborn-these-days,
+  .newborn-booking,
+  .newborn-archive,
+  .newborn-questions {
+    padding-block: 5rem;
+  }
+
+  .newborn-short-answer h2,
+  .newborn-these-days h2,
+  .newborn-booking h2,
+  .newborn-archive h2,
+  .newborn-questions h2,
+  .newborn-final h2 {
+    font-size: clamp(2.3rem, 12vw, 2.85rem);
+  }
+
+  .newborn-booking__statement h3 {
+    max-width: 8ch;
+    font-size: clamp(3.5rem, 20vw, 4.5rem);
+  }
+
+  .newborn-archive__media {
+    min-height: 22rem;
+  }
+
+  .newborn-archive__photo {
+    border-width: 0.45rem;
+  }
+
+  .newborn-questions__item summary {
+    grid-template-columns: 1.65rem minmax(0, 1fr) 1.1rem;
+    gap: 0.55rem;
+  }
+
+  .newborn-questions__question {
+    font-size: 1.2rem;
+  }
+
+  .newborn-questions__answer {
+    padding-left: 2.2rem;
+  }
+
+  .newborn-final__copy {
+    width: calc(100% - 2.5rem);
+    padding-block: 5rem;
+  }
+
+  .newborn-final__photo {
+    min-height: 26rem;
   }
 }

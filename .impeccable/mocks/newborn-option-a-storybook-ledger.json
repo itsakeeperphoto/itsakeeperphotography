@@ -1,0 +1,23 @@
+{
+  "surface": "/newborn-photographer-tri-cities-wa/",
+  "option": "A",
+  "name": "Storybook ledger",
+  "viewport": "1440px desktop long page",
+  "approved": true,
+  "canonical": true,
+  "approvedOn": "2026-08-10",
+  "approvedCombination": {
+    "base": "newborn-option-a-storybook-ledger.png",
+    "carryForwardFrom": "newborn-option-c-archival-proofbook.png",
+    "elements": [
+      "No hard deadline booking spread",
+      "master-detail FAQ composition"
+    ]
+  },
+  "protected": [
+    "Existing EditorialHero remains unchanged",
+    "What Your Newborn Session Looks Like remains unchanged"
+  ],
+  "prompt": "Long desktop service-page comp below a protected hero: direct-answer split, arched personal-story section, protected process band, oversized probably-not-too-late booking ledger, dark twenty-year story chapter, eight-row FAQ ledger, and split final CTA. Warm ivory, walnut, muted olive and sand; editorial serif, sans-serif body, square edges and hairlines. No generated people: neutral PHOTO placeholders only. No copied brand, tape, splatters, handwriting, gradients, rounded cards, pills, shadows or SaaS patterns.",
+  "assetPolicy": "Generated placeholders describe geometry only; production uses verified Lisa Weiss photographs."
+}

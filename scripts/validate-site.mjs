@@ -1,5 +1,6 @@
 import { readFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 
 const mode = process.env.SITE_MODE || process.env.PUBLICATION_MODE || "staging";
@@ -23,6 +24,31 @@ const htmlFiles = (await collectHtml(output)).filter(
   (file) => !file.includes(`${path.sep}admin${path.sep}`)
 );
 const failures = [];
+const newbornSource = JSON.parse(
+  await readFile(path.join(root, "content", "pages", "newborn.json"), "utf8"),
+);
+const newbornProtectedContent = {
+  hero: {
+    value: newbornSource.hero,
+    sha256: "699c9486f5e59f0b1d898943f0b062fb8251f8de6c1c2b60f53268bcc6d05e85",
+  },
+  process: {
+    value: newbornSource.sections?.find(
+      (section) => section.id === "newborn-session-process",
+    ),
+    sha256: "23dac799de1ec93127927a678e95fcc25d60da9dbd6c8835fc2cbf3d6e803ad3",
+  },
+};
+for (const [region, contract] of Object.entries(newbornProtectedContent)) {
+  const digest = createHash("sha256")
+    .update(JSON.stringify(contract.value))
+    .digest("hex");
+  if (digest !== contract.sha256) {
+    failures.push(
+      `content/pages/newborn.json: protected ${region} subtree changed (${digest})`,
+    );
+  }
+}
 const decodeHtml = (value = "") =>
   value
     .replace(/&#(\d+);/g, (_match, code) => String.fromCodePoint(Number(code)))
@@ -38,7 +64,10 @@ const decodeHtml = (value = "") =>
       "&#39;": "'",
     })[entity]);
 const normalizedText = (value = "") =>
-  decodeHtml(value.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+  decodeHtml(value.replace(/<[^>]*>/g, " "))
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 const sectionById = (source, id) => {
   const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return source.match(
@@ -92,6 +121,7 @@ const internalTargetExists = (href) => {
 const indexableReleaseFiles = new Set([
   "index.html",
   `family-photographer-tri-cities-wa${path.sep}index.html`,
+  `newborn-photographer-tri-cities-wa${path.sep}index.html`,
   `richland-wa-photographer${path.sep}index.html`,
   `kennewick-wa-photographer${path.sep}index.html`,
   `pasco-wa-photographer${path.sep}index.html`,
@@ -104,6 +134,7 @@ const expandedDirectoryLinkCounts = new Map([
   [`pasco-wa-photographer${path.sep}index.html`, 8],
 ]);
 const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
+const newbornRelative = `newborn-photographer-tri-cities-wa${path.sep}index.html`;
 const activeCityGalleryContracts = new Map([
   [
     `richland-wa-photographer${path.sep}index.html`,
@@ -291,6 +322,169 @@ for (const file of htmlFiles) {
     }
     if (!/href="https:\/\/www\.itsakeeperphotography\.com(?:\/|[^\"]*\/)"/i.test(source)) {
       failures.push(`${relative}: release canonical does not use the custom-domain origin`);
+    }
+  }
+  if (relative === newbornRelative) {
+    const expectedOrigin = mode === "release"
+      ? "https://www.itsakeeperphotography.com"
+      : "https://itsakeeperphotography.netlify.app";
+    const canonical = `${expectedOrigin}/newborn-photographer-tri-cities-wa/`;
+    const schemas = parseJsonLd(source, relative);
+    const h1Texts = [...main.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const expectedH2Texts = [
+      "The Short Answer: I Come to You",
+      "These Days Go So Fast",
+      "What Your Newborn Session Looks Like",
+      "When to Book — and Why It's Probably Not Too Late",
+      "Twenty Years of Watching Them Grow Up",
+      "Newborn Session Questions",
+      "Expecting? Let's Talk Early",
+    ];
+    const expectedFaqQuestions = [
+      "Where do newborn sessions take place?",
+      "When should newborn photos be taken?",
+      "Do you use props or a studio setup?",
+      "What if my baby cries the whole time?",
+      "Is my house too small or too dark?",
+      "Can we include siblings, grandparents or pets?",
+      "What should we wear?",
+      "How long until we see the photos?",
+    ];
+    const expectedInternalAnchors = [
+      "/contact/",
+      "/journal/in-home-vs-studio-newborn-photography/",
+      "/family-photographer-tri-cities-wa/",
+      "/contact/",
+    ];
+
+    if (!source.includes(`<link rel="canonical" href="${canonical}">`)) {
+      failures.push(`${relative}: canonical must match the Newborn route exactly`);
+    }
+    if (!/data-content-status=["']ready["']/i.test(main)) {
+      failures.push(`${relative}: Newborn must render with ready content status`);
+    }
+    if (
+      JSON.stringify(h1Texts) !==
+      JSON.stringify(["Newborn Photographer in the Tri-Cities, WA"])
+    ) {
+      failures.push(
+        `${relative}: H1 must be exactly "Newborn Photographer in the Tri-Cities, WA"`,
+      );
+    }
+    if (JSON.stringify(h2Texts) !== JSON.stringify(expectedH2Texts)) {
+      failures.push(`${relative}: expected the approved seven H2 headings in order`);
+    }
+    if (JSON.stringify(internalAnchors) !== JSON.stringify(expectedInternalAnchors)) {
+      failures.push(`${relative}: internal body links differ from the approved four-link map`);
+    }
+
+    const faq = withoutComments.match(
+      /<section\b(?=[^>]*aria-labelledby=["']newborn-session-questions-title["'])[^>]*>([\s\S]*?)<\/section>/i,
+    )?.[1] || "";
+    const visibleFaq = [...faq.matchAll(/<details\b([^>]*)>([\s\S]*?)<\/details>/gi)]
+      .map((match) => {
+        const attributes = match[1];
+        const detail = match[2];
+        const summary = detail.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/i)?.[1] || "";
+        const question = summary.match(
+          /<span\b(?=[^>]*role=["']heading["'])[^>]*>([\s\S]*?)<\/span>/i,
+        )?.[1] || summary;
+        const answer = detail.replace(/[\s\S]*?<\/summary>/i, "");
+        return {
+          hidden: /\bhidden\b|aria-hidden=["']true["']/i.test(attributes),
+          question: normalizedText(question),
+          answer: normalizedText(answer),
+        };
+      });
+    const faqSchemas = schemas.filter((schema) => schema?.["@type"] === "FAQPage");
+    const faqEntities = faqSchemas[0]?.mainEntity || [];
+    if (
+      visibleFaq.length !== 8 ||
+      visibleFaq.some((item) => item.hidden) ||
+      JSON.stringify(visibleFaq.map((item) => item.question)) !==
+        JSON.stringify(expectedFaqQuestions) ||
+      faqSchemas.length !== 1 ||
+      faqEntities.length !== 8 ||
+      visibleFaq.some(
+        (item, index) =>
+          faqEntities[index]?.["@type"] !== "Question" ||
+          faqEntities[index]?.acceptedAnswer?.["@type"] !== "Answer" ||
+          item.question !== faqEntities[index]?.name ||
+          item.answer !== faqEntities[index]?.acceptedAnswer?.text,
+      )
+    ) {
+      failures.push(
+        `${relative}: eight visible FAQ disclosures must match the eight approved FAQPage Questions 1:1`,
+      );
+    }
+
+    const serviceSchemas = schemas.filter((schema) => schema?.["@type"] === "Service");
+    const services = serviceSchemas[0];
+    const serviceCities = Array.isArray(services?.areaServed)
+      ? services.areaServed.map((area) => area?.name)
+      : [];
+    if (
+      serviceSchemas.length !== 1 ||
+      services?.["@id"] !== `${canonical}#service` ||
+      services?.name !== "Newborn Photography" ||
+      services?.serviceType !== "In-home newborn and baby photography" ||
+      services?.description !==
+        "Gentle, unhurried in-home newborn photography sessions photographed at the baby's pace using natural light, without props or studio setups. Serving Richland, Kennewick and Pasco, Washington." ||
+      services?.provider?.["@id"] !== `${expectedOrigin}/#business` ||
+      JSON.stringify(serviceCities) !== JSON.stringify(["Richland", "Kennewick", "Pasco"]) ||
+      services?.url !== canonical ||
+      services?.mainEntityOfPage?.["@id"] !== `${canonical}#webpage`
+    ) {
+      failures.push(`${relative}: Newborn Service schema differs from the approved scope`);
+    }
+
+    const webPages = schemas.filter((schema) => schema?.["@type"] === "WebPage");
+    if (
+      webPages.length !== 1 ||
+      webPages[0]?.["@id"] !== `${canonical}#webpage` ||
+      webPages[0]?.url !== canonical
+    ) {
+      failures.push(`${relative}: Newborn must emit one canonical WebPage schema`);
+    }
+    const breadcrumbs = schemas.filter((schema) => schema?.["@type"] === "BreadcrumbList");
+    const breadcrumbItems = breadcrumbs[0]?.itemListElement || [];
+    if (
+      breadcrumbs.length !== 1 ||
+      breadcrumbItems.length !== 2 ||
+      breadcrumbItems[0]?.position !== 1 ||
+      breadcrumbItems[0]?.name !== "Home" ||
+      breadcrumbItems[0]?.item !== `${expectedOrigin}/` ||
+      breadcrumbItems[1]?.position !== 2 ||
+      breadcrumbItems[1]?.name !== "Newborn Photography" ||
+      breadcrumbItems[1]?.item !== canonical
+    ) {
+      failures.push(`${relative}: BreadcrumbList must resolve Home to Newborn Photography`);
+    }
+
+    const approvedImageSources = [
+      "/uploads/family-newborn-sunset-tricities.jpg",
+      "/uploads/newborn-portrait-with-mother-richland.jpg",
+      "/uploads/family-newborn-connection-richland.jpg",
+      "/uploads/richland-mother-newborn-at-home.jpg",
+      "/uploads/newborn-family-at-home-west-richland.jpg",
+      "/uploads/family-newborn-at-home-tricities.jpg",
+      "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+      "/uploads/family-with-baby-black-white-tricities.jpg",
+      "/uploads/maternity-waiting-to-welcome-tricities.jpg",
+    ];
+    const imageSources = [...main.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["']/gi)]
+      .map((match) => match[1]);
+    const uniqueImageSources = [...new Set(imageSources)];
+    if (
+      approvedImageSources.some((asset) => !uniqueImageSources.includes(asset)) ||
+      uniqueImageSources.some((asset) => !approvedImageSources.includes(asset))
+    ) {
+      failures.push(
+        `${relative}: image sources must stay within the literal approved Newborn asset allowlist`,
+      );
     }
   }
   if (
@@ -633,6 +827,7 @@ if (mode === "staging") {
   const expectedSitemapUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
@@ -648,6 +843,12 @@ if (mode === "staging") {
   if (!/<lastmod>2026-08-09<\/lastmod>/.test(pascoSitemapEntry)) {
     failures.push("sitemap.xml: Pasco lastmod must be 2026-08-09");
   }
+  const newbornSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/newborn-photographer-tri-cities-wa\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-10<\/lastmod>/.test(newbornSitemapEntry)) {
+    failures.push("sitemap.xml: Newborn lastmod must be 2026-08-10");
+  }
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");
   }
@@ -656,6 +857,7 @@ if (mode === "staging") {
   const expectedLlmsUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
@@ -675,6 +877,9 @@ if (mode === "staging") {
   }
   if (/^\/pasco-wa-photographer\/\*\s*$/m.test(headers)) {
     failures.push("_headers: Pasco noindex rule must not block the published city page");
+  }
+  if (/^\/newborn-photographer-tri-cities-wa\/\*\s*$/m.test(headers)) {
+    failures.push("_headers: Newborn noindex rule must not block the published service page");
   }
   for (const route of [
     "/contact/*",

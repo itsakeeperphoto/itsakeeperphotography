@@ -40,6 +40,14 @@ const detailedService =
           description:
             "Senior portrait sessions in the Tri-Cities photographed at golden hour across multiple locations in one evening, with wardrobe planning and full posing guidance included.",
         }
+      : entry.id === "newborn"
+        ? {
+            name: "Newborn Photography",
+            breadcrumbName: "Newborn Photography",
+            serviceType: "In-home newborn and baby photography",
+            description:
+              "Gentle, unhurried in-home newborn photography sessions photographed at the baby's pace using natural light, without props or studio setups. Serving Richland, Kennewick and Pasco, Washington.",
+          }
       : entry.id === "headshots"
         ? {
             name: "Professional Headshots",

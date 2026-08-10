@@ -1,0 +1,14 @@
+{
+  "surface": "/newborn-photographer-tri-cities-wa/",
+  "option": "B",
+  "name": "Quiet home journal",
+  "viewport": "1440px desktop long page",
+  "approved": false,
+  "canonical": false,
+  "protected": [
+    "Existing EditorialHero remains unchanged",
+    "What Your Newborn Session Looks Like remains unchanged"
+  ],
+  "prompt": "Long desktop service-page comp below a protected hero: contents-style short answer with proof rail, horizontal home photo essay, protected process band, three-stage booking timeline, walnut archival chronology, two-column FAQ index and dark split final CTA. Warm ivory, walnut, muted olive and sand; editorial serif, sans-serif body, square edges and hairlines. No generated people: neutral PHOTO placeholders only. No copied brand, tape, splatters, handwriting, gradients, rounded cards, pills, shadows or SaaS patterns.",
+  "assetPolicy": "Generated placeholders describe geometry only; production uses verified Lisa Weiss photographs."
+}

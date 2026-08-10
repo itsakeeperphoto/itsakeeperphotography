@@ -21,10 +21,13 @@ const requireSection = (id: string): PageSection => {
 const firstDays = requireSection("those-first-days");
 const babyLed = requireSection("baby-led-sessions");
 const process = requireSection("newborn-session-process");
+const booking = requireSection("when-to-book");
 const growing = requireSection("growing-families");
 const questions = requireSection("newborn-session-questions");
 
 const processItems = process.items || [];
+const bookingStatement = booking.items?.[0];
+const growingLink = growing.links?.[0];
 const [heroHeadingLead, heroHeadingTail] = page.hero.heading.split(" in ");
 const heroHeadingLines = [
   heroHeadingLead.replace("Photographer", "Photo\u200bgrapher"),
@@ -72,40 +75,11 @@ const faqSchema = (questions.items || [])
   />
 
   <section
-    class:list={["newborn-first-days", `tone-${firstDays.tone}`]}
-    aria-labelledby={`${firstDays.id}-title`}
-  >
-    <div class="newborn-shell newborn-first-days__inner">
-      {firstDays.image && (
-        <figure class="newborn-first-days__arch">
-          <Picture
-            src={firstDays.image}
-            alt={firstDays.imageAlt || ""}
-            loading="lazy"
-            decoding="async"
-            responsiveSrcset
-            sizes="(max-width: 767px) 18rem, (max-width: 1050px) 18rem, 25rem"
-            imgClass="photo--editorial"
-          />
-        </figure>
-      )}
-
-      <div class="newborn-first-days__copy">
-        <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${firstDays.id}-title`}>{firstDays.heading}</h2>
-        <div class="newborn-prose">
-          {firstDays.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section
-    class:list={["newborn-baby-led", `tone-${babyLed.tone}`]}
+    class:list={["newborn-short-answer", `tone-${babyLed.tone}`]}
     aria-labelledby={`${babyLed.id}-title`}
   >
-    <div class="newborn-shell newborn-baby-led__inner">
-      <div class="newborn-baby-led__copy">
+    <div class="newborn-shell newborn-short-answer__inner">
+      <div class="newborn-short-answer__copy">
         <span class="newborn-rule" aria-hidden="true"></span>
         <h2 id={`${babyLed.id}-title`}>{babyLed.heading}</h2>
         <div class="newborn-prose">
@@ -114,41 +88,47 @@ const faqSchema = (questions.items || [])
       </div>
 
       {babyLed.image && (
-        <div class="newborn-baby-led__media">
-          <figure class="newborn-print newborn-baby-led__primary">
-            <span class="newborn-tape" aria-hidden="true"></span>
-            <Picture
-              src={babyLed.image}
-              alt={babyLed.imageAlt || ""}
-              loading="lazy"
-              decoding="async"
-              responsiveSrcset
-              sizes="(max-width: 767px) 88vw, (max-width: 1050px) 50vw, 35rem"
-              imgClass="photo--editorial"
-            />
-          </figure>
-
-          {babyLed.secondaryImage && (
-            <figure class="newborn-print newborn-baby-led__secondary" aria-hidden="true">
-              <Picture
-                src={babyLed.secondaryImage}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                optimizedMobileWidth={400}
-                optimizedDesktopWidth={640}
-                imgClass="photo--editorial"
-              />
-            </figure>
-          )}
-
-          {babyLed.scriptLine && (
-            <p class="newborn-script newborn-baby-led__script" aria-hidden="true">
-              {babyLed.scriptLine}
-            </p>
-          )}
-        </div>
+        <figure class="newborn-short-answer__photo">
+          <Picture
+            src={babyLed.image}
+            alt={babyLed.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1050px) 46vw, 34rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
       )}
+    </div>
+  </section>
+
+  <section
+    class:list={["newborn-these-days", `tone-${firstDays.tone}`]}
+    aria-labelledby={`${firstDays.id}-title`}
+  >
+    <div class="newborn-shell newborn-these-days__inner">
+      {firstDays.image && (
+        <figure class="newborn-these-days__arch">
+          <Picture
+            src={firstDays.image}
+            alt={firstDays.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) min(82vw, 22rem), (max-width: 1050px) 36vw, 25rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+
+      <div class="newborn-these-days__copy">
+        <span class="newborn-rule" aria-hidden="true"></span>
+        <h2 id={`${firstDays.id}-title`}>{firstDays.heading}</h2>
+        <div class="newborn-prose">
+          {firstDays.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -215,60 +195,87 @@ const faqSchema = (questions.items || [])
   </section>
 
   <section
-    class:list={["newborn-growing", `tone-${growing.tone}`]}
+    class:list={["newborn-booking", `tone-${booking.tone}`]}
+    aria-labelledby={`${booking.id}-title`}
+  >
+    <div class="newborn-shell newborn-booking__inner">
+      <header class="newborn-booking__heading">
+        <span class="newborn-rule" aria-hidden="true"></span>
+        <h2 id={`${booking.id}-title`}>{booking.heading}</h2>
+      </header>
+
+      <div class="newborn-booking__spread">
+        <div class="newborn-booking__statement">
+          {bookingStatement?.heading && <h3>{bookingStatement.heading}</h3>}
+          {booking.image && (
+            <figure class="newborn-booking__photo">
+              <Picture
+                src={booking.image}
+                alt={booking.imageAlt || ""}
+                loading="lazy"
+                decoding="async"
+                responsiveSrcset
+                sizes="(max-width: 767px) min(76vw, 21rem), (max-width: 1050px) 34vw, 23rem"
+                imgClass="photo--editorial"
+              />
+            </figure>
+          )}
+        </div>
+
+        <div class="newborn-booking__copy">
+          <div class="newborn-prose">
+            {bookingStatement?.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          {booking.links?.[0] && (
+            <a class="newborn-text-link" href={booking.links[0].href}>
+              {booking.links[0].label}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class:list={["newborn-archive", `tone-${growing.tone}`]}
     aria-labelledby={`${growing.id}-title`}
   >
-    <div class="newborn-growing__background">
-      {growing.image && (
-        <Picture
-          src={growing.image}
-          alt={growing.imageAlt || ""}
-          loading="lazy"
-          decoding="async"
-          responsiveSrcset
-          sizes="100vw"
-          imgClass="newborn-growing__background-image"
-        />
-      )}
-      <div class="newborn-growing__wash" aria-hidden="true"></div>
-    </div>
-
-    <div class="newborn-shell newborn-growing__inner">
-      <div class="newborn-growing__copy">
+    <div class="newborn-shell newborn-archive__inner">
+      <div class="newborn-archive__copy">
         <span class="newborn-rule" aria-hidden="true"></span>
         <h2 id={`${growing.id}-title`}>{growing.heading}</h2>
         <div class="newborn-prose">
-          {growing.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          <p>{growing.paragraphs?.[0]}{growingLink && (
+            <a href={growingLink.href}>{growingLink.label}</a>
+          )}{growing.paragraphs?.[1]}</p>
+          {growing.paragraphs?.[2] && <p>{growing.paragraphs[2]}</p>}
         </div>
-        {growing.links?.map((link) => (
-          <a class="newborn-text-link" href={link.href}>{link.label}</a>
-        ))}
       </div>
 
       {(growing.image || growing.secondaryImage) && (
-        <div class="newborn-growing__prints" aria-hidden="true">
+        <div class="newborn-archive__media">
           {growing.image && (
-            <figure class="newborn-print newborn-growing__print newborn-growing__print--rear">
+            <figure class="newborn-archive__photo newborn-archive__photo--primary">
               <Picture
                 src={growing.image}
-                alt=""
+                alt={growing.imageAlt || ""}
                 loading="lazy"
                 decoding="async"
-                optimizedMobileWidth={640}
-                optimizedDesktopWidth={960}
+                responsiveSrcset
+                sizes="(max-width: 767px) 72vw, (max-width: 1050px) 32vw, 22rem"
                 imgClass="photo--editorial"
               />
             </figure>
           )}
           {growing.secondaryImage && (
-            <figure class="newborn-print newborn-growing__print newborn-growing__print--front">
+            <figure class="newborn-archive__photo newborn-archive__photo--secondary">
               <Picture
                 src={growing.secondaryImage}
-                alt=""
+                alt={growing.secondaryImageAlt || ""}
                 loading="lazy"
                 decoding="async"
                 responsiveSrcset
-                sizes="(max-width: 767px) 72vw, 22rem"
+                sizes="(max-width: 767px) 52vw, (max-width: 1050px) 23vw, 15rem"
                 imgClass="photo--editorial"
               />
             </figure>
@@ -276,83 +283,73 @@ const faqSchema = (questions.items || [])
         </div>
       )}
     </div>
-
-    <div class="newborn-growing__paper-edge" aria-hidden="true"></div>
   </section>
 
   <section
-    class:list={["newborn-faq", `tone-${questions.tone}`]}
+    class:list={["newborn-questions", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
   >
-    <div class="newborn-shell newborn-faq__inner">
-      <div class="newborn-faq__content">
-        <header class="newborn-faq__heading">
-          <span class="newborn-rule" aria-hidden="true"></span>
-          <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
-        </header>
+    <div class="newborn-shell newborn-questions__inner">
+      <header class="newborn-questions__heading">
+        <span class="newborn-rule" aria-hidden="true"></span>
+        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+      </header>
 
-        {questions.items?.length && (
-          <div class="newborn-faq__list">
-            {questions.items.map((item, index) => (
-              <details class="newborn-faq__item" open={index === 0}>
-                <summary>
-                  <span class="newborn-faq__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span class="newborn-faq__question" role="heading" aria-level="3">
-                    {item.heading}
-                  </span>
-                  <span class="newborn-faq__mark" aria-hidden="true"></span>
-                </summary>
-                <div class="newborn-faq__answer">
-                  {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-                  {item.links?.map((link) => (
-                    <a class="newborn-text-link" href={link.href}>{link.label}</a>
-                  ))}
-                </div>
-              </details>
-            ))}
-          </div>
-        )}
-
-        {questions.links?.length && (
-          <div class="newborn-faq__links">
-            {questions.links.map((link) => (
-              <a class="newborn-text-link" href={link.href}>{link.label}</a>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {page.finalCta && (
-        <aside
-          class:list={["newborn-note", `tone-${page.finalCta.tone}`]}
-          aria-labelledby="newborn-final-title"
-        >
-          <div class="newborn-note__paper" aria-hidden="true">
-            <Picture
-              src="/uploads/newborn-torn-paper-note.webp"
-              alt=""
-              loading="lazy"
-              decoding="async"
-              responsiveSrcset
-              sizes="(max-width: 29.9375rem) calc(100vw - 2.5rem), (max-width: 65.625rem) min(calc(100vw - 3rem), 26.5rem), (max-width: 78.125rem) 25rem, 27rem"
-              imgClass="newborn-note__paper-image"
-            />
-          </div>
-          <div class="newborn-note__content">
-            <h2 id="newborn-final-title">{page.finalCta.heading}</h2>
-            {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-            {page.finalCta.link && (
-              <a class="outline-button" href={page.finalCta.link.href}>
-                {page.finalCta.link.label}
-              </a>
-            )}
-          </div>
-        </aside>
+      {questions.items?.length && (
+        <div class="newborn-questions__list">
+          {questions.items.map((item, index) => (
+            <details class="newborn-questions__item" open={index === 0}>
+              <summary>
+                <span class="newborn-questions__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="newborn-questions__question" role="heading" aria-level="3">
+                  {item.heading}
+                </span>
+                <span class="newborn-questions__mark" aria-hidden="true"></span>
+              </summary>
+              <div class="newborn-questions__answer">
+                {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            </details>
+          ))}
+        </div>
       )}
     </div>
   </section>
+
+  {page.finalCta && (
+    <section
+      class:list={["newborn-final", `tone-${page.finalCta.tone}`]}
+      aria-labelledby="newborn-final-title"
+    >
+      <div class="newborn-final__inner">
+        <div class="newborn-final__copy">
+          <span class="newborn-rule" aria-hidden="true"></span>
+          <h2 id="newborn-final-title">{page.finalCta.heading}</h2>
+          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {page.finalCta.link && (
+            <a class="outline-button" href={page.finalCta.link.href}>
+              {page.finalCta.link.label}
+            </a>
+          )}
+        </div>
+        {page.finalCta.image && (
+          <figure class="newborn-final__photo">
+            <Picture
+              src={page.finalCta.image}
+              alt={page.finalCta.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 100vw, 55vw"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
+    </section>
+  )}
 
   {faqSchema.length > 0 && (
     <script
