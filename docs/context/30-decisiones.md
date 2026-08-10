@@ -920,3 +920,31 @@
   schema y hero exactos. Release valida 21/21 rutas, Playwright aprueba
   1440/1200/900/390 más la inspección 1728×997, e Impeccable devuelve `[]`. No
   se hizo push ni otra mutación externa.
+
+### ADR-047 — Method conserva 32 px antes de la segunda fila en tablet
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada; refina ADR-046 únicamente en el ritmo vertical del
+  ledger Method dentro de su layout de dos columnas. El resto del contrato de
+  densidad y todos los contratos de contenido, media, schema, hero e indexación
+  permanecen vigentes.
+- **Contexto:** La revisión visual independiente posterior a ADR-046 detectó un
+  defecto aislado a 900 px: aunque el inset horizontal ya era válido, la última
+  línea del ítem 01 quedaba a aproximadamente 8–10 px de la hairline que abre la
+  segunda fila. Los ítems mantenían `padding-bottom: 0` al pasar a la retícula
+  de dos columnas, por lo que el texto y la división competían visualmente.
+- **Decisión:** Dentro del rango tablet delimitado por los breakpoints
+  existentes, `768px`–`1050px`, aplicar `padding-bottom: var(--space-8)`
+  únicamente a los ítems Method 01 y 02 mediante
+  `li:nth-child(-n + 2)`. Conservar el inset horizontal responsive de ADR-046,
+  las hairlines, el DOM y la progresión 4/2/1; no añadir un valor de breakpoint,
+  row gap ni reglas para los layouts de cuatro o una columna.
+- **Alternativas descartadas:** Añadir padding inferior a los cuatro ítems en
+  todos los breakpoints, introducir `gap` entre filas, mover la hairline,
+  reducir copy o tipografía, o ocultar el borde se descartó porque alteraría el
+  ledger fuera del ancho afectado o disimularía el problema.
+- **Consecuencias:** A 900 px, la distancia desde la última línea del ítem 01 a
+  la hairline de la segunda fila es exactamente 32 px; la retícula conserva dos
+  columnas y overflow horizontal 0. El commit `0f9989c` mantiene `/about/`
+  `ready/index`, copy, media, schema y hero exactos. Release valida 21/21 rutas,
+  Playwright About vuelve a aprobar 1440/1200/900/390 e Impeccable devuelve
+  `[]`. No se hizo push ni otra mutación externa.

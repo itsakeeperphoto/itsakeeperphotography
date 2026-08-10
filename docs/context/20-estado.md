@@ -3,26 +3,26 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-10 17:42 -05
+**Última actualización:** 2026-08-10 17:55 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit funcional verificado:** `4774a25` —
-`fix(about): rebalance belief and method spacing`
+**Commit funcional verificado:** `0f9989c` —
+`fix(about): add tablet ledger breathing room`
 
 **Commit documental:** este archivo pertenece al commit local inmediatamente
-posterior a `4774a25`; consultar `git log -1` después de crearlo para obtener su
+posterior a `0f9989c`; consultar `git log -1` después de crearlo para obtener su
 hash sin inventarlo aquí.
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al preparar este cierre:** `main` está diecinueve commits por
-delante de `origin/main` (`ff736c6`) en `4774a25`. El worktree contiene
+**Estado Git al preparar este cierre:** `main` está veintiún commits por
+delante de `origin/main` (`ff736c6`) en `0f9989c`. El worktree contiene
 únicamente los seis documentos reconciliados de este cierre; cuando entren en
-su commit local, la rama quedará limpia y veinte commits por delante. No se
+su commit local, la rama quedará limpia y veintidós commits por delante. No se
 hizo push, deploy, DNS ni otra mutación externa; el usuario conserva la
 publicación.
 
@@ -30,16 +30,17 @@ publicación.
 
 ## Siguiente paso concreto
 
-El usuario debe publicar los veinte commits locales posteriores a `ff736c6`.
+El usuario debe publicar los veintidós commits locales posteriores a `ff736c6`.
 Cuando Netlify termine, comprobar `/about/` en el dominio final: status 200,
 canonical `www`, meta robots index, ausencia de `X-Robots-Tag: noindex`,
 membresía y `lastmod: 2026-08-10` en `/sitemap.xml`, entrada exacta en
 `/llms.txt`, las cuatro fotografías nuevas y el fondo del hero
 `/uploads/about-lisa-photographing-tricities.jpg` con crop `50% 24%`. Confirmar
 además que Belief conserva la cita horizontal en tres líneas y Method su inset
-20–32 px y retícula 4/2/1. Repetir la comprobación pendiente de Newborn,
-Richland, Kennewick y Pasco. No cambiar apex/`www`, DNS ni redirects antes de
-resolver la divergencia de host ya documentada.
+20–32 px, retícula 4/2/1 y 32 px antes de la segunda fila en tablet. Repetir la
+comprobación pendiente de Newborn, Richland, Kennewick y Pasco. No cambiar
+apex/`www`, DNS ni redirects antes de resolver la divergencia de host ya
+documentada.
 
 ## Resumen ejecutivo
 
@@ -62,9 +63,12 @@ resolver la divergencia de host ya documentada.
 - Belief y Method quedaron reequilibradas con un ajuste CSS-only: la cita usa
   medida display de 12ch y balance, mientras el ledger recupera un inset válido
   de 20–32 px y conserva 4/2/1. Copy, DOM, media, schema y hero no cambian.
+- La revisión independiente detectó un ritmo apretado a 900 px; los ítems Method
+  01–02 ahora añaden 32 px inferiores antes de la segunda fila. La grilla sigue
+  en dos columnas y overflow permanece en cero.
 - Los claims pendientes de reseñas, salud, premio, Grammy, certificaciones,
   seguro, membresías y Google Business no se publican y no bloquean About.
-- El commit funcional más reciente es `4774a25`; este cierre documental
+- El commit funcional más reciente es `0f9989c`; este cierre documental
   todavía no está commiteado ni publicado.
 
 ## About publicado
@@ -116,6 +120,10 @@ resolver la divergencia de host ya documentada.
 - En Method, el token inexistente `--space-7` invalidaba todo el shorthand
   `padding`. El inset ahora usa tokens existentes mediante un clamp de 20–32 px,
   resuelve 27.648 px a 1728 y conserva la retícula 4/2/1 sin overflow.
+- En el layout de dos columnas entre 768 y 1050 px, los ítems 01–02 usan además
+  `padding-bottom: var(--space-8)`. A 900 px, la última línea del ítem 01 queda
+  exactamente a 32 px de la hairline de la segunda fila, frente a 8–10 px antes
+  del ajuste; se conservan dos columnas y overflow 0.
 
 ### Hero rebaselined y protegido
 
@@ -175,8 +183,8 @@ resolver la divergencia de host ya documentada.
 ## Verificación ejecutada
 
 - Release: `Validated 21 public routes in release mode.`
-- Playwright About aprobó 1440/1200/900/390; la revisión manual 1728×997
-  confirmó las nuevas medidas de Belief y Method.
+- Playwright About volvió a aprobar 1440/1200/900/390 después del ajuste tablet;
+  la inspección 1728×997 conserva las medidas aprobadas de Belief y Method.
 - En los cinco anchos: status 200, canonical/robots correctos, un H1, nueve
   H2, cinco anchors en orden, schema exacto, todas las imágenes cargadas,
   variantes WebP, ancho de lectura y foco visibles.
@@ -186,10 +194,10 @@ resolver la divergencia de host ya documentada.
 - El hero conserva copy, prints y geometría dentro de la tolerancia de 1 px; el
   fondo, alt, crop y fingerprint DOM nuevos están protegidos de regresión.
 - Belief conserva una cita legible y horizontal; Method mantiene 4/2/1 con inset
-  válido, sin overflow.
-- Impeccable devolvió `[]` después del refinamiento.
-- La revisión final independiente del rollout A+C permanece `PASS`; el ajuste
-  posterior no cambia copy, autoridad, gates, schema, links, headings ni
+  válido y 32 px antes de la segunda fila a 900, sin overflow.
+- Impeccable final devolvió `[]` después del refinamiento tablet.
+- El único hallazgo de la revisión independiente fue el breathing room a 900;
+  quedó resuelto sin cambiar copy, autoridad, gates, schema, links, headings ni
   aislamiento CSS.
 - `git diff --check`, copy 55/55, fences Markdown y conflicto markers pasan para
   los documentos de cierre.
@@ -227,6 +235,12 @@ Refinamiento de densidad en `4774a25`:
 - `.impeccable/surfaces/route-about.md`
 - `.impeccable/mocks/about-approved-manifest.json`
 
+Ajuste tablet del ledger Method en `0f9989c`:
+
+- `src/styles/about-page.css`
+- `.impeccable/surfaces/route-about.md`
+- `.impeccable/mocks/about-approved-manifest.json`
+
 Documentación reconciliada en este cierre:
 
 - `paginas/08-about.md`
@@ -240,9 +254,9 @@ Documentación reconciliada en este cierre:
 
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
-| About | `ready/index` en `4774a25` | Push del usuario y QA del deploy. |
+| About | `ready/index` en `0f9989c` | Push del usuario y QA del deploy. |
 | Documentación About | Completa en worktree | Crear el commit local de cierre. |
-| Producción | Diecinueve commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
+| Producción | Veintiún commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
 | Newborn | `ready/index` | Verificar producción; Q41 sigue opcional/no bloqueante y sin claim. |
 | Richland/Kennewick/Pasco | `ready/index` | Verificar producción y crawler outputs tras push. |
 | Bandwidth/build | Optimizado localmente | Observar logs y bandwidth Netlify durante 48 h tras deploy. |
@@ -268,8 +282,8 @@ personalmente, porque ese script publica el repositorio.
 
 ## Bloqueadores externos
 
-1. Crear el commit documental local inmediatamente posterior a `4774a25`.
-2. El usuario debe publicar los veinte commits locales en el remoto oficial.
+1. Crear el commit documental local inmediatamente posterior a `0f9989c`.
+2. El usuario debe publicar los veintidós commits locales en el remoto oficial.
 3. Esperar el deploy Netlify y comprobar About y las cuatro rutas recientes.
 4. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
 5. Completar verificaciones externas de Forms, analytics, GBP y Privacy.

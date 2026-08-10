@@ -1212,6 +1212,14 @@ El contrato corregido usa `12ch` en el texto display de Belief,
 `clamp(var(--space-5), 1.6vw, var(--space-8))`, es decir, un inset de 20–32 px,
 sin alterar la retícula 4/2/1.
 
+En el layout Method de dos columnas entre 768 y 1050 px, los dos ítems de la
+primera fila añaden `padding-bottom: var(--space-8)`. Este inset inferior de
+32 px separa el final del copy de la hairline que abre la segunda fila sin
+introducir `gap`, romper el ledger ni afectar los layouts 4/1. A 900 px, la
+distancia medida desde la última línea del ítem 01 hasta esa hairline es
+exactamente 32 px, frente a aproximadamente 8–10 px antes del ajuste; la
+retícula conserva dos columnas y overflow horizontal 0.
+
 A 1728×997, Belief queda en 1324.2 px; la cita en 180 px y tres líneas; la media
 y el copy miden 973.8 y 978.6 px. El inset resuelto de Method es 27.648 px. Las
 regresiones 1440/1200/900/390 conservan cero overflow y la misma semántica,

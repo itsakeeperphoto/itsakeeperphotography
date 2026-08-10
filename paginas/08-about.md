@@ -300,6 +300,11 @@ referencia de geometría; ninguna imagen generada se publica.
   con un inset responsive de 20–32 px construido solo con tokens existentes.
   No se debe usar el token inexistente `--space-7`, porque invalida todo el
   shorthand `padding` que lo contiene.
+- En la retícula de dos columnas entre 768 y 1050 px, los ítems 01 y 02 conservan
+  además 32 px de padding inferior antes de la hairline de la segunda fila. A
+  900 px, la distancia entre la última línea del ítem 01 y esa división es
+  exactamente 32 px; antes del ajuste era de aproximadamente 8–10 px. La
+  retícula sigue en dos columnas y el overflow horizontal permanece en cero.
 - A 1728×997, Belief mide 1324.2 px de alto frente a 1738.5 px antes del ajuste;
   la cita mide 180 px en tres líneas frente a 495.9 px, y las pistas quedan
   equilibradas en 973.8 px de media y 978.6 px de copy. El inset Method

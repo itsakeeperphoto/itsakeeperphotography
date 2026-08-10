@@ -866,3 +866,27 @@
   commits por delante de `origin/main` antes del cierre documental y quedará
   veinte por delante tras su commit local. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva la publicación.
+
+### 2026-08-10 — Codex / GPT-5 — Breathing room tablet del ledger Method corregido
+
+- **Objetivo:** resolver el único defecto detectado por la revisión visual
+  independiente posterior a ADR-046 sin alterar la composición fuera de tablet.
+- **Hallazgo:** a 900 px, el texto final del ítem Method 01 quedaba a unos
+  8–10 px de la hairline que inicia la segunda fila. El layout seguía en dos
+  columnas y sin overflow, pero el ritmo vertical era demasiado apretado.
+- **Corrección:** dentro del rango tablet 768–1050 px, delimitado por los
+  breakpoints existentes, los ítems 01 y 02 reciben
+  `padding-bottom: var(--space-8)`. El selector queda limitado a la primera fila
+  del layout de dos columnas; los layouts 4/1, hairlines, DOM, copy, media,
+  schema y hero permanecen intactos.
+- **Resultado:** a 900 px, la última línea del ítem 01 queda exactamente a
+  32 px de la hairline de la segunda fila. La retícula conserva dos columnas y
+  overflow horizontal 0.
+- **QA:** release validó 21/21 rutas. Playwright About volvió a aprobar
+  1440/1200/900/390 e Impeccable final devolvió `[]`. La ruta conserva
+  `ready/index`, sitemap, `llms.txt`, metadata y autoridad.
+- **Git/operación:** el ajuste funcional quedó en `0f9989c`
+  (`fix(about): add tablet ledger breathing room`). `main` está veintiún commits
+  por delante de `origin/main` antes del cierre documental y quedará veintidós
+  por delante tras su commit local. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva la publicación.
