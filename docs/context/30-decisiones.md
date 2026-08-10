@@ -716,3 +716,37 @@
   sus nueve anchors, FAQ/schema y estado `ready/index`. Cualquier expansión
   futura exige una sesión nueva verificable y debe pasar build release/staging,
   allowlists y QA responsive antes de publicación.
+
+### ADR-041 — Newborn publica el híbrido definitivo A+C sin inventar seguridad
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada.
+- **Contexto:** La fuente externa Newborn v2 confirmó mediante Q53 que las
+  sesiones ocurren principalmente en casa y pueden incorporar exterior según
+  la temporada, por lo que el formato dejó de ser un bloqueador. El usuario
+  aprobó A como dirección compositiva base y C como donante de la declaración
+  `No hard deadline` y el FAQ master-detail, pero protegió sin cambios el
+  `EditorialHero` existente y el bloque completo `What Your Newborn Session
+  Looks Like`. Q41 no confirma todavía formación de seguridad newborn.
+- **Decisión:** Reconciliar la v2 externa en `paginas/04-newborn.md` como única
+  autoridad editorial vigente del repositorio y publicar el híbrido real:
+  conservar exactos hero y proceso; usar el posicionamiento in-home/baby-led en
+  las demás secciones; incorporar una sola fotografía Drive verificada; y
+  marcar la ruta `ready/index`, `lastModified: 2026-08-10`, en sitemap release y
+  `llms.txt`. Fijar siete H2, cuatro anchors exactos dentro de `<main>`, ocho FAQ
+  visibles y ocho entidades schema 1:1, más un `Service` detallado, un
+  `WebPage` y un `BreadcrumbList`. Mantener Q41 como pendiente no bloqueante y
+  no publicar ningún claim de formación, certificación o posing seguro.
+- **Alternativas descartadas:** Reemplazar también las dos regiones protegidas
+  con el texto v2, mantener la ruta draft hasta resolver Q41, inferir formación
+  de seguridad, imponer una ventana estricta de dos semanas, añadir enlaces a
+  Investment/Reviews o publicar fotografía generada desde los mocks se
+  descartó por contradecir la aprobación, la exactitud del servicio y el
+  contrato visual existente.
+- **Consecuencias:** Release pasa a ocho URLs en sitemap y siete entradas en
+  `llms.txt`; staging conserva noindex global. La nueva fuente
+  `newborn-family-at-home-west-richland.jpg` queda en 1600×2400 y 412 KiB, con
+  variantes WebP ignoradas/regenerables. Los validadores staging/release pasan
+  21/21, el detector Impeccable devuelve `[]` y Playwright aprueba
+  1440/1200/900/390 sin overflow, fallos de runtime, imágenes ni foco. Cualquier
+  claim futuro de seguridad requiere confirmación explícita de Q41 y nueva
+  reconciliación de copy/schema.

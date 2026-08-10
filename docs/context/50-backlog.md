@@ -27,14 +27,21 @@
 - [x] **6. Rediseñar y publicar Pasco según ADR-039.** Dirección A+C aprobada,
   `EditorialHero`, diez fotografías de diez sesiones Drive verificadas, copy
   local, ocho anchors, schema/crawler gates y QA 1440/1200/900/390 completos.
-- [ ] **7. Verificar Richland, Kennewick y Pasco después del push del usuario.**
-  Confirmar en el dominio final status 200, meta index, canonical, ausencia de
-  header noindex, membresía del sitemap/llms y lastmod: Richland, Kennewick y
-  Pasco `2026-08-09`.
-- [ ] **8. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [x] **7. Publicar Newborn definitiva según ADR-041.** Fuente v2 reconciliada,
+  dirección A+C, hero/proceso protegidos sin cambios, una foto Drive verificada,
+  siete H2, cuatro anchors, FAQ/schema 8:8, crawler gates y QA
+  1440/1200/900/390 completos. Q41 queda pendiente no bloqueante sin claim.
+- [ ] **8. Cerrar y publicar los commits locales.** Crear el commit documental
+  pendiente sobre la base funcional `b3bb362`; después el usuario publica los
+  commits posteriores a `ff736c6`. Codex no ejecuta push.
+- [ ] **9. Verificar Richland, Kennewick, Pasco y Newborn después del push del
+  usuario.** Confirmar en el dominio final status 200, meta index, canonical,
+  ausencia de header noindex, membresía de sitemap/llms y lastmod: ciudades
+  `2026-08-09`, Newborn `2026-08-10`.
+- [ ] **10. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **9. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **11. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -81,10 +88,15 @@ sin reemplazar el archivo.
 
 ### Newborn
 
-- [ ] Confirmar formato exacto de sesión y lenguaje de safety/handling.
-- [ ] Validar con Lisa las afirmaciones del artículo in-home vs studio.
-- [ ] Confirmar el formato exacto descrito en el artículo.
-- [ ] Asignar fecha editorial real al artículo.
+- [x] Formato de servicio confirmado por Q53: principalmente in-home, con
+  opción exterior según temporada; reconciliado en la ruta definitiva.
+- [x] Publicada `ready/index` con A+C, siete H2, cuatro anchors, FAQ/schema 8:8,
+  schema detallado y una fotografía Drive nueva verificada.
+- [ ] Pendiente no bloqueante Q41: confirmar si Lisa tiene formación de
+  seguridad newborn antes de añadir cualquier claim. Hoy no se publica.
+- [ ] Validar con Lisa las afirmaciones del artículo comparativo in-home vs.
+  studio antes de publicarlo.
+- [ ] Asignar una fecha editorial real al artículo comparativo Newborn.
 
 ### Investment
 
@@ -181,9 +193,9 @@ sin reemplazar el archivo.
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
   ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los commits locales creados después de `ff736c6`: reconciliación,
-  rediseño/cierre Kennewick, implementación/cierre Pasco y galerías locales de
-  Richland/Kennewick. Codex no ejecuta push.
+- [ ] Publicar los ocho commits funcionales/documentales locales creados después
+  de `ff736c6`, hasta `b3bb362`, más el cierre documental Newborn cuando tenga
+  commit local. Codex no ejecuta push; el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -243,6 +255,9 @@ sin reemplazar el archivo.
 - [x] Añadir galerías de sesiones verificadas a Richland (10) y Kennewick (5):
   13 JPEG nuevos optimizados de 165.81 a 5.92 MiB, 52 variantes WebP, cero
   duplicados nuevos, cero anchors y QA responsive en ocho combinaciones.
+- [x] Publicar Newborn definitiva: una fuente Drive de 13.13 MiB/4000×6000
+  optimizada a 412 KiB/1600×2400, CSS podado 39.4%, Impeccable `[]`,
+  validadores 21/21 staging/release y Playwright 1440/1200/900/390 sin fallos.
 - [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
   guard de fuentes y las variantes terminan, comprobar que
   `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a
@@ -295,7 +310,9 @@ sin reemplazar el archivo.
 - [ ] Para cada ruta completada, actualizar status/fecha en
   `src/lib/page-manifest.ts` y comprobar membership de sitemap/llms.
 - [x] Pasco actualizado a `ready/index`, añadido a sitemap/llms con canonical y
-  `lastModified: 2026-08-09`; release contiene siete URLs.
+  `lastModified: 2026-08-09`; al cerrar ese rollout release contenía siete URLs.
+- [x] Newborn actualizado a `ready/index`, `lastModified: 2026-08-10`, sitemap y
+  `llms.txt`; release contiene ahora ocho URLs y conserva staging noindex.
 - [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
   contenido visible actual; no crear ratings no verificados.
 - [ ] Actualizar `README.md` para reflejar las 21 rutas, forms reales, modos de
@@ -321,6 +338,8 @@ sin reemplazar el archivo.
   no reutilizar una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
   sesiones verificadas.
+- [x] Completar Newborn con composición A+C, fuente v2 reconciliada, hero y
+  proceso protegidos, ocho FAQ y prueba in-home verificada.
 - [ ] Evaluar composición individual de Privacy/Thank-you sin afectar su noindex;
   Thank-you debe permanecer simple y cálida.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,
@@ -389,3 +408,5 @@ sin reemplazar el archivo.
   contradictorios.
 - [x] Verificado `npm run build:local` el 2026-08-08.
 - [x] Instalado el sistema de contexto persistente en la raíz.
+- [x] Publicada Newborn definitiva `ready/index` con dirección A+C, fuente v2
+  reconciliada, regiones protegidas intactas y QA final en cuatro viewports.

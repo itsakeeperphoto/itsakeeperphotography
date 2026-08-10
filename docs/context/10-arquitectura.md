@@ -1,7 +1,7 @@
 # 10 — Arquitectura
 
 > Solo describe lo que existe y fue inspeccionado o construido con éxito el
-> 2026-08-09. Lo planeado está en `50-backlog.md`.
+> 2026-08-10. Lo planeado está en `50-backlog.md`.
 
 ## Stack
 
@@ -133,6 +133,15 @@ Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
 botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
+`NewbornPage.astro` conserva sin cambios el `EditorialHero` compartido y el
+subárbol completo `What Your Newborn Session Looks Like`; ambos están protegidos
+por fingerprints DOM y baselines geométricos en 1440/1200/900/390. El resto de
+la ruta implementa la dirección A+C aprobada: A como composición base y C como
+donante del statement `No hard deadline` y el FAQ ledger. El contrato exige
+siete H2, cuatro anchors exactos dentro de `<main>` y ocho FAQ visibles/schema
+1:1. Q41 sobre formación de seguridad permanece pendiente no bloqueante y no
+existe un claim publicado.
+
 El contrato de `RichlandPage.astro` renderiza cinco filas enlazadas de servicio
 y cuatro FAQ. Su guard específico de galería exige, cuando esta no está vacía,
 exactamente diez fotografías con heading, imagen y alt completos, fuentes
@@ -260,18 +269,19 @@ para evitar cambios silenciosos al repositorio.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para siete rutas:
+En `release`, el manifiesto actualmente permite sitemap para ocho rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
+- `/newborn-photographer-tri-cities-wa/`
 - `/richland-wa-photographer/`
 - `/kennewick-wa-photographer/`
 - `/pasco-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family, Richland, Kennewick, Pasco y Family Photo
-Locations; Portfolio está excluido de llms. Las otras 13 rutas siguen
+`llms.txt` incluye Homepage, Family, Newborn, Richland, Kennewick, Pasco y
+Family Photo Locations; Portfolio está excluido de llms. Otras 12 rutas siguen
 `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
@@ -283,6 +293,11 @@ también los artículos publicados. En
 photography con `areaServed` de la ciudad/WA y provider enlazado al negocio; no
 declara ubicación física en esas ciudades. No se emiten `Review`,
 `AggregateRating` ni `streetAddress` sin evidencia y autorización.
+
+Para Newborn, `src/pages/[slug].astro` emite un `WebPage`, un `Service`
+detallado de fotografía newborn in-home para Richland/Kennewick/Pasco y un
+`BreadcrumbList` Home → Newborn Photography. `NewbornPage.astro` deriva un
+único `FAQPage` de las ocho respuestas visibles, en el mismo orden y texto.
 
 ## Assets y rendimiento
 
@@ -310,6 +325,10 @@ declara ubicación física en esas ciudades. No se emiten `Review`,
   verificadas por folder, XMP e identidad visual: tres family/large-family y
   siete senior. Sus originales de auditoría permanecen ignorados; producción
   usa solo los JPEG ≤2400 px/700 KiB y variantes WebP 400/640/960/1440.
+- Newborn incorpora un JPEG nuevo verificado desde Drive:
+  `newborn-family-at-home-west-richland.jpg`, optimizado de 13.13 MiB/4000×6000
+  a 412 KiB/1600×2400. Sus variantes WebP responsive son regenerables y están
+  ignoradas por Git; los demás assets de la ruta ya existían en producción.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.
@@ -325,8 +344,10 @@ declara ubicación física en esas ciudades. No se emiten `Review`,
 3. Ejecutar `npm run build:local` puede modificar temporalmente los componentes
    de formularios añadiendo IDs. Revisar `git status` después del build y no
    commitear cambios generados no solicitados.
-4. Tina local abre un listener en `::1:4001`; entornos sandbox pueden devolver
-   `EPERM`. Fuera del sandbox el build verificado funciona.
+4. Tina local abre listeners para UI y data layer; entornos sandbox pueden
+   devolver `EPERM`. Si el servidor largo del usuario ya ocupa `:9000`, usar un
+   puerto alterno como `--datalayer-port 9001` sin detener ese proceso. Los
+   builds finales Newborn se verificaron de ese modo.
 5. `docs/final-handoff.md` y sus 84 capturas son evidencia histórica del
    2026-07-21, no una certificación de todos los cambios posteriores.
 6. `README.md` está desactualizado respecto a rutas y formularios actuales.

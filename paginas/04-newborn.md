@@ -1,152 +1,281 @@
 # NEWBORN — `/newborn-photographer-tri-cities-wa/`
-_Página 4 de 18 · Core commercial · P0 · Nicho huérfano (Tara Lindley → Boise)_
 
-> ⚠️ **Bloqueo parcial:** Lisa no detalló su servicio newborn en el cuestionario (Q2 no lo lista; el sitio actual sí lo muestra). Antes de publicar: confirmar formato (in-home / outdoor / lifestyle), edad ideal del bebé, y si tiene formación de seguridad newborn (Q41 — sería un diferenciador enorme tipo Tawny Rochelle).
+_Página 4 de 18 · Core commercial · P0 · v2 definitiva reconciliada y publicada
+el 2026-08-10_
 
----
+> **Estado publicado:** `ready/index`, `lastModified: 2026-08-10`, incluida en
+> el sitemap release y en `llms.txt`. Staging conserva
+> `noindex,nofollow,noarchive` global.
 
-## SEO técnico
+## Autoridad y procedencia
+
+- Este archivo es la fuente editorial vigente del repositorio para Newborn y
+  documenta el híbrido exacto publicado en `b3bb362`.
+- Procedencia de la v2 externa definitiva:
+  `/Users/williammelo/Documents/Claude/Projects/Its A Keeper Photography/paginas/04-newborn.md`.
+  Esa fuente confirmó el servicio mediante Q53 y eliminó el bloqueo de formato;
+  después de esta reconciliación queda como procedencia histórica, no como una
+  segunda autoridad activa.
+- La implementación conserva **sin cambios** el `EditorialHero` existente y el
+  bloque completo **“What Your Newborn Session Looks Like”**. El resto adopta
+  el posicionamiento v2 con la dirección visual A+C aprobada: A como base y C
+  como donante del statement de booking y del FAQ ledger.
+- Único pendiente no bloqueante: confirmar si Lisa tiene formación de seguridad
+  newborn (Q41). No se publica ninguna afirmación de formación, certificación o
+  posing seguro mientras no exista confirmación.
+
+## SEO técnico publicado
 
 | Campo | Valor |
 |---|---|
-| **URL** | `/newborn-photographer-tri-cities-wa/` |
-| **Keyword primaria** | tri cities newborn photographer (20/mes, KD 0) |
-| **Secundarias** | newborn photographer tri cities wa · kennewick newborn photographer · baby photographers tri cities wa · in home newborn photography tri cities · maternity photographers in tri cities wa |
-| **Title** (53) | `Newborn Photographer Tri-Cities WA | In-Home Sessions` |
-| **Meta description** (149) | `Gentle, unhurried newborn photography in the Tri-Cities. Relaxed in-home sessions in Richland, Kennewick and Pasco that preserve how small they started.` |
+| **URL / canonical release** | `https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/` |
+| **Estado** | `ready/index` |
+| **Last modified** | `2026-08-10` |
+| **Keyword primaria** | `tri cities newborn photographer` |
+| **Secundarias** | `newborn photographer tri cities wa` · `kennewick newborn photographer` · `baby photographers tri cities wa` · `in home newborn photography` · `newborn photographer richland wa` · `maternity photographers in tri cities wa` |
+| **Title** | `Newborn Photographer Tri-Cities WA \| In-Home Sessions` |
+| **Meta description** | `Gentle in-home newborn photography in Richland, Kennewick and Pasco. Unhurried sessions at your baby's pace, in your own light — no props, no production.` |
+| **Crawler outputs** | Incluida en sitemap release y `llms.txt`; excluida del sitemap staging por el noindex global. |
 
-### Estructura de headings
+### Entidades y atributos declarados
 
-```
+Newborn photography · in-home newborn session · lifestyle newborn photography ·
+Tri-Cities · Richland · Kennewick · Pasco · Washington · natural light ·
+nursery · siblings · Lisa Weiss · It's A Keeper Photography.
+
+Atributos diferenciales presentes y confirmados: sesión principalmente en casa
+del cliente, ritmo guiado por el bebé, sin props ni studio setup, hermanos,
+abuelos y mascotas incluidos, sin deadline rígido de dos semanas y opción
+exterior según la temporada.
+
+### Contrato exacto de headings visibles
+
+```text
 H1  Newborn Photographer in the Tri-Cities, WA
- H2  Those First Days Pass So Quickly
- H2  Gentle, Unhurried, Baby-Led Sessions
+ H2  The Short Answer: I Come to You
+ H2  These Days Go So Fast
  H2  What Your Newborn Session Looks Like
   H3  Before baby arrives
   H3  Session day
   H3  Your gallery
- H2  Growing Families Stay With Me
+ H2  When to Book — and Why It's Probably Not Too Late
+  H3  No hard deadline
+ H2  Twenty Years of Watching Them Grow Up
  H2  Newborn Session Questions
  H2  Expecting? Let's Talk Early
 ```
 
----
+El contrato final contiene exactamente un H1 y siete H2 en ese orden.
 
-## COPY
+## Copy visible publicado
 
-### Hero
+### Hero protegido — sin cambios
 
 **H1:** Newborn Photographer in the Tri-Cities, WA
 
-**Subhead:** Gentle, unhurried newborn sessions in Richland, Kennewick and Pasco — photographs that preserve just how small they started, and how it felt to hold them.
+**Subhead:** Gentle, unhurried newborn sessions in Richland, Kennewick and Pasco
+— photographs that preserve just how small they started, and how it felt to
+hold them.
+
+**Script:** keep the way this felt
 
 **CTA:** Plan Your Newborn Session → `/contact/`
 
-### Sección 2
+### The Short Answer: I Come to You
 
-**H2:** Those First Days Pass So Quickly
+Most of my newborn sessions happen inside your home. Not a studio, not a set —
+your nursery, your window light, the chair where you feed her at two in the
+morning.
 
-Everyone tells you the newborn days are a blur — and they're right. The tiny fingers curled around yours, the weight of them asleep on your chest, the way the whole house goes quiet when they finally do. These are the details you'll ache to remember, and the ones that slip away first.
+There's no rigid posing schedule to keep up with and no props your baby will
+never see again. We leave room for feeding, changing and settling, and follow
+your baby's rhythm throughout the session. When the season is kind, we can add
+something outdoors in a beautiful spot nearby.
 
-I became a photographer because of my own children. I know from experience how fast this season moves, and I know the value of the photographs on the other side of it. They begin as beautiful images; over the years they become something closer to treasure.
+That's the whole approach, and everything below is just the detail.
 
-### Sección 3 — Enfoque
+### These Days Go So Fast
 
-**H2:** Gentle, Unhurried, Baby-Led Sessions
+Everyone tells you the newborn days are a blur, and they're right. The weight
+of her asleep on your chest. The tiny fingers curled around yours. How quiet the
+house goes when she finally settles.
 
-My newborn sessions are relaxed and unforced. No rigid schedule, no elaborate props your baby will never wear again — just your family, soft natural light, and time enough for feeding, soothing and snuggling whenever baby needs it.
+I became a photographer because of my own children. Before this was my work, I
+was a mom at home with two little ones, and those years taught me exactly how
+fast childhood moves — how the ordinary moments are the ones you'd give
+anything to hold onto later. That's the whole reason this business exists.
 
-I photograph the real story of these days: baby in your arms, in the nursery you prepared, wrapped in the blanket that will someday live in a keepsake box. Big siblings and pets are always welcome — they're part of this chapter too.
+So when I photograph your baby, I'm not thinking about a pretty picture for this
+month. I'm thinking about what these images will mean to you in twenty years,
+when the house is quiet for entirely different reasons.
 
-`[PENDIENTE: confirmar con Lisa formato exacto (in-home / lifestyle / outdoor para familias con newborn), y si menciona seguridad/posing seguro — Q41, Q63+]`
+### What Your Newborn Session Looks Like — protegido sin cambios
 
-### Sección 4 — Proceso
+**Eyebrow:** A quiet, unhurried morning
 
-**H2:** What Your Newborn Session Looks Like
+**Before baby arrives**
 
-**H3: Before baby arrives**
-The best time to reach out is during your second or third trimester. We'll plan everything before your due date — timing, location, what to have ready — so that once baby is here, the only thing you have to do is text me.
+The best time to reach out is during your second or third trimester. We'll plan
+everything before your due date — timing, location, what to have ready — so
+that once baby is here, the only thing you have to do is text me.
 
-**H3: Session day**
-We work around your baby, not the clock. I'll guide you into natural, comfortable moments — no awkward posing, no pressure for baby to "perform." Feeding breaks, diaper changes and pauses are simply part of the rhythm.
+**Session day**
 
-**H3: Your gallery**
-Warm, true-to-life editing that keeps your baby looking like your baby — every tiny detail preserved, from eyelashes to toes.
+We work around your baby, not the clock. I'll guide you into natural,
+comfortable moments — no awkward posing, no pressure for baby to "perform."
+Feeding breaks, diaper changes and pauses are simply part of the rhythm.
 
-### Sección 5 — Retención
+**Your gallery**
 
-**H2:** Growing Families Stay With Me
+Warm, true-to-life editing that keeps your baby looking like your baby — every
+tiny detail preserved, from eyelashes to toes.
 
-Many of the families I photograph began with a newborn session — and came back for first birthdays, family sessions, and eventually senior pictures. It's one of the greatest privileges of twenty years in the Tri-Cities: watching the babies I photographed grow up in front of my camera.
+### When to Book — and Why It's Probably Not Too Late
 
-→ Family Photography → `/family-photographer-tri-cities-wa/`
+**No hard deadline**
 
-### Sección 6 — FAQ
+But if you're reading this with a three-week-old asleep on you, wondering
+whether you missed the window: you almost certainly didn't. That famous
+two-week deadline belongs to studio posing, where babies need to be sleepy
+enough to curl into shapes. An in-home session doesn't depend on that at all. At
+six weeks she's still brand new. At two months she's still impossibly small, and
+now she's starting to look at you.
 
-**H2:** Newborn Session Questions
+I've never once had a family regret photographing their baby "late." I've had
+plenty regret not photographing at all.
 
-**H3: When should newborn photos be taken?**
-There's no single "right" window. The classic sleepy-curled look happens in the first two weeks, but lifestyle sessions at home are beautiful anytime in the first couple of months. If your baby is already here, it's not too late — reach out and we'll plan it.
+→ An honest comparison of in-home versus studio newborn photography →
+`/journal/in-home-vs-studio-newborn-photography/`
 
-**H3: Should we do the session at home or outdoors?**
-Both can be beautiful, and it depends on your comfort and the season.
-→ My honest comparison: In-home vs. studio newborn photography → `/journal/in-home-vs-studio-newborn-photography/`
+### Twenty Years of Watching Them Grow Up
 
-**H3: What if baby cries the whole time?**
-Then we pause, feed, snuggle and try again. Sessions are unhurried on purpose. Babies set the pace — that's the whole philosophy.
+Here's something I didn't expect when I started: many of the families I
+photograph now began with a newborn session. Then a first birthday. Then
+[family sessions every fall](/family-photographer-tri-cities-wa/). And then,
+eventually, senior pictures for the same child I photographed asleep in
+someone's arms.
 
-**H3: Can siblings and pets be included?**
-Always. This chapter belongs to them too.
+That's the real privilege of twenty years in one place. I'm not photographing a
+moment — I'm keeping a record of a family, and I take that seriously.
 
-### CTA final
+### Newborn Session Questions
 
-**H2:** Expecting? Let's Talk Early
-Due dates fill my calendar differently than any other session — reach out during pregnancy and we'll hold space for your baby's arrival.
+**Where do newborn sessions take place?**
+
+Usually in your own home, anywhere in the Tri-Cities — Richland, Kennewick,
+Pasco and the surrounding areas. Depending on the time of year, we can also
+photograph outdoors in a beautiful spot nearby. There's no travel fee within
+the Tri-Cities.
+
+**When should newborn photos be taken?**
+
+Reach out during pregnancy so we can plan ahead, but there's no hard deadline.
+In-home sessions are beautiful anywhere in the first couple of months, because
+they don't depend on posing a sleeping newborn.
+
+**Do you use props or a studio setup?**
+
+No. No baskets, no themed sets, no wardrobe closet. Your baby, your family and
+your home — that's the session. If elaborate styled portraits are what you're
+picturing, there are wonderful studio photographers in the area and I'm always
+glad to point you toward one.
+
+**What if my baby cries the whole time?**
+
+Then we pause, feed, snuggle, and pick back up. That's not a session going badly
+— that's just a session with a newborn in it. Nothing about my approach
+requires your baby to cooperate.
+
+**Is my house too small or too dark?**
+
+Almost certainly not. One decent window is enough. Finding and using the light
+is my job, not something you need to solve before I arrive.
+
+**Can we include siblings, grandparents or pets?**
+
+Always, and I'd encourage it. They're part of this story too.
+
+**What should we wear?**
+
+We'll plan it together before your session — comfortable, simple, in colors
+that work with your home. Nothing that requires you to think about it while
+holding a newborn.
+
+**How long until we see the photos?**
+
+About two weeks, and then we sit down together in person to go through your
+gallery. Final images follow about a week after you choose.
+
+### Expecting? Let's Talk Early
+
+Due dates fill my calendar differently than anything else I photograph — I hold
+space around them rather than booking a fixed day. Reach out while you're still
+pregnant and we'll get everything planned before the sleepless part starts.
+
 **CTA:** Start planning → `/contact/`
 
----
+## Contrato de enlaces internos
 
-## Internal links
+`<main>` contiene exactamente cuatro anchors, en este orden:
 
-- Entrantes: Home, journal newborn, Family, city pages.
-- Salientes: `/contact/` · `/journal/in-home-vs-studio-newborn-photography/` · `/family-photographer-tri-cities-wa/` · `/reviews/`.
+1. Hero Contact → `/contact/`
+2. Comparison article → `/journal/in-home-vs-studio-newborn-photography/`
+3. Family service → `/family-photographer-tri-cities-wa/`
+4. Final Contact → `/contact/`
 
-## Alt texts
+No se añaden enlaces a Investment ni Reviews.
 
-- `A mother kissing her newborn during a gentle in-home newborn session in Richland, WA`
-- `Newborn baby's tiny hand wrapped around a parent's finger during a Tri-Cities newborn photoshoot`
-- `Parents holding their newborn close in soft window light at home in Kennewick`
-- `Big sibling gently kissing the new baby during a family newborn session in Pasco`
+## Contrato de media
 
-## Schema JSON-LD
+- Hero y proceso reutilizan sus assets y geometría protegidos sin cambios.
+- Única fotografía nueva verificada:
+  `public/uploads/newborn-family-at-home-west-richland.jpg`, procedente de Drive
+  `Family/Baby Session - West Richland/010A9895 copy.jpg`.
+- Optimización verificada: 13.13 MiB y 4000×6000 → 412 KiB y 1600×2400.
+- Alt visible literal: `Parents and an older sister gathered around a sleeping newborn at home`.
+- Las variantes WebP responsivas son regenerables e ignoradas por Git.
+- Los mocks aprobados definen composición, no son fotografía publicable.
 
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Service",
-      "name": "Newborn Photography",
-      "serviceType": "Newborn and baby photography",
-      "provider": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "areaServed": [{"@type": "City", "name": "Richland"}, {"@type": "City", "name": "Kennewick"}, {"@type": "City", "name": "Pasco"}],
-      "url": "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/"
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itsakeeperphotography.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Newborn Photography", "item": "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/"}
-      ]
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {"@type": "Question", "name": "When should newborn photos be taken?", "acceptedAnswer": {"@type": "Answer", "text": "The classic sleepy-curled look happens in the first two weeks, but lifestyle sessions at home are beautiful anytime in the first couple of months. If baby is already here, it's not too late."}},
-        {"@type": "Question", "name": "What if the baby cries during the session?", "acceptedAnswer": {"@type": "Answer", "text": "Sessions are unhurried on purpose — pauses for feeding, soothing and snuggling are part of the rhythm. Babies set the pace."}},
-        {"@type": "Question", "name": "Can siblings and pets be included in newborn photos?", "acceptedAnswer": {"@type": "Answer", "text": "Always — they're part of this chapter too."}}
-      ]
-    }
-  ]
-}
-```
+## Contrato de schema JSON-LD
+
+La ruta emite, además de los grafos globales `LocalBusiness` y `WebSite`:
+
+- un `WebPage` canónico con `@id` terminado en `#webpage`, el title y la meta
+  description exactos de este documento, `about` apuntando a `#business` e
+  `inLanguage: en-US`;
+- un `Service` con nombre `Newborn Photography`, `serviceType`
+  `In-home newborn and baby photography`, provider `#business`, `areaServed`
+  Richland/Kennewick/Pasco, URL canónica y `mainEntityOfPage` al WebPage;
+- un `BreadcrumbList` de dos ítems exactos: Home y Newborn Photography;
+- un `FAQPage` con ocho entidades `Question` en el mismo orden y con respuestas
+  idénticas al texto visible. La relación visible/schema es 8:8 y 1:1.
+
+Descripción exacta del `Service`:
+
+> Gentle, unhurried in-home newborn photography sessions photographed at the
+> baby's pace using natural light, without props or studio setups. Serving
+> Richland, Kennewick and Pasco, Washington.
+
+No se emiten claims de safety training, `Review`, `AggregateRating`, dirección
+residencial ni una regla estricta de dos semanas.
+
+## Dirección visual y verificación del rollout
+
+- Dirección aprobada: **A+C**, con A “storybook ledger” como base y C “archival
+  proofbook” como donante de `No hard deadline` y del FAQ master-detail.
+- `EditorialHero` y `What Your Newborn Session Looks Like` conservan hashes DOM
+  y geometría congelados en 1440, 1200, 900 y 390 px.
+- CSS depurado durante el rollout: 30,378 → 18,404 bytes (`-39.4%`); gzip final
+  de 3,661 bytes.
+- Detector Impeccable final: `[]`.
+- Staging y release: `Validated 21 public routes`.
+- Playwright aprobó 1440/1200/900/390 sin overflow, fallos de runtime, imágenes
+  rotas ni fallos de foco; FAQ visible/schema 8:8 y regiones protegidas intactas.
+- Capturas finales ignoradas: `.artifacts/newborn-final/`.
+- Los builds Tina finales usaron `--datalayer-port 9001` porque el servidor Tina
+  de larga duración del usuario ocupaba `:9000`; no se detuvo ese proceso.
+
+## Pendiente no bloqueante
+
+- [ ] Q41: confirmar si Lisa tiene formación de seguridad newborn. Solo después
+  de confirmación explícita se evaluará añadir el claim; hoy no está publicado.

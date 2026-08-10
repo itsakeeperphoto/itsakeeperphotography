@@ -659,3 +659,39 @@
   commit documental local. Los servidores temporales y Playwright se cerraron,
   Tina `:9000` no se tocó y `dist/` quedó en release. No se ejecutó push,
   deploy, DNS ni `./scripts/handoff.sh`; el usuario publica los commits.
+
+### 2026-08-10 — Codex / GPT-5 — Newborn definitiva publicada y documentada
+
+- **Objetivo:** reconciliar la fuente externa v2 y publicar
+  `/newborn-photographer-tri-cities-wa/` como una service page definitiva,
+  preservando dos regiones ya aprobadas y sin inventar hechos de seguridad.
+- **Fuente/copy:** la v2 definitiva externa vive en
+  `/Users/williammelo/Documents/Claude/Projects/Its A Keeper Photography/paginas/04-newborn.md`.
+  Q53 confirmó sesiones principalmente en casa y exterior según temporada. El
+  repositorio la reconcilia en `paginas/04-newborn.md` como autoridad vigente;
+  Q41 sobre formación de seguridad queda pendiente no bloqueante y la página no
+  publica ese claim.
+- **Dirección visual:** el usuario aprobó A+C: A “storybook ledger” como base y
+  C “archival proofbook” para `No hard deadline` y el FAQ master-detail. El
+  `EditorialHero` y `What Your Newborn Session Looks Like` permanecieron exactos
+  en contenido, DOM y geometría. El detector final Impeccable devolvió `[]`.
+- **Contrato visible:** un H1 exacto, siete H2, cuatro anchors dentro de
+  `<main>` y ocho FAQ nativas. Las ocho preguntas/respuestas coinciden 1:1 con
+  las ocho entidades `Question`; además se emiten `WebPage`, `Service`
+  detallado y `BreadcrumbList`.
+- **Publicación:** la ruta quedó `ready/index`, `lastModified: 2026-08-10`,
+  incluida en sitemap release y `llms.txt`; staging conserva noindex global.
+  Release contiene ocho URLs en sitemap y siete entradas en `llms.txt`.
+- **Media/rendimiento:** se incorporó una sola fotografía Drive verificada,
+  `newborn-family-at-home-west-richland.jpg`, optimizada de 13.13 MiB/4000×6000
+  a 412 KiB/1600×2400, más variantes WebP responsive ignoradas. El CSS se podó
+  de 30,378 a 18,404 bytes (`-39.4%`) y quedó en 3,661 bytes gzip.
+- **QA:** los validadores aprobaron 21/21 rutas tanto en staging como en
+  release. Playwright aprobó 1440/1200/900/390 sin overflow horizontal, fallos
+  de runtime, imágenes rotas ni fallos de foco, y confirmó las dos regiones
+  protegidas. Capturas finales ignoradas: `.artifacts/newborn-final/`.
+- **Operación:** la implementación está en `b3bb362`. Los builds Tina finales
+  usaron `--datalayer-port 9001` porque el servidor largo del usuario ocupaba
+  `:9000`; no se detuvo. Este cierre documental permanece pendiente en el
+  worktree, sin inventar hash futuro. No se ejecutó push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva la publicación.

@@ -15,7 +15,7 @@ approved_donor_mock: "../mocks/newborn-option-c-archival-proofbook.png"
 
 - User approval: 2026-08-10, **A as the composition base plus C's “No hard deadline” spread and master-detail FAQ**.
 - The approved mocks define geometry, rhythm and hierarchy only. Their placeholder copy and photo blocks are not production authority.
-- The definitive content authority is `paginas/04-newborn.md`, reconciled with the two protected production regions below.
+- The repository's definitive content authority is `paginas/04-newborn.md`: it records the shipped hybrid copy and the two protected production regions exactly. Its external v2 provenance is `/Users/williammelo/Documents/Claude/Projects/Its A Keeper Photography/paginas/04-newborn.md`; that external file is provenance, not a competing current authority.
 - Production photography must be a verified Lisa Weiss repository asset or a Drive original audited in `It’s A Keeper Photography Assets`. Generated people never ship.
 
 ## Protected regions

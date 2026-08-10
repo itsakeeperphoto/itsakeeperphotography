@@ -28,6 +28,7 @@ entry when that date is missing.
 | --- | --- | --- |
 | `/` | Homepage | 2026-08-04 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
+| `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-10 |
 | `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
@@ -40,7 +41,7 @@ entry when that date is missing.
 
 - `/family-photographer-tri-cities-wa/` — ready and indexable
 - `/senior-photographer-tri-cities-wa/` — draft; excluded
-- `/newborn-photographer-tri-cities-wa/` — draft; excluded
+- `/newborn-photographer-tri-cities-wa/` — ready and indexable
 - `/branding-photographer-tri-cities-wa/` — draft; excluded
 - `/headshot-photographer-tri-cities-wa/` — draft; excluded
 
