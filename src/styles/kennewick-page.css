@@ -705,6 +705,12 @@
   }
 }
 
+@media (min-width: 1051px) {
+  .kennewick-final__background-image {
+    object-position: 50% 20%;
+  }
+}
+
 @media (max-width: 1250px) {
   .kennewick-shell {
     width: min(calc(100% - 3.5rem), 70rem);
