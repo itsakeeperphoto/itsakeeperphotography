@@ -29,6 +29,11 @@
     "mobileObjectPosition": "50% 24%",
     "domSha256": "7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17"
   },
+  "densityRefinement": {
+    "approvedAt": "2026-08-10",
+    "belief": "Keep the title and quote horizontally balanced beside the photograph; do not collapse the quote into a one-word vertical column.",
+    "method": "Keep the four-principle ruled ledger at 4/2/1 columns with a responsive 20–32px desktop inset between copy and divider lines."
+  },
   "contentAuthority": "content/pages/about.json",
   "authorityContract": [
     "Lisa Weiss — Founder and Professional Photographer in Richland, Washington",

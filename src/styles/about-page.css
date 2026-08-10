@@ -456,30 +456,32 @@
 }
 
 .about-belief__heading {
-  padding-bottom: var(--space-10);
+  padding-bottom: var(--space-8);
   border-bottom: var(--border-hairline) solid rgba(242, 232, 215, 0.64);
 }
 
 .about-belief__heading h2 {
-  max-width: 9ch;
+  max-width: 12ch;
 }
 
 .about-belief__heading blockquote {
-  max-width: 8ch;
-  margin-top: var(--space-10);
+  max-width: none;
+  margin-top: var(--space-8);
 }
 
 .about-belief__heading blockquote p {
+  max-width: 12ch;
   color: var(--about-ivory);
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 4.1vw, 4.5rem);
+  font-size: clamp(2.75rem, 3.6vw, 3.75rem);
   font-style: italic;
   line-height: 1;
+  text-wrap: balance;
 }
 
 .about-belief__note {
   width: calc(100% + var(--space-10));
-  margin-top: var(--space-10);
+  margin-top: var(--space-8);
   margin-left: calc(var(--space-10) * -1);
   padding: var(--space-12) var(--space-10) var(--space-10);
 }
@@ -548,7 +550,7 @@
 
 .about-method__ledger li {
   min-width: 0;
-  padding: var(--space-2) var(--space-7) 0;
+  padding: var(--space-2) clamp(var(--space-5), 1.6vw, var(--space-8)) 0;
 }
 
 .about-method__ledger li + li {
