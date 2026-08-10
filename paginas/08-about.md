@@ -18,12 +18,13 @@ publicada el 2026-08-10_
 | Meta description | `The story behind It's A Keeper Photography — twenty years of preserving Tri-Cities families' most meaningful moments, and the mom who picked up a camera first.` |
 | Resumen `llms.txt` | `Meet Lisa Weiss, the Richland photographer behind It's A Keeper Photography, with twenty years behind the camera and fourteen years in business.` |
 
-## Excepción editorial protegida: hero existente
+## Contrato protegido del hero y excepción de fondo aprobada
 
-El usuario pidió conservar el hero anterior sin cambios. Este bloque es la única
-excepción a la reconciliación del copy definitivo: no se deben cambiar su copy,
-DOM, fotografías, crops, CTA ni geometría responsive sin una nueva aprobación
-explícita.
+El usuario aprobó explícitamente reemplazar solo el fondo del hero por el
+retrato de Lisa fotografiando. H1, intro, script, CTA, dos prints, estructura
+DOM y geometría responsive permanecen exactos. El nuevo fondo y su crop común
+desktop/móvil forman parte de la baseline protegida; cualquier otro cambio
+requiere una nueva aprobación explícita.
 
 - **H1:** Meet Lisa — The Heart Behind It's A Keeper
 - **Intro:** Professional senior, family and couples photographer in Richland,
@@ -31,13 +32,18 @@ explícita.
   of Tri-Cities stories preserved.
 - **Script:** the heart behind every keeper
 - **CTA:** Her story → `#it-started-with-my-own-children`
-- **Fondo:** `/uploads/lisa-photographer-tricities.jpg`
-- **Alt:** Lisa, owner of It’s A Keeper Photography, holding her camera in the
-  Tri-Cities
+- **Fondo aprobado:** `/uploads/about-lisa-photographing-tricities.jpg`
+- **Alt literal:** Lisa holding a camera to her face among dry grass and shrubs.
+- **Crop desktop y móvil:** `50% 24%`
 - **Print izquierdo:**
   `/uploads/about-origin-family-newborn-tricities.jpg`
 - **Print derecho:**
   `/uploads/about-story-senior-horse-tricities.jpg`
+- **Fingerprint DOM Playwright:**
+  `7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`
+
+La fuente anterior `/uploads/lisa-photographer-tricities.jpg` no se borró ni se
+reprocesó y sigue siendo utilizada por otras rutas de producción.
 
 ## Headings publicados
 

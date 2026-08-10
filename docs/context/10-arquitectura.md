@@ -135,9 +135,13 @@ líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
 `AboutPage.astro` publica la dirección híbrida A+C aprobada —`Keeper Archive`
 más `Through Her Lens`— como página de identidad y confianza. Su
-`EditorialHero` anterior es una excepción protegida: conserva copy, CTA hash,
-DOM, tres fuentes fotográficas, crops y geometría exactos en
-1440/1200/900/390. Debajo, la secuencia fija comprende origen, historia del
+`EditorialHero` conserva H1, intro, script, CTA hash, dos prints, estructura DOM
+y geometría exactos. El usuario aprobó una única excepción de media: el fondo
+es `/uploads/about-lisa-photographing-tricities.jpg`, con alt literal y crop
+`50% 24%` tanto en desktop como en móvil; el DOM rebaselined queda fijado por
+SHA-256
+`7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`.
+Debajo, la secuencia fija comprende origen, historia del
 nombre, historia de la cámara, lecciones, creencia, método 4/2/1, vida fuera de
 cámara, autoridad como ledger y cierre fotográfico full-bleed. El contrato
 visible exige un H1, nueve H2 y cinco anchors en orden: hash del hero, Seniors,
@@ -289,11 +293,12 @@ para evitar cambios silenciosos al repositorio.
   Para las galerías Richland/Kennewick compara allowlists literales de `src` y
   alt, cuenta 10/5 tríos figure/image/caption, prohíbe duplicados y anchors, y
   conserva siete H2 y nueve anchors de `<main>` en ambas rutas.
-- Para About valida metadata y estado `ready/index`, H1 protegido, nueve H2,
-  mapa exacto de cinco anchors, enlace Issuu seguro, ausencia de claims
-  pendientes, entidades `AboutPage`/`Person`/`BreadcrumbList`, referencia única
-  al founder global y ausencia de schema de servicio, FAQ, reseñas, rating,
-  premio, coordenadas o dirección de calle.
+- Para About valida metadata y estado `ready/index`, H1 protegido, fondo/alt y
+  crop exactos del hero, nueve H2, mapa exacto de cinco anchors, enlace Issuu
+  seguro, ausencia de claims pendientes, entidades
+  `AboutPage`/`Person`/`BreadcrumbList`, referencia única al founder global y
+  ausencia de schema de servicio, FAQ, reseñas, rating, premio, coordenadas o
+  dirección de calle.
 
 ## SEO/indexación actual
 
@@ -370,9 +375,10 @@ Tri-Cities MOM Magazine de agosto de 2019. No emite `Service`, `FAQPage`,
 - About incorpora cuatro retratos nuevos de Lisa procedentes de la carpeta
   Drive `MY NEW branding pics ( Lisa )`: tres en color y uno en blanco y negro,
   todos en 1600×2400, sRGB, sin metadata y entre 298–487 KiB. Sus variantes
-  WebP 400/640/960/1440 son regenerables; no se borró ni reemplazó ninguna
-  fotografía existente y las tres fuentes que construyen el hero permanecen
-  byte-identical.
+  WebP 400/640/960/1440 son regenerables. Uno de esos retratos es ahora el fondo
+  aprobado del hero, con crop `50% 24%`; los dos prints laterales permanecen
+  intactos. La fuente de fondo anterior no se borró ni se reprocesó porque
+  continúa utilizada por otras rutas de producción.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

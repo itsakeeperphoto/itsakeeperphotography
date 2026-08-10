@@ -817,3 +817,27 @@
   permanece en el worktree para el commit local siguiente. `main` está quince
   commits por delante de `origin/main` antes de documentarlo; no se hizo push,
   deploy, DNS ni `./scripts/handoff.sh`. El usuario conserva la publicación.
+
+### 2026-08-10 — Codex / GPT-5 — Fondo del hero About actualizado por aprobación explícita
+
+- **Objetivo:** reemplazar únicamente la fotografía de fondo del hero de
+  `/about/` por el retrato señalado por el usuario, sin alterar el resto del
+  bloque ni borrar media que siga en producción.
+- **Cambio aprobado:** el fondo ahora usa
+  `/uploads/about-lisa-photographing-tricities.jpg`, alt literal `Lisa holding a
+  camera to her face among dry grass and shrubs.` y crop `50% 24%` en desktop y
+  móvil. La fuente anterior `/uploads/lisa-photographer-tricities.jpg` permanece
+  sin borrar ni reprocesar porque otras rutas todavía la utilizan.
+- **Regresión protegida:** H1, intro, script, CTA hash, dos prints laterales,
+  estructura DOM y geometría responsive continúan exactos. El nuevo fingerprint
+  DOM es
+  `7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`.
+- **QA:** Playwright aprobó la revisión solicitada a 1728×997 y las baselines
+  1440/1200/900/390; release validó 21/21 rutas e Impeccable devolvió `[]`.
+  About conserva `ready/index`, sitemap, `llms.txt`, metadata, schema, enlaces y
+  autoridad sin cambios.
+- **Git/operación:** el cambio funcional quedó en `bd40b70`
+  (`fix(about): update hero background portrait`). `main` está diecisiete
+  commits por delante de `origin/main` antes del cierre documental y quedará
+  dieciocho por delante tras su commit local. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva la publicación.

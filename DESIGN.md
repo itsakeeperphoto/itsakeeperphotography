@@ -1143,21 +1143,29 @@ Keeper Photography.
 - **Prohibido:** badges, cards redondeadas, sombras decorativas, cintas o pins,
   estadísticas aisladas como widgets y fotografías generadas en el DOM final.
 
-### Hero protegido
+### Hero rebaselined y protegido
 
-El hero existente es una excepción aprobada y no se rediseña con el resto de la
-ruta. Debe preservar:
+El usuario aprobó explícitamente una única excepción de media: reemplazar solo
+el fondo del hero por `/uploads/about-lisa-photographing-tricities.jpg`. La
+baseline protegida debe preservar:
 
 - H1 `Meet Lisa — The Heart Behind It's A Keeper`;
 - intro, script y CTA hash `#it-started-with-my-own-children`;
-- fondo y dos prints existentes, con sus crops;
+- fondo aprobado con alt literal `Lisa holding a camera to her face among dry
+  grass and shrubs.` y `object-position: 50% 24%` tanto en desktop como en
+  móvil;
+- los dos prints laterales existentes, sin reemplazo ni cambio de crop;
 - DOM fingerprint Playwright
-  `e28a637235dfa3f87fdb438f017e4c9fe9560d2aacc4627076d8e90ebd6a930d`;
+  `7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`;
 - geometría exterior de 1440×882, 1200×782, 900×688 y 390×867.64 px en los
   cuatro viewports de QA, con tolerancia máxima de 1 CSS px.
 
-Cualquier cambio futuro al hero exige una aprobación explícita y una nueva
-baseline; no debe ocurrir como efecto colateral de editar las secciones About.
+La fuente anterior `/uploads/lisa-photographer-tricities.jpg` no se elimina ni
+se reprocesa porque continúa utilizada en otras rutas de producción. Playwright
+aprobó además el encuadre a 1728×997 y las regresiones a 1440, 1200, 900 y
+390 px. Cualquier cambio futuro al hero exige una aprobación explícita y una
+nueva baseline; no debe ocurrir como efecto colateral de editar las secciones
+About.
 
 ### Secuencia compositiva
 

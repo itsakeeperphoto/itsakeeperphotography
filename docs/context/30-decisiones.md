@@ -859,3 +859,33 @@
   del hero mayor a 1 CSS px. La revisión final independiente devuelve `PASS`
   sin defectos materiales. Los hechos excluidos pueden reconsiderarse solo con
   evidencia y autorización nuevas; no son bloqueadores de la página actual.
+
+### ADR-045 — About reemplaza únicamente el fondo de su hero
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada; supersede ADR-044 únicamente en la media y el crop del
+  fondo del hero. El copy, la estructura, los prints, la geometría y todos los
+  contratos editoriales, SEO y de autoridad de ADR-044 permanecen vigentes.
+- **Contexto:** Después de publicar About A+C, el usuario señaló en una revisión
+  a 1728×997 una fotografía concreta de Lisa trabajando y pidió reemplazar con
+  ella la imagen de fondo que mostraba su rostro. La solicitud fue explícita y
+  limitada al fondo; no autorizó rediseñar el hero ni eliminar la fuente
+  anterior, que continúa utilizada por otras rutas de producción.
+- **Decisión:** Usar `/uploads/about-lisa-photographing-tricities.jpg` como
+  fondo del hero, con alt literal `Lisa holding a camera to her face among dry
+  grass and shrubs.` y `object-position: 50% 24%` tanto en desktop como en
+  móvil. Conservar exactos H1, intro, script, CTA hash, dos prints laterales,
+  estructura DOM y geometría responsive. Proteger la nueva salida con el
+  fingerprint DOM SHA-256
+  `7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`
+  y mantener `/uploads/lisa-photographer-tricities.jpg` sin borrar ni
+  reprocesar.
+- **Alternativas descartadas:** Cambiar también los prints o el copy, aplicar
+  crops distintos sin necesidad entre desktop y móvil, retirar la fuente
+  anterior, volver a optimizar fotografías ya publicadas o modificar las
+  secciones A+C se descartó por exceder el feedback y arriesgar contratos ya
+  aprobados.
+- **Consecuencias:** El commit funcional `bd40b70` conserva `/about/`
+  `ready/index`, metadata, sitemap, `llms.txt`, schema, anchors y autoridad sin
+  cambios. Release valida 21/21 rutas; Impeccable devuelve `[]`; Playwright
+  aprueba 1728×997 y 1440/1200/900/390 sin desviación de geometría, imágenes
+  rotas ni fallos locales. No se hizo push ni otra mutación externa.

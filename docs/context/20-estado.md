@@ -3,38 +3,40 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-10 15:29 -05
+**Última actualización:** 2026-08-10 17:01 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit funcional verificado:** `364569a` —
-`feat(about): redesign and publish Lisa story`
+**Commit funcional verificado:** `bd40b70` —
+`fix(about): update hero background portrait`
 
 **Commit documental:** este archivo pertenece al commit local inmediatamente
-posterior a `364569a`; consultar `git log -1` después de crearlo para obtener su
+posterior a `bd40b70`; consultar `git log -1` después de crearlo para obtener su
 hash sin inventarlo aquí.
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al preparar este cierre:** `main` está quince commits por delante
-de `origin/main` (`ff736c6`) en `364569a`. El worktree contiene únicamente los
-ocho documentos reconciliados de este cierre; cuando entren en su commit local,
-la rama quedará limpia y dieciséis commits por delante. No se hizo push, deploy,
-DNS ni otra mutación externa; el usuario conserva la publicación.
+**Estado Git al preparar este cierre:** `main` está diecisiete commits por
+delante de `origin/main` (`ff736c6`) en `bd40b70`. El worktree contiene
+únicamente los siete documentos reconciliados de este cierre; cuando entren en
+su commit local, la rama quedará limpia y dieciocho commits por delante. No se
+hizo push, deploy, DNS ni otra mutación externa; el usuario conserva la
+publicación.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario debe publicar los dieciséis commits locales posteriores a `ff736c6`.
+El usuario debe publicar los dieciocho commits locales posteriores a `ff736c6`.
 Cuando Netlify termine, comprobar `/about/` en el dominio final: status 200,
 canonical `www`, meta robots index, ausencia de `X-Robots-Tag: noindex`,
 membresía y `lastmod: 2026-08-10` en `/sitemap.xml`, entrada exacta en
-`/llms.txt`, las cuatro fotografías nuevas y el hero sin cambios. Repetir la
-comprobación pendiente de Newborn, Richland, Kennewick y Pasco. No cambiar
+`/llms.txt`, las cuatro fotografías nuevas y el fondo del hero
+`/uploads/about-lisa-photographing-tricities.jpg` con crop `50% 24%`. Repetir
+la comprobación pendiente de Newborn, Richland, Kennewick y Pasco. No cambiar
 apex/`www`, DNS ni redirects antes de resolver la divergencia de host ya
 documentada.
 
@@ -49,14 +51,17 @@ documentada.
   global.
 - `/about/` quedó `ready/index`, `lastModified: 2026-08-10`, con copy definitivo,
   dirección A+C aprobada, autoridad verificable, schema propio y CSS aislado.
-- El hero About anterior es una excepción protegida y permanece exacto en copy,
-  DOM, tres fuentes fotográficas, crops y geometría 1440/1200/900/390.
-- Ninguna fotografía previa fue borrada, reemplazada ni renombrada. Se añadieron
-  cuatro retratos Lisa optimizados desde la carpeta Drive autorizada.
+- El usuario aprobó reemplazar solo el fondo del hero About por
+  `/uploads/about-lisa-photographing-tricities.jpg`, con alt literal y crop
+  `50% 24%` común. H1, intro, script, CTA, prints y geometría permanecen
+  exactos; el DOM nuevo está rebaselined.
+- La fuente anterior no se borró ni reprocesó y continúa utilizada por otras
+  rutas. Los cuatro retratos Lisa optimizados desde Drive permanecen en
+  producción.
 - Los claims pendientes de reseñas, salud, premio, Grammy, certificaciones,
   seguro, membresías y Google Business no se publican y no bloquean About.
-- El commit funcional es `364569a`; este cierre documental todavía no está
-  commiteado ni publicado.
+- El commit funcional más reciente es `bd40b70`; este cierre documental
+  todavía no está commiteado ni publicado.
 
 ## About publicado
 
@@ -75,7 +80,7 @@ documentada.
 - El enlace Issuu es la única salida externa, abre con `target="_blank"` y
   `rel="noopener"`, sin `nofollow`.
 - `paginas/08-about.md` es la fuente reconciliada: contiene los 55 campos de
-  copy publicados y documenta el hero como excepción explícita.
+  copy publicados y documenta la única excepción explícita de fondo del hero.
 
 ### Dirección A+C
 
@@ -95,13 +100,18 @@ documentada.
 - `DESIGN.md` y `.impeccable/surfaces/route-about.md` fijan la tesis, el mundo
   visual, los patrones prohibidos, la secuencia responsive y el finish contract.
 
-### Hero protegido
+### Hero rebaselined y protegido
 
-- Conserva H1, intro, script, CTA `#it-started-with-my-own-children`, fondo y
-  dos prints existentes.
-- Las tres fuentes de entrada permanecen byte-identical frente al estado previo.
+- El usuario aprobó explícitamente reemplazar solo el fondo por
+  `/uploads/about-lisa-photographing-tricities.jpg`.
+- Alt literal: `Lisa holding a camera to her face among dry grass and shrubs.`
+- Crop desktop y móvil: `50% 24%`.
+- H1, intro, script, CTA `#it-started-with-my-own-children`, dos prints,
+  estructura DOM y geometría permanecen exactos.
+- La fuente anterior `/uploads/lisa-photographer-tricities.jpg` no se borró ni
+  reprocesó y sigue usada por otras rutas de producción.
 - Fingerprint DOM Playwright:
-  `e28a637235dfa3f87fdb438f017e4c9fe9560d2aacc4627076d8e90ebd6a930d`.
+  `7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`.
 - Baseline exterior: 1440×882, 1200×782, 900×688 y 390×867.64 px, tolerancia
   máxima de 1 CSS px.
 
@@ -115,6 +125,8 @@ documentada.
   400/640/960/1440 son regenerables mediante el pipeline existente.
 - La auditoría Drive local permanece fuera del commit; producción incluye solo
   las cuatro selecciones autorizadas y optimizadas.
+- `about-lisa-photographing-tricities.jpg` sirve ahora tanto el fondo aprobado
+  del hero como la historia de la cámara; no se duplicaron bytes.
 
 ### SEO y autoridad estructurada
 
@@ -144,23 +156,26 @@ documentada.
 ## Verificación ejecutada
 
 - Release: `Validated 21 public routes in release mode.`
-- Playwright CLI: aprobado en 1440×1000, 1200×900, 900×900 y 390×844.
-- En los cuatro viewports: status 200, canonical/robots correctos, un H1, nueve
+- Playwright: el nuevo fondo y su crop aprobaron 1728×997 y
+  1440/1200/900/390.
+- En los cinco anchos: status 200, canonical/robots correctos, un H1, nueve
   H2, cinco anchors en orden, schema exacto, todas las imágenes cargadas,
   variantes WebP, ancho de lectura y foco visibles.
 - Cero overflow horizontal, clipping, solapamientos indebidos, imágenes rotas,
   errores de runtime, respuestas 4xx o requests same-origin fallidos.
 - Reduced motion deja transiciones/transforms prescindibles anulados.
-- El hero conserva DOM, fuentes y geometría dentro de la tolerancia de 1 px.
-- La revisión final independiente devolvió `PASS` sin defectos materiales en
-  hero, copy, autoridad, gates, schema, links, headings, responsive, assets ni
+- El hero conserva copy, prints y geometría dentro de la tolerancia de 1 px; el
+  fondo, alt, crop y fingerprint DOM nuevos están protegidos de regresión.
+- Impeccable devolvió `[]` después del cambio de fondo.
+- La revisión final independiente del rollout A+C permanece `PASS`; el ajuste
+  posterior no cambia copy, autoridad, gates, schema, links, headings ni
   aislamiento CSS.
 - `git diff --check`, copy 55/55, fences Markdown y conflicto markers pasan para
   los documentos de cierre.
 
 ## Archivos del lote
 
-Implementación funcional en `364569a`:
+Implementación funcional base en `364569a`:
 
 - `content/pages/about.json`
 - `src/components/pages/AboutPage.astro`
@@ -176,11 +191,19 @@ Implementación funcional en `364569a`:
 - cuatro JPEG bajo `public/uploads/about-lisa-*.jpg`
 - comps, sidecars, prompts, manifest aprobado y superficie bajo `.impeccable/`
 
+Ajuste del fondo del hero en `bd40b70`:
+
+- `content/pages/about.json`
+- `src/components/pages/AboutPage.astro`
+- `scripts/validate-site.mjs`
+- `scripts/playwright-about.js`
+- `.impeccable/surfaces/route-about.md`
+- `.impeccable/mocks/about-approved-manifest.json`
+
 Documentación reconciliada en este cierre:
 
 - `paginas/08-about.md`
 - `DESIGN.md`
-- `STRUCTURE.md`
 - `docs/context/10-arquitectura.md`
 - `docs/context/20-estado.md`
 - `docs/context/30-decisiones.md`
@@ -191,9 +214,9 @@ Documentación reconciliada en este cierre:
 
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
-| About | `ready/index` en `364569a` | Push del usuario y QA del deploy. |
+| About | `ready/index` en `bd40b70` | Push del usuario y QA del deploy. |
 | Documentación About | Completa en worktree | Crear el commit local de cierre. |
-| Producción | Quince commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
+| Producción | Diecisiete commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
 | Newborn | `ready/index` | Verificar producción; Q41 sigue opcional/no bloqueante y sin claim. |
 | Richland/Kennewick/Pasco | `ready/index` | Verificar producción y crawler outputs tras push. |
 | Bandwidth/build | Optimizado localmente | Observar logs y bandwidth Netlify durante 48 h tras deploy. |
@@ -219,8 +242,8 @@ personalmente, porque ese script publica el repositorio.
 
 ## Bloqueadores externos
 
-1. Crear el commit documental local inmediatamente posterior a `364569a`.
-2. El usuario debe publicar los dieciséis commits locales en el remoto oficial.
+1. Crear el commit documental local inmediatamente posterior a `bd40b70`.
+2. El usuario debe publicar los dieciocho commits locales en el remoto oficial.
 3. Esperar el deploy Netlify y comprobar About y las cuatro rutas recientes.
 4. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
 5. Completar verificaciones externas de Forms, analytics, GBP y Privacy.

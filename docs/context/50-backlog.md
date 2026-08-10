@@ -46,18 +46,24 @@
   `AboutPage`/`Person`/breadcrumb, cinco anchors y QA
   1440/1200/900/390 completos. La ruta queda `ready/index` sin claims
   pendientes.
-- [ ] **11. Publicar los commits locales.** About está terminado en el worktree
-  y su commit funcional/documental se crea localmente al cerrar; el usuario
-  publica todos los commits posteriores a `ff736c6`. Codex no ejecuta push.
-- [ ] **12. Verificar About, Richland, Kennewick, Pasco y Newborn después del
+- [x] **11. Actualizar solo el fondo del hero About según ADR-045.** El usuario
+  aprobó `/uploads/about-lisa-photographing-tricities.jpg`, alt literal y crop
+  `50% 24%` común; H1, intro, script, CTA, prints y geometría permanecen
+  exactos. Release 21/21, Impeccable `[]` y Playwright
+  1728/1440/1200/900/390 completos. La fuente anterior no se borró.
+- [ ] **12. Publicar los commits locales.** About está terminado en commits
+  funcionales y documentales locales; el cierre quedará dieciocho commits por
+  delante de `origin/main`. El usuario publica todos los commits posteriores a
+  `ff736c6`; Codex no ejecuta push.
+- [ ] **13. Verificar About, Richland, Kennewick, Pasco y Newborn después del
   push del usuario.** Confirmar en el dominio final status 200, meta index,
   canonical, ausencia de header noindex, membresía de sitemap/llms y lastmod:
   ciudades `2026-08-09`; Newborn y About `2026-08-10`; además del cierre Pasco
-  sin panel y el hero About intacto.
-- [ ] **13. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  sin panel y el nuevo fondo aprobado del hero About con crop `50% 24%`.
+- [ ] **14. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **14. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **15. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -90,6 +96,9 @@ sin reemplazar el archivo.
 
 - [x] Publicada `ready/index` con dirección A+C, nueve H2, cinco anchors,
   autoridad editorial y schema `AboutPage`/`Person`/breadcrumb.
+- [x] Reemplazado únicamente el fondo del hero por la fotografía de Lisa
+  trabajando aprobada por el usuario; crop `50% 24%` en desktop/móvil y nueva
+  baseline DOM protegida. La fuente anterior continúa en producción.
 - [x] Verificada la publicación de portada de Lisa en Tri-Cities MOM Magazine,
   agosto/septiembre de 2019, mediante su edición primaria en Issuu.
 - [x] Eliminados del copy publicado el condicional y todos los placeholders; el
@@ -221,9 +230,10 @@ sin reemplazar el archivo.
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
   ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los diez commits funcionales/documentales locales creados después
-  de `ff736c6`, incluidos `b3bb362`, `128e274` y el commit de estado posterior.
-  Codex no ejecuta push; el usuario conserva esa operación.
+- [ ] Publicar los dieciocho commits funcionales/documentales locales creados
+  después de `ff736c6` al completar este cierre, incluidos `b3bb362`,
+  `bd40b70` y el commit documental posterior. Codex no ejecuta push; el usuario
+  conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -286,6 +296,10 @@ sin reemplazar el archivo.
 - [x] Publicar Newborn definitiva: una fuente Drive de 13.13 MiB/4000×6000
   optimizada a 412 KiB/1600×2400, CSS podado 39.4%, Impeccable `[]`,
   validadores 21/21 staging/release y Playwright 1440/1200/900/390 sin fallos.
+- [x] Rebaselined el hero About después del cambio de fondo autorizado:
+  fotografía y alt exactos, crop `50% 24%`, DOM SHA protegido, release 21/21,
+  Impeccable `[]` y Playwright 1728/1440/1200/900/390 aprobados sin alterar la
+  geometría ni borrar la fuente anterior.
 - [x] Corregir el lote de geometría desktop sin cambiar contenido ni media:
   Newborn final sin clipping, Richland 3/2/1 en bandas completas y Kennewick con
   crop desktop protegido. Release 21/21, Impeccable `[]` y Playwright
@@ -375,9 +389,9 @@ sin reemplazar el archivo.
   sesiones verificadas.
 - [x] Completar Newborn con composición A+C, fuente v2 reconciliada, hero y
   proceso protegidos, ocho FAQ y prueba in-home verificada.
-- [x] Completar About con composición A+C, hero protegido, fuente v2
-  reconciliada, método visible y autoridad verificable sin badges ni claims
-  pendientes.
+- [x] Completar About con composición A+C, hero protegido salvo la sustitución
+  explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
+  visible y autoridad verificable sin badges ni claims pendientes.
 - [ ] Evaluar composición individual de Privacy/Thank-you sin afectar su noindex;
   Thank-you debe permanecer simple y cálida.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,
@@ -450,3 +464,5 @@ sin reemplazar el archivo.
   reconciliada, regiones protegidas intactas y QA final en cuatro viewports.
 - [x] Alineados los cierres Newborn/Kennewick y la galería Richland en desktop,
   preservando copy, fotografías, tablet, móvil y contratos SEO.
+- [x] Sustituido solo el fondo del hero About por el retrato aprobado de Lisa
+  fotografiando, con crop común `50% 24%` y regresión responsive completa.
