@@ -1,0 +1,9 @@
+{
+  "surface": "route:/about/",
+  "name": "A+C middle-page implementation comp",
+  "viewport": "1536x1024",
+  "approved": true,
+  "canonical": true,
+  "derivation": "Generated after the user's A+C approval on 2026-08-10",
+  "promptFile": "about-04-middle-story-belief.prompt.txt"
+}

@@ -1,56 +1,148 @@
 async (page) => {
-  const root = "http://127.0.0.1:4321/about/";
-  const viewports = [
-    { name: "1440x1000", width: 1440, height: 1000 },
-    { name: "1200x900", width: 1200, height: 900 },
-    { name: "900x900", width: 900, height: 900 },
-    { name: "390x844", width: 390, height: 844 },
-  ];
-  const report = {};
+  const baseUrl = page.url().match(/^https?:\/\/[^/]+/)?.[0];
+  if (!baseUrl) throw new Error("Open the local site before running this suite.");
 
+  const route = "/about/";
+  const releaseOrigin = "https://www.itsakeeperphotography.com";
+  const stagingOrigin = "https://itsakeeperphotography.netlify.app";
+  const issuuUrl =
+    "https://issuu.com/wpdigitalpublications/docs/tri_final2_augsept_19-july30_issuu";
+  const viewports = [
+    { id: "1440", width: 1440, height: 1000 },
+    { id: "1200", width: 1200, height: 900 },
+    { id: "900", width: 900, height: 900 },
+    { id: "390", width: 390, height: 844 },
+  ];
+  const expected = {
+    title: "Meet Lisa Weiss | Tri-Cities Photographer for 20 Years",
+    description:
+      "The story behind It's A Keeper Photography — twenty years of preserving Tri-Cities families' most meaningful moments, and the mom who picked up a camera first.",
+    personDescription:
+      "Professional senior, family and newborn photographer based in Richland, Washington, with over 20 years behind the camera and 14 years in business serving the Tri-Cities.",
+    h1: ["Meet Lisa — The Heart Behind It's A Keeper"],
+    h2: [
+      "It Started With My Own Children",
+      'Why "It\'s A Keeper"',
+      "A Camera, a Scam, and a Door That Opened Anyway",
+      "What Twenty Years Has Taught Me",
+      "What I Believe You Deserve",
+      "How I Photograph",
+      "Lisa, Off Camera",
+      "Experience & Recognition",
+      "Let's Tell Your Story",
+    ],
+    anchors: [
+      "#it-started-with-my-own-children",
+      "/senior-photographer-tri-cities-wa/",
+      "/investment/",
+      issuuUrl,
+      "/contact/",
+    ],
+    rootRoutes: [
+      "/senior-photographer-tri-cities-wa/",
+      "/investment/",
+      "/contact/",
+    ],
+    knowsAbout: [
+      "senior portrait photography",
+      "family photography",
+      "newborn photography",
+      "branding photography",
+      "professional headshots",
+      "natural light photography",
+      "golden hour portraiture",
+    ],
+    sameAs: [
+      "https://www.instagram.com/itsakeeperphoto/",
+      "https://www.facebook.com/10210306464689688",
+    ],
+    protectedHeroDom:
+      "e28a637235dfa3f87fdb438f017e4c9fe9560d2aacc4627076d8e90ebd6a930d",
+    geometry: {
+      "1440": {
+        hero: [0, 118, 1440, 882],
+        heroBackground: [0, 118, 1440, 882],
+        heroCopy: [160, 323.84, 1120, 470.31],
+        heroLeft: [-77.39, 697.39, 292.09, 409.91],
+        heroRight: [1213.13, 699.11, 285.68, 405.93],
+      },
+      "1200": {
+        hero: [0, 118, 1200, 782],
+        heroBackground: [0, 118, 1200, 782],
+        heroCopy: [160, 202.84, 880, 612.31],
+        heroLeft: [-71.83, 663.82, 243.42, 341.59],
+        heroRight: [1016.26, 665.26, 238.07, 338.28],
+      },
+      "900": {
+        hero: [0, 104, 900, 688],
+        heroBackground: [0, 104, 900, 688],
+        heroCopy: [106, 185.64, 688, 524.7],
+        heroLeft: [-67.4, 586.06, 183.1, 284.91],
+        heroRight: [772.19, 587.08, 178.58, 282.5],
+      },
+      "390": {
+        hero: [0, 92, 390, 867.64],
+        heroBackground: [0, 92, 390, 867.64],
+        heroCopy: [0, 92, 390, 867.64],
+        heroLeft: [-44.51, 855.32, 132.29, 201.38],
+        heroRight: [294.14, 856.06, 129.11, 199.62],
+      },
+    },
+  };
+
+  const results = [];
+  const failures = [];
   await page.emulateMedia({ reducedMotion: "reduce" });
 
   for (const viewport of viewports) {
     const consoleErrors = [];
     const pageErrors = [];
-    const failedRequests = [];
-    const failedResponses = [];
+    const failedSameOriginRequests = [];
+    const failedSameOriginResponses = [];
     const onConsole = (message) => {
-      if (message.type() === "error") consoleErrors.push(message.text());
+      if (
+        message.type() === "error" &&
+        !/(?:clarity\.ms|googletagmanager\.com|google-analytics\.com)/i.test(
+          `${message.text()} ${message.location().url || ""}`,
+        )
+      ) {
+        consoleErrors.push(message.text());
+      }
     };
     const onPageError = (error) => pageErrors.push(error.message);
     const onRequestFailed = (request) => {
-      failedRequests.push(
-        `${request.method()} ${request.url()} — ${request.failure()?.errorText || "failed"}`
-      );
-    };
-    const onResponse = (response) => {
-      if (response.status() >= 400 && !response.url().includes("favicon")) {
-        failedResponses.push(`${response.status()} ${response.url()}`);
+      if (request.url().startsWith(baseUrl)) {
+        failedSameOriginRequests.push(
+          `${request.method()} ${request.url()} — ${request.failure()?.errorText || "failed"}`,
+        );
       }
     };
-
+    const onResponse = (response) => {
+      if (response.url().startsWith(baseUrl) && response.status() >= 400) {
+        failedSameOriginResponses.push(`${response.status()} ${response.url()}`);
+      }
+    };
     page.on("console", onConsole);
     page.on("pageerror", onPageError);
     page.on("requestfailed", onRequestFailed);
     page.on("response", onResponse);
 
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    const response = await page.goto(root, { waitUntil: "networkidle" });
-
-    await page.evaluate(async () => {
-      const step = Math.max(window.innerHeight * 0.72, 420);
-      for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
-        window.scrollTo(0, y);
-        await new Promise((resolve) => setTimeout(resolve, 45));
-      }
-      const images = [...document.querySelectorAll(".about-page img")];
-      await Promise.race([
-        Promise.all(images.map((image) => image.decode().catch(() => undefined))),
-        new Promise((resolve) => setTimeout(resolve, 5000)),
-      ]);
-      window.scrollTo(0, 0);
+    const response = await page.goto(`${baseUrl}${route}`, {
+      waitUntil: "domcontentloaded",
+      timeout: 30_000,
     });
+    await page.locator(".about-page").waitFor({ state: "visible" });
+    await page.evaluate(() => document.fonts.ready);
+    const pageImages = page.locator(".about-page img");
+    for (let index = 0; index < await pageImages.count(); index += 1) {
+      const image = pageImages.nth(index);
+      if (!(await image.evaluate((element) => Boolean(element.closest("[data-editorial-hero]"))))) {
+        await image.scrollIntoViewIfNeeded();
+      }
+      await image.evaluate((element) => element.decode().catch(() => undefined));
+    }
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForFunction(() => window.scrollY === 0);
 
     const menuToggle = page.locator("[data-menu-toggle], .menu-toggle").first();
@@ -62,353 +154,448 @@ async (page) => {
         opened: (await menuToggle.getAttribute("aria-expanded")) === "true",
       };
       await page.keyboard.press("Escape");
-      compactMenu.closed = (await menuToggle.getAttribute("aria-expanded")) === "false";
+      compactMenu.closed =
+        (await menuToggle.getAttribute("aria-expanded")) === "false";
       compactMenu.focusReturned = await menuToggle.evaluate(
-        (node) => document.activeElement === node
+        (node) => document.activeElement === node,
       );
     }
 
-    const links = page.locator(".about-page a[href]");
     const focusChecks = [];
-    for (let index = 0; index < await links.count(); index += 1) {
-      const link = links.nth(index);
+    const bodyLinks = page.locator(".about-page a[href]");
+    for (let index = 0; index < await bodyLinks.count(); index += 1) {
+      const link = bodyLinks.nth(index);
       if (!(await link.isVisible())) continue;
       await link.focus();
       focusChecks.push(
         await link.evaluate((node) => {
           const style = getComputedStyle(node);
           return {
-            label: node.textContent?.trim() || "",
+            href: node.getAttribute("href"),
             outlineStyle: style.outlineStyle,
             outlineWidth: Number.parseFloat(style.outlineWidth),
             outlineOffset: Number.parseFloat(style.outlineOffset),
             outlineColor: style.outlineColor,
           };
-        })
+        }),
       );
     }
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
       window.scrollTo(0, 0);
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve))
+      );
     });
-    await page.waitForFunction(() => window.scrollY === 0);
+    await page.waitForFunction(
+      () => document.getAnimations().every((animation) => animation.playState !== "running"),
+      null,
+      { timeout: 2_000 },
+    );
 
-    const audit = await page.evaluate(() => {
-      const documentElement = document.documentElement;
-      const about = document.querySelector(".about-page");
-      const originArch = document.querySelector('[data-about-arch="origin"]');
-      const lessonsArch = document.querySelector('[data-about-arch="lessons"]');
-      const originNote = document.querySelector(".about-origin__note");
-      const hero = document.querySelector("[data-about-hero]");
-      const rightPrint = document.querySelector('[data-about-hero-print="right"]');
-      const rear = document.querySelector('[data-about-layer="rear"]');
-      const front = document.querySelector('[data-about-layer="front"]');
-
-      const rect = (node) => node?.getBoundingClientRect();
-      const intersection = (a, b) => {
-        if (!a || !b) return { width: 0, height: 0, area: 0 };
-        const width = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
-        const height = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
-        return { width, height, area: width * height };
-      };
-      const archData = (node) => {
-        if (!node) return null;
-        const box = rect(node);
-        const style = getComputedStyle(node);
-        return {
-          width: Math.round(box.width),
-          height: Math.round(box.height),
-          ratio: box.height / box.width,
-          topLeftRadius: Number.parseFloat(style.borderTopLeftRadius),
-          bottomLeftRadius: Number.parseFloat(style.borderBottomLeftRadius),
-          bottomRightRadius: Number.parseFloat(style.borderBottomRightRadius),
-          overflow: style.overflow,
-        };
-      };
-
-      const internalBodyLinks = [...document.querySelectorAll("main a[href]")].filter(
-        (anchor) => {
-          const raw = anchor.getAttribute("href")?.trim() || "";
-          if (!raw || /^(mailto:|tel:)/i.test(raw)) return false;
-          return new URL(raw, location.href).origin === location.origin;
-        }
-      );
-
-      const bodyNodes = [...document.querySelectorAll(".about-page p, .about-page li")].filter(
-        (node) => {
-          const style = getComputedStyle(node);
-          const box = rect(node);
-          return (
-            !node.classList.contains("about-script") &&
-            box.width > 0 &&
-            box.height > 0 &&
-            style.display !== "none" &&
-            style.visibility !== "hidden"
+    const audit = await page.evaluate(
+      async ({ expectedDescription, expectedOriginCandidates, issuuHref }) => {
+        const root = document.querySelector(".about-page");
+        const hero = root?.querySelector('[data-editorial-hero-page="about"]');
+        const normalize = (value = "") =>
+          value
+            .replace(/[\u200B-\u200D\uFEFF]/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+        const cleanHtml = (node) => (node?.outerHTML || "")
+          .replace(/\s+/g, " ")
+          .trim();
+        const hash = async (value) => {
+          const digest = await crypto.subtle.digest(
+            "SHA-256",
+            new TextEncoder().encode(value),
           );
-        }
-      );
-
-      const images = [...document.querySelectorAll(".about-page img")].map((image) => {
-        const box = rect(image);
-        const pictureBox = rect(image.closest("picture"));
-        const width = Number.parseInt(image.getAttribute("width") || "0", 10);
-        const height = Number.parseInt(image.getAttribute("height") || "0", 10);
-        return {
-          alt: image.alt,
-          src: image.currentSrc || image.src,
-          complete: image.complete,
-          naturalWidth: image.naturalWidth,
-          naturalHeight: image.naturalHeight,
-          widthAttribute: width,
-          heightAttribute: height,
-          renderedWidth: Math.round(box.width),
-          renderedHeight: Math.round(box.height),
-          visible: box.width > 0 && box.height > 0,
-          aspectDelta:
-            width && height && image.naturalWidth && image.naturalHeight
-              ? Math.abs(width / height - image.naturalWidth / image.naturalHeight)
-              : 1,
-          frameDelta: pictureBox
-            ? Math.max(
-                Math.abs(box.width - pictureBox.width),
-                Math.abs(box.height - pictureBox.height)
-              )
-            : 999,
-          objectFit: getComputedStyle(image).objectFit,
+          return [...new Uint8Array(digest)]
+            .map((byte) => byte.toString(16).padStart(2, "0"))
+            .join("");
         };
-      });
-
-      const clippedText = [];
-      const walker = document.createTreeWalker(
-        about,
-        NodeFilter.SHOW_TEXT,
-        {
-          acceptNode(node) {
-            if (!node.textContent?.trim()) return NodeFilter.FILTER_REJECT;
-            const parent = node.parentElement;
-            if (!parent) return NodeFilter.FILTER_REJECT;
-            const style = getComputedStyle(parent);
-            return style.display === "none" || style.visibility === "hidden"
-              ? NodeFilter.FILTER_REJECT
-              : NodeFilter.FILTER_ACCEPT;
-          },
-        }
-      );
-      while (walker.nextNode()) {
-        const range = document.createRange();
-        range.selectNodeContents(walker.currentNode);
-        for (const textRect of range.getClientRects()) {
-          if (textRect.left < -1 || textRect.right > innerWidth + 1) {
-            clippedText.push({
-              text: walker.currentNode.textContent.trim().slice(0, 80),
-              left: Math.round(textRect.left),
-              right: Math.round(textRect.right),
-            });
+        const rect = (element) => {
+          const box = element?.getBoundingClientRect();
+          return box
+            ? {
+                x: +box.x.toFixed(2),
+                y: +box.y.toFixed(2),
+                width: +box.width.toFixed(2),
+                height: +box.height.toFixed(2),
+                right: +box.right.toFixed(2),
+                bottom: +box.bottom.toFixed(2),
+              }
+            : null;
+        };
+        const flattenSchemas = (value) => {
+          if (!value || typeof value !== "object") return [];
+          if (Array.isArray(value)) return value.flatMap(flattenSchemas);
+          return [value, ...Object.values(value).flatMap(flattenSchemas)];
+        };
+        const schemas = [...document.querySelectorAll('script[type="application/ld+json"]')]
+          .map((script) => {
+            try {
+              return JSON.parse(script.textContent || "");
+            } catch {
+              return null;
+            }
+          })
+          .filter(Boolean);
+        const schemaObjects = schemas.flatMap(flattenSchemas);
+        const aboutPages = schemas.filter((schema) => schema["@type"] === "AboutPage");
+        const people = schemas.filter((schema) => schema["@type"] === "Person");
+        const businesses = schemas.filter(
+          (schema) => schema["@type"] === "LocalBusiness",
+        );
+        const personObjects = schemaObjects.filter(
+          (schema) => schema["@type"] === "Person",
+        );
+        const breadcrumbs = schemas.filter(
+          (schema) => schema["@type"] === "BreadcrumbList",
+        );
+        const prohibitedSchemaCounts = Object.fromEntries(
+          ["Service", "FAQPage", "Review", "AggregateRating"].map((type) => [
+            type,
+            schemas.filter((schema) => schema["@type"] === type).length,
+          ]),
+        );
+        const schemaUnsafe = schemaObjects.some(
+          (schema) =>
+            [
+              "Review",
+              "AggregateRating",
+              "GeoCoordinates",
+              "EducationalOccupationalCredential",
+            ].includes(schema["@type"]) ||
+            Object.keys(schema).some((key) =>
+              [
+                "award",
+                "awards",
+                "credential",
+                "hascredential",
+                "memberof",
+                "streetaddress",
+                "latitude",
+                "longitude",
+              ].includes(key.toLowerCase()),
+            ),
+        );
+        const anchors = [...(root?.querySelectorAll("a[href]") || [])].map((anchor) => ({
+          href: anchor.getAttribute("href") || "",
+          target: anchor.getAttribute("target"),
+          rel: (anchor.getAttribute("rel") || "").toLowerCase().split(/\s+/).filter(Boolean),
+        }));
+        const rootRoutes = anchors
+          .map((anchor) => anchor.href)
+          .filter((href) => href.startsWith("/") && !href.startsWith("//"));
+        const externalAnchors = anchors.filter((anchor) => {
+          try {
+            return new URL(anchor.href, location.href).origin !== location.origin;
+          } catch {
+            return false;
+          }
+        });
+        const h2s = [...(root?.querySelectorAll("h2") || [])];
+        const bodyNodes = [...(root?.querySelectorAll("p, li") || [])].filter((node) => {
+          const style = getComputedStyle(node);
+          const box = node.getBoundingClientRect();
+          return box.width > 0 && box.height > 0 && style.display !== "none" &&
+            style.visibility !== "hidden";
+        });
+        const images = [...(root?.querySelectorAll("img") || [])].map((image) => {
+          const width = Number(image.getAttribute("width"));
+          const height = Number(image.getAttribute("height"));
+          return {
+            src: image.getAttribute("src"),
+            alt: image.getAttribute("alt"),
+            decorative: Boolean(image.closest('[aria-hidden="true"]')),
+            complete: image.complete,
+            naturalWidth: image.naturalWidth,
+            naturalHeight: image.naturalHeight,
+            hasDimensions: width > 0 && height > 0,
+            ratioDelta:
+              image.naturalWidth && image.naturalHeight && width && height
+                ? Math.abs(
+                    (image.naturalWidth / image.naturalHeight) / (width / height) - 1,
+                  )
+                : Infinity,
+          };
+        });
+        const clippedText = [];
+        if (root) {
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (!node.textContent?.trim() || !node.parentElement) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              const style = getComputedStyle(node.parentElement);
+              return style.display === "none" || style.visibility === "hidden"
+                ? NodeFilter.FILTER_REJECT
+                : NodeFilter.FILTER_ACCEPT;
+            },
+          });
+          while (walker.nextNode()) {
+            const range = document.createRange();
+            range.selectNodeContents(walker.currentNode);
+            for (const textRect of range.getClientRects()) {
+              if (textRect.left < -1 || textRect.right > innerWidth + 1) {
+                clippedText.push(normalize(walker.currentNode.textContent || "").slice(0, 80));
+              }
+            }
           }
         }
-      }
+        const canonical = document.querySelector('link[rel="canonical"]')?.href || "";
+        const publicationMode = canonical === `${expectedOriginCandidates.release}/about/`
+          ? "release"
+          : canonical === `${expectedOriginCandidates.staging}/about/`
+            ? "staging"
+            : "unknown";
+        const expectedOrigin = publicationMode === "release"
+          ? expectedOriginCandidates.release
+          : expectedOriginCandidates.staging;
+        const person = people[0] || null;
+        const breadcrumbItems = breadcrumbs[0]?.itemListElement || [];
+        const issuuAnchors = externalAnchors.filter((anchor) => anchor.href === issuuHref);
+        const unsafeText = normalize(root?.textContent || "");
+        const firstBodyContentNode = [...document.body.childNodes].find(
+          (node) => node.nodeType !== Node.TEXT_NODE || Boolean(node.textContent?.trim()),
+        );
 
-      const activeAnimations = document
-        .getAnimations()
-        .filter((animation) => animation.playState === "running").length;
-      const originArchBox = rect(originArch);
-      const originNoteBox = rect(originNote);
-      const rearBox = rect(rear);
-      const frontBox = rect(front);
-      const personalIntersection = intersection(rearBox, frontBox);
-      const originNoteIntersection = intersection(originArchBox, originNoteBox);
-      const rightPrintBox = rect(rightPrint);
-      const heroBox = rect(hero);
-
-      const visibleLines = [...document.querySelectorAll("[data-construction-line]")].filter(
-        (line) => {
-          const style = getComputedStyle(line);
-          const box = rect(line);
-          return style.display !== "none" && box.width > 0;
-        }
-      );
-
-      return {
-        status: about?.getAttribute("data-content-status"),
-        signature: about?.getAttribute("data-signature-device"),
-        heading: document.querySelector("#about-hero-title")?.textContent
-          ?.replace(/\s+/g, " ")
-          .trim(),
-        sectionAnchorExists: Boolean(
-          document.querySelector("#it-started-with-my-own-children")
-        ),
-        robots: document.querySelector('meta[name="robots"]')?.content || null,
-        canonical: document.querySelector('link[rel="canonical"]')?.href || null,
-        overflow: documentElement.scrollWidth - documentElement.clientWidth,
-        bodyLinks: internalBodyLinks.map((anchor) => anchor.getAttribute("href")),
-        minimumBodyFont: Math.min(
-          ...bodyNodes.map((node) => Number.parseFloat(getComputedStyle(node).fontSize))
-        ),
-        placeholderLeak:
-          /\[(?:PENDIENTE|PENDING|VALIDAR|FECHA|INSERT|PLACEHOLDER|PRICE|DATE|URL|LINK|NUMBER|CONFIRM|NAME)[^\]]*\]|CONTENT PENDING/i.test(
-            about?.innerText || ""
-          ),
-        clippedText,
-        originArch: archData(originArch),
-        lessonsArch: archData(lessonsArch),
-        personalOverlapRatio:
-          personalIntersection.area /
-          Math.max(1, Math.min(rearBox.width * rearBox.height, frontBox.width * frontBox.height)),
-        personalIntersection: {
-          width: Math.round(personalIntersection.width),
-          height: Math.round(personalIntersection.height),
-        },
-        personalOrder:
-          frontBox.left < rearBox.left && frontBox.bottom > rearBox.bottom,
-        originNoteOverlapRatio:
-          originNoteIntersection.area / Math.max(1, originNoteBox.width * originNoteBox.height),
-        rightPrintBleed: {
-          beyondRight: Math.round(rightPrintBox.right - innerWidth),
-          insideHero: Math.round(
-            Math.max(0, Math.min(rightPrintBox.bottom, heroBox.bottom) - Math.max(rightPrintBox.top, heroBox.top))
-          ),
-          height: Math.round(rightPrintBox.height),
-        },
-        visibleLines: visibleLines.map((line) => {
-          const anchor = line.getAttribute("data-line-anchor");
-          const target = document.querySelector(`[data-line-target="${anchor}"]`);
-          const lineBox = rect(line);
-          const targetBox = rect(target);
-          return {
-            anchor,
-            borderTop: Number.parseFloat(getComputedStyle(line).borderTopWidth),
-            width: Math.round(lineBox.width),
-            targetExists: Boolean(target),
-            touchesTarget: Boolean(
-              targetBox &&
-                lineBox.right >= targetBox.left - 2 &&
-                lineBox.left <= targetBox.right + 2 &&
-                lineBox.top >= targetBox.top - 2 &&
-                lineBox.top <= targetBox.bottom + 2
+        return {
+          responseMode: publicationMode,
+          contentStatus: root?.getAttribute("data-content-status"),
+          signature: root?.getAttribute("data-signature-device"),
+          title: document.title,
+          description:
+            document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
+          descriptionExpectedInBrowser: expectedDescription,
+          canonical,
+          robots: document.querySelector('meta[name="robots"]')?.content || "",
+          currentPage:
+            document.querySelector('.primary-nav__link[aria-current="page"]')
+              ?.textContent?.trim() || null,
+          directionContract:
+            firstBodyContentNode?.nodeType === Node.COMMENT_NODE &&
+            firstBodyContentNode.textContent?.includes(
+              "THESIS: Lisa's About page is a keeper archive",
+            ) &&
+            firstBodyContentNode.textContent?.includes(
+              "FINISH: unreviewed and undocumented is unfinished",
             ),
-          };
-        }),
-        images,
-        activeAnimations,
-        reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
-        scrollBehavior: getComputedStyle(documentElement).scrollBehavior,
-        currentPage:
-          document
-            .querySelector('.primary-nav__link[aria-current="page"]')
-            ?.textContent?.trim() || null,
-      };
-    });
+          h1: [...(root?.querySelectorAll("h1") || [])].map((node) =>
+            normalize(node.textContent || ""),
+          ),
+          h2: h2s.map((node) => normalize(node.textContent || "")),
+          headingsFit: h2s.every((node) => {
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            return [...range.getClientRects()].every(
+              (box) => box.left >= -1 && box.right <= innerWidth + 1,
+            );
+          }),
+          anchors,
+          rootRoutes,
+          externalAnchors,
+          issuuAnchorPass:
+            externalAnchors.length === 1 && issuuAnchors.length === 1 &&
+            issuuAnchors[0].target === "_blank" &&
+            issuuAnchors[0].rel.includes("noopener") &&
+            !issuuAnchors[0].rel.includes("nofollow"),
+          heroHashLink:
+            hero?.querySelectorAll('a[href="#it-started-with-my-own-children"]').length === 1 &&
+            hero?.querySelectorAll("a[href]").length === 1,
+          minimumBodyFont: bodyNodes.length
+            ? Math.min(...bodyNodes.map((node) => Number.parseFloat(getComputedStyle(node).fontSize)))
+            : 0,
+          placeholderLeak:
+            /\[(?:PENDIENTE|PENDING|VALIDAR|FECHA|INSERT|PLACEHOLDER|PRICE|DATE|URL|LINK|NUMBER|CONFIRM|NAME|si se publica)[^\]]*\]|CONTENT PENDING/i.test(
+              unsafeText,
+            ),
+          unsafeClaimLeak:
+            /96\s*(?:\+\s*)?five[- ]star|\bgrammy\b|\bhealth\s+(?:challenge|condition|issue|journey|struggle)s?\b|\baward(?:-winning)?\b|\bcertif(?:ied|ication|ications)\b|\b(?:professional\s+)?memberships?\b|\binsur(?:ed|ance)\b/i.test(
+              unsafeText,
+            ),
+          images,
+          overflow:
+            document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          clippedText,
+          sectionBounds: [...(root?.querySelectorAll(":scope > section, :scope > header") || [])]
+            .map(rect),
+          reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
+          activeAnimations: document.getAnimations()
+            .filter((animation) => animation.playState === "running").length,
+          aboutStylesheet:
+            [...document.querySelectorAll('link[rel="stylesheet"]')]
+              .map((link) => link.getAttribute("href") || "")
+              .filter((href) => /(?:^|\/)about-page[^/]*\.css(?:[?#]|$)/i.test(href)),
+          protectedHeroDom: await hash(cleanHtml(hero)),
+          geometry: {
+            hero: rect(hero),
+            heroBackground: rect(hero?.querySelector("[data-hero-background]")),
+            heroCopy: rect(hero?.querySelector("[data-hero-copy]")),
+            heroLeft: rect(hero?.querySelector('[data-hero-print="left"]')),
+            heroRight: rect(hero?.querySelector('[data-hero-print="right"]')),
+          },
+          schema: {
+            aboutPageCount: aboutPages.length,
+            personCount: people.length,
+            breadcrumbCount: breadcrumbs.length,
+            prohibitedSchemaCounts,
+            unsafe: schemaUnsafe,
+            personObjectCount: personObjects.length,
+            businessCount: businesses.length,
+            businessFounder: businesses[0]?.founder || null,
+            uniquePersonIds: [...new Set(personObjects.map((item) => item["@id"]))],
+            personObjectsCanonical: personObjects.every(
+              (item) => item["@id"] === `${expectedOrigin}/#lisa`,
+            ),
+            aboutPage: aboutPages[0] || null,
+            person,
+            breadcrumbItems,
+          },
+        };
+      },
+      {
+        expectedDescription: expected.description,
+        expectedOriginCandidates: { release: releaseOrigin, staging: stagingOrigin },
+        issuuHref: issuuUrl,
+      },
+    );
+
+    const expectedOrigin = audit.responseMode === "release"
+      ? releaseOrigin
+      : audit.responseMode === "staging"
+        ? stagingOrigin
+        : "";
+    const expectedCanonical = `${expectedOrigin}${route}`;
+    const lisaId = `${expectedOrigin}/#lisa`;
+    const businessId = `${expectedOrigin}/#business`;
+    const aboutPage = audit.schema.aboutPage;
+    const person = audit.schema.person;
+    const homeAddress = person?.homeLocation?.address;
+    const breadcrumbItems = audit.schema.breadcrumbItems;
+    const schemaPass =
+      audit.schema.aboutPageCount === 1 && audit.schema.personCount === 1 &&
+      audit.schema.personObjectCount === 1 && audit.schema.businessCount === 1 &&
+      audit.schema.businessFounder?.["@id"] === lisaId &&
+      !Object.hasOwn(audit.schema.businessFounder || {}, "@type") &&
+      audit.schema.breadcrumbCount === 1 &&
+      Object.values(audit.schema.prohibitedSchemaCounts).every((count) => count === 0) &&
+      !audit.schema.unsafe &&
+      JSON.stringify(audit.schema.uniquePersonIds) === JSON.stringify([lisaId]) &&
+      audit.schema.personObjectsCanonical &&
+      aboutPage?.["@id"] === `${expectedCanonical}#webpage` &&
+      aboutPage?.url === expectedCanonical && aboutPage?.name === expected.title &&
+      aboutPage?.description === expected.description &&
+      aboutPage?.about?.["@id"] === lisaId && aboutPage?.mainEntity?.["@id"] === lisaId &&
+      person?.name === "Lisa Weiss" && person?.jobTitle === "Professional Photographer" &&
+      person?.description === expected.personDescription &&
+      person?.worksFor?.["@id"] === businessId &&
+      person?.homeLocation?.["@type"] === "Place" &&
+      person?.homeLocation?.name === "Richland, Washington" &&
+      homeAddress?.["@type"] === "PostalAddress" &&
+      homeAddress?.addressLocality === "Richland" && homeAddress?.addressRegion === "WA" &&
+      homeAddress?.addressCountry === "US" &&
+      JSON.stringify(person?.knowsAbout) === JSON.stringify(expected.knowsAbout) &&
+      person?.knowsLanguage === "en" &&
+      JSON.stringify(person?.sameAs) === JSON.stringify(expected.sameAs) &&
+      person?.subjectOf?.["@type"] === "Article" &&
+      person?.subjectOf?.name === "Cover feature: Lisa Weiss" &&
+      person?.subjectOf?.isPartOf?.["@type"] === "Periodical" &&
+      person?.subjectOf?.isPartOf?.name === "Tri-Cities MOM Magazine" &&
+      person?.subjectOf?.datePublished === "2019-08" &&
+      person?.subjectOf?.url === issuuUrl &&
+      breadcrumbItems.length === 2 && breadcrumbItems[0]?.position === 1 &&
+      breadcrumbItems[0]?.name === "Home" && breadcrumbItems[0]?.item === `${expectedOrigin}/` &&
+      breadcrumbItems[1]?.position === 2 && breadcrumbItems[1]?.name === "About Lisa" &&
+      breadcrumbItems[1]?.item === expectedCanonical;
+    const geometryBaseline = expected.geometry[viewport.id];
+    const geometryClose = (actual, baseline) =>
+      actual && baseline &&
+      Math.abs(actual.x - baseline[0]) <= 3 &&
+      Math.abs(actual.y - baseline[1]) <= 3 &&
+      Math.abs(actual.width - baseline[2]) <= 3 &&
+      Math.abs(actual.height - baseline[3]) <= 3;
+    const protectedGeometryPass = geometryBaseline &&
+      geometryClose(audit.geometry.hero, geometryBaseline.hero) &&
+      geometryClose(audit.geometry.heroBackground, geometryBaseline.heroBackground) &&
+      geometryClose(audit.geometry.heroCopy, geometryBaseline.heroCopy) &&
+      geometryClose(audit.geometry.heroLeft, geometryBaseline.heroLeft) &&
+      geometryClose(audit.geometry.heroRight, geometryBaseline.heroRight);
+    const sectionsWithinViewport = audit.sectionBounds.every(
+      (box) => box && box.x >= -1 && box.right <= viewport.width + 1,
+    );
+    const checks = {
+      response: Boolean(response?.ok()),
+      mode: audit.responseMode === "release" || audit.responseMode === "staging",
+      publication: audit.contentStatus === "ready" && audit.signature === "arch",
+      directionContract: Boolean(audit.directionContract),
+      metadata:
+        audit.title === expected.title && audit.description === expected.description &&
+        audit.descriptionExpectedInBrowser === expected.description,
+      seo:
+        audit.canonical === expectedCanonical &&
+        (audit.responseMode === "release"
+          ? audit.robots.startsWith("index, follow")
+          : audit.robots === "noindex, nofollow, noarchive"),
+      schema: schemaPass,
+      h1: JSON.stringify(audit.h1) === JSON.stringify(expected.h1),
+      h2: JSON.stringify(audit.h2) === JSON.stringify(expected.h2),
+      headingsFit: audit.headingsFit,
+      links:
+        JSON.stringify(audit.anchors.map((anchor) => anchor.href)) ===
+          JSON.stringify(expected.anchors) &&
+        JSON.stringify(audit.rootRoutes) === JSON.stringify(expected.rootRoutes) &&
+        audit.issuuAnchorPass && audit.heroHashLink,
+      copySafety:
+        !audit.placeholderLeak && !audit.unsafeClaimLeak && audit.minimumBodyFont >= 16,
+      cssIsolation: audit.aboutStylesheet.length === 1,
+      images:
+        audit.images.length > 0 && audit.images.every((image) =>
+          image.complete && image.naturalWidth > 0 && image.naturalHeight > 0 &&
+          image.hasDimensions && image.ratioDelta < 0.005 && image.alt !== null &&
+          (image.decorative || Boolean(image.alt.trim())),
+        ),
+      focus: focusChecks.every((focus) =>
+        focus.outlineStyle !== "none" && focus.outlineWidth >= 2 &&
+        focus.outlineOffset >= 3 && focus.outlineColor !== "rgba(0, 0, 0, 0)"),
+      compactMenu:
+        !compactMenu || (compactMenu.opened && compactMenu.closed && compactMenu.focusReturned),
+      reducedMotion: audit.reducedMotion && audit.activeAnimations === 0,
+      noOverflow:
+        audit.overflow <= 1 && audit.clippedText.length === 0 && sectionsWithinViewport,
+      currentPage: audit.currentPage === "About",
+      protectedDom: audit.protectedHeroDom === expected.protectedHeroDom,
+      protectedGeometry: Boolean(protectedGeometryPass),
+      runtime:
+        consoleErrors.length === 0 && pageErrors.length === 0 &&
+        failedSameOriginRequests.length === 0 && failedSameOriginResponses.length === 0,
+    };
+    const viewportFailures = Object.entries(checks)
+      .filter(([, pass]) => !pass)
+      .map(([name]) => name);
+    if (viewportFailures.length) {
+      failures.push(`${viewport.id}px (${audit.responseMode}): ${viewportFailures.join(", ")}`);
+    }
 
     await page.screenshot({
       fullPage: true,
-      path: `.artifacts/about-redesign/final/${viewport.name}.png`,
+      path: `.artifacts/about-redesign/final/${audit.responseMode}-${viewport.id}.png`,
       scale: "css",
       type: "png",
       animations: "disabled",
     });
-
-    const failures = [];
-    if (response?.status() !== 200) failures.push(`HTTP ${response?.status()}`);
-    if (audit.status !== "draft") failures.push(`status=${audit.status}`);
-    if (audit.signature !== "arch") failures.push(`signature=${audit.signature}`);
-    if (
-      audit.heading !== "Meet Lisa — The Heart Behind It's A Keeper"
-    ) failures.push(`heading=${audit.heading}`);
-    if (!audit.sectionAnchorExists) failures.push("missing hero anchor target");
-    if (!audit.robots?.includes("noindex")) failures.push(`robots=${audit.robots}`);
-    if (audit.canonical !== "https://itsakeeperphotography.netlify.app/about/") {
-      failures.push(`canonical=${audit.canonical}`);
-    }
-    if (audit.overflow > 1) failures.push(`overflow=${audit.overflow}`);
-    if (audit.bodyLinks.length > 4) failures.push(`bodyLinks=${audit.bodyLinks.length}`);
-    if (audit.minimumBodyFont < 16) failures.push(`bodyFont=${audit.minimumBodyFont}`);
-    if (audit.placeholderLeak) failures.push("placeholder leakage");
-    if (audit.clippedText.length) failures.push(`clippedText=${audit.clippedText.length}`);
-    if (
-      !audit.originArch ||
-      audit.originArch.ratio < 1.15 ||
-      audit.originArch.ratio > 1.45 ||
-      audit.originArch.topLeftRadius <= 0 ||
-      audit.originArch.bottomLeftRadius > 1 ||
-      audit.originArch.bottomRightRadius > 1
-    ) failures.push("origin arch geometry");
-    if (
-      !audit.lessonsArch ||
-      audit.lessonsArch.ratio < 1.15 ||
-      audit.lessonsArch.ratio > 1.45 ||
-      audit.lessonsArch.topLeftRadius <= 0 ||
-      audit.lessonsArch.bottomLeftRadius > 1 ||
-      audit.lessonsArch.bottomRightRadius > 1
-    ) failures.push("lessons arch geometry");
-    if (audit.personalOverlapRatio < 0.2) {
-      failures.push(`personalOverlap=${audit.personalOverlapRatio.toFixed(3)}`);
-    }
-    if (!audit.personalOrder) failures.push("personal portrait order");
-    if (audit.originNoteOverlapRatio < 0.35) {
-      failures.push(`originNoteOverlap=${audit.originNoteOverlapRatio.toFixed(3)}`);
-    }
-    if (audit.rightPrintBleed.beyondRight < 24) failures.push("hero right print does not bleed");
-    if (audit.rightPrintBleed.insideHero < audit.rightPrintBleed.height * 0.5) {
-      failures.push("hero right print mostly outside");
-    }
-    if (
-      audit.visibleLines.some(
-        (line) =>
-          line.borderTop < 0.75 ||
-          line.borderTop > 1.25 ||
-          !line.targetExists ||
-          !line.touchesTarget
-      )
-    ) failures.push("construction line geometry");
-    if (!audit.reducedMotion || audit.activeAnimations > 0) {
-      failures.push(`reducedMotion animations=${audit.activeAnimations}`);
-    }
-    if (audit.currentPage !== "About") failures.push(`currentPage=${audit.currentPage}`);
-    if (
-      focusChecks.some(
-        (focus) =>
-          focus.outlineStyle === "none" ||
-          focus.outlineWidth < 2 ||
-          focus.outlineOffset < 3 ||
-          focus.outlineColor === "rgba(0, 0, 0, 0)"
-      )
-    ) failures.push("focus outline");
-    if (
-      compactMenu &&
-      (!compactMenu.opened || !compactMenu.closed || !compactMenu.focusReturned)
-    ) failures.push("compact menu keyboard behavior");
-
-    const brokenImages = audit.images.filter(
-      (image) =>
-        !image.complete ||
-        image.naturalWidth <= 0 ||
-        image.naturalHeight <= 0 ||
-        image.widthAttribute <= 0 ||
-        image.heightAttribute <= 0 ||
-        image.aspectDelta > 0.01 ||
-        !/\.webp(?:$|\?)/i.test(image.src) ||
-        (image.visible &&
-          (image.frameDelta > 1.5 ||
-            image.objectFit !== "cover" ||
-            image.naturalWidth + 1 < image.renderedWidth))
-    );
-    if (brokenImages.length) failures.push(`images=${brokenImages.length}`);
-    if (consoleErrors.length) failures.push(`consoleErrors=${consoleErrors.length}`);
-    if (pageErrors.length) failures.push(`pageErrors=${pageErrors.length}`);
-    if (failedRequests.length) failures.push(`failedRequests=${failedRequests.length}`);
-    if (failedResponses.length) failures.push(`failedResponses=${failedResponses.length}`);
-
-    report[viewport.name] = {
-      ...audit,
+    results.push({
+      viewport: viewport.id,
+      checks,
+      audit,
       compactMenu,
       focusChecks,
-      brokenImages,
       consoleErrors,
       pageErrors,
-      failedRequests,
-      failedResponses,
-      failures,
-    };
+      failedSameOriginRequests,
+      failedSameOriginResponses,
+    });
 
     page.off("console", onConsole);
     page.off("pageerror", onPageError);
@@ -416,12 +603,8 @@ async (page) => {
     page.off("response", onResponse);
   }
 
-  return {
-    screenshotCount: viewports.length,
-    failureCount: Object.values(report).reduce(
-      (total, result) => total + result.failures.length,
-      0
-    ),
-    report,
-  };
+  if (failures.length) {
+    throw new Error(`About responsive QA failed:\n${failures.join("\n")}`);
+  }
+  return results;
 }

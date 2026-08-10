@@ -1,0 +1,11 @@
+{
+  "surface": "route:/about/",
+  "name": "Through Her Lens",
+  "viewport": "1536x1024",
+  "scope": "content below the protected hero",
+  "approved": true,
+  "approval": "Combined with option A by the user on 2026-08-10",
+  "heroLocked": true,
+  "generatedAt": "2026-08-10",
+  "promptFile": "about-comp-c-through-her-lens.prompt.txt"
+}

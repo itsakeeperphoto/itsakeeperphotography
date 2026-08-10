@@ -21,6 +21,8 @@ interface Props {
   pageSchemaExtra?: Record<string, unknown>;
   loadEditorialMotion?: boolean;
   pageStylesheet?: string;
+  directionContract?: string;
+  founderReferenceOnly?: boolean;
 }
 
 const {
@@ -38,6 +40,8 @@ const {
   pageSchemaExtra = {},
   loadEditorialMotion = Boolean(homepage),
   pageStylesheet,
+  directionContract,
+  founderReferenceOnly = false,
 } = Astro.props;
 const isDevelopment = import.meta.env.DEV;
 
@@ -80,11 +84,13 @@ const localBusinessSchema = {
   email: settings.email,
   image: absolute(seoImage),
   logo: absolute(settings.logo),
-  founder: {
-    "@type": "Person",
-    "@id": `${siteRoot}#lisa`,
-    name: settings.advanced.founderName,
-  },
+  founder: founderReferenceOnly
+    ? { "@id": `${siteRoot}#lisa` }
+    : {
+        "@type": "Person",
+        "@id": `${siteRoot}#lisa`,
+        name: settings.advanced.founderName,
+      },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Richland",
@@ -305,6 +311,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
   </head>
 
   <body>
+    <Fragment set:html={directionContract ? `<!--\n${directionContract}\n-->` : ""} />
     <slot name="preloader" />
     <a class="skip-link" href="#main-content">Skip to content</a>
     <slot />

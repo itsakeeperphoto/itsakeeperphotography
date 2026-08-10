@@ -1,0 +1,10 @@
+{
+  "surface": "route:/about/",
+  "name": "Twenty Years Ledger",
+  "viewport": "1536x1024",
+  "scope": "content below the protected hero",
+  "approved": false,
+  "heroLocked": true,
+  "generatedAt": "2026-08-10",
+  "promptFile": "about-comp-b-twenty-years-ledger.prompt.txt"
+}

@@ -1,8 +1,11 @@
 ---
-import type { EditorialPageData, PageSection } from "../../content/page-types";
+import type {
+  EditorialPageData,
+  PageLink,
+  PageSection,
+} from "../../content/page-types";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
-import "../../styles/about-page.css";
 
 interface Props {
   page: EditorialPageData;
@@ -23,6 +26,7 @@ const nameStory = requireSection("why-its-a-keeper");
 const cameraStory = requireSection("a-camera-a-scam-and-a-door-that-opened-anyway");
 const lessons = requireSection("what-twenty-years-behind-the-camera-has-taught-me");
 const belief = requireSection("what-i-believe-you-deserve");
+const method = requireSection("how-i-photograph");
 const offCamera = requireSection("lisa-off-camera");
 const credentials = requireSection("experience-and-credentials");
 
@@ -44,6 +48,17 @@ const originImage = origin.image || offCamera.secondaryImage || page.hero.image;
 const originOverlapImage = origin.secondaryImage || lessonPrints[0]?.image;
 const finalImage = page.finalCta?.image || belief.image;
 const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
+
+const linkedParts = (text: string, link?: PageLink) => {
+  if (!link) return null;
+  const linkIndex = text.indexOf(link.label);
+  if (linkIndex < 0) return null;
+  return {
+    before: text.slice(0, linkIndex),
+    label: link.label,
+    after: text.slice(linkIndex + link.label.length),
+  };
+};
 ---
 
 <article
@@ -146,7 +161,10 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
         <h2 id={`${nameStory.id}-title`}>{nameStory.heading}</h2>
       </div>
       <div class="about-name__copy">
-        {nameStory.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        <div class="about-name__story">
+          {nameStory.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <p class="about-name__payoff" aria-label="Keepers">Keepers.</p>
       </div>
     </div>
   </section>
@@ -159,7 +177,6 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
     <div class="about-shell about-camera__inner">
       {cameraStory.image && (
         <figure class="about-print about-camera__print" data-line-target="camera-print">
-          <span class="about-tape" aria-hidden="true"></span>
           <Picture
             src={cameraStory.image}
             alt={cameraStory.imageAlt || ""}
@@ -222,11 +239,23 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
 
       {lessonParagraphs?.length && (
         <div class="about-lessons__ledger">
-          {lessonParagraphs.map((paragraph) => (
-            <div class="about-lessons__entry">
-              <p>{paragraph}</p>
-            </div>
-          ))}
+          {lessonParagraphs.map((paragraph) => {
+            const link = lessons.links?.find((candidate) =>
+              paragraph.includes(candidate.label)
+            );
+            const parts = linkedParts(paragraph, link);
+            return (
+              <div class="about-lessons__entry">
+                <p>
+                  {parts ? (
+                    <>
+                      {parts.before}<a href={link!.href}>{parts.label}</a>{parts.after}
+                    </>
+                  ) : paragraph}
+                </p>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -259,12 +288,52 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
         </header>
 
         <div class="about-paper-note about-belief__note">
-          <span class="about-pin" aria-hidden="true"></span>
           <div class="about-belief__prose">
             {belief.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section
+    id={method.id}
+    class:list={["about-method", `tone-${method.tone}`]}
+    aria-labelledby={`${method.id}-title`}
+  >
+    <div class="about-shell about-method__inner">
+      <header class="about-method__heading">
+        <h2 id={`${method.id}-title`}>{method.heading}</h2>
+        {method.intro && <p>{method.intro}</p>}
+      </header>
+
+      {method.items?.length && (
+        <ol class="about-method__ledger">
+          {method.items.map((item, index) => (
+            <li>
+              <span class="about-method__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {item.heading && <strong>{item.heading}</strong>}
+              {item.paragraphs?.map((paragraph) => {
+                const link = item.links?.find((candidate) =>
+                  paragraph.includes(candidate.label)
+                );
+                const parts = linkedParts(paragraph, link);
+                return (
+                  <p>
+                    {parts ? (
+                      <>
+                        {parts.before}<a href={link!.href}>{parts.label}</a>{parts.after}
+                      </>
+                    ) : paragraph}
+                  </p>
+                );
+              })}
+            </li>
+          ))}
+        </ol>
+      )}
     </div>
   </section>
 
@@ -304,7 +373,6 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
               class="about-print about-personal__portrait about-personal__portrait--front"
               data-about-layer="front"
             >
-              <span class="about-tape" aria-hidden="true"></span>
               <Picture
                 src={offCamera.secondaryImage}
                 alt={offCamera.secondaryImageAlt || ""}
@@ -329,13 +397,28 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
     <div class="about-shell about-proof__inner">
       <div class="about-proof__heading">
         <h2 id={`${credentials.id}-title`}>{credentials.heading}</h2>
+        {credentials.intro && (
+          <p class="about-proof__identity">{credentials.intro}</p>
+        )}
       </div>
       {credentials.items?.length && (
         <ul class="about-proof__ledger">
           {credentials.items.map((item, index) => (
             <li>
               <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <p>{item.detail}</p>
+              <div class="about-proof__entry">
+                {item.heading && <strong>{item.heading}</strong>}
+                {item.detail && <p>{item.detail}</p>}
+                {item.links?.map((link) => (
+                  <a
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener" : undefined}
+                  >
+                    {link.label}<span aria-hidden="true"> ↗</span>
+                  </a>
+                ))}
+              </div>
             </li>
           ))}
         </ul>
@@ -345,23 +428,25 @@ const finalImageAlt = page.finalCta?.imageAlt || belief.imageAlt || "";
 
   {page.finalCta && (
     <section
+      id="about-final"
       class:list={["about-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="about-final-title"
     >
+      {finalImage && (
+        <figure class="about-final__media">
+          <Picture
+            src={finalImage}
+            alt={finalImageAlt}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="100vw"
+            imgClass="about-final__photo photo--editorial"
+          />
+        </figure>
+      )}
+      <div class="about-final__wash" aria-hidden="true"></div>
       <div class="about-shell about-final__inner">
-        {finalImage && (
-          <figure class="about-final__media">
-            <Picture
-              src={finalImage}
-              alt={finalImageAlt}
-              loading="lazy"
-              decoding="async"
-              responsiveSrcset
-              sizes="(max-width: 767px) 88vw, 76vw"
-              imgClass="about-final__photo photo--editorial"
-            />
-          </figure>
-        )}
         <div class="about-final__frame">
           <h2 id="about-final-title">{page.finalCta.heading}</h2>
           <div class="about-final__invitation">

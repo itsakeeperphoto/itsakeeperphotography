@@ -1,12 +1,12 @@
 {
   "route": "/about/",
   "family": "trust",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "AboutPage",
   "signature": "arch",
-  "title": "Meet Lisa Weiss | Tri-Cities Photographer Since 2005",
-  "description": "The story behind It's A Keeper Photography — 20 years of preserving Tri-Cities families' most meaningful moments, and the mom who picked up a camera to start it.",
+  "title": "Meet Lisa Weiss | Tri-Cities Photographer for 20 Years",
+  "description": "The story behind It's A Keeper Photography — twenty years of preserving Tri-Cities families' most meaningful moments, and the mom who picked up a camera first.",
   "hero": {
     "tone": "earth",
     "heading": "Meet Lisa — The Heart Behind It's A Keeper",
@@ -27,14 +27,14 @@
       "kind": "split",
       "tone": "ivory",
       "heading": "It Started With My Own Children",
-      "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
-      "imageAlt": "Lisa seated with her camera between photographs",
+      "image": "/uploads/about-lisa-camera-portrait-tricities.jpg",
+      "imageAlt": "Lisa smiling outdoors while holding a camera, with dry grass and blurred hills behind her.",
       "secondaryImage": "/uploads/about-origin-family-newborn-tricities.jpg",
       "secondaryImageAlt": "Parents and their children gathered close around a newborn at home",
       "paragraphs": [
         "My journey into photography began with my children, not a business plan.",
-        "Before photography became my career, I was a stay-at-home mom raising my two kids. When they were little, I wanted more than rushed studio portraits — I wanted photographs that captured who they truly were. My husband bought me my first point-and-shoot camera, and I quickly fell in love with preserving the everyday moments that would one day become treasured memories.",
-        "Those years taught me just how quickly childhood passes. The little moments that feel ordinary at the time — tiny hands, genuine laughter, family traditions — become the memories you wish you could hold onto forever. That truth still shapes every single session I photograph."
+        "Before this was my career, I was a stay-at-home mom raising my two kids. When they were little, I wanted more than rushed studio portraits — I wanted photographs that captured who they truly were. My husband bought me my first point-and-shoot camera, and I fell in love almost immediately with preserving the everyday moments that would one day become treasured memories.",
+        "Those years taught me how quickly childhood passes. The ordinary things — tiny hands, real laughter, the traditions you don't realize you're building — become the ones you'd give anything to hold onto. That truth still shapes every session I photograph."
       ]
     },
     {
@@ -43,7 +43,8 @@
       "tone": "sand",
       "heading": "Why \"It's A Keeper\"",
       "paragraphs": [
-        "When it came time to name my business, my husband suggested It's A Keeper Photography — and it was perfect. It reflects my heart for creating images that become keepsakes for generations. Not just pictures for this year's card. Keepers."
+        "When it came time to name the business, my husband suggested It's A Keeper Photography, and it was perfect.",
+        "It reflects my heart for creating images that become keepsakes for generations. Not pictures for this year's Christmas card. Keepers."
       ]
     },
     {
@@ -52,22 +53,31 @@
       "tone": "earth",
       "heading": "A Camera, a Scam, and a Door That Opened Anyway",
       "paragraphs": [
-        "As my passion grew, I knew I wanted a real camera. When I found what seemed like the perfect deal on a DSLR on eBay, we took a leap of faith — and it turned out to be a scam. We lost money we couldn't really afford to lose.",
-        "Looking back, that disappointment became one of the greatest reminders of God's faithfulness in my life. What I couldn't see was that a way was already being made: someone had been placed on a path to gift me that exact camera, just in time for me to photograph my first two weddings. That gift was more than a camera — it was confirmation. A door was opening, and I was being invited to step into the calling prepared for me.",
-        "Over the past twenty years, doors have kept opening. What started with photographing my own children has become the privilege of documenting life's most meaningful moments for hundreds of families, couples and seniors across the Tri-Cities."
+        "As my passion grew, I knew I needed a real camera. I found what looked like the perfect deal on a DSLR on eBay, and we took a leap of faith with money we couldn't really afford to lose.",
+        "It was a scam. We lost it all.",
+        "Looking back, that disappointment became one of the greatest reminders of God's faithfulness in my life. What I couldn't see at the time was that a way was already being made — someone had it on their heart to buy me that exact camera, and it arrived just in time for me to photograph my first two weddings.",
+        "That gift was more than a camera. It was confirmation that a door was opening and I was being invited to walk through it.",
+        "Twenty years later, doors have kept opening. What started with photographing my own children has become the privilege of documenting life's most meaningful moments for hundreds of families, seniors and couples across the Tri-Cities."
       ],
-      "image": "/uploads/lisa-photographer-tricities.jpg",
-      "imageAlt": "Detail of Lisa holding the camera she uses to preserve Tri-Cities stories"
+      "image": "/uploads/about-lisa-photographing-tricities.jpg",
+      "imageAlt": "Lisa holding a camera to her face among dry grass and shrubs."
     },
     {
       "id": "what-twenty-years-behind-the-camera-has-taught-me",
       "kind": "split",
       "tone": "olive",
-      "heading": "What Twenty Years Behind the Camera Has Taught Me",
+      "heading": "What Twenty Years Has Taught Me",
       "paragraphs": [
-        "I once photographed my own grandparents — laughing, holding hands, sharing the quiet love they'd built over a lifetime. I had no idea how precious those photographs would become after my grandpa passed away.",
-        "Moments like that have taught me what this work really is. I'm not just taking photographs for today; I'm preserving moments that may one day become a family's most treasured memories. It's a responsibility I never take lightly — and one of the greatest reasons I love what I do.",
-        "It's also taught me about people. Watching a shy teenager's face light up at the back of my camera. Sitting in a coffee shop while parents see their senior's gallery and their eyes fill — because their \"baby\" grew up, or because their child was truly captured for who they are. The pieces of people's stories I get to be part of become part of me."
+        "I photographed my own grandparents once — laughing, holding hands, sharing the quiet love they'd built across a lifetime. I had no idea how precious those photographs would become after my grandpa passed away.",
+        "That's the truth I carry into every session now. I'm not taking photographs for today. I'm preserving moments that may one day become a family's most treasured possession, and it's a responsibility I've never taken lightly.",
+        "It's also taught me about people. My favorite thing that happens, over and over, is turning the camera around to show a shy teenager the back of it — and watching her face change as she sees how beautiful she actually is. I've sat in coffee shops with parents seeing their senior's gallery for the first time, watching their eyes fill because their baby grew up, or because their child was finally seen the way they see them.",
+        "The pieces of people's stories I get to be part of become part of me. That's not something I expected when I started."
+      ],
+      "links": [
+        {
+          "label": "shy teenager",
+          "href": "/senior-photographer-tri-cities-wa/"
+        }
       ],
       "items": [
         {
@@ -90,8 +100,9 @@
       "tone": "sand",
       "heading": "What I Believe You Deserve",
       "paragraphs": [
-        "Beautiful images matter — but what sets a photograph apart is whether you can feel the person in it. When I look through my lens, I'm not just capturing a smile. I'm looking for the heart, the story, and the unique qualities that make you who you are. My hope is that every person leaves their session feeling seen, valued, and celebrated — reminded of how beautifully they were made, and that their story matters.",
-        "That's not something a posing guide can copy. It's the heart I bring to every session."
+        "Beautiful images matter, but what separates a good photograph from one you'd never part with is whether you can feel the person inside it. When I look through my lens, I'm not just watching for a nice smile. I'm looking for the heart, the story, and the particular things that make you you.",
+        "My hope is that every person leaves their session feeling seen, valued and celebrated — reminded of how beautifully they were made, and that their story is worth remembering.",
+        "That's not something a posing guide can copy. It's the intention I bring, and it's the reason I'm still doing this after twenty years."
       ],
       "items": [
         {
@@ -102,32 +113,89 @@
       "imageAlt": "Parents holding their young child in glowing Tri-Cities evening light"
     },
     {
+      "id": "how-i-photograph",
+      "kind": "steps",
+      "tone": "olive",
+      "heading": "How I Photograph",
+      "intro": "A few things that are true of every session I shoot:",
+      "items": [
+        {
+          "heading": "I guide you the whole way.",
+          "paragraphs": [
+            "You'll never have to know what to do with your hands. I'll walk you through everything, including a few prompts that will feel completely ridiculous — I will absolutely ask you to fake-laugh, and a real one always follows."
+          ]
+        },
+        {
+          "heading": "I plan before we ever meet.",
+          "paragraphs": [
+            "Wardrobe, location, timing, the order we do things in. By the time you show up, the thinking is done and all you have to do is enjoy it."
+          ],
+          "links": [
+            {
+              "label": "the thinking is done",
+              "href": "/investment/"
+            }
+          ]
+        },
+        {
+          "heading": "I edit warm.",
+          "paragraphs": [
+            "Rich, vibrant, with a film feel. I'll take care of the temporary things, but I won't make you look like someone else. You are who you are, and my job is to show that at its best."
+          ]
+        },
+        {
+          "heading": "I chase the light, not the trend.",
+          "paragraphs": [
+            "In twenty years I've watched styles come and go. I'd rather your photographs still look right in thirty years than look current this spring."
+          ]
+        }
+      ]
+    },
+    {
       "id": "lisa-off-camera",
       "kind": "prose",
       "tone": "earth",
       "heading": "Lisa, Off Camera",
-      "image": "/uploads/lisa-photographer-tricities.jpg",
-      "imageAlt": "Lisa holding her camera in her Tri-Cities studio",
-      "secondaryImage": "/uploads/lisa-photographer-at-work-black-white.jpg",
-      "secondaryImageAlt": "Lisa seated with her camera between photographs",
+      "image": "/uploads/about-lisa-camera-close-portrait-tricities.jpg",
+      "imageAlt": "Close portrait of Lisa looking down as she adjusts a camera outdoors.",
+      "secondaryImage": "/uploads/about-lisa-camera-candid-black-white.jpg",
+      "secondaryImageAlt": "Black-and-white candid of Lisa laughing with one hand in her hair and a camera in the other.",
       "paragraphs": [
-        "I grew up in Wisconsin — my first award-winning photograph was of my son, sitting in the broken-out window of my parents' old barn there — and the Tri-Cities has been home since 2005. When I'm not chasing golden hour, you'll find me with my family and the church family I love being part of."
+        "I grew up in Wisconsin. One of the first images I was ever truly proud of was of my son sitting in the broken-out window of my parents' old barn there, and it's still one of my favorites.",
+        "The Tri-Cities has been home since 2005. When I'm not chasing golden hour you'll find me with my family, or with the church family I'm grateful to be part of — people who love God and love serving others.",
+        "And I pray before every session. It's the honest reason things go the way they do.",
+        "Something photography gave me that I didn't expect: it taught me how to see. I'll be out walking at sunrise and notice the way the light catches only the tips of the leaves on a tree, and I take it as a gift — a small reminder to find beauty wherever I am and whatever I'm walking through."
       ]
     },
     {
       "id": "experience-and-credentials",
       "kind": "checklist",
-      "tone": "earth",
-      "heading": "Experience & Credentials",
+      "tone": "ivory",
+      "heading": "Experience & Recognition",
+      "intro": "Lisa Weiss · Founder & Professional Photographer · Richland, Washington",
       "items": [
         {
-          "detail": "20+ years photographing professionally · 14 years in business"
+          "heading": "20+ years",
+          "detail": "Behind the camera"
         },
         {
-          "detail": "Hundreds of Tri-Cities families, seniors and couples photographed — many returning year after year"
+          "heading": "14 years",
+          "detail": "In business"
         },
         {
-          "detail": "96 five-star reviews on Google"
+          "heading": "Hundreds of stories",
+          "detail": "Tri-Cities families, seniors and couples photographed"
+        },
+        {
+          "heading": "Cover feature",
+          "detail": "Tri-Cities MOM Magazine · August/September 2019",
+          "links": [
+            {
+              "label": "Read the original issue",
+              "href": "https://issuu.com/wpdigitalpublications/docs/tri_final2_augsept_19-july30_issuu",
+              "external": true
+            }
+          ]
         }
       ]
     }
@@ -145,12 +213,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE: hobbies/detalles personales adicionales que Lisa quiera compartir — Q17 dijo \"most of this\", falta especificar. PENDIENTE: bloque de la hija/health challenges — confirmar publicación.]",
-    "[PENDIENTE: nombre del premio — Q10/Q42]",
-    "[PENDIENTE: MOM Magazine feature — Q42, con link]",
-    "[PENDIENTE: sesión con ganador de Grammy — Q43, con permiso]",
-    "[PENDIENTE: certificaciones, seguro, membresías — Q40–41]",
-    "[si se publica]"
-  ]
+  "pending": []
 }

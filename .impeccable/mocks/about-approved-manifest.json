@@ -1,0 +1,42 @@
+{
+  "route": "/about/",
+  "title": "About Lisa — Keeper Archive and Through Her Lens",
+  "approved": true,
+  "canonical": true,
+  "approvedAt": "2026-08-10",
+  "direction": "A+C",
+  "purpose": "Geometry and hierarchy authority for the implemented About body; generated photographic pixels are never production assets.",
+  "sourceCompositions": [
+    {
+      "file": "about-comp-a-keeper-archive.png",
+      "role": "Origin arch, restrained print overlap and name-story ledger"
+    },
+    {
+      "file": "about-comp-c-through-her-lens.png",
+      "role": "Lisa portrait constellation and four-part working-method ledger"
+    }
+  ],
+  "sectionReferences": [
+    "about-04-middle-story-belief.png",
+    "about-05-method-authority-final.png"
+  ],
+  "heroPolicy": "The existing About hero is protected and was not redesigned. Its copy, assets, DOM invocation, crops and responsive geometry remain regression-locked.",
+  "contentAuthority": "content/pages/about.json",
+  "authorityContract": [
+    "Lisa Weiss — Founder and Professional Photographer in Richland, Washington",
+    "20+ years behind the camera",
+    "14 years in business",
+    "Hundreds of Tri-Cities stories",
+    "Tri-Cities MOM Magazine cover feature, August/September 2019, linked to the original issue"
+  ],
+  "excludedClaims": [
+    "Static review count",
+    "Unidentified award",
+    "Grammy session",
+    "Health story",
+    "Certifications, insurance or memberships",
+    "Unverified Google Business Profile URL"
+  ],
+  "mediaPolicy": "Use only existing production photographs or the four locally optimized, metadata-stripped sRGB Lisa portraits audited from the authorized Drive branding folder. Never replace, re-encode or delete the three protected hero inputs.",
+  "schemaPolicy": "AboutPage plus one canonical Person and BreadcrumbList; no top-level Service, FAQ, Review or AggregateRating. The Person subjectOf Article links the independently verifiable Tri-Cities MOM source."
+}

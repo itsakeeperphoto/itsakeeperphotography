@@ -29,9 +29,6 @@
 /investment/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/about/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
 /reviews/*
   X-Robots-Tag: noindex, nofollow, noarchive
 

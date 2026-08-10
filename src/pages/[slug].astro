@@ -8,6 +8,7 @@ import { topLevelEditorialManifest } from "../lib/page-manifest";
 import { getStaticHomepagePage } from "../lib/static-content";
 import { absoluteUrl, siteOrigin } from "../lib/site-environment";
 import { contentPageWrapper } from "../lib/tina/wrappers";
+import aboutStylesheet from "../styles/about-page.css?url";
 import pascoStylesheet from "../styles/pasco-page.css?url";
 
 export function getStaticPaths() {
@@ -22,7 +23,19 @@ const page = getContentPage(entry.contentPath);
 const shared = getStaticHomepagePage();
 const { homepage, settings } = shared.data;
 const canonical = absoluteUrl(entry.path);
-const pageStylesheet = entry.id === "pasco" ? pascoStylesheet : undefined;
+const pageStylesheet = entry.id === "about"
+  ? aboutStylesheet
+  : entry.id === "pasco"
+    ? pascoStylesheet
+    : undefined;
+const directionContract = entry.id === "about"
+  ? `THESIS: Lisa's About page is a keeper archive of why and how she photographs; it refuses generic credential cards.
+OWN-WORLD: Warm ivory, sand, olive, walnut and umber fields; arched portraits, square prints and one-pixel ledgers; no badges or decorative shadows.
+STORY: Her children begin the work, the name and camera open the door, twenty years shape the method, and verified recognition earns the inquiry.
+FIRST VIEWPORT: The existing hero remains exact; below its torn edge, Lisa's portrait arch faces the origin story and one line resolves into the name ledger.
+FORM: User-approved A+C — Keeper Archive plus Through Her Lens — pinned 2026-08-10.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`
+  : undefined;
 const detailedService =
   entry.id === "family"
     ? {
@@ -151,6 +164,73 @@ const cityServiceSchema =
         mainEntityOfPage: { "@id": `${canonical}#webpage` },
       }
     : null;
+const aboutPersonId = `${siteOrigin}/#lisa`;
+const aboutPersonSchema =
+  entry.id === "about"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": aboutPersonId,
+        name: "Lisa Weiss",
+        jobTitle: "Professional Photographer",
+        description:
+          "Professional senior, family and newborn photographer based in Richland, Washington, with over 20 years behind the camera and 14 years in business serving the Tri-Cities.",
+        worksFor: { "@id": `${siteOrigin}/#business` },
+        homeLocation: {
+          "@type": "Place",
+          name: "Richland, Washington",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Richland",
+            addressRegion: "WA",
+            addressCountry: "US",
+          },
+        },
+        knowsAbout: [
+          "senior portrait photography",
+          "family photography",
+          "newborn photography",
+          "branding photography",
+          "professional headshots",
+          "natural light photography",
+          "golden hour portraiture",
+        ],
+        knowsLanguage: "en",
+        sameAs: [settings.social.instagram, settings.social.facebook].filter(Boolean),
+        subjectOf: {
+          "@type": "Article",
+          name: "Cover feature: Lisa Weiss",
+          isPartOf: {
+            "@type": "Periodical",
+            name: "Tri-Cities MOM Magazine",
+          },
+          datePublished: "2019-08",
+          url: "https://issuu.com/wpdigitalpublications/docs/tri_final2_augsept_19-july30_issuu",
+        },
+      }
+    : null;
+const aboutBreadcrumbSchema =
+  entry.id === "about"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteOrigin}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "About Lisa",
+            item: canonical,
+          },
+        ],
+      }
+    : null;
 const detailedFaqSchema =
   entry.id === "branding"
     ? {
@@ -236,11 +316,19 @@ const detailedAdditionalSchema = detailedService
         ],
       },
     ]
-  : investmentBreadcrumbSchema
-    ? [investmentBreadcrumbSchema]
-    : cityBreadcrumbSchema
-      ? [...(cityServiceSchema ? [cityServiceSchema] : []), cityBreadcrumbSchema]
-    : [];
+  : aboutPersonSchema && aboutBreadcrumbSchema
+    ? [aboutPersonSchema, aboutBreadcrumbSchema]
+    : investmentBreadcrumbSchema
+      ? [investmentBreadcrumbSchema]
+      : cityBreadcrumbSchema
+        ? [...(cityServiceSchema ? [cityServiceSchema] : []), cityBreadcrumbSchema]
+        : [];
+const pageSchemaExtra = entry.id === "about"
+  ? {
+      about: { "@id": aboutPersonId },
+      mainEntity: { "@id": aboutPersonId },
+    }
+  : undefined;
 ---
 
 <Base
@@ -254,8 +342,11 @@ const detailedAdditionalSchema = detailedService
   schemaType={detailedService ? "WebPage" : entry.schemaType}
   additionalSchema={detailedAdditionalSchema}
   pageSpatialCoverage={citySpatialCoverage}
+  pageSchemaExtra={pageSchemaExtra}
   loadEditorialMotion={entry.id === "contact"}
   pageStylesheet={pageStylesheet}
+  directionContract={directionContract}
+  founderReferenceOnly={entry.id === "about"}
 >
   <SiteShell settings={settings} homepage={homepage} currentPath={entry.path}>
     <TinaIsland name="contentPage" wrapper={contentPageWrapper} params={{ path: entry.contentPath }} primary>
