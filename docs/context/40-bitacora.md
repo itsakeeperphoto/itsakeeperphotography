@@ -739,3 +739,30 @@
   `main` queda doce commits por delante de `origin/main` (`ff736c6`). No se
   ejecutó push, deploy, DNS ni `./scripts/handoff.sh`; el usuario conserva la
   publicación.
+
+### 2026-08-10 — Codex / GPT-5 — Cierre Pasco alineado con Richland
+
+- **Objetivo:** responder al feedback visual de `/pasco-wa-photographer/` y
+  convertir `Let's Find Your Light` en la misma invitación full-bleed centrada
+  que usa Richland, sin tocar el contenido definitivo ni la evidencia local.
+- **Implementación:** `pasco-page.css` reemplazó el panel marfil lateral por la
+  retícula Richland de 12 columnas, altura 720/656 px, display marfil, párrafo
+  centrado y CTA outlined. El eyebrow decorativo deja de competir con el H2.
+  La fotografía, su alt y el anchor `/contact/` permanecen intactos.
+- **Crop:** la fuente Pasco 3:2 no puede copiar el focal point de la foto portrait
+  Richland. Desktop usa `62% 15%` para conservar las cabezas adultas; móvil
+  mantiene `59% 42%`, `cover` y el grupo central. No se heredó el `contain`
+  route-wide móvil de Richland.
+- **QA:** el build Tina release usó los puertos alternos 4002/9001, el validador
+  aprobó 21/21 rutas y el detector Impeccable devolvió `[]`. Playwright comparó
+  Pasco/Richland a 1728/1440/1200/900/390: misma altura, pista, escala de H2,
+  alineación y superficie; cero overflow, errores de consola, requests
+  same-origin fallidos o imágenes rotas. El CTA del hero transfirió foco a
+  `#pasco-final`.
+- **Decisión/memoria:** ADR-043 supersede ADR-039 solo en la composición del
+  cierre. La superficie y manifest A+C retiran el mock con panel de la lista
+  canónica, pero lo conservan como referencia histórica.
+- **Git/operación:** el cambio funcional está en `ff0a075`. El preview temporal
+  `:4323` y Playwright se cerraron; los servidores del usuario `:4321` y `:9000`
+  quedaron intactos. No se ejecutó push, deploy, DNS ni `./scripts/handoff.sh`;
+  el usuario conserva la publicación.

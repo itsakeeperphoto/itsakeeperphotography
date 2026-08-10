@@ -36,18 +36,22 @@
   reorganiza Richland como contact sheet 3/2/1 en dos bandas desktop y baja el
   crop Kennewick solo por encima de 1050 px. QA 1728/1440/1200/900/390 más 768,
   release 21/21 e Impeccable `[]` completos.
-- [ ] **9. Publicar los commits locales.** Implementación final de geometría en
-  `974d97c` y cierre documental en el commit local inmediatamente posterior. El
-  usuario publica los doce commits posteriores a `ff736c6`; Codex no ejecuta
-  push.
-- [ ] **10. Verificar Richland, Kennewick, Pasco y Newborn después del push del
+- [x] **9. Alinear el cierre Pasco con Richland según ADR-043.** El commit
+  `ff0a075` reemplaza el panel marfil por la invitación full-bleed centrada,
+  conserva copy/media/alt/SEO Pasco y usa crops deliberados por breakpoint.
+  Release 21/21, Impeccable `[]` y Playwright 1728/1440/1200/900/390 aprobados.
+- [ ] **10. Publicar los commits locales.** La última implementación está en
+  `ff0a075` y este cierre documental pertenece al commit inmediatamente
+  posterior. El usuario publica los catorce commits posteriores a `ff736c6`;
+  Codex no ejecuta push.
+- [ ] **11. Verificar Richland, Kennewick, Pasco y Newborn después del push del
   usuario.** Confirmar en el dominio final status 200, meta index, canonical,
   ausencia de header noindex, membresía de sitemap/llms y lastmod: ciudades
-  `2026-08-09`, Newborn `2026-08-10`.
-- [ ] **11. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  `2026-08-09`, Newborn `2026-08-10`, además del cierre Pasco sin panel.
+- [ ] **12. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **12. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **13. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
