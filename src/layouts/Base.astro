@@ -20,6 +20,7 @@ interface Props {
   pageSpatialCoverage?: Record<string, unknown>;
   pageSchemaExtra?: Record<string, unknown>;
   loadEditorialMotion?: boolean;
+  pageStylesheet?: string;
 }
 
 const {
@@ -36,6 +37,7 @@ const {
   pageSpatialCoverage,
   pageSchemaExtra = {},
   loadEditorialMotion = Boolean(homepage),
+  pageStylesheet,
 } = Astro.props;
 const isDevelopment = import.meta.env.DEV;
 
@@ -201,6 +203,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
     <meta name="robots" content={robots} />
     <meta name="theme-color" content="#281E10" />
     <link rel="canonical" href={canonical} />
+    {pageStylesheet && <link rel="stylesheet" href={pageStylesheet} />}
     <link
       rel="icon"
       type="image/webp"

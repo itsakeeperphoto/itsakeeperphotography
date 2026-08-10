@@ -35,6 +35,7 @@ public/uploads/*-1440.webp
 *.mp4
 
 # research and visual QA evidence generated during development
+.artifacts/
 .firecrawl/
 .playwright-cli/
 artifacts/qa/

@@ -1,0 +1,30 @@
+{
+  "route": "/pasco-wa-photographer/",
+  "approved": true,
+  "canonical": true,
+  "approvedAt": "2026-08-09",
+  "direction": "A+C",
+  "sourceCompositions": [
+    {
+      "file": "pasco-comp-a-open-horizon.png",
+      "role": "hero, torn-paper transition and arched introduction"
+    },
+    {
+      "file": "pasco-comp-c-long-horizon-archive.png",
+      "role": "services ledger and long-horizon archive rhythm"
+    }
+  ],
+  "sectionReferences": [
+    "pasco-01-editorial-hero.png",
+    "pasco-02-underrated-light-intro.png",
+    "pasco-03-confluence-setting.png",
+    "pasco-04-farmland-horizons.png",
+    "pasco-05-services-ledger.png",
+    "pasco-06-recent-sessions-gallery.png",
+    "pasco-07-seasons-planning.png",
+    "pasco-08-faq-ledger.png",
+    "pasco-09-final-full-bleed.png"
+  ],
+  "contentAuthority": "content/pages/pasco.json",
+  "mediaPolicy": "Only verified originals from Google Drive folders explicitly titled Pasco may ship; generated imagery is geometry reference only."
+}

@@ -21,6 +21,12 @@ async (page) => {
       script: "keep the way this felt",
     },
     {
+      id: "pasco",
+      path: "/pasco-wa-photographer/",
+      heading: "Pasco, WA Photographer",
+      script: null,
+    },
+    {
       id: "about",
       path: "/about/",
       heading: "Meet Lisa — The Heart Behind It's A Keeper",
@@ -174,6 +180,9 @@ async (page) => {
               "maxWidth",
             ]),
             cta: ctaBox,
+            ctaTag: cta?.tagName || null,
+            ctaScrollTarget: cta?.getAttribute("data-hero-scroll-target") || null,
+            heroAnchorCount: hero?.querySelectorAll("a").length || 0,
             ctaStyle: style(cta, [
               "fontFamily",
               "fontSize",
@@ -200,7 +209,10 @@ async (page) => {
               hero?.getAttribute("aria-labelledby") === title?.getAttribute("id"),
             accessibleHeadingMatches:
               title?.getAttribute("aria-label") === expectedHeading,
-            scriptMatches: script?.textContent?.trim() === expectedScript,
+            scriptMatches:
+              expectedScript === null
+                ? script === null
+                : script?.textContent?.trim() === expectedScript,
             titleInsideViewport:
               !!titleBox && titleBox.x >= -1 && titleBox.right <= innerWidth + 1,
             ctaTargetPass:
@@ -317,6 +329,11 @@ async (page) => {
       result.printCount !== 2 ||
       result.brokenImages.length > 0 ||
       !result.decorativePrintAltsPass ||
+      (result.route === "pasco" && (
+        result.ctaTag !== "BUTTON" ||
+        result.ctaScrollTarget !== "pasco-final" ||
+        result.heroAnchorCount !== 0
+      )) ||
       !result.reducedMotion ||
       result.activeAnimations > 0,
   );

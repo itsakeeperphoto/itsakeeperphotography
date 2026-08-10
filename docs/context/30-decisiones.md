@@ -643,3 +643,38 @@
   previsualizaciones quedan bajo `.impeccable/mocks/`; la media fuente de Drive
   usada entra en `public/uploads/`, pero los originales de auditoría permanecen
   ignorados. El gate futuro es diversidad de sesiones, no cantidad de archivos.
+
+### ADR-039 — Pasco publica A+C con diez sesiones verificadas
+- **Fecha:** 2026-08-09
+- **Estado:** Aceptada; crea una excepción limitada a ADR-006.
+- **Contexto:** El usuario pidió convertir `/pasco-wa-photographer/` en una
+  service-area page especializada, usar el hero de Seniors/Newborn/Family,
+  generar la dirección visual antes del código y auditar las carpetas Drive de
+  Pasco. Aprobó combinar A “Open Horizon” con C “Long Horizon Archive”. Los 23
+  originales descargados representan once sesiones según folder, XMP e
+  identidad visual; diez podían seleccionarse sin reutilizar una sesión ni una
+  captura ya presente en producción.
+- **Decisión:** Implementar `PascoPage.astro` con `EditorialHero` sin frase
+  script, botón hacia `#pasco-final`, arco introductorio, dos secciones de
+  paisaje, directorio ledger de cinco servicios, galería exacta de diez
+  sesiones, planificación estacional, cuatro FAQ nativas y cierre full-bleed.
+  Publicar diez JPEG optimizados —tres family/large-family y siete senior— con
+  alt literal y sin inferir landmarks ni revelar meeting points. Autorizar ocho
+  anchors exactos en `<main>`: About, Locations Guide, cinco servicios y
+  Contact. Marcar Pasco `ready/index`, `lastModified: 2026-08-09`, añadir un
+  `Service` con `areaServed` Pasco y mantener fuera dirección Pasco,
+  coordenadas, Review y AggregateRating. Servir el CSS Pasco como asset Vite
+  enlazado solo en esa ruta para no aumentar cada HTML editorial.
+- **Alternativas descartadas:** copiar marca, colores, tape o textos de la
+  referencia; usar fotografías generadas en producción; presentar varios
+  frames de una misma sesión como diez sesiones; atribuir portfolio genérico a
+  Pasco; publicar puntos exactos o una dirección local; y mantener la ruta
+  draft después de resolver copy, media y QA se descartaron por coherencia,
+  trazabilidad, privacidad y calidad SEO local.
+- **Consecuencias:** Release contiene siete URLs en sitemap y seis en
+  `llms.txt`. Pasco conserva H1 exacta, ocho H2, ocho anchors, cinco servicios,
+  galería 10/10 y FAQ visible/schema 4:4. Las diez fuentes suman ~5.2 MiB y sus
+  40 WebP ~4.1 MiB; todas cumplen 2400 px/700 KiB. El CSS route-scoped evita
+  ~20 KiB sin comprimir en cada ruta editorial ajena. Cualquier cambio futuro
+  debe conservar diversidad de sesiones, alts literales, privacidad, canonical
+  exacta y los gates de release.

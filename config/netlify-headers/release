@@ -41,9 +41,6 @@
 /contact/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/pasco-wa-photographer/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
 /journal/
   X-Robots-Tag: noindex, nofollow, noarchive
 

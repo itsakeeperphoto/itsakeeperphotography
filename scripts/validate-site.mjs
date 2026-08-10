@@ -23,6 +23,49 @@ const htmlFiles = (await collectHtml(output)).filter(
   (file) => !file.includes(`${path.sep}admin${path.sep}`)
 );
 const failures = [];
+const decodeHtml = (value = "") =>
+  value
+    .replace(/&#(\d+);/g, (_match, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([\da-f]+);/gi, (_match, code) =>
+      String.fromCodePoint(Number.parseInt(code, 16)),
+    )
+    .replace(/&(amp|lt|gt|quot|apos|#39);/g, (entity) => ({
+      "&amp;": "&",
+      "&lt;": "<",
+      "&gt;": ">",
+      "&quot;": '"',
+      "&apos;": "'",
+      "&#39;": "'",
+    })[entity]);
+const normalizedText = (value = "") =>
+  decodeHtml(value.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+const sectionById = (source, id) => {
+  const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return source.match(
+    new RegExp(
+      `<section\\b(?=[^>]*\\bid=["']${escapedId}["'])[^>]*>([\\s\\S]*?)<\\/section>`,
+      "i",
+    ),
+  )?.[1] || "";
+};
+const parseJsonLd = (source, relative) => {
+  const schemas = [];
+  for (const match of source.matchAll(
+    /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+  )) {
+    try {
+      schemas.push(JSON.parse(match[1]));
+    } catch {
+      failures.push(`${relative}: JSON-LD must be valid JSON`);
+    }
+  }
+  return schemas;
+};
+const nestedSchemaObjects = (value) => {
+  if (!value || typeof value !== "object") return [];
+  if (Array.isArray(value)) return value.flatMap(nestedSchemaObjects);
+  return [value, ...Object.values(value).flatMap(nestedSchemaObjects)];
+};
 const internalTargetExists = (href) => {
   let pathname;
   try {
@@ -51,17 +94,30 @@ const indexableReleaseFiles = new Set([
   `family-photographer-tri-cities-wa${path.sep}index.html`,
   `richland-wa-photographer${path.sep}index.html`,
   `kennewick-wa-photographer${path.sep}index.html`,
+  `pasco-wa-photographer${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
   `portfolio${path.sep}index.html`,
 ]);
-const expandedDirectoryFiles = new Set([
-  `richland-wa-photographer${path.sep}index.html`,
-  `kennewick-wa-photographer${path.sep}index.html`,
+const expandedDirectoryLinkCounts = new Map([
+  [`richland-wa-photographer${path.sep}index.html`, 9],
+  [`kennewick-wa-photographer${path.sep}index.html`, 9],
+  [`pasco-wa-photographer${path.sep}index.html`, 8],
 ]);
+const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
 
 for (const file of htmlFiles) {
   const relative = path.relative(output, file);
   const source = await readFile(file, "utf8");
+  const pascoStylesheetHref = source.match(
+    /<link\b[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']*pasco-page[^"']*\.css)["'][^>]*>/i,
+  )?.[1];
+  if (relative === pascoRelative) {
+    if (!pascoStylesheetHref || !internalTargetExists(pascoStylesheetHref)) {
+      failures.push(`${relative}: route-scoped Pasco stylesheet is missing or broken`);
+    }
+  } else if (pascoStylesheetHref || /\.pasco-page\s*\{/.test(source)) {
+    failures.push(`${relative}: Pasco CSS leaked into an unrelated route`);
+  }
   const withoutComments = source.replace(/<!--[\s\S]*?-->/g, "");
   const main = withoutComments.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] || "";
   const internalAnchors = [...main.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)]
@@ -76,10 +132,11 @@ for (const file of htmlFiles) {
       `${relative}: broken internal body links (${brokenInternalAnchors.join(", ")})`
     );
   }
-  if (expandedDirectoryFiles.has(relative)) {
-    if (internalAnchors.length !== 9) {
+  const expectedDirectoryLinkCount = expandedDirectoryLinkCounts.get(relative);
+  if (expectedDirectoryLinkCount !== undefined) {
+    if (internalAnchors.length !== expectedDirectoryLinkCount) {
       failures.push(
-        `${relative}: expected exactly 9 internal body links; found ${internalAnchors.length}`
+        `${relative}: expected exactly ${expectedDirectoryLinkCount} internal body links; found ${internalAnchors.length}`
       );
     }
   }
@@ -114,51 +171,212 @@ for (const file of htmlFiles) {
     [
       `richland-wa-photographer${path.sep}index.html`,
       `kennewick-wa-photographer${path.sep}index.html`,
+      pascoRelative,
     ].includes(relative)
   ) {
-    const schemas = [];
-    for (const match of source.matchAll(
-      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
-    )) {
-      try {
-        schemas.push(JSON.parse(match[1]));
-      } catch {
-        failures.push(`${relative}: JSON-LD must be valid JSON`);
-      }
-    }
+    const schemas = parseJsonLd(source, relative);
     const serviceSchemas = schemas.filter((schema) => schema?.["@type"] === "Service");
-    const unsafeSchema = schemas.some((schema) => {
-      const serialized = JSON.stringify(schema);
-      return (
-        serialized.includes('"streetAddress"') ||
-        /"@type":"(?:Review|AggregateRating)"/.test(serialized)
+    const unsafeSchema = schemas
+      .flatMap(nestedSchemaObjects)
+      .some((schema) =>
+        Object.hasOwn(schema, "streetAddress") ||
+        Object.hasOwn(schema, "latitude") ||
+        Object.hasOwn(schema, "longitude") ||
+        ["Review", "AggregateRating", "GeoCoordinates"].includes(schema["@type"]) ||
+        schema.addressLocality === "Pasco",
       );
-    });
     if (unsafeSchema) {
       failures.push(
-        `${relative}: city schema must not expose a street address, Review, or AggregateRating`
+        `${relative}: city schema must not expose a Pasco address, coordinates, Review, or AggregateRating`
       );
     }
     if (relative === `richland-wa-photographer${path.sep}index.html` && serviceSchemas.length) {
       failures.push(
-        `${relative}: Service schema is reserved for the published Kennewick page`
+        `${relative}: Richland must not emit a top-level Service schema`
       );
     }
-    if (relative === `kennewick-wa-photographer${path.sep}index.html`) {
+    const expectedServiceCity = relative === `kennewick-wa-photographer${path.sep}index.html`
+      ? "Kennewick"
+      : relative === pascoRelative
+        ? "Pasco"
+        : null;
+    if (expectedServiceCity) {
       const service = serviceSchemas[0];
       const expectedOrigin = mode === "release"
         ? "https://www.itsakeeperphotography.com"
         : "https://itsakeeperphotography.netlify.app";
+      const expectedServiceCanonical = `${expectedOrigin}/${expectedServiceCity.toLowerCase()}-wa-photographer/`;
       if (
         serviceSchemas.length !== 1 ||
+        service?.["@id"] !== `${expectedServiceCanonical}#service` ||
+        service?.name !== `${expectedServiceCity} Portrait Photography` ||
         service?.serviceType !== "Portrait photography" ||
         service?.provider?.["@id"] !== `${expectedOrigin}/#business` ||
         service?.areaServed?.["@type"] !== "City" ||
-        service?.areaServed?.name !== "Kennewick" ||
+        service?.areaServed?.name !== expectedServiceCity ||
         service?.areaServed?.containedInPlace?.["@type"] !== "State" ||
-        service?.areaServed?.containedInPlace?.name !== "Washington"
+        service?.areaServed?.containedInPlace?.name !== "Washington" ||
+        service?.url !== expectedServiceCanonical
       ) {
-        failures.push(`${relative}: Kennewick Service schema does not match the approved local scope`);
+        failures.push(
+          `${relative}: ${expectedServiceCity} Service schema does not match the approved local scope`,
+        );
+      }
+    }
+
+    if (relative === pascoRelative) {
+      const expectedOrigin = mode === "release"
+        ? "https://www.itsakeeperphotography.com"
+        : "https://itsakeeperphotography.netlify.app";
+      const canonical = `${expectedOrigin}/pasco-wa-photographer/`;
+      if (!source.includes(`<link rel="canonical" href="${canonical}">`)) {
+        failures.push(`${relative}: canonical must match the Pasco route exactly`);
+      }
+      if (!/data-content-status=["']ready["']/i.test(main)) {
+        failures.push(`${relative}: Pasco must render with ready content status`);
+      }
+      const h1Texts = [...main.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+        .map((match) => normalizedText(match[1]));
+      const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+        .map((match) => normalizedText(match[1]));
+      const expectedH2Texts = [
+        "The Most Underrated Light in the Tri-Cities",
+        "Where Two Rivers Meet",
+        "Farmland, Rows and Long Horizons",
+        "What I Photograph in Pasco",
+        "Recent Pasco Sessions",
+        "Seasons in Pasco",
+        "Pasco Questions",
+        "Let's Find Your Light",
+      ];
+      if (JSON.stringify(h1Texts) !== JSON.stringify(["Pasco, WA Photographer"])) {
+        failures.push(`${relative}: H1 must be exactly \"Pasco, WA Photographer\"`);
+      }
+      if (JSON.stringify(h2Texts) !== JSON.stringify(expectedH2Texts)) {
+        failures.push(`${relative}: expected the approved eight H2 headings in order`);
+      }
+
+      const expectedInternalAnchors = [
+        "/about/",
+        "/journal/family-photo-locations-tri-cities/",
+        "/senior-photographer-tri-cities-wa/",
+        "/family-photographer-tri-cities-wa/",
+        "/newborn-photographer-tri-cities-wa/",
+        "/branding-photographer-tri-cities-wa/",
+        "/headshot-photographer-tri-cities-wa/",
+        "/contact/",
+      ];
+      if (JSON.stringify(internalAnchors) !== JSON.stringify(expectedInternalAnchors)) {
+        failures.push(`${relative}: internal body links differ from the approved eight-link map`);
+      }
+
+      const hero = main.match(
+        /<header\b(?=[^>]*data-editorial-hero-page=["']pasco["'])[^>]*>([\s\S]*?)<\/header>/i,
+      )?.[1] || "";
+      const heroButtons = hero.match(/<button\b[^>]*data-hero-cta[^>]*>/gi) || [];
+      if (
+        heroButtons.length !== 1 ||
+        !/data-hero-scroll-target=["']pasco-final["']/i.test(heroButtons[0]) ||
+        /<a\b/i.test(hero)
+      ) {
+        failures.push(`${relative}: hero must use one local-scroll button and no anchor`);
+      }
+
+      const directory = sectionById(main, "pasco-session-directory");
+      const directoryHrefs = [...directory.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)]
+        .map((match) => match[1]);
+      if (
+        directoryHrefs.length !== 5 ||
+        JSON.stringify(directoryHrefs) !== JSON.stringify(expectedInternalAnchors.slice(2, 7))
+      ) {
+        failures.push(`${relative}: Pasco service directory must contain five approved linked rows`);
+      }
+
+      const gallery = sectionById(main, "recent-pasco-sessions");
+      const galleryFigureCount = (gallery.match(/<figure\b/gi) || []).length;
+      const galleryImages = [...gallery.matchAll(/<img\b[^>]*>/gi)].map((match) => ({
+        src: match[0].match(/\bsrc=["']([^"']+)["']/i)?.[1] || "",
+        alt: decodeHtml(match[0].match(/\balt=["']([^"']*)["']/i)?.[1] || "").trim(),
+      }));
+      const expectedGallerySources = [
+        "/uploads/pasco-family-mother-children-golden-hour.jpg",
+        "/uploads/pasco-family-group-golden-field.jpg",
+        "/uploads/pasco-extended-family-walking-golden-field.jpg",
+        "/uploads/pasco-senior-airplane-portrait.jpg",
+        "/uploads/pasco-senior-black-dress-foliage.jpg",
+        "/uploads/pasco-senior-seated-golden-field.jpg",
+        "/uploads/pasco-senior-pine-portrait.jpg",
+        "/uploads/pasco-senior-wildflower-portrait.jpg",
+        "/uploads/pasco-senior-floral-dress-field.jpg",
+        "/uploads/pasco-senior-white-dress-seated-portrait.jpg",
+      ];
+      if (
+        galleryFigureCount !== 10 ||
+        galleryImages.length !== 10 ||
+        new Set(galleryImages.map((image) => image.src)).size !== 10 ||
+        galleryImages.some((image) => !image.alt) ||
+        JSON.stringify(galleryImages.map((image) => image.src)) !==
+          JSON.stringify(expectedGallerySources)
+      ) {
+        failures.push(
+          `${relative}: recent gallery must render the ten verified, unique photographs with alt text`,
+        );
+      }
+
+      const faq = sectionById(main, "pasco-questions");
+      const visibleFaq = [...faq.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/gi)]
+        .map((match) => {
+          const detail = match[1];
+          const summary = detail.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/i)?.[1] || "";
+          const h3 = summary.match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i)?.[1];
+          const answer = detail.replace(/[\s\S]*?<\/summary>/i, "");
+          return {
+            question: normalizedText(h3 || summary),
+            answer: normalizedText(answer),
+          };
+        });
+      const faqSchemas = schemas.filter((schema) => schema?.["@type"] === "FAQPage");
+      const faqEntities = faqSchemas[0]?.mainEntity || [];
+      if (
+        visibleFaq.length !== 4 ||
+        faqSchemas.length !== 1 ||
+        faqEntities.length !== 4 ||
+        visibleFaq.some(
+          (item, index) =>
+            faqEntities[index]?.["@type"] !== "Question" ||
+            faqEntities[index]?.acceptedAnswer?.["@type"] !== "Answer" ||
+            item.question !== faqEntities[index]?.name ||
+            item.answer !== faqEntities[index]?.acceptedAnswer?.text,
+        )
+      ) {
+        failures.push(`${relative}: four visible FAQ entries must match four FAQPage entities`);
+      }
+
+      const webPages = schemas.filter((schema) => schema?.["@type"] === "WebPage");
+      const breadcrumbs = schemas.filter((schema) => schema?.["@type"] === "BreadcrumbList");
+      const webPage = webPages[0];
+      const breadcrumb = breadcrumbs[0];
+      const breadcrumbItems = breadcrumb?.itemListElement || [];
+      if (
+        webPages.length !== 1 ||
+        webPage?.spatialCoverage?.["@type"] !== "City" ||
+        webPage?.spatialCoverage?.name !== "Pasco" ||
+        webPage?.spatialCoverage?.containedInPlace?.["@type"] !== "State" ||
+        webPage?.spatialCoverage?.containedInPlace?.name !== "Washington"
+      ) {
+        failures.push(`${relative}: WebPage spatialCoverage must be Pasco, Washington`);
+      }
+      if (
+        breadcrumbs.length !== 1 ||
+        breadcrumbItems.length !== 2 ||
+        breadcrumbItems[0]?.position !== 1 ||
+        breadcrumbItems[0]?.name !== "Home" ||
+        breadcrumbItems[0]?.item !== `${expectedOrigin}/` ||
+        breadcrumbItems[1]?.position !== 2 ||
+        breadcrumbItems[1]?.name !== "Pasco Photographer" ||
+        breadcrumbItems[1]?.item !== canonical
+      ) {
+        failures.push(`${relative}: BreadcrumbList must resolve Home to Pasco Photographer`);
       }
     }
   }
@@ -213,11 +431,18 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
+    "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
     "https://www.itsakeeperphotography.com/portfolio/",
   ];
   if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) {
     failures.push(`sitemap.xml: release membership is ${sitemapUrls.join(", ") || "empty"}`);
+  }
+  const pascoSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/pasco-wa-photographer\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-09<\/lastmod>/.test(pascoSitemapEntry)) {
+    failures.push("sitemap.xml: Pasco lastmod must be 2026-08-09");
   }
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");
@@ -229,6 +454,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
+    "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
   ];
   if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
@@ -242,6 +468,9 @@ if (mode === "staging") {
   }
   if (/^\/kennewick-wa-photographer\/\*\s*$/m.test(headers)) {
     failures.push("_headers: Kennewick noindex rule must not block the published city page");
+  }
+  if (/^\/pasco-wa-photographer\/\*\s*$/m.test(headers)) {
+    failures.push("_headers: Pasco noindex rule must not block the published city page");
   }
   for (const route of [
     "/contact/*",

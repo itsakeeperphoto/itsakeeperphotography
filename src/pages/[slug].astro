@@ -8,6 +8,7 @@ import { topLevelEditorialManifest } from "../lib/page-manifest";
 import { getStaticHomepagePage } from "../lib/static-content";
 import { absoluteUrl, siteOrigin } from "../lib/site-environment";
 import { contentPageWrapper } from "../lib/tina/wrappers";
+import pascoStylesheet from "../styles/pasco-page.css?url";
 
 export function getStaticPaths() {
   return topLevelEditorialManifest.map((entry) => ({
@@ -21,6 +22,7 @@ const page = getContentPage(entry.contentPath);
 const shared = getStaticHomepagePage();
 const { homepage, settings } = shared.data;
 const canonical = absoluteUrl(entry.path);
+const pageStylesheet = entry.id === "pasco" ? pascoStylesheet : undefined;
 const detailedService =
   entry.id === "family"
     ? {
@@ -84,7 +86,9 @@ const cityPageDetails =
     ? { city: "Richland", breadcrumb: "Richland Photographer" }
     : entry.id === "kennewick"
       ? { city: "Kennewick", breadcrumb: "Kennewick Photographer" }
-      : null;
+      : entry.id === "pasco"
+        ? { city: "Pasco", breadcrumb: "Pasco Photographer" }
+        : null;
 const citySpatialCoverage =
   cityPageDetails
     ? {
@@ -115,18 +119,24 @@ const cityBreadcrumbSchema =
         ],
       }
     : null;
-const kennewickServiceSchema =
+const cityServiceDetails =
   entry.id === "kennewick"
+    ? { city: "Kennewick", name: "Kennewick Portrait Photography" }
+    : entry.id === "pasco"
+      ? { city: "Pasco", name: "Pasco Portrait Photography" }
+      : null;
+const cityServiceSchema =
+  cityServiceDetails
     ? {
         "@context": "https://schema.org",
         "@type": "Service",
         "@id": `${canonical}#service`,
-        name: "Kennewick Portrait Photography",
+        name: cityServiceDetails.name,
         serviceType: "Portrait photography",
         provider: { "@id": `${siteOrigin}/#business` },
         areaServed: {
           "@type": "City",
-          name: "Kennewick",
+          name: cityServiceDetails.city,
           containedInPlace: { "@type": "State", name: "Washington" },
         },
         url: canonical,
@@ -221,7 +231,7 @@ const detailedAdditionalSchema = detailedService
   : investmentBreadcrumbSchema
     ? [investmentBreadcrumbSchema]
     : cityBreadcrumbSchema
-      ? [...(kennewickServiceSchema ? [kennewickServiceSchema] : []), cityBreadcrumbSchema]
+      ? [...(cityServiceSchema ? [cityServiceSchema] : []), cityBreadcrumbSchema]
     : [];
 ---
 
@@ -237,6 +247,7 @@ const detailedAdditionalSchema = detailedService
   additionalSchema={detailedAdditionalSchema}
   pageSpatialCoverage={citySpatialCoverage}
   loadEditorialMotion={entry.id === "contact"}
+  pageStylesheet={pageStylesheet}
 >
   <SiteShell settings={settings} homepage={homepage} currentPath={entry.path}>
     <TinaIsland name="contentPage" wrapper={contentPageWrapper} params={{ path: entry.contentPath }} primary>

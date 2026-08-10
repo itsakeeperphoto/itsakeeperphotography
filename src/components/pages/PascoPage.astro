@@ -1,0 +1,529 @@
+---
+import type {
+  EditorialPageData,
+  PageLink,
+  PageSection,
+} from "../../content/page-types";
+import { absoluteUrl } from "../../lib/site-environment";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+  inquiry?: any;
+}
+
+interface RichPart {
+  text: string;
+  link?: PageLink;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) throw new Error(`Pasco page is missing the required section: ${id}`);
+  return section;
+};
+
+const introduction = requireSection("pasco-underrated-light");
+const rivers = requireSection("where-two-rivers-meet");
+const farmland = requireSection("pasco-farmland");
+const directory = requireSection("pasco-session-directory");
+const recent = requireSection("recent-pasco-sessions");
+const seasons = requireSection("seasons-in-pasco");
+const questions = requireSection("pasco-questions");
+
+const heroAction = page.hero.links?.[0];
+const serviceItems = directory.items || [];
+const recentItems = recent.items || [];
+const faqItems = (questions.items || []).filter(
+  (item) => item.heading && item.paragraphs?.length,
+);
+
+const expectedHeadings = [
+  "The Most Underrated Light in the Tri-Cities",
+  "Where Two Rivers Meet",
+  "Farmland, Rows and Long Horizons",
+  "What I Photograph in Pasco",
+  "Recent Pasco Sessions",
+  "Seasons in Pasco",
+  "Pasco Questions",
+  "Let's Find Your Light",
+];
+const actualHeadings = [
+  introduction.heading,
+  rivers.heading,
+  farmland.heading,
+  directory.heading,
+  recent.heading,
+  seasons.heading,
+  questions.heading,
+  page.finalCta?.heading,
+];
+const expectedLinks = [
+  "/about/",
+  "/journal/family-photo-locations-tri-cities/",
+  "/senior-photographer-tri-cities-wa/",
+  "/family-photographer-tri-cities-wa/",
+  "/newborn-photographer-tri-cities-wa/",
+  "/branding-photographer-tri-cities-wa/",
+  "/headshot-photographer-tri-cities-wa/",
+  "/contact/",
+];
+const actualLinks = [
+  ...(introduction.links || []).map((link) => link.href),
+  ...(rivers.links || []).map((link) => link.href),
+  ...serviceItems.map((item) => item.links?.[0]?.href || ""),
+  page.finalCta?.link?.href || "",
+];
+
+if (page.hero.heading !== "Pasco, WA Photographer") {
+  throw new Error('Pasco H1 must be exactly "Pasco, WA Photographer"');
+}
+if (!heroAction?.label) {
+  throw new Error("Pasco hero is missing its local scroll action label");
+}
+if (JSON.stringify(actualHeadings) !== JSON.stringify(expectedHeadings)) {
+  throw new Error("Pasco requires the approved eight H2 headings in order");
+}
+if (
+  serviceItems.length !== 5 ||
+  serviceItems.some(
+    (item) => !item.heading || !item.detail || !item.links?.[0]?.href,
+  )
+) {
+  throw new Error("Pasco service directory requires five complete linked rows");
+}
+if (
+  recentItems.length !== 10 ||
+  recentItems.some((item) => !item.image || !item.imageAlt) ||
+  new Set(recentItems.map((item) => item.image)).size !== 10
+) {
+  throw new Error("Pasco recent work requires ten unique verified photographs");
+}
+if (faqItems.length !== 4) {
+  throw new Error("Pasco FAQ requires four complete questions and answers");
+}
+if (
+  !page.finalCta?.image ||
+  !page.finalCta.imageAlt ||
+  !page.finalCta.link?.href
+) {
+  throw new Error("Pasco final CTA requires a verified image, alt text and link");
+}
+if (JSON.stringify(actualLinks) !== JSON.stringify(expectedLinks)) {
+  throw new Error("Pasco internal links differ from the approved eight-link map");
+}
+
+const richParts = (paragraph: string, links: PageLink[] = []): RichPart[] => {
+  const availableLinks = links.filter(
+    (link) => link.label && paragraph.includes(link.label),
+  );
+  const parts: RichPart[] = [];
+  let cursor = 0;
+
+  while (cursor < paragraph.length) {
+    const next = availableLinks
+      .map((link) => ({
+        index: paragraph.indexOf(link.label, cursor),
+        end: paragraph.indexOf(link.label, cursor) + link.label.length,
+        part: { text: link.label, link } satisfies RichPart,
+      }))
+      .filter(({ index }) => index >= cursor)
+      .sort((a, b) => a.index - b.index)[0];
+
+    if (!next) {
+      parts.push({ text: paragraph.slice(cursor) });
+      break;
+    }
+    if (next.index > cursor) parts.push({ text: paragraph.slice(cursor, next.index) });
+    parts.push(next.part);
+    cursor = next.end;
+  }
+
+  return parts;
+};
+
+const faqSchema = faqItems.map((item) => ({
+  "@type": "Question",
+  name: item.heading,
+  acceptedAnswer: {
+    "@type": "Answer",
+    text: item.paragraphs?.join(" "),
+  },
+}));
+
+const heroLeftPrint = "/uploads/pasco-senior-airplane-portrait.jpg";
+const heroRightPrint = "/uploads/pasco-family-mother-children-golden-hour.jpg";
+const introImage = "/uploads/pasco-family-mother-children-golden-hour.jpg";
+const riversPrimary = "/uploads/pasco-family-group-golden-field.jpg";
+const riversSecondary = "/uploads/pasco-senior-wildflower-portrait.jpg";
+const farmlandPrimary = "/uploads/pasco-extended-family-walking-golden-field.jpg";
+const farmlandSecondary = "/uploads/pasco-senior-wildflower-portrait.jpg";
+const farmlandTertiary = "/uploads/pasco-senior-pine-portrait.jpg";
+const directoryPrimary = "/uploads/pasco-senior-airplane-portrait.jpg";
+const directorySecondary = "/uploads/pasco-family-mother-children-golden-hour.jpg";
+const seasonsImages = [
+  recentItems[1],
+  recentItems[8],
+  recentItems[4],
+];
+---
+
+<article
+  class="pasco-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <!-- THESIS: Pasco's open light leads from local coverage to setting, landscape, service fit, verified work, planning, practical questions and one invitation. OWN-WORLD: the shared editorial hero, warm tonal surfaces, square prints, one arch and ruled ledgers. FIRST VIEWPORT: exact local H1, real Pasco work, a local-scroll action and two restrained prints. -->
+  <EditorialHero
+    pageKey="pasco"
+    titleId="pasco-hero-title"
+    heading={page.hero.heading}
+    headingLines={["Pasco, WA", "Photographer"]}
+    intro={page.hero.intro}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 49%"
+    mobileBackgroundPosition="57% 50%"
+    leftPrint={{ src: heroLeftPrint, objectPosition: "56% 48%" }}
+    rightPrint={{ src: heroRightPrint, objectPosition: "52% 42%" }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel={heroAction.label}
+    buttonTargetId="pasco-final"
+  />
+
+  <section
+    id={introduction.id}
+    class:list={["pasco-intro", `tone-${introduction.tone}`]}
+    aria-labelledby={`${introduction.id}-title`}
+  >
+    <div class="pasco-shell pasco-intro__grid">
+      <figure class="pasco-intro__media">
+        <Picture
+          src={introImage}
+          alt="Mother embracing two children in tall golden grass."
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) min(84vw, 28rem), (max-width: 1050px) 40vw, 30rem"
+          imgClass="photo--editorial"
+        />
+      </figure>
+      <span class="pasco-intro__line" aria-hidden="true"></span>
+      <div class="pasco-intro__copy">
+        <p class="pasco-eyebrow">Photography across Pasco</p>
+        <h2 id={`${introduction.id}-title`}>{introduction.heading}</h2>
+        <div class="pasco-prose">
+          {introduction.paragraphs?.map((paragraph) => (
+            <p>
+              {richParts(paragraph, introduction.links).map((part) =>
+                part.link ? <a href={part.link.href}>{part.text}</a> : <Fragment>{part.text}</Fragment>,
+              )}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id={rivers.id}
+    class:list={["pasco-rivers", `tone-${rivers.tone}`]}
+    aria-labelledby={`${rivers.id}-title`}
+  >
+    <div class="pasco-shell pasco-rivers__grid">
+      <div class="pasco-rivers__copy">
+        <p class="pasco-eyebrow">Setting the session</p>
+        <h2 id={`${rivers.id}-title`}>{rivers.heading}</h2>
+        <div class="pasco-prose">
+          {rivers.paragraphs?.map((paragraph) => (
+            <p>
+              {richParts(paragraph, rivers.links).map((part) =>
+                part.link ? <a href={part.link.href}>{part.text}</a> : <Fragment>{part.text}</Fragment>,
+              )}
+            </p>
+          ))}
+        </div>
+      </div>
+      <div class="pasco-rivers__media">
+        <figure class="pasco-rivers__primary">
+          <Picture
+            src={riversPrimary}
+            alt="Family gathered together in a golden field."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 58vw, 48rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <figure class="pasco-rivers__secondary">
+          <Picture
+            src={riversSecondary}
+            alt="High school senior seated among dry wildflowers in warm light."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 54vw, (max-width: 1050px) 28vw, 22rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <span class="pasco-rivers__cross pasco-rivers__cross--a" aria-hidden="true"></span>
+        <span class="pasco-rivers__cross pasco-rivers__cross--b" aria-hidden="true"></span>
+        <p class="pasco-rivers__caption">Pasco / Washington</p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id={farmland.id}
+    class:list={["pasco-farmland", `tone-${farmland.tone}`]}
+    aria-labelledby={`${farmland.id}-title`}
+  >
+    <div class="pasco-shell">
+      <header class="pasco-farmland__header">
+        <p class="pasco-eyebrow">The Pasco landscape</p>
+        <h2 id={`${farmland.id}-title`}>{farmland.heading}</h2>
+      </header>
+      <figure class="pasco-farmland__panorama">
+        <Picture
+          src={farmlandPrimary}
+          alt="Extended family walking hand in hand across a sunlit field."
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) calc(100vw - 2.5rem), 92vw"
+          imgClass="photo--editorial"
+        />
+      </figure>
+      <div class="pasco-farmland__lower">
+        <div class="pasco-farmland__copy pasco-prose">
+          <p class="pasco-farmland__aside" aria-hidden="true">Room to move. Space to notice.</p>
+          {farmland.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="pasco-farmland__portraits">
+          <figure>
+            <Picture
+              src={farmlandSecondary}
+              alt="High school senior seated among dry wildflowers in warm light."
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 46vw, (max-width: 1050px) 30vw, 24rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+          <figure>
+            <Picture
+              src={farmlandTertiary}
+              alt="High school senior smiling in front of green pine branches."
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 46vw, (max-width: 1050px) 30vw, 24rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id={directory.id}
+    class:list={["pasco-directory", `tone-${directory.tone}`]}
+    aria-labelledby={`${directory.id}-title`}
+  >
+    <div class="pasco-shell pasco-directory__layout">
+      <div class="pasco-directory__content">
+        <header class="pasco-directory__header">
+          <p class="pasco-eyebrow">Services in Pasco</p>
+          <h2 id={`${directory.id}-title`}>{directory.heading}</h2>
+          {directory.intro && <p class="pasco-directory__intro">{directory.intro}</p>}
+        </header>
+        <nav aria-labelledby={`${directory.id}-title`}>
+          <ol class="pasco-directory__list">
+            {serviceItems.map((item, index) => {
+              const link = item.links![0];
+              return (
+                <li>
+                  <a class="pasco-directory__row" href={link.href}>
+                    <span class="pasco-directory__number">{String(index + 1).padStart(2, "0")}</span>
+                    <span class="pasco-directory__name">{item.heading}</span>
+                    <span class="pasco-directory__detail">{item.detail}</span>
+                    <span class="pasco-directory__arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      </div>
+      <div class="pasco-directory__media">
+        <figure class="pasco-directory__primary">
+          <Picture
+            src={directoryPrimary}
+            alt="High school senior in a white shirt standing beside a small airplane."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 44vw, 38rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <figure class="pasco-directory__arch">
+          <Picture
+            src={directorySecondary}
+            alt="Mother embracing two children in tall golden grass."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 48vw, (max-width: 1050px) 24vw, 18rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <p class="pasco-directory__caption">Pasco / Service area</p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id={recent.id}
+    class:list={["pasco-gallery", `tone-${recent.tone}`]}
+    aria-labelledby={`${recent.id}-title`}
+  >
+    <div class="pasco-shell">
+      <header class="pasco-gallery__header">
+        <p class="pasco-eyebrow">Recent work</p>
+        <h2 id={`${recent.id}-title`}>{recent.heading}</h2>
+        {recent.intro && <p>{recent.intro}</p>}
+      </header>
+      <div class="pasco-gallery__grid">
+        {recentItems.map((item, index) => (
+          <figure class={`pasco-gallery__item pasco-gallery__item--${index + 1}`}>
+            <Picture
+              src={item.image!}
+              alt={item.imageAlt!}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 46vw, 30rem"
+              imgClass="photo--editorial"
+            />
+            <figcaption>{item.heading}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="pasco-gallery__count" aria-hidden="true">01—10</p>
+    </div>
+  </section>
+
+  <section
+    id={seasons.id}
+    class:list={["pasco-seasons", `tone-${seasons.tone}`]}
+    aria-labelledby={`${seasons.id}-title`}
+  >
+    <div class="pasco-shell pasco-seasons__grid">
+      <div class="pasco-seasons__copy">
+        <p class="pasco-eyebrow">Planning the calendar</p>
+        <h2 id={`${seasons.id}-title`}>{seasons.heading}</h2>
+        <div class="pasco-prose">
+          {seasons.paragraphs?.map((paragraph, index) => (
+            <div class="pasco-seasons__entry">
+              <p class="pasco-seasons__label">{["May—October", "Spring", "Winter"][index]}</p>
+              <p>{paragraph}</p>
+            </div>
+          ))}
+        </div>
+        <p class="pasco-seasons__number" aria-hidden="true">04</p>
+      </div>
+      <div class="pasco-seasons__media">
+        {seasonsImages.map((item, index) => (
+          <figure class={`pasco-seasons__photo pasco-seasons__photo--${index + 1}`}>
+            <Picture
+              src={item.image!}
+              alt={item.imageAlt!}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 46vw, 36rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    id={questions.id}
+    class:list={["pasco-faq", `tone-${questions.tone}`]}
+    aria-labelledby={`${questions.id}-title`}
+  >
+    <div class="pasco-shell pasco-faq__grid">
+      <header class="pasco-faq__header">
+        <p class="pasco-eyebrow">Before you book</p>
+        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        <p>Four practical answers for planning your session.</p>
+      </header>
+      <div class="pasco-faq__list">
+        {faqItems.map((item, index) => (
+          <details open={index === 0}>
+            <summary>
+              <span class="pasco-faq__number">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{item.heading}</h3>
+              <span class="pasco-faq__mark" aria-hidden="true"></span>
+            </summary>
+            <div class="pasco-faq__answer">
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="pasco-final"
+    class:list={["pasco-final", `tone-${page.finalCta.tone}`]}
+    aria-labelledby="pasco-final-title"
+    tabindex="-1"
+  >
+    <figure class="pasco-final__background">
+      <Picture
+        src={page.finalCta.image}
+        alt={page.finalCta.imageAlt}
+        loading="lazy"
+        decoding="async"
+        responsiveSrcset
+        sizes="100vw"
+        imgClass="pasco-final__background-image"
+      />
+    </figure>
+    <div class="pasco-final__wash" aria-hidden="true"></div>
+    <div class="pasco-shell pasco-final__layout">
+      <div class="pasco-final__copy">
+        <p class="pasco-eyebrow">Ready when you are</p>
+        <h2 id="pasco-final-title">{page.finalCta.heading}</h2>
+        {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        <a class="outline-button" href={page.finalCta.link.href}>
+          {page.finalCta.link.label}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${absoluteUrl(page.route)}#faq`,
+      mainEntity: faqSchema,
+    })}
+  />
+</article>

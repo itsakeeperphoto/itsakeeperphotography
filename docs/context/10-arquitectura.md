@@ -122,15 +122,15 @@ Componentes especializados existentes:
 - `BrandingPage.astro`, `HeadshotPage.astro`
 - `AboutPage.astro`, `InvestmentPage.astro`, `ContactPage.astro`
 - `JournalPage.astro`, `LocationsGuidePage.astro`
-- `RichlandPage.astro`, `KennewickPage.astro`
-- `ContentPage.astro` para rutas aún genéricas, incluidas Pasco, Reviews,
-  Privacy, Thank-you y algunos artículos.
+- `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
+- `ContentPage.astro` para rutas aún genéricas, incluidas Reviews, Privacy,
+  Thank-you y algunos artículos.
 
 `EditorialHero.astro` materializa la estructura de hero basada en Seniors y es
-compartido por varias páginas especializadas, incluida Kennewick. Su frase
+compartido por varias páginas especializadas, incluidas Kennewick y Pasco. Su frase
 script es opcional: cuando no existe contenido aprobado, el nodo no se emite.
-Admite CTA como enlaces o como botón de desplazamiento; Kennewick usa solo el
-botón hacia `#kennewick-final`, por lo que no añade un anchor. Su título en
+Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
+botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
 `KennewickPage.astro` exige cinco filas enlazadas de servicio y cuatro FAQ. El
@@ -138,6 +138,14 @@ cuerpo usa arco+hairline, un único collage restringido, sección local
 text-led, directorio ledger con una fotografía, FAQ nativo y cierre fotográfico
 full-bleed. La galería futura permanece completamente fuera del DOM mientras
 no todos sus ítems tengan imagen y alt verificados.
+
+`PascoPage.astro` exige cinco servicios enlazados, diez fotografías verificadas
+de diez sesiones, cuatro FAQ y ocho anchors exactos. Su secuencia A+C combina
+hero/intro de horizonte abierto, dos bloques de paisaje, directorio ledger,
+galería editorial, planificación estacional, FAQ nativo y cierre full-bleed.
+`src/pages/[slug].astro` importa `pasco-page.css` como URL procesada por Vite y
+`Base.astro` la enlaza solo para Pasco. Así se evita que el router compartido
+inyecte aproximadamente 20 KiB de CSS Pasco en cada ruta editorial ajena.
 
 ## Contratos externos
 
@@ -241,17 +249,18 @@ para evitar cambios silenciosos al repositorio.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para seis rutas:
+En `release`, el manifiesto actualmente permite sitemap para siete rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
 - `/richland-wa-photographer/`
 - `/kennewick-wa-photographer/`
+- `/pasco-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family, Richland, Kennewick y Family Photo
-Locations; Portfolio está excluido de llms. Las otras 14 rutas siguen
+`llms.txt` incluye Homepage, Family, Richland, Kennewick, Pasco y Family Photo
+Locations; Portfolio está excluido de llms. Las otras 13 rutas siguen
 `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
@@ -259,9 +268,9 @@ también los artículos publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
 
 `Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.
-`src/pages/[slug].astro` añade para Kennewick un `Service` de portrait
-photography con `areaServed` Kennewick/WA y provider enlazado al negocio; no
-declara ubicación física en esa ciudad. No se emiten `Review`,
+`src/pages/[slug].astro` añade para Kennewick y Pasco un `Service` de portrait
+photography con `areaServed` de la ciudad/WA y provider enlazado al negocio; no
+declara ubicación física en esas ciudades. No se emiten `Review`,
 `AggregateRating` ni `streetAddress` sin evidencia y autorización.
 
 ## Assets y rendimiento
@@ -281,6 +290,10 @@ declara ubicación física en esa ciudad. No se emiten `Review`,
   Drive `Couples - Kennewick` y `Senior Session - Kennewick`, más sus variantes
   WebP generadas. `010A4575copy.jpg` y `sennior-session-benton-city.jpg` no se
   publican porque pertenecen a la misma sesión identificada como Benton City.
+- Pasco incorpora diez JPEG fuente optimizados de diez sesiones distintas
+  verificadas por folder, XMP e identidad visual: tres family/large-family y
+  siete senior. Sus originales de auditoría permanecen ignorados; producción
+  usa solo los JPEG ≤2400 px/700 KiB y variantes WebP 400/640/960/1440.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

@@ -1,73 +1,245 @@
 {
   "route": "/pasco-wa-photographer/",
   "family": "city",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "WebPage",
-  "signature": "crossing-line",
+  "signature": "overlap",
   "title": "Pasco WA Photographer | It's A Keeper Photography",
-  "description": "Golden-hour photography in Pasco, WA — seniors, families, newborns and branding sessions at Sacajawea's rivers, open farmland and your favorite spots.",
+  "description": "Pasco, WA photography by Lisa Weiss: golden-hour family and senior portraits, in-home newborn sessions, branding photography and professional headshots.",
   "hero": {
-    "tone": "olive",
-    "heading": "Your Pasco, WA Photographer",
-    "intro": "Senior pictures, family sessions, newborns and branding photography in Pasco — big skies, river light, and a photographer who knows where they meet."
+    "tone": "umber",
+    "heading": "Pasco, WA Photographer",
+    "intro": "Family sessions and senior pictures in Pasco's open evening light, plus in-home newborn photography, branding sessions and professional headshots — where the sky feels wider and the horizons run long.",
+    "image": "/uploads/pasco-extended-family-walking-golden-field.jpg",
+    "imageAlt": "Extended family walking hand in hand across a golden field.",
+    "links": [
+      {
+        "label": "Plan Your Session",
+        "href": "/contact/"
+      }
+    ]
   },
   "sections": [
     {
-      "id": "where-the-rivers-meet",
-      "kind": "prose",
+      "id": "pasco-underrated-light",
+      "kind": "split",
       "tone": "sand",
-      "heading": "Where the Rivers Meet",
+      "heading": "The Most Underrated Light in the Tri-Cities",
       "paragraphs": [
-        "Pasco has some of the most underrated session light in the Tri-Cities. The confluence at Sacajawea, the open farmland north of town, the long uninterrupted horizons — when the evening sun stretches across those spaces, it's some of the warmest light in the whole valley."
+        "I'll say something here I don't say on the other city pages: Pasco has light that people overlook.",
+        "Open sky and long horizons give the evening light room to stretch across the frame. Around open land, fewer visual interruptions let the sun stay low and warm, creating a spacious look that feels different from a busier streetscape.",
+        "I'm Lisa Weiss, based in Richland and photographing across the Tri-Cities since 2005. Pasco is part of my home coverage area, with no travel fee anywhere in Richland, Kennewick or Pasco.",
+        "Most outdoor family and senior sessions happen at golden hour, at a setting we choose together. Newborn sessions take place in your Pasco home. Branding sessions can happen at your business or on location, while professional headshots use portable studio lighting at your workplace. Planning and direction are part of every session."
+      ],
+      "links": [
+        {
+          "label": "photographing across the Tri-Cities since 2005",
+          "href": "/about/"
+        }
       ]
     },
     {
-      "id": "pasco-session-directory",
-      "kind": "services",
-      "tone": "earth",
-      "heading": "Sessions I Photograph in Pasco",
+      "id": "where-two-rivers-meet",
+      "kind": "split",
+      "tone": "ivory",
+      "heading": "Where Two Rivers Meet",
+      "paragraphs": [
+        "The Snake and Columbia meet in Pasco, opening the landscape to water, driftwood, big sky and long views. For portraits, that combination gives us reflected light, room to move and a setting that can feel open without becoming empty.",
+        "I keep exact meeting points private, but I don't keep the planning mysterious. We choose the kind of setting together, and I set the time around the light. The specific place matters less than arriving when that light is ready. My guide explains more about how I choose locations across the Tri-Cities."
+      ],
       "links": [
         {
-          "label": "Senior Pictures",
-          "href": "/senior-photographer-tri-cities-wa/"
-        },
-        {
-          "label": "Family Photography",
-          "href": "/family-photographer-tri-cities-wa/"
-        },
-        {
-          "label": "Best places to take pictures in the Tri-Cities",
+          "label": "how I choose locations across the Tri-Cities",
           "href": "/journal/family-photo-locations-tri-cities/"
         }
       ]
     },
     {
+      "id": "pasco-farmland",
+      "kind": "split",
+      "tone": "earth",
+      "heading": "Farmland, Rows and Long Horizons",
+      "paragraphs": [
+        "The agricultural landscape around Pasco changes through the year: blossoms in spring, deep green through summer and dusty gold as the season turns. Those shifts give the same wide horizon a different mood from one month to the next.",
+        "Rows do something specific in a photograph — they carry your eye straight through the frame and land it on the people. For senior pictures, open roads and long horizons create room to walk, turn and move without a crowded background.",
+        "For families, open space lets children move and interact instead of holding a pose. I choose the setting around the people first, then use the landscape to support the photograph rather than compete with it."
+      ]
+    },
+    {
+      "id": "pasco-session-directory",
+      "kind": "services",
+      "tone": "olive",
+      "heading": "What I Photograph in Pasco",
+      "intro": "Pasco is part of my full Tri-Cities service area. The service changes the plan, but the same things stay consistent: careful timing, clear guidance and photographs built around the people in front of the camera.",
+      "items": [
+        {
+          "heading": "Senior Pictures",
+          "detail": "relaxed portraits across several outdoor settings in one golden-hour evening, planned around your style",
+          "links": [
+            {
+              "label": "Senior Pictures",
+              "href": "/senior-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Family Photography",
+          "detail": "unhurried, activity-based photographs with room for children to move and interact",
+          "links": [
+            {
+              "label": "Family Photography",
+              "href": "/family-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Newborn Photography",
+          "detail": "gentle photography in your Pasco home, with the session built around your family",
+          "links": [
+            {
+              "label": "Newborn Photography",
+              "href": "/newborn-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Branding Photography",
+          "detail": "portraits and working details photographed at your business or at a location chosen for your brand",
+          "links": [
+            {
+              "label": "Branding Photography",
+              "href": "/branding-photographer-tri-cities-wa/"
+            }
+          ]
+        },
+        {
+          "heading": "Professional Headshots",
+          "detail": "individual and team portraits made at your workplace with portable studio lighting",
+          "links": [
+            {
+              "label": "Professional Headshots",
+              "href": "/headshot-photographer-tri-cities-wa/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recent-pasco-sessions",
+      "kind": "locations",
+      "tone": "walnut",
+      "heading": "Recent Pasco Sessions",
+      "intro": "A selection of family and senior sessions photographed in Pasco, shown without publishing private meeting points.",
+      "items": [
+        {
+          "heading": "Family Session",
+          "image": "/uploads/pasco-family-mother-children-golden-hour.jpg",
+          "imageAlt": "Mother embracing two children in tall golden grass."
+        },
+        {
+          "heading": "Family Session",
+          "image": "/uploads/pasco-family-group-golden-field.jpg",
+          "imageAlt": "Family gathered together in a golden field."
+        },
+        {
+          "heading": "Extended Family Session",
+          "image": "/uploads/pasco-extended-family-walking-golden-field.jpg",
+          "imageAlt": "Extended family walking hand in hand across a golden field."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-airplane-portrait.jpg",
+          "imageAlt": "High school senior in a white shirt standing beside a small airplane."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-black-dress-foliage.jpg",
+          "imageAlt": "High school senior in a black dress standing among softly lit foliage."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-seated-golden-field.jpg",
+          "imageAlt": "High school senior seated among dry wildflowers in warm evening light."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-pine-portrait.jpg",
+          "imageAlt": "High school senior smiling in front of green pine branches."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-wildflower-portrait.jpg",
+          "imageAlt": "High school senior seated among dry wildflowers in warm light."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-floral-dress-field.jpg",
+          "imageAlt": "High school senior with glasses seated in dry grass wearing a green floral dress."
+        },
+        {
+          "heading": "Senior Session",
+          "image": "/uploads/pasco-senior-white-dress-seated-portrait.jpg",
+          "imageAlt": "High school senior in a white dress seated beneath leafy branches."
+        }
+      ]
+    },
+    {
+      "id": "seasons-in-pasco",
+      "kind": "prose",
+      "tone": "sand",
+      "heading": "Seasons in Pasco",
+      "paragraphs": [
+        "May through October is peak season across the Tri-Cities, and Pasco's open landscape is especially warm in late summer as fields turn gold. Fall dates fill first, so October sessions are best requested in late summer.",
+        "March and April bring blossoms, fresh green and milder evenings, with more room on the calendar. Spring can be a strong choice for families or seniors who want color without the pace of fall.",
+        "I also photograph year-round. A clear winter afternoon over open land can produce crisp, low light and a quieter palette. The season changes the look; it does not decide whether a meaningful session can happen."
+      ]
+    },
+    {
       "id": "pasco-questions",
       "kind": "faq",
-      "tone": "ivory",
+      "tone": "walnut",
       "heading": "Pasco Questions",
       "items": [
         {
-          "heading": "What time are sessions?",
+          "heading": "Do you travel to Pasco?",
           "paragraphs": [
-            "Golden hour — the last stretch of warm light before sunset. Exact timing shifts with the season, and I'll plan it to the minute."
+            "Yes. Richland, Kennewick and Pasco are all part of my home coverage area, with no travel fee anywhere in the Tri-Cities."
+          ]
+        },
+        {
+          "heading": "What kinds of locations work well in Pasco?",
+          "paragraphs": [
+            "Open country, farmland and river settings all work well. The right choice depends on the people, the season and the look you want, and I confirm the exact meeting point during planning."
+          ]
+        },
+        {
+          "heading": "Where do newborn, branding and headshot sessions happen?",
+          "paragraphs": [
+            "Newborn sessions happen in your Pasco home. Branding photography can happen at your business or on location, and I bring portable studio lighting to your workplace for professional headshots."
+          ]
+        },
+        {
+          "heading": "When should I book?",
+          "paragraphs": [
+            "Most sessions are reserved four to six weeks ahead. May through October is busiest and fall dates go first, so reach out in late summer if you are picturing October light."
           ]
         }
       ]
     }
   ],
   "finalCta": {
-    "tone": "walnut",
-    "heading": "Let's Find Your Light in Pasco",
+    "tone": "umber",
+    "heading": "Let's Find Your Light",
+    "paragraphs": [
+      "Big sky, long horizons, and an evening that knows what it's doing. Tell me who you are bringing and what you want the photographs to feel like; I'll help plan the setting, timing and next steps."
+    ],
+    "image": "/uploads/pasco-family-group-golden-field.jpg",
+    "imageAlt": "Family gathered together in a golden field.",
     "link": {
       "label": "Start planning",
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[VALIDAR CON LISA: sus spots reales de Pasco + detalles de primera mano]",
-    "[PENDIENTE: 6–10 imágenes de sesiones reales en Pasco con alt text de locación]",
-    "[VALIDAR — Q53]"
-  ]
+  "pending": []
 }

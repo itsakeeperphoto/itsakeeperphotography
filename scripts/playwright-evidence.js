@@ -39,9 +39,10 @@ async (page) => {
     "/reviews/",
     "/contact/",
   ]);
-  const expandedDirectoryPaths = new Set([
-    "/richland-wa-photographer/",
-    "/kennewick-wa-photographer/",
+  const expandedDirectoryLinkCounts = new Map([
+    ["/richland-wa-photographer/", 9],
+    ["/kennewick-wa-photographer/", 9],
+    ["/pasco-wa-photographer/", 8],
   ]);
   const report = [];
 
@@ -125,6 +126,7 @@ async (page) => {
 
       const checks = await page.evaluate(() => {
         const origin = location.origin;
+        const normalize = (value) => value?.replace(/\s+/g, " ").trim() || "";
         const internalBodyLinks = [...document.querySelectorAll("main a[href]")].filter((anchor) => {
           const raw = anchor.getAttribute("href") || "";
           if (!raw || raw.startsWith("#") || raw.startsWith("mailto:") || raw.startsWith("tel:")) return false;
@@ -136,7 +138,16 @@ async (page) => {
         )].filter((element) => {
           const style = getComputedStyle(element);
           const rect = element.getBoundingClientRect();
-          return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
+          const isPascoUtility = element.matches(
+            ".pasco-eyebrow, .pasco-rivers__caption, .pasco-farmland__aside, .pasco-directory__caption, .pasco-gallery__count, .pasco-seasons__label, .pasco-seasons__number",
+          );
+          return (
+            !isPascoUtility &&
+            rect.width > 0 &&
+            rect.height > 0 &&
+            style.display !== "none" &&
+            style.visibility !== "hidden"
+          );
         });
         const textSizes = visibleText.map((element) => Number.parseFloat(getComputedStyle(element).fontSize));
         const images = [...document.images].map((image) => ({
@@ -148,6 +159,110 @@ async (page) => {
           complete: image.complete,
         }));
         const content = document.querySelector("[data-signature-device]");
+        let pascoContract = null;
+        if (location.pathname === "/pasco-wa-photographer/") {
+          const main = document.querySelector("main");
+          const hero = main?.querySelector('[data-editorial-hero-page="pasco"]');
+          const directory = main?.querySelector("#pasco-session-directory");
+          const gallery = main?.querySelector("#recent-pasco-sessions");
+          const faq = main?.querySelector("#pasco-questions");
+          const galleryImages = [...(gallery?.querySelectorAll("img") || [])];
+          const visibleFaq = [...(faq?.querySelectorAll("details") || [])].map((detail) => ({
+            question: normalize(detail.querySelector("h3")?.textContent || detail.querySelector("summary")?.textContent),
+            answer: normalize(detail.querySelector("summary")?.nextElementSibling?.textContent),
+          }));
+          const schemas = [...document.querySelectorAll('script[type="application/ld+json"]')]
+            .map((script) => {
+              try {
+                return JSON.parse(script.textContent || "");
+              } catch {
+                return null;
+              }
+            });
+          const services = schemas.filter((schema) => schema?.["@type"] === "Service");
+          const faqSchemas = schemas.filter((schema) => schema?.["@type"] === "FAQPage");
+          const webPages = schemas.filter((schema) => schema?.["@type"] === "WebPage");
+          const breadcrumbs = schemas.filter((schema) => schema?.["@type"] === "BreadcrumbList");
+          const faqEntities = faqSchemas[0]?.mainEntity || [];
+          const expectedH2 = [
+            "The Most Underrated Light in the Tri-Cities",
+            "Where Two Rivers Meet",
+            "Farmland, Rows and Long Horizons",
+            "What I Photograph in Pasco",
+            "Recent Pasco Sessions",
+            "Seasons in Pasco",
+            "Pasco Questions",
+            "Let's Find Your Light",
+          ];
+          const expectedLinks = [
+            "/about/",
+            "/journal/family-photo-locations-tri-cities/",
+            "/senior-photographer-tri-cities-wa/",
+            "/family-photographer-tri-cities-wa/",
+            "/newborn-photographer-tri-cities-wa/",
+            "/branding-photographer-tri-cities-wa/",
+            "/headshot-photographer-tri-cities-wa/",
+            "/contact/",
+          ];
+          const h1Texts = [...(main?.querySelectorAll("h1") || [])].map((heading) => normalize(heading.textContent));
+          const h2Texts = [...(main?.querySelectorAll("h2") || [])].map((heading) => normalize(heading.textContent));
+          const directoryHrefs = [...(directory?.querySelectorAll("a[href]") || [])]
+            .map((anchor) => anchor.getAttribute("href"));
+          const breadcrumbItems = breadcrumbs[0]?.itemListElement || [];
+          const faqMatchesSchema =
+            visibleFaq.length === 4 &&
+            faqSchemas.length === 1 &&
+            faqEntities.length === 4 &&
+            visibleFaq.every(
+              (item, index) =>
+                item.question === faqEntities[index]?.name &&
+                item.answer === faqEntities[index]?.acceptedAnswer?.text,
+            );
+          const schemaPass =
+            services.length === 1 &&
+            services[0]?.serviceType === "Portrait photography" &&
+            services[0]?.areaServed?.name === "Pasco" &&
+            webPages.length === 1 &&
+            webPages[0]?.spatialCoverage?.name === "Pasco" &&
+            breadcrumbs.length === 1 &&
+            breadcrumbItems.length === 2 &&
+            breadcrumbItems[0]?.name === "Home" &&
+            breadcrumbItems[1]?.name === "Pasco Photographer";
+          pascoContract = {
+            h1Texts,
+            h2Texts,
+            heroCtaTag: hero?.querySelector("[data-hero-cta]")?.tagName || null,
+            heroScrollTarget: hero?.querySelector("[data-hero-cta]")?.getAttribute("data-hero-scroll-target") || null,
+            heroAnchorCount: hero?.querySelectorAll("a").length || 0,
+            heroScriptCount: hero?.querySelectorAll("[data-hero-script]").length || 0,
+            directoryHrefs,
+            galleryFigureCount: gallery?.querySelectorAll("figure").length || 0,
+            galleryImageCount: galleryImages.length,
+            uniqueGalleryImageCount: new Set(galleryImages.map((image) => image.getAttribute("src"))).size,
+            galleryAltsPass: galleryImages.every((image) => Boolean(image.getAttribute("alt")?.trim())),
+            visibleFaqCount: visibleFaq.length,
+            faqSchemaCount: faqSchemas.length,
+            faqEntityCount: faqEntities.length,
+            faqMatchesSchema,
+            serviceSchemaCount: services.length,
+            schemaPass,
+            pass:
+              JSON.stringify(h1Texts) === JSON.stringify(["Pasco, WA Photographer"]) &&
+              JSON.stringify(h2Texts) === JSON.stringify(expectedH2) &&
+              JSON.stringify(internalBodyLinks.map((anchor) => anchor.getAttribute("href"))) === JSON.stringify(expectedLinks) &&
+              hero?.querySelector("[data-hero-cta]")?.tagName === "BUTTON" &&
+              hero?.querySelector("[data-hero-cta]")?.getAttribute("data-hero-scroll-target") === "pasco-final" &&
+              (hero?.querySelectorAll("a").length || 0) === 0 &&
+              (hero?.querySelectorAll("[data-hero-script]").length || 0) === 0 &&
+              JSON.stringify(directoryHrefs) === JSON.stringify(expectedLinks.slice(2, 7)) &&
+              (gallery?.querySelectorAll("figure").length || 0) === 10 &&
+              galleryImages.length === 10 &&
+              new Set(galleryImages.map((image) => image.getAttribute("src"))).size === 10 &&
+              galleryImages.every((image) => Boolean(image.getAttribute("alt")?.trim())) &&
+              faqMatchesSchema &&
+              schemaPass,
+          };
+        }
         return {
           title: document.title,
           canonical: document.querySelector('link[rel="canonical"]')?.href || null,
@@ -164,6 +279,7 @@ async (page) => {
           brokenImages: images.filter((image) => !image.complete || image.naturalWidth === 0 || image.naturalHeight === 0),
           imagesWithoutDimensions: images.filter((image) => !image.width || !image.height).map((image) => image.src),
           currentNavLinks: [...document.querySelectorAll('.primary-nav a[aria-current="page"]')].map((anchor) => anchor.getAttribute("href")),
+          pascoContract,
         };
       });
 
@@ -194,9 +310,10 @@ async (page) => {
   const failures = report.filter((result) =>
     result.status !== 200 ||
     result.overflow > 0 ||
-    (expandedDirectoryPaths.has(result.pathname)
-      ? result.internalBodyLinkCount !== 9
+    (expandedDirectoryLinkCounts.has(result.pathname)
+      ? result.internalBodyLinkCount !== expandedDirectoryLinkCounts.get(result.pathname)
       : result.internalBodyLinkCount > 4) ||
+    (result.pathname === "/pasco-wa-photographer/" && !result.pascoContract?.pass) ||
     (result.minBodyFontPx !== null && result.minBodyFontPx < 16) ||
     !result.signature ||
     result.placeholderLeak ||
