@@ -32,7 +32,7 @@ const aboutHeroDigest = createHash("sha256")
   .digest("hex");
 if (
   aboutHeroDigest !==
-  "90adfcb9a8daf5fce4da2d8f2b9c7eb7cb7587b9f1d41f17a081f59efe1a6681"
+  "89ff030fedfc6e042ffa325711f08e1b80df846634923976e3560d26cf0bdc73"
 ) {
   failures.push(
     `content/pages/about.json: protected hero subtree changed (${aboutHeroDigest})`,
@@ -65,7 +65,7 @@ const aboutEffectiveHeroProps = {
   links: aboutSource.hero.links,
   backgroundImage: aboutSource.hero.image,
   backgroundAlt: aboutSource.hero.imageAlt,
-  backgroundPosition: "50% 32%",
+  backgroundPosition: "50% 24%",
   mobileBackgroundPosition: "50% 24%",
   leftPrint: {
     src:
@@ -85,7 +85,7 @@ const aboutEffectiveHeroDigest = createHash("sha256")
   .digest("hex");
 if (
   aboutEffectiveHeroDigest !==
-  "62f037476f4ad68c2aed83aedd38548b757e6f740267375e5f20bf0d6f7177b5"
+  "035a9fac0a023b507ef96a3f5870c8530279ecc0570dfed609447e23eb99de81"
 ) {
   failures.push(
     `content/pages/about.json: protected effective hero props changed (${aboutEffectiveHeroDigest})`,
@@ -103,7 +103,7 @@ const aboutHeroInvocationDigest = createHash("sha256")
   .digest("hex");
 if (
   aboutHeroInvocationDigest !==
-  "dca8e782f801b98119c3e0f4b48e06de7d7c719756e30c6eb76b073f54cb07fe"
+  "8ddaf0424452d0e5bab30a198a4ef545070d63cedfe7808a87f1507a615eddc3"
 ) {
   failures.push(
     `src/components/pages/AboutPage.astro: protected EditorialHero invocation changed (${aboutHeroInvocationDigest})`,
@@ -500,6 +500,10 @@ for (const file of htmlFiles) {
     const expectedTitle = "Meet Lisa Weiss | Tri-Cities Photographer for 20 Years";
     const expectedDescription =
       "The story behind It's A Keeper Photography — twenty years of preserving Tri-Cities families' most meaningful moments, and the mom who picked up a camera first.";
+    const expectedHeroImage =
+      "/uploads/about-lisa-photographing-tricities.jpg";
+    const expectedHeroImageAlt =
+      "Lisa holding a camera to her face among dry grass and shrubs.";
     const expectedPersonDescription =
       "Professional senior, family and newborn photographer based in Richland, Washington, with over 20 years behind the camera and 14 years in business serving the Tri-Cities.";
     const expectedH2Texts = [
@@ -564,7 +568,9 @@ for (const file of htmlFiles) {
       aboutSource.contentStatus !== "ready" ||
       aboutSource.searchVisibility !== "index" ||
       aboutSource.title !== expectedTitle ||
-      aboutSource.description !== expectedDescription
+      aboutSource.description !== expectedDescription ||
+      aboutSource.hero.image !== expectedHeroImage ||
+      aboutSource.hero.imageAlt !== expectedHeroImageAlt
     ) {
       failures.push(`${relative}: source publication state or metadata differs from v2`);
     }
@@ -624,7 +630,14 @@ for (const file of htmlFiles) {
     const hero = main.match(
       /<header\b(?=[^>]*data-editorial-hero-page=["']about["'])[^>]*>([\s\S]*?)<\/header>/i,
     )?.[1] || "";
+    const heroBackgroundImageTag = hero.match(/<img\b[^>]*>/i)?.[0] || "";
     const heroAnchorTags = hero.match(/<a\b[^>]*>/gi) || [];
+    if (
+      htmlAttribute(heroBackgroundImageTag, "src") !== expectedHeroImage ||
+      htmlAttribute(heroBackgroundImageTag, "alt") !== expectedHeroImageAlt
+    ) {
+      failures.push(`${relative}: About hero background image or alt changed`);
+    }
     if (
       heroAnchorTags.length !== 1 ||
       htmlAttribute(heroAnchorTags[0], "href") !==

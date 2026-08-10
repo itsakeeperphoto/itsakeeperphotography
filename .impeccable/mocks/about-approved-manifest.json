@@ -20,7 +20,15 @@
     "about-04-middle-story-belief.png",
     "about-05-method-authority-final.png"
   ],
-  "heroPolicy": "The existing About hero is protected and was not redesigned. Its copy, assets, DOM invocation, crops and responsive geometry remain regression-locked.",
+  "heroPolicy": "The About hero is protected after one user-approved background override. Copy, side prints and responsive geometry remain unchanged; the background is about-lisa-photographing-tricities.jpg at 50% 24% and the resulting DOM is regression-locked.",
+  "heroBackgroundOverride": {
+    "approvedAt": "2026-08-10",
+    "image": "/uploads/about-lisa-photographing-tricities.jpg",
+    "imageAlt": "Lisa holding a camera to her face among dry grass and shrubs.",
+    "desktopObjectPosition": "50% 24%",
+    "mobileObjectPosition": "50% 24%",
+    "domSha256": "7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17"
+  },
   "contentAuthority": "content/pages/about.json",
   "authorityContract": [
     "Lisa Weiss — Founder and Professional Photographer in Richland, Washington",
@@ -37,6 +45,6 @@
     "Certifications, insurance or memberships",
     "Unverified Google Business Profile URL"
   ],
-  "mediaPolicy": "Use only existing production photographs or the four locally optimized, metadata-stripped sRGB Lisa portraits audited from the authorized Drive branding folder. Never replace, re-encode or delete the three protected hero inputs.",
+  "mediaPolicy": "Use only existing production photographs or the four locally optimized, metadata-stripped sRGB Lisa portraits audited from the authorized Drive branding folder. Preserve the previous About background because other routes still use it; never re-encode or delete any referenced source.",
   "schemaPolicy": "AboutPage plus one canonical Person and BreadcrumbList; no top-level Service, FAQ, Review or AggregateRating. The Person subjectOf Article links the independently verifiable Tri-Cities MOM source."
 }

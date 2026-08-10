@@ -56,8 +56,11 @@ async (page) => {
       "https://www.instagram.com/itsakeeperphoto/",
       "https://www.facebook.com/10210306464689688",
     ],
+    heroImage: "/uploads/about-lisa-photographing-tricities.jpg",
+    heroImageAlt: "Lisa holding a camera to her face among dry grass and shrubs.",
+    heroObjectPosition: "50% 24%",
     protectedHeroDom:
-      "e28a637235dfa3f87fdb438f017e4c9fe9560d2aacc4627076d8e90ebd6a930d",
+      "7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17",
     geometry: {
       "1440": {
         hero: [0, 118, 1440, 882],
@@ -197,6 +200,9 @@ async (page) => {
       async ({ expectedDescription, expectedOriginCandidates, issuuHref }) => {
         const root = document.querySelector(".about-page");
         const hero = root?.querySelector('[data-editorial-hero-page="about"]');
+        const heroBackgroundImage = hero?.querySelector(
+          "[data-hero-background] img",
+        );
         const normalize = (value = "") =>
           value
             .replace(/[\u200B-\u200D\uFEFF]/g, "")
@@ -404,6 +410,13 @@ async (page) => {
           heroHashLink:
             hero?.querySelectorAll('a[href="#it-started-with-my-own-children"]').length === 1 &&
             hero?.querySelectorAll("a[href]").length === 1,
+          heroMedia: {
+            src: heroBackgroundImage?.getAttribute("src") || "",
+            alt: heroBackgroundImage?.getAttribute("alt") || "",
+            objectPosition: heroBackgroundImage
+              ? getComputedStyle(heroBackgroundImage).objectPosition
+              : "",
+          },
           minimumBodyFont: bodyNodes.length
             ? Math.min(...bodyNodes.map((node) => Number.parseFloat(getComputedStyle(node).fontSize)))
             : 0,
@@ -547,6 +560,10 @@ async (page) => {
           JSON.stringify(expected.anchors) &&
         JSON.stringify(audit.rootRoutes) === JSON.stringify(expected.rootRoutes) &&
         audit.issuuAnchorPass && audit.heroHashLink,
+      heroMedia:
+        audit.heroMedia.src === expected.heroImage &&
+        audit.heroMedia.alt === expected.heroImageAlt &&
+        audit.heroMedia.objectPosition === expected.heroObjectPosition,
       copySafety:
         !audit.placeholderLeak && !audit.unsafeClaimLeak && audit.minimumBodyFont >= 16,
       cssIsolation: audit.aboutStylesheet.length === 1,

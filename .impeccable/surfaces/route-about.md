@@ -22,13 +22,15 @@ related_targets: []
 - Omitted until confirmed: static review count, award name/year, Grammy session, health story, certifications, insurance, memberships and Google Business Profile URL.
 - Schema: AboutPage + Person + BreadcrumbList. No Service, FAQ, Review, AggregateRating, street address or coordinates.
 
-## Locked hero
+## Rebaselined hero
 
-- The existing hero is outside redesign scope. H1, intro, script, hash CTA, three source images, object positions, DOM and responsive geometry remain exact.
-- `page.hero` SHA: `90adfcb9a8daf5fce4da2d8f2b9c7eb7cb7587b9f1d41f17a081f59efe1a6681`.
-- Effective hero props SHA: `62f037476f4ad68c2aed83aedd38548b757e6f740267375e5f20bf0d6f7177b5`.
-- EditorialHero invocation SHA: `dca8e782f801b98119c3e0f4b48e06de7d7c719756e30c6eb76b073f54cb07fe`.
-- Existing hero inputs remain byte-identical: `lisa-photographer-tricities.jpg`, `about-origin-family-newborn-tricities.jpg`, `about-story-senior-horse-tricities.jpg`.
+- The hero remains outside redesign scope. H1, intro, script, hash CTA, side prints and responsive geometry stay exact.
+- The user explicitly approved one media override on 2026-08-10: the background is now `about-lisa-photographing-tricities.jpg`, with `object-position: 50% 24%` on desktop and mobile. The previous source remains in production for other routes and is not deleted.
+- `page.hero` SHA: `89ff030fedfc6e042ffa325711f08e1b80df846634923976e3560d26cf0bdc73`.
+- Effective hero props SHA: `035a9fac0a023b507ef96a3f5870c8530279ecc0570dfed609447e23eb99de81`.
+- EditorialHero invocation SHA: `8ddaf0424452d0e5bab30a198a4ef545070d63cedfe7808a87f1507a615eddc3`.
+- Playwright DOM SHA: `7788c70630779dbd4405b8eebc4856ea3700a3896003c74962a596d08286bf17`.
+- The protected hero inputs are now `about-lisa-photographing-tricities.jpg`, `about-origin-family-newborn-tricities.jpg` and `about-story-senior-horse-tricities.jpg`.
 
 ## Approved direction
 
@@ -43,7 +45,7 @@ related_targets: []
 
 | Ingredient | Commitment | Medium |
 |---|---|---|
-| Existing hero | Pixel/DOM/geometry regression lock | Existing Astro component and protected assets |
+| Rebaselined hero | Pixel/DOM/geometry regression lock after the user-approved background swap | Existing Astro component and protected assets |
 | Origin | 12-column split, portrait arch, restrained B&W overlap, short note and crossing line | Semantic HTML/CSS + verified Lisa photographs |
 | Name story | Horizontal sand ledger with large `Keepers.` payoff | Semantic HTML/CSS |
 | Camera story | Dark 12-column story, action portrait beside long-form copy | Semantic HTML/CSS + verified Lisa action photograph |
