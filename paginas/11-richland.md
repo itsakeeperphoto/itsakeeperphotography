@@ -3,7 +3,7 @@ _Página 11 de 18 · Service-area · **v2 — reescrita 2026-07** sin publicar s
 
 > **Ángulo único de esta página:** Richland no es una ciudad que Lisa cubre — es donde vive. Ese es el diferenciador y ninguna de las otras dos páginas puede reclamarlo. Todo lo demás se subordina a eso.
 >
-> **Estado de publicación:** `ready/index` aprobado el 2026-08-08. La galería se añadirá después como mejora y su ausencia no bloquea esta versión.
+> **Estado de publicación:** `ready/index` aprobado el 2026-08-08. `Recent Richland Sessions` quedó publicada el 2026-08-09 con diez fotografías de diez sesiones verificadas; `lastModified` es `2026-08-09`.
 >
 > **Privacidad:** el copy público declara que el negocio está basado en Richland, pero no publica calle, número ni map pin, conforme a ADR-019.
 
@@ -152,15 +152,12 @@ You bring your people. I'll bring twenty years of knowing this town.
 
 El CTA del hero sigue siendo un botón de scroll y no añade un décimo anchor.
 
-## Alt texts
+## Contrato de alt text
 
-- `Family session in golden evening light along the river in Richland, WA`
-- `High school senior photographed in an open field at the edge of Richland`
-- `Newborn photographed at home in soft window light in Richland, Washington`
-- `Autumn family portraits under turning trees in Richland`
-- `Winter portrait session in clear January light in Richland, WA`
-
-Usar cada alt solo cuando la fotografía real correspondiente esté verificada; la lista no autoriza a asignar localización o estación a una imagen distinta.
+La tabla publicada bajo `Recent Richland Sessions` es la allowlist literal de
+la galería. No sustituir esos diez alts por inferencias de ciudad, estación o
+spot. Las demás fotografías del cuerpo conservan sus descripciones aprobadas y
+no sirven para ampliar el número de sesiones de la galería.
 
 ## Schema JSON-LD
 

@@ -133,10 +133,11 @@ Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
 botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
-`RichlandPage.astro` exige cinco filas enlazadas de servicio, cuatro FAQ y,
-cuando la galería no está vacía, exactamente diez fotografías con heading,
-imagen y alt completos, fuentes únicas y cero links. Las diez actuales proceden
-de diez sesiones Richland distintas y se muestran en retícula editorial 4/2/1.
+El contrato de `RichlandPage.astro` renderiza cinco filas enlazadas de servicio
+y cuatro FAQ. Su guard específico de galería exige, cuando esta no está vacía,
+exactamente diez fotografías con heading, imagen y alt completos, fuentes
+únicas y cero links. Las diez actuales proceden de diez sesiones Richland
+distintas y se muestran en retícula editorial 4/2/1.
 
 `KennewickPage.astro` exige cinco filas enlazadas de servicio y cuatro FAQ. El
 cuerpo usa arco+hairline, un único collage restringido, sección local

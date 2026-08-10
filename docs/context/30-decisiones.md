@@ -509,8 +509,8 @@
 
 ### ADR-034 — Richland se publica sin esperar la galería opcional
 - **Fecha:** 2026-08-08
-- **Estado:** Aceptada; supersede únicamente el gate de publicación de ADR-032
-  y la consecuencia de indexación de ADR-033.
+- **Estado:** Parcialmente supersedida por ADR-040 en la galería y
+  `lastModified`; sigue vigente la publicación independiente del gate original.
 - **Contexto:** El usuario decidió añadir la galería después y autorizó ahora
   que `/richland-wa-photographer/` pase a producción. El copy local, diseño,
   privacidad, enlaces, FAQ y schema ya estaban completos y verificados; la
@@ -533,8 +533,9 @@
 
 ### ADR-035 — Kennewick v2 se publica sin galería y con directorio navegable
 - **Fecha:** 2026-08-08
-- **Estado:** Aceptada; precisa ADR-024 para Kennewick y crea una excepción
-  limitada a ADR-006.
+- **Estado:** Parcialmente supersedida por ADR-040 en la ausencia de galería y
+  la fecha de modificación; el copy, publicación y excepción a ADR-006 siguen
+  vigentes.
 - **Contexto:** El usuario declaró definitivo el documento Kennewick v2. Este
   reemplaza los spots exactos de v1 por conocimiento local general y por el
   contraste entre la edición cálida/moody de Lisa y el estilo light and airy.
@@ -559,7 +560,8 @@
 
 ### ADR-036 — Kennewick adopta el lenguaje visual de Seniors
 - **Fecha:** 2026-08-09
-- **Estado:** Aceptada; conserva íntegros los contratos editoriales, de
+- **Estado:** Parcialmente supersedida por ADR-040 únicamente en la galería
+  opcional; conserva la dirección visual y los contratos editoriales, de
   publicación y navegación de ADR-035.
 - **Contexto:** El usuario rechazó el hero split y la dirección “Warm Proof /
   Tonal Contact Sheet” implementados en Kennewick. Fijó como autoridad visual
@@ -614,8 +616,9 @@
 
 ### ADR-038 — Kennewick usa media verificada sin convertirla en una galería falsa
 - **Fecha:** 2026-08-09
-- **Estado:** Parcialmente supersedida por ADR-040 únicamente en el mínimo de
-  sesiones requerido para activar la galería; el resto permanece vigente.
+- **Estado:** Parcialmente supersedida por ADR-040 en la ausencia de galería,
+  el mínimo/mezcla exigidos y el conteo de H2; la dirección visual, procedencia,
+  exclusión de Benton y contratos restantes permanecen vigentes.
 - **Contexto:** El usuario pidió ejecutar el rediseño image-first de Kennewick y
   suministró dos carpetas Drive tituladas `Couples - Kennewick` y
   `Senior Session - Kennewick`. Los 22 archivos descargados representan seis
@@ -682,8 +685,10 @@
 
 ### ADR-040 — Richland y Kennewick publican galerías con evidencia local estricta
 - **Fecha:** 2026-08-09
-- **Estado:** Aceptada; supersede ADR-034 y ADR-038 únicamente en sus gates de
-  galería y conserva sus contratos restantes.
+- **Estado:** Aceptada; supersede ADR-034 en galería/`lastModified`, ADR-035 en
+  ausencia de galería/`lastModified`, ADR-036 en galería opcional y ADR-038 en
+  ausencia, mínimo, mezcla y conteo de H2. Conserva los contratos restantes de
+  esas decisiones.
 - **Contexto:** El usuario pidió añadir a Richland y Kennewick una sección como
   `Recent Pasco Sessions` y autorizó auditar nuevas imágenes de Drive. Los diez
   seleccionados de Richland pertenecen a diez sesiones distintas según carpeta,

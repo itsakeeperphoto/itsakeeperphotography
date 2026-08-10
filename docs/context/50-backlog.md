@@ -17,9 +17,9 @@
   aislamiento staging conservado; el 2026-08-09 se añadieron diez fotografías
   de diez sesiones Richland distintas y se actualizó `lastModified`.
 - [x] **4. Implementar y publicar Kennewick v2.** Reemplazar v1 por el copy
-  definitivo centrado en estilo, mantener la galería como mejora opcional,
-  verificar diseño/schema en cuatro viewports y pasar la ruta a `ready/index`
-  con sitemap/llms/header coherentes.
+  definitivo centrado en estilo, publicar inicialmente sin galería, verificar
+  diseño/schema en cuatro viewports y pasar la ruta a `ready/index` con
+  sitemap/llms/header coherentes. La activación posterior está en el ítem 5.
 - [x] **5. Rediseñar Kennewick y completar su galería según ADR-036/040.** Auditoría de ruta/copy/media,
   siete composiciones image-first, `EditorialHero`, seis fuentes Drive
   optimizadas, cinco sesiones seguras en galería, contratos SEO intactos y QA

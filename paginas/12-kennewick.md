@@ -111,7 +111,7 @@ no duplicar bytes bajo otro nombre.
 | Senior | `review-isabella-senior-golden-hour-tricities.jpg` | `High school senior surrounded by roses in warm evening light.` |
 
 No se nombra el spot exacto. `010A4575copy.jpg` y
-`Sennior Session - Benton City.jpg` permanecen fuera de producción porque son
+`sennior-session-benton-city.jpg` permanecen fuera de producción porque son
 la misma sesión identificada como Benton City.
 
 ---
@@ -152,12 +152,15 @@ El `<main>` contiene exactamente nueve anchors: tres contextuales, cinco de serv
 
 ## Fotografías y alt texts publicados
 
-Las seis fotografías nuevas proceden directamente de las carpetas Drive
-`Couples - Kennewick` y `Senior Session - Kennewick`. Esa procedencia permite
-usarlas como portafolio editorial de la página, pero no atribuirles un spot
-exacto ni presentarlas como una galería diversa de sesiones. Los dos prints del
-hero son decorativos y conservan alt vacío. Los alt texts visibles son
-descripciones literales:
+Las seis fotografías del rediseño original y las tres tomas alternativas
+añadidas para la galería proceden directamente de `Couples - Kennewick` y
+`Senior Session - Kennewick`. La galería reutiliza además dos fuentes ya
+presentes en producción, cada una de una sesión segura distinta. Esta
+procedencia permite usarlas como portafolio editorial de la página, pero no
+atribuirles un spot exacto. Los dos prints del hero son decorativos y conservan
+alt vacío. Los alts exactos de los cinco ítems de galería están en la tabla
+anterior; los siguientes corresponden a las imágenes visibles del rediseño
+original fuera de esa galería:
 
 - `A couple embracing in warm sunset light among open hills.`
 - `Lisa holding a camera to her eye and a takeaway cup while photographing outdoors.`

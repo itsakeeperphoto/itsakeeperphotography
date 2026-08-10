@@ -618,3 +618,44 @@
   documental. Los previews y navegadores temporales se cerraron y el Tina
   preexistente en `:9000` no se tocó. No hubo push, deploy ni cambio de DNS;
   el usuario mantiene la publicación de los commits locales.
+
+### 2026-08-09 — Codex / GPT-5 — Galerías locales Richland y Kennewick
+
+- **Objetivo:** responder al Page Feedback de Pasco añadiendo una sección de
+  sesiones recientes a Richland y Kennewick, con fotografías nuevas de Drive,
+  sin borrar media de producción ni inventar procedencia local.
+- **Auditoría Drive:** se revisaron únicamente carpetas tituladas Richland o
+  Kennewick dentro de `It’s A keeper Photography Assets`. West Richland se
+  mantuvo separado. Richland aportó diez sesiones distintas verificadas por
+  carpeta, fecha XMP, `OriginalDocumentID` e identidad visual. Kennewick solo
+  sostiene cinco sesiones seguras; `010A4575copy.jpg` y
+  `sennior-session-benton-city.jpg` permanecen excluidos como una misma sesión
+  Benton City.
+- **Implementación:** `Recent Richland Sessions` publica 10 figuras en retícula
+  4/2/1 y `Recent Kennewick Sessions` 5 figuras con panorama + retícula 3/2/1.
+  Ambas usan captions visibles, alt literal, fuentes únicas y cero anchors. Los
+  guards de componente rechazan una galería no vacía parcial, incompleta,
+  duplicada o enlazada.
+- **Media/bandwidth:** se añadieron trece JPEG —diez Richland y tres Kennewick—
+  de 5.92 MiB frente a 165.81 MiB de origen, todos ≤2400 px/700 KiB. Se
+  generaron 52 WebP 400/640/960/1440; la segunda corrida quedó `up to date`.
+  No se borró, reemplazó ni renombró ninguna fotografía existente y no apareció
+  ningún duplicado JPEG nuevo.
+- **SEO/publicación:** Richland actualiza `lastModified` a `2026-08-09`;
+  Kennewick lo conserva. Ambas rutas siguen `ready/index`, con siete H2, nueve
+  anchors, CTA hero como botón, FAQ/schema y canonical intactos. Release sigue
+  publicando siete URLs en sitemap y seis entradas en `llms.txt`.
+- **QA:** el build Tina release pasó en puertos alternos 4002/9001; builds
+  staging/release y headers terminaron con `Validated 21 public routes`.
+  Playwright CLI aprobó Richland y Kennewick en 1440, 1200, 900 y 390 px: 8/8,
+  status 200, 10/5 imágenes y captions, WebP responsive, dimensiones válidas,
+  cero clipping, solapamiento, overflow o anchors de galería. Clarity devolvió
+  un 400 externo bajo red restringida; no hubo errores locales.
+- **Diseño/memoria:** ADR-040 documenta la autorización expresa de cinco
+  sesiones Kennewick sin fabricar una sexta y supersede los gates históricos
+  correspondientes. Superficies Impeccable, documentos fuente, arquitectura,
+  backlog y estado quedaron reconciliados con la implementación real.
+- **Git/operación:** la implementación está en `9f293d0`; este cierre añade un
+  commit documental local. Los servidores temporales y Playwright se cerraron,
+  Tina `:9000` no se tocó y `dist/` quedó en release. No se ejecutó push,
+  deploy, DNS ni `./scripts/handoff.sh`; el usuario publica los commits.
