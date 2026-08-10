@@ -889,3 +889,34 @@
   cambios. Release valida 21/21 rutas; Impeccable devuelve `[]`; Playwright
   aprueba 1728×997 y 1440/1200/900/390 sin desviación de geometría, imágenes
   rotas ni fallos locales. No se hizo push ni otra mutación externa.
+
+### ADR-046 — About corrige la densidad de Belief y Method sin cambiar estructura
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada; refina ADR-044 únicamente en la densidad visual de las
+  secciones Belief y Method. Copy, DOM, media, schema, hero, navegación y
+  publicación permanecen vigentes.
+- **Contexto:** La inspección a 1728×997 mostró una cita Belief en columna de
+  una palabra y un ledger Method con copy pegado a sus divisiones. En Belief,
+  el `max-width: 8ch` vivía en el padre `blockquote`: el navegador calculaba
+  `ch` con el font del body antes de que el párrafo adoptara la tipografía
+  display, produciendo una medida cercana a 70 px, una cita de 495.9 px y una
+  sección de 1738.5 px. En Method, el token inexistente `--space-7` invalidaba
+  todo el shorthand `padding`, por lo que no existía inset horizontal efectivo.
+- **Decisión:** Aplicar `12ch` directamente al H2 y al párrafo display de la
+  cita, retirar el límite del `blockquote`, usar `text-wrap: balance`, reducir
+  el máximo de la cita a `3.75rem` y cambiar las separaciones afectadas de 40 a
+  32 px. Reemplazar el padding Method por
+  `clamp(var(--space-5), 1.6vw, var(--space-8))`, compuesto únicamente por
+  tokens existentes y limitado a 20–32 px. Mantener la retícula Method 4/2/1 y
+  no introducir wrappers, contenido ni breakpoints nuevos.
+- **Alternativas descartadas:** Fijar una altura arbitraria, reducir o editar la
+  cita, definir globalmente `--space-7`, mover divisiones, alterar la retícula o
+  ocultar overflow se descartó porque habría encubierto las causas y ampliado
+  el cambio fuera de las dos reglas defectuosas.
+- **Consecuencias:** A 1728×997, Belief baja de 1738.5 a 1324.2 px; la cita queda
+  en 180 px y tres líneas, y las pistas se equilibran en 973.8 px de media y
+  978.6 px de copy. Method resuelve un inset de 27.648 px y conserva 4/2/1 sin
+  overflow. El commit `4774a25` mantiene `/about/` `ready/index`, copy, media,
+  schema y hero exactos. Release valida 21/21 rutas, Playwright aprueba
+  1440/1200/900/390 más la inspección 1728×997, e Impeccable devuelve `[]`. No
+  se hizo push ni otra mutación externa.

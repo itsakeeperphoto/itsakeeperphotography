@@ -51,19 +51,25 @@
   `50% 24%` común; H1, intro, script, CTA, prints y geometría permanecen
   exactos. Release 21/21, Impeccable `[]` y Playwright
   1728/1440/1200/900/390 completos. La fuente anterior no se borró.
-- [ ] **12. Publicar los commits locales.** About está terminado en commits
-  funcionales y documentales locales; el cierre quedará dieciocho commits por
+- [x] **12. Corregir la densidad About según ADR-046.** Belief ya no convierte
+  la cita en una columna de una palabra y Method recupera un inset válido de
+  20–32 px sin perder su retícula 4/2/1. Release 21/21, Impeccable `[]`,
+  Playwright 1440/1200/900/390 y revisión 1728×997 completos; copy, media,
+  schema, hero y estado `ready/index` permanecen exactos.
+- [ ] **13. Publicar los commits locales.** About está terminado en commits
+  funcionales y documentales locales; el cierre quedará veinte commits por
   delante de `origin/main`. El usuario publica todos los commits posteriores a
   `ff736c6`; Codex no ejecuta push.
-- [ ] **13. Verificar About, Richland, Kennewick, Pasco y Newborn después del
+- [ ] **14. Verificar About, Richland, Kennewick, Pasco y Newborn después del
   push del usuario.** Confirmar en el dominio final status 200, meta index,
   canonical, ausencia de header noindex, membresía de sitemap/llms y lastmod:
   ciudades `2026-08-09`; Newborn y About `2026-08-10`; además del cierre Pasco
-  sin panel y el nuevo fondo aprobado del hero About con crop `50% 24%`.
-- [ ] **14. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  sin panel, el nuevo fondo aprobado del hero About con crop `50% 24%` y la
+  densidad Belief/Method corregida.
+- [ ] **15. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **15. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **16. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -99,6 +105,9 @@ sin reemplazar el archivo.
 - [x] Reemplazado únicamente el fondo del hero por la fotografía de Lisa
   trabajando aprobada por el usuario; crop `50% 24%` en desktop/móvil y nueva
   baseline DOM protegida. La fuente anterior continúa en producción.
+- [x] Corregida la densidad de Belief y Method sin tocar contenido: cita
+  balanceada en tres líneas, sección reducida a 1324.2 px a 1728 y ledger 4/2/1
+  con inset responsive válido.
 - [x] Verificada la publicación de portada de Lisa en Tri-Cities MOM Magazine,
   agosto/septiembre de 2019, mediante su edición primaria en Issuu.
 - [x] Eliminados del copy publicado el condicional y todos los placeholders; el
@@ -230,9 +239,9 @@ sin reemplazar el archivo.
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
   ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los dieciocho commits funcionales/documentales locales creados
+- [ ] Publicar los veinte commits funcionales/documentales locales creados
   después de `ff736c6` al completar este cierre, incluidos `b3bb362`,
-  `bd40b70` y el commit documental posterior. Codex no ejecuta push; el usuario
+  `4774a25` y el commit documental posterior. Codex no ejecuta push; el usuario
   conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
@@ -300,6 +309,10 @@ sin reemplazar el archivo.
   fotografía y alt exactos, crop `50% 24%`, DOM SHA protegido, release 21/21,
   Impeccable `[]` y Playwright 1728/1440/1200/900/390 aprobados sin alterar la
   geometría ni borrar la fuente anterior.
+- [x] Reequilibradas Belief y Method de About: `8ch` dejó de evaluarse en el
+  font del body, la cita usa 12ch/balance y separaciones 32 px, y el padding con
+  `--space-7` inválido fue reemplazado por tokens 20–32 px. Playwright
+  1728/1440/1200/900/390, release 21/21 e Impeccable `[]` aprobados.
 - [x] Corregir el lote de geometría desktop sin cambiar contenido ni media:
   Newborn final sin clipping, Richland 3/2/1 en bandas completas y Kennewick con
   crop desktop protegido. Release 21/21, Impeccable `[]` y Playwright
@@ -391,7 +404,8 @@ sin reemplazar el archivo.
   proceso protegidos, ocho FAQ y prueba in-home verificada.
 - [x] Completar About con composición A+C, hero protegido salvo la sustitución
   explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
-  visible y autoridad verificable sin badges ni claims pendientes.
+  visible, densidad Belief/Method corregida según ADR-046 y autoridad
+  verificable sin badges ni claims pendientes.
 - [ ] Evaluar composición individual de Privacy/Thank-you sin afectar su noindex;
   Thank-you debe permanecer simple y cálida.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,
@@ -466,3 +480,5 @@ sin reemplazar el archivo.
   preservando copy, fotografías, tablet, móvil y contratos SEO.
 - [x] Sustituido solo el fondo del hero About por el retrato aprobado de Lisa
   fotografiando, con crop común `50% 24%` y regresión responsive completa.
+- [x] Corregida la densidad About sin tocar estructura: Belief queda horizontal
+  y balanceada; Method conserva 4/2/1 con inset responsive válido.

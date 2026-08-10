@@ -1179,10 +1179,12 @@ About.
 4. **Veinte años:** superficie olive, tres fotografías con arco central y tres
    entradas de texto. El ledger responde 3 columnas en desktop, 2 con la tercera
    a ancho completo en tablet y 1 en móvil.
-5. **Creencia:** imagen dominante, statement serif y papel sand cuadrado; no
-   usar clip-path, cinta, pin ni sombra.
-6. **Método:** heading lateral más cuatro entradas numeradas. Responde 4/2/1 y
-   conserva los títulos como `strong`, no como headings adicionales.
+5. **Creencia:** imagen dominante, statement serif y papel sand cuadrado; título
+   y cita conservan una medida horizontal balanceada, nunca una columna de una
+   palabra. No usar clip-path, cinta, pin ni sombra.
+6. **Método:** heading lateral más cuatro entradas numeradas. Responde 4/2/1,
+   conserva los títulos como `strong`, no como headings adicionales, y mantiene
+   un inset responsive entre copy y divisiones.
 7. **Lisa, Off Camera:** copy más dos retratos verticales en solape controlado;
    el retrato frontal en blanco y negro lleva marco de print.
 8. **Autoridad:** `Experience & Recognition` es un ledger de cuatro filas, no
@@ -1190,6 +1192,30 @@ About.
    cientos de historias y la portada verificable de Tri-Cities MOM Magazine.
 9. **Cierre:** fotografía full-bleed, wash de lectura, frame hairline centrado y
    CTA outlined a Contact.
+
+### Densidad de Belief y Method
+
+La revisión a 1728×997 detectó dos fallos CSS, no un problema de contenido ni
+de estructura:
+
+- En Belief, `max-width: 8ch` estaba en el padre `blockquote`; esa unidad se
+  calculaba con el font del body y producía una medida cercana a 70 px antes de
+  que el párrafo adoptara la tipografía display. El resultado era una cita de
+  una palabra por línea y una sección de 1738.5 px.
+- En Method, `--space-7` no existe. Al aparecer dentro del shorthand `padding`,
+  el navegador invalidaba la declaración completa y dejaba el copy pegado a
+  las divisiones.
+
+El contrato corregido usa `12ch` en el texto display de Belief,
+`text-wrap: balance`, un máximo de `3.75rem` para la cita y separaciones de
+32 px donde antes había 40 px. Method usa únicamente tokens existentes mediante
+`clamp(var(--space-5), 1.6vw, var(--space-8))`, es decir, un inset de 20–32 px,
+sin alterar la retícula 4/2/1.
+
+A 1728×997, Belief queda en 1324.2 px; la cita en 180 px y tres líneas; la media
+y el copy miden 973.8 y 978.6 px. El inset resuelto de Method es 27.648 px. Las
+regresiones 1440/1200/900/390 conservan cero overflow y la misma semántica,
+copy, media, schema, hero e indexación.
 
 ### Responsive y accesibilidad
 

@@ -841,3 +841,28 @@
   commits por delante de `origin/main` antes del cierre documental y quedará
   dieciocho por delante tras su commit local. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva la publicación.
+
+### 2026-08-10 — Codex / GPT-5 — Densidad Belief y Method de About corregida
+
+- **Objetivo:** corregir la altura excesiva de Belief y devolver aire al ledger
+  Method sin cambiar contenido, DOM, media, schema, hero ni publicación.
+- **Causa Belief:** `max-width: 8ch` estaba aplicado al `blockquote` con el font
+  del body, generaba una medida cercana a 70 px y convertía la cita display en
+  una columna de una palabra. La sección medía 1738.5 px y la cita 495.9 px.
+- **Corrección Belief:** el texto display usa `12ch`, `text-wrap: balance` y un
+  máximo de `3.75rem`; el `blockquote` deja de limitar la medida y las
+  separaciones afectadas bajan de 40 a 32 px. A 1728×997 la sección mide
+  1324.2 px, la cita 180 px en tres líneas, y las pistas quedan en 973.8 px de
+  media frente a 978.6 px de copy.
+- **Causa y corrección Method:** el token inexistente `--space-7` invalidaba el
+  shorthand completo de padding. Se reemplazó por un `clamp()` de tokens
+  existentes equivalente a 20–32 px; a 1728 resuelve 27.648 px. El ledger
+  conserva 4/2/1 y cero overflow.
+- **QA:** release validó 21/21 rutas. Playwright About aprobó
+  1440/1200/900/390 y la revisión manual 1728×997; Impeccable devolvió `[]`.
+  `/about/` conserva `ready/index`, copy, fotografías, schema, enlaces y hero.
+- **Git/operación:** el ajuste funcional quedó en `4774a25`
+  (`fix(about): rebalance belief and method spacing`). `main` está diecinueve
+  commits por delante de `origin/main` antes del cierre documental y quedará
+  veinte por delante tras su commit local. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva la publicación.

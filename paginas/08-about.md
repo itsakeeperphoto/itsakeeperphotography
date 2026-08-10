@@ -289,3 +289,21 @@ oscuro para la historia de la cámara, galería editorial con arco central,
 statement de creencia, método 4/2/1, retratos de Lisa en solape controlado,
 autoridad como ledger editorial y cierre fotográfico full-bleed. Los mocks son
 referencia de geometría; ninguna imagen generada se publica.
+
+### Densidad protegida de Belief y Method
+
+- `What I Believe You Deserve` mantiene título y cita con medida horizontal
+  balanceada: `12ch` sobre el texto display, `text-wrap: balance`, escala máxima
+  de cita reducida a `3.75rem` y separaciones verticales de 32 px en lugar de
+  40 px. La cita no debe volver a una columna de una palabra.
+- `How I Photograph` conserva el ledger 4/2/1 y separa el copy de las divisiones
+  con un inset responsive de 20–32 px construido solo con tokens existentes.
+  No se debe usar el token inexistente `--space-7`, porque invalida todo el
+  shorthand `padding` que lo contiene.
+- A 1728×997, Belief mide 1324.2 px de alto frente a 1738.5 px antes del ajuste;
+  la cita mide 180 px en tres líneas frente a 495.9 px, y las pistas quedan
+  equilibradas en 973.8 px de media y 978.6 px de copy. El inset Method
+  resuelto es 27.648 px.
+
+Este refinamiento no cambia copy, fotografías, schema, hero ni estado
+`ready/index`.

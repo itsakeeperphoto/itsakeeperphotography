@@ -3,26 +3,26 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-10 17:01 -05
+**Última actualización:** 2026-08-10 17:42 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit funcional verificado:** `bd40b70` —
-`fix(about): update hero background portrait`
+**Commit funcional verificado:** `4774a25` —
+`fix(about): rebalance belief and method spacing`
 
 **Commit documental:** este archivo pertenece al commit local inmediatamente
-posterior a `bd40b70`; consultar `git log -1` después de crearlo para obtener su
+posterior a `4774a25`; consultar `git log -1` después de crearlo para obtener su
 hash sin inventarlo aquí.
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al preparar este cierre:** `main` está diecisiete commits por
-delante de `origin/main` (`ff736c6`) en `bd40b70`. El worktree contiene
-únicamente los siete documentos reconciliados de este cierre; cuando entren en
-su commit local, la rama quedará limpia y dieciocho commits por delante. No se
+**Estado Git al preparar este cierre:** `main` está diecinueve commits por
+delante de `origin/main` (`ff736c6`) en `4774a25`. El worktree contiene
+únicamente los seis documentos reconciliados de este cierre; cuando entren en
+su commit local, la rama quedará limpia y veinte commits por delante. No se
 hizo push, deploy, DNS ni otra mutación externa; el usuario conserva la
 publicación.
 
@@ -30,15 +30,16 @@ publicación.
 
 ## Siguiente paso concreto
 
-El usuario debe publicar los dieciocho commits locales posteriores a `ff736c6`.
+El usuario debe publicar los veinte commits locales posteriores a `ff736c6`.
 Cuando Netlify termine, comprobar `/about/` en el dominio final: status 200,
 canonical `www`, meta robots index, ausencia de `X-Robots-Tag: noindex`,
 membresía y `lastmod: 2026-08-10` en `/sitemap.xml`, entrada exacta en
 `/llms.txt`, las cuatro fotografías nuevas y el fondo del hero
-`/uploads/about-lisa-photographing-tricities.jpg` con crop `50% 24%`. Repetir
-la comprobación pendiente de Newborn, Richland, Kennewick y Pasco. No cambiar
-apex/`www`, DNS ni redirects antes de resolver la divergencia de host ya
-documentada.
+`/uploads/about-lisa-photographing-tricities.jpg` con crop `50% 24%`. Confirmar
+además que Belief conserva la cita horizontal en tres líneas y Method su inset
+20–32 px y retícula 4/2/1. Repetir la comprobación pendiente de Newborn,
+Richland, Kennewick y Pasco. No cambiar apex/`www`, DNS ni redirects antes de
+resolver la divergencia de host ya documentada.
 
 ## Resumen ejecutivo
 
@@ -58,9 +59,12 @@ documentada.
 - La fuente anterior no se borró ni reprocesó y continúa utilizada por otras
   rutas. Los cuatro retratos Lisa optimizados desde Drive permanecen en
   producción.
+- Belief y Method quedaron reequilibradas con un ajuste CSS-only: la cita usa
+  medida display de 12ch y balance, mientras el ledger recupera un inset válido
+  de 20–32 px y conserva 4/2/1. Copy, DOM, media, schema y hero no cambian.
 - Los claims pendientes de reseñas, salud, premio, Grammy, certificaciones,
   seguro, membresías y Google Business no se publican y no bloquean About.
-- El commit funcional más reciente es `bd40b70`; este cierre documental
+- El commit funcional más reciente es `4774a25`; este cierre documental
   todavía no está commiteado ni publicado.
 
 ## About publicado
@@ -99,6 +103,19 @@ documentada.
   geometría. Ningún pixel generado se usa como fotografía de producción.
 - `DESIGN.md` y `.impeccable/surfaces/route-about.md` fijan la tesis, el mundo
   visual, los patrones prohibidos, la secuencia responsive y el finish contract.
+
+### Densidad Belief y Method
+
+- En Belief, `max-width: 8ch` estaba aplicado al `blockquote` y se evaluaba con
+  el font del body, produciendo una medida cercana a 70 px y una columna de una
+  palabra. Ahora H2 y texto display usan 12ch, la cita tiene
+  `text-wrap: balance`, máximo `3.75rem` y separaciones de 32 px en lugar de
+  40 px.
+- A 1728×997, Belief pasa de 1738.5 a 1324.2 px; la cita baja de 495.9 a
+  180 px en tres líneas. Media y copy quedan equilibrados en 973.8 y 978.6 px.
+- En Method, el token inexistente `--space-7` invalidaba todo el shorthand
+  `padding`. El inset ahora usa tokens existentes mediante un clamp de 20–32 px,
+  resuelve 27.648 px a 1728 y conserva la retícula 4/2/1 sin overflow.
 
 ### Hero rebaselined y protegido
 
@@ -152,12 +169,14 @@ documentada.
   veinte rutas del router editorial compartido.
 - No se añadió JavaScript interactivo propio a About; el cuerpo permanece Astro
   estático y usa el pipeline responsive de `Picture.astro`.
+- El ajuste de densidad modifica únicamente `src/styles/about-page.css`; no
+  añade assets, DOM, JavaScript, breakpoints ni reglas globales.
 
 ## Verificación ejecutada
 
 - Release: `Validated 21 public routes in release mode.`
-- Playwright: el nuevo fondo y su crop aprobaron 1728×997 y
-  1440/1200/900/390.
+- Playwright About aprobó 1440/1200/900/390; la revisión manual 1728×997
+  confirmó las nuevas medidas de Belief y Method.
 - En los cinco anchos: status 200, canonical/robots correctos, un H1, nueve
   H2, cinco anchors en orden, schema exacto, todas las imágenes cargadas,
   variantes WebP, ancho de lectura y foco visibles.
@@ -166,7 +185,9 @@ documentada.
 - Reduced motion deja transiciones/transforms prescindibles anulados.
 - El hero conserva copy, prints y geometría dentro de la tolerancia de 1 px; el
   fondo, alt, crop y fingerprint DOM nuevos están protegidos de regresión.
-- Impeccable devolvió `[]` después del cambio de fondo.
+- Belief conserva una cita legible y horizontal; Method mantiene 4/2/1 con inset
+  válido, sin overflow.
+- Impeccable devolvió `[]` después del refinamiento.
 - La revisión final independiente del rollout A+C permanece `PASS`; el ajuste
   posterior no cambia copy, autoridad, gates, schema, links, headings ni
   aislamiento CSS.
@@ -200,11 +221,16 @@ Ajuste del fondo del hero en `bd40b70`:
 - `.impeccable/surfaces/route-about.md`
 - `.impeccable/mocks/about-approved-manifest.json`
 
+Refinamiento de densidad en `4774a25`:
+
+- `src/styles/about-page.css`
+- `.impeccable/surfaces/route-about.md`
+- `.impeccable/mocks/about-approved-manifest.json`
+
 Documentación reconciliada en este cierre:
 
 - `paginas/08-about.md`
 - `DESIGN.md`
-- `docs/context/10-arquitectura.md`
 - `docs/context/20-estado.md`
 - `docs/context/30-decisiones.md`
 - `docs/context/40-bitacora.md`
@@ -214,9 +240,9 @@ Documentación reconciliada en este cierre:
 
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
-| About | `ready/index` en `bd40b70` | Push del usuario y QA del deploy. |
+| About | `ready/index` en `4774a25` | Push del usuario y QA del deploy. |
 | Documentación About | Completa en worktree | Crear el commit local de cierre. |
-| Producción | Diecisiete commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
+| Producción | Diecinueve commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
 | Newborn | `ready/index` | Verificar producción; Q41 sigue opcional/no bloqueante y sin claim. |
 | Richland/Kennewick/Pasco | `ready/index` | Verificar producción y crawler outputs tras push. |
 | Bandwidth/build | Optimizado localmente | Observar logs y bandwidth Netlify durante 48 h tras deploy. |
@@ -242,8 +268,8 @@ personalmente, porque ese script publica el repositorio.
 
 ## Bloqueadores externos
 
-1. Crear el commit documental local inmediatamente posterior a `bd40b70`.
-2. El usuario debe publicar los dieciocho commits locales en el remoto oficial.
+1. Crear el commit documental local inmediatamente posterior a `4774a25`.
+2. El usuario debe publicar los veinte commits locales en el remoto oficial.
 3. Esperar el deploy Netlify y comprobar About y las cuatro rutas recientes.
 4. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
 5. Completar verificaciones externas de Forms, analytics, GBP y Privacy.
