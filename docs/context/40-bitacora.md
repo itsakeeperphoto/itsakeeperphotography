@@ -695,3 +695,14 @@
   `:9000`; no se detuvo. Este cierre documental permanece pendiente en el
   worktree, sin inventar hash futuro. No se ejecutó push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva la publicación.
+
+### 2026-08-10 — Codex / GPT-5 — Cierre local Newborn confirmado
+
+- **Documentación:** el cierre principal quedó registrado en `128e274`
+  (`docs(context): record Newborn rollout`).
+- **Estado final:** `20-estado.md` y el backlog se reconciliaron en el commit
+  local inmediatamente posterior para retirar el pendiente ya resuelto; usar
+  `git log -1` como hash autoritativo de ese commit.
+- **Operación:** el worktree queda limpio al terminar este commit. No se hizo
+  push, deploy, DNS ni `./scripts/handoff.sh`; el usuario publica los diez
+  commits locales posteriores a `ff736c6`.

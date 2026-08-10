@@ -31,9 +31,10 @@
   dirección A+C, hero/proceso protegidos sin cambios, una foto Drive verificada,
   siete H2, cuatro anchors, FAQ/schema 8:8, crawler gates y QA
   1440/1200/900/390 completos. Q41 queda pendiente no bloqueante sin claim.
-- [ ] **8. Cerrar y publicar los commits locales.** Crear el commit documental
-  pendiente sobre la base funcional `b3bb362`; después el usuario publica los
-  commits posteriores a `ff736c6`. Codex no ejecuta push.
+- [ ] **8. Publicar los commits locales.** Implementación Newborn en `b3bb362`,
+  documentación principal en `128e274` y estado final en el commit local
+  inmediatamente posterior. El usuario publica todo lo posterior a `ff736c6`;
+  Codex no ejecuta push.
 - [ ] **9. Verificar Richland, Kennewick, Pasco y Newborn después del push del
   usuario.** Confirmar en el dominio final status 200, meta index, canonical,
   ausencia de header noindex, membresía de sitemap/llms y lastmod: ciudades
@@ -193,9 +194,9 @@ sin reemplazar el archivo.
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
   ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los ocho commits funcionales/documentales locales creados después
-  de `ff736c6`, hasta `b3bb362`, más el cierre documental Newborn cuando tenga
-  commit local. Codex no ejecuta push; el usuario conserva esa operación.
+- [ ] Publicar los diez commits funcionales/documentales locales creados después
+  de `ff736c6`, incluidos `b3bb362`, `128e274` y el commit de estado posterior.
+  Codex no ejecuta push; el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
