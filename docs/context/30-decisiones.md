@@ -685,10 +685,11 @@
 
 ### ADR-040 — Richland y Kennewick publican galerías con evidencia local estricta
 - **Fecha:** 2026-08-09
-- **Estado:** Aceptada; supersede ADR-034 en galería/`lastModified`, ADR-035 en
-  ausencia de galería/`lastModified`, ADR-036 en galería opcional y ADR-038 en
-  ausencia, mínimo, mezcla y conteo de H2. Conserva los contratos restantes de
-  esas decisiones.
+- **Estado:** Parcialmente supersedida por ADR-042 únicamente en el punto visual
+  de retícula Richland 4/2/1. Continúa aceptada y supersede ADR-034 en
+  galería/`lastModified`, ADR-035 en ausencia de galería/`lastModified`, ADR-036
+  en galería opcional y ADR-038 en ausencia, mínimo, mezcla y conteo de H2.
+  Conserva los contratos restantes de esas decisiones.
 - **Contexto:** El usuario pidió añadir a Richland y Kennewick una sección como
   `Recent Pasco Sessions` y autorizó auditar nuevas imágenes de Drive. Los diez
   seleccionados de Richland pertenecen a diez sesiones distintas según carpeta,
@@ -750,3 +751,35 @@
   1440/1200/900/390 sin overflow, fallos de runtime, imágenes ni foco. Cualquier
   claim futuro de seguridad requiere confirmación explícita de Q41 y nueva
   reconciliación de copy/schema.
+
+### ADR-042 — Los fixes de geometría desktop preservan contenido y crops móviles
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada; supersede ADR-040 solo en la retícula Richland 4/2/1.
+- **Contexto:** La revisión visual a 1728×963 mostró tres defectos aislados: el
+  copy del cierre Newborn excedía su pista y quedaba cortado contra la imagen;
+  las diez sesiones Richland formaban una composición 4/2/1 irregular, distinta
+  de las otras páginas locales; y el crop desktop del cierre Kennewick cortaba
+  la cabeza del hombre. El contenido, las fotografías y los contratos SEO ya
+  estaban aprobados y no requerían sustitución.
+- **Decisión:** Permitir que `.newborn-final__copy` se dimensione dentro de la
+  pista disponible con `min-width: 0`, sin ancho fijo; ampliar la medida del H2,
+  reducir su escala fluida desktop y usar `overflow-wrap: normal` para no partir
+  `EXPECTING?` dentro de la palabra. Reorganizar Richland como contact sheet
+  editorial determinista 3/2/1: tres columnas lógicas en desktop, diez
+  fotografías repartidas en dos bandas completas de cinco, dos columnas en
+  tablet y una en móvil. Aplicar al fondo final Kennewick
+  `object-position: 50% 20%` únicamente desde 1051 px; conservar sin cambios el
+  crop de tablet y móvil.
+- **Alternativas descartadas:** Reescribir copy, reemplazar o borrar fotografías,
+  conservar la retícula Richland 4/2/1 pese al desbalance, aplicar el crop
+  Kennewick a todos los breakpoints o cambiar la altura de los cierres se
+  descartaron por ampliar innecesariamente el alcance y arriesgar composiciones
+  ya aprobadas.
+- **Consecuencias:** No cambian contenido, media, schema, sitemap ni estado de
+  indexación. El commit funcional `974d97c` pasa el validador release 21/21 y el
+  detector Impeccable devuelve `[]`. Playwright verifica 1728/1440/1200/900/390
+  sin overflow, solapamientos ni imágenes rotas dentro de las secciones; el H2
+  Newborn conserva `EXPECTING?` en una sola línea de texto incluso a 768 px. El
+  único fallo de red observado es la telemetría externa de Clarity en local.
+  Cualquier ajuste futuro debe preservar la separación desktop/tablet en
+  Kennewick y las diez sesiones únicas de Richland.

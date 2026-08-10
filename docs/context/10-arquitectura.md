@@ -139,14 +139,19 @@ por fingerprints DOM y baselines geométricos en 1440/1200/900/390. El resto de
 la ruta implementa la dirección A+C aprobada: A como composición base y C como
 donante del statement `No hard deadline` y el FAQ ledger. El contrato exige
 siete H2, cuatro anchors exactos dentro de `<main>` y ocho FAQ visibles/schema
-1:1. Q41 sobre formación de seguridad permanece pendiente no bloqueante y no
-existe un claim publicado.
+1:1. El copy del cierre se dimensiona automáticamente dentro de su primera pista
+desktop, sin invadir ni quedar recortado por la fotografía contigua; el H2 usa
+una escala fluida y `overflow-wrap: normal` para que `EXPECTING?` nunca se parta
+dentro de la palabra. Q41 sobre formación de seguridad permanece pendiente no
+bloqueante y no existe un claim publicado.
 
 El contrato de `RichlandPage.astro` renderiza cinco filas enlazadas de servicio
 y cuatro FAQ. Su guard específico de galería exige, cuando esta no está vacía,
 exactamente diez fotografías con heading, imagen y alt completos, fuentes
 únicas y cero links. Las diez actuales proceden de diez sesiones Richland
-distintas y se muestran en retícula editorial 4/2/1.
+distintas y se muestran como contact sheet editorial determinista 3/2/1: en
+desktop son tres columnas lógicas distribuidas en dos bandas completas de cinco
+imágenes; tablet usa dos columnas y móvil una.
 
 `KennewickPage.astro` exige cinco filas enlazadas de servicio y cuatro FAQ. El
 cuerpo usa arco+hairline, un único collage restringido, sección local
@@ -154,7 +159,9 @@ text-led, directorio ledger con una fotografía, FAQ nativo y cierre fotográfic
 full-bleed. Cuando la galería no está vacía, exige exactamente cinco fotografías
 con heading, imagen y alt completos, fuentes únicas y cero links. Las cinco
 actuales representan cinco sesiones seguras; la sesión Benton City permanece
-excluida y no se inventa una sexta.
+excluida y no se inventa una sexta. El cierre full-bleed usa
+`object-position: 50% 20%` solo por encima de 1050 px para conservar completa la
+cabeza del sujeto; tablet y móvil mantienen su crop previo.
 
 `PascoPage.astro` exige cinco servicios enlazados, diez fotografías verificadas
 de diez sesiones, cuatro FAQ y ocho anchors exactos. Su secuencia A+C combina

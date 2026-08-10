@@ -31,18 +31,23 @@
   dirección A+C, hero/proceso protegidos sin cambios, una foto Drive verificada,
   siete H2, cuatro anchors, FAQ/schema 8:8, crawler gates y QA
   1440/1200/900/390 completos. Q41 queda pendiente no bloqueante sin claim.
-- [ ] **8. Publicar los commits locales.** Implementación Newborn en `b3bb362`,
-  documentación principal en `128e274` y estado final en el commit local
-  inmediatamente posterior. El usuario publica todo lo posterior a `ff736c6`;
-  Codex no ejecuta push.
-- [ ] **9. Verificar Richland, Kennewick, Pasco y Newborn después del push del
+- [x] **8. Corregir la geometría final según ADR-042.** El commit `974d97c`
+  deja el copy final Newborn dentro de su pista y `EXPECTING?` sin corte interno,
+  reorganiza Richland como contact sheet 3/2/1 en dos bandas desktop y baja el
+  crop Kennewick solo por encima de 1050 px. QA 1728/1440/1200/900/390 más 768,
+  release 21/21 e Impeccable `[]` completos.
+- [ ] **9. Publicar los commits locales.** Implementación final de geometría en
+  `974d97c` y cierre documental en el commit local inmediatamente posterior. El
+  usuario publica los doce commits posteriores a `ff736c6`; Codex no ejecuta
+  push.
+- [ ] **10. Verificar Richland, Kennewick, Pasco y Newborn después del push del
   usuario.** Confirmar en el dominio final status 200, meta index, canonical,
   ausencia de header noindex, membresía de sitemap/llms y lastmod: ciudades
   `2026-08-09`, Newborn `2026-08-10`.
-- [ ] **10. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **11. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **11. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **12. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -128,6 +133,8 @@ sin reemplazar el archivo.
   gate y se retiró de `src/content/pending.ts`.
 - [x] Añadidas diez sesiones reales con procedencia Richland, diez fechas XMP y
   `OriginalDocumentID` distintos, alt literal y cero nombres de spot exacto.
+- [x] Reorganizada la galería como contact sheet determinista 3/2/1: dos bandas
+  completas de cinco imágenes en desktop, dos columnas en tablet y una en móvil.
 
 ### Kennewick
 
@@ -145,6 +152,8 @@ sin reemplazar el archivo.
   borrada.
 - [x] Añadida `Recent Kennewick Sessions` con cinco sesiones seguras, alt
   literal y cero anchors; no se fabricó una sexta sesión.
+- [x] Ajustado el cierre full-bleed solo en desktop a
+  `object-position: 50% 20%`; tablet y móvil conservan el crop anterior.
 - [ ] Mejora opcional: ampliar la galería solo cuando exista una sesión
   Kennewick nueva y verificable, idealmente Family, Newborn, Branding o
   Headshots; no reutilizar otra toma de las cinco sesiones actuales.
@@ -259,6 +268,11 @@ sin reemplazar el archivo.
 - [x] Publicar Newborn definitiva: una fuente Drive de 13.13 MiB/4000×6000
   optimizada a 412 KiB/1600×2400, CSS podado 39.4%, Impeccable `[]`,
   validadores 21/21 staging/release y Playwright 1440/1200/900/390 sin fallos.
+- [x] Corregir el lote de geometría desktop sin cambiar contenido ni media:
+  Newborn final sin clipping, Richland 3/2/1 en bandas completas y Kennewick con
+  crop desktop protegido. Release 21/21, Impeccable `[]` y Playwright
+  1728/1440/1200/900/390 sin overflow, solapamientos ni imágenes de sección
+  rotas; solo falló la telemetría externa de Clarity en local.
 - [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
   guard de fuentes y las variantes terminan, comprobar que
   `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a
@@ -411,3 +425,5 @@ sin reemplazar el archivo.
 - [x] Instalado el sistema de contexto persistente en la raíz.
 - [x] Publicada Newborn definitiva `ready/index` con dirección A+C, fuente v2
   reconciliada, regiones protegidas intactas y QA final en cuatro viewports.
+- [x] Alineados los cierres Newborn/Kennewick y la galería Richland en desktop,
+  preservando copy, fotografías, tablet, móvil y contratos SEO.

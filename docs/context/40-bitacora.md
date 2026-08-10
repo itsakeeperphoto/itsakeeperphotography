@@ -706,3 +706,36 @@
 - **Operación:** el worktree queda limpio al terminar este commit. No se hizo
   push, deploy, DNS ni `./scripts/handoff.sh`; el usuario publica los diez
   commits locales posteriores a `ff736c6`.
+
+### 2026-08-10 — Codex / GPT-5 — Geometría final de Newborn, Richland y Kennewick
+
+- **Objetivo:** corregir tres observaciones visuales a 1728×963 sin modificar
+  copy, fotografías, schema, indexación ni las composiciones tablet/móvil ya
+  aprobadas.
+- **Newborn:** `.newborn-final__copy` dejó de imponer un ancho fijo y ahora se
+  contrae dentro de la primera pista del grid con `min-width: 0`; el párrafo ya
+  no queda cortado por la fotografía contigua en desktop. El H2 ajusta medida y
+  escala fluida con `overflow-wrap: normal`, de modo que `EXPECTING?` no se
+  divide dentro de la palabra, incluido el borde crítico de 768 px.
+- **Richland:** `Recent Richland Sessions` dejó la retícula histórica 4/2/1 y
+  adoptó un contact sheet determinista 3/2/1. Desktop distribuye las diez
+  sesiones en dos bandas completas de cinco sobre tres columnas lógicas;
+  tablet usa dos columnas y móvil una. Las fuentes, captions, alts, orden y cero
+  anchors permanecen intactos.
+- **Kennewick:** el cierre full-bleed aplica `object-position: 50% 20%` solo
+  desde 1051 px para evitar cortar la cabeza del hombre; tablet y móvil conservan
+  exactamente el crop previo.
+- **QA:** el validador release aprobó 21/21 rutas y el detector Impeccable
+  devolvió `[]`. Playwright verificó 1728/1440/1200/900/390 sin overflow,
+  solapamientos ni imágenes rotas dentro de las secciones. El único request
+  fallido fue la telemetría externa de Clarity en local; no falló ningún recurso
+  same-origin.
+- **Decisión/memoria:** ADR-042 supersede ADR-040 únicamente en el punto visual
+  Richland 4/2/1; los contratos de evidencia local y publicación de ADR-040
+  siguen vigentes. La superficie Richland, arquitectura, backlog y estado se
+  reconciliaron con la implementación real.
+- **Git/operación:** el cambio funcional está en `974d97c`; este cierre
+  documental pertenece al commit local inmediatamente posterior. Al completarlo,
+  `main` queda doce commits por delante de `origin/main` (`ff736c6`). No se
+  ejecutó push, deploy, DNS ni `./scripts/handoff.sh`; el usuario conserva la
+  publicación.

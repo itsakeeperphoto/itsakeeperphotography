@@ -37,7 +37,7 @@ The page continues below the unchanged hero as a calm, long-form service narrati
 5. `When to Book — and Why It's Probably Not Too Late`: ivory/sand typographic spread led by `No hard deadline`, one verified detail photograph and the comparison-article link.
 6. `Twenty Years of Watching Them Grow Up`: dark archival chapter with two existing family photographs and the Family service link.
 7. `Newborn Session Questions`: eight native `details` rows in a master-detail ledger; one open by default.
-8. `Expecting? Let's Talk Early`: full-width existing maternity photograph, concise copy and one Contact CTA.
+8. `Expecting? Let's Talk Early`: full-width existing maternity photograph, concise copy and one Contact CTA. The display heading may wrap between words but must never split `Expecting?` inside the word.
 
 ## Ingredient inventory
 
