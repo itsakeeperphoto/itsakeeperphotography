@@ -1122,3 +1122,83 @@ select {
   }
 }
 ~~~
+
+## 11. ADDENDUM DE RUTA — ABOUT A+C
+
+Este addendum documenta la extensión aprobada para `/about/`. No reemplaza la
+homepage como autoridad visual ni convierte el sistema en la marca de la
+referencia. Los comps generados sirven únicamente para resolver composición;
+producción usa el color, la tipografía, las fotografías y el copy de It's A
+Keeper Photography.
+
+### Tesis y forma aprobada
+
+- **Tesis:** la página es un archivo de por qué y cómo Lisa fotografía, no una
+  colección genérica de credenciales.
+- **Híbrido A+C:** A, `Keeper Archive`, aporta el arco de origen, el print
+  superpuesto y el ledger del nombre. C, `Through Her Lens`, aporta el ritmo de
+  retratos de Lisa, el ledger de método y la autoridad editorial.
+- **Mundo propio:** marfil, sand, olive, walnut y umber; arcos
+  semicirculares, prints cuadrados, hairlines de 1 px y superficies planas.
+- **Prohibido:** badges, cards redondeadas, sombras decorativas, cintas o pins,
+  estadísticas aisladas como widgets y fotografías generadas en el DOM final.
+
+### Hero protegido
+
+El hero existente es una excepción aprobada y no se rediseña con el resto de la
+ruta. Debe preservar:
+
+- H1 `Meet Lisa — The Heart Behind It's A Keeper`;
+- intro, script y CTA hash `#it-started-with-my-own-children`;
+- fondo y dos prints existentes, con sus crops;
+- DOM fingerprint Playwright
+  `e28a637235dfa3f87fdb438f017e4c9fe9560d2aacc4627076d8e90ebd6a930d`;
+- geometría exterior de 1440×882, 1200×782, 900×688 y 390×867.64 px en los
+  cuatro viewports de QA, con tolerancia máxima de 1 CSS px.
+
+Cualquier cambio futuro al hero exige una aprobación explícita y una nueva
+baseline; no debe ocurrir como efecto colateral de editar las secciones About.
+
+### Secuencia compositiva
+
+1. **Origen:** retícula de doce columnas; retrato de Lisa en arco, fotografía
+   familiar como print y una nota marfil restringida. Un hairline atraviesa la
+   composición sin convertirse en decoración flotante.
+2. **Nombre:** ledger horizontal sand con H2, dos párrafos y `Keepers.` como
+   payoff tipográfico. En tablet y móvil se apila conservando las divisiones de
+   1 px.
+3. **Cámara:** bloque earth de fotografía vertical y copy; sin collage extra.
+4. **Veinte años:** superficie olive, tres fotografías con arco central y tres
+   entradas de texto. El ledger responde 3 columnas en desktop, 2 con la tercera
+   a ancho completo en tablet y 1 en móvil.
+5. **Creencia:** imagen dominante, statement serif y papel sand cuadrado; no
+   usar clip-path, cinta, pin ni sombra.
+6. **Método:** heading lateral más cuatro entradas numeradas. Responde 4/2/1 y
+   conserva los títulos como `strong`, no como headings adicionales.
+7. **Lisa, Off Camera:** copy más dos retratos verticales en solape controlado;
+   el retrato frontal en blanco y negro lleva marco de print.
+8. **Autoridad:** `Experience & Recognition` es un ledger de cuatro filas, no
+   una fila de badges. La identidad de Lisa precede a 20+ años, 14 años,
+   cientos de historias y la portada verificable de Tri-Cities MOM Magazine.
+9. **Cierre:** fotografía full-bleed, wash de lectura, frame hairline centrado y
+   CTA outlined a Contact.
+
+### Responsive y accesibilidad
+
+- Breakpoints About: 1250, 1050, 767 y 479 px, alineados con los tokens globales.
+- Prosa visible: mínimo 18 px en móvil; ningún bloque debe provocar overflow
+  horizontal.
+- Los estados hover solo se aplican con `hover:hover` y `pointer:fine`; el CTA
+  conserva feedback `:active` y los enlaces tienen `:focus-visible` claro.
+- `prefers-reduced-motion: reduce` elimina transiciones y transforms
+  prescindibles.
+- Las fotografías informativas conservan alt literal; ninguna imagen de Lisa o
+  del portfolio se trata como decorativa.
+
+### Aislamiento
+
+`about-page.css` se procesa como asset Vite mediante `?url` y se enlaza desde
+`Base.astro` únicamente para `/about/`. Ninguna regla `.about-*` debe aparecer
+en las otras veinte rutas públicas. El contrato de dirección se conserva como
+comentario HTML solo en About para que una revisión futura pueda contrastar la
+tesis con el render.

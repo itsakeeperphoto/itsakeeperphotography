@@ -133,6 +133,18 @@ Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
 botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
+`AboutPage.astro` publica la dirección híbrida A+C aprobada —`Keeper Archive`
+más `Through Her Lens`— como página de identidad y confianza. Su
+`EditorialHero` anterior es una excepción protegida: conserva copy, CTA hash,
+DOM, tres fuentes fotográficas, crops y geometría exactos en
+1440/1200/900/390. Debajo, la secuencia fija comprende origen, historia del
+nombre, historia de la cámara, lecciones, creencia, método 4/2/1, vida fuera de
+cámara, autoridad como ledger y cierre fotográfico full-bleed. El contrato
+visible exige un H1, nueve H2 y cinco anchors en orden: hash del hero, Seniors,
+Investment, Issuu y Contact. El stylesheet se importa con `?url` en
+`src/pages/[slug].astro` y `Base.astro` lo enlaza solo en About para impedir
+leakage a las demás rutas del router compartido.
+
 `NewbornPage.astro` conserva sin cambios el `EditorialHero` compartido y el
 subárbol completo `What Your Newborn Session Looks Like`; ambos están protegidos
 por fingerprints DOM y baselines geométricos en 1440/1200/900/390. El resto de
@@ -277,23 +289,29 @@ para evitar cambios silenciosos al repositorio.
   Para las galerías Richland/Kennewick compara allowlists literales de `src` y
   alt, cuenta 10/5 tríos figure/image/caption, prohíbe duplicados y anchors, y
   conserva siete H2 y nueve anchors de `<main>` en ambas rutas.
+- Para About valida metadata y estado `ready/index`, H1 protegido, nueve H2,
+  mapa exacto de cinco anchors, enlace Issuu seguro, ausencia de claims
+  pendientes, entidades `AboutPage`/`Person`/`BreadcrumbList`, referencia única
+  al founder global y ausencia de schema de servicio, FAQ, reseñas, rating,
+  premio, coordenadas o dirección de calle.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para ocho rutas:
+En `release`, el manifiesto actualmente permite sitemap para nueve rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
 - `/newborn-photographer-tri-cities-wa/`
+- `/about/`
 - `/richland-wa-photographer/`
 - `/kennewick-wa-photographer/`
 - `/pasco-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family, Newborn, Richland, Kennewick, Pasco y
-Family Photo Locations; Portfolio está excluido de llms. Otras 12 rutas siguen
-`draft/noindex`.
+`llms.txt` incluye Homepage, Family, Newborn, About, Richland, Kennewick, Pasco
+y Family Photo Locations; Portfolio está excluido de llms. Otras 11 rutas
+siguen `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En
@@ -309,6 +327,15 @@ Para Newborn, `src/pages/[slug].astro` emite un `WebPage`, un `Service`
 detallado de fotografía newborn in-home para Richland/Kennewick/Pasco y un
 `BreadcrumbList` Home → Newborn Photography. `NewbornPage.astro` deriva un
 único `FAQPage` de las ocho respuestas visibles, en el mismo orden y texto.
+
+Para About, `Base.astro` emite un único `AboutPage` cuyo `about` y
+`mainEntity` apuntan a `#lisa`; `[slug].astro` añade una sola entidad `Person`
+Lisa Weiss y `BreadcrumbList` Home → About Lisa. `LocalBusiness.founder`
+referencia el mismo `@id` sin duplicar la persona. La autoridad estructurada
+incluye rol, Richland/WA/US sin calle ni coordenadas, siete áreas de
+conocimiento, idioma, perfiles sociales y la publicación verificable de
+Tri-Cities MOM Magazine de agosto de 2019. No emite `Service`, `FAQPage`,
+`Review`, `AggregateRating`, premio ni credencial.
 
 ## Assets y rendimiento
 
@@ -340,6 +367,12 @@ detallado de fotografía newborn in-home para Richland/Kennewick/Pasco y un
   `newborn-family-at-home-west-richland.jpg`, optimizado de 13.13 MiB/4000×6000
   a 412 KiB/1600×2400. Sus variantes WebP responsive son regenerables y están
   ignoradas por Git; los demás assets de la ruta ya existían en producción.
+- About incorpora cuatro retratos nuevos de Lisa procedentes de la carpeta
+  Drive `MY NEW branding pics ( Lisa )`: tres en color y uno en blanco y negro,
+  todos en 1600×2400, sRGB, sin metadata y entre 298–487 KiB. Sus variantes
+  WebP 400/640/960/1440 son regenerables; no se borró ni reemplazó ninguna
+  fotografía existente y las tres fuentes que construyen el hero permanecen
+  byte-identical.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

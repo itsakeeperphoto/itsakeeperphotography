@@ -29,6 +29,7 @@ entry when that date is missing.
 | `/` | Homepage | 2026-08-04 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
 | `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-10 |
+| `/about/` | About / trust | 2026-08-10 |
 | `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
@@ -48,7 +49,7 @@ entry when that date is missing.
 ### Trust and conversion
 
 - `/investment/` — draft; excluded
-- `/about/` — draft; excluded
+- `/about/` — ready and indexable
 - `/reviews/` — draft; excluded
 - `/contact/` — draft; excluded
 
@@ -88,7 +89,8 @@ threshold. Each must retain genuinely city-specific content before it is approve
   indexable release page, so a mismatch fails the build.
 - Body content uses at most four internal links except the approved Richland and
   Kennewick service directories, which each use exactly nine, and Pasco, which
-  uses exactly eight.
+  uses exactly eight. About uses three internal route links, one protected hero
+  hash and one external primary-source link to Issuu.
 
 ## Publishing a draft route
 

@@ -40,18 +40,24 @@
   `ff0a075` reemplaza el panel marfil por la invitación full-bleed centrada,
   conserva copy/media/alt/SEO Pasco y usa crops deliberados por breakpoint.
   Release 21/21, Impeccable `[]` y Playwright 1728/1440/1200/900/390 aprobados.
-- [ ] **10. Publicar los commits locales.** La última implementación está en
-  `ff0a075` y este cierre documental pertenece al commit inmediatamente
-  posterior. El usuario publica los catorce commits posteriores a `ff736c6`;
-  Codex no ejecuta push.
-- [ ] **11. Verificar Richland, Kennewick, Pasco y Newborn después del push del
-  usuario.** Confirmar en el dominio final status 200, meta index, canonical,
-  ausencia de header noindex, membresía de sitemap/llms y lastmod: ciudades
-  `2026-08-09`, Newborn `2026-08-10`, además del cierre Pasco sin panel.
-- [ ] **12. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [x] **10. Rediseñar y publicar About según ADR-044.** Copy definitivo
+  reconciliado con excepción explícita del hero protegido, dirección A+C,
+  cuatro retratos Drive optimizados, autoridad verificable como ledger,
+  `AboutPage`/`Person`/breadcrumb, cinco anchors y QA
+  1440/1200/900/390 completos. La ruta queda `ready/index` sin claims
+  pendientes.
+- [ ] **11. Publicar los commits locales.** About está terminado en el worktree
+  y su commit funcional/documental se crea localmente al cerrar; el usuario
+  publica todos los commits posteriores a `ff736c6`. Codex no ejecuta push.
+- [ ] **12. Verificar About, Richland, Kennewick, Pasco y Newborn después del
+  push del usuario.** Confirmar en el dominio final status 200, meta index,
+  canonical, ausencia de header noindex, membresía de sitemap/llms y lastmod:
+  ciudades `2026-08-09`; Newborn y About `2026-08-10`; además del cierre Pasco
+  sin panel y el hero About intacto.
+- [ ] **13. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **13. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **14. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -82,12 +88,20 @@ sin reemplazar el archivo.
 
 ### About
 
-- [ ] Confirmar hobbies y referencias de salud publicables.
-- [ ] Confirmar nombre exacto del premio.
-- [ ] Proveer URL/atribución de MOM Magazine.
-- [ ] Confirmar permiso para la referencia/foto Grammy.
-- [ ] Confirmar certificaciones, seguro y membresías profesionales.
-- [ ] Resolver el texto condicional marcado “[si se publica]”.
+- [x] Publicada `ready/index` con dirección A+C, nueve H2, cinco anchors,
+  autoridad editorial y schema `AboutPage`/`Person`/breadcrumb.
+- [x] Verificada la publicación de portada de Lisa en Tri-Cities MOM Magazine,
+  agosto/septiembre de 2019, mediante su edición primaria en Issuu.
+- [x] Eliminados del copy publicado el condicional y todos los placeholders; el
+  estado de la página no depende de hechos sin confirmar.
+- [ ] Opcional/no bloqueante: confirmar hobbies o referencias de salud solo si
+  Lisa quiere ampliar la página; hoy no se publican.
+- [ ] Opcional/no bloqueante: confirmar nombre y año exactos del premio antes de
+  añadir cualquier claim o propiedad `award`; hoy no se publica.
+- [ ] Opcional/no bloqueante: confirmar permiso para la referencia/foto Grammy;
+  hoy no se publica.
+- [ ] Opcional/no bloqueante: confirmar certificaciones, seguro y membresías;
+  hoy no se publican ni se modelan en schema.
 
 ### Branding y Headshots
 
@@ -332,6 +346,8 @@ sin reemplazar el archivo.
   `lastModified: 2026-08-09`; al cerrar ese rollout release contenía siete URLs.
 - [x] Newborn actualizado a `ready/index`, `lastModified: 2026-08-10`, sitemap y
   `llms.txt`; release contiene ahora ocho URLs y conserva staging noindex.
+- [x] About actualizado a `ready/index`, `lastModified: 2026-08-10`, sitemap y
+  `llms.txt`; release contiene ahora nueve URLs y ocho entradas citables.
 - [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
   contenido visible actual; no crear ratings no verificados.
 - [ ] Actualizar `README.md` para reflejar las 21 rutas, forms reales, modos de
@@ -359,6 +375,9 @@ sin reemplazar el archivo.
   sesiones verificadas.
 - [x] Completar Newborn con composición A+C, fuente v2 reconciliada, hero y
   proceso protegidos, ocho FAQ y prueba in-home verificada.
+- [x] Completar About con composición A+C, hero protegido, fuente v2
+  reconciliada, método visible y autoridad verificable sin badges ni claims
+  pendientes.
 - [ ] Evaluar composición individual de Privacy/Thank-you sin afectar su noindex;
   Thank-you debe permanecer simple y cálida.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,

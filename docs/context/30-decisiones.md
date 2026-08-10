@@ -814,3 +814,48 @@
   H2, ocho anchors, galería 10/10, FAQ/schema 4:4 y estado `ready/index`. El
   manifest A+C conserva las referencias históricas, pero su cierre anterior con
   panel queda fuera de la lista canónica y documentado como supersedido.
+
+### ADR-044 — About publica un archivo A+C con autoridad verificable
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada.
+- **Contexto:** La fuente externa definitiva de About amplió la historia de
+  Lisa, su método y su voz personal. El usuario pidió mantener el hero existente
+  tal cual, aprobó la combinación A+C de las previsualizaciones image-first y
+  pidió integrar bien la autoridad. La fuente anterior del repositorio aún
+  trataba la ruta como borrador y mezclaba datos publicables con una cifra de
+  reseñas, salud, premio, Grammy y credenciales sin evidencia suficiente. La
+  edición agosto/septiembre de 2019 de Tri-Cities MOM Magazine sí permite
+  verificar una portada con Lisa mediante la publicación primaria en Issuu.
+- **Decisión:** Reconciliar `paginas/08-about.md` y `content/pages/about.json`
+  con el copy definitivo, dejando el hero anterior como excepción protegida de
+  copy, DOM, media, crops y geometría. Materializar A `Keeper Archive` como
+  estructura base y C `Through Her Lens` como donante del método, retratos y
+  autoridad: arco de origen, ledger del nombre, una composición fotográfica por
+  historia, método 4/2/1, retratos de Lisa en solape controlado, prueba como
+  ledger de cuatro filas y CTA full-bleed. Publicar exactamente un H1, nueve H2
+  y cinco anchors —hash del hero, Seniors, Investment, Issuu y Contact—. Modelar
+  la ruta como `AboutPage` con una sola `Person` Lisa Weiss, breadcrumb y
+  referencia única desde `LocalBusiness.founder`; incluir la portada verificable
+  como `subjectOf`, sin `Service`, FAQ, reseñas, rating, premio, credencial,
+  calle ni coordenadas. Marcar `/about/` `ready/index`,
+  `lastModified: 2026-08-10`, e incluirla en sitemap release y `llms.txt`.
+- **Fotografía:** Usar cuatro retratos autorizados de la carpeta Drive
+  `MY NEW branding pics ( Lisa )`, optimizados a 1600×2400, sRGB, sin metadata
+  y entre 298–487 KiB, más WebP responsive regenerables. No borrar, reemplazar
+  ni renombrar media ya usada; preservar byte-identical las tres fuentes que
+  construyen el hero.
+- **Alternativas descartadas:** Rediseñar el hero, publicar badges o stats cards,
+  convertir About en una `Service`, enlazar Reviews sin respaldo, inferir datos
+  pendientes, usar imágenes generadas como fotografía de producción, copiar la
+  marca/colores/textos de la referencia o dejar la ruta `noindex` pese a que el
+  cuerpo publicable ya estaba completo se descartó por aprobación explícita,
+  E-E-A-T, trazabilidad y consistencia visual.
+- **Consecuencias:** Release pasa a nueve URLs en sitemap y ocho entradas en
+  `llms.txt`; staging conserva noindex global. El stylesheet About se entrega
+  solo en su ruta mediante `?url`, el contrato HTML preserva la dirección y los
+  validadores bloquean cambios al hero, links, headings, schema o claims. El
+  validador release aprueba 21/21 rutas y Playwright aprueba
+  1440/1200/900/390 sin overflow, imágenes rotas, errores locales ni desviación
+  del hero mayor a 1 CSS px. La revisión final independiente devuelve `PASS`
+  sin defectos materiales. Los hechos excluidos pueden reconsiderarse solo con
+  evidencia y autorización nuevas; no son bloqueadores de la página actual.

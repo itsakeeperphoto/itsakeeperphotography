@@ -766,3 +766,54 @@
   `:4323` y Playwright se cerraron; los servidores del usuario `:4321` y `:9000`
   quedaron intactos. No se ejecutó push, deploy, DNS ni `./scripts/handoff.sh`;
   el usuario conserva la publicación.
+
+### 2026-08-10 — Codex / GPT-5 — About A+C publicada con autoridad verificable
+
+- **Objetivo:** rediseñar `/about/` con el copy definitivo, conservar el hero
+  exactamente como estaba, integrar autoridad sin badges genéricos y dejar la
+  ruta lista para indexación.
+- **Auditoría y fuente:** se reconciliaron la fuente externa v2, el JSON, la
+  página anterior, las fotografías existentes y siete retratos de la carpeta
+  Drive autorizada `MY NEW branding pics ( Lisa )`. La edición original de
+  Tri-Cities MOM Magazine agosto/septiembre de 2019 verificó la portada de Lisa.
+  La cifra de reseñas, salud, premio sin nombre, Grammy, certificaciones,
+  seguro, membresías y URL Google pendiente quedaron fuera del render y schema.
+- **Dirección visual:** el usuario aprobó A+C. `Keeper Archive` aporta el arco
+  de origen, print y ledger del nombre; `Through Her Lens` aporta retratos,
+  método 4/2/1 y prueba editorial. El resto compone historia de la cámara,
+  galería con arco central, statement de creencia, retratos Off Camera,
+  autoridad de cuatro filas y cierre full-bleed. Los comps son evidencia de
+  geometría; ninguna imagen generada se usa como fotografía de producción.
+- **Hero protegido:** H1, intro, script, hash CTA, DOM, fondo, dos prints, crops
+  y baselines 1440/1200/900/390 permanecen exactos. Las tres fuentes de entrada
+  son byte-identical frente a `HEAD`; Playwright bloquea el fingerprint DOM y
+  una desviación geométrica mayor a 1 CSS px.
+- **Copy y enlaces:** la fuente reconciliada publica un H1, nueve H2 y cinco
+  anchors exactos: hash del hero, Seniors en `shy teenager`, Investment en `the
+  thinking is done`, la edición Issuu y Contact final. `How I Photograph`
+  queda visible como método y `Experience & Recognition` muestra identidad,
+  20+ años detrás de cámara, 14 años de negocio, cientos de historias y la
+  portada verificable.
+- **Media:** se incorporaron cuatro retratos Lisa de 1600×2400, sRGB, metadata
+  retirada y 298–487 KiB, más WebP 400/640/960/1440 regenerables. No se borró,
+  reemplazó ni renombró ninguna fotografía de producción.
+- **SEO/schema:** About quedó `ready/index`, `lastModified: 2026-08-10`, sin
+  regla release noindex, dentro de sitemap y `llms.txt`. Emite un único
+  `AboutPage`, una sola `Person` Lisa, `BreadcrumbList` y referencia founder
+  coherente desde el negocio; no emite `Service`, FAQ, Review, rating, premio,
+  credencial, calle ni coordenadas. Release pasa a nueve URLs en sitemap y ocho
+  entradas citables.
+- **Rendimiento/aislamiento:** `about-page.css` se procesa con `?url` y solo se
+  enlaza en About; el contrato de dirección HTML tampoco aparece en las otras
+  veinte rutas.
+- **QA:** release validó 21/21 rutas. Playwright aprobó 1440×1000, 1200×900,
+  900×900 y 390×844: status 200, metadata/canonical/index, headings/links/schema,
+  hero exacto, imágenes y WebP cargados, foco, reduced motion, ancho de lectura,
+  cero overflow, clipping, solapamientos, errores de runtime o fallos
+  same-origin. La revisión final independiente devolvió `PASS` sin defectos
+  materiales.
+- **Git/operación:** la implementación funcional quedó en `364569a`
+  (`feat(about): redesign and publish Lisa story`). Este cierre documental
+  permanece en el worktree para el commit local siguiente. `main` está quince
+  commits por delante de `origin/main` antes de documentarlo; no se hizo push,
+  deploy, DNS ni `./scripts/handoff.sh`. El usuario conserva la publicación.
