@@ -51,7 +51,7 @@ related_targets: []
 | Camera story | Dark 12-column story, action portrait beside long-form copy | Semantic HTML/CSS + verified Lisa action photograph |
 | Twenty years | Three-photo contact sheet and three ruled text entries | Semantic HTML/CSS + existing verified portfolio assets |
 | Belief | Large family photograph plus square editorial note; title and quote use a balanced horizontal measure instead of a one-word vertical column | Existing semantic composition |
-| How I Photograph | Four ruled principles, 4/2/1 columns, no cards/icons; copy keeps a responsive inset from every divider | Semantic HTML/CSS |
+| How I Photograph | Four ruled principles, 4/2/1 columns, no cards/icons; copy keeps a responsive inset from every divider and a full 32px lower inset before the second row in the 2-column layout | Semantic HTML/CSS |
 | Off camera | Controlled two-print Lisa composition | Semantic HTML/CSS + verified Lisa photographs |
 | Authority | Editorial ledger with Lisa identity, experience and MOM source link | Semantic HTML/CSS, external text link only |
 | Final invitation | Existing framed photographic close and Contact action | Semantic HTML/CSS + existing verified image |

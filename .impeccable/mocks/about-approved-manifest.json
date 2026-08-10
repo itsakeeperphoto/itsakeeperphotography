@@ -32,7 +32,7 @@
   "densityRefinement": {
     "approvedAt": "2026-08-10",
     "belief": "Keep the title and quote horizontally balanced beside the photograph; do not collapse the quote into a one-word vertical column.",
-    "method": "Keep the four-principle ruled ledger at 4/2/1 columns with a responsive 20–32px desktop inset between copy and divider lines."
+    "method": "Keep the four-principle ruled ledger at 4/2/1 columns with a responsive 20–32px desktop inset between copy and divider lines, plus a 32px lower inset before the second row in the 2-column layout."
   },
   "contentAuthority": "content/pages/about.json",
   "authorityContract": [

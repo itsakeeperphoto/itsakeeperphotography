@@ -990,6 +990,12 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 1050px) {
+  .about-method__ledger li:nth-child(-n + 2) {
+    padding-bottom: var(--space-8);
+  }
+}
+
 @media (max-width: 767px) {
   .about-page {
     --about-gutter: var(--page-gutter-mobile);
