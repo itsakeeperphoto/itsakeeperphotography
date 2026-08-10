@@ -783,3 +783,34 @@
   único fallo de red observado es la telemetría externa de Clarity en local.
   Cualquier ajuste futuro debe preservar la separación desktop/tablet en
   Kennewick y las diez sesiones únicas de Richland.
+
+### ADR-043 — El cierre Pasco adopta la geometría de invitación Richland
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada; supersede ADR-039 únicamente en la composición visual
+  del cierre Pasco. El resto de A+C y todos sus contratos de contenido, media,
+  SEO y privacidad permanecen vigentes.
+- **Contexto:** El feedback visual a 1728×963 pidió que `Let's Find Your Light`
+  de Pasco quedara igual al cierre Richland. El bloque Pasco aún usaba el mock
+  A+C original: 880 px de alto, panel marfil lateral de 640 px, copy izquierdo y
+  escala menor. Richland usa una invitación full-bleed de 720 px, frame
+  transparente centrado sobre 12 columnas, H2 mayor, wash umber y CTA outlined.
+  La fotografía Pasco es landscape 3:2, mientras la donante Richland es portrait,
+  por lo que copiar literalmente su focal point cortaba las cabezas adultas.
+- **Decisión:** Portar a `pasco-page.css` la altura, retícula, tipografía,
+  alineación, medida de párrafo, wash y estados del CTA Richland, manteniendo el
+  DOM semántico Pasco, su alt significativo, su copy definitivo y su única
+  anchor a Contact. Ocultar el eyebrow decorativo para reproducir la jerarquía
+  donante sin añadir otro nivel visual. Usar `object-position: 62% 15%` en
+  desktop para preservar las cabezas y conservar `59% 42%` por debajo de 768 px;
+  la imagen continúa `cover` y no hereda el `contain` móvil de Richland.
+- **Alternativas descartadas:** Reutilizar el CSS Richland global, vaciar el alt
+  como si la imagen fuera decorativa, conservar el panel marfil, forzar una
+  altura mayor por el copy Pasco, copiar `50% 48%` pese al head crop o mostrar
+  los siete sujetos completos en 390 px —geométricamente imposible con cover—
+  se descartaron por aislamiento, accesibilidad, igualdad visual y calidad del
+  encuadre.
+- **Consecuencias:** Pasco comparte la pista visual Richland en
+  1728/1440/1200/900/390 sin compartir componente ni stylesheet. Conserva ocho
+  H2, ocho anchors, galería 10/10, FAQ/schema 4:4 y estado `ready/index`. El
+  manifest A+C conserva las referencias históricas, pero su cierre anterior con
+  panel queda fuera de la lista canónica y documentado como supersedido.

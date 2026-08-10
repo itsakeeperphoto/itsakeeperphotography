@@ -3,6 +3,8 @@
 ## Approval
 
 - Direction approved by the user on 2026-08-09: **A+C**.
+- Final-invitation override approved by the user on 2026-08-10: adopt the
+  Richland city-page closing geometry while preserving Pasco content and media.
 - A controls the shared EditorialHero, torn-paper transition and arched intro.
 - C controls the dark services ledger and the restrained archive rhythm.
 - `pasco-approved-manifest.json` is the canonical visual manifest.
@@ -19,7 +21,10 @@
 - Gallery: exactly ten verified Pasco photographs in a disciplined editorial grid. Generated mock people never ship.
 - Seasons: text-led calendar planning with one wide and two supporting photographs.
 - FAQ: four native `details` rows on olive-walnut, one open by default, keyboard-visible focus.
-- Final: full-bleed verified Pasco photograph with one square ivory copy panel.
+- Final: full-bleed verified Pasco photograph with the centered Richland
+  invitation geometry: transparent 12-column frame, ivory display type,
+  restrained dark wash and outlined Contact CTA. Preserve the Pasco-specific
+  photograph, alt text and focal crops; no ivory copy panel.
 
 ## Prohibited devices
 
@@ -43,4 +48,7 @@
 - Verify 1440, 1200, 900 and 390 px with no real horizontal overflow.
 - At 390 px, protect `Photographer`, the intro H2, `Professional Headshots` and long FAQ labels.
 - Dissolve overlaps below 768 px; preserve DOM reading order and meaningful crops.
+- The final keeps `object-fit: cover`, a desktop focal position that preserves
+  adult heads and the established Pasco mobile crop; do not inherit Richland's
+  route-wide mobile `contain` rule.
 - Targets are at least 44 px, focus is visible, `prefers-reduced-motion` removes nonessential movement and the hero scroll button transfers focus to `#pasco-final`.

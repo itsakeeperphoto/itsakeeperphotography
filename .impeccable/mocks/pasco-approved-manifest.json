@@ -3,6 +3,7 @@
   "approved": true,
   "canonical": true,
   "approvedAt": "2026-08-09",
+  "updatedAt": "2026-08-10",
   "direction": "A+C",
   "sourceCompositions": [
     {
@@ -22,9 +23,17 @@
     "pasco-05-services-ledger.png",
     "pasco-06-recent-sessions-gallery.png",
     "pasco-07-seasons-planning.png",
-    "pasco-08-faq-ledger.png",
-    "pasco-09-final-full-bleed.png"
+    "pasco-08-faq-ledger.png"
   ],
+  "sectionOverrides": [
+    {
+      "section": "final-invitation",
+      "approvedAt": "2026-08-10",
+      "geometrySource": "/richland-wa-photographer/#richland-final",
+      "scope": "Centered full-bleed geometry, type scale, wash and CTA treatment only; preserve Pasco copy, verified photograph, alt text and focal crops."
+    }
+  ],
+  "historicalReferences": ["pasco-09-final-full-bleed.png"],
   "contentAuthority": "content/pages/pasco.json",
   "mediaPolicy": "Only verified originals from Google Drive folders explicitly titled Pasco may ship; generated imagery is geometry reference only."
 }

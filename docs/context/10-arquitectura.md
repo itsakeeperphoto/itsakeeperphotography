@@ -167,6 +167,10 @@ cabeza del sujeto; tablet y móvil mantienen su crop previo.
 de diez sesiones, cuatro FAQ y ocho anchors exactos. Su secuencia A+C combina
 hero/intro de horizonte abierto, dos bloques de paisaje, directorio ledger,
 galería editorial, planificación estacional, FAQ nativo y cierre full-bleed.
+El cierre reutiliza la geometría centrada de la invitación Richland —retícula de
+12 columnas, wash umber, display marfil y CTA outlined— sin compartir CSS ni
+media: conserva copy, fotografía, alt y focal crops propios de Pasco. En móvil
+la foto permanece `cover`; no hereda el `contain` route-wide de Richland.
 `src/pages/[slug].astro` importa `pasco-page.css` como URL procesada por Vite y
 `Base.astro` la enlaza solo para Pasco. Así se evita que el router compartido
 inyecte aproximadamente 20 KiB de CSS Pasco en cada ruta editorial ajena.

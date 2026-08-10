@@ -751,16 +751,18 @@
   line-height: 1.55;
 }
 
-/* Full-bleed close with one square editorial panel. */
+/* Full-bleed close aligned with the Richland city-page invitation. */
 
 .pasco-page .pasco-final {
-  --color-focus-ring: var(--color-focus-ring-dark);
+  --color-focus-ring: var(--color-focus-ring-light);
   position: relative;
-  min-height: clamp(43rem, 58vw, 55rem);
+  display: grid;
+  min-height: 45rem;
+  place-items: center;
   scroll-margin-top: var(--header-height);
   isolation: isolate;
   overflow: hidden;
-  color: var(--color-deep-umber);
+  color: var(--color-warm-ivory);
   background: var(--color-deep-umber);
 }
 
@@ -781,45 +783,60 @@
 
 .pasco-final__background-image {
   object-fit: cover;
-  object-position: 62% 45%;
-  filter: saturate(0.86) contrast(1.02) brightness(0.78) sepia(0.035);
+  object-position: 62% 15%;
+  filter: saturate(0.82) brightness(0.66) sepia(0.08);
 }
 
 .pasco-final__wash {
   z-index: 1;
-  background: rgba(40, 30, 16, 0.32);
+  background: color-mix(in srgb, var(--color-deep-umber) 72%, transparent);
 }
 
 .pasco-final__layout {
   position: relative;
   z-index: 2;
   display: grid;
-  min-height: inherit;
-  align-items: center;
+  width: min(calc(100% - 6rem), 84rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding-block: 8rem;
 }
 
 .pasco-final__copy {
-  width: min(40rem, 48vw);
-  padding: clamp(3rem, 5vw, 5.5rem);
-  background: var(--color-warm-ivory);
+  grid-column: 3 / span 8;
+  text-align: center;
 }
 
-.pasco-final__copy h2 {
-  margin-bottom: 2rem;
-  font-size: clamp(3.4rem, 5vw, 5.7rem);
+.pasco-final__copy .pasco-eyebrow {
+  display: none;
+}
+
+.pasco-page .pasco-final h2 {
+  margin-inline: auto;
+  font-size: clamp(3.75rem, 6.8vw, 7rem);
+  letter-spacing: var(--tracking-heading);
+  line-height: 0.92;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .pasco-final__copy > p:not(.pasco-eyebrow) {
+  max-width: 39rem;
+  margin: 2rem auto 0;
   font-family: var(--font-body);
-  font-size: clamp(1.1rem, 1.35vw, 1.3rem);
+  font-size: 1.125rem;
   font-style: italic;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .pasco-final__copy .outline-button {
-  margin-top: 2.25rem;
-  border-color: var(--color-walnut);
-  color: var(--color-deep-umber);
+  min-height: var(--minimum-hit-area);
+  margin-top: 2.5rem;
+  border-color: var(--color-warm-ivory);
+  color: var(--color-warm-ivory);
+  background: color-mix(in srgb, var(--color-deep-umber) 42%, transparent);
+  transition: color 180ms var(--ease-ui), background 180ms var(--ease-ui),
+    border-color 180ms var(--ease-ui);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -834,9 +851,9 @@
   }
 
   .pasco-final__copy .outline-button:hover {
-    color: var(--color-warm-ivory);
-    background: var(--color-deep-umber);
-    border-color: var(--color-deep-umber);
+    border-color: var(--color-warm-ivory);
+    color: var(--color-deep-umber);
+    background: var(--color-warm-ivory);
   }
 }
 
@@ -856,6 +873,10 @@
 
   .pasco-directory__name {
     font-size: clamp(1.2rem, 1.65vw, 1.65rem);
+  }
+
+  .pasco-final__layout {
+    width: min(calc(100% - 4rem), 72rem);
   }
 }
 
@@ -948,6 +969,12 @@
 
   .pasco-faq__list {
     grid-column: 5 / 13;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1050px) {
+  .pasco-final__layout {
+    width: min(calc(100% - 3rem), 60rem);
   }
 }
 
@@ -1135,8 +1162,8 @@
     font-size: 1.0625rem;
   }
 
-  .pasco-final {
-    min-height: 48rem;
+  .pasco-page .pasco-final {
+    min-height: 41rem;
   }
 
   .pasco-final__background-image {
@@ -1144,17 +1171,18 @@
   }
 
   .pasco-final__layout {
-    align-items: end;
-    padding-block: var(--space-24);
+    width: min(calc(100% - 2rem), 36rem);
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 6rem;
   }
 
   .pasco-final__copy {
-    width: 100%;
-    padding: var(--space-10) var(--space-8);
+    grid-column: 1;
   }
 
-  .pasco-final__copy h2 {
-    max-width: 9ch;
+  .pasco-page .pasco-final h2 {
+    max-width: none;
+    font-size: clamp(3.1rem, 14vw, 5rem);
   }
 }
 
@@ -1224,8 +1252,8 @@
     font-size: clamp(1.28rem, 6.2vw, 1.75rem);
   }
 
-  .pasco-final__copy {
-    padding: var(--space-8) var(--space-6);
+  .pasco-final__layout {
+    width: min(calc(100% - 1.5rem), 32rem);
   }
 }
 
