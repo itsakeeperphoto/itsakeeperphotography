@@ -18,7 +18,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 13 | 13-pasco.md | `/pasco-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
 | 14 | 14-journal-hub.md | `/journal/` | ✅ Completo |
 | 15 | 15-journal-locations.md | `/journal/family-photo-locations-tri-cities/` | ✅ Completo · ready/index (fecha 2026-08-08) |
-| 16 | 16-journal-senior-timing.md | `/journal/when-to-book-senior-pictures-tri-cities/` | ✅ Completo (validar fechas de yearbook locales) |
+| 16 | 16-journal-senior-timing.md | `/journal/when-to-book-senior-pictures-tri-cities/` | ⚠️ Rediseñado · `draft/noindex` (fecha editorial, datos distritales y Q54 pendientes) |
 | 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ✅ Completo (depende de #4) |
 | 18 | 18-journal-branding-vs-headshots.md | `/journal/branding-photos-vs-headshots/` | ✅ Completo |
 
@@ -37,7 +37,10 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 ## Lo que falta de Lisa (bloqueos)
 
 - **Q47:** selección de 8–12 reseñas de Google (afecta Reviews + bloques de proof en 5 páginas)
-- **Q54/Q56/Q58:** inclusiones de paquetes, turnaround, derechos (afecta Investment + FAQs)
+- **Q54/Q56/Q58:** inclusiones de paquetes, turnaround, derechos (afecta
+  Investment + FAQs; Q54 permanece omitida de Senior Timing)
+- **Senior Timing:** aprobar fecha editorial; añadir datos distritales solo con
+  fuente verificable
 - **Q42–43:** links/permisos de MOM Magazine y sesión Grammy (afecta About + Home)
 - **Newborn:** confirmar que se ofrece y en qué formato (afecta páginas 4 y 17)
 - **Locaciones de ciudad:** validar los spots reales + 1 detalle de primera mano por lugar (afecta 13)

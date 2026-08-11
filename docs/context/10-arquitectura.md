@@ -129,7 +129,9 @@ retry, freeze tras éxito ni analítica personalizada del gate.
 - `src/pages/index.astro` compone la homepage y es la única ruta que incluye
   `SitePreloader.astro`.
 - `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto.
-- `src/pages/journal/[slug].astro` resuelve artículos.
+- `src/pages/journal/[slug].astro` resuelve artículos y ramifica explícitamente
+  Family Photo Locations y Senior Timing a sus renderers especializados antes
+  del fallback `ContentPage`.
 - `src/pages/portfolio.astro` conserva el flipbook especializado.
 - `src/pages/tina-island/[name].ts` sirve refresco visual de islas Tina.
 - `src/pages/sitemap.xml.ts`, `robots.txt.ts` y `llms.txt.ts` generan salidas
@@ -154,7 +156,7 @@ Componentes especializados existentes:
 - `FamilyPage.astro`, `SeniorPage.astro`, `NewbornPage.astro`
 - `BrandingPage.astro`, `HeadshotPage.astro`
 - `AboutPage.astro`, `InvestmentPage.astro`, `ContactPage.astro`
-- `JournalPage.astro`, `LocationsGuidePage.astro`
+- `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
 - `ContentPage.astro` para rutas aún genéricas, incluidas Reviews, Privacy,
   Thank-you y algunos artículos.
@@ -165,6 +167,18 @@ script es opcional: cuando no existe contenido aprobado, el nodo no se emite.
 Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
 botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
+
+`SeniorTimingPage.astro` renderiza el artículo
+`/journal/when-to-book-senior-pictures-tri-cities/` como field guide
+image-first: byline sin fecha, short answer, yearbook guidance, contact sheet
+estacional 4/2/1, essays Too Late/Golden Hour, booking ledger, tres `<details>`
+y cierre full-bleed. El contrato exacto es 1 H1, 8 H2, 7 H3, cuatro anchors y
+11 imágenes —nueve informativas más dos prints decorativos—. Reutiliza
+`EditorialHero`; su control es un botón local, no un anchor. El CSS
+`journal-senior-timing-page.css` se importa con `?url` desde
+`src/pages/journal/[slug].astro` y `Base.astro` lo enlaza solo en esa ruta.
+`EditorialPageRouter.astro` repite la misma rama para que el refresco Tina no
+degrade la superficie a `ContentPage`.
 
 `AboutPage.astro` publica la dirección híbrida A+C aprobada —`Keeper Archive`
 más `Through Her Lens`— como página de identidad y confianza. Su
@@ -363,6 +377,15 @@ para evitar cambios silenciosos al repositorio.
   fuente y alt de cada superficie, mínimo 11 fuentes únicas por ruta, máximo
   dos usos por fuente, hero distinto del cierre y unicidad específica del
   mosaico Branding y el par Team Headshots.
+- Para Senior Timing fija el estado `draft/noindex`, metadata/canonical,
+  `og:type=article`, tres pendientes literales y exclusión de sitemap/`llms.txt`.
+  En el HTML exige 1 H1, 8 H2, 7 H3, cuatro anchors en orden, 11 imágenes con
+  nueve alts informativos/dos vacíos decorativos, byline sin fecha, CTA local
+  como botón, tres FAQ visibles y CSS aislado. Contrasta `Article`, `FAQPage` y
+  `BreadcrumbList` con el copy visible y prohíbe fechas, Q54, deadlines
+  distritales, `Service`, ratings, calle y geodatos inventados. Playwright cubre
+  1440/1200/900/390, foco, acordeones, reduced motion, crops, carga WebP,
+  consola/red, overflow y ausencia de regresión de `og:type` en las 21 rutas.
 
 ## SEO/indexación actual
 
@@ -388,6 +411,8 @@ también los artículos publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
 
 `Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.
+También deriva `og:type`: `article` únicamente cuando `schemaType` es
+`Article`, y `website` para las demás familias.
 `src/pages/[slug].astro` añade para Kennewick y Pasco un `Service` de portrait
 photography con `areaServed` de la ciudad/WA y provider enlazado al negocio; no
 declara ubicación física en esas ciudades. No se emiten `Review`,
@@ -411,6 +436,14 @@ Para Contact, `Base.astro` emite un único `ContactPage` enlazado al negocio y
 `[slug].astro` añade `BreadcrumbList` Home → Session Pricing Estimate. La ruta
 no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
 `AggregateRating`.
+
+Para Senior Timing, `Base.astro` emite `Article` con headline, author/publisher,
+imagen, `mainEntityOfPage`, `about` y cobertura Richland/Kennewick/Pasco;
+`journal/[slug].astro` añade `FAQPage` de tres respuestas visibles y
+`BreadcrumbList` Home → Journal → When to Take Senior Pictures. Ningún nodo
+contiene `datePublished`, `dateModified` o `lastModified` mientras `[FECHA]`
+siga pendiente. La frase distrital no demostrada y Q54 tampoco se exponen. La
+ruta conserva `draft/noindex`, su header release y exclusión de sitemap/llms.
 
 ## Assets y rendimiento
 
@@ -447,6 +480,12 @@ no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
   `newborn-family-at-home-west-richland.jpg`, optimizado de 13.13 MiB/4000×6000
   a 412 KiB/1600×2400. Sus variantes WebP responsive son regenerables y están
   ignoradas por Git; los demás assets de la ruta ya existían en producción.
+- Senior Timing incorpora
+  `west-richland-senior-woodpile-portrait.jpg`, verificado desde la carpeta
+  Senior de West Richland y usado como print decorativo del hero. La fuente
+  cumple el guard ≤2400 px/700 KiB, genera WebP 400/640/960/1440 y conserva XMP
+  allowlisted con título, descripción y localidad demostrada; no contiene GPS,
+  dirección, sublocation, fecha, serial, EXIF/IPTC/ICC ni IDs `xmpMM`.
 - About incorpora cuatro retratos nuevos de Lisa procedentes de la carpeta
   Drive `MY NEW branding pics ( Lisa )`: tres en color y uno en blanco y negro,
   todos en 1600×2400, sRGB, sin metadata y entre 298–487 KiB. Sus variantes

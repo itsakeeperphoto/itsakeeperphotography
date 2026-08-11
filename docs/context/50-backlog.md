@@ -88,11 +88,11 @@
   retry ni analítica personalizada. Tina release integral, validadores 21/21,
   Playwright 1440/1200/900/390 y no-JS 390 aprobados; Contact conserva
   `ready/index`, sitemap 10, `llms.txt` 9 y schema.
-- [ ] **19. Publicar los ocho commits locales pendientes.** `origin/main`
-  permanece en `b504f84`; después del cierre documental esperado, el usuario
-  publica el historial Contact gated y su reversión transparente, los dos
-  commits Branding/Headshots, los dos de Kind Words y este cierre ADR-053.
-  Codex no ejecuta push.
+- [ ] **19. Cerrar documentación y publicar el lote local acumulado.** La
+  implementación Senior Timing está en `bcbadae`; `main` está nueve commits por
+  delante de `origin/main` (`b504f84`) y este cierre documental sigue unstaged.
+  Tras revisar y crear su commit local separado, el usuario publica el historial
+  completo. Codex no ejecuta push ni `./scripts/handoff.sh`.
 - [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
@@ -110,23 +110,34 @@
 - [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
   `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
   WebP responsive; no publicarlas hasta confirmar paquetes y entregables.
+- [ ] Confirmar también que Senior Timing conserva `draft/noindex`, header
+  release, exclusión de sitemap/`llms.txt`, schema sin fechas y las 11 imágenes
+  responsive; el push del rediseño no autoriza su publicación.
 - [ ] **21. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **22. Completar Seniors con hechos confirmados.** Revisar
-  `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
+- [x] **22. Rediseñar el artículo Senior Timing según ADR-054.** Se implementó
+  `SeniorTimingPage` con `EditorialHero`, contact sheet estacional, CSS `?url`,
+  1 H1/8 H2/7 H3, cuatro anchors y 11 imágenes. La frase distrital no demostrada
+  se sustituyó por guía basada en el deadline publicado por la escuela; Q54 y
+  fecha no se inventaron. Staging/release 21/21, Playwright
+  1440/1200/900/390 y revisión independiente `PASS`. La ruta permanece
+  `draft/noindex`, con header y exclusión sitemap/llms intactos.
+- [ ] **23. Completar el cluster Seniors con hechos confirmados.** Revisar
+  `src/content/pending.ts` y `content/pages/seniors.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
-  de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
-  reescribir su voz.
-- [ ] Ejecutar `npm run build:local` después de esas ediciones y confirmar
-  `Validated 21 public routes in staging mode.`; revisar inmediatamente
+  de `/journal/when-to-book-senior-pictures-tri-cities/`. Los datos concretos de
+  deadlines distritales son una mejora opcional y solo se añaden con fuente
+  verificable. Actualizar copy sin reescribir su voz.
+- [ ] Después de editar esos hechos, ejecutar `npm run build:local`, confirmar
+  `Validated 21 public routes in staging mode.` y revisar inmediatamente
   `git status --short` por IDs de forms generados.
-- [ ] Ejecutar Playwright para Seniors a 1440×1000, 1200×900, 900×900 y 390×844;
-  guardar capturas y verificar overflow, crops, focus, reduced motion, consola,
-  body links, robots y composición.
-- [ ] Solo si los tres puntos anteriores pasan, cambiar Seniors y su artículo
-  asociado a `ready/index` en `src/lib/page-manifest.ts`, actualizar
-  `lastModified`, reconstruir y comprobar sitemap/robots/llms de release.
+- [ ] Repetir Playwright para la página de servicio Seniors y el artículo en
+  1440×1000, 1200×900, 900×900 y 390×844; verificar overflow, crops, foco,
+  reduced motion, consola, body links, robots y composición.
+- [ ] Solo si contenido, fecha y QA pasan, decidir por separado si Seniors y su
+  artículo cambian a `ready/index`; entonces actualizar `lastModified`, headers
+  y manifest, reconstruir y comprobar sitemap/robots/llms de release.
 
 ## Contenido pendiente registrado
 
@@ -249,6 +260,9 @@ sin reemplazar el archivo.
 - [ ] Datos de distritos/fechas escolares para Senior timing.
 - [ ] Respuesta/offer de Lisa referida en Q54 para Senior timing.
 - [ ] Fecha editorial para Senior timing.
+- [x] Rediseño Senior Timing completo sin resolver los tres pendientes por
+  inferencia: guía escolar neutral, Q54 omitida y schema/byline sin fecha; la
+  ruta conserva `draft/noindex` y exclusión de crawler outputs.
 - [ ] Validación de Lisa, formato exacto y fecha para Newborn comparison.
 
 ### Richland
@@ -334,10 +348,11 @@ sin reemplazar el archivo.
   `ff736c6`. Codex no realizó el push.
 - [x] El usuario publicó también el lote local posterior; al iniciar Contact,
   `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
-- [ ] Publicar los ocho commits locales creados a partir de `b504f84`: historial
-  gated de Contact, media Branding/Headshots, Kind Words, reversión transparente
-  `df6db0f` y su cierre documental esperado. Codex no ejecuta push; el usuario
-  conserva esa operación.
+- [ ] Publicar el lote local creado a partir de `b504f84`: historial gated de
+  Contact y su reversión, media Branding/Headshots, Kind Words, Senior Timing
+  funcional `bcbadae` y los cierres documentales. Antes de este cierre docs,
+  `main` está nueve commits por delante; después del commit docs esperado estará
+  diez. Codex no ejecuta push; el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -447,6 +462,12 @@ sin reemplazar el archivo.
   1200×900, 900×900 y 390×844: sin overflow, 20/20 imágenes, cuatro body links,
   cinco FAQs, foco visible y consola limpia. Evidencia en
   `.codex-evidence/journal-locations-2026-08-08/`.
+- [x] Verificada
+  `/journal/when-to-book-senior-pictures-tri-cities/` en staging/release 21/21
+  y Playwright 1440×1000, 1200×900, 900×900 y 390×844: 1/8/7 headings,
+  cuatro anchors, 11 imágenes, schema sin fechas, foco/acordeones, reduced
+  motion, crops, red, consola y overflow correctos; revisión independiente
+  `PASS` sin P1/P2.
 - [x] Revalidada la guía tras las correcciones de producción en 1728×963,
   1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
   de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto

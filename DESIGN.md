@@ -1500,3 +1500,85 @@ hasta `$955.98`; después intercepta el POST y exige navegación de documento,
 acción `/thank-you/`, URL encoding y payload calculado completo. Cubrir 1440,
 1200, 900 y 390 px, más un contexto sin JavaScript a 390 px. QA nunca usa una
 persona real ni envía el formulario a producción.
+
+## 16. ADDENDUM DE RUTA — SENIOR TIMING FIELD GUIDE
+
+Este addendum fija el rediseño de
+`/journal/when-to-book-senior-pictures-tri-cities/` sin cambiar su gate
+editorial. La mejora visual y semántica no autoriza publicación: la ruta
+permanece `draft/noindex`, conserva su header release y sigue fuera de sitemap
+y `llms.txt` mientras no exista una fecha editorial aprobada.
+
+### Dirección aprobada
+
+- Mock canónico:
+  `.impeccable/mocks/senior-timing-03-contact-sheet-field-guide.png`.
+- Se rechazaron
+  `.impeccable/mocks/senior-timing-01-season-ledger.png` y
+  `.impeccable/mocks/senior-timing-02-season-spine.png`: la opción 03 traduce
+  las cuatro estaciones como un solo año fotográfico, evita una fila de cards
+  intercambiables y conserva un recorrido image-first más claro.
+- La gramática combina `EditorialHero`, superficies ivory/sand/umber, una sola
+  imagen en arco, hairlines de 1 px, una contact sheet asimétrica y un cierre
+  fotográfico full-bleed.
+- Se prohíben cards redondeadas, sombras decorativas, badges, cinta, pins,
+  splatter, glassmorphism y gradientes. El wash funcional del cierre sirve solo
+  para lectura sobre fotografía.
+
+### Secuencia compositiva
+
+1. **Hero:** fotografía verificada full-bleed, H1 e intro centrados, dos prints
+   decorativos y un botón `Read the timeline` hacia `the-short-answer`.
+2. **Byline:** rail `By Lisa Weiss · It's A Keeper Photography · Richland, WA`,
+   sin fecha falsa.
+3. **Short Answer:** statement marfil con regla superior/inferior y nota
+   editorial lateral.
+4. **Yearbook guidance:** retrato en arco y prosa estrecha con un enlace inline
+   a Seniors; recomienda consultar el deadline publicado por la escuela, sin
+   fingir fechas distritales.
+5. **Season by season:** ordered list de cuatro retratos y cuatro H3 como una
+   contact sheet asimétrica; responde 4 composiciones en desktop, 2×2 en tablet
+   y una columna en móvil sin cambiar el orden DOM.
+6. **Too late:** statement oscuro, text-led, sin card ornamental.
+7. **Golden hour:** split ancho de imagen/prosa con la respuesta directa.
+8. **Booking calendar:** advisory spread con reglas, retrato y enlaces a
+   Seniors/Locations; no inventa un calendario mensual.
+9. **Quick Answers:** tres filas `<details>` nativas con H3 visibles; Q54 queda
+   ausente hasta confirmación.
+10. **Cierre:** imagen full-bleed, H2, prosa y CTA outlined a Contact.
+
+### Semántica, media y verdad
+
+- El contrato visible exacto es 1 H1, 8 H2, 7 H3 y cuatro anchors dentro de
+  `<main>`: Seniors, Seniors, Locations y Contact. El control del hero es botón,
+  no anchor.
+- Se renderizan 11 imágenes: nueve informativas con alt literal y dos prints
+  decorativos con alt vacío. La nueva
+  `/uploads/west-richland-senior-woodpile-portrait.jpg` procede de una carpeta
+  West Richland verificada y conserva solo XMP allowlisted sin GPS ni metadata
+  sensible.
+- La frase distrital no demostrada se reemplaza por guía basada en el deadline
+  que publique cada escuela; `no school-schedule conflicts` se corrige a
+  `fewer school-schedule conflicts`. Q54 no se renderiza y no existe fecha en
+  byline ni schema.
+- `Article`, `FAQPage` y `BreadcrumbList` derivan de texto visible y omiten
+  fechas. `og:type` es `article`; no se emiten `Service`, `Review`,
+  `AggregateRating`, calle ni coordenadas.
+
+### Interacción, responsive y aislamiento
+
+- Breakpoints de la ruta: 1250, 1050, 767 y 479 px. El layout conserva lectura,
+  hit areas mínimas de 44 px, foco visible, acordeones operables por teclado,
+  reduced motion y overflow horizontal cero.
+- El único defecto real detectado por Impeccable fue una transición de `width`
+  en la línea de los enlaces del booking ledger; ahora el estado usa
+  `transform: scaleX()` con el mismo resultado visual. Los diez avisos
+  `broken-image` restantes provenían de regex del validador y fueron refutados
+  por las 11 imágenes cargadas en el DOM real.
+- `journal-senior-timing-page.css` se procesa mediante `?url` y se enlaza desde
+  `Base.astro` solo para esta ruta. `EditorialPageRouter.astro` resuelve también
+  `SeniorTimingPage` para que el refresco Tina no caiga en `ContentPage`.
+- Validadores staging y release aprobaron 21/21 rutas. Playwright aprobó
+  1440×1000, 1200×900, 900×900 y 390×844; la revisión final independiente
+  devolvió `PASS` sin defectos P1/P2 y confirmó que `og:type` no regresó en las
+  otras veinte rutas.

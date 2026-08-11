@@ -1188,3 +1188,47 @@
   Todos los POST se interceptaron: no hubo envío real, push, deploy, DNS ni otra
   mutación externa. Forms/notificaciones productivas permanecen confirmados por
   el usuario.
+
+### ADR-054 — Senior Timing adopta un field guide image-first sin fabricar el gate editorial
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** El artículo Senior Timing usaba `ContentPage` genérico aunque
+  su copy, oportunidad SEO y secuencia estacional requerían una lectura
+  editorial propia. El documento definitivo conservaba tres pendientes: fechas
+  distritales, la oferta Q54 y `[FECHA]`. La frase sobre deadlines locales no
+  tenía evidencia publicada, la pregunta Q54 no estaba confirmada y no existía
+  una fecha autorizada. El usuario pidió rediseñar con fotografía real y
+  preservar la verdad SEO, no resolver esos datos por inferencia.
+- **Decisión:** Usar
+  `.impeccable/mocks/senior-timing-03-contact-sheet-field-guide.png` como comp
+  canónico; rechazar `01-season-ledger` y `02-season-spine`. Crear
+  `SeniorTimingPage.astro`, mantener `EditorialHero` y aislar
+  `journal-senior-timing-page.css` con `?url`; ramificar tanto
+  `journal/[slug].astro` como `EditorialPageRouter.astro` para conservar el
+  renderer en SSR y refresco Tina. Fijar 1 H1, 8 H2, 7 H3, cuatro anchors, una
+  contact sheet estacional 4/2/1 y 11 imágenes —nueve informativas y dos
+  decorativas—. Incorporar el JPEG West Richland verificado con XMP allowlisted
+  sin GPS ni metadata sensible. Sustituir la frase distrital por la recomendación
+  de consultar el deadline publicado por cada escuela, cambiar `no conflicts`
+  por `fewer school-schedule conflicts`, omitir Q54 y no mostrar fecha. Mantener
+  el artículo `draft/noindex`, su header release y exclusión de sitemap/llms con
+  los tres pendientes literales intactos. Emitir `Article`, `FAQPage` y
+  `BreadcrumbList` derivados de contenido visible, sin fechas; usar
+  `og:type=article` solo para páginas Article.
+- **Alternativas descartadas:** Publicar fechas o deadlines por inferencia,
+  mostrar Q54 como oferta vigente, añadir una fecha de build, cambiar a
+  `ready/index` por calidad visual, usar las comps 01/02, conservar el renderer
+  genérico, cargar CSS de ruta globalmente o tratar los dos prints redundantes
+  como información se descartó por riesgo factual, de indexación,
+  accesibilidad, duplicación visual o leakage.
+- **Consecuencias:** Staging y release validan 21/21 rutas. Playwright aprueba
+  1440/1200/900/390 con headings, anchors, schema, carga responsive, foco,
+  acordeones, reduced motion, crops, consola/red y overflow correctos. El único
+  hallazgo real de Impeccable —transición de `width`— se corrigió con
+  `transform: scaleX()`; diez avisos `broken-image` sobre regex fueron refutados
+  por las 11 imágenes cargadas. La revisión final independiente devolvió
+  `PASS` sin P1/P2 y confirmó ausencia de regresiones `og:type`. El commit
+  funcional `bcbadae` (`feat(journal): redesign senior timing guide`) contiene
+  la implementación; el cierre documental permanece en el worktree para un
+  commit local separado. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`.

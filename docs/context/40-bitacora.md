@@ -1090,3 +1090,43 @@
   (`b504f84`) y quedará ocho después del commit local esperado
   `docs(contact): record transparent estimate reversal`. No se hizo stage,
   commit, push, deploy, DNS, envío real ni `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Senior Timing rediseñado sin publicar hechos pendientes
+
+- **Objetivo:** convertir
+  `/journal/when-to-book-senior-pictures-tri-cities/` en una guía image-first
+  útil para Seniors, preservando el copy definitivo, la verdad local y el gate
+  de publicación.
+- **Dirección:** se eligió
+  `.impeccable/mocks/senior-timing-03-contact-sheet-field-guide.png`; las comps
+  01 ledger y 02 spine quedaron rechazadas. `SeniorTimingPage` reutiliza
+  `EditorialHero` y ordena short answer, yearbook guidance, contact sheet
+  estacional 4/2/1, essays prácticos, FAQ ledger y cierre full-bleed. El
+  contrato visible es 1 H1, 8 H2, 7 H3 y cuatro anchors.
+- **Verdad editorial:** la afirmación no demostrada sobre deadlines de escuelas
+  Tri-Cities se reemplazó por la recomendación de consultar el deadline
+  publicado por cada escuela y trabajar hacia atrás. La frase absoluta sobre
+  conflictos escolares pasó a `fewer school-schedule conflicts`; Q54 no se
+  renderiza y no se inventa fecha. Los tres pendientes exactos permanecen en
+  contenido y validadores.
+- **Media:** la ruta usa 11 imágenes, nueve informativas y dos decorativas. Se
+  incorporó `west-richland-senior-woodpile-portrait.jpg` desde una carpeta
+  West Richland verificada, con fuente optimizada, variantes WebP y XMP
+  allowlisted sin GPS ni metadata sensible. Las otras superficies reutilizan
+  media existente verificada.
+- **SEO y arquitectura:** `journal/[slug].astro` y
+  `EditorialPageRouter.astro` resuelven el renderer especializado; el CSS se
+  enlaza solo en la ruta mediante `?url`. `Article`, `FAQPage` y
+  `BreadcrumbList` no contienen fechas; `og:type=article`. La ruta sigue
+  `draft/noindex`, conserva el header release y permanece fuera de sitemap y
+  `llms.txt`.
+- **QA:** validadores staging/release aprobaron 21/21 rutas y Playwright pasó
+  1440×1000, 1200×900, 900×900 y 390×844. Impeccable detectó una transición de
+  `width` real, corregida a `transform`; sus diez avisos `broken-image` de regex
+  fueron falsos positivos refutados por imágenes cargadas. La revisión final
+  independiente devolvió `PASS` sin P1/P2 y sin regresión global de `og:type`.
+- **Git/operación:** la implementación funcional quedó en `bcbadae`
+  (`feat(journal): redesign senior timing guide`); `main` está nueve commits por
+  delante de `origin/main` (`b504f84`). Este cierre documental permanece
+  unstaged en el worktree para un commit local separado. No se ejecutó push,
+  deploy, DNS ni `./scripts/handoff.sh`.

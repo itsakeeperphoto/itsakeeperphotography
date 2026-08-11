@@ -30,6 +30,7 @@ entry when that date is missing.
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
 | `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-10 |
 | `/about/` | About / trust | 2026-08-10 |
+| `/contact/` | Contact / conversion | 2026-08-11 |
 | `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
@@ -51,7 +52,7 @@ entry when that date is missing.
 - `/investment/` — draft; excluded
 - `/about/` — ready and indexable
 - `/reviews/` — draft; excluded
-- `/contact/` — draft; excluded
+- `/contact/` — ready and indexable
 
 ### Service areas
 
@@ -66,7 +67,9 @@ threshold. Each must retain genuinely city-specific content before it is approve
 
 - `/journal/` — draft; excluded
 - `/journal/family-photo-locations-tri-cities/` — ready and indexable
-- `/journal/when-to-book-senior-pictures-tri-cities/` — draft; excluded
+- `/journal/when-to-book-senior-pictures-tri-cities/` — redesigned with a
+  specialized article renderer; remains draft/noindex and excluded while the
+  editorial date, district-specific evidence and Q54 remain pending
 - `/journal/in-home-vs-studio-newborn-photography/` — draft; excluded
 - `/journal/branding-photos-vs-headshots/` — draft; excluded
 
@@ -90,7 +93,9 @@ threshold. Each must retain genuinely city-specific content before it is approve
 - Body content uses at most four internal links except the approved Richland and
   Kennewick service directories, which each use exactly nine, and Pasco, which
   uses exactly eight. About uses three internal route links, one protected hero
-  hash and one external primary-source link to Issuu.
+  hash and one external primary-source link to Issuu. Senior Timing uses exactly
+  four route anchors — Senior twice, Locations once and Contact once — while its
+  hero scroll control remains a button.
 
 ## Publishing a draft route
 
