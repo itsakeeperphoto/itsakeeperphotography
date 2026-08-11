@@ -13,6 +13,7 @@ import NewbornPage from "./NewbornPage.astro";
 import PascoPage from "./PascoPage.astro";
 import RichlandPage from "./RichlandPage.astro";
 import SeniorPage from "./SeniorPage.astro";
+import SeniorTimingPage from "./SeniorTimingPage.astro";
 
 interface Props {
   page: EditorialPageData;
@@ -34,6 +35,8 @@ const isNewbornPage = props.page.route === "/newborn-photographer-tri-cities-wa/
 const isPascoPage = props.page.route === "/pasco-wa-photographer/";
 const isRichlandPage = props.page.route === "/richland-wa-photographer/";
 const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
+const isSeniorTimingPage =
+  props.page.route === "/journal/when-to-book-senior-pictures-tri-cities/";
 ---
 
 {isAboutPage
@@ -60,4 +63,6 @@ const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
     ? <RichlandPage {...props} />
   : isSeniorPage
     ? <SeniorPage {...props} />
+  : isSeniorTimingPage
+    ? <SeniorTimingPage {...props} />
     : <ContentPage {...props} />}

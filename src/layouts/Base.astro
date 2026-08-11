@@ -53,6 +53,7 @@ const canonical = absoluteUrl(normalizedCanonicalPath);
 const siteRoot = `${siteOrigin}/`;
 const absolute = (path: string) => new URL(path, siteRoot).toString();
 const robots = robotsDirective(searchVisibility);
+const openGraphType = schemaType === "Article" ? "article" : "website";
 
 const seoImage = pageSeoImage || settings.seoImage;
 const seoImageAlt = pageSeoImageAlt || settings.seoImageAlt;
@@ -225,7 +226,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
       href="/uploads/its-a-keeper-photography-favicon.jpg"
     />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={openGraphType} />
     <meta property="og:site_name" content={settings.businessName} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonical} />

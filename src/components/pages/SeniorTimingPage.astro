@@ -1,0 +1,301 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import InlineLinkedText from "../InlineLinkedText.astro";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) throw new Error(`Senior timing article is missing the required section: ${id}`);
+  return section;
+};
+
+const shortAnswer = requireSection("the-short-answer");
+const yearbook = requireSection("when-are-you-supposed-to-take-senior-pictures");
+const seasons = requireSection("season-by-season");
+const tooLate = requireSection("when-is-it-too-late");
+const goldenHour = requireSection("best-time-of-day");
+const booking = requireSection("tri-cities-booking-calendar");
+const quickAnswers = requireSection("quick-answers");
+
+const yearbookSeniorLink = yearbook.links?.find(
+  (link) => link.href === "/senior-photographer-tri-cities-wa/",
+);
+const bookingSeniorLink = booking.links?.find(
+  (link) => link.href === "/senior-photographer-tri-cities-wa/",
+);
+const bookingLocationsLink = booking.links?.find(
+  (link) => link.href === "/journal/family-photo-locations-tri-cities/",
+);
+
+const seasonSizes = [
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), (max-width: 1250px) 48vw, 43rem",
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), (max-width: 1250px) 44vw, 35rem",
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), (max-width: 1250px) 48vw, 40rem",
+  "(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) calc(50vw - 3.5rem), (max-width: 1250px) 44vw, 31rem",
+];
+
+const finalCta = page.finalCta;
+---
+
+<article
+  class="senior-timing-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="journal"
+    titleId="senior-timing-hero-title"
+    heading={page.hero.heading}
+    headingLines={["When Should You Take", "Senior Pictures?"]}
+    scriptLine={page.hero.scriptLine || "your season"}
+    intro={page.hero.intro}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 43%"
+    mobileBackgroundPosition="50% 48%"
+    leftPrint={{
+      src: "/uploads/west-richland-senior-woodpile-portrait.jpg",
+      objectPosition: "50% 39%",
+    }}
+    rightPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 44%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel="Read the timeline"
+    buttonTargetId={shortAnswer.id}
+  />
+
+  <div class="senior-timing-byline" aria-label="Article author">
+    <span>By Lisa Weiss</span>
+    <span aria-hidden="true">·</span>
+    <span>It's A Keeper Photography</span>
+    <span aria-hidden="true">·</span>
+    <span>Richland, WA</span>
+  </div>
+
+  <section
+    class="senior-timing-answer"
+    id={shortAnswer.id}
+    aria-labelledby={`${shortAnswer.id}-title`}
+    tabindex="-1"
+  >
+    <div class="senior-timing-shell senior-timing-answer__inner">
+      <div class="senior-timing-answer__arch">
+        <h2 id={`${shortAnswer.id}-title`}>{shortAnswer.heading}</h2>
+        {shortAnswer.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <p class="senior-timing-answer__note">
+        The best time is the one that matches your season.
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="senior-timing-yearbook"
+    id={yearbook.id}
+    aria-labelledby={`${yearbook.id}-title`}
+  >
+    <div class="senior-timing-shell senior-timing-yearbook__inner">
+      {yearbook.image && (
+        <figure class="senior-timing-yearbook__arch">
+          <Picture
+            src={yearbook.image}
+            alt={yearbook.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) min(82vw, 31rem), (max-width: 1050px) 43vw, 34rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+      <div class="senior-timing-yearbook__copy">
+        <h2 id={`${yearbook.id}-title`}>{yearbook.heading}</h2>
+        {yearbook.paragraphs?.map((paragraph, index) => (
+          <p>
+            {index === 0 ? (
+              <InlineLinkedText
+                text={paragraph}
+                phrase={yearbookSeniorLink?.label}
+                href={yearbookSeniorLink?.href}
+              />
+            ) : paragraph}
+          </p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="senior-timing-seasons"
+    id={seasons.id}
+    aria-labelledby={`${seasons.id}-title`}
+  >
+    <div class="senior-timing-shell senior-timing-seasons__inner">
+      <header class="senior-timing-seasons__header">
+        <h2 id={`${seasons.id}-title`}>{seasons.heading}</h2>
+        <p>The weather they love most.</p>
+      </header>
+
+      <ol class="senior-timing-seasons__contact-sheet">
+        {seasons.items?.map((item, index) => (
+          <li class:list={["senior-timing-season", `senior-timing-season--${index + 1}`]}>
+            {item.image && (
+              <figure class="senior-timing-season__image">
+                <Picture
+                  src={item.image}
+                  alt={item.imageAlt || ""}
+                  loading="lazy"
+                  decoding="async"
+                  responsiveSrcset
+                  sizes={seasonSizes[index]}
+                  imgClass="photo--editorial"
+                />
+              </figure>
+            )}
+            <div class="senior-timing-season__copy">
+              <h3>{item.heading}</h3>
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="senior-timing-too-late"
+    id={tooLate.id}
+    aria-labelledby={`${tooLate.id}-title`}
+  >
+    <div class="senior-timing-shell senior-timing-too-late__inner">
+      <h2 id={`${tooLate.id}-title`}>{tooLate.heading}</h2>
+      <div class="senior-timing-too-late__copy">
+        {tooLate.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="senior-timing-golden"
+    id={goldenHour.id}
+    aria-labelledby={`${goldenHour.id}-title`}
+  >
+    <div class="senior-timing-shell senior-timing-golden__inner">
+      {goldenHour.image && (
+        <figure class="senior-timing-golden__image">
+          <Picture
+            src={goldenHour.image}
+            alt={goldenHour.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 48vw, 46rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+      <div class="senior-timing-golden__copy">
+        <h2 id={`${goldenHour.id}-title`}>{goldenHour.heading}</h2>
+        {goldenHour.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="senior-timing-booking"
+    id={booking.id}
+    aria-labelledby={`${booking.id}-title`}
+  >
+    <div class="senior-timing-shell senior-timing-booking__inner">
+      <div class="senior-timing-booking__copy">
+        <h2 id={`${booking.id}-title`}>{booking.heading}</h2>
+        {booking.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        <nav class="senior-timing-booking__links" aria-label="Senior session planning resources">
+          {bookingSeniorLink && (
+            <a href={bookingSeniorLink.href}>{bookingSeniorLink.label}</a>
+          )}
+          {bookingLocationsLink && (
+            <a href={bookingLocationsLink.href}>{bookingLocationsLink.label}</a>
+          )}
+        </nav>
+      </div>
+      {booking.image && (
+        <figure class="senior-timing-booking__image">
+          <Picture
+            src={booking.image}
+            alt={booking.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 42vw, 32rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <section
+    class="senior-timing-faq"
+    id={quickAnswers.id}
+    aria-labelledby={`${quickAnswers.id}-title`}
+  >
+    <div class="senior-timing-shell senior-timing-faq__inner">
+      <h2 id={`${quickAnswers.id}-title`}>{quickAnswers.heading}</h2>
+      <div class="senior-timing-faq__list">
+        {quickAnswers.items?.map((item, index) => (
+          <details open={index === 0}>
+            <summary>
+              <h3>
+                <span>{item.heading}</span>
+                <span class="senior-timing-faq__toggle" aria-hidden="true"></span>
+              </h3>
+            </summary>
+            <div class="senior-timing-faq__answer">
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              {item.detail && <p>{item.detail}</p>}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {finalCta && (
+    <section class="senior-timing-final" aria-labelledby="senior-timing-final-title">
+      {finalCta.image && (
+        <figure class="senior-timing-final__background">
+          <Picture
+            src={finalCta.image}
+            alt={finalCta.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="100vw"
+            imgClass="senior-timing-final__background-image"
+          />
+        </figure>
+      )}
+      <span class="senior-timing-final__wash" aria-hidden="true"></span>
+      <div class="senior-timing-shell senior-timing-final__inner">
+        <div class="senior-timing-final__copy">
+          <h2 id="senior-timing-final-title">{finalCta.heading}</h2>
+          {finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {finalCta.link && (
+            <a class="outline-button" href={finalCta.link.href}>{finalCta.link.label}</a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+</article>

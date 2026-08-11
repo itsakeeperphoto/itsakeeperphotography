@@ -178,6 +178,16 @@
         "country": "United States",
         "countryCode": "US"
       }
+    },
+    "west-richland-senior-woodpile-portrait.jpg": {
+      "title": "Senior Portrait in West Richland, Washington",
+      "description": "High school senior seated beside stacked firewood in a plaid shirt during a West Richland portrait session.",
+      "location": {
+        "city": "West Richland",
+        "state": "Washington",
+        "country": "United States",
+        "countryCode": "US"
+      }
     }
   }
 }

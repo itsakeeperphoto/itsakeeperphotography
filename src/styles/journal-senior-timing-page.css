@@ -1,0 +1,932 @@
+.senior-timing-page {
+  --senior-timing-shell: 88rem;
+  --senior-timing-gutter: max(var(--page-gutter-desktop), 4vw);
+  --senior-timing-line: color-mix(in srgb, var(--color-deep-umber) 38%, transparent);
+  --senior-timing-line-light: color-mix(in srgb, var(--color-warm-ivory) 42%, transparent);
+  overflow: clip;
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
+}
+
+.senior-timing-page .senior-timing-shell {
+  width: min(
+    var(--senior-timing-shell),
+    calc(100% - (var(--senior-timing-gutter) * 2))
+  );
+  margin-inline: auto;
+}
+
+.senior-timing-page h2,
+.senior-timing-page h3,
+.senior-timing-page p,
+.senior-timing-page figure {
+  margin: 0;
+}
+
+.senior-timing-page h2,
+.senior-timing-page h3 {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.senior-timing-page p {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.22vw, 1.21875rem);
+  line-height: 1.62;
+}
+
+.senior-timing-page picture,
+.senior-timing-page img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.senior-timing-page img {
+  object-fit: cover;
+}
+
+.senior-timing-page a {
+  color: currentColor;
+  text-underline-offset: 0.28em;
+  text-decoration-thickness: 1px;
+}
+
+.senior-timing-page a:focus-visible,
+.senior-timing-page button:focus-visible,
+.senior-timing-page summary:focus-visible,
+.senior-timing-page section[tabindex="-1"]:focus-visible {
+  outline: 2px solid var(--color-focus-ring-dark);
+  outline-offset: 0.25rem;
+}
+
+.senior-timing-page > .editorial-hero {
+  --editorial-hero-wash: rgba(40, 30, 16, 0.55);
+  --editorial-hero-control-wash: rgba(40, 30, 16, 0.42);
+  min-height: clamp(47rem, calc(100vh - var(--header-height)), 58rem);
+}
+
+.senior-timing-page > .editorial-hero .editorial-hero__copy {
+  width: min(66rem, calc(100% - 18rem));
+  padding-bottom: var(--space-20);
+}
+
+.senior-timing-page > .editorial-hero .editorial-hero__title {
+  max-width: 15ch;
+  font-size: clamp(3.5rem, 5.15vw, 5.9rem);
+  letter-spacing: 0.1rem;
+  line-height: 0.94;
+}
+
+.senior-timing-page > .editorial-hero .editorial-hero__script {
+  margin-bottom: -0.14em;
+  font-size: clamp(3rem, 4.6vw, 5.25rem);
+}
+
+.senior-timing-page > .editorial-hero .editorial-hero__intro {
+  max-width: 43rem;
+  font-size: clamp(1.0625rem, 1.35vw, 1.2rem);
+}
+
+.senior-timing-page > .editorial-hero .outline-button {
+  min-width: 11rem;
+  min-height: var(--minimum-hit-area);
+}
+
+.senior-timing-page > .editorial-hero .editorial-hero__print {
+  bottom: -5rem;
+  width: clamp(11.5rem, 15vw, 15.5rem);
+  height: clamp(18rem, 24vw, 25rem);
+}
+
+.senior-timing-page .senior-timing-byline {
+  display: flex;
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--page-gutter-desktop);
+  border-bottom: 1px solid var(--senior-timing-line);
+  color: var(--color-deep-umber);
+  background: var(--color-warm-ivory);
+  font-family: var(--font-utility);
+  font-size: var(--font-size-caption);
+  letter-spacing: var(--tracking-caption);
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.senior-timing-page .senior-timing-answer {
+  padding-block: clamp(var(--space-24), 9vw, var(--space-40));
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
+  background: var(--color-warm-ivory);
+}
+
+.senior-timing-page .senior-timing-answer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(15rem, 0.58fr);
+  gap: clamp(var(--space-12), 6vw, var(--space-28));
+  align-items: center;
+}
+
+.senior-timing-page .senior-timing-answer__arch {
+  display: grid;
+  min-height: 29rem;
+  align-content: center;
+  padding: clamp(var(--space-12), 6vw, var(--space-24));
+  border-top: 1px solid var(--senior-timing-line);
+  border-bottom: 1px solid var(--senior-timing-line);
+  text-align: center;
+}
+
+.senior-timing-page .senior-timing-answer__arch h2 {
+  font-size: clamp(2.8rem, 4.6vw, 5rem);
+  line-height: 0.96;
+}
+
+.senior-timing-page .senior-timing-answer__arch p {
+  max-width: 54rem;
+  margin: var(--space-8) auto 0;
+  font-size: clamp(1.2rem, 1.65vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.senior-timing-page .senior-timing-answer__note {
+  max-width: 23ch;
+  padding: var(--space-10) 0 var(--space-10) clamp(var(--space-8), 3vw, var(--space-12));
+  border-left: 1px solid var(--senior-timing-line);
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-style: italic;
+}
+
+.senior-timing-page .senior-timing-yearbook {
+  padding-block: clamp(var(--space-24), 10vw, var(--space-48));
+  background: var(--color-weathered-sand);
+}
+
+.senior-timing-page .senior-timing-yearbook__inner {
+  display: grid;
+  grid-template-columns: minmax(19rem, 0.84fr) minmax(0, 1.16fr);
+  gap: clamp(var(--space-16), 8vw, var(--space-32));
+  align-items: center;
+}
+
+.senior-timing-page .senior-timing-yearbook__arch {
+  width: min(100%, 35rem);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  justify-self: end;
+}
+
+.senior-timing-page .senior-timing-yearbook__arch img {
+  object-position: 51% 50%;
+}
+
+.senior-timing-page .senior-timing-yearbook__copy {
+  max-width: 42rem;
+  padding-block: var(--space-10);
+}
+
+.senior-timing-page .senior-timing-yearbook__copy h2 {
+  max-width: 14ch;
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--senior-timing-line);
+  font-size: clamp(2.75rem, 4.3vw, 4.75rem);
+  line-height: 0.98;
+}
+
+.senior-timing-page .senior-timing-yearbook__copy p {
+  max-width: 65ch;
+  margin-top: var(--space-6);
+}
+
+.senior-timing-page .senior-timing-yearbook__copy a {
+  font-style: italic;
+  font-weight: var(--font-weight-medium);
+}
+
+.senior-timing-page .senior-timing-seasons {
+  padding-block: clamp(var(--space-24), 9vw, var(--space-40));
+  background: var(--color-warm-ivory);
+}
+
+.senior-timing-page .senior-timing-seasons__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.55fr);
+  gap: var(--space-12);
+  align-items: end;
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--senior-timing-line);
+  border-bottom: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-seasons__header h2 {
+  max-width: 18ch;
+  font-size: clamp(2.8rem, 4.5vw, 5rem);
+  line-height: 0.97;
+}
+
+.senior-timing-page .senior-timing-seasons__header p {
+  max-width: 28ch;
+  justify-self: end;
+  font-style: italic;
+}
+
+.senior-timing-page .senior-timing-seasons__contact-sheet {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(var(--space-10), 4vw, var(--space-20)) var(--space-4);
+  margin: 0;
+  padding: clamp(var(--space-12), 5vw, var(--space-24)) 0 0;
+  list-style: none;
+}
+
+.senior-timing-page .senior-timing-season {
+  min-width: 0;
+}
+
+.senior-timing-page .senior-timing-season--1 {
+  grid-column: 1 / span 7;
+}
+
+.senior-timing-page .senior-timing-season--2 {
+  grid-column: 8 / -1;
+  align-self: end;
+  padding-top: clamp(var(--space-12), 6vw, var(--space-24));
+}
+
+.senior-timing-page .senior-timing-season--3 {
+  z-index: 2;
+  grid-column: 2 / span 6;
+  margin-top: clamp(-5rem, -4vw, -2.5rem);
+}
+
+.senior-timing-page .senior-timing-season--4 {
+  grid-column: 8 / -1;
+  padding-top: var(--space-16);
+}
+
+.senior-timing-page .senior-timing-season__image {
+  overflow: hidden;
+  border: 1px solid var(--senior-timing-line);
+  background: var(--color-walnut);
+}
+
+.senior-timing-page .senior-timing-season--1 .senior-timing-season__image {
+  aspect-ratio: 16 / 10;
+}
+
+.senior-timing-page .senior-timing-season--2 .senior-timing-season__image {
+  aspect-ratio: 16 / 11;
+}
+
+.senior-timing-page .senior-timing-season--3 .senior-timing-season__image {
+  aspect-ratio: 3 / 2;
+}
+
+.senior-timing-page .senior-timing-season--4 .senior-timing-season__image {
+  width: min(100%, 31rem);
+  aspect-ratio: 4 / 5;
+}
+
+.senior-timing-page .senior-timing-season--1 img {
+  object-position: 50% 35%;
+}
+
+.senior-timing-page .senior-timing-season--2 img {
+  object-position: 50% 48%;
+}
+
+.senior-timing-page .senior-timing-season--3 img {
+  object-position: 50% 46%;
+}
+
+.senior-timing-page .senior-timing-season--4 img {
+  object-position: 44% 50%;
+}
+
+.senior-timing-page .senior-timing-season__copy {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.64fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-season__copy h3 {
+  font-size: clamp(1.35rem, 1.75vw, 1.85rem);
+  line-height: 1.05;
+}
+
+.senior-timing-page .senior-timing-season__copy p {
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  line-height: 1.55;
+}
+
+.senior-timing-page .senior-timing-too-late {
+  padding-block: clamp(var(--space-24), 9vw, var(--space-40));
+  color: var(--color-warm-ivory);
+  background: var(--color-deep-umber);
+}
+
+.senior-timing-page .senior-timing-too-late__inner {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(var(--space-12), 7vw, var(--space-28));
+  align-items: center;
+}
+
+.senior-timing-page .senior-timing-too-late__inner h2 {
+  max-width: none;
+  font-size: clamp(2.6rem, 4.4vw, 5rem);
+  line-height: 0.94;
+}
+
+.senior-timing-page .senior-timing-too-late__copy {
+  padding: var(--space-10) 0 var(--space-10) clamp(var(--space-8), 4vw, var(--space-16));
+  border-left: 1px solid var(--senior-timing-line-light);
+}
+
+.senior-timing-page .senior-timing-too-late__copy p {
+  max-width: 62ch;
+  font-size: clamp(1.15rem, 1.45vw, 1.35rem);
+}
+
+.senior-timing-page .senior-timing-golden {
+  padding-block: clamp(var(--space-24), 9vw, var(--space-40));
+  background: var(--color-weathered-sand);
+}
+
+.senior-timing-page .senior-timing-golden__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 0.82fr);
+  gap: clamp(var(--space-12), 7vw, var(--space-28));
+  align-items: center;
+}
+
+.senior-timing-page .senior-timing-golden__image {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.senior-timing-page .senior-timing-golden__image img {
+  object-position: 52% 45%;
+}
+
+.senior-timing-page .senior-timing-golden__copy h2 {
+  max-width: 12ch;
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--senior-timing-line);
+  font-size: clamp(2.75rem, 4.15vw, 4.65rem);
+  line-height: 0.96;
+}
+
+.senior-timing-page .senior-timing-golden__copy p {
+  max-width: 59ch;
+  margin-top: var(--space-6);
+}
+
+.senior-timing-page .senior-timing-booking {
+  padding-block: clamp(var(--space-24), 9vw, var(--space-40));
+  background: var(--color-warm-ivory);
+}
+
+.senior-timing-page .senior-timing-booking__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 0.72fr);
+  border-top: 1px solid var(--senior-timing-line);
+  border-bottom: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-booking__copy {
+  padding: clamp(var(--space-12), 5vw, var(--space-24)) clamp(var(--space-12), 5vw, var(--space-20)) clamp(var(--space-12), 5vw, var(--space-24)) 0;
+}
+
+.senior-timing-page .senior-timing-booking__copy h2 {
+  max-width: 15ch;
+  font-size: clamp(2.75rem, 4.25vw, 4.75rem);
+  line-height: 0.96;
+}
+
+.senior-timing-page .senior-timing-booking__copy > p {
+  max-width: 65ch;
+  margin-top: var(--space-8);
+}
+
+.senior-timing-page .senior-timing-booking__links {
+  margin-top: var(--space-10);
+  border-top: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-booking__links a {
+  display: flex;
+  min-height: 4.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  border-bottom: 1px solid var(--senior-timing-line);
+  font-family: var(--font-utility);
+  font-size: var(--font-size-button);
+  letter-spacing: var(--tracking-button);
+  line-height: 1.35;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.senior-timing-page .senior-timing-booking__links a::after {
+  width: 2.75rem;
+  height: 1px;
+  flex: 0 0 auto;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0.64);
+  transform-origin: right center;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.senior-timing-page .senior-timing-booking__image {
+  min-height: 38rem;
+  overflow: hidden;
+  border-left: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-booking__image img {
+  object-position: 52% 50%;
+}
+
+.senior-timing-page .senior-timing-faq {
+  padding-block: clamp(var(--space-24), 9vw, var(--space-40));
+  background: var(--color-weathered-sand);
+}
+
+.senior-timing-page .senior-timing-faq__inner {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.52fr) minmax(0, 1.48fr);
+  gap: clamp(var(--space-12), 7vw, var(--space-28));
+  align-items: start;
+}
+
+.senior-timing-page .senior-timing-faq__inner > h2 {
+  max-width: none;
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  line-height: 0.94;
+}
+
+.senior-timing-page .senior-timing-faq__list {
+  border-top: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-faq__list details {
+  border-bottom: 1px solid var(--senior-timing-line);
+}
+
+.senior-timing-page .senior-timing-faq__list summary {
+  min-height: 5.5rem;
+  padding: var(--space-5) 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.senior-timing-page .senior-timing-faq__list summary::-webkit-details-marker {
+  display: none;
+}
+
+.senior-timing-page .senior-timing-faq__list summary h3 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--minimum-hit-area);
+  gap: var(--space-8);
+  align-items: center;
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  line-height: 1.12;
+}
+
+.senior-timing-page .senior-timing-faq__toggle {
+  position: relative;
+  display: block;
+  width: var(--minimum-hit-area);
+  height: var(--minimum-hit-area);
+}
+
+.senior-timing-page .senior-timing-faq__toggle::before,
+.senior-timing-page .senior-timing-faq__toggle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.25rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.senior-timing-page .senior-timing-faq__toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.senior-timing-page .senior-timing-faq__list details[open] .senior-timing-faq__toggle::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.senior-timing-page .senior-timing-faq__answer {
+  max-width: 65ch;
+  padding: 0 calc(var(--minimum-hit-area) + var(--space-8)) var(--space-8) 0;
+}
+
+.senior-timing-page .senior-timing-final {
+  position: relative;
+  display: grid;
+  min-height: clamp(40rem, 70vh, 52rem);
+  align-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--color-warm-ivory);
+  background: var(--color-deep-umber);
+}
+
+.senior-timing-page .senior-timing-final__background,
+.senior-timing-page .senior-timing-final__background picture,
+.senior-timing-page .senior-timing-final__background img,
+.senior-timing-page .senior-timing-final__wash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.senior-timing-page .senior-timing-final__background {
+  z-index: -2;
+}
+
+.senior-timing-page .senior-timing-final__background-image {
+  object-position: 50% 48%;
+  filter: saturate(0.82) contrast(1.02) brightness(0.72);
+}
+
+.senior-timing-page .senior-timing-final__wash {
+  z-index: -1;
+  background: rgba(40, 30, 16, 0.58);
+}
+
+.senior-timing-page .senior-timing-final__inner {
+  display: flex;
+  min-height: inherit;
+  align-items: center;
+  padding-block: var(--space-24);
+}
+
+.senior-timing-page .senior-timing-final__copy {
+  max-width: 49rem;
+  padding: clamp(var(--space-10), 5vw, var(--space-20));
+  border-top: 1px solid var(--senior-timing-line-light);
+  border-bottom: 1px solid var(--senior-timing-line-light);
+}
+
+.senior-timing-page .senior-timing-final__copy h2 {
+  max-width: 14ch;
+  font-size: clamp(3rem, 5vw, 5.75rem);
+  line-height: 0.94;
+}
+
+.senior-timing-page .senior-timing-final__copy p {
+  max-width: 51ch;
+  margin-top: var(--space-6);
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-style: italic;
+}
+
+.senior-timing-page .senior-timing-final__copy .outline-button {
+  min-height: var(--minimum-hit-area);
+  margin-top: var(--space-8);
+  border-color: var(--color-warm-ivory);
+  color: var(--color-warm-ivory);
+  background: rgba(40, 30, 16, 0.34);
+}
+
+.senior-timing-page .senior-timing-too-late a:focus-visible,
+.senior-timing-page .senior-timing-final a:focus-visible {
+  outline-color: var(--color-focus-ring-light);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .senior-timing-page .senior-timing-booking__links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .senior-timing-page .senior-timing-final__copy .outline-button:hover {
+    border-color: var(--color-warm-ivory);
+    color: var(--color-deep-umber);
+    background: var(--color-warm-ivory);
+  }
+}
+
+@media (max-width: 1250px) {
+  .senior-timing-page {
+    --senior-timing-gutter: var(--page-gutter-desktop);
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__copy {
+    width: min(56rem, calc(100% - 13rem));
+  }
+
+  .senior-timing-page .senior-timing-answer__inner {
+    gap: var(--space-16);
+  }
+
+  .senior-timing-page .senior-timing-yearbook__inner,
+  .senior-timing-page .senior-timing-golden__inner,
+  .senior-timing-page .senior-timing-too-late__inner,
+  .senior-timing-page .senior-timing-faq__inner {
+    gap: var(--space-16);
+  }
+
+  .senior-timing-page .senior-timing-season__copy {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 1050px) {
+  .senior-timing-page {
+    --senior-timing-gutter: var(--page-gutter-tablet);
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__copy {
+    width: min(44rem, calc(100% - 10rem));
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__title {
+    font-size: clamp(3.25rem, 7.3vw, 5.25rem);
+  }
+
+  .senior-timing-page .senior-timing-answer__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.42fr);
+  }
+
+  .senior-timing-page .senior-timing-answer__arch {
+    min-height: 25rem;
+  }
+
+  .senior-timing-page .senior-timing-yearbook__inner,
+  .senior-timing-page .senior-timing-golden__inner {
+    grid-template-columns: minmax(17rem, 0.82fr) minmax(0, 1.18fr);
+  }
+
+  .senior-timing-page .senior-timing-seasons__contact-sheet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-16) var(--space-6);
+  }
+
+  .senior-timing-page .senior-timing-season--1,
+  .senior-timing-page .senior-timing-season--2,
+  .senior-timing-page .senior-timing-season--3,
+  .senior-timing-page .senior-timing-season--4 {
+    grid-column: auto;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .senior-timing-page .senior-timing-season--4 .senior-timing-season__image {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+  }
+
+  .senior-timing-page .senior-timing-too-late__inner {
+    grid-template-columns: minmax(15rem, 0.68fr) minmax(0, 1.32fr);
+  }
+
+  .senior-timing-page .senior-timing-booking__inner {
+    grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
+  }
+
+  .senior-timing-page .senior-timing-booking__image {
+    min-height: 34rem;
+  }
+
+  .senior-timing-page .senior-timing-faq__inner {
+    grid-template-columns: minmax(13rem, 0.45fr) minmax(0, 1.55fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .senior-timing-page {
+    --senior-timing-gutter: var(--page-gutter-mobile);
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__copy {
+    width: 100%;
+    padding-bottom: 8.75rem;
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__title {
+    max-width: 11ch;
+    font-size: clamp(2.7rem, 13vw, 4.1rem);
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__script {
+    font-size: clamp(2.7rem, 13vw, 4.5rem);
+  }
+
+  .senior-timing-page .senior-timing-byline {
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    padding-inline: var(--page-gutter-mobile);
+    font-size: 0.72rem;
+  }
+
+  .senior-timing-page .senior-timing-answer,
+  .senior-timing-page .senior-timing-yearbook,
+  .senior-timing-page .senior-timing-seasons,
+  .senior-timing-page .senior-timing-too-late,
+  .senior-timing-page .senior-timing-golden,
+  .senior-timing-page .senior-timing-booking,
+  .senior-timing-page .senior-timing-faq {
+    padding-block: var(--space-20);
+  }
+
+  .senior-timing-page .senior-timing-answer__inner,
+  .senior-timing-page .senior-timing-yearbook__inner,
+  .senior-timing-page .senior-timing-too-late__inner,
+  .senior-timing-page .senior-timing-golden__inner,
+  .senior-timing-page .senior-timing-faq__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .senior-timing-page .senior-timing-answer__arch {
+    min-height: auto;
+    padding: var(--space-16) var(--space-2);
+  }
+
+  .senior-timing-page .senior-timing-answer__arch h2,
+  .senior-timing-page .senior-timing-yearbook__copy h2,
+  .senior-timing-page .senior-timing-seasons__header h2,
+  .senior-timing-page .senior-timing-too-late__inner h2,
+  .senior-timing-page .senior-timing-golden__copy h2,
+  .senior-timing-page .senior-timing-booking__copy h2,
+  .senior-timing-page .senior-timing-faq__inner > h2,
+  .senior-timing-page .senior-timing-final__copy h2 {
+    font-size: clamp(2.45rem, 11vw, 3.65rem);
+    line-height: 0.98;
+  }
+
+  .senior-timing-page .senior-timing-answer__arch p {
+    font-size: 1.15rem;
+  }
+
+  .senior-timing-page .senior-timing-answer__note {
+    max-width: 34ch;
+    padding: var(--space-6) 0 0;
+    border-top: 1px solid var(--senior-timing-line);
+    border-left: 0;
+  }
+
+  .senior-timing-page .senior-timing-yearbook__arch {
+    width: min(82vw, 30rem);
+    justify-self: center;
+  }
+
+  .senior-timing-page .senior-timing-yearbook__copy {
+    padding-block: 0;
+  }
+
+  .senior-timing-page .senior-timing-seasons__header {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .senior-timing-page .senior-timing-seasons__header p {
+    justify-self: start;
+  }
+
+  .senior-timing-page .senior-timing-seasons__contact-sheet {
+    grid-template-columns: 1fr;
+    gap: var(--space-16);
+    padding-top: var(--space-12);
+  }
+
+  .senior-timing-page .senior-timing-season--1 .senior-timing-season__image,
+  .senior-timing-page .senior-timing-season--2 .senior-timing-season__image,
+  .senior-timing-page .senior-timing-season--3 .senior-timing-season__image,
+  .senior-timing-page .senior-timing-season--4 .senior-timing-season__image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .senior-timing-page .senior-timing-season__copy {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .senior-timing-page .senior-timing-season__copy h3 {
+    font-size: 1.55rem;
+  }
+
+  .senior-timing-page .senior-timing-too-late__copy {
+    padding: var(--space-8) 0 0;
+    border-top: 1px solid var(--senior-timing-line-light);
+    border-left: 0;
+  }
+
+  .senior-timing-page .senior-timing-golden__image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .senior-timing-page .senior-timing-booking__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .senior-timing-page .senior-timing-booking__copy {
+    padding: var(--space-12) 0;
+  }
+
+  .senior-timing-page .senior-timing-booking__image {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    border-top: 1px solid var(--senior-timing-line);
+    border-left: 0;
+  }
+
+  .senior-timing-page .senior-timing-faq__inner > h2 {
+    max-width: 12ch;
+  }
+
+  .senior-timing-page .senior-timing-faq__list summary h3 {
+    gap: var(--space-4);
+    font-size: 1.45rem;
+  }
+
+  .senior-timing-page .senior-timing-faq__answer {
+    padding-right: calc(var(--minimum-hit-area) + var(--space-4));
+  }
+
+  .senior-timing-page .senior-timing-final {
+    min-height: 42rem;
+    align-items: end;
+  }
+
+  .senior-timing-page .senior-timing-final__background-image {
+    object-position: 57% 50%;
+  }
+
+  .senior-timing-page .senior-timing-final__inner {
+    align-items: end;
+    padding-block: var(--space-16);
+  }
+
+  .senior-timing-page .senior-timing-final__copy {
+    padding: var(--space-10) 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .senior-timing-page {
+    --senior-timing-gutter: var(--page-gutter-small);
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__copy {
+    padding-inline: var(--page-gutter-small);
+  }
+
+  .senior-timing-page > .editorial-hero .editorial-hero__intro {
+    max-width: 31ch;
+  }
+
+  .senior-timing-page .senior-timing-byline span[aria-hidden="true"] {
+    display: none;
+  }
+
+  .senior-timing-page .senior-timing-byline span:not([aria-hidden="true"]) {
+    width: 100%;
+  }
+
+  .senior-timing-page .senior-timing-answer__arch {
+    padding-inline: 0;
+  }
+
+  .senior-timing-page .senior-timing-booking__links a {
+    align-items: flex-start;
+    padding-block: var(--space-5);
+  }
+
+  .senior-timing-page .senior-timing-faq__list summary h3 {
+    font-size: 1.3rem;
+    letter-spacing: 0.09rem;
+  }
+
+  .senior-timing-page .senior-timing-final__background-image {
+    object-position: 61% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .senior-timing-page .senior-timing-booking__links a::after {
+    transition: none;
+  }
+}

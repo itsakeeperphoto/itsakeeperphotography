@@ -9,7 +9,13 @@
   "description": "When should you take senior pictures — and when is it too late? A 20-year senior photographer shares the real timeline, season by season, plus booking tips.",
   "hero": {
     "tone": "olive",
-    "heading": "When Should You Take Senior Pictures?"
+    "heading": "When Should You Take Senior Pictures?",
+    "intro": "Summer before senior year and early fall are the most common windows, but the right time is the one that fits your yearbook deadline, your schedule and your style.",
+    "scriptLine": "your season",
+    "image": "/uploads/journal-senior-golden-hour-tricities.jpg",
+    "imageAlt": "High school senior in a white dress standing among softly lit branches.",
+    "secondaryImage": "/uploads/richland-senior-autumn-dress.jpg",
+    "secondaryImageAlt": "High school senior in a dark dress standing among autumn leaves."
   },
   "sections": [
     {
@@ -26,8 +32,17 @@
       "kind": "prose",
       "tone": "sand",
       "heading": "When Are You Supposed to Take Senior Pictures?",
+      "image": "/uploads/senior-session-summer-light-richland.jpg",
+      "imageAlt": "High school senior in a white dress and tan hat standing in golden grass.",
       "paragraphs": [
+        "There's no official rule — just a practical one: your school's yearbook deadline. Check the deadline published by your school, then work backward so you have time to photograph, choose your favorites, and submit without stress. A summer or early-fall session often gives you that breathing room; see how senior sessions work.",
         "Beyond the yearbook, families time sessions around sports seasons, hair appointments, braces coming off, and — smart ones — the weather they love most."
+      ],
+      "links": [
+        {
+          "label": "see how senior sessions work",
+          "href": "/senior-photographer-tri-cities-wa/"
+        }
       ]
     },
     {
@@ -38,24 +53,32 @@
       "items": [
         {
           "heading": "Spring of junior year",
+          "image": "/uploads/pasco-senior-white-dress-seated-portrait.jpg",
+          "imageAlt": "High school senior in a white dress seated beneath leafy branches.",
           "paragraphs": [
             "Blossoms, green fields and soft light — and you beat the senior-year rush entirely. Choosing spring means your photos are done before applications, sports and lasts-of-everything take over."
           ]
         },
         {
           "heading": "Summer before senior year",
+          "image": "/uploads/pasco-senior-airplane-portrait.jpg",
+          "imageAlt": "High school senior in a white shirt leaning beside a small airplane.",
           "paragraphs": [
-            "The most popular window, for good reason: long golden evenings, tan lines optional, no school-schedule conflicts. In the Tri-Cities, summer golden hour is generous — warm light that lasts and lasts. Book early; these dates go first."
+            "The most popular window, for good reason: long golden evenings, tan lines optional, fewer school-schedule conflicts. In the Tri-Cities, summer golden hour is generous — warm light that lasts and lasts. Book early; these dates go first."
           ]
         },
         {
           "heading": "Early fall of senior year",
+          "image": "/uploads/richland-senior-autumn-portrait.jpg",
+          "imageAlt": "High school senior standing in front of golden autumn foliage.",
           "paragraphs": [
             "October along the river is the Tri-Cities showing off — autumn color, honey light, sweater weather. It's also yearbook-deadline season, so fall sessions book out fastest of all."
           ]
         },
         {
           "heading": "Winter",
+          "image": "/uploads/richland-senior-suit-portrait.jpg",
+          "imageAlt": "High school senior in a dark suit leaning against a concrete column.",
           "paragraphs": [
             "Underrated. Clean light, quiet locations, moody skies — and a calendar with far more open dates. If your style leans dramatic or cozy, winter might be your season."
           ]
@@ -76,6 +99,8 @@
       "kind": "prose",
       "tone": "olive",
       "heading": "What's the Best Time of Day for Senior Pictures Outside?",
+      "image": "/uploads/richland-senior-seated-golden-hour.jpg",
+      "imageAlt": "High school senior with glasses seated in warm evening grass.",
       "paragraphs": [
         "Golden hour — roughly the last 60 to 90 minutes before sunset. The light turns warm and directional, skin looks its best, and backgrounds glow instead of glare. In the Tri-Cities that means an evening session almost year-round; exact timing shifts with the season, and I plan it to the minute for every shoot."
       ]
@@ -85,6 +110,8 @@
       "kind": "split",
       "tone": "sand",
       "heading": "The Tri-Cities Booking Calendar (What Nobody Tells You)",
+      "image": "/uploads/kennewick-senior-riverside-portrait.jpg",
+      "imageAlt": "High school senior standing beside water beneath leafy branches.",
       "paragraphs": [
         "Senior dates fill faster than anything else I photograph. My practical advice, learned from twenty years of local booking patterns: reserve your session four to six weeks before the date you want, and earlier for the golden windows — summer evenings and October. If you're reading this in spring wanting a fall session, now is exactly the right time to reach out."
       ],
@@ -126,6 +153,8 @@
     "paragraphs": [
       "The timeline matters less than this: your senior pictures should look like you — your style, your places, your story. That's what we plan together, and it's the part I've loved for twenty years."
     ],
+    "image": "/uploads/about-story-senior-horse-tricities.jpg",
+    "imageAlt": "High school senior walking with a paint horse across dry grass.",
     "link": {
       "label": "Check my calendar",
       "href": "/contact/"

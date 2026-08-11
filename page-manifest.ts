@@ -254,8 +254,9 @@ export const pageManifest = [
     llms: true,
     primaryRoute: true,
     signature: "crossing-line",
-    title: "When to Take Senior Pictures | Tri-Cities Timeline",
-    summary: "A practical booking timeline for Tri-Cities senior pictures.",
+    title: "When to Take Senior Pictures: A Photographer's Timeline",
+    summary:
+      "A twenty-year senior photographer's season-by-season timeline for Tri-Cities senior pictures.",
   },
   {
     id: "newborn-comparison",

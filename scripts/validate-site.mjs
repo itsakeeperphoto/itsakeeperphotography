@@ -450,6 +450,119 @@ const expandedDirectoryLinkCounts = new Map([
 const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
 const newbornRelative = `newborn-photographer-tri-cities-wa${path.sep}index.html`;
 const aboutRelative = `about${path.sep}index.html`;
+const seniorTimingRelative =
+  `journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`;
+const seniorTimingSource = JSON.parse(
+  await readFile(
+    path.join(root, "content", "pages", "journal-senior-timing.json"),
+    "utf8",
+  ),
+);
+const seniorTimingContract = {
+  title: "When to Take Senior Pictures: A Photographer's Timeline",
+  description:
+    "When should you take senior pictures — and when is it too late? A 20-year senior photographer shares the real timeline, season by season, plus booking tips.",
+  h1: ["When Should You Take Senior Pictures?"],
+  h2: [
+    "The Short Answer",
+    "When Are You Supposed to Take Senior Pictures?",
+    "Season by Season: What Each One Gives You",
+    "When Is It Too Late to Take Senior Pictures?",
+    "What's the Best Time of Day for Senior Pictures Outside?",
+    "The Tri-Cities Booking Calendar (What Nobody Tells You)",
+    "Quick Answers",
+    "Whenever You Shoot, Make It Yours",
+  ],
+  h3: [
+    "Spring of junior year",
+    "Summer before senior year",
+    "Early fall of senior year",
+    "Winter",
+    "Junior or senior year?",
+    "Before or after getting braces off?",
+    "Is winter too cold?",
+  ],
+  anchors: [
+    {
+      href: "/senior-photographer-tri-cities-wa/",
+      label: "see how senior sessions work",
+    },
+    {
+      href: "/senior-photographer-tri-cities-wa/",
+      label: "See how senior sessions work",
+    },
+    {
+      href: "/journal/family-photo-locations-tri-cities/",
+      label: "Best places to take pictures in the Tri-Cities",
+    },
+    { href: "/contact/", label: "Check my calendar" },
+  ],
+  images: [
+    {
+      src: "/uploads/journal-senior-golden-hour-tricities.jpg",
+      alt: "High school senior in a white dress standing among softly lit branches.",
+    },
+    {
+      src: "/uploads/west-richland-senior-woodpile-portrait.jpg",
+      alt: "",
+    },
+    { src: "/uploads/richland-senior-autumn-dress.jpg", alt: "" },
+    {
+      src: "/uploads/senior-session-summer-light-richland.jpg",
+      alt: "High school senior in a white dress and tan hat standing in golden grass.",
+    },
+    {
+      src: "/uploads/pasco-senior-white-dress-seated-portrait.jpg",
+      alt: "High school senior in a white dress seated beneath leafy branches.",
+    },
+    {
+      src: "/uploads/pasco-senior-airplane-portrait.jpg",
+      alt: "High school senior in a white shirt leaning beside a small airplane.",
+    },
+    {
+      src: "/uploads/richland-senior-autumn-portrait.jpg",
+      alt: "High school senior standing in front of golden autumn foliage.",
+    },
+    {
+      src: "/uploads/richland-senior-suit-portrait.jpg",
+      alt: "High school senior in a dark suit leaning against a concrete column.",
+    },
+    {
+      src: "/uploads/richland-senior-seated-golden-hour.jpg",
+      alt: "High school senior with glasses seated in warm evening grass.",
+    },
+    {
+      src: "/uploads/kennewick-senior-riverside-portrait.jpg",
+      alt: "High school senior standing beside water beneath leafy branches.",
+    },
+    {
+      src: "/uploads/about-story-senior-horse-tricities.jpg",
+      alt: "High school senior walking with a paint horse across dry grass.",
+    },
+  ],
+  quickAnswers: [
+    {
+      question: "Junior or senior year?",
+      answer:
+        "Either. Spring junior year or summer/fall senior year are both ideal.",
+    },
+    {
+      question: "Before or after getting braces off?",
+      answer:
+        "After, if the timing is close — or we celebrate the smile you have now. Your call.",
+    },
+    {
+      question: "Is winter too cold?",
+      answer:
+        "We plan around it: shorter sets, warm layers between shots, and light that's worth it.",
+    },
+  ],
+  pending: [
+    "[VALIDAR: fechas concretas de los distritos de Richland, Kennewick y Pasco — dato local que nadie más publica]",
+    "[VALIDAR: si Lisa ofrece esto — Q54]",
+    "[FECHA]",
+  ],
+};
 const serviceMediaContracts = new Map([
   [
     `branding-photographer-tri-cities-wa${path.sep}index.html`,
@@ -726,7 +839,13 @@ for (const file of htmlFiles) {
   const aboutStylesheetHref = stylesheetHrefs.find((href) =>
     /(?:^|\/)about-page[^/]*\.css(?:[?#]|$)/i.test(href),
   );
+  const seniorTimingStylesheetHref = stylesheetHrefs.find((href) =>
+    /(?:^|\/)journal-senior-timing-page[^/]*\.css(?:[?#]|$)/i.test(href),
+  );
   const linkedAboutCss = linkedStylesheets.some((css) => /\.about-page\b/.test(css));
+  const linkedSeniorTimingCss = linkedStylesheets.some((css) =>
+    /\.senior-timing-page\b/.test(css),
+  );
   if (relative === pascoRelative) {
     if (!pascoStylesheetHref || !internalTargetExists(pascoStylesheetHref)) {
       failures.push(`${relative}: route-scoped Pasco stylesheet is missing or broken`);
@@ -747,6 +866,26 @@ for (const file of htmlFiles) {
     }
   } else if (aboutStylesheetHref || linkedAboutCss || /\.about-page\b/.test(source)) {
     failures.push(`${relative}: About CSS leaked into an unrelated route`);
+  }
+  if (relative === seniorTimingRelative) {
+    const seniorTimingCss = seniorTimingStylesheetHref
+      ? await readInternalStylesheet(seniorTimingStylesheetHref)
+      : "";
+    if (
+      !seniorTimingStylesheetHref ||
+      !internalTargetExists(seniorTimingStylesheetHref) ||
+      !/\.senior-timing-page\b/.test(seniorTimingCss)
+    ) {
+      failures.push(
+        `${relative}: route-scoped Senior Timing stylesheet is missing or broken`,
+      );
+    }
+  } else if (
+    seniorTimingStylesheetHref ||
+    linkedSeniorTimingCss ||
+    /\.senior-timing-page\s*\{/.test(source)
+  ) {
+    failures.push(`${relative}: Senior Timing CSS leaked into an unrelated route`);
   }
   const aboutDirectionComment = `<!--\n${aboutDirectionContract}\n-->`;
   if (relative === aboutRelative) {
@@ -882,6 +1021,366 @@ for (const file of htmlFiles) {
       if (new Set(images.slice(start, end).map((image) => image.src)).size !== end - start) {
         failures.push(`${relative}: Headshot team proofs must use distinct sources`);
       }
+    }
+  }
+  if (relative === seniorTimingRelative) {
+    const expectedOrigin = mode === "release"
+      ? "https://www.itsakeeperphotography.com"
+      : "https://itsakeeperphotography.netlify.app";
+    const canonical =
+      `${expectedOrigin}/journal/when-to-book-senior-pictures-tri-cities/`;
+    const expectedSectionIds = [
+      "the-short-answer",
+      "when-are-you-supposed-to-take-senior-pictures",
+      "season-by-season",
+      "when-is-it-too-late",
+      "best-time-of-day",
+      "tri-cities-booking-calendar",
+      "quick-answers",
+    ];
+    const sourceSectionIds = (seniorTimingSource.sections || []).map(
+      (section) => section.id,
+    );
+    if (
+      seniorTimingSource.route !==
+        "/journal/when-to-book-senior-pictures-tri-cities/" ||
+      seniorTimingSource.family !== "article" ||
+      seniorTimingSource.contentStatus !== "draft" ||
+      seniorTimingSource.searchVisibility !== "noindex" ||
+      seniorTimingSource.schemaType !== "Article" ||
+      seniorTimingSource.signature !== "crossing-line" ||
+      seniorTimingSource.title !== seniorTimingContract.title ||
+      seniorTimingSource.description !== seniorTimingContract.description ||
+      JSON.stringify(sourceSectionIds) !== JSON.stringify(expectedSectionIds) ||
+      JSON.stringify(seniorTimingSource.pending) !==
+        JSON.stringify(seniorTimingContract.pending)
+    ) {
+      failures.push(
+        "content/pages/journal-senior-timing.json: draft state, section order, metadata or three pending facts changed",
+      );
+    }
+
+    const titleText = normalizedText(
+      source.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || "",
+    );
+    const descriptionTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "description",
+    );
+    const robotsTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "robots",
+    );
+    const openGraphTypeTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "property")?.toLowerCase() === "og:type",
+    );
+    if (
+      titleText !== seniorTimingContract.title ||
+      htmlAttribute(descriptionTag || "", "content") !==
+        seniorTimingContract.description ||
+      htmlAttribute(robotsTag || "", "content") !==
+        "noindex, nofollow, noarchive" ||
+      htmlAttribute(openGraphTypeTag || "", "content") !== "article" ||
+      !source.includes(`<link rel="canonical" href="${canonical}">`) ||
+      !/data-content-status=["']draft["']/i.test(main) ||
+      !/data-signature-device=["']crossing-line["']/i.test(main)
+    ) {
+      failures.push(
+        `${relative}: title, description, canonical, article OG type or draft/noindex state is invalid`,
+      );
+    }
+
+    const h1Texts = [...main.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h3Texts = [...main.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)]
+      .map((match) => normalizedText(match[1]));
+    if (JSON.stringify(h1Texts) !== JSON.stringify(seniorTimingContract.h1)) {
+      failures.push(`${relative}: Senior Timing must render exactly one approved H1`);
+    }
+    if (JSON.stringify(h2Texts) !== JSON.stringify(seniorTimingContract.h2)) {
+      failures.push(`${relative}: Senior Timing must render the eight approved H2s in order`);
+    }
+    if (JSON.stringify(h3Texts) !== JSON.stringify(seniorTimingContract.h3)) {
+      failures.push(`${relative}: Senior Timing must render the seven approved H3s in order`);
+    }
+
+    const bodyAnchors = [...main.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/gi)]
+      .map((match) => ({
+        href: htmlAttribute(match[0], "href") || "",
+        label: normalizedText(match[1]),
+      }));
+    if (
+      JSON.stringify(bodyAnchors) !== JSON.stringify(seniorTimingContract.anchors) ||
+      JSON.stringify(internalAnchors) !==
+        JSON.stringify(seniorTimingContract.anchors.map((anchor) => anchor.href))
+    ) {
+      failures.push(
+        `${relative}: internal body anchors must remain Senior, Senior, Locations and Contact in order`,
+      );
+    }
+
+    const hero = main.match(
+      /<header\b(?=[^>]*data-editorial-hero-page=["']journal["'])[^>]*>([\s\S]*?)<\/header>/i,
+    )?.[1] || "";
+    const heroButtons = [...hero.matchAll(
+      /<button\b(?=[^>]*data-hero-cta)[^>]*>([\s\S]*?)<\/button>/gi,
+    )];
+    const heroPrints = [...hero.matchAll(
+      /<figure\b(?=[^>]*data-hero-print=["'](?:left|right)["'])[^>]*>[\s\S]*?<\/figure>/gi,
+    )].map((match) => match[0]);
+    if (
+      heroButtons.length !== 1 ||
+      htmlAttribute(heroButtons[0]?.[0] || "", "data-hero-scroll-target") !==
+        "the-short-answer" ||
+      htmlAttribute(heroButtons[0]?.[0] || "", "aria-controls") !==
+        "the-short-answer" ||
+      normalizedText(heroButtons[0]?.[1] || "") !== "Read the timeline" ||
+      /<a\b/i.test(hero) ||
+      heroPrints.length !== 2 ||
+      heroPrints.some(
+        (print) => {
+          const printImage = print.match(/<img\b[^>]*>/i)?.[0] || "";
+          return (
+            !/aria-hidden=["']true["']/i.test(print) ||
+            !hasHtmlAttribute(printImage, "alt") ||
+            (htmlAttribute(printImage, "alt") || "") !== ""
+          );
+        },
+      )
+    ) {
+      failures.push(
+        `${relative}: hero must use one local-scroll button, no anchor and two decorative prints`,
+      );
+    }
+
+    const byline = main.match(
+      /<div\b(?=[^>]*class=["'][^"']*\bsenior-timing-byline\b)[^>]*>([\s\S]*?)<\/div>/i,
+    )?.[1] || "";
+    const bylineSpans = [...byline.matchAll(/<span\b([^>]*)>([\s\S]*?)<\/span>/gi)];
+    const bylineValues = bylineSpans
+      .filter((match) => !/aria-hidden=["']true["']/i.test(match[1]))
+      .map((match) => normalizedText(match[2]));
+    if (
+      JSON.stringify(bylineValues) !==
+        JSON.stringify([
+          "By Lisa Weiss",
+          "It's A Keeper Photography",
+          "Richland, WA",
+        ]) ||
+      /<time\b|\b(?:19|20)\d{2}\b/i.test(byline)
+    ) {
+      failures.push(`${relative}: byline must identify Lisa, the studio and Richland without a date`);
+    }
+
+    const quickAnswers = sectionById(main, "quick-answers");
+    const visibleQuickAnswers = [...quickAnswers.matchAll(
+      /<details\b([^>]*)>([\s\S]*?)<\/details>/gi,
+    )].map((match) => {
+      const summary = match[2].match(
+        /<summary\b[^>]*>([\s\S]*?)<\/summary>/i,
+      )?.[1] || "";
+      const answer = match[2].match(
+        /<div\b(?=[^>]*class=["'][^"']*\bsenior-timing-faq__answer\b)[^>]*>([\s\S]*?)<\/div>/i,
+      )?.[1] || "";
+      return {
+        hidden: /\bhidden\b|aria-hidden=["']true["']/i.test(match[1]),
+        open: /(?:^|\s)open(?:\s|=|$)/i.test(match[1]),
+        question: normalizedText(summary),
+        answer: normalizedText(answer),
+      };
+    });
+    if (
+      visibleQuickAnswers.length !== 3 ||
+      visibleQuickAnswers.some((item) => item.hidden) ||
+      JSON.stringify(
+        visibleQuickAnswers.map(({ question, answer }) => ({ question, answer })),
+      ) !== JSON.stringify(seniorTimingContract.quickAnswers) ||
+      JSON.stringify(visibleQuickAnswers.map((item) => item.open)) !==
+        JSON.stringify([true, false, false])
+    ) {
+      failures.push(
+        `${relative}: Quick Answers must expose three approved native disclosures`,
+      );
+    }
+
+    const pictureBlocks = [...main.matchAll(/<picture\b[^>]*>([\s\S]*?)<\/picture>/gi)]
+      .map((match) => match[1]);
+    const renderedImages = pictureBlocks.map((picture) => {
+      const tag = picture.match(/<img\b[^>]*>/i)?.[0] || "";
+      return {
+        src: htmlAttribute(tag, "src") || "",
+        alt: htmlAttribute(tag, "alt") || "",
+        width: Number(htmlAttribute(tag, "width")),
+        height: Number(htmlAttribute(tag, "height")),
+        loading: htmlAttribute(tag, "loading"),
+        decoding: htmlAttribute(tag, "decoding"),
+        fetchpriority: htmlAttribute(tag, "fetchpriority"),
+      };
+    });
+    if (
+      JSON.stringify(renderedImages.map(({ src, alt }) => ({ src, alt }))) !==
+        JSON.stringify(seniorTimingContract.images) ||
+      new Set(renderedImages.map((image) => image.src)).size !== 11 ||
+      renderedImages.filter((image) => image.alt).length !== 9
+    ) {
+      failures.push(`${relative}: rendered 11-image src+alt order changed`);
+    }
+    for (const [index, image] of renderedImages.entries()) {
+      const picture = pictureBlocks[index] || "";
+      const webpSources = (picture.match(/<source\b[^>]*>/gi) || [])
+        .filter((tag) => htmlAttribute(tag, "type") === "image/webp");
+      const responsivePaths = webpSources.flatMap((tag) =>
+        (htmlAttribute(tag, "srcset") || "")
+          .split(",")
+          .map((candidate) => candidate.trim().split(/\s+/, 1)[0])
+          .filter(Boolean),
+      );
+      const sourcePath = path.join(root, "public", image.src.replace(/^\//, ""));
+      let sourceDimensionsMatch = false;
+      if (existsSync(sourcePath) && image.width > 0 && image.height > 0) {
+        const metadata = await sharp(sourcePath).metadata();
+        sourceDimensionsMatch =
+          metadata.width === image.width && metadata.height === image.height;
+      }
+      if (
+        image.loading !== (index < 3 ? "eager" : "lazy") ||
+        image.decoding !== "async" ||
+        (index === 0 ? image.fetchpriority !== "high" : image.fetchpriority === "high") ||
+        !internalTargetExists(image.src) ||
+        !sourceDimensionsMatch ||
+        responsivePaths.length < 2 ||
+        responsivePaths.some((asset) => !/\.webp$/i.test(asset) || !internalTargetExists(asset))
+      ) {
+        failures.push(
+          `${relative}: image ${index + 1} violates loading, priority, intrinsic-size or responsive-WebP contract`,
+        );
+      }
+    }
+
+    const schemas = parseJsonLd(source, relative);
+    const articles = schemas.filter((schema) => schema?.["@type"] === "Article");
+    const faqSchemas = schemas.filter((schema) => schema?.["@type"] === "FAQPage");
+    const breadcrumbs = schemas.filter(
+      (schema) => schema?.["@type"] === "BreadcrumbList",
+    );
+    const topLevelServices = schemas.filter(
+      (schema) => schema?.["@type"] === "Service",
+    );
+    const schemaObjects = schemas.flatMap(nestedSchemaObjects);
+    const unsafeSchema = schemaObjects.some((schema) =>
+      ["Review", "AggregateRating", "GeoCoordinates"].includes(schema?.["@type"]) ||
+      Object.keys(schema).some((key) =>
+        ["streetaddress", "latitude", "longitude"].includes(key.toLowerCase()) ||
+        key.toLowerCase().startsWith("gps"),
+      ),
+    );
+    const article = articles[0];
+    const articleAbout = Array.isArray(article?.about)
+      ? article.about.map((item) => [item?.["@type"], item?.name])
+      : [];
+    const articleCities = Array.isArray(article?.spatialCoverage)
+      ? article.spatialCoverage.map((item) => item?.name)
+      : [];
+    if (
+      articles.length !== 1 ||
+      faqSchemas.length !== 1 ||
+      breadcrumbs.length !== 1 ||
+      topLevelServices.length !== 0 ||
+      unsafeSchema ||
+      article?.["@id"] !== `${canonical}#webpage` ||
+      article?.url !== canonical ||
+      article?.name !== seniorTimingContract.title ||
+      article?.description !== seniorTimingContract.description ||
+      article?.headline !== seniorTimingContract.title ||
+      article?.author?.["@id"] !== `${expectedOrigin}/#lisa` ||
+      article?.publisher?.["@id"] !== `${expectedOrigin}/#business` ||
+      article?.image !==
+        `${expectedOrigin}/uploads/journal-senior-golden-hour-tricities.jpg` ||
+      article?.primaryImageOfPage?.url !==
+        `${expectedOrigin}/uploads/journal-senior-golden-hour-tricities.jpg` ||
+      article?.isPartOf?.["@id"] !== `${expectedOrigin}/#website` ||
+      article?.mainEntityOfPage?.["@id"] !== canonical ||
+      article?.inLanguage !== "en-US" ||
+      Object.hasOwn(article || {}, "datePublished") ||
+      Object.hasOwn(article || {}, "dateModified") ||
+      JSON.stringify(articleAbout) !==
+        JSON.stringify([
+          ["Thing", "Senior pictures"],
+          ["Place", "Tri-Cities, Washington"],
+        ]) ||
+      JSON.stringify(articleCities) !==
+        JSON.stringify(["Richland", "Kennewick", "Pasco"]) ||
+      article?.spatialCoverage?.[0]?.containedInPlace?.["@type"] !== "State" ||
+      article?.spatialCoverage?.[0]?.containedInPlace?.name !== "Washington"
+    ) {
+      failures.push(
+        `${relative}: Article/FAQ/Breadcrumb top-level schema or claim-safety contract is invalid`,
+      );
+    }
+
+    const firstParagraph = (section) => normalizedText(
+      section.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] || "",
+    );
+    const shortAnswerSection = sectionById(main, "the-short-answer");
+    const tooLateSection = sectionById(main, "when-is-it-too-late");
+    const goldenHourSection = sectionById(main, "best-time-of-day");
+    const visibleFaqPairs = [
+      {
+        question: h1Texts[0],
+        answer: firstParagraph(
+          shortAnswerSection.match(
+            /<div\b(?=[^>]*class=["'][^"']*\bsenior-timing-answer__arch\b)[^>]*>([\s\S]*?)<\/div>/i,
+          )?.[1] || "",
+        ),
+      },
+      {
+        question: normalizedText(
+          tooLateSection.match(/<h2\b[^>]*>([\s\S]*?)<\/h2>/i)?.[1] || "",
+        ),
+        answer: firstParagraph(tooLateSection),
+      },
+      {
+        question: normalizedText(
+          goldenHourSection.match(/<h2\b[^>]*>([\s\S]*?)<\/h2>/i)?.[1] || "",
+        ),
+        answer: firstParagraph(goldenHourSection),
+      },
+    ];
+    const faqEntities = faqSchemas[0]?.mainEntity || [];
+    if (
+      faqEntities.length !== 3 ||
+      visibleFaqPairs.some(
+        (pair, index) =>
+          faqEntities[index]?.["@type"] !== "Question" ||
+          faqEntities[index]?.acceptedAnswer?.["@type"] !== "Answer" ||
+          faqEntities[index]?.name !== pair.question ||
+          faqEntities[index]?.acceptedAnswer?.text !== pair.answer,
+      )
+    ) {
+      failures.push(
+        `${relative}: FAQPage must map the three approved visible question/answer pairs 1:1`,
+      );
+    }
+
+    const breadcrumbItems = breadcrumbs[0]?.itemListElement || [];
+    const expectedBreadcrumbs = [
+      { position: 1, name: "Home", item: `${expectedOrigin}/` },
+      { position: 2, name: "Journal", item: `${expectedOrigin}/journal/` },
+      { position: 3, name: "When to Take Senior Pictures", item: canonical },
+    ];
+    if (
+      breadcrumbItems.length !== 3 ||
+      breadcrumbItems.some(
+        (item, index) =>
+          item?.["@type"] !== "ListItem" ||
+          item?.position !== expectedBreadcrumbs[index].position ||
+          item?.name !== expectedBreadcrumbs[index].name ||
+          item?.item !== expectedBreadcrumbs[index].item,
+      )
+    ) {
+      failures.push(
+        `${relative}: BreadcrumbList must resolve Home, Journal and the Senior Timing article`,
+      );
     }
   }
   if (relative === aboutRelative) {
@@ -2107,6 +2606,16 @@ const sitemap = await readFile(path.join(output, "sitemap.xml"), "utf8");
 const robots = await readFile(path.join(output, "robots.txt"), "utf8");
 const llms = await readFile(path.join(output, "llms.txt"), "utf8");
 const headers = await readFile(path.join(output, "_headers"), "utf8");
+const seniorTimingPublicationPath =
+  "/journal/when-to-book-senior-pictures-tri-cities/";
+if (
+  sitemap.includes(seniorTimingPublicationPath) ||
+  llms.includes(seniorTimingPublicationPath)
+) {
+  failures.push(
+    "Senior Timing article: draft route must remain excluded from sitemap.xml and llms.txt",
+  );
+}
 const netlifyHeaderBlocks = [];
 let activeHeaderBlock = null;
 for (const line of headers.split(/\r?\n/)) {
