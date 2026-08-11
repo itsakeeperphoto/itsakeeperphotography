@@ -18,6 +18,9 @@
 **Cierre documental Senior Timing:** incluido en el commit local
 `docs(journal): record senior timing redesign`; no se hizo push.
 
+**HEAD documental actual:** `2c47def` —
+`docs(journal): record senior timing redesign`
+
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
@@ -30,9 +33,15 @@ edición externa, envío de formulario ni `./scripts/handoff.sh`.
 
 ## Siguiente paso concreto
 
-Publicar los diez commits acumulados cuando el usuario lo decida y verificar el
-deploy. Codex no hizo push. El cierre documental no cambia el gate de la ruta:
-`/journal/when-to-book-senior-pictures-tri-cities/` sigue
+Auditar y rediseñar
+`/journal/in-home-vs-studio-newborn-photography/` con el copy definitivo de
+`paginas/17-journal-newborn.md`, fotografía existente verificable, comps
+image-first y QA en 1440/1200/900/390. La calidad visual no autoriza por sí sola
+`ready/index`: validar primero los hechos pendientes y una fecha editorial real.
+
+Los diez commits acumulados permanecen locales hasta que el usuario decida
+publicarlos. Codex no hizo push. El cierre documental Senior Timing no cambia
+su gate: `/journal/when-to-book-senior-pictures-tri-cities/` sigue
 `draft/noindex`, con header release noindex y fuera de sitemap/`llms.txt`.
 
 Después de un push/deploy autorizado, verificar en el host final que la ruta
@@ -235,8 +244,9 @@ propios commits, porque ese script hace push.
 
 ## Bloqueadores externos
 
-1. Revisar y commitear localmente los nueve documentos de este cierre; después,
-   el usuario publica los diez commits acumulados. Codex no hace push.
+1. El usuario decide cuándo publicar los diez commits locales acumulados; este
+   pendiente externo no bloquea el rediseño local del artículo Newborn. Codex
+   no hace push.
 2. Aprobar una fecha editorial real antes de cambiar Senior Timing a
    `ready/index` o generar `lastModified`.
 3. Lisa debe confirmar Q54 si se desea recuperar la pregunta multi-season; los

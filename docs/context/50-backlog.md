@@ -88,11 +88,16 @@
   retry ni analítica personalizada. Tina release integral, validadores 21/21,
   Playwright 1440/1200/900/390 y no-JS 390 aprobados; Contact conserva
   `ready/index`, sitemap 10, `llms.txt` 9 y schema.
-- [ ] **19. Cerrar documentación y publicar el lote local acumulado.** La
-  implementación Senior Timing está en `bcbadae`; `main` está nueve commits por
-  delante de `origin/main` (`b504f84`) y este cierre documental sigue unstaged.
-  Tras revisar y crear su commit local separado, el usuario publica el historial
-  completo. Codex no ejecuta push ni `./scripts/handoff.sh`.
+- [x] **19. Cerrar documentación del lote Senior Timing.** La implementación
+  está en `bcbadae` y el cierre documental en `2c47def`; `main` quedó diez
+  commits por delante de `origin/main` (`b504f84`) con worktree limpio. El
+  usuario conserva la publicación del historial completo. Codex no ejecutó push
+  ni `./scripts/handoff.sh`.
+- [ ] **19A. Rediseñar el artículo comparativo Newborn.** Auditar
+  `/journal/in-home-vs-studio-newborn-photography/`, reconciliar el copy
+  definitivo de `paginas/17-journal-newborn.md`, inventariar fotografía local,
+  generar comps image-first e implementar un renderer editorial aislado con QA
+  1440/1200/900/390. No publicar ni resolver hechos/fecha por inferencia.
 - [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
@@ -350,9 +355,9 @@ sin reemplazar el archivo.
   `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
 - [ ] Publicar el lote local creado a partir de `b504f84`: historial gated de
   Contact y su reversión, media Branding/Headshots, Kind Words, Senior Timing
-  funcional `bcbadae` y los cierres documentales. Antes de este cierre docs,
-  `main` está nueve commits por delante; después del commit docs esperado estará
-  diez. Codex no ejecuta push; el usuario conserva esa operación.
+  funcional `bcbadae` y cierre documental `2c47def`. `main` está diez commits
+  por delante de `origin/main`; Codex no ejecuta push y el usuario conserva esa
+  operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
