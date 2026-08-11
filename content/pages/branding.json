@@ -11,10 +11,10 @@
     "tone": "walnut",
     "heading": "Branding Photography for Tri-Cities Businesses",
     "intro": "Custom business photography in Richland, Kennewick and Pasco — warm, genuine images of you, your work and your space, made to carry your marketing for the whole year.",
-    "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
-    "imageAlt": "Lisa Weiss reviewing photographs on the back of her camera during a branding session.",
-    "secondaryImage": "/uploads/business-branding-portrait-richland.jpg",
-    "secondaryImageAlt": "Tri-Cities business owner smiling during a personal branding portrait against a brick wall.",
+    "image": "/uploads/branding-chef-kitchen-richland-wa.jpg",
+    "imageAlt": "Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session.",
+    "secondaryImage": "/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg",
+    "secondaryImageAlt": "Business owner standing beside a kitchen island during a West Richland branding session.",
     "links": [
       {
         "label": "Plan Your Branding Session",
@@ -28,10 +28,10 @@
       "kind": "prose",
       "tone": "sand",
       "heading": "People Hire People",
-      "image": "/uploads/business-branding-portrait-richland.jpg",
-      "imageAlt": "Tri-Cities business owner smiling during a personal branding portrait against a brick wall.",
-      "secondaryImage": "/uploads/review-lisa-griffith-headshot-tricities.jpg",
-      "secondaryImageAlt": "Business professional photographed in a warm studio headshot against a dark background.",
+      "image": "/uploads/business-owner-kitchen-branding-west-richland-wa.jpg",
+      "imageAlt": "Business owner leaning on a kitchen counter during a West Richland personal branding session.",
+      "secondaryImage": "/uploads/professional-headshot-man-blue-shirt-kennewick-wa.jpg",
+      "secondaryImageAlt": "Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.",
       "paragraphs": [
         "Nobody hires a logo. They hire a person — and in a community like the Tri-Cities, they usually hire the person they feel like they already know.",
         "That's what branding photography actually does. It introduces you before you've said a word.",
@@ -43,10 +43,6 @@
       "kind": "split",
       "tone": "olive",
       "heading": "Custom Business Photography, Built Around You",
-      "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
-      "imageAlt": "Lisa Weiss working with her camera during a portrait session.",
-      "secondaryImage": "/uploads/business-branding-portrait-richland.jpg",
-      "secondaryImageAlt": "Personal branding portrait of a Tri-Cities business owner in natural light.",
       "paragraphs": [
         "No two sessions look the same, because no two businesses have the same story.",
         "I plan yours around your brand's colors, your actual spaces, your tools, your process — and mostly around you, at ease and in your element. The result is a library of images that work everywhere you show up: your website, Instagram, your Google Business Profile, your newsletter, and the local feature you haven't landed yet."
@@ -61,24 +57,32 @@
       "items": [
         {
           "heading": "You",
+          "image": "/uploads/pianist-creative-branding-portrait-richland-wa.jpg",
+          "imageAlt": "Pianist seated beside sheet music in a layered creative portrait made in Richland.",
           "paragraphs": [
             "portraits that feel like your brand rather than like a passport photo. These double as your headshots."
           ]
         },
         {
           "heading": "Your work",
+          "image": "/uploads/chef-cooking-branding-action-richland-wa.jpg",
+          "imageAlt": "Chef stirring vegetables on a stovetop during a Richland business branding session.",
           "paragraphs": [
             "hands, tools, process, craft. The evidence that you actually do the thing."
           ]
         },
         {
           "heading": "Your space",
+          "image": "/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg",
+          "imageAlt": "Business owner standing beside a kitchen island during a West Richland branding session.",
           "paragraphs": [
             "the studio, shop, office or corner of the world where it happens."
           ]
         },
         {
           "heading": "Your details",
+          "image": "/uploads/chef-saute-pan-branding-detail-richland-wa.jpg",
+          "imageAlt": "Chef stirring vegetables in a pan during a close-up Richland branding photograph.",
           "paragraphs": [
             "products, textures, materials, the small things your clients notice and you've stopped seeing."
           ]
@@ -114,10 +118,10 @@
       "kind": "services",
       "tone": "earth",
       "heading": "Who Books Branding Sessions With Me",
-      "image": "/uploads/business-branding-portrait-richland.jpg",
-      "imageAlt": "Tri-Cities business owner photographed for a warm personal branding portrait.",
-      "secondaryImage": "/uploads/review-lisa-griffith-headshot-tricities.jpg",
-      "secondaryImageAlt": "Business professional photographed for a warm studio headshot.",
+      "image": "/uploads/businesswoman-working-desk-richland-wa.jpg",
+      "imageAlt": "Business owner writing at her desk during a Richland workplace branding session.",
+      "secondaryImage": "/uploads/business-partners-office-portrait-richland-wa.jpg",
+      "secondaryImageAlt": "Two business professionals posing together in their Richland office.",
       "paragraphs": [
         "Tri-Cities entrepreneurs, makers, wellness professionals, realtors, salons, boutiques, coaches and small teams. People whose business is personal.",
         "If your clients choose you — your style, your process, the way you make them feel — rather than comparing your price list to someone else's, branding photography is built for you.",
@@ -225,8 +229,8 @@
     "paragraphs": [
       "Tell me about your business and where you want it to go."
     ],
-    "image": "/uploads/lisa-photographer-at-work-black-white.jpg",
-    "imageAlt": "Lisa Weiss working behind the camera during a portrait session.",
+    "image": "/uploads/business-team-outside-office-kennewick-wa.jpg",
+    "imageAlt": "Four business professionals standing outside their Kennewick workplace.",
     "link": {
       "label": "Start planning",
       "href": "/contact/"

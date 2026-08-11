@@ -2,13 +2,27 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
+import {
+  buildSafeXmp,
+  validateImageSeoManifest,
+} from "./lib/image-xmp.mjs";
 
 const uploadsDir = path.join(process.cwd(), "public", "uploads");
+const imageSeoManifestPath = path.join(
+  process.cwd(),
+  "config",
+  "image-seo-metadata.json"
+);
 const widths = [400, 640, 960, 1440];
 const sourcePattern = /\.(?:jpe?g|png|webp)$/i;
 const generatedPattern = /-(?:400|640|960|1440|mobile|desktop)\.webp$/i;
 
-const files = await fs.readdir(uploadsDir);
+const [files, manifestSource, manifestStat] = await Promise.all([
+  fs.readdir(uploadsDir),
+  fs.readFile(imageSeoManifestPath, "utf8"),
+  fs.stat(imageSeoManifestPath),
+]);
+const imageSeoManifest = validateImageSeoManifest(JSON.parse(manifestSource));
 const sourceFiles = files.filter(
   (file) => sourcePattern.test(file) && !generatedPattern.test(file)
 );
@@ -38,9 +52,14 @@ for (const [base, file] of byBase) {
     const output = path.join(uploadsDir, `${base}-${width}.webp`);
     const outputStat = await fs.stat(output).catch(() => null);
 
-    if (outputStat && outputStat.mtimeMs >= inputStat.mtimeMs) continue;
+    const seoMetadata = imageSeoManifest.assets[file];
+    const requiredMtime = seoMetadata
+      ? Math.max(inputStat.mtimeMs, manifestStat.mtimeMs)
+      : inputStat.mtimeMs;
 
-    jobs.push({ input, output, width });
+    if (outputStat && outputStat.mtimeMs >= requiredMtime) continue;
+
+    jobs.push({ input, output, width, seoMetadata });
   }
 }
 
@@ -52,10 +71,16 @@ async function runWorker() {
     const job = jobs[nextJob];
     nextJob += 1;
 
-    await sharp(job.input)
+    const pipeline = sharp(job.input)
+      .rotate()
       .resize({ width: job.width, withoutEnlargement: true })
-      .webp({ quality: 72, effort: 4, smartSubsample: true })
-      .toFile(job.output);
+      .webp({ quality: 72, effort: 4, smartSubsample: true });
+
+    if (job.seoMetadata) {
+      pipeline.withXmp(buildSafeXmp(imageSeoManifest, job.seoMetadata));
+    }
+
+    await pipeline.toFile(job.output);
   }
 }
 

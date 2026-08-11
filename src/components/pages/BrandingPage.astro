@@ -65,6 +65,16 @@ const faqItems = (questions.items || []).map((item) => ({
   linkedParagraphs: linkParagraphs(item.paragraphs, item.links),
 }));
 
+const brandingMosaicMedia = [0, 1, 2, 3].map((index) => {
+  const item = photograph.items?.[index];
+  if (!item?.image || !item.imageAlt) {
+    throw new Error(
+      "Branding page requires four complete What We'll Photograph images.",
+    );
+  }
+  return { image: item.image, imageAlt: item.imageAlt };
+});
+
 const lisaWorkingImage = "/uploads/lisa-photographer-at-work-black-white.jpg";
 const lisaPortraitImage = "/uploads/lisa-photographer-tricities.jpg";
 const businessPortraitImage =
@@ -205,8 +215,8 @@ const businessHeadshotImage =
           data-branding-photo="portrait"
         >
           <Picture
-            src={custom.secondaryImage || businessPortraitImage}
-            alt={custom.secondaryImageAlt || ""}
+            src={brandingMosaicMedia[0].image}
+            alt={brandingMosaicMedia[0].imageAlt}
             loading="lazy"
             decoding="async"
             responsiveSrcset
@@ -221,8 +231,8 @@ const businessHeadshotImage =
         >
           <span class="branding-tape" aria-hidden="true"></span>
           <Picture
-            src={custom.image || lisaWorkingImage}
-            alt={custom.imageAlt || ""}
+            src={brandingMosaicMedia[1].image}
+            alt={brandingMosaicMedia[1].imageAlt}
             loading="lazy"
             decoding="async"
             responsiveSrcset
@@ -237,7 +247,7 @@ const businessHeadshotImage =
           aria-hidden="true"
         >
           <Picture
-            src={businessHeadshotImage}
+            src={brandingMosaicMedia[3].image}
             alt=""
             loading="lazy"
             decoding="async"
@@ -253,7 +263,7 @@ const businessHeadshotImage =
           aria-hidden="true"
         >
           <Picture
-            src={lisaPortraitImage}
+            src={brandingMosaicMedia[2].image}
             alt=""
             loading="lazy"
             decoding="async"

@@ -1,7 +1,12 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import path from "node:path";
+import sharp from "sharp";
+import {
+  buildSafeXmp,
+  validateImageSeoManifest,
+} from "./lib/image-xmp.mjs";
 
 const mode = process.env.SITE_MODE || process.env.PUBLICATION_MODE || "staging";
 const root = process.cwd();
@@ -24,6 +29,69 @@ const htmlFiles = (await collectHtml(output)).filter(
   (file) => !file.includes(`${path.sep}admin${path.sep}`)
 );
 const failures = [];
+const imageSeoManifest = validateImageSeoManifest(
+  JSON.parse(
+    await readFile(
+      path.join(root, "config", "image-seo-metadata.json"),
+      "utf8",
+    ),
+  ),
+);
+
+for (const [filename, asset] of Object.entries(imageSeoManifest.assets)) {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/.test(filename)) {
+    failures.push(`${filename}: image SEO filename must be lowercase kebab-case`);
+  }
+  if (asset.description.length < 10 || asset.description.length > 125) {
+    failures.push(`${filename}: image SEO description must be 10-125 characters`);
+  }
+
+  const sourcePath = path.join(root, "public", "uploads", filename);
+  if (!existsSync(sourcePath)) {
+    failures.push(`${filename}: image SEO source is missing`);
+    continue;
+  }
+
+  const sourceStat = await stat(sourcePath);
+  const sourceMetadata = await sharp(sourcePath).metadata();
+  const expectedXmp = buildSafeXmp(imageSeoManifest, asset);
+  if (
+    sourceMetadata.format !== "jpeg" ||
+    !sourceMetadata.width ||
+    !sourceMetadata.height ||
+    Math.max(sourceMetadata.width, sourceMetadata.height) > 2400 ||
+    sourceStat.size > 700 * 1024 ||
+    sourceMetadata.exif ||
+    sourceMetadata.iptc ||
+    sourceMetadata.icc ||
+    sourceMetadata.orientation ||
+    sourceMetadata.xmp?.toString() !== expectedXmp
+  ) {
+    failures.push(`${filename}: JPEG dimensions, weight or safe-XMP contract failed`);
+  }
+
+  const base = filename.replace(/\.jpg$/, "");
+  for (const width of [400, 640, 960, 1440]) {
+    const variantName = `${base}-${width}.webp`;
+    const variantPath = path.join(root, "public", "uploads", variantName);
+    if (!existsSync(variantPath)) {
+      failures.push(`${variantName}: responsive WebP is missing`);
+      continue;
+    }
+    const variantMetadata = await sharp(variantPath).metadata();
+    if (
+      variantMetadata.format !== "webp" ||
+      variantMetadata.width !== width ||
+      variantMetadata.exif ||
+      variantMetadata.iptc ||
+      variantMetadata.icc ||
+      variantMetadata.orientation ||
+      variantMetadata.xmp?.toString() !== expectedXmp
+    ) {
+      failures.push(`${variantName}: responsive safe-XMP contract failed`);
+    }
+  }
+}
 const homepageContent = JSON.parse(
   await readFile(path.join(root, "content", "homepage", "index.json"), "utf8"),
 );
@@ -382,6 +450,133 @@ const expandedDirectoryLinkCounts = new Map([
 const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
 const newbornRelative = `newborn-photographer-tri-cities-wa${path.sep}index.html`;
 const aboutRelative = `about${path.sep}index.html`;
+const serviceMediaContracts = new Map([
+  [
+    `branding-photographer-tri-cities-wa${path.sep}index.html`,
+    {
+      pageClass: "branding-page",
+      minimumUnique: 10,
+      maximumUses: 2,
+      mosaicRange: [5, 9],
+      triptychRange: [9, 12],
+      images: [
+        {
+          src: "/uploads/branding-chef-kitchen-richland-wa.jpg",
+          alt: "Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session.",
+        },
+        {
+          src: "/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg",
+          alt: "",
+        },
+        { src: "/uploads/lisa-photographer-tricities.jpg", alt: "" },
+        {
+          src: "/uploads/business-owner-kitchen-branding-west-richland-wa.jpg",
+          alt: "Business owner leaning on a kitchen counter during a West Richland personal branding session.",
+        },
+        {
+          src: "/uploads/professional-headshot-man-blue-shirt-kennewick-wa.jpg",
+          alt: "Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.",
+        },
+        {
+          src: "/uploads/pianist-creative-branding-portrait-richland-wa.jpg",
+          alt: "Pianist seated beside sheet music in a layered creative portrait made in Richland.",
+        },
+        {
+          src: "/uploads/chef-cooking-branding-action-richland-wa.jpg",
+          alt: "Chef stirring vegetables on a stovetop during a Richland business branding session.",
+        },
+        {
+          src: "/uploads/chef-saute-pan-branding-detail-richland-wa.jpg",
+          alt: "",
+        },
+        {
+          src: "/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg",
+          alt: "",
+        },
+        {
+          src: "/uploads/businesswoman-working-desk-richland-wa.jpg",
+          alt: "Business owner writing at her desk during a Richland workplace branding session.",
+        },
+        {
+          src: "/uploads/business-partners-office-portrait-richland-wa.jpg",
+          alt: "Two business professionals posing together in their Richland office.",
+        },
+        {
+          src: "/uploads/lisa-photographer-tricities.jpg",
+          alt: "Lisa Weiss holding her camera for a professional portrait.",
+        },
+        {
+          src: "/uploads/business-team-outside-office-kennewick-wa.jpg",
+          alt: "",
+        },
+      ],
+    },
+  ],
+  [
+    `headshot-photographer-tri-cities-wa${path.sep}index.html`,
+    {
+      pageClass: "headshot-page",
+      minimumUnique: 10,
+      maximumUses: 2,
+      teamsRange: [9, 11],
+      images: [
+        {
+          src: "/uploads/business-professional-working-laptop-richland-wa.jpg",
+          alt: "Business professional working at a laptop during a Richland branding session.",
+        },
+        {
+          src: "/uploads/professional-headshot-woman-neutral-backdrop.jpg",
+          alt: "",
+        },
+        {
+          src: "/uploads/professional-headshot-woman-black-top-kennewick-wa.jpg",
+          alt: "",
+        },
+        {
+          src: "/uploads/investment-lisa-studio-portrait-camera.jpg",
+          alt: "Lisa Weiss standing with her camera beside portable lights and reflectors.",
+        },
+        {
+          src: "/uploads/professional-headshot-woman-blue-top-kennewick-wa.jpg",
+          alt: "Smiling woman in a blue top photographed during a Kennewick team headshot session.",
+        },
+        {
+          src: "/uploads/professional-headshot-woman-neutral-backdrop.jpg",
+          alt: "Smiling woman with long blonde hair against a neutral studio backdrop.",
+        },
+        {
+          src: "/uploads/professional-headshot-man-glasses-kennewick-wa.jpg",
+          alt: "",
+        },
+        {
+          src: "/uploads/personal-branding-portrait-sofa-west-richland-wa.jpg",
+          alt: "Business owner seated on a black leather sofa during a West Richland branding portrait.",
+        },
+        {
+          src: "/uploads/professional-headshot-man-blue-shirt-kennewick-wa.jpg",
+          alt: "Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.",
+        },
+        {
+          src: "/uploads/professional-headshot-woman-black-top-kennewick-wa.jpg",
+          alt: "Smiling woman in a black top photographed during a Kennewick team headshot session.",
+        },
+        {
+          src: "/uploads/professional-headshot-man-glasses-kennewick-wa.jpg",
+          alt: "Smiling man wearing glasses photographed during a Kennewick team headshot session.",
+        },
+        {
+          src: "/uploads/about-lisa-photographing-tricities.jpg",
+          alt: "Lisa Weiss photographing a portrait outdoors with her camera.",
+        },
+        {
+          src: "/uploads/businesswoman-coffee-branding-portrait-richland-wa.jpg",
+          alt: "Business professional holding a coffee cup during a relaxed Richland branding portrait.",
+        },
+        { src: "/uploads/business-team-meeting-richland-wa.jpg", alt: "" },
+      ],
+    },
+  ],
+]);
 const aboutDirectionContract = `THESIS: Lisa's About page is a keeper archive of why and how she photographs; it refuses generic credential cards.
 OWN-WORLD: Warm ivory, sand, olive, walnut and umber fields; arched portraits, square prints and one-pixel ledgers; no badges or decorative shadows.
 STORY: Her children begin the work, the name and camera open the door, twenty years shape the method, and verified recognition earns the inquiry.
@@ -616,6 +811,77 @@ for (const file of htmlFiles) {
     }
     if (!/href="https:\/\/www\.itsakeeperphotography\.com(?:\/|[^\"]*\/)"/i.test(source)) {
       failures.push(`${relative}: release canonical does not use the custom-domain origin`);
+    }
+  }
+  const serviceMediaContract = serviceMediaContracts.get(relative);
+  if (serviceMediaContract) {
+    if (
+      !new RegExp(
+        `<article\\b[^>]*class=["'][^"']*\\b${serviceMediaContract.pageClass}\\b`,
+        "i",
+      ).test(main)
+    ) {
+      failures.push(`${relative}: service page article class is missing`);
+    }
+
+    const imageTags = main.match(/<img\b[^>]*>/gi) || [];
+    const images = imageTags.map((tag) => ({
+      src: htmlAttribute(tag, "src") || "",
+      alt: decodeHtml(htmlAttribute(tag, "alt") || "").trim(),
+    }));
+    const usage = new Map();
+    for (const image of images) {
+      usage.set(image.src, (usage.get(image.src) || 0) + 1);
+    }
+    const uniqueSources = new Set(images.map((image) => image.src));
+    const overusedSources = [...usage.entries()]
+      .filter(([, count]) => count > serviceMediaContract.maximumUses)
+      .map(([src, count]) => `${src}×${count}`);
+    const meaningfulAltsAreValid = images.every(
+      ({ alt }) => !alt || (alt.length >= 10 && alt.length <= 125),
+    );
+    const modernSources = (main.match(
+      /<source\b[^>]*type=["']image\/webp["'][^>]*>/gi,
+    ) || []).length;
+
+    if (JSON.stringify(images) !== JSON.stringify(serviceMediaContract.images)) {
+      failures.push(`${relative}: rendered service image src+alt order changed`);
+    }
+    if (
+      uniqueSources.size < serviceMediaContract.minimumUnique ||
+      overusedSources.length ||
+      images[0]?.src === images.at(-1)?.src ||
+      !meaningfulAltsAreValid ||
+      modernSources < images.length
+    ) {
+      failures.push(
+        `${relative}: service media must keep ${serviceMediaContract.minimumUnique}+ unique sources, max ${serviceMediaContract.maximumUses} uses, distinct hero/final, valid alts and responsive WebP (${overusedSources.join(", ")})`,
+      );
+    }
+
+    for (const image of images) {
+      if (!image.src.startsWith("/uploads/") || !internalTargetExists(image.src)) {
+        failures.push(`${relative}: missing service image ${image.src}`);
+      }
+    }
+
+    if (serviceMediaContract.mosaicRange) {
+      const [start, end] = serviceMediaContract.mosaicRange;
+      if (new Set(images.slice(start, end).map((image) => image.src)).size !== end - start) {
+        failures.push(`${relative}: Branding mosaic must use four distinct sources`);
+      }
+    }
+    if (serviceMediaContract.triptychRange) {
+      const [start, end] = serviceMediaContract.triptychRange;
+      if (new Set(images.slice(start, end).map((image) => image.src)).size !== end - start) {
+        failures.push(`${relative}: Branding audience triptych must use three distinct sources`);
+      }
+    }
+    if (serviceMediaContract.teamsRange) {
+      const [start, end] = serviceMediaContract.teamsRange;
+      if (new Set(images.slice(start, end).map((image) => image.src)).size !== end - start) {
+        failures.push(`${relative}: Headshot team proofs must use distinct sources`);
+      }
     }
   }
   if (relative === aboutRelative) {
