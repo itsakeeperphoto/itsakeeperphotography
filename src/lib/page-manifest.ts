@@ -159,7 +159,7 @@ export const pageManifest = [
     signature: "overlap",
     title: "Session Pricing Estimate | It's A Keeper Photography",
     summary:
-      "Plan a portrait session, send the details to Lisa and reveal a personalized pricing estimate.",
+      "Build a personalized photography session pricing estimate, then plan the details with Lisa.",
   },
   {
     id: "richland",

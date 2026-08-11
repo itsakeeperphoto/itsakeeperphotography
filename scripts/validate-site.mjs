@@ -1866,7 +1866,9 @@ if (contactFormMatches.length !== 1) {
   const nameField = inputByName("name");
   const emailField = inputByName("email");
   const phoneField = inputByName("phone");
+  const preferredTimingField = inputByName("preferred_timing");
   const storyField = textareaByName("story");
+  const estimatedTotalField = inputByName("estimated_total");
 
   if (
     htmlAttribute(formNameField, "type") !== "hidden" ||
@@ -1880,17 +1882,33 @@ if (contactFormMatches.length !== 1) {
     htmlAttribute(nameField, "type") !== "text" ||
     !hasHtmlAttribute(nameField, "required") ||
     htmlAttribute(emailField, "type") !== "email" ||
-    !hasHtmlAttribute(emailField, "required")
+    !hasHtmlAttribute(emailField, "required") ||
+    htmlAttribute(phoneField, "type") !== "tel" ||
+    !hasHtmlAttribute(phoneField, "required") ||
+    !storyField ||
+    !hasHtmlAttribute(storyField, "required")
   ) {
-    failures.push("contact: name and email must be the only required contact fields");
+    failures.push("contact: name, email, phone and story must be required contact fields");
   }
   if (
-    htmlAttribute(phoneField, "type") !== "tel" ||
-    hasHtmlAttribute(phoneField, "required") ||
-    !storyField ||
-    hasHtmlAttribute(storyField, "required")
+    htmlAttribute(preferredTimingField, "type") !== "text" ||
+    hasHtmlAttribute(preferredTimingField, "required")
   ) {
-    failures.push("contact: phone and story must exist and remain optional");
+    failures.push("contact: preferred timing must exist and remain optional");
+  }
+  if (
+    [nameField, emailField, phoneField, preferredTimingField, storyField].some(
+      (field) => !hasHtmlAttribute(field, "data-contact-field"),
+    )
+  ) {
+    failures.push("contact: contact-field markers are incomplete");
+  }
+  if (
+    htmlAttribute(estimatedTotalField, "type") !== "hidden" ||
+    htmlAttribute(estimatedTotalField, "name") !== "estimated_total" ||
+    htmlAttribute(estimatedTotalField, "data-estimate-field") !== "estimated_total"
+  ) {
+    failures.push("contact: hidden estimated_total field is missing");
   }
 
   const submitButtons = [
@@ -1902,70 +1920,114 @@ if (contactFormMatches.length !== 1) {
     submitButtons.length !== 1 ||
     htmlAttribute(submitButtons[0]?.[0]?.match(/^<button\b[^>]*>/i)?.[0] || "", "type") !==
       "submit" ||
-    normalizedText(submitButtons[0]?.[1] || "") !==
-      "Send My Details & Reveal My Estimate"
+    normalizedText(submitButtons[0]?.[1] || "") !== "Send My Estimate to Lisa"
   ) {
-    failures.push("contact: submit CTA must be exactly “Send My Details & Reveal My Estimate”");
+    failures.push("contact: submit CTA must be exactly “Send My Estimate to Lisa”");
   }
 }
 
-const contactTags = contact.match(/<(?:section|aside|div|strong|p|h3)\b[^>]*>/gi) || [];
-const tagWithMarker = (marker) =>
-  contactTags.find((tag) => hasHtmlAttribute(tag, marker)) || "";
-const plannerTag = tagWithMarker("data-session-planner");
-const receiptTag = tagWithMarker("data-estimate-receipt");
-const detailsTag = tagWithMarker("data-estimate-details");
-const mobileTotalTag = tagWithMarker("data-mobile-estimate-total");
-const successTag = tagWithMarker("data-estimate-success");
-const errorTag = tagWithMarker("data-estimate-error");
-const totalLiveTag = tagWithMarker("data-total-live");
+const receiptMatch = contact.match(
+  /(<aside\b(?=[^>]*\bdata-estimate-receipt(?:\s|=|>))[^>]*>)([\s\S]*?)<\/aside>/i,
+);
+const desktopTotalMatch = contact.match(
+  /(<strong\b(?=[^>]*\bdata-estimate-total(?:\s|=|>))[^>]*>)([\s\S]*?)<\/strong>/i,
+);
+const mobileBarMatch = contact.match(
+  /(<div\b(?=[^>]*\bdata-mobile-estimate-bar(?:\s|=|>))[^>]*>)([\s\S]*?)<\/div>/i,
+);
+const mobileTotalMatch = contact.match(
+  /(<strong\b(?=[^>]*\bdata-mobile-estimate-total(?:\s|=|>))[^>]*>)([\s\S]*?)<\/strong>/i,
+);
+const totalLiveMatch = contact.match(
+  /(<p\b(?=[^>]*\bdata-total-live(?:\s|=|>))[^>]*>)([\s\S]*?)<\/p>/i,
+);
+const receiptTag = receiptMatch?.[1] || "";
+const receiptSource = receiptMatch?.[2] || "";
+const desktopTotalTag = desktopTotalMatch?.[1] || "";
+const mobileBarTag = mobileBarMatch?.[1] || "";
+const mobileTotalTag = mobileTotalMatch?.[1] || "";
+const totalLiveTag = totalLiveMatch?.[1] || "";
 if (
-  htmlAttribute(plannerTag, "data-estimate-state") !== "locked" ||
-  htmlAttribute(receiptTag, "data-estimate-state") !== "locked" ||
-  !hasHtmlAttribute(detailsTag, "hidden") ||
-  !hasHtmlAttribute(mobileTotalTag, "hidden")
-) {
-  failures.push("contact: the initial receipt and desktop/mobile totals must be locked and hidden");
-}
-if (
-  !hasHtmlAttribute(successTag, "hidden") ||
-  htmlAttribute(successTag, "role") !== "status" ||
-  htmlAttribute(successTag, "aria-live") !== "polite" ||
-  !hasHtmlAttribute(errorTag, "hidden") ||
-  htmlAttribute(errorTag, "role") !== "alert" ||
-  htmlAttribute(errorTag, "aria-live") !== "assertive" ||
-  htmlAttribute(errorTag, "tabindex") !== "-1" ||
-  htmlAttribute(totalLiveTag, "aria-live") !== "polite"
-) {
-  failures.push("contact: success, error and total live-region semantics are invalid");
-}
-
-const ajaxContractPatterns = [
-  [/new FormData\(form\)/, "FormData serialization"],
-  [/new URLSearchParams\(\)/, "URLSearchParams encoding"],
-  [/fetch\(\s*["']\/["']\s*,/, "same-origin Netlify POST endpoint"],
-  [/method:\s*["']POST["']/, "POST method"],
-  [/["']Content-Type["']:\s*["']application\/x-www-form-urlencoded["']/, "URL-encoded content type"],
-  [/if\s*\(!response\.ok\)/, "response.ok success gate"],
-  [/event\.preventDefault\(\)/, "enhanced submit interception"],
-  [/isSubmitting\s*\|\|\s*hasSubmitted/, "duplicate submission guard"],
-  [/new AbortController\(\)/, "submission timeout controller"],
-  [/signal:\s*submissionController\.signal/, "submission timeout signal"],
-  [/receiptDetails\.hidden\s*=\s*false/, "receipt reveal marker"],
-  [/errorMessage\.focus\(/, "error focus recovery"],
-  [/\.gtag\?\.\(/, "non-PII gtag analytics bridge"],
-];
-for (const [pattern, label] of ajaxContractPatterns) {
-  if (!pattern.test(contactCalculatorScript)) {
-    failures.push(`contact calculator: missing ${label}`);
-  }
-}
-if (
-  !normalizedText(contact).includes(
-    "Submitting sends your contact details and session choices to Lisa through Netlify Forms",
+  !receiptTag ||
+  !desktopTotalTag ||
+  !mobileBarTag ||
+  !mobileTotalTag ||
+  [receiptTag, desktopTotalTag, mobileBarTag, mobileTotalTag].some(
+    (tag) =>
+      hasHtmlAttribute(tag, "hidden") ||
+      htmlAttribute(tag, "aria-hidden") === "true" ||
+      /(?:display\s*:\s*none|visibility\s*:\s*hidden)/i.test(
+        htmlAttribute(tag, "style") || "",
+      ),
   )
 ) {
-  failures.push("contact: factual form data-use disclosure is missing");
+  failures.push("contact: the receipt and desktop/mobile totals must be present and visible in SSR HTML");
+}
+if (
+  normalizedText(desktopTotalMatch?.[2] || "") !== "$160" ||
+  normalizedText(mobileTotalMatch?.[2] || "") !== "$160" ||
+  htmlAttribute(totalLiveTag, "aria-live") !== "polite" ||
+  htmlAttribute(totalLiveTag, "aria-atomic") !== "true" ||
+  normalizedText(totalLiveMatch?.[2] || "") !== "Estimated total $160."
+) {
+  failures.push("contact: SSR totals and initial polite live announcement must be $160");
+}
+for (const marker of [
+  "data-receipt-service",
+  "data-receipt-package",
+  "data-receipt-people",
+  "data-receipt-collection",
+  "data-receipt-addons",
+]) {
+  if (!receiptSource.includes(marker)) {
+    failures.push(`contact: visible receipt is missing ${marker}`);
+  }
+}
+if (
+  normalizedText(mobileBarMatch?.[2] || "") !==
+  "Estimated total $160 Review estimate"
+) {
+  failures.push("contact: mobile SSR estimate bar copy or initial total is invalid");
+}
+
+const forbiddenContactMarkup = [
+  [/\bdata-estimate-state\b/i, "estimate state attribute"],
+  [/\bdata-submission-state\b/i, "submission state attribute"],
+  [/\bdata-estimate-lock\b/i, "locked receipt element"],
+  [/\bdata-estimate-details\b/i, "gated receipt wrapper"],
+  [/\bdata-estimate-success\b/i, "AJAX success element"],
+  [/\bdata-estimate-error\b/i, "AJAX error element"],
+  [/\bdata-finish-estimate\b/i, "finish-and-reveal control"],
+  [/\bdata-mobile-estimate-lock\b/i, "mobile locked-total element"],
+  [/\bdata-mobile-estimate-label\b/i, "mobile gate label"],
+  [/\bdata-receipt-title\b/i, "gate focus target"],
+  [/\bdata-receipt-eyebrow\b/i, "gate eyebrow target"],
+  [/\bcontact_gate_/i, "contact_gate_ marker"],
+  [/\bestimate_revealed\b/i, "estimate_revealed marker"],
+  [/\brevealEstimate\b/, "revealEstimate marker"],
+  [/\bsubmission_id\b/i, "submission_id field"],
+];
+for (const [pattern, label] of forbiddenContactMarkup) {
+  if (pattern.test(contact)) {
+    failures.push(`contact: forbidden ${label} remains`);
+  }
+}
+
+const forbiddenContactScript = [
+  [/\bfetch\s*\(/, "fetch submission"],
+  [/\bFormData\b/, "FormData serialization"],
+  [/\bURLSearchParams\b/, "URLSearchParams serialization"],
+  [/\.preventDefault\s*\(/, "submit interception"],
+  [/\bAbortController\b/, "AbortController submission gate"],
+  [/\bcontact_gate_/i, "contact_gate_ analytics"],
+  [/\bestimate_revealed\b/i, "estimate_revealed analytics"],
+  [/\brevealEstimate\b/, "revealEstimate gate"],
+  [/\bsubmission_id\b/i, "submission_id state"],
+];
+for (const [pattern, label] of forbiddenContactScript) {
+  if (pattern.test(contactCalculatorScript)) {
+    failures.push(`contact calculator: forbidden ${label} remains`);
+  }
 }
 
 const contactExpectedOrigin =
@@ -2160,7 +2222,7 @@ if (mode === "staging") {
     failures.push("llms.txt: About title or v2 summary differs from the manifest contract");
   }
   const expectedContactLlmsLine =
-    "- [Session Pricing Estimate | It's A Keeper Photography](https://www.itsakeeperphotography.com/contact/): Plan a portrait session, send the details to Lisa and reveal a personalized pricing estimate.";
+    "- [Session Pricing Estimate | It's A Keeper Photography](https://www.itsakeeperphotography.com/contact/): Build a personalized photography session pricing estimate, then plan the details with Lisa.";
   if (!llms.includes(expectedContactLlmsLine)) {
     failures.push("llms.txt: Contact title or summary differs from the manifest contract");
   }

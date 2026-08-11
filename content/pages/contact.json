@@ -6,12 +6,12 @@
   "schemaType": "ContactPage",
   "signature": "overlap",
   "title": "Session Pricing Estimate | It's A Keeper Photography",
-  "description": "Plan a Tri-Cities photography session, send your details and reveal a personalized pricing estimate. Lisa reads every inquiry and replies personally.",
+  "description": "Build a personalized photography session pricing estimate, then send your plans to Lisa. She reads every inquiry and follows up personally.",
   "hero": {
     "tone": "umber",
     "heading": "Let's Plan Your Session",
     "scriptLine": "your season, your way",
-    "intro": "Choose the session, coverage and keepsakes you have in mind, then send your name and email to reveal the complete estimate. I read every inquiry and follow up personally — you'll hear from me, not an assistant.",
+    "intro": "Build a personalized session pricing estimate around what you have in mind, then send it to me when you're ready. I read every inquiry and follow up personally — you'll hear from me, not an assistant.",
     "image": "/uploads/family-golden-hour-columbia-basin.jpg",
     "imageAlt": "A family held close in warm golden-hour light in the Tri-Cities",
     "secondaryImage": "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
@@ -23,7 +23,7 @@
       "kind": "form",
       "tone": "ivory",
       "heading": "Build Your Session Estimate",
-      "intro": "Choose the session, coverage and keepsakes that fit what you're planning. Send your name and email once to reveal the itemized estimate and share the same plan with Lisa."
+      "intro": "Choose the session, collection and details that fit what you're planning. Your estimate updates as you go."
     },
     {
       "id": "what-happens-after-you-reach-out",
