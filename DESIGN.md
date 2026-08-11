@@ -1582,3 +1582,93 @@ y `llms.txt` mientras no exista una fecha editorial aprobada.
   1440×1000, 1200×900, 900×900 y 390×844; la revisión final independiente
   devolvió `PASS` sin defectos P1/P2 y confirmó que `og:type` no regresó en las
   otras veinte rutas.
+
+## 17. ADDENDUM DE RUTA — NEWBORN COMPARISON HOUSE ARCHIVE
+
+Este addendum fija el rediseño de
+`/journal/in-home-vs-studio-newborn-photography/` sin levantar su gate
+editorial. La ruta permanece `draft/noindex`, conserva el header release
+noindex, no muestra fechas y sigue fuera de sitemap y `llms.txt`. Calidad visual
+y QA no sustituyen la aprobación factual de Lisa, la confirmación del formato
+exacto ni una fecha editorial real.
+
+### Dirección canónica
+
+- Concept B / Impeccable,
+  `.impeccable/mocks/newborn-comparison-b-house-archive.png`, es la comp
+  canónica: `The house as archive`.
+- La dirección convierte la casa en archivo de la memoria y la falta de una
+  fotografía studio verificable en espacio negativo deliberado. El díptico
+  enfrenta una fotografía in-home en un único arco con una página umber de
+  prosa y un marco hairline vacío; no fabrica una sesión de estudio.
+- Concept A comprimía demasiado la comparación en un díptico convencional y
+  Concept C daba al outdoor más peso del que tiene en el artículo. Ambos se
+  conservan como alternativas rechazadas.
+- Las comps definen geometría y jerarquía. Personas, escenas y sample copy
+  generados nunca se publican.
+
+### Secuencia compositiva
+
+1. **Hero compartido:** `EditorialHero` full-bleed, madre y bebé verificados,
+   dos prints decorativos, H1/intro centrados y botón `Read the comparison`
+   hacia `the-short-answer`.
+2. **Byline:** Lisa Weiss, It's A Keeper Photography y Richland, WA; sin fecha.
+3. **Short Answer:** manifiesto marfil amplio y text-led.
+4. **Definitions:** díptico sand/umber, arco in-home frente a definición Studio
+   sin fotografía ni falsa equivalencia visual.
+5. **Honest Comparison:** cuatro filas completas con reglas, H3 y párrafo en el
+   orden definitivo; no cards de igual altura.
+6. **Outdoor:** fotografía familiar ancha, panel estrecho y enlace a Family.
+7. **Treasure:** ensayo personal centrado, spread de dos fotografías y enlace a
+   Newborn.
+8. **Common Questions:** tres `<details>` nativos; el primero abierto y cada H3
+   visible se refleja 1:1 en FAQ schema.
+9. **Cierre:** fotografía full-bleed, H2, párrafo Tri-Cities y CTA a Contact.
+
+### Copy, media y semántica
+
+- Contrato visible exacto: 1 H1, 8 H2, 7 H3, tres FAQ y tres anchors en orden
+  Family → Newborn → Contact. El control del hero es botón, no anchor.
+- Se conserva el copy definitivo completo, incluido `What About Outdoor
+  Newborn Sessions?` y el párrafo final Tri-Cities. El validador compara cada
+  párrafo y su orden exacto para impedir omisiones o paráfrasis accidentales.
+- Nueve fuentes locales existentes cubren la ruta: siete imágenes informativas
+  con alt literal y dos prints decorativos con alt vacío. Las escenas
+  aspiracionales de nursing, nursery, bassinet y parents by the window no se
+  usan como alt porque las fuentes elegidas no las demuestran.
+- Las tres imágenes del hero cargan eager; solo el fondo tiene prioridad alta.
+  Las otras seis cargan lazy/async y reutilizan dimensiones intrínsecas y WebP
+  400/640/960/1440 existentes.
+- Un `Article`, un `FAQPage` y un `BreadcrumbList` derivan de contenido visible.
+  No se emiten `Service`, `Review`, `AggregateRating`, calle, coordenadas,
+  credencial de seguridad ni fechas.
+
+### Correcciones finales y responsive
+
+- El último pase corrigió focos sin sustituir media: hero `61% 48%` en desktop
+  y `65% 48%` en móvil; arco in-home `50% 38%`; outdoor principal `62% 47%` y
+  secundaria `50% 43%`; cierre `50% 46%` y `58% 50%` en móvil.
+- Se restituyó breathing room vertical entre definiciones y capítulos, y se
+  equilibró el díptico: dos páginas asimétricas amplias en desktop, balance
+  legible en tablet y una sola columna en móvil, siempre en orden DOM.
+- Por debajo de 768 px se disuelven los overlaps, las filas pasan a ancho
+  completo y los crops protegen rostros. Texto de cuerpo ≥16 px, hit areas de
+  44 px, foco visible, reduced motion y overflow horizontal cero permanecen
+  obligatorios.
+- `journal-newborn-comparison-page.css` se procesa con `?url` y `Base.astro` lo
+  enlaza solo para esta ruta. `journal/[slug].astro` y
+  `EditorialPageRouter.astro` resuelven `NewbornComparisonPage` en SSR y refresh
+  Tina; no existe caída a `ContentPage`.
+
+### Regresión y gate
+
+Los validadores staging y release aprobaron 21/21 rutas. Playwright aprobó
+1440×1000, 1200×900, 900×900 y 390×844, más una inspección puntual a 1728 px,
+con headings, párrafos, anchors, imágenes, FAQ, schema, foco, crops, red,
+consola, CSS aislado y overflow correctos. El detector Impeccable final devolvió
+`[]`.
+
+Los tres pendientes literales son `[VALIDAR CON LISA]`,
+`[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`. Mientras cualquiera
+permanezca, no se añaden `datePublished`, `dateModified` o `lastModified`, no se
+cambia a `ready/index` y no se incorpora la URL a crawler outputs.

@@ -1232,3 +1232,34 @@
   la implementación; el cierre documental permanece en el worktree para un
   commit local separado. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`.
+
+### ADR-055 — Newborn Comparison adopta House Archive sin fabricar su publicación
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** El artículo comparativo Newborn caía en `ContentPage`, había
+  perdido el capítulo Outdoor y el cierre del copy definitivo, y el ejemplo de
+  schema no coincidía con sus FAQ visibles. La fotografía local no demostraba
+  las cuatro escenas sugeridas por sus alt aspiracionales. Además permanecían
+  tres gates literales: `[VALIDAR CON LISA]`,
+  `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`.
+- **Decisión:** Adoptar Concept B / Impeccable `The house as archive` y crear
+  `NewbornComparisonPage.astro` para SSR y refresh Tina, con CSS de ruta
+  procesado por `?url`. Restaurar el copy definitivo completo y fijar 1 H1, 8
+  H2, 7 H3, tres FAQ, tres anchors Family → Newborn → Contact y nueve imágenes
+  existentes —siete informativas y dos decorativas— con alt literales. Emitir
+  exactamente un `Article`, un `FAQPage` derivado 1:1 de lo visible y un
+  `BreadcrumbList`. Mantener `draft/noindex`, header release, exclusión de
+  sitemap/`llms.txt` y ausencia de fechas hasta resolver los tres gates.
+- **Alternativas descartadas:** Usar los Concepts A/C, conservar el renderer
+  genérico, fabricar una fotografía studio, publicar los alt aspiracionales,
+  derivar FAQ distintos de la UI, cargar CSS global o promover a `ready/index`
+  por calidad visual se descartó por menor claridad, falta de evidencia,
+  accesibilidad, leakage o riesgo factual/SEO.
+- **Consecuencias:** El pase final corrigió crops, espaciado y balance del
+  díptico, y añadió un guard del orden literal de párrafos. Staging y release
+  aprobaron 21/21 rutas; Playwright pasó 1440/1200/900/390 más spot-check 1728,
+  e Impeccable devolvió `[]`. La implementación está en `1dd00d3`
+  (`feat(journal): redesign newborn comparison guide`). Antes del commit
+  documental `main` está 12 commits por delante de `origin/main`; el cierre
+  queda sin stage para un commit local separado, que lo dejaría ahead 13. No se
+  hizo push, deploy, DNS ni `./scripts/handoff.sh`.

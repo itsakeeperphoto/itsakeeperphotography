@@ -1,7 +1,29 @@
 # JOURNAL: NEWBORN — `/journal/in-home-vs-studio-newborn-photography/`
 _Página 17 de 18 · Content engine → soporta Newborn · Segunda mayor oportunidad (cluster ≈800/mes, KD 0–1)_
 
-> `[VALIDAR CON LISA]`: el artículo asume que Lisa ofrece sesiones in-home/lifestyle. Confirmar antes de publicar; si su formato es otro, ajustar la conclusión (la comparativa honesta se mantiene — es lo que rankea y lo que cita la IA).
+> **Estado implementado:** rediseño funcional en `1dd00d3`
+> (`feat(journal): redesign newborn comparison guide`). La ruta permanece
+> `draft/noindex`, conserva el header release noindex y sigue fuera de sitemap y
+> `llms.txt`. No muestra fecha en byline ni schema.
+
+El bloque `COPY` preserva íntegro el texto definitivo entregado por el usuario.
+En la auditoría previa a la implementación, la fuente externa y este documento
+eran byte-identical, con SHA-256
+`bda5c204895def04a6a912265caacf21a5fc90db0b0bd06341ddc9dbef9acfed`.
+Los marcadores editoriales viven en `pending` y nunca se renderizan.
+
+## Gates literales de publicación
+
+1. `[VALIDAR CON LISA]`
+2. `[VALIDAR: formato exacto que ofrece Lisa]`
+3. `[FECHA]`
+
+El primer gate exige aprobación factual de Lisa sobre el artículo completo. El
+segundo protege específicamente la afirmación de combinar una sesión íntima en
+casa con otra breve a golden hour cuando el bebé sea mayor. El tercero requiere
+una fecha editorial real. Hasta resolver los tres, no se permite fabricar
+`datePublished`, `dateModified`, `lastModified` ni cambiar la ruta a
+`ready/index`.
 
 ---
 
@@ -13,11 +35,16 @@ _Página 17 de 18 · Content engine → soporta Newborn · Segunda mayor oportun
 | **Keyword primaria** | in home newborn photography (390/mes, KD 1) |
 | **Secundarias** | in home newborn photography near me (210, KD 0) · in home lifestyle newborn photography (90, KD 0) · newborn in home photography (90) · newborn photography in home (50) · in-home vs studio newborn photography |
 | **Title** (53) | `In-Home vs. Studio Newborn Photography: How to Choose` |
-| **Meta description** (156) | `In-home or studio newborn photos? An honest comparison from a Tri-Cities newborn photographer — comfort, style, timing and what each session really feels like.` |
+| **Meta description** (159) | `In-home or studio newborn photos? An honest comparison from a Tri-Cities newborn photographer — comfort, style, timing and what each session really feels like.` |
+| **Estado** | `draft/noindex`; fuera de sitemap y `llms.txt` |
+| **Open Graph** | `og:type=article` |
+| **Fecha** | Omitida de UI, metadata y schema hasta resolver `[FECHA]` |
 
 ### Estructura de headings
 
-```
+Contrato visible exacto: 1 H1, 8 H2, 7 H3 y 3 preguntas frecuentes.
+
+```text
 H1  In-Home vs. Studio Newborn Photography
  H2  The Short Answer
  H2  What Is In-Home Newborn Photography?
@@ -30,6 +57,9 @@ H1  In-Home vs. Studio Newborn Photography
  H2  What About Outdoor Newborn Sessions?
  H2  Which One Will You Treasure More?
  H2  Common Questions
+  H3  When should I book newborn photos?
+  H3  Is my house too small or too dark for in-home photos?
+  H3  What if we missed the two-week window?
  H2  Planning Your Baby's First Photos in the Tri-Cities
 ```
 
@@ -71,7 +101,7 @@ Studio: drive there, hand over the reins. In-home: no travel, but a little tidyi
 
 **H2: What About Outdoor Newborn Sessions?**
 
-In the Tri-Cities, golden-hour outdoor sessions with a newborn are possible in mild months and make especially beautiful *family* sessions — baby in arms, siblings around, the river light doing its thing. Many families combine: intimate photos at home, then a short golden-hour family set when baby is a bit older. `[VALIDAR: formato exacto que ofrece Lisa]`
+In the Tri-Cities, golden-hour outdoor sessions with a newborn are possible in mild months and make especially beautiful *family* sessions — baby in arms, siblings around, the river light doing its thing. Many families combine: intimate photos at home, then a short golden-hour family set when baby is a bit older.
 
 **H2: Which One Will You Treasure More?**
 
@@ -92,54 +122,75 @@ For in-home lifestyle photos, there's no missed window. Two months old is still 
 
 If the in-home style speaks to you, that's the heart of how I photograph newborns across Richland, Kennewick and Pasco — gentle, unhurried, baby-led.
 
-**CTA:** See how my newborn sessions work → `/newborn-photographer-tri-cities-wa/`
-**CTA 2:** Expecting? Let's talk early → `/contact/`
-
 ---
 
-## Internal links
+## Enlaces internos implementados
 
-- Salientes: `/newborn-photographer-tri-cities-wa/` (principal) · `/family-photographer-tri-cities-wa/` (mención de sesión familiar) · `/contact/`.
-- Entrantes: página Newborn (FAQ), hub, journal locations.
+El hero usa un botón local `Read the comparison` hacia `the-short-answer`; no
+cuenta como anchor. Dentro de `<main>` existen exactamente tres enlaces, en este
+orden:
 
-## Alt texts
+1. `Family Photography` → `/family-photographer-tri-cities-wa/`
+2. `See how my newborn sessions work` → `/newborn-photographer-tri-cities-wa/`
+3. `Expecting? Let's talk early` → `/contact/`
 
-- `Mother nursing her newborn in soft window light during an in-home newborn session`
-- `Newborn baby asleep in the nursery during an in-home lifestyle photography session in Richland, WA`
-- `Big sibling peeking into the bassinet during at-home newborn photos`
-- `Parents holding their newborn by the window during a Tri-Cities in-home session`
+Entrantes previstos en la arquitectura editorial: página Newborn, hub y Journal
+Locations. No se consideran publicados hasta que sus fuentes realmente enlacen
+esta ruta.
 
-## Schema JSON-LD
+## Media y alt implementados
 
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Article",
-      "headline": "In-Home vs. Studio Newborn Photography: How to Choose",
-      "author": {"@id": "https://www.itsakeeperphotography.com/#lisa"},
-      "publisher": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "datePublished": "[FECHA]",
-      "dateModified": "[FECHA]",
-      "url": "https://www.itsakeeperphotography.com/journal/in-home-vs-studio-newborn-photography/"
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {"@type": "Question", "name": "What is in-home newborn photography?", "acceptedAnswer": {"@type": "Answer", "text": "A lifestyle session photographed in your own home using natural light — documenting baby's real first days in the nursery and spaces where they're happening, guided gently around the baby's rhythm."}},
-        {"@type": "Question", "name": "When should newborn photos be taken?", "acceptedAnswer": {"@type": "Answer", "text": "Studio posed sessions usually need the first 10–14 days. In-home lifestyle sessions are beautiful anytime in the first couple of months."}},
-        {"@type": "Question", "name": "Is my house too dark for in-home newborn photos?", "acceptedAnswer": {"@type": "Answer", "text": "Almost never — one good window is enough. Finding the light is the photographer's job."}}
-      ]
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itsakeeperphotography.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Journal", "item": "https://www.itsakeeperphotography.com/journal/"},
-        {"@type": "ListItem", "position": 3, "name": "In-Home vs. Studio Newborn Photography", "item": "https://www.itsakeeperphotography.com/journal/in-home-vs-studio-newborn-photography/"}
-      ]
-    }
-  ]
-}
-```
+La ruta reutiliza nueve fuentes existentes: siete imágenes informativas y dos
+prints decorativos con alt vacío. No se añadieron, renombraron, recodificaron ni
+borraron fotografías para este rediseño.
+
+| Superficie | Fuente | Alt / función |
+|---|---|---|
+| Fondo del hero | `/uploads/richland-mother-newborn-at-home.jpg` | `A mother holding her sleeping newborn beside a bed.` |
+| Print izquierdo del hero | `/uploads/newborn-family-at-home-west-richland.jpg` | Decorativa, `alt=""` |
+| Print derecho del hero | `/uploads/newborn-portrait-with-mother-richland.jpg` | Decorativa, `alt=""` |
+| Definición in-home | `/uploads/family-newborn-at-home-tricities.jpg` | `Parents and an older sister holding a sleeping newborn together on a bed.` |
+| Exterior principal | `/uploads/family-newborn-sunset-tricities.jpg` | `A family gathered around a baby outdoors in warm evening light.` |
+| Exterior secundaria | `/uploads/family-with-baby-golden-hour-embrace-tricities.jpg` | `Parents holding their baby close outdoors in warm evening light.` |
+| Memoria principal | `/uploads/family-newborn-connection-richland.jpg` | `Parents standing close with their baby in warm evening light.` |
+| Memoria secundaria | `/uploads/family-with-baby-black-white-tricities.jpg` | `A family holding a baby together outdoors in a black-and-white portrait.` |
+| Cierre | `/uploads/maternity-waiting-to-welcome-tricities.jpg` | `An expecting couple standing together in warm sunset light.` |
+
+Las tres superficies del hero cargan eager; solo el fondo usa prioridad alta.
+Las seis imágenes de cuerpo cargan lazy/async. Todas usan dimensiones
+intrínsecas y las variantes WebP responsive existentes. Los alt aspiracionales
+anteriores sobre nursing, nursery, bassinet y parents by the window fueron
+retirados porque las fotografías locales seleccionadas no demostraban esas
+escenas.
+
+## Schema implementado
+
+- Un solo `Article`, emitido por Base y enriquecido con headline, autor
+  `#lisa`, publisher `#business`, imagen real, `mainEntityOfPage`, tema Newborn
+  y cobertura Richland/Kennewick/Pasco.
+- Un solo `FAQPage`, derivado 1:1 de las tres preguntas y respuestas visibles de
+  `Common Questions`, en el mismo orden.
+- Un solo `BreadcrumbList`: Home → Journal → In-Home vs. Studio Newborn
+  Photography.
+- Ningún `Service`, `Review`, `AggregateRating`, calle, coordenadas, credencial
+  de seguridad, `datePublished`, `dateModified` ni `lastModified`.
+
+## Render, dirección y QA
+
+- Renderer especializado `NewbornComparisonPage.astro` tanto en SSR como en el
+  refresh Tina; no cae en `ContentPage`.
+- Dirección canónica Concept B / Impeccable, `The house as archive`, con un
+  díptico de definición: fotografía in-home en arco frente a un marco vacío y
+  tipográfico para Studio. Las comps A y C quedaron descartadas.
+- CSS de ruta `journal-newborn-comparison-page.css` importado mediante `?url` y
+  enlazado solo aquí; sus selectores permanecen bajo
+  `.newborn-comparison-*`.
+- El validador protege título, description, estado, tres gates, 1/8/7 headings,
+  tres anchors, nueve imágenes 7/2, byline sin fecha, tres FAQ, schema y el orden
+  literal de todos los párrafos definitivos.
+- Staging y release aprobaron 21/21 rutas. Playwright aprobó 1440×1000,
+  1200×900, 900×900 y 390×844, más una inspección puntual a 1728 px. El detector
+  Impeccable final devolvió `[]`.
+- El pase final corrigió crops de hero/exterior/cierre por breakpoint, restauró
+  el espaciado vertical, equilibró el díptico en desktop/tablet/móvil y fijó el
+  guard exacto de párrafos sin cambiar el copy.

@@ -6,7 +6,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 1 | 01-home.md | `/` | ✅ Completo (2 pendientes menores) |
 | 2 | 02-family.md | `/family-photographer-tri-cities-wa/` | ✅ Completo |
 | 3 | 03-seniors.md | `/senior-photographer-tri-cities-wa/` | ✅ Completo |
-| 4 | 04-newborn.md | `/newborn-photographer-tri-cities-wa/` | ⚠️ Confirmar formato de servicio con Lisa |
+| 4 | 04-newborn.md | `/newborn-photographer-tri-cities-wa/` | ✅ Completo · ready/index (Q41 no bloqueante omitida) |
 | 5 | 05-branding.md | `/branding-photographer-tri-cities-wa/` | ✅ Completo |
 | 6 | 06-headshots.md | `/headshot-photographer-tri-cities-wa/` | ✅ Completo |
 | 7 | 07-investment.md | `/investment/` | ⚠️ 9 pendientes (Q49–62 de Lisa) |
@@ -19,7 +19,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 14 | 14-journal-hub.md | `/journal/` | ✅ Completo |
 | 15 | 15-journal-locations.md | `/journal/family-photo-locations-tri-cities/` | ✅ Completo · ready/index (fecha 2026-08-08) |
 | 16 | 16-journal-senior-timing.md | `/journal/when-to-book-senior-pictures-tri-cities/` | ⚠️ Rediseñado · `draft/noindex` (fecha editorial, datos distritales y Q54 pendientes) |
-| 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ✅ Completo (depende de #4) |
+| 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ⚠️ Rediseñado · `draft/noindex` (aprobación Lisa, formato exacto y fecha real pendientes) |
 | 18 | 18-journal-branding-vs-headshots.md | `/journal/branding-photos-vs-headshots/` | ✅ Completo |
 
 **Utilidad (no search-facing):** `/privacy/` (legal estándar) y `/thank-you/` (noindex, destino del formulario para medir conversiones).
@@ -30,7 +30,8 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 2. Headshots + Branding + journal branding-vs-headshots (quick wins — ya rankeamos)
 3. Seniors + journal senior-timing (cluster 450/mes, KD 0)
 4. Family + journal locations
-5. Newborn + journal newborn (tras confirmar servicio con Lisa)
+5. Newborn ya está publicado; journal newborn solo tras aprobar el artículo,
+   confirmar el formato exacto y asignar una fecha real
 6. Investment + Reviews (cuando lleguen respuestas Q47/Q54)
 7. Richland y Kennewick publicados; Pasco solo con contenido y galería reales
 
@@ -42,6 +43,9 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 - **Senior Timing:** aprobar fecha editorial; añadir datos distritales solo con
   fuente verificable
 - **Q42–43:** links/permisos de MOM Magazine y sesión Grammy (afecta About + Home)
-- **Newborn:** confirmar que se ofrece y en qué formato (afecta páginas 4 y 17)
+- **Newborn comparison:** resolver literalmente `[VALIDAR CON LISA]`,
+  `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; la ruta 17 sigue
+  `draft/noindex`, sin fechas y fuera de sitemap/`llms.txt`. La página de
+  servicio 4 ya está publicada y no comparte este gate.
 - **Locaciones de ciudad:** validar los spots reales + 1 detalle de primera mano por lugar (afecta 13)
 - **Hija/health challenges:** confirmar si se publica (Home/About)

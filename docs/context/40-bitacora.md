@@ -1130,3 +1130,28 @@
   delante de `origin/main` (`b504f84`). Este cierre documental permanece
   unstaged en el worktree para un commit local separado. No se ejecutó push,
   deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Newborn Comparison rediseñado sin levantar sus gates
+
+- **Objetivo:** convertir
+  `/journal/in-home-vs-studio-newborn-photography/` en una comparación editorial
+  completa, sin inventar oferta, fecha ni evidencia visual.
+- **Dirección y render:** Concept B / Impeccable `The house as archive` quedó
+  canónico. `NewbornComparisonPage` se resuelve en SSR y refresh Tina; su CSS
+  `?url` se enlaza solo en la ruta. El pase final corrigió crops, espaciado y
+  balance responsive del díptico.
+- **Copy y media:** se restauró el copy definitivo completo con contrato
+  1 H1/8 H2/7 H3/3 FAQ, tres anchors Family → Newborn → Contact y guard literal
+  del orden de párrafos. La ruta reutiliza nueve imágenes existentes: siete
+  informativas con alt literal y dos decorativas con alt vacío.
+- **SEO y gate:** emite un `Article`, un `FAQPage` 1:1 y un `BreadcrumbList`,
+  sin fechas ni schema no sustentado. Sigue `draft/noindex`, con header release
+  y fuera de sitemap/`llms.txt` por `[VALIDAR CON LISA]`,
+  `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`.
+- **QA:** staging y release validaron 21/21 rutas. Playwright aprobó
+  1440/1200/900/390 más spot-check 1728; Impeccable final devolvió `[]`.
+- **Git/operación:** implementación funcional en `1dd00d3`
+  (`feat(journal): redesign newborn comparison guide`). `main` está 12 commits
+  ahead antes del cierre documental; los documentos quedan unstaged para un
+  commit local separado que lo dejaría ahead 13. No se hizo push, deploy, DNS
+  ni `./scripts/handoff.sh`.

@@ -70,7 +70,10 @@ threshold. Each must retain genuinely city-specific content before it is approve
 - `/journal/when-to-book-senior-pictures-tri-cities/` — redesigned with a
   specialized article renderer; remains draft/noindex and excluded while the
   editorial date, district-specific evidence and Q54 remain pending
-- `/journal/in-home-vs-studio-newborn-photography/` — draft; excluded
+- `/journal/in-home-vs-studio-newborn-photography/` — redesigned with the
+  specialized House Archive renderer and route-only CSS; remains draft/noindex,
+  without dates and excluded from sitemap/`llms.txt` until Lisa approves the
+  article, confirms the exact combined format and supplies a real date
 - `/journal/branding-photos-vs-headshots/` — draft; excluded
 
 ### Portfolio and utilities
@@ -95,7 +98,17 @@ threshold. Each must retain genuinely city-specific content before it is approve
   uses exactly eight. About uses three internal route links, one protected hero
   hash and one external primary-source link to Issuu. Senior Timing uses exactly
   four route anchors — Senior twice, Locations once and Contact once — while its
-  hero scroll control remains a button.
+  hero scroll control remains a button. Newborn Comparison uses exactly three
+  route anchors — Family, Newborn and Contact, in that order — while its hero
+  scroll control also remains a button.
+
+The Newborn Comparison release contract is intentionally stricter than its
+visual completion: it renders one `Article`, one FAQ derived 1:1 from the three
+visible questions and one `BreadcrumbList`, with no publication/modification
+dates. Its exact 1 H1/8 H2/7 H3 hierarchy, complete ordered paragraph copy and
+nine-image 7-informative/2-decorative inventory are validated, but none of those
+facts authorizes indexing while `[VALIDAR CON LISA]`,
+`[VALIDAR: formato exacto que ofrece Lisa]` and `[FECHA]` remain unresolved.
 
 ## Publishing a draft route
 

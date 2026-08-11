@@ -93,11 +93,16 @@
   commits por delante de `origin/main` (`b504f84`) con worktree limpio. El
   usuario conserva la publicación del historial completo. Codex no ejecutó push
   ni `./scripts/handoff.sh`.
-- [ ] **19A. Rediseñar el artículo comparativo Newborn.** Auditar
-  `/journal/in-home-vs-studio-newborn-photography/`, reconciliar el copy
-  definitivo de `paginas/17-journal-newborn.md`, inventariar fotografía local,
-  generar comps image-first e implementar un renderer editorial aislado con QA
-  1440/1200/900/390. No publicar ni resolver hechos/fecha por inferencia.
+- [x] **19A. Rediseñar el artículo comparativo Newborn según ADR-055.**
+  `NewbornComparisonPage` implementa Concept B / Impeccable, CSS `?url`, copy
+  definitivo 1/8/7/3, tres anchors y nueve imágenes 7/2. Article + FAQPage +
+  Breadcrumb, staging/release 21/21, Playwright 1440/1200/900/390 + spot 1728
+  e Impeccable `[]` quedaron aprobados en `1dd00d3`.
+- [ ] **19B. Publicar Newborn Comparison solo después de sus tres gates.**
+  Resolver `[VALIDAR CON LISA]`,
+  `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; hasta entonces
+  conservar `draft/noindex`, header release, ausencia de fechas y exclusión de
+  sitemap/`llms.txt`.
 - [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
@@ -118,6 +123,9 @@
 - [ ] Confirmar también que Senior Timing conserva `draft/noindex`, header
   release, exclusión de sitemap/`llms.txt`, schema sin fechas y las 11 imágenes
   responsive; el push del rediseño no autoriza su publicación.
+- [ ] Confirmar también que Newborn Comparison conserva `draft/noindex`, header
+  release, exclusión de sitemap/`llms.txt`, schema sin fechas, CSS aislado y las
+  nueve imágenes responsive; el push del rediseño no autoriza su publicación.
 - [ ] **21. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -220,9 +228,13 @@ sin reemplazar el archivo.
   schema detallado y una fotografía Drive nueva verificada.
 - [ ] Pendiente no bloqueante Q41: confirmar si Lisa tiene formación de
   seguridad newborn antes de añadir cualquier claim. Hoy no se publica.
-- [ ] Validar con Lisa las afirmaciones del artículo comparativo in-home vs.
-  studio antes de publicarlo.
-- [ ] Asignar una fecha editorial real al artículo comparativo Newborn.
+- [x] Rediseño comparativo completo en `1dd00d3`: renderer especializado, copy
+  1/8/7/3, nueve imágenes 7/2, schema seguro y QA integral; esto no publica la
+  ruta.
+- [ ] Resolver `[VALIDAR CON LISA]` sobre las afirmaciones del artículo.
+- [ ] Resolver `[VALIDAR: formato exacto que ofrece Lisa]`, especialmente la
+  combinación casa + golden hour posterior.
+- [ ] Resolver `[FECHA]` con una fecha editorial real.
 
 ### Investment
 
@@ -268,7 +280,10 @@ sin reemplazar el archivo.
 - [x] Rediseño Senior Timing completo sin resolver los tres pendientes por
   inferencia: guía escolar neutral, Q54 omitida y schema/byline sin fecha; la
   ruta conserva `draft/noindex` y exclusión de crawler outputs.
-- [ ] Validación de Lisa, formato exacto y fecha para Newborn comparison.
+- [x] Rediseño Newborn Comparison completo según ADR-055, sin inferir sus
+  pendientes ni fechas.
+- [ ] Validación de Lisa, formato exacto y fecha real para Newborn Comparison;
+  mantener `draft/noindex` y exclusión crawler mientras falte cualquiera.
 
 ### Richland
 
@@ -355,9 +370,10 @@ sin reemplazar el archivo.
   `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
 - [ ] Publicar el lote local creado a partir de `b504f84`: historial gated de
   Contact y su reversión, media Branding/Headshots, Kind Words, Senior Timing
-  funcional `bcbadae` y cierre documental `2c47def`. `main` está diez commits
-  por delante de `origin/main`; Codex no ejecuta push y el usuario conserva esa
-  operación.
+  funcional `bcbadae`, cierre `2c47def` y Newborn Comparison funcional
+  `1dd00d3`. Antes del commit documental actual, `main` está 12 commits por
+  delante de `origin/main`; quedaría ahead 13 después de ese commit local.
+  Codex no ejecuta push y el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -473,6 +489,11 @@ sin reemplazar el archivo.
   cuatro anchors, 11 imágenes, schema sin fechas, foco/acordeones, reduced
   motion, crops, red, consola y overflow correctos; revisión independiente
   `PASS` sin P1/P2.
+- [x] Verificada
+  `/journal/in-home-vs-studio-newborn-photography/` en staging/release 21/21 y
+  Playwright 1440×1000, 1200×900, 900×900 y 390×844, más spot-check 1728:
+  1/8/7/3, tres anchors, nueve imágenes 7/2, párrafos exactos, FAQ/schema,
+  foco, crops, CSS aislado, red, consola y overflow correctos; Impeccable `[]`.
 - [x] Revalidada la guía tras las correcciones de producción en 1728×963,
   1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
   de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto
@@ -520,6 +541,9 @@ sin reemplazar el archivo.
 - [x] Contact actualizado a `ready/index`, `lastModified: 2026-08-11`, sitemap y
   `llms.txt`; release contiene ahora diez URLs y nueve entradas citables, con
   `ContactPage`/breadcrumb y sin `Service` inventado.
+- [x] Newborn Comparison rediseñado con Article/FAQPage/Breadcrumb y sin fechas;
+  conserva `draft/noindex`, header release y exclusión sitemap/`llms.txt` hasta
+  resolver sus tres gates literales.
 - [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
   contenido visible actual; no crear ratings no verificados.
 - [ ] Actualizar `README.md` para reflejar las 21 rutas, forms reales, modos de
@@ -559,6 +583,9 @@ sin reemplazar el archivo.
   sesiones verificadas.
 - [x] Completar Newborn con composición A+C, fuente v2 reconciliada, hero y
   proceso protegidos, ocho FAQ y prueba in-home verificada.
+- [x] Completar Newborn Comparison con Concept B / House Archive, renderer y
+  CSS aislados, copy 1/8/7/3, media existente 7/2 y QA responsive; su publicación
+  continúa como pendiente editorial separado.
 - [x] Completar About con composición A+C, hero protegido salvo la sustitución
   explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
   visible, densidad Belief/Method corregida según ADR-046/047 y autoridad
@@ -657,3 +684,6 @@ sin reemplazar el archivo.
   72 WebP regenerables, 11 fuentes únicas por ruta, alt literal, XMP local sin
   GPS y QA responsive completo, sin borrar media de producción ni publicar las
   rutas draft.
+- [x] Rediseñado Newborn Comparison en `1dd00d3` con House Archive, renderer/CSS
+  aislados, copy definitivo completo, nueve imágenes existentes y QA integral,
+  preservando `draft/noindex` y sus tres gates de publicación.

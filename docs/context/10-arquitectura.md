@@ -130,8 +130,8 @@ retry, freeze tras éxito ni analítica personalizada del gate.
   `SitePreloader.astro`.
 - `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto.
 - `src/pages/journal/[slug].astro` resuelve artículos y ramifica explícitamente
-  Family Photo Locations y Senior Timing a sus renderers especializados antes
-  del fallback `ContentPage`.
+  Family Photo Locations, Senior Timing y Newborn Comparison a sus renderers
+  especializados antes del fallback `ContentPage`.
 - `src/pages/portfolio.astro` conserva el flipbook especializado.
 - `src/pages/tina-island/[name].ts` sirve refresco visual de islas Tina.
 - `src/pages/sitemap.xml.ts`, `robots.txt.ts` y `llms.txt.ts` generan salidas
@@ -156,7 +156,8 @@ Componentes especializados existentes:
 - `FamilyPage.astro`, `SeniorPage.astro`, `NewbornPage.astro`
 - `BrandingPage.astro`, `HeadshotPage.astro`
 - `AboutPage.astro`, `InvestmentPage.astro`, `ContactPage.astro`
-- `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`
+- `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`,
+  `NewbornComparisonPage.astro`
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
 - `ContentPage.astro` para rutas aún genéricas, incluidas Reviews, Privacy,
   Thank-you y algunos artículos.
@@ -179,6 +180,19 @@ y cierre full-bleed. El contrato exacto es 1 H1, 8 H2, 7 H3, cuatro anchors y
 `src/pages/journal/[slug].astro` y `Base.astro` lo enlaza solo en esa ruta.
 `EditorialPageRouter.astro` repite la misma rama para que el refresco Tina no
 degrade la superficie a `ContentPage`.
+
+`NewbornComparisonPage.astro` renderiza
+`/journal/in-home-vs-studio-newborn-photography/` según Concept B / Impeccable,
+`The house as archive`: hero compartido, byline sin fecha, short answer,
+díptico de definiciones, cuatro filas de comparación, capítulo Outdoor, ensayo
+Treasure, tres `<details>` y cierre full-bleed. El contrato exacto es 1 H1, 8
+H2, 7 H3, tres anchors —Family, Newborn y Contact— y nueve imágenes existentes:
+siete informativas y dos prints decorativos. `journal/[slug].astro` y
+`EditorialPageRouter.astro` resuelven el renderer en SSR y refresh Tina. El CSS
+`journal-newborn-comparison-page.css` se importa mediante `?url` y `Base.astro`
+lo enlaza únicamente en esta ruta; no filtra selectores a las otras veinte.
+El pase final corrigió crops por breakpoint, breathing room y balance del
+díptico, y el validador protege además la secuencia literal de párrafos.
 
 `AboutPage.astro` publica la dirección híbrida A+C aprobada —`Keeper Archive`
 más `Through Her Lens`— como página de identidad y confianza. Su
@@ -386,6 +400,15 @@ para evitar cambios silenciosos al repositorio.
   distritales, `Service`, ratings, calle y geodatos inventados. Playwright cubre
   1440/1200/900/390, foco, acordeones, reduced motion, crops, carga WebP,
   consola/red, overflow y ausencia de regresión de `og:type` en las 21 rutas.
+- Para Newborn Comparison fija el estado `draft/noindex`, title/description,
+  canonical, `og:type=article`, los tres pendientes literales y la exclusión de
+  sitemap/`llms.txt`. En HTML exige 1 H1, 8 H2, 7 H3, tres anchors en orden,
+  nueve fuentes únicas con siete alts informativos/dos decorativos, byline sin
+  fecha, hero scroll como botón, tres FAQ visibles y CSS aislado. También
+  compara todos los párrafos definitivos en su orden exacto y alinea un único
+  `Article`, `FAQPage` y `BreadcrumbList` con el contenido visible, sin
+  `Service`, ratings, calle, geodatos, credenciales ni fechas. Playwright cubre
+  1440/1200/900/390; la revisión visual añade un spot-check a 1728 px.
 
 ## SEO/indexación actual
 
@@ -445,6 +468,16 @@ contiene `datePublished`, `dateModified` o `lastModified` mientras `[FECHA]`
 siga pendiente. La frase distrital no demostrada y Q54 tampoco se exponen. La
 ruta conserva `draft/noindex`, su header release y exclusión de sitemap/llms.
 
+Para Newborn Comparison, `Base.astro` emite un único `Article` y
+`journal/[slug].astro` lo enriquece con headline, `#lisa`, `#business`, imagen
+hero real, `mainEntityOfPage`, tema Newborn y cobertura
+Richland/Kennewick/Pasco. La ruta añade un único `FAQPage` derivado 1:1 de las
+tres preguntas visibles y `BreadcrumbList` Home → Journal → In-Home vs. Studio
+Newborn Photography. No contiene `datePublished`, `dateModified` ni
+`lastModified`: permanece `draft/noindex`, con header release y fuera de
+sitemap/`llms.txt` hasta resolver `[VALIDAR CON LISA]`,
+`[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`.
+
 ## Assets y rendimiento
 
 - Fuentes WOFF2 locales en `public/fonts/`; no se depende de Google Fonts en
@@ -480,6 +513,11 @@ ruta conserva `draft/noindex`, su header release y exclusión de sitemap/llms.
   `newborn-family-at-home-west-richland.jpg`, optimizado de 13.13 MiB/4000×6000
   a 412 KiB/1600×2400. Sus variantes WebP responsive son regenerables y están
   ignoradas por Git; los demás assets de la ruta ya existían en producción.
+- El artículo Newborn Comparison no incorpora media nueva: reutiliza nueve
+  fuentes existentes y únicas, siete informativas con alt literal y dos prints
+  decorativos con alt vacío. Las variantes WebP 400/640/960/1440 y dimensiones
+  intrínsecas ya existían; el rediseño no copió, recodificó, renombró ni borró
+  fotografías compartidas.
 - Senior Timing incorpora
   `west-richland-senior-woodpile-portrait.jpg`, verificado desde la carpeta
   Senior de West Richland y usado como print decorativo del hero. La fuente
