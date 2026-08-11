@@ -1028,3 +1028,45 @@
   a byte intacta con SHA-256
   `1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c`.
   No se borró media ni se hizo push, deploy, DNS u otra mutación externa.
+
+### ADR-050 — Contact revela el estimado solo después de una solicitud confirmada
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** El estimador de `/contact/` mostraba el total antes de que la
+  persona enviara sus datos. El usuario pidió invertir ese orden para crear
+  anticipación: primero elegir la sesión y enviar el formulario, luego ver el
+  estimado. También confirmó que Netlify Forms y sus notificaciones ya
+  funcionan en producción y autorizó dejar la ruta `ready/index` dentro del
+  sitemap. La página global de Privacy continúa sin revisión legal autorizada.
+- **Decisión:** Conservar exactamente un form `session-estimate` en Contact.
+  Mantener visibles opciones y precios parciales, pero ocultar semánticamente
+  el total combinado y su desglose hasta que el mismo form reciba una respuesta
+  HTTP `2xx` de Netlify. Requerir solo nombre y email; dejar teléfono, timing e
+  historia opcionales. Enviar mediante POST URL-encoded same-origin, bloquear
+  doble submit, congelar selecciones durante el request y definitivamente tras
+  el éxito. Ante HTTP no exitoso, fallo de red o timeout de 15 segundos,
+  conservar datos, mantener el recibo locked, restaurar controles, enfocar el
+  error y permitir reintento. Sin JavaScript, conservar el POST HTML y la
+  navegación a `/thank-you/`. Emitir eventos Google tag de interacción sin PII.
+  Publicar Contact como `ready/index`, `lastModified: 2026-08-11`, con
+  `ContactPage` y `BreadcrumbList`, sin inventar un `Service`, calle,
+  coordenadas, reseñas ni rating. Mantener `/privacy/` `draft/noindex` como
+  deuda legal separada y añadir junto al submit una divulgación factual del uso
+  de los datos.
+- **Alternativas descartadas:** Crear un segundo formulario oculto solo para
+  Netlify, revelar al disparar el evento submit sin esperar al servidor, exigir
+  teléfono o historia, borrar los datos después de un error, almacenar el
+  unlock o PII en browser storage, adjuntar campos personales a analytics,
+  declarar un `Service` sin contenido visible o publicar Privacy sin revisión
+  se descartó por duplicación, falsos positivos de conversión, fricción,
+  accesibilidad, privacidad o falta de evidencia.
+- **Consecuencias:** El commit funcional `dd4a590` deja release con 10 URLs en
+  sitemap y 9 entradas en `llms.txt`; staging conserva sitemap vacío y noindex
+  global. Los validadores staging/release aprueban 21/21 rutas. Playwright
+  aprueba 1440/1200/900/390
+  con POST interceptados para 2xx, 5xx, fallo de red y doble clic: un solo POST,
+  unlock exclusivo tras 2xx, datos preservados y retry en error, controles
+  congelados tras éxito, foco accesible, fallback sin JavaScript y cero
+  overflow. Ninguna prueba automatizada envió datos reales; la confirmación del
+  funcionamiento productivo de Forms/notificaciones proviene del usuario. No
+  se hizo push, deploy, DNS ni otra mutación externa.

@@ -66,23 +66,31 @@
   retrato candid en blanco y negro. La media global de Open Graph/schema no
   cambió, ADR-048 sigue exacto y Seniors permanece byte-identical. Release
   21/21, Playwright en cinco anchos y revisión independiente están aprobados.
-- [ ] **15. Publicar los commits locales.** About y Homepage —portfolio, hero y
-  print Biography— están terminados en commits funcionales/documentales locales;
-  el cierre quedará veintiséis commits por delante de `origin/main`. El usuario
-  publica todos los commits posteriores a `ff736c6`; Codex no ejecuta push.
-- [ ] **16. Verificar Homepage, About, Richland, Kennewick, Pasco y Newborn
+- [x] **15. Publicar Contact con gate de estimado según ADR-050.** Un único
+  form `session-estimate`, nombre/email requeridos, datos restantes opcionales,
+  unlock solo tras 2xx, timeout de 15 s, error/retry, fallback no-JS, eventos
+  sin PII, `ContactPage`/breadcrumb y divulgación factual. La ruta queda
+  `ready/index`, con 10 URLs release en sitemap y 9 entradas en `llms.txt`;
+  validadores 21/21 y Playwright 1440/1200/900/390 completos con POST mockeados.
+- [ ] **16. Publicar los commits locales de Contact.** Al iniciar este lote,
+  `main` y `origin/main` coincidían en `b504f84`; el usuario publica los commits
+  funcional/documental de ADR-050. Codex no ejecuta push.
+- [ ] **17. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
-  ciudades `2026-08-09`; Newborn y About `2026-08-10`; además del cierre Pasco
+  ciudades `2026-08-09`; Newborn y About `2026-08-10`; Contact `2026-08-11`;
+  además del cierre Pasco
   sin panel, el nuevo fondo aprobado del hero About con crop `50% 24%` y la
   densidad Belief/Method corregida, incluido el inset tablet de 32 px. En `/`,
   comprobar la nueva pareja del hero y sus crops 29/58/42%, el print pequeño en
   blanco y negro, la carga AVIF sin JPEG paralelo y las cinco cards de ADR-048.
-- [ ] **17. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  En Contact, ejecutar una prueba controlada del gate ya desplegado y confirmar
+  que una respuesta real de Netlify revela el recibo sin guardar PII en git.
+- [ ] **18. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **18. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **19. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -173,6 +181,21 @@ sin reemplazar el archivo.
 - [ ] QA actual de sticky headings, timeline, policy section y final paper en los
   cuatro breakpoints; la evidencia actual es puntual.
 
+### Contact
+
+- [x] Publicada `ready/index`, `lastModified: 2026-08-11`, dentro de sitemap y
+  `llms.txt`, con `ContactPage` y `BreadcrumbList` sin un `Service` inventado.
+- [x] Implementado un único `session-estimate`: nombre/email requeridos,
+  teléfono/timing/historia opcionales y recibo oculto hasta la confirmación 2xx.
+- [x] Implementados timeout de 15 s, guard de doble submit, preservación de
+  datos, error enfocable, retry y freeze de controles tras el éxito.
+- [x] Preservado el fallback HTML POST a `/thank-you/` y añadidos eventos Google
+  tag sin PII y disclosure factual de Netlify Forms.
+- [x] Verificados staging/release 21/21 y Playwright 1440/1200/900/390 con 2xx,
+  5xx, fallo de red y doble clic mediante POST interceptados; no hubo envío real.
+- [ ] Después del deploy del gate, repetir una prueba controlada de extremo a
+  extremo sin guardar PII en el repositorio.
+
 ### Journal
 
 - [ ] Fecha editorial para Branding Photos vs Headshots.
@@ -262,12 +285,11 @@ sin reemplazar el archivo.
   intervención termina en commits locales que el usuario administra.
 - [x] El usuario publicó los siete commits locales pendientes, incluidos
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
-  `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
-  ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los veinticuatro commits funcionales/documentales locales creados
-  después de `ff736c6` al completar este cierre, incluidos `b3bb362`,
-  `0f9989c`, `82af21f` y el commit documental posterior. Codex no ejecuta push;
-  el usuario conserva esa operación.
+  `ff736c6`. Codex no realizó el push.
+- [x] El usuario publicó también el lote local posterior; al iniciar Contact,
+  `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
+- [ ] Publicar los commits funcional/documental de Contact creados a partir de
+  `b504f84`. Codex no ejecuta push; el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -282,14 +304,13 @@ sin reemplazar el archivo.
 
 ### Netlify Forms
 
-- [ ] En Netlify Dashboard, confirmar que Netlify detecta `session-inquiry` y
-  `session-estimate` en el deploy actual.
-- [ ] Crear notificación email para ambos forms hacia
-  `itsakeeperphoto@gmail.com` en producción. Si se sigue probando antes, usar la
-  notificación temporal `globalbridge360@gmail.com` y luego retirarla.
-- [ ] En deploy preview, enviar una inquiry y un estimate con etiquetas claras;
-  verificar que aparecen en Forms y llegan al buzón.
-- [ ] Repetir prueba mínima en producción después del cutover.
+- [x] El usuario confirmó el 2026-08-11 que Netlify Forms está configurado y
+  funcionando en producción.
+- [x] El usuario confirmó el 2026-08-11 que las notificaciones de producción
+  están configuradas y funcionando.
+- [ ] Después de desplegar ADR-050, enviar un estimate de prueba con etiqueta
+  clara; verificar recepción, unlock tras 2xx y ausencia de duplicados. El QA
+  automatizado actual usó POST mockeados y no sustituye esta prueba real.
 - [ ] Documentar capturas/fecha de la prueba sin almacenar PII en git.
 
 ### Google Business Profile
@@ -346,6 +367,11 @@ sin reemplazar el archivo.
   crop desktop protegido. Release 21/21, Impeccable `[]` y Playwright
   1728/1440/1200/900/390 sin overflow, solapamientos ni imágenes de sección
   rotas; solo falló la telemetría externa de Clarity en local.
+- [x] Publicado localmente el gate Contact en `dd4a590`: staging/release 21/21
+  y Playwright 1440/1200/900/390 con 2xx, 5xx, fallo de red y doble clic,
+  interceptando todos los POST. Verificados unlock exclusivo tras 2xx, un solo
+  request, preservación de datos/retry, freeze tras éxito, foco, no-JS y
+  overflow 0; no se enviaron datos reales.
 - [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
   guard de fuentes y las variantes terminan, comprobar que
   `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a
@@ -403,6 +429,9 @@ sin reemplazar el archivo.
   `llms.txt`; release contiene ahora ocho URLs y conserva staging noindex.
 - [x] About actualizado a `ready/index`, `lastModified: 2026-08-10`, sitemap y
   `llms.txt`; release contiene ahora nueve URLs y ocho entradas citables.
+- [x] Contact actualizado a `ready/index`, `lastModified: 2026-08-11`, sitemap y
+  `llms.txt`; release contiene ahora diez URLs y nueve entradas citables, con
+  `ContactPage`/breadcrumb y sin `Service` inventado.
 - [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
   contenido visible actual; no crear ratings no verificados.
 - [ ] Actualizar `README.md` para reflejar las 21 rutas, forms reales, modos de
@@ -427,6 +456,9 @@ sin reemplazar el archivo.
 - [x] Renovados el hero visual y el print pequeño Biography de Homepage con art
   direction responsive, accesibilidad y guardas de carga; el retrato principal,
   Open Graph/schema y las cinco cards protegidas no cambiaron.
+- [x] Convertido Contact en un estimador gated: receipt editorial locked,
+  formulario mínimo, estados 2xx/error/no-JS accesibles y publicación
+  `ready/index` sin duplicar el form ni inventar schema.
 - [ ] Completar una página Reviews especializada cuando haya testimonios reales;
   no reutilizar una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
@@ -472,8 +504,9 @@ sin reemplazar el archivo.
 - [ ] TODO(contexto): ¿se planea publicar Elopement en otra fase? — Lisa.
 - [ ] TODO(contexto): ¿cuál es el link definitivo de Google Reviews? — Lisa.
 - [ ] TODO(contexto): ¿quién aprueba formalmente Privacy y cuándo? — cliente.
-- [ ] TODO(contexto): ¿las notificaciones Netlify de ambos forms ya existen y
-  fueron probadas? — administrador de Netlify.
+- [x] Resuelto por confirmación del usuario el 2026-08-11: Netlify Forms y sus
+  notificaciones están configurados y funcionando en producción. La versión
+  gated de Contact aún requiere prueba real después de su deploy.
 - [ ] TODO(contexto): ¿quién verificará los dashboards de Clarity y Google
   Analytics y el acceso a Search Console? — administrador del cliente.
 - [ ] TODO(contexto): ¿existe un tablero de tareas externo? — William.
@@ -519,3 +552,6 @@ sin reemplazar el archivo.
 - [x] Renovados hero y print Biography de Homepage en `ec4c734`, con AVIF/WebP
   art-directed, una sola descarga del hero, portfolio ADR-048 intacto y QA en
   cinco anchos.
+- [x] Publicado localmente Contact en `dd4a590` con gate tras 2xx, un único
+  `session-estimate`, error/retry/no-JS, analítica sin PII, schema sobrio,
+  sitemap 10, `llms.txt` 9 y QA mockeado en cuatro anchos.

@@ -1282,3 +1282,79 @@ art direction por breakpoint, foco visible, cero overflow y carga responsive
 sin JPEG innecesario. Las fuentes anteriores siguen disponibles mientras otra
 ruta, Settings, schema u Open Graph las referencie; este addendum no autoriza
 borrarlas.
+
+## 13. ADDENDUM DE CONVERSIÓN — CONTACT GATED ESTIMATE
+
+Este addendum fija el patrón aprobado para `/contact/`: la selección ocurre
+antes de pedir datos y el recibo personalizado se revela solamente cuando el
+transporte de Netlify confirma el envío. El gate no convierte el estimado en una
+reserva, un pago o una cotización contractual.
+
+### Jerarquía y composición
+
+- El `EditorialHero` introduce la tarea y desplaza al planner mediante
+  `Build My Estimate`.
+- Session, Coverage y Keepsakes conservan opciones y precios visibles. La
+  anticipación vive en el total combinado y su desglose; no oculta la estructura
+  comercial necesaria para elegir con criterio.
+- Details es la cuarta y última fase. Solo nombre y email son obligatorios;
+  teléfono, timing y nota permanecen opcionales.
+- En desktop, el recibo se mantiene como papel editorial sticky dentro de la
+  retícula. En estado bloqueado usa eyebrow, H3, marca de cierre y
+  `Finish & reveal`; no usa blur, glassmorphism, sombra ni una capa engañosa.
+- En móvil, una barra sticky compacta presenta `Ready to reveal` y conduce al
+  mismo bloque Details. Después de confirmar, se convierte en acceso al total
+  revelado.
+- El total y el desglose usan `hidden` antes del éxito. No basta con bajar
+  opacidad, aplicar filtro o cubrir texto que seguiría expuesto a tecnologías
+  asistivas.
+
+### Estados de interacción
+
+1. **Locked:** selecciones editables; recibo y barra móvil anuncian que el
+   estimado está listo para revelar.
+2. **Submitting:** formulario `aria-busy`, CTA `Sending…`, controles congelados
+   y guard contra doble envío.
+3. **Unlocked:** solo una respuesta HTTP 2xx muestra recibo, desglose y total;
+   las selecciones y datos quedan congelados para coincidir con el payload.
+4. **Error:** HTTP no exitoso, fallo de red o timeout de 15 segundos conserva
+   los valores, vuelve a habilitar controles, mantiene el recibo bloqueado y
+   permite reintentar.
+5. **No JavaScript:** el form HTML conserva `POST` a `/thank-you/`; no intenta
+   simular un unlock local.
+
+### Accesibilidad y feedback
+
+- `Finish & reveal` lleva a Details y enfoca nombre; el éxito lleva al título
+  del recibo y el error enfoca su alerta.
+- Éxito usa `role="status"`/`aria-live="polite"`; error usa
+  `role="alert"`/`aria-live="assertive"`.
+- El anuncio del total ocurre solo después del reveal.
+- Los campos conservan labels visibles, foco de teclado, invalid state y los
+  estilos cuadrados/hairline del sistema. No se cambia color como única señal.
+- `prefers-reduced-motion` elimina desplazamientos o animaciones no esenciales
+  sin alterar el cambio de estado.
+
+### Transporte, analítica y privacidad
+
+- Contact contiene un único form `session-estimate`, detectable de forma
+  estática por Netlify, con honeypot y fallback `/thank-you/`.
+- El submit mejorado usa body URL-encoded same-origin. Solo `response.ok`
+  desbloquea; ninguna excepción o timeout cuenta como conversión.
+- Los eventos enviados a Google tag describen view, inicio, intento, éxito,
+  error y reveal sin adjuntar nombre, email, teléfono, historia ni valores de
+  campos.
+- La microcopia junto a la CTA declara de forma factual que los datos de
+  contacto y elecciones se envían a Lisa mediante Netlify Forms para responder
+  sobre la sesión.
+- Este disclosure no reemplaza la revisión legal. `/privacy/` permanece
+  `draft/noindex` y debe evaluar Netlify Forms, Clarity, GA4 y consentimiento
+  antes de su propia publicación.
+
+### Regresión
+
+Las pruebas deben interceptar cualquier POST y nunca usar información real.
+Cubrir 1440, 1200, 900 y 390 px con 2xx, 5xx, fallo de red y doble clic; exigir
+un solo POST, unlock exclusivo de 2xx, preservación de datos en error, foco
+correcto, controles congelados tras éxito, fallback sin JavaScript y cero
+overflow horizontal.

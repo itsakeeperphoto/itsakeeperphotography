@@ -960,3 +960,37 @@
   por delante de `origin/main` (`ff736c6`) antes del cierre documental y quedará
   veintiséis tras su commit local. No se ejecutó push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva la publicación.
+
+### 2026-08-11 — Codex / GPT-5 — Contact publicado con estimated receipt gated
+
+- **Objetivo:** pedir los datos mínimos después de configurar la sesión y
+  revelar el estimado personalizado solo cuando Netlify confirme el envío.
+- **Formulario:** `/contact/` conserva una única instancia
+  `session-estimate`, detectada estáticamente por Netlify. Nombre y email son
+  requeridos; teléfono, timing e historia son opcionales. El mismo HTML mantiene
+  honeypot, `form-name`, selecciones crudas, POST y fallback a `/thank-you/`.
+- **Gate:** el recibo y el total móvil empiezan `hidden`/locked. JavaScript
+  serializa URL-encoded hacia `/`; solo `response.ok` revela el desglose. El
+  request congela controles y bloquea doble submit. Un 5xx, fallo de red o
+  timeout de 15 segundos conserva datos, restaura controles, enfoca la alerta y
+  permite reintentar sin desbloquear.
+- **Accesibilidad y privacidad:** las CTA auxiliares enfocan nombre, el éxito
+  enfoca el título del recibo y el error su live region assertive. La microcopia
+  declara que los datos y selecciones se envían a Lisa mediante Netlify Forms.
+  Google tag recibe solo nombres de eventos sin PII. `/privacy/` permanece
+  `draft/noindex` como deuda legal separada.
+- **SEO/schema:** Contact queda `ready/index`, `lastModified: 2026-08-11`, sin
+  header release noindex y dentro de sitemap/`llms.txt`. Emite `ContactPage` y
+  breadcrumb Home → Session Pricing Estimate, sin `Service`, calle,
+  coordenadas, reseñas ni rating. Release pasa a 10 URLs y 9 entradas citables;
+  staging conserva sitemap vacío y noindex global.
+- **QA:** los validadores staging/release aprobaron 21/21 rutas. Playwright
+  aprobó 1440/1200/900/390 con 2xx, 5xx, fallo de red y doble clic, siempre con
+  POST interceptados: un solo POST, unlock exclusivo de 2xx, datos preservados
+  en error, retry, freeze tras éxito, foco, fallback sin JavaScript y overflow
+  0. No se enviaron datos reales durante QA.
+- **Operación externa:** el usuario confirmó que Netlify Forms y las
+  notificaciones funcionan en producción. La implementación quedó en
+  `dd4a590` (`feat(contact): gate estimate behind inquiry`); este cierre
+  documental permanece en el worktree para el commit local siguiente. No se
+  hizo push, deploy, DNS ni `./scripts/handoff.sh`.

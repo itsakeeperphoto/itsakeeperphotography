@@ -3,146 +3,141 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-11 00:10 -05
+**Última actualización:** 2026-08-11 10:11 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit funcional verificado:** `ec4c734` —
-`feat(home): refresh hero and Lisa print`
+**Commit funcional verificado:** `dd4a590` —
+`feat(contact): gate estimate behind inquiry`
 
 **Cierre documental:** incluido en `HEAD` —
-`docs(home): record homepage photography refresh`
+`docs(contact): record gated estimate publication`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al cerrar:** `main` queda limpio y veintiséis commits por delante
-de `origin/main` (`ff736c6`), con la implementación y este cierre documental
-incluidos en `HEAD`. No se hizo push, deploy, DNS ni otra mutación externa.
+**Estado Git al cerrar:** `main` queda limpio y dos commits por delante de
+`origin/main` (`b504f84`): la implementación funcional y este cierre
+documental. No se hizo push, deploy, DNS ni otra mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario debe publicar los commits locales posteriores a `ff736c6` en el
-remoto oficial. Cuando termine el deploy de Netlify, verificar `/` en el dominio
-final a 1728/1440/1200/900/390: status 200, canonical `www`, meta index,
-ausencia de `X-Robots-Tag: noindex`, membresía de `/sitemap.xml` y `/llms.txt`,
-hero nuevo con crops 29/58/42%, una sola descarga AVIF sin JPEG paralelo, print
-pequeño Biography en blanco y negro y las cinco cards exactas de ADR-048.
+El usuario debe publicar `dd4a590` y el commit documental inmediatamente
+posterior en el remoto oficial. Cuando termine el deploy de Netlify, verificar
+`/contact/` en el dominio final: status 200, canonical `www`, meta index,
+ausencia de `X-Robots-Tag: noindex`, `lastmod: 2026-08-11`, membresía de
+`/sitemap.xml` y `/llms.txt`, y gate visual/funcional en 1440, 1200, 900 y
+390 px.
 
-En el mismo deploy, repetir el QA pendiente de About, Newborn, Richland,
-Kennewick y Pasco, comprobar sus `lastmod` y crawler outputs, y observar logs y
-bandwidth durante 48 horas. No cambiar apex/`www`, DNS ni redirects hasta
-resolver la divergencia de host documentada.
+Después, ejecutar una prueba real controlada del nuevo gate: confirmar un solo
+registro `session-estimate`, recepción de la notificación y reveal únicamente
+tras la respuesta exitosa de Netlify. No guardar PII, payloads ni capturas con
+datos personales en git. El usuario ya confirmó que Netlify Forms y las
+notificaciones funcionan en producción; esta prueba posterior al deploy valida
+la nueva capa AJAX, no reabre esa configuración.
 
 ## Resumen ejecutivo
 
 - El sitio Astro/Tina/Netlify construye y valida 21 rutas públicas.
-- Están `ready/index`: Homepage, Family, Newborn, About, Richland, Kennewick,
-  Pasco, Family Photo Locations y Portfolio. Thank-you es `ready/noindex`; las
-  otras 11 rutas siguen `draft/noindex`.
-- Release contiene nueve URLs en sitemap y ocho entradas en `llms.txt`;
-  Portfolio queda fuera de `llms.txt`. Staging mantiene sitemap vacío y
-  noindex global.
-- Homepage queda `ready/index` con el hero, Biography y portfolio verificados.
-  El refresh visual no cambió copy, schema, Settings, Open Graph ni el retrato
-  principal de Lisa.
-- `/about/` permanece `ready/index`, `lastModified: 2026-08-10`, con dirección
-  A+C, autoridad verificable, fondo aprobado, Belief balanceada y Method 4/2/1.
-- Newborn permanece `ready/index` con hero/proceso protegidos y Q41 opcional sin
-  claim. Richland, Kennewick y Pasco siguen `ready/index` con galerías/cierres
-  aprobados y `lastModified: 2026-08-09` en las rutas de ciudad.
-- Los claims pendientes de reseñas, salud, premio, Grammy, certificaciones,
-  seguro, membresías y Google Business no se publican.
+- Están `ready/index`: Homepage, Family, Newborn, About, Contact, Richland,
+  Kennewick, Pasco, Family Photo Locations y Portfolio. Thank-you es
+  `ready/noindex`; las otras 10 rutas siguen `draft/noindex`.
+- Release contiene 10 URLs en sitemap y 9 entradas en `llms.txt`; Portfolio
+  queda fuera de `llms.txt`. Staging mantiene sitemap vacío y noindex global.
+- Contact queda `ready/index`, `lastModified: 2026-08-11`, con metadata y
+  canonical release, sin regla noindex, y schema `ContactPage` más
+  `BreadcrumbList`. No emite un `Service`, calle, coordenadas, reseñas ni
+  rating inventados.
+- `/privacy/` permanece `draft/noindex`. Su revisión legal de Netlify Forms,
+  Microsoft Clarity, Google Analytics y consentimiento es una deuda separada y
+  no se resolvió por inferencia.
+- El usuario confirmó el 2026-08-11 que Netlify Forms y sus notificaciones están
+  configurados y funcionando en producción.
 
-## Homepage cerrado en `ec4c734`
+## Contact cerrado en `dd4a590`
 
-### Hero art-directed
+### Un solo formulario y un solo momento de conversión
 
-- Fuente visual:
-  `/uploads/kennewick-couple-open-field-golden-hour.jpg`, 2400×1600,
-  549817 B, SHA-256
-  `37cc4686f26b843e68b847ad033ed419fc668abd63d237040cd08fd845b0a43f`.
-- Alt: `A couple laughing together while walking through an open field in warm
-  evening light`.
-- Desktop: AVIF 86112 B y WebP 150604 B, 1440×960, foco `50% 29%` por
-  encima de 1050 px.
-- Tablet: fuente desktop con foco `50% 58%`.
-- Móvil: recorte AVIF 43181 B y WebP 72142 B, 640×1024, foco `50% 42%`.
-- SHA-256 de derivados, desktop AVIF/WebP y móvil AVIF/WebP:
-  `d890163b2a6fc91704682273b7ffd8a479d38d19ad2d50150ffd170bbb8d5db1`,
-  `7a14b42ef79a0671b9ef89f0bb2e31bf7bf8af483e19b249efb26778586275d2`,
-  `1c6773948667cf3905fbbda6e7e42e9833fae8598e6e7857bd300f9d521a93a3` y
-  `d5593ba07caf5e8ba2a3b231a4995b8ea37be3b3bf29c874f2a71d464d90c412`.
-- El navegador compatible solicita una sola fuente AVIF; no descarga el JPEG en
-  paralelo. La imagen anterior permanece porque Settings, Open Graph, schema y
-  otras rutas todavía la referencian.
+- `/contact/` renderiza exactamente un form `session-estimate`; no existe un
+  form oculto duplicado para Netlify.
+- Nombre y email son los únicos datos de contacto requeridos. Teléfono,
+  preferred timing e historia son opcionales.
+- Session, Coverage, People, Keepsakes y add-ons conservan sus opciones y
+  precios visibles; el total combinado y el desglose empiezan
+  semánticamente ocultos.
+- La CTA exacta es `Send My Details & Reveal My Estimate`.
+- La microcopia aclara que el resultado no es booking ni pago y que los datos y
+  elecciones se envían a Lisa mediante Netlify Forms para responder sobre la
+  sesión.
 
-### Biography / Meet Lisa
+### Gate AJAX y fallback
 
-- El retrato principal en arco sigue siendo
-  `/uploads/lisa-photographer-tricities.jpg`.
-- Solo el print pequeño cambia a
-  `/uploads/about-lisa-camera-candid-black-white.jpg`.
-- `meetLisa.printImage` es opcional en Tina; `MeetLisa.astro` usa `portrait`
-  como fallback.
-- El print es decorativo: `alt=""`, contenedor `aria-hidden`, carga lazy, WebP
-  640 en desktop y 400 en móvil, `object-position: 50% 50%` y sin zoom.
+- JavaScript serializa el único form como
+  `application/x-www-form-urlencoded` y hace POST same-origin a `/`.
+- Solo `response.ok` desbloquea el recibo, muestra el total desktop/móvil,
+  anuncia éxito y enfoca el título del recibo.
+- Durante el request, los controles quedan congelados y el guard impide doble
+  submit. Después del éxito permanecen congelados para que el recibo coincida
+  con lo enviado.
+- HTTP no exitoso, fallo de red o timeout de 15 segundos mantienen el recibo
+  locked, conservan todos los valores, restauran controles, enfocan la alerta y
+  permiten reintentar.
+- Sin JavaScript, el HTML conserva Netlify detection, honeypot, campo
+  `form-name`, POST y `action="/thank-you/"`; las selecciones crudas permiten
+  recalcular manualmente.
 
-### Portfolio preservado
+### Analítica y privacidad
 
-- Orden: Seniors, Families, Newborns, Branding y Headshots.
-- Seniors conserva
-  `/uploads/senior-portrait-golden-hour-richland.jpg`, alt y SHA-256
-  `1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c`
-  byte a byte.
-- Family: `/uploads/about-belief-family-golden-hour-tricities.jpg`.
-- Newborn: `/uploads/newborn-family-at-home-west-richland.jpg`.
-- Branding: `/uploads/about-lisa-camera-portrait-tricities.jpg`.
-- Headshots: `/uploads/review-lisa-griffith-headshot-tricities.jpg`.
-- La retícula conserva 5/5/5/2–2–1/1 columnas en
-  1728/1440/1200/900/390. No se borró ni reprocesó media de producción.
+- Google tag recibe únicamente los eventos `contact_gate_view`,
+  `estimate_started`, `contact_gate_submit_attempt`,
+  `contact_gate_submit_success`, `contact_gate_submit_error` y
+  `estimate_revealed`, sin nombre, email, teléfono, historia ni valor de campos.
+- El disclosure inline describe el transporte y propósito de los datos; no se
+  presenta como sustituto de una política legal.
+- No se usa browser storage para persistir PII o el estado desbloqueado.
 
 ## Verificación ejecutada
 
-- Build release Tina/Astro completado con data layer alterno; el validador
-  aprobó `Validated 21 public routes in release mode.`
-- `npm run optimize:source-images -- --dry-run`: todas las fuentes cumplen
-  ≤2400 px/≤700 KiB.
-- `npm run optimize:images`: variantes responsive al día.
-- Playwright Homepage aprobó 1728×963, 1440×1000, 1200×900, 900×900 y
-  390×844: hero, Biography y cards exactos, AVIF cargado, cero JPEG, cero
-  overflow, foco de teclado visible y sin errores same-origin.
-- Clarity puede devolver 400 externo después de recargas repetidas de QA; el
-  filtro se limita a su URL y no oculta fallos del sitio.
-- La revisión independiente devolvió `PASS`.
-- Impeccable se ejecutó exactamente una vez. Reportó siete falsos positivos
-  `broken-image` sobre expresiones regulares del validador, refutados por el HTML
-  construido y la carga real del navegador; su resultado no fue `[]`.
+- Build/validador staging: `Validated 21 public routes in staging mode.`
+- Build/validador release: `Validated 21 public routes in release mode.`
+- Release verificado con 10 URLs exactas en sitemap y 9 líneas exactas en
+  `llms.txt`; Contact tiene `lastmod 2026-08-11`.
+- Playwright aprobó 1440, 1200, 900 y 390 px con una respuesta 2xx mockeada:
+  exactamente un POST, receipt desbloqueado, total `$955.98`, foco correcto,
+  controles congelados y cero overflow.
+- Playwright aprobó error 5xx a 1200 y fallo de red a 390: exactamente un POST,
+  receipt bloqueado, datos preservados, alerta enfocada y reintento disponible.
+- Playwright aprobó doble clic a 1440 con exactamente un POST.
+- El contexto sin JavaScript confirmó método/action, Netlify detection,
+  `form-name`, honeypot, detalles ocultos y mensaje de fallback.
+- Todos los POST de Playwright fueron interceptados. El QA no envió datos
+  reales ni comprobó el buzón; la confirmación de Forms/notificaciones en
+  producción fue aportada por el usuario.
 - `node --check` pasó para el validador y el script Playwright.
-- `git diff --check` pasó antes del cierre funcional; el cierre documental se
-  vuelve a comprobar antes de su commit.
+- `git diff --check` y el parseo Markdown pasaron antes del cierre documental.
 
 ## Archivos del lote
 
-Implementación funcional en `ec4c734`:
+Implementación funcional en `dd4a590`:
 
-- `content/homepage/index.json`
-- `src/components/MeetLisa.astro`
-- `src/styles/styles.css`
-- `tina/config.ts`
-- `tina/tina-lock.json`
+- `config/netlify-headers/release`
+- `content/pages/contact.json`
+- `page-manifest.ts`
+- `scripts/playwright-contact-gate.js`
 - `scripts/validate-site.mjs`
-- `scripts/playwright-session-cards.js`
-- cuatro variantes
-  `public/uploads/kennewick-couple-open-field-golden-hour-{desktop,mobile}.{avif,webp}`
+- `src/components/SessionPriceCalculator.astro`
+- `src/lib/page-manifest.ts`
+- `src/pages/[slug].astro`
+- `src/scripts/session-price-calculator.ts`
+- `src/styles/contact-page.css`
 
 Documentación de este cierre:
 
-- `paginas/01-home.md`
+- `paginas/10-contact.md`
 - `DESIGN.md`
 - `docs/context/10-arquitectura.md`
 - `docs/context/20-estado.md`
@@ -154,16 +149,15 @@ Documentación de este cierre:
 
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
-| Homepage | `ready/index`; hero/print/portfolio cerrados | Push del usuario y QA del deploy. |
-| Documentación Homepage | Completa en `HEAD` | Sin trabajo parcial. |
-| About | `ready/index` en `0f9989c` | Push del usuario y QA del deploy. |
-| Newborn | `ready/index` | Verificar producción; Q41 sigue opcional y sin claim. |
-| Richland/Kennewick/Pasco | `ready/index` | Verificar producción y crawler outputs tras push. |
+| Contact | `ready/index` en `dd4a590`; gate cerrado | Push del usuario, deploy y prueba real controlada. |
+| Documentación Contact | Completa en `HEAD` | Sin trabajo parcial. |
+| Netlify Forms/notificaciones | Usuario confirma funcionamiento en producción | Validar la nueva capa AJAX después del deploy. |
+| Privacy | `draft/noindex` | Revisión factual/legal y decisión de consentimiento. |
+| Homepage/About/Newborn/ciudades | `ready/index` | QA acumulado del dominio final tras push. |
 | Bandwidth/build | Optimizado localmente | Observar logs y consumo Netlify 48 h tras deploy. |
 | Seniors / Senior timing | Draft | Paquetes, oferta Q54, fechas editoriales y QA. |
 | Branding/Headshots/Investment | Draft | Entregables, duración/cantidades y QA. |
-| Reviews/Privacy | Draft | Reseñas autorizadas y revisión legal. |
-| Netlify Forms | Código listo | Confirmar notificaciones y envíos reales. |
+| Reviews | Draft | Reseñas autorizadas y link oficial. |
 | Dominio | Contradicción documentada | Elegir apex o `www` antes de tocar DNS. |
 
 ## Comandos de reanudación
@@ -173,7 +167,7 @@ git remote get-url origin
 git log --oneline -20
 git status
 git rev-list --count origin/main..HEAD
-SITE_MODE=release npm run validate:site
+SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run validate:site
 ```
 
 Para reconstruir Tina localmente, no detener el servidor largo del usuario en
@@ -183,18 +177,18 @@ propios commits, porque ese script hace push.
 
 ## Bloqueadores externos
 
-1. El usuario debe publicar los commits locales en el remoto oficial.
-2. Netlify debe completar el deploy antes del QA del dominio final.
+1. El usuario debe publicar los dos commits locales de Contact.
+2. Netlify debe completar el deploy antes del QA del dominio final y la prueba
+   real del gate.
 3. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
-4. Completar verificaciones externas de Forms, analytics, GBP y Privacy.
+4. Privacy requiere revisión legal autorizada antes de su propia publicación.
+5. Las verificaciones externas de analytics, GBP y Search Console continúan
+   pendientes.
 
 ## Preguntas abiertas
 
-- TODO(contexto): ¿Lisa quiere ampliar About/Homepage con alguno de los hechos
-  hoy excluidos? Cada claim requiere evidencia y autorización.
+- TODO(contexto): ¿quién aprobará la revisión legal de Privacy?
 - TODO(contexto): ¿Lisa tiene formación de seguridad newborn confirmable para
   Q41? No publicar el claim antes de respuesta explícita.
 - TODO(contexto): ¿cuál es el link público definitivo de Google Reviews?
-- TODO(contexto): ¿quién aprobará la revisión legal de Privacy?
-- TODO(contexto): ¿ya existen las notificaciones de los dos formularios en
-  Netlify y se recibieron envíos reales?
+- TODO(contexto): ¿quién verificará Clarity, Google Analytics y Search Console?

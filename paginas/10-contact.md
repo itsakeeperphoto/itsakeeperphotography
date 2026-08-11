@@ -1,160 +1,229 @@
 # CONTACT — `/contact/`
-_Página 10 de 18 · Trust & conversion · **v2 — actualizada 2026-07 con Q49, Q50, Q61**_
 
-> **Corrección importante:** Lisa NO tiene calendario de reservas online (está en su lista de tareas). El sitio no debe prometerlo. Su preferencia real es **email → llamada telefónica**; el texto es su canal menos favorito.
+_Página 10 de 18 · Trust & conversion · **v3 definitiva — publicada localmente
+el 2026-08-11**_
+
+> Contact combina un estimador transparente con una única solicitud de datos:
+> la persona elige su sesión primero y el total personalizado se revela solo
+> cuando Netlify confirma el envío. El resultado sigue siendo un estimado; no
+> reserva fecha, procesa pagos ni sustituye la conversación con Lisa.
 
 ---
 
-## SEO técnico
+## Estado editorial y SEO técnico
 
 | Campo | Valor |
 |---|---|
 | **URL** | `/contact/` |
-| **Keyword objetivo** | Marca + NAP para local SEO |
-| **Title** (52) | `Contact Lisa | Book Your Tri-Cities Photo Session` |
-| **Meta description** (147) | `Tell Lisa who's in front of the camera and what this season means to you. She reads and answers every inquiry herself — usually with a phone call to plan.` |
+| **Estado** | `ready/index` |
+| **Last modified** | `2026-08-11` |
+| **Title** | `Session Pricing Estimate \| It's A Keeper Photography` |
+| **Meta description** | `Plan a Tri-Cities photography session, send your details and reveal a personalized pricing estimate. Lisa reads every inquiry and replies personally.` |
+| **Schema** | `ContactPage` + `BreadcrumbList` |
+| **Sitemap release** | Incluida; 10 URLs totales |
+| **llms.txt release** | Incluida; 9 entradas totales |
 
-### Entidades a establecer
-It's A Keeper Photography · Lisa Weiss · 62 Canyon St, Richland, WA 99352 · (509) 948-7322 · Richland · Kennewick · Pasco · Tri-Cities
-**NAP idéntico carácter a carácter** al Google Business Profile y al footer global. Es la página donde más pesa esa consistencia.
+La página no publica una dirección de calle, coordenadas, reseñas, ratings ni
+un `Service` de nivel superior. El breadcrumb visible para buscadores es Home →
+Session Pricing Estimate. Staging permanece globalmente noindex, con sitemap
+vacío y `llms.txt` de preview.
 
-### Estructura de headings
+## Estructura de headings publicada
 
-```
+```text
 H1  Let's Plan Your Session
- H2  Tell Me About You              (planner multi-paso)
+ H2  Build Your Session Estimate
+  H3  Optional finishing touches
+  H3  Your Estimate Is Ready / Your Estimate
  H2  What Happens Next
+  H3  I'll write back personally.
+  H3  We'll set up a phone call.
+  H3  Your date gets reserved.
  H2  Prefer to Talk?
- H2  Where I Work
- H2  A Few Things Worth Knowing
 ```
+
+`Where I Work` funciona como eyebrow dentro del bloque de contacto y no añade
+otro heading estructural.
 
 ---
 
-## COPY
+## Copy definitivo
 
 ### Hero
 
 **H1:** Let's Plan Your Session
 
-**Subhead:** This takes about a minute, and it's the first step toward photographs your family will keep. I read and answer every inquiry myself — you'll hear back from me, not an assistant.
+**Script:** your season, your way
+
+**Intro:** Choose the session, coverage and keepsakes you have in mind, then
+send your name and email to reveal the complete estimate. I read every inquiry
+and follow up personally — you'll hear from me, not an assistant.
+
+**CTA:** Build My Estimate
+
+### Estimador
+
+**Eyebrow:** A clear place to begin
+
+**H2:** Build Your Session Estimate
+
+Choose what fits the session you have in mind, then send your name and email to
+reveal the complete estimate. Lisa receives the same plan and follows up
+personally to confirm the details.
+
+El planner conserva cuatro fases visibles:
+
+1. **Your session — Who's in front of the camera?** Senior, Family, Newborn,
+   Branding o Headshots.
+2. **Coverage — Choose the time we'll have together.** Paquete, duración,
+   ubicaciones, outfits y número de personas.
+3. **Keepsakes — Choose how you'd like to keep it.** Colección y add-ons
+   opcionales.
+4. **Send & reveal — Tell Lisa where to reach you.** Datos de contacto y nota
+   opcional antes de revelar el recibo.
+
+Los nombres, límites y precios se leen de `src/lib/session-pricing.ts`; este
+documento no crea una segunda fuente comercial.
+
+### Datos solicitados
+
+- **Requeridos:** Your name, Email.
+- **Opcionales:** Phone, Preferred timing, What are you hoping to keep?
+- **Honeypot:** `bot-field`, fuera del flujo de teclado.
+- **Campos técnicos:** `form-name`, `pricing_version`, selecciones crudas,
+  desglose calculado y total estimado.
+
+**Microcopy de envío:**
+
+> Your result is a planning estimate, not a booking or payment. Lisa will reply
+> about your session and confirm every detail before sending a contract.
+> Submitting sends your contact details and session choices to Lisa through
+> Netlify Forms so she can reply about this session.
+
+**CTA exacta:** Send My Details & Reveal My Estimate
+
+### Recibo bloqueado
+
+**Eyebrow:** One final step
+
+**H3:** Your Estimate Is Ready
+
+Your choices are being prepared behind this receipt. Send your name and email
+to reveal the complete itemized estimate.
+
+**CTA auxiliar:** Finish & reveal
+
+En móvil, la barra fija muestra `Personalized estimate`, `Ready to reveal` y el
+mismo CTA. El total y el desglose permanecen semánticamente ocultos con
+`hidden`, no solo desenfocados o cubiertos visualmente.
+
+### Confirmación
+
+Solo una respuesta HTTP exitosa de Netlify desbloquea el recibo, cambia su
+título a `Your Estimate`, muestra el total itemizado y anuncia:
+
+> Thank you — your details were sent to Lisa. Your planning estimate is now
+> unlocked, and Lisa will reply personally about your session.
+
+Las selecciones y los datos quedan congelados después del éxito para que el
+recibo revelado coincida con lo enviado.
+
+### Error y reintento
+
+Un HTTP no exitoso, fallo de red o timeout de 15 segundos mantiene el estimado
+bloqueado, conserva los valores, restablece los controles y enfoca este aviso:
+
+> We couldn't confirm the submission, so your estimate is still locked. Your
+> entries are still here — please try again, or call or text Lisa at
+> (509) 948-7322.
+
+El guard de estado evita envíos duplicados durante el request y después de una
+confirmación exitosa.
+
+### Fallback sin JavaScript
+
+El mismo formulario HTML continúa siendo submittable con `POST` y
+`action="/thank-you/"`. Netlify recibe las selecciones crudas para que Lisa
+pueda recalcularlas; el navegador navega a la confirmación noindex en lugar de
+intentar revelar un total en cliente.
 
 ---
 
-**H2: Tell Me About You**
+## What Happens Next
 
-_(Mantener el planner multi-paso actual. Pasos:)_
+1. **I'll write back personally.** Usually with a couple of questions, because
+   I want to understand what you're hoping for before I start suggesting
+   things.
+2. **We'll set up a phone call.** This is my favorite part. We'll talk through
+   dates, locations, wardrobe and timing — and most people get off that call a
+   lot more excited and a lot less nervous than they got on it.
+3. **Your date gets reserved.** Once we've found a date that works, I'll send a
+   contract and a retainer invoice. Your date is officially yours once both are
+   complete. The remaining balance is due the day of your session.
 
-1. **Who's in front of the camera?** — Senior · Family · Newborn · My Business · Headshot _(cada opción con imagen)_
-2. **What season do you picture?** — Spring · Summer · Autumn · Winter · I'm flexible
-   _Microcopia:_ "I book about four to six weeks ahead, so there's time to plan it right. May through October fills fastest."
-3. **Where do you imagine it?** — Somewhere outdoors and golden · A place that's special to us · Help me choose
-4. **Tell me about you** — "Who are these photos for? What moment are you hoping to keep?"
-5. **Where should I reach you?** — Name, email, phone
-   _Microcopia:_ "No newsletters, no pressure — just me, calling to plan everything with you."
+Nothing is held before that step, so if you have a particular season in mind,
+it's worth reaching out sooner than you think.
 
-**CTA:** Send it to Lisa
+## Prefer to Talk?
 
----
+Sometimes it's just easier to say it out loud. Call or text me at
+**(509) 948-7322** and tell me what you're thinking.
 
-**H2: What Happens Next**
+Honestly? Email is the easiest way to reach me, and a phone call is the best way
+to plan. But use whichever one gets you to actually reach out — that's the part
+that matters.
 
-**1. I'll write back personally.** Usually with a couple of questions, because I want to understand what you're hoping for before I start suggesting things.
+## Where I Work
 
-**2. We'll set up a phone call.** This is my favorite part. We'll talk through dates, locations, wardrobe and timing — and most people get off that call a lot more excited and a lot less nervous than they got on it.
+**It's A Keeper Photography**<br>
+**(509) 948-7322**
 
-**3. Your date gets reserved.** Once we've found a date that works, I'll send a contract and a retainer invoice. Your date is officially yours once both are complete. The remaining balance is due the day of your session.
-
-Nothing is held before that step, so if you have a particular season in mind, it's worth reaching out sooner than you think.
-
----
-
-**H2: Prefer to Talk?**
-
-Sometimes it's just easier to say it out loud. Call or text me at **(509) 948-7322** and tell me what you're thinking.
-
-Honestly? Email is the easiest way to reach me, and a phone call is the best way to plan. But use whichever one gets you to actually reach out — that's the part that matters.
-
----
-
-**H2: Where I Work**
-
-**It's A Keeper Photography**
-62 Canyon St
-Richland, WA 99352
-(509) 948-7322
-
-I photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the countryside around them — with no travel fee anywhere in the area. Sessions happen outdoors at golden hour, at a location we choose together, except newborn sessions, which happen in your home.
-
-_(Embeber mapa del Google Business Profile aquí.)_
+I photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the
+countryside around them — with no travel fee anywhere in the area. Sessions
+happen outdoors at golden hour, at a location we choose together, except
+newborn sessions, which happen in your home.
 
 ---
 
-**H2: A Few Things Worth Knowing**
+## Contrato del formulario
 
-- I reserve most sessions **four to six weeks ahead.** May through October is peak season and fall dates go first.
-- I photograph **seniors, families, newborns, couples, small elopements, branding and headshots.** I don't photograph full weddings, events or boudoir — if that's what you need, I'm glad to point you toward someone who specializes in it.
-- Pricing is shared during our first conversation, so I can recommend what actually fits you.
+- La ruta contiene exactamente un `<form name="session-estimate">`.
+- Método `POST`, `data-netlify="true"`, `netlify-honeypot="bot-field"` y campo
+  oculto `form-name=session-estimate`.
+- JavaScript serializa como `application/x-www-form-urlencoded` y envía a `/`,
+  el endpoint same-origin que Netlify Forms procesa.
+- El recibo solo se revela tras `response.ok`; una excepción nunca se trata como
+  conversión.
+- Los eventos GA4 registran únicamente nombres de interacción —view, inicio,
+  intento, éxito, error y reveal— sin nombre, email, teléfono, nota ni valor de
+  campos.
+- La configuración y las notificaciones de Netlify Forms en producción fueron
+  confirmadas por el usuario el 2026-08-11. El QA automatizado de este cambio
+  interceptó todos los POST; no envió datos reales.
 
----
+## Privacidad
 
-## Internal links (4 en prosa)
+La divulgación inline explica de forma factual qué datos se envían y por qué.
+No sustituye una política legal. `/privacy/` continúa `draft/noindex` hasta que
+una persona autorizada revise el uso global de Netlify Forms, Microsoft Clarity
+y Google Analytics y defina cualquier requisito de consentimiento.
 
-1. `/investment/` — en "A Few Things Worth Knowing", desde la línea de pricing
-2. `/reviews/` — antes del formulario, para quien aún está decidiendo
-3. `/about/` — desde "you'll hear back from me"
-4. `/journal/` — opcional, para quien todavía está en fase de planeación
+## QA de publicación
 
-## Schema JSON-LD
+- Validadores staging y release: 21/21 rutas.
+- Release: Contact indexable, canonical `www`, sin header noindex, dentro de
+  sitemap (10 URLs) y `llms.txt` (9 entradas).
+- Playwright: 1440, 1200, 900 y 390 px.
+- Casos automatizados con POST interceptado: HTTP 2xx, HTTP 5xx, fallo de red y
+  doble clic.
+- Verificado: un solo POST, unlock únicamente en 2xx, error/retry sin pérdida de
+  datos, controles congelados tras éxito, foco accesible, fallback sin
+  JavaScript y ausencia de overflow horizontal.
 
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "ContactPage",
-      "url": "https://www.itsakeeperphotography.com/contact/",
-      "about": {"@id": "https://www.itsakeeperphotography.com/#business"}
-    },
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://www.itsakeeperphotography.com/#business",
-      "name": "It's A Keeper Photography",
-      "telephone": "+15099487322",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "62 Canyon St",
-        "addressLocality": "Richland",
-        "addressRegion": "WA",
-        "postalCode": "99352",
-        "addressCountry": "US"
-      },
-      "areaServed": [
-        {"@type": "City", "name": "Richland"},
-        {"@type": "City", "name": "Kennewick"},
-        {"@type": "City", "name": "Pasco"}
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+15099487322",
-        "contactType": "customer service",
-        "areaServed": "US",
-        "availableLanguage": "English"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itsakeeperphotography.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.itsakeeperphotography.com/contact/"}
-      ]
-    }
-  ]
-}
-```
+## Notas editoriales
 
-## Notas
-
-- El formulario envía a `/thank-you/` (noindex) para medir conversiones.
-- **No prometer calendario de reservas online** hasta que Lisa lo implemente.
-- Sin `[PENDIENTE]` de tiempo de respuesta: se evita comprometer un plazo que Lisa no fijó, diciendo en su lugar que responde personalmente.
+- No prometer calendario de reservas online.
+- No presentar el estimado como precio contractual, booking ni pago.
+- No publicar una dirección de calle o pin de mapa desde datos legados.
+- No añadir un `Service`, Review o rating al schema sin evidencia y una decisión
+  explícita.

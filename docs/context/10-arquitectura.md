@@ -110,6 +110,16 @@ La versión enviada con el formulario se define en
 `src/components/SessionPriceCalculator.astro`. El total es un estimado, no un
 booking ni un cobro.
 
+En Contact, las opciones y sus precios permanecen visibles mientras el total
+combinado y el desglose empiezan semánticamente ocultos. La ruta contiene un
+único form `session-estimate`; nombre y email son los únicos datos de contacto
+obligatorios, y teléfono, timing e historia son opcionales. El submit mejorado
+serializa el form como URL-encoded hacia `/` y solo una respuesta `2xx`
+desbloquea el recibo. Durante el request congela controles y evita duplicados;
+un HTTP no exitoso, fallo de red o timeout de 15 segundos conserva los valores,
+mantiene el recibo bloqueado, restaura los controles y permite reintentar.
+Sin JavaScript, el HTML conserva `POST` y `action="/thank-you/"`.
+
 ## Ruteo y renderizado
 
 - `src/pages/index.astro` compone la homepage y es la única ruta que incluye
@@ -215,6 +225,14 @@ Ambos usan `POST`, `data-netlify="true"`, honeypot, campo oculto `form-name` y
 acción `/thank-you/`. La entrega por correo se configura en Netlify Dashboard;
 un campo oculto de recipient no crea la notificación.
 
+`/contact/` renderiza exactamente una instancia de `session-estimate`. Con
+JavaScript, esa misma instancia se envía a Netlify Forms sin navegar y el
+recibo se revela solo tras `response.ok`; no existe un segundo formulario
+oculto para el gate. La microcopia informa que los datos de contacto y las
+elecciones se envían a Lisa para responder sobre la sesión. El usuario confirmó
+el 2026-08-11 que Forms y sus notificaciones ya funcionan en producción. El QA
+local de este cambio interceptó los POST y no realizó envíos reales.
+
 ### Analítica
 
 - `src/layouts/Base.astro` carga Microsoft Clarity con project ID público
@@ -265,7 +283,9 @@ Los nombres están en `.env.example`; nunca documentar valores reales.
 
 `netlify.toml` configura staging con `globalbridge360@gmail.com` y producción
 con `itsakeeperphoto@gmail.com` en la variable pública de auditoría. Las
-notificaciones reales siguen dependiendo del Dashboard de Netlify.
+notificaciones reales siguen dependiendo del Dashboard de Netlify; su
+configuración y funcionamiento en producción fueron confirmados por el usuario
+el 2026-08-11.
 
 ## Comandos
 
@@ -314,24 +334,31 @@ para evitar cambios silenciosos al repositorio.
   `AboutPage`/`Person`/`BreadcrumbList`, referencia única al founder global y
   ausencia de schema de servicio, FAQ, reseñas, rating, premio, coordenadas o
   dirección de calle.
+- Para Contact valida estado `ready/index`, metadata/canonical/robots, una sola
+  instancia de `session-estimate`, campos requeridos y opcionales, fallback
+  estático, estados locked/unlocked, regiones live, timeout, submit URL-encoded,
+  analítica sin PII, disclosure de datos, `ContactPage`/`BreadcrumbList` y
+  ausencia de un `Service` inventado. También fija la membresía exacta en
+  sitemap/`llms.txt` y el aislamiento noindex de staging.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para nueve rutas:
+En `release`, el manifiesto actualmente permite sitemap para diez rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
 - `/newborn-photographer-tri-cities-wa/`
 - `/about/`
+- `/contact/`
 - `/richland-wa-photographer/`
 - `/kennewick-wa-photographer/`
 - `/pasco-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family, Newborn, About, Richland, Kennewick, Pasco
-y Family Photo Locations; Portfolio está excluido de llms. Otras 11 rutas
-siguen `draft/noindex`.
+`llms.txt` incluye Homepage, Family, Newborn, About, Contact, Richland,
+Kennewick, Pasco y Family Photo Locations; Portfolio está excluido de llms.
+Otras 10 rutas siguen `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En
@@ -356,6 +383,11 @@ incluye rol, Richland/WA/US sin calle ni coordenadas, siete áreas de
 conocimiento, idioma, perfiles sociales y la publicación verificable de
 Tri-Cities MOM Magazine de agosto de 2019. No emite `Service`, `FAQPage`,
 `Review`, `AggregateRating`, premio ni credencial.
+
+Para Contact, `Base.astro` emite un único `ContactPage` enlazado al negocio y
+`[slug].astro` añade `BreadcrumbList` Home → Session Pricing Estimate. La ruta
+no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
+`AggregateRating`.
 
 ## Assets y rendimiento
 
@@ -412,8 +444,9 @@ Tri-Cities MOM Magazine de agosto de 2019. No emite `Service`, `FAQPage`,
 
 1. La homepage Netlify es la autoridad visual; no rehacerla desde `DESIGN.md` ni
    usar el dominio legado como referencia.
-2. `PUBLIC_INQUIRY_NOTIFICATION_EMAIL` no entrega emails. Configurar
-   notifications para ambos formularios en Netlify Dashboard.
+2. `PUBLIC_INQUIRY_NOTIFICATION_EMAIL` no entrega emails por sí mismo. Las
+   notifications se configuran en Netlify Dashboard; el usuario confirmó su
+   funcionamiento en producción el 2026-08-11.
 3. Ejecutar `npm run build:local` puede modificar temporalmente los componentes
    de formularios añadiendo IDs. Revisar `git status` después del build y no
    commitear cambios generados no solicitados.
