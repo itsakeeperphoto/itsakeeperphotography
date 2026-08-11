@@ -1,12 +1,12 @@
 # CONTACT — `/contact/`
 
-_Página 10 de 18 · Trust & conversion · **v3 definitiva — publicada localmente
+_Página 10 de 18 · Trust & conversion · **v4 definitiva — publicada localmente
 el 2026-08-11**_
 
-> Contact combina un estimador transparente con una única solicitud de datos:
-> la persona elige su sesión primero y el total personalizado se revela solo
-> cuando Netlify confirma el envío. El resultado sigue siendo un estimado; no
-> reserva fecha, procesa pagos ni sustituye la conversación con Lisa.
+> Contact ofrece un estimado transparente desde el primer render. La persona
+> configura la sesión, ve cómo cambian el recibo y el total, y envía el mismo
+> formulario HTML a Lisa cuando está lista. El resultado sigue siendo un
+> estimado: no reserva fecha, procesa pagos ni sustituye la conversación.
 
 ---
 
@@ -18,15 +18,15 @@ el 2026-08-11**_
 | **Estado** | `ready/index` |
 | **Last modified** | `2026-08-11` |
 | **Title** | `Session Pricing Estimate \| It's A Keeper Photography` |
-| **Meta description** | `Plan a Tri-Cities photography session, send your details and reveal a personalized pricing estimate. Lisa reads every inquiry and replies personally.` |
+| **Meta description** | `Build a personalized photography session pricing estimate, then send your plans to Lisa. She reads every inquiry and follows up personally.` |
 | **Schema** | `ContactPage` + `BreadcrumbList` |
 | **Sitemap release** | Incluida; 10 URLs totales |
 | **llms.txt release** | Incluida; 9 entradas totales |
 
 La página no publica una dirección de calle, coordenadas, reseñas, ratings ni
-un `Service` de nivel superior. El breadcrumb visible para buscadores es Home →
-Session Pricing Estimate. Staging permanece globalmente noindex, con sitemap
-vacío y `llms.txt` de preview.
+un `Service` de nivel superior. El breadcrumb es Home → Session Pricing
+Estimate. Staging permanece globalmente noindex, con sitemap vacío y
+`llms.txt` de preview.
 
 ## Estructura de headings publicada
 
@@ -34,7 +34,7 @@ vacío y `llms.txt` de preview.
 H1  Let's Plan Your Session
  H2  Build Your Session Estimate
   H3  Optional finishing touches
-  H3  Your Estimate Is Ready / Your Estimate
+  H3  Your Estimate
  H2  What Happens Next
   H3  I'll write back personally.
   H3  We'll set up a phone call.
@@ -55,9 +55,9 @@ otro heading estructural.
 
 **Script:** your season, your way
 
-**Intro:** Choose the session, coverage and keepsakes you have in mind, then
-send your name and email to reveal the complete estimate. I read every inquiry
-and follow up personally — you'll hear from me, not an assistant.
+**Intro:** Build a personalized session pricing estimate around what you have
+in mind, then send it to me when you're ready. I read every inquiry and follow
+up personally — you'll hear from me, not an assistant.
 
 **CTA:** Build My Estimate
 
@@ -67,9 +67,8 @@ and follow up personally — you'll hear from me, not an assistant.
 
 **H2:** Build Your Session Estimate
 
-Choose what fits the session you have in mind, then send your name and email to
-reveal the complete estimate. Lisa receives the same plan and follows up
-personally to confirm the details.
+Choose what fits the session you have in mind. Your estimate updates as you go,
+then Lisa follows up personally to confirm the details.
 
 El planner conserva cuatro fases visibles:
 
@@ -79,73 +78,65 @@ El planner conserva cuatro fases visibles:
    ubicaciones, outfits y número de personas.
 3. **Keepsakes — Choose how you'd like to keep it.** Colección y add-ons
    opcionales.
-4. **Send & reveal — Tell Lisa where to reach you.** Datos de contacto y nota
-   opcional antes de revelar el recibo.
+4. **Review & send — Tell Lisa where to reach you.** Datos de contacto y notas
+   antes del envío nativo.
 
 Los nombres, límites y precios se leen de `src/lib/session-pricing.ts`; este
 documento no crea una segunda fuente comercial.
 
+### Recibo y total transparentes
+
+El HTML renderizado en servidor contiene el recibo completo y ambos totales
+visibles desde el inicio:
+
+- **Eyebrow:** Live session receipt
+- **H3:** Your Estimate
+- **Total SSR inicial:** `$160`
+- **Barra móvil:** Estimated total `$160` · Review estimate
+
+El recibo muestra Session, Coverage, People, Keepsakes y Add-ons. JavaScript
+actualiza esas líneas, la fotografía, los campos ocultos y los totales desktop
+y móvil cuando cambia una selección. Una región `aria-live="polite"` anuncia el
+nuevo total. Nada del recibo depende del submit para mostrarse y no existen los
+estados locked, submitting, unlocked, reveal, error ni retry del gate anterior.
+
+El escenario de regresión completo parte de `$160` y llega a `$955.98` con
+Family, paquete #THREE, siete personas, Collection #1, una extra retouched image
+y rush 48-hour delivery.
+
 ### Datos solicitados
 
-- **Requeridos:** Your name, Email.
-- **Opcionales:** Phone, Preferred timing, What are you hoping to keep?
+- **Requeridos:** Your name, Email, Phone, What are you hoping to keep?
+- **Opcional:** Preferred timing.
 - **Honeypot:** `bot-field`, fuera del flujo de teclado.
 - **Campos técnicos:** `form-name`, `pricing_version`, selecciones crudas,
-  desglose calculado y total estimado.
+  desglose calculado, estado de cálculo y total estimado.
+
+**Intro de la fase 04:**
+
+> This sends your complete estimate and notes to Lisa. It does not reserve a
+> date or charge a payment.
 
 **Microcopy de envío:**
 
-> Your result is a planning estimate, not a booking or payment. Lisa will reply
-> about your session and confirm every detail before sending a contract.
-> Submitting sends your contact details and session choices to Lisa through
-> Netlify Forms so she can reply about this session.
+> Estimate only. Lisa will confirm the final details, send the contract and
+> payment link, and reserve the date after the contract and retainer are
+> complete.
 
-**CTA exacta:** Send My Details & Reveal My Estimate
+**CTA exacta:** Send My Estimate to Lisa
 
-### Recibo bloqueado
+### Envío nativo
 
-**Eyebrow:** One final step
+El único formulario usa `method="post"` y `action="/thank-you/"`. Con JavaScript
+activo o inactivo, el navegador ejecuta un POST URL-encoded como navegación de
+documento y llega a la confirmación noindex. El script del calculador no llama
+`fetch`, no intercepta submit con `preventDefault` y no implementa respuestas
+AJAX, gate, reveal, timeout, reintento ni analítica personalizada del gate.
 
-**H3:** Your Estimate Is Ready
-
-Your choices are being prepared behind this receipt. Send your name and email
-to reveal the complete itemized estimate.
-
-**CTA auxiliar:** Finish & reveal
-
-En móvil, la barra fija muestra `Personalized estimate`, `Ready to reveal` y el
-mismo CTA. El total y el desglose permanecen semánticamente ocultos con
-`hidden`, no solo desenfocados o cubiertos visualmente.
-
-### Confirmación
-
-Solo una respuesta HTTP exitosa de Netlify desbloquea el recibo, cambia su
-título a `Your Estimate`, muestra el total itemizado y anuncia:
-
-> Thank you — your details were sent to Lisa. Your planning estimate is now
-> unlocked, and Lisa will reply personally about your session.
-
-Las selecciones y los datos quedan congelados después del éxito para que el
-recibo revelado coincida con lo enviado.
-
-### Error y reintento
-
-Un HTTP no exitoso, fallo de red o timeout de 15 segundos mantiene el estimado
-bloqueado, conserva los valores, restablece los controles y enfoca este aviso:
-
-> We couldn't confirm the submission, so your estimate is still locked. Your
-> entries are still here — please try again, or call or text Lisa at
-> (509) 948-7322.
-
-El guard de estado evita envíos duplicados durante el request y después de una
-confirmación exitosa.
-
-### Fallback sin JavaScript
-
-El mismo formulario HTML continúa siendo submittable con `POST` y
-`action="/thank-you/"`. Netlify recibe las selecciones crudas para que Lisa
-pueda recalcularlas; el navegador navega a la confirmación noindex en lugar de
-intentar revelar un total en cliente.
+Los campos calculados acompañan las selecciones cuando JavaScript está activo.
+Sin JavaScript, las selecciones crudas y el fallback técnico indican a Lisa que
+debe recalcular el estimado; el recibo SSR permanece visible en `$160`, pero no
+se actualiza en vivo.
 
 ---
 
@@ -188,42 +179,51 @@ newborn sessions, which happen in your home.
 ## Contrato del formulario
 
 - La ruta contiene exactamente un `<form name="session-estimate">`.
-- Método `POST`, `data-netlify="true"`, `netlify-honeypot="bot-field"` y campo
-  oculto `form-name=session-estimate`.
-- JavaScript serializa como `application/x-www-form-urlencoded` y envía a `/`,
-  el endpoint same-origin que Netlify Forms procesa.
-- El recibo solo se revela tras `response.ok`; una excepción nunca se trata como
-  conversión.
-- Los eventos GA4 registran únicamente nombres de interacción —view, inicio,
-  intento, éxito, error y reveal— sin nombre, email, teléfono, nota ni valor de
-  campos.
+- Método `POST`, `data-netlify="true"`, `netlify-honeypot="bot-field"`, campo
+  oculto `form-name=session-estimate` y acción `/thank-you/`.
+- Nombre, email, teléfono e historia son obligatorios; timing es opcional.
+- El recibo y los totales desktop/móvil están presentes y visibles en el HTML
+  SSR con `$160` antes de ejecutar JavaScript.
+- El calculador mejora selección, desplazamiento, validación y total vivo, pero
+  no toma control del submit.
+- El envío válido es una navegación de documento nativa, no un request AJAX.
+- No existen marcadores ni eventos personalizados `contact_gate_*`,
+  `estimate_revealed`, `submission_id`, reveal, locked o retry.
 - La configuración y las notificaciones de Netlify Forms en producción fueron
-  confirmadas por el usuario el 2026-08-11. El QA automatizado de este cambio
-  interceptó todos los POST; no envió datos reales.
+  confirmadas por el usuario el 2026-08-11. El QA automatizado interceptó todos
+  los POST y no envió datos reales.
 
 ## Privacidad
 
-La divulgación inline explica de forma factual qué datos se envían y por qué.
-No sustituye una política legal. `/privacy/` continúa `draft/noindex` hasta que
-una persona autorizada revise el uso global de Netlify Forms, Microsoft Clarity
-y Google Analytics y defina cualquier requisito de consentimiento.
+El formulario envía a Lisa datos de contacto, selecciones y notas mediante
+Netlify Forms para continuar la conversación. `/privacy/` continúa
+`draft/noindex` hasta que una persona autorizada revise Netlify Forms, Microsoft
+Clarity y Google Analytics y defina cualquier requisito de consentimiento. El
+calculador transparente no añade analítica personalizada del gate ni guarda PII
+en browser storage.
 
 ## QA de publicación
 
+- Tina release integral: servidor en `4002` y data layer en `9001`.
 - Validadores staging y release: 21/21 rutas.
 - Release: Contact indexable, canonical `www`, sin header noindex, dentro de
   sitemap (10 URLs) y `llms.txt` (9 entradas).
-- Playwright: 1440, 1200, 900 y 390 px.
-- Casos automatizados con POST interceptado: HTTP 2xx, HTTP 5xx, fallo de red y
-  doble clic.
-- Verificado: un solo POST, unlock únicamente en 2xx, error/retry sin pérdida de
-  datos, controles congelados tras éxito, foco accesible, fallback sin
-  JavaScript y ausencia de overflow horizontal.
+- Playwright: 1440, 1200, 900 y 390 px; `$160` SSR → `$955.98` en vivo.
+- En los cuatro anchos se verificaron campos requeridos, timing opcional, total
+  visible, ausencia completa del gate y POST nativo URL-encoded como navegación
+  de documento a `/thank-you/`.
+- Sin JavaScript a 390 px: recibo SSR `$160`, validación nativa y POST de
+  documento con selecciones crudas.
+- Cero envíos reales durante QA; Forms y notificaciones productivas se preservan
+  como confirmación externa del usuario.
+- Revisión final independiente: `PASS`.
 
 ## Notas editoriales
 
+- No volver a ocultar el precio detrás de una solicitud sin una nueva decisión
+  explícita.
 - No prometer calendario de reservas online.
 - No presentar el estimado como precio contractual, booking ni pago.
 - No publicar una dirección de calle o pin de mapa desde datos legados.
-- No añadir un `Service`, Review o rating al schema sin evidencia y una decisión
-  explícita.
+- No añadir un `Service`, `Review` o rating al schema sin evidencia y una
+  decisión explícita.

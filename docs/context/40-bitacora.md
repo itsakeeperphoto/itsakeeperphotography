@@ -1054,3 +1054,39 @@
   `main` está cinco commits por delante de `origin/main` y quedará seis después
   del commit local. No se hizo push, deploy, edición de Drive ni
   `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Contact volvió al estimate transparente y nativo
+
+- **Objetivo:** revertir los dos cambios documentados del estimated receipt
+  gated sin despublicar Contact ni perder el historial de ADR-050.
+- **Decisión:** ADR-053 supersede ADR-050 solo en gate, AJAX y campos
+  opcionales. Contact conserva un único `session-estimate`, pero el recibo y los
+  totales desktop/móvil vuelven a estar visibles desde SSR en `$160`; el
+  calculador los actualiza antes del contacto. Nombre, email, teléfono e
+  historia son requeridos; preferred timing permanece opcional.
+- **Transporte:** el form mantiene detección Netlify, honeypot, `POST` y
+  `action="/thank-you/"`. JavaScript no intercepta submit ni usa `fetch`,
+  `preventDefault`, reveal, locked/unlocked, timeout, retry, freeze tras éxito,
+  `submission_id` o eventos personalizados del gate. El navegador envía
+  URL-encoded como navegación de documento con y sin JavaScript.
+- **Publicación preservada:** Contact continúa `ready/index`,
+  `lastModified: 2026-08-11`, dentro de sitemap release con 10 URLs y
+  `llms.txt` con 9 entradas. Conserva `ContactPage` y `BreadcrumbList`, sin
+  `Service`, calle, coordenadas, reseñas ni rating. Forms y notificaciones
+  productivas siguen confirmados por el usuario.
+- **QA:** Tina release integral corrió en puertos `4002`/`9001`; validadores
+  staging/release aprobaron 21/21 rutas. Playwright aprobó
+  1440/1200/900/390 con `$160` → `$955.98`, campos nativos, ausencia del gate y
+  POST URL-encoded de documento a `/thank-you/`; no-JS a 390 px conservó SSR,
+  validación y selecciones crudas. La revisión final independiente devolvió
+  `PASS`. Todos los POST se interceptaron y no hubo envío real.
+- **Documentación:** `paginas/10-contact.md` queda en v4 definitiva;
+  `DESIGN.md` añade el addendum 15 sin borrar el 13; Arquitectura, Estado,
+  Backlog y ADR quedan sincronizados, preservando Reviews y la media
+  Branding/Headshots.
+- **Git/operación:** la implementación funcional está en `df6db0f`
+  (`fix(contact): restore transparent native estimate`). Antes del cierre
+  documental, `main` está siete commits por delante de `origin/main`
+  (`b504f84`) y quedará ocho después del commit local esperado
+  `docs(contact): record transparent estimate reversal`. No se hizo stage,
+  commit, push, deploy, DNS, envío real ni `./scripts/handoff.sh`.

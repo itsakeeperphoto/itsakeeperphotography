@@ -66,12 +66,11 @@
   retrato candid en blanco y negro. La media global de Open Graph/schema no
   cambió, ADR-048 sigue exacto y Seniors permanece byte-identical. Release
   21/21, Playwright en cinco anchos y revisión independiente están aprobados.
-- [x] **15. Publicar Contact con gate de estimado según ADR-050.** Un único
-  form `session-estimate`, nombre/email requeridos, datos restantes opcionales,
-  unlock solo tras 2xx, timeout de 15 s, error/retry, fallback no-JS, eventos
-  sin PII, `ContactPage`/breadcrumb y divulgación factual. La ruta queda
-  `ready/index`, con 10 URLs release en sitemap y 9 entradas en `llms.txt`;
-  validadores 21/21 y Playwright 1440/1200/900/390 completos con POST mockeados.
+- [x] **15. Publicar Contact con gate de estimado según ADR-050 — histórico,
+  supersedido parcialmente por ADR-053.** El gate, AJAX y los campos opcionales
+  existieron en `dd4a590` y quedaron documentados sin borrar el historial. Su
+  publicación `ready/index`, sitemap 10, `llms.txt` 9,
+  `ContactPage`/breadcrumb y formulario único permanecen vigentes.
 - [x] **16. Renovar la media Branding/Headshots según ADR-051.** Se incorporan
   18 JPEG Drive, 72 WebP regenerables, filenames/alt descriptivos y XMP de
   ciudad verificada sin GPS ni metadata sensible. Branding queda 13/11 y
@@ -83,11 +82,18 @@
   Drive, siete JPEG nuevos se optimizaron y los tres exactos existentes se
   reutilizan. Tina, loaders, fallback GBP y tap coarse quedaron sincronizados;
   Astro/validador 21/21 y Playwright 1920/1440/1200/900/390 pasan.
-- [ ] **18. Publicar los seis commits locales pendientes.** `origin/main`
-  permanece en `b504f84`; el usuario publica los dos commits Contact, los dos
-  del refresh Branding/Headshots y los dos de Kind Words. Codex no ejecuta
-  push.
-- [ ] **19. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
+- [x] **18. Restaurar Contact transparente según ADR-053.** Recibo y `$160`
+  visibles en SSR, cálculo vivo, nombre/email/teléfono/historia requeridos,
+  timing opcional y POST HTML nativo a `/thank-you/`; sin gate, AJAX, reveal,
+  retry ni analítica personalizada. Tina release integral, validadores 21/21,
+  Playwright 1440/1200/900/390 y no-JS 390 aprobados; Contact conserva
+  `ready/index`, sitemap 10, `llms.txt` 9 y schema.
+- [ ] **19. Publicar los ocho commits locales pendientes.** `origin/main`
+  permanece en `b504f84`; después del cierre documental esperado, el usuario
+  publica el historial Contact gated y su reversión transparente, los dos
+  commits Branding/Headshots, los dos de Kind Words y este cierre ADR-053.
+  Codex no ejecuta push.
+- [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
@@ -98,15 +104,16 @@
   comprobar la nueva pareja del hero y sus crops 29/58/42%, el print pequeño en
   blanco y negro, la carga AVIF sin JPEG paralelo, las cinco cards de ADR-048 y
   las diez reseñas Kind Words de ADR-052, incluido tap y resumen GBP vivo.
-  En Contact, ejecutar una prueba controlada del gate ya desplegado y confirmar
-  que una respuesta real de Netlify revela el recibo sin guardar PII en git.
+  En Contact, confirmar `$160` visible antes de completar datos, cálculo vivo y
+  un envío nativo controlado hacia Thank-you; registrar solo recepción y
+  navegación, sin guardar PII en git.
 - [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
   `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
   WebP responsive; no publicarlas hasta confirmar paquetes y entregables.
-- [ ] **20. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **21. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **21. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **22. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -213,6 +220,9 @@ sin reemplazar el archivo.
 
 - [x] Publicada `ready/index`, `lastModified: 2026-08-11`, dentro de sitemap y
   `llms.txt`, con `ContactPage` y `BreadcrumbList` sin un `Service` inventado.
+- [x] **Histórico ADR-050, supersedido parcialmente por ADR-053:** los cuatro
+  checks siguientes registran el gate que existió en `dd4a590`; ya no describen
+  el comportamiento actual.
 - [x] Implementado un único `session-estimate`: nombre/email requeridos,
   teléfono/timing/historia opcionales y recibo oculto hasta la confirmación 2xx.
 - [x] Implementados timeout de 15 s, guard de doble submit, preservación de
@@ -221,8 +231,16 @@ sin reemplazar el archivo.
   tag sin PII y disclosure factual de Netlify Forms.
 - [x] Verificados staging/release 21/21 y Playwright 1440/1200/900/390 con 2xx,
   5xx, fallo de red y doble clic mediante POST interceptados; no hubo envío real.
-- [ ] Después del deploy del gate, repetir una prueba controlada de extremo a
-  extremo sin guardar PII en el repositorio.
+- [x] Restaurado en `df6db0f` el contrato transparente: recibo y `$160` visibles
+  en SSR, cálculo vivo hasta `$955.98`, nombre/email/teléfono/historia
+  requeridos, timing opcional y un único POST nativo a `/thank-you/`.
+- [x] Retirados `fetch`, `preventDefault`, markup/estados locked/reveal,
+  timeout/retry/freeze, `submission_id` y analítica personalizada del gate.
+- [x] Verificados Tina release integral `4002`/`9001`, staging/release 21/21,
+  Playwright 1440/1200/900/390, navegación POST de documento y no-JS a 390 px;
+  revisión final `PASS`, sin envíos reales.
+- [ ] Después del deploy transparente, realizar una prueba controlada del POST
+  nativo y documentar recepción/navegación sin guardar PII en el repositorio.
 
 ### Journal
 
@@ -316,8 +334,10 @@ sin reemplazar el archivo.
   `ff736c6`. Codex no realizó el push.
 - [x] El usuario publicó también el lote local posterior; al iniciar Contact,
   `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
-- [ ] Publicar los commits funcional/documental de Contact creados a partir de
-  `b504f84`. Codex no ejecuta push; el usuario conserva esa operación.
+- [ ] Publicar los ocho commits locales creados a partir de `b504f84`: historial
+  gated de Contact, media Branding/Headshots, Kind Words, reversión transparente
+  `df6db0f` y su cierre documental esperado. Codex no ejecuta push; el usuario
+  conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -336,9 +356,11 @@ sin reemplazar el archivo.
   funcionando en producción.
 - [x] El usuario confirmó el 2026-08-11 que las notificaciones de producción
   están configuradas y funcionando.
-- [ ] Después de desplegar ADR-050, enviar un estimate de prueba con etiqueta
-  clara; verificar recepción, unlock tras 2xx y ausencia de duplicados. El QA
-  automatizado actual usó POST mockeados y no sustituye esta prueba real.
+- [x] **SUPERSEDIDO POR ADR-053:** no ejecutar la prueba real de unlock 2xx
+  prevista para ADR-050; el gate y su transporte AJAX ya no existen.
+- [ ] Después de desplegar ADR-053, enviar un estimate de prueba con etiqueta
+  clara; verificar recepción y navegación nativa a Thank-you. El QA
+  automatizado interceptó los POST y no sustituye esta prueba real.
 - [ ] Documentar capturas/fecha de la prueba sin almacenar PII en git.
 
 ### Google Business Profile
@@ -396,11 +418,18 @@ sin reemplazar el archivo.
   crop desktop protegido. Release 21/21, Impeccable `[]` y Playwright
   1728/1440/1200/900/390 sin overflow, solapamientos ni imágenes de sección
   rotas; solo falló la telemetría externa de Clarity en local.
-- [x] Publicado localmente el gate Contact en `dd4a590`: staging/release 21/21
+- [x] **Histórico ADR-050:** publicado localmente el gate Contact en `dd4a590`:
+  staging/release 21/21
   y Playwright 1440/1200/900/390 con 2xx, 5xx, fallo de red y doble clic,
   interceptando todos los POST. Verificados unlock exclusivo tras 2xx, un solo
   request, preservación de datos/retry, freeze tras éxito, foco, no-JS y
   overflow 0; no se enviaron datos reales.
+- [x] Restaurado el estimate transparente en `df6db0f`: Tina release integral
+  con puertos `4002`/`9001`, staging/release 21/21 y Playwright
+  1440/1200/900/390 con recibo SSR `$160`, cálculo `$955.98`, campos nativos,
+  ausencia de gate y POST URL-encoded como navegación de documento. No-JS a
+  390 px y revisión final independiente `PASS`; todos los POST se interceptaron
+  y no hubo envío real.
 - [x] Renovada la media Branding/Headshots en `127c539`: 18 JPEG ≤2400 px/
   700 KiB, 72 WebP regenerables, XMP segura y contratos de diversidad/alt.
   Release validó 21/21 y Playwright aprobó 1440/1200/900/390 con crops, red,
@@ -489,9 +518,12 @@ sin reemplazar el archivo.
 - [x] Renovados el hero visual y el print pequeño Biography de Homepage con art
   direction responsive, accesibilidad y guardas de carga; el retrato principal,
   Open Graph/schema y las cinco cards protegidas no cambiaron.
-- [x] Convertido Contact en un estimador gated: receipt editorial locked,
-  formulario mínimo, estados 2xx/error/no-JS accesibles y publicación
-  `ready/index` sin duplicar el form ni inventar schema.
+- [x] **Histórico ADR-050:** Contact fue convertido en un estimador gated con
+  receipt locked y estados 2xx/error/no-JS; ADR-053 supersedió ese patrón sin
+  borrar su registro.
+- [x] Contact actual usa estimate transparente: recibo/total SSR visibles,
+  cálculo vivo y submit HTML nativo, preservando `ready/index`, form único y
+  schema sobrio.
 - [x] Renovadas Branding y Headshots con fotografía Drive local, diversidad
   protegida, filenames/alt descriptivos y XMP de ciudad segura; el estado
   editorial sigue `draft/noindex` hasta confirmar paquetes.
@@ -541,8 +573,8 @@ sin reemplazar el archivo.
 - [ ] TODO(contexto): ¿cuál es el link definitivo de Google Reviews? — Lisa.
 - [ ] TODO(contexto): ¿quién aprueba formalmente Privacy y cuándo? — cliente.
 - [x] Resuelto por confirmación del usuario el 2026-08-11: Netlify Forms y sus
-  notificaciones están configurados y funcionando en producción. La versión
-  gated de Contact aún requiere prueba real después de su deploy.
+  notificaciones están configurados y funcionando en producción. ADR-053
+  retiró el gate; queda una prueba controlada del POST nativo tras el deploy.
 - [ ] TODO(contexto): ¿quién verificará los dashboards de Clarity y Google
   Analytics y el acceso a Search Console? — administrador del cliente.
 - [ ] TODO(contexto): ¿existe un tablero de tareas externo? — William.
@@ -588,9 +620,13 @@ sin reemplazar el archivo.
 - [x] Renovados hero y print Biography de Homepage en `ec4c734`, con AVIF/WebP
   art-directed, una sola descarga del hero, portfolio ADR-048 intacto y QA en
   cinco anchos.
-- [x] Publicado localmente Contact en `dd4a590` con gate tras 2xx, un único
+- [x] **Histórico ADR-050:** publicado localmente Contact en `dd4a590` con gate tras 2xx, un único
   `session-estimate`, error/retry/no-JS, analítica sin PII, schema sobrio,
   sitemap 10, `llms.txt` 9 y QA mockeado en cuatro anchos.
+- [x] Restaurado Contact transparente en `df6db0f`: `$160` visible en SSR,
+  cálculo vivo, campos requeridos restaurados y POST nativo a `/thank-you/`,
+  sin AJAX/gate/reveal/retry ni eventos personalizados; QA integral PASS y SEO
+  publicado intacto.
 - [x] Renovada la fotografía de Branding/Headshots en `127c539`: 18 JPEG Drive,
   72 WebP regenerables, 11 fuentes únicas por ruta, alt literal, XMP local sin
   GPS y QA responsive completo, sin borrar media de producción ni publicar las

@@ -1415,3 +1415,88 @@ los crops.
 Ambas rutas continúan `draft/noindex` y fuera de sitemap/`llms.txt` hasta que
 se confirmen los entregables, cantidades y duraciones pendientes. La calidad
 visual no sustituye ese gate editorial.
+
+## 15. ADDENDUM DE CONVERSIÓN — CONTACT TRANSPARENT NATIVE ESTIMATE
+
+Este addendum supersede el addendum 13 únicamente en el gate, el transporte
+AJAX, los estados de reveal/retry y la opcionalidad de campos. El addendum 13 se
+conserva como historial de la dirección anterior. Permanecen vigentes la
+composición editorial del planner, el único form `session-estimate`, la
+publicación `ready/index`, `ContactPage` + `BreadcrumbList`, sitemap 10,
+`llms.txt` 9 y la confirmación externa de Netlify Forms/notificaciones.
+
+### Tesis y jerarquía transparentes
+
+- **Tesis:** el precio orientativo ayuda a decidir antes del contacto; no es una
+  recompensa condicionada al envío.
+- Session, Coverage y Keepsakes conservan opciones y precios visibles. El
+  recibo completo también es visible desde el HTML SSR, con Session, Coverage,
+  People, Keepsakes, Add-ons y un total inicial de `$160`.
+- Details sigue como fase 04, renombrada `Review & send`. Nombre, email,
+  teléfono e historia son obligatorios; preferred timing es el único campo de
+  contacto opcional.
+- En desktop, el recibo continúa como papel editorial sticky. Su eyebrow es
+  `Live session receipt`, el H3 es `Your Estimate` y no contiene lock, blur,
+  cubierta, éxito ni error AJAX.
+- En móvil, la barra muestra `Estimated total`, el valor visible y
+  `Review estimate`; el botón desplaza al recibo en lugar de conducir a un
+  reveal.
+- Tanto el recibo como los totales desktop/móvil deben estar presentes,
+  expuestos a tecnologías asistivas y visibles antes de ejecutar JavaScript.
+
+### Calculador vivo y progressive enhancement
+
+1. **SSR:** el paquete #ONE produce `$160` visible en recibo, barra móvil y
+   anuncio polite.
+2. **Selección:** JavaScript actualiza de inmediato líneas, fotografía, total,
+   campos ocultos y estado de personas sin exigir datos ni submit.
+3. **Navegación del planner:** progress, avance entre fases, stepper y
+   `Review estimate` conservan scroll suave o instantáneo con reduced motion.
+4. **Validación:** los campos nativos requeridos usan el navegador y
+   `aria-invalid`; no existe un estado de error de transporte en la página.
+5. **Sin JavaScript:** el recibo SSR permanece visible en `$160`; las
+   selecciones crudas permiten recalcular el estimate después del envío.
+
+El cambio de total puede usar una transición breve de opacity/transform y una
+región `aria-live="polite"`, siempre respetando `prefers-reduced-motion`. El
+valor no debe anunciarse por cada frame ni depender únicamente de color.
+
+### Transporte nativo
+
+- Contact contiene exactamente un form `session-estimate`, detectable de forma
+  estática por Netlify, con `method="post"`, `action="/thank-you/"`, honeypot y
+  campo `form-name`.
+- Un submit válido siempre pertenece al navegador: POST URL-encoded como
+  navegación de documento hacia `/thank-you/`, con JavaScript activo o
+  desactivado.
+- El calculador no usa `fetch`, `FormData`, `URLSearchParams`,
+  `preventDefault`, `AbortController` ni otro control del transporte.
+- No existen estados locked/submitting/unlocked, reveal condicionado a 2xx,
+  timeout, retry, freeze posterior al éxito ni persistencia del unlock.
+- No se emiten eventos personalizados `contact_gate_*`,
+  `estimate_revealed`, `submission_id` ni datos de campos desde el calculador.
+  Esto no modifica los snippets globales de Clarity y GA4.
+
+### Accesibilidad, privacidad y límites comerciales
+
+- Recibo y total tienen semántica disponible desde SSR; la región polite
+  anuncia actualizaciones posteriores.
+- Labels visibles, foco cuadrado, `aria-current` del progress, invalid state y
+  navegación de teclado permanecen dentro del sistema global.
+- `prefers-reduced-motion` retira desplazamientos y animación del total sin
+  alterar cálculo, validación ni submit.
+- El estimado sigue siendo planificación, no booking, pago ni precio
+  contractual. Lisa confirma detalles, contrato y retainer fuera del planner.
+- Netlify Forms recibe contacto, notas, selecciones y campos calculados. La
+  configuración y las notificaciones productivas fueron confirmadas por el
+  usuario; `/privacy/` sigue `draft/noindex` hasta revisión autorizada.
+
+### Regresión
+
+El HTML release debe empezar con `$160` visible en recibo y barra móvil y no
+contener ningún marcador del gate histórico. La prueba viva cambia Family,
+paquete #THREE, siete personas, Collection #1, extra retouched image y rush 48h
+hasta `$955.98`; después intercepta el POST y exige navegación de documento,
+acción `/thank-you/`, URL encoding y payload calculado completo. Cubrir 1440,
+1200, 900 y 390 px, más un contexto sin JavaScript a 390 px. QA nunca usa una
+persona real ni envía el formulario a producción.

@@ -1033,7 +1033,10 @@
 
 ### ADR-050 — Contact revela el estimado solo después de una solicitud confirmada
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada.
+- **Estado:** SUPERSEDIDA PARCIALMENTE POR ADR-053 únicamente en gate,
+  transporte AJAX y campos opcionales. Permanecen vigentes la publicación
+  `ready/index`, `lastModified`, sitemap/`llms.txt`, `ContactPage` +
+  `BreadcrumbList`, el único form y la confirmación de Forms/notificaciones.
 - **Contexto:** El estimador de `/contact/` mostraba el total antes de que la
   persona enviara sus datos. El usuario pidió invertir ese orden para crear
   anticipación: primero elegir la sesión y enviar el formulario, luego ver el
@@ -1145,3 +1148,43 @@
   errores de consola. El build Tina integral no se repitió porque el data layer
   largo del usuario ocupa `:9000`; no se detuvo ese proceso. No hubo push,
   deploy, edición de Drive ni borrado de media.
+
+### ADR-053 — Contact restaura un estimado transparente con submit HTML nativo
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada; supersede ADR-050 únicamente en gate, transporte AJAX y
+  campos opcionales. Preserva todos los contratos de publicación, schema,
+  crawler outputs, formulario único y operación de Netlify confirmada en
+  ADR-050.
+- **Contexto:** Después de implementar y documentar el estimated receipt gated,
+  el usuario pidió revertir esos dos cambios y volver al comportamiento
+  transparente: ver el precio antes de enviar y usar la navegación normal del
+  formulario. La solicitud no revocó la publicación de Contact ni autorizó
+  retirar la ruta de sitemap, `llms.txt` o schema. Netlify Forms y sus
+  notificaciones ya estaban confirmados como funcionales en producción.
+- **Decisión:** Renderizar en SSR el recibo completo y los totales desktop/móvil
+  visibles en `$160`; mantener el calculador vivo para actualizar líneas,
+  fotografía, región polite, campos ocultos y total antes del contacto. Exigir
+  nombre, email, teléfono e historia; dejar preferred timing opcional. Conservar
+  un único form `session-estimate` con `POST`, `action="/thank-you/"`, detección
+  Netlify, honeypot y selecciones crudas. No interceptar submit: el navegador
+  envía URL-encoded como navegación de documento con o sin JavaScript. Eliminar
+  `fetch`, `preventDefault`, reveal condicionado a 2xx, estados
+  locked/submitting/unlocked, timeout, retry, freeze tras éxito,
+  `submission_id` y eventos personalizados del gate. Mantener Contact
+  `ready/index`, `lastModified: 2026-08-11`, en sitemap 10 y `llms.txt` 9, con
+  `ContactPage` y `BreadcrumbList` y sin `Service`, calle, coordenadas,
+  `Review` ni `AggregateRating`.
+- **Alternativas descartadas:** Conservar el gate, mostrar un total visual pero
+  mantenerlo oculto semánticamente, usar un híbrido AJAX/navegación, pedir
+  preferred timing como obligatorio, retirar Contact del índice o crear un
+  segundo form para Netlify se descartó por contradecir la reversión solicitada,
+  duplicar transporte o deshacer contratos SEO ya aprobados.
+- **Consecuencias:** El commit funcional `df6db0f` deja visibles en SSR el
+  recibo y `$160`, y Playwright confirma el cálculo `$160` → `$955.98` y un POST
+  nativo de documento a `/thank-you/` en 1440/1200/900/390; el contexto sin
+  JavaScript a 390 px conserva recibo SSR, validación y payload crudo. El build
+  Tina release integral usó puertos `4002`/`9001`; validadores staging y release
+  aprobaron 21/21 rutas y la revisión final independiente devolvió `PASS`.
+  Todos los POST se interceptaron: no hubo envío real, push, deploy, DNS ni otra
+  mutación externa. Forms/notificaciones productivas permanecen confirmados por
+  el usuario.

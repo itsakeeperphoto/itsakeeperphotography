@@ -114,15 +114,15 @@ La versión enviada con el formulario se define en
 `src/components/SessionPriceCalculator.astro`. El total es un estimado, no un
 booking ni un cobro.
 
-En Contact, las opciones y sus precios permanecen visibles mientras el total
-combinado y el desglose empiezan semánticamente ocultos. La ruta contiene un
-único form `session-estimate`; nombre y email son los únicos datos de contacto
-obligatorios, y teléfono, timing e historia son opcionales. El submit mejorado
-serializa el form como URL-encoded hacia `/` y solo una respuesta `2xx`
-desbloquea el recibo. Durante el request congela controles y evita duplicados;
-un HTTP no exitoso, fallo de red o timeout de 15 segundos conserva los valores,
-mantiene el recibo bloqueado, restaura los controles y permite reintentar.
-Sin JavaScript, el HTML conserva `POST` y `action="/thank-you/"`.
+En Contact, el recibo, el desglose y los totales desktop/móvil se renderizan
+visibles en SSR con el paquete inicial #ONE y `$160`. La ruta contiene un único
+form `session-estimate`; nombre, email, teléfono e historia son obligatorios, y
+preferred timing es opcional. JavaScript recalcula en vivo las líneas, la
+fotografía, el total y los campos ocultos, pero no intercepta el submit. El
+navegador ejecuta el `POST` URL-encoded con `action="/thank-you/"` como
+navegación de documento, también cuando JavaScript está desactivado. No existen
+`fetch`, `preventDefault`, gate, reveal, estados locked/unlocked, timeout,
+retry, freeze tras éxito ni analítica personalizada del gate.
 
 ## Ruteo y renderizado
 
@@ -237,13 +237,13 @@ Ambos usan `POST`, `data-netlify="true"`, honeypot, campo oculto `form-name` y
 acción `/thank-you/`. La entrega por correo se configura en Netlify Dashboard;
 un campo oculto de recipient no crea la notificación.
 
-`/contact/` renderiza exactamente una instancia de `session-estimate`. Con
-JavaScript, esa misma instancia se envía a Netlify Forms sin navegar y el
-recibo se revela solo tras `response.ok`; no existe un segundo formulario
-oculto para el gate. La microcopia informa que los datos de contacto y las
-elecciones se envían a Lisa para responder sobre la sesión. El usuario confirmó
-el 2026-08-11 que Forms y sus notificaciones ya funcionan en producción. El QA
-local de este cambio interceptó los POST y no realizó envíos reales.
+`/contact/` renderiza exactamente una instancia de `session-estimate`. Con o
+sin JavaScript, esa instancia usa el transporte HTML nativo hacia
+`/thank-you/`; el script solo mejora el cálculo y la navegación interna del
+planner. El payload conserva contacto, notas, selecciones crudas y, cuando el
+calculador está activo, desglose y total. El usuario confirmó el 2026-08-11 que
+Forms y sus notificaciones ya funcionan en producción. El QA local interceptó
+los POST como navegaciones de documento y no realizó envíos reales.
 
 ### Analítica
 
@@ -349,11 +349,14 @@ para evitar cambios silenciosos al repositorio.
   ausencia de schema de servicio, FAQ, reseñas, rating, premio, coordenadas o
   dirección de calle.
 - Para Contact valida estado `ready/index`, metadata/canonical/robots, una sola
-  instancia de `session-estimate`, campos requeridos y opcionales, fallback
-  estático, estados locked/unlocked, regiones live, timeout, submit URL-encoded,
-  analítica sin PII, disclosure de datos, `ContactPage`/`BreadcrumbList` y
-  ausencia de un `Service` inventado. También fija la membresía exacta en
-  sitemap/`llms.txt` y el aislamiento noindex de staging.
+  instancia de `session-estimate`, nombre/email/teléfono/historia requeridos,
+  timing opcional, recibo y totales SSR visibles en `$160`, región live, campos
+  calculados, acción nativa `/thank-you/` y ausencia completa de markup, script
+  y analítica del gate. Playwright lleva el total a `$955.98`, intercepta el
+  POST URL-encoded como navegación de documento en 1440/1200/900/390 y repite
+  el fallback sin JavaScript a 390 px. El contrato conserva
+  `ContactPage`/`BreadcrumbList`, ausencia de un `Service` inventado, membresía
+  exacta en sitemap/`llms.txt` y aislamiento noindex de staging.
 - Para Branding y Headshots valida el manifiesto XMP de 18 JPEG, naming
   descriptivo, dimensiones/peso, ausencia de metadata sensible, cuatro WebP
   400/640/960/1440 por fuente y XMP exacto en fuente/derivados. En el HTML fija
