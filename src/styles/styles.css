@@ -1381,9 +1381,7 @@ footer[id] {
   width: var(--full-width);
   height: var(--full-width);
   object-fit: cover;
-  object-position: 50% 100%;
-  transform: scale(2.35);
-  transform-origin: 50% 100%;
+  object-position: 50% 50%;
 }
 
 .biography__tape {
@@ -1564,14 +1562,14 @@ footer[id] {
   }
 }
 
-/* Preserve the couple's faces throughout the desktop hero scale-down. */
+/* Keep both faces above the central title throughout the desktop scale-down. */
 @media (min-width: 1051px) {
   :root {
-    --hero-image-position-y: 0%;
+    --hero-image-position-y: 29%;
   }
 
   .hero__image {
-    transform-origin: center top;
+    transform-origin: center center;
   }
 }
 

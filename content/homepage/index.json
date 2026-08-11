@@ -5,8 +5,8 @@
   },
   "hero": {
     "visible": true,
-    "image": "/uploads/hero-couple-golden-hour-richland.jpg",
-    "imageAlt": "A couple sharing a quiet embrace beneath autumn trees during a golden-hour session in Richland, WA",
+    "image": "/uploads/kennewick-couple-open-field-golden-hour.jpg",
+    "imageAlt": "A couple laughing together while walking through an open field in warm evening light",
     "heading": "Tri-Cities Photographer for the Seasons Worth Keeping",
     "subhead": "Warm, natural portraits for seniors, families, newborns and businesses across Richland, Kennewick and Pasco — photographed in golden light, guided so you never have to wonder what to do with your hands.",
     "scriptLine": "keep the way this felt",
@@ -97,7 +97,8 @@
     "story": "My journey into photography began with my own children, not a business plan. When they were little, I wanted more than rushed studio portraits — I wanted photographs that captured who they truly were. What started with my own kids has become the privilege of documenting life's most meaningful moments for hundreds of Tri-Cities families, seniors and couples over the past 20 years.",
     "credit": "I photographed my own grandparents once — laughing, holding hands, sharing the quiet love they'd built over a lifetime. I had no idea how precious those photographs would become after my grandpa passed away. That's the truth I carry into every session: I'm not just taking photographs for today. I'm preserving moments that may one day be a family's most treasured memories.",
     "portrait": "/uploads/lisa-photographer-tricities.jpg",
-    "portraitAlt": "Lisa, owner of It’s A Keeper Photography, holding her camera in the Tri-Cities"
+    "portraitAlt": "Lisa, owner of It’s A Keeper Photography, holding her camera in the Tri-Cities",
+    "printImage": "/uploads/about-lisa-camera-candid-black-white.jpg"
   },
   "howItWorks": {
     "visible": true,

@@ -76,11 +76,12 @@ const headingAccent = accentBreak > -1
         <Picture
           pictureClass="biography__print-picture"
           imgClass="photo--editorial biography__print-image"
-          src={meetLisa.portrait}
+          src={meetLisa.printImage || meetLisa.portrait}
           alt=""
           loading="lazy"
           decoding="async"
           optimizedMobileWidth={400}
+          optimizedDesktopWidth={640}
         />
       </div>
     </div>

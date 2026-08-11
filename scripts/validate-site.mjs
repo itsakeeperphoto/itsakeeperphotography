@@ -27,6 +27,68 @@ const failures = [];
 const homepageContent = JSON.parse(
   await readFile(path.join(root, "content", "homepage", "index.json"), "utf8"),
 );
+const homepageHeroContract = {
+  image: "/uploads/kennewick-couple-open-field-golden-hour.jpg",
+  imageAlt:
+    "A couple laughing together while walking through an open field in warm evening light",
+  desktopAvif:
+    "/uploads/kennewick-couple-open-field-golden-hour-desktop.avif",
+  desktopWebp:
+    "/uploads/kennewick-couple-open-field-golden-hour-desktop.webp",
+  mobileAvif:
+    "/uploads/kennewick-couple-open-field-golden-hour-mobile.avif",
+  mobileWebp:
+    "/uploads/kennewick-couple-open-field-golden-hour-mobile.webp",
+};
+const homepageBiographyContract = {
+  portrait: "/uploads/lisa-photographer-tricities.jpg",
+  portraitAlt:
+    "Lisa, owner of It’s A Keeper Photography, holding her camera in the Tri-Cities",
+  printImage: "/uploads/about-lisa-camera-candid-black-white.jpg",
+};
+if (
+  homepageContent.hero?.image !== homepageHeroContract.image ||
+  homepageContent.hero?.imageAlt !== homepageHeroContract.imageAlt
+) {
+  failures.push("content/homepage/index.json: hero image contract is invalid");
+}
+if (
+  homepageContent.meetLisa?.portrait !== homepageBiographyContract.portrait ||
+  homepageContent.meetLisa?.portraitAlt !== homepageBiographyContract.portraitAlt ||
+  homepageContent.meetLisa?.printImage !== homepageBiographyContract.printImage
+) {
+  failures.push("content/homepage/index.json: Meet Lisa image contract is invalid");
+}
+for (const asset of [
+  homepageHeroContract.image,
+  homepageHeroContract.desktopAvif,
+  homepageHeroContract.desktopWebp,
+  homepageHeroContract.mobileAvif,
+  homepageHeroContract.mobileWebp,
+  homepageBiographyContract.portrait,
+  homepageBiographyContract.printImage,
+]) {
+  if (!existsSync(path.join(root, "public", asset.replace(/^\//, "")))) {
+    failures.push(`content/homepage/index.json: missing approved image ${asset}`);
+  }
+}
+for (const [asset, expectedDigest] of [
+  [
+    homepageHeroContract.image,
+    "37cc4686f26b843e68b847ad033ed419fc668abd63d237040cd08fd845b0a43f",
+  ],
+  [
+    homepageBiographyContract.printImage,
+    "ac3bb02ffb4154555321271699a874c3632ca0941b0aa2cd5b00e0607b5db89e",
+  ],
+]) {
+  const digest = createHash("sha256")
+    .update(await readFile(path.join(root, "public", asset.replace(/^\//, ""))))
+    .digest("hex");
+  if (digest !== expectedDigest) {
+    failures.push(`${asset}: approved Homepage source changed (${digest})`);
+  }
+}
 const homepageSessionCards = [
   {
     label: "Seniors",
@@ -1318,6 +1380,120 @@ for (const file of htmlFiles) {
 
 const homepage = await readFile(path.join(output, "index.html"), "utf8");
 const contact = await readFile(path.join(output, "contact", "index.html"), "utf8");
+const homepageHero = sectionById(homepage, "home");
+const homepageHeroImageTags = [...homepageHero.matchAll(/<img\b[^>]*>/gi)].map(
+  (match) => match[0],
+);
+const homepageHeroSourceTags = [
+  ...homepageHero.matchAll(/<source\b[^>]*>/gi),
+].map((match) => match[0]);
+const expectedHeroSources = [
+  {
+    srcset: homepageHeroContract.desktopAvif,
+    media: "(min-width: 768px)",
+    type: "image/avif",
+  },
+  {
+    srcset: homepageHeroContract.mobileAvif,
+    media: "(max-width: 767px)",
+    type: "image/avif",
+  },
+  {
+    srcset: homepageHeroContract.mobileWebp,
+    media: "(max-width: 767px)",
+    type: "image/webp",
+  },
+  {
+    srcset: homepageHeroContract.desktopWebp,
+    media: "(min-width: 768px)",
+    type: "image/webp",
+  },
+];
+if (homepageHeroImageTags.length !== 1) {
+  failures.push(`homepage: expected one hero image; found ${homepageHeroImageTags.length}`);
+} else {
+  const tag = homepageHeroImageTags[0];
+  if (
+    htmlAttribute(tag, "src") !== homepageHeroContract.image ||
+    htmlAttribute(tag, "alt") !== homepageHeroContract.imageAlt ||
+    htmlAttribute(tag, "loading") !== "eager" ||
+    htmlAttribute(tag, "fetchpriority") !== "high" ||
+    htmlAttribute(tag, "decoding") !== "sync" ||
+    Number(htmlAttribute(tag, "width")) !== 2400 ||
+    Number(htmlAttribute(tag, "height")) !== 1600
+  ) {
+    failures.push("homepage: hero image attributes are invalid");
+  }
+}
+if (
+  homepageHeroSourceTags.length !== expectedHeroSources.length ||
+  !expectedHeroSources.every((expected) =>
+    homepageHeroSourceTags.some(
+      (tag) =>
+        htmlAttribute(tag, "srcset") === expected.srcset &&
+        htmlAttribute(tag, "media") === expected.media &&
+        htmlAttribute(tag, "type") === expected.type,
+    ),
+  )
+) {
+  failures.push("homepage: responsive hero source contract is invalid");
+}
+for (const expected of [
+  {
+    href: homepageHeroContract.mobileAvif,
+    media: "(max-width: 767px)",
+  },
+  {
+    href: homepageHeroContract.desktopAvif,
+    media: "(min-width: 768px)",
+  },
+]) {
+  const preloadPattern = new RegExp(
+    `<link\\b(?=[^>]*\\brel="preload")(?=[^>]*\\bas="image")(?=[^>]*\\bhref="${expected.href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}")(?=[^>]*\\bmedia="${expected.media.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}")[^>]*>`,
+    "i",
+  );
+  if (!preloadPattern.test(homepage)) {
+    failures.push(`homepage: missing responsive hero preload ${expected.href}`);
+  }
+}
+const homepageBiography = sectionById(homepage, "meet-lisa");
+const homepageBiographyImageTags = [
+  ...homepageBiography.matchAll(/<img\b[^>]*>/gi),
+].map((match) => match[0]);
+if (homepageBiographyImageTags.length !== 2) {
+  failures.push(
+    `homepage: expected two Meet Lisa images; found ${homepageBiographyImageTags.length}`,
+  );
+} else {
+  const [portraitTag, printTag] = homepageBiographyImageTags;
+  if (
+    htmlAttribute(portraitTag, "src") !== homepageBiographyContract.portrait ||
+    htmlAttribute(portraitTag, "alt") !== homepageBiographyContract.portraitAlt ||
+    htmlAttribute(portraitTag, "loading") !== "lazy" ||
+    htmlAttribute(printTag, "src") !== homepageBiographyContract.printImage ||
+    !["", null].includes(htmlAttribute(printTag, "alt")) ||
+    htmlAttribute(printTag, "loading") !== "lazy"
+  ) {
+    failures.push("homepage: Meet Lisa portrait or decorative print is invalid");
+  }
+}
+if (
+  !/<div\b(?=[^>]*\bdata-biography-print)(?=[^>]*\baria-hidden="true")[^>]*>/i.test(
+    homepageBiography,
+  )
+) {
+  failures.push("homepage: Meet Lisa print must remain decorative and aria-hidden");
+}
+if (
+  !homepageBiography.includes(
+    "/uploads/about-lisa-camera-candid-black-white-400.webp",
+  ) ||
+  !homepageBiography.includes(
+    "/uploads/about-lisa-camera-candid-black-white-640.webp",
+  )
+) {
+  failures.push("homepage: Meet Lisa print responsive sources are missing");
+}
 const homepageSessions = sectionById(homepage, "sessions");
 const homepageSessionImageTags = [
   ...homepageSessions.matchAll(/<img\b[^>]*>/gi),

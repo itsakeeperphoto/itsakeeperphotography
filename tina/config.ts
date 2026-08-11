@@ -400,7 +400,7 @@ export default defineConfig({
           {
             type: "object",
             name: "sessions",
-            label: "Session types (the four photo cards)",
+            label: "Session types (the five photo cards)",
             fields: [
               visibilityToggle,
               {
@@ -552,6 +552,13 @@ export default defineConfig({
                 "Your portrait",
                 "A vertical photo of you works best."
               ),
+              {
+                type: "image",
+                name: "printImage",
+                label: "Small decorative print",
+                description:
+                  "A second vertical portrait of you. It is decorative, so its alt text remains empty in the rendered page.",
+              },
             ],
           },
 
