@@ -24,6 +24,67 @@ const htmlFiles = (await collectHtml(output)).filter(
   (file) => !file.includes(`${path.sep}admin${path.sep}`)
 );
 const failures = [];
+const homepageContent = JSON.parse(
+  await readFile(path.join(root, "content", "homepage", "index.json"), "utf8"),
+);
+const homepageSessionCards = [
+  {
+    label: "Seniors",
+    image: "/uploads/senior-portrait-golden-hour-richland.jpg",
+    imageAlt: "High school senior in a black dress photographed at golden hour in Richland",
+  },
+  {
+    label: "Families",
+    image: "/uploads/about-belief-family-golden-hour-tricities.jpg",
+    imageAlt: "Parents holding their young child close in warm evening light",
+  },
+  {
+    label: "Newborns",
+    image: "/uploads/newborn-family-at-home-west-richland.jpg",
+    imageAlt: "Parents and an older sister gathered around a sleeping newborn on a bed",
+  },
+  {
+    label: "Branding",
+    image: "/uploads/about-lisa-camera-portrait-tricities.jpg",
+    imageAlt: "A photographer holding her camera during an outdoor portrait",
+  },
+  {
+    label: "Headshots",
+    image: "/uploads/review-lisa-griffith-headshot-tricities.jpg",
+    imageAlt: "A man in a black shirt seated against a dark studio backdrop",
+  },
+];
+const homepageSessionContract = (homepageContent.sessions?.cards || []).map(
+  ({ label, image, imageAlt }) => ({ label, image, imageAlt }),
+);
+if (JSON.stringify(homepageSessionContract) !== JSON.stringify(homepageSessionCards)) {
+  failures.push(
+    "content/homepage/index.json: session-card images or alts differ from the approved five-card contract",
+  );
+}
+if (new Set(homepageSessionCards.map((card) => card.image)).size !== homepageSessionCards.length) {
+  failures.push("content/homepage/index.json: session-card images must be unique");
+}
+for (const card of homepageSessionCards) {
+  if (!existsSync(path.join(root, "public", card.image.replace(/^\//, "")))) {
+    failures.push(`content/homepage/index.json: missing session-card image ${card.image}`);
+  }
+}
+const homepageSeniorDigest = createHash("sha256")
+  .update(
+    await readFile(
+      path.join(root, "public", "uploads", "senior-portrait-golden-hour-richland.jpg"),
+    ),
+  )
+  .digest("hex");
+if (
+  homepageSeniorDigest !==
+  "1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c"
+) {
+  failures.push(
+    `public/uploads/senior-portrait-golden-hour-richland.jpg: protected Seniors image changed (${homepageSeniorDigest})`,
+  );
+}
 const aboutSource = JSON.parse(
   await readFile(path.join(root, "content", "pages", "about.json"), "utf8"),
 );
@@ -1257,6 +1318,32 @@ for (const file of htmlFiles) {
 
 const homepage = await readFile(path.join(output, "index.html"), "utf8");
 const contact = await readFile(path.join(output, "contact", "index.html"), "utf8");
+const homepageSessions = sectionById(homepage, "sessions");
+const homepageSessionImageTags = [
+  ...homepageSessions.matchAll(/<img\b[^>]*>/gi),
+].map((match) => match[0]);
+if (homepageSessionImageTags.length !== homepageSessionCards.length) {
+  failures.push(
+    `homepage: expected ${homepageSessionCards.length} rendered session-card images; found ${homepageSessionImageTags.length}`,
+  );
+} else {
+  homepageSessionImageTags.forEach((tag, index) => {
+    const expected = homepageSessionCards[index];
+    const width = Number(htmlAttribute(tag, "width"));
+    const height = Number(htmlAttribute(tag, "height"));
+    if (
+      htmlAttribute(tag, "src") !== expected.image ||
+      htmlAttribute(tag, "alt") !== expected.imageAlt ||
+      htmlAttribute(tag, "loading") !== "lazy" ||
+      !Number.isFinite(width) ||
+      width <= 0 ||
+      !Number.isFinite(height) ||
+      height <= 0
+    ) {
+      failures.push(`homepage: ${expected.label} session-card image contract is invalid`);
+    }
+  });
+}
 for (const [label, formName, source] of [
   ["homepage", "session-inquiry", homepage],
   ["contact", "session-estimate", contact],

@@ -1,7 +1,8 @@
 async (page) => {
   const root = "http://localhost:4321/";
-  const artifacts = "artifacts/audits";
+  const artifacts = ".artifacts/home-session-cards";
   const viewports = [
+    { name: "1728", width: 1728, height: 963 },
     { name: "1440", width: 1440, height: 1000 },
     { name: "1200", width: 1200, height: 900 },
     { name: "900", width: 900, height: 900 },
@@ -9,6 +10,33 @@ async (page) => {
   ];
   const consoleErrors = [];
   const report = {};
+  const expectedCards = [
+    {
+      id: "seniors",
+      src: "/uploads/senior-portrait-golden-hour-richland.jpg",
+      alt: "High school senior in a black dress photographed at golden hour in Richland",
+    },
+    {
+      id: "families",
+      src: "/uploads/about-belief-family-golden-hour-tricities.jpg",
+      alt: "Parents holding their young child close in warm evening light",
+    },
+    {
+      id: "newborns",
+      src: "/uploads/newborn-family-at-home-west-richland.jpg",
+      alt: "Parents and an older sister gathered around a sleeping newborn on a bed",
+    },
+    {
+      id: "branding",
+      src: "/uploads/about-lisa-camera-portrait-tricities.jpg",
+      alt: "A photographer holding her camera during an outdoor portrait",
+    },
+    {
+      id: "headshots",
+      src: "/uploads/review-lisa-griffith-headshot-tricities.jpg",
+      alt: "A man in a black shirt seated against a dark studio backdrop",
+    },
+  ];
 
   page.on("console", (message) => {
     if (message.type() === "error") consoleErrors.push(message.text());
@@ -44,7 +72,7 @@ async (page) => {
       );
     });
 
-    report[viewport.name] = await page.evaluate(() => {
+    report[viewport.name] = await page.evaluate((expectedCards) => {
       const round = (value) => Number(value.toFixed(2));
       const cards = [...document.querySelectorAll(".portfolio-card")];
       const boxes = cards.map((card) => {
@@ -68,6 +96,16 @@ async (page) => {
         };
       });
       const rows = [...new Set(boxes.map((box) => Math.round(box.y)))];
+      const renderedCards = cards.map((card) => {
+        const image = card.querySelector(".portfolio-card__image img");
+        return {
+          id: card.id,
+          src: image?.getAttribute("src") || "",
+          alt: image?.getAttribute("alt") || "",
+          currentSrc: image?.currentSrc || "",
+          naturalWidth: image?.naturalWidth || 0,
+        };
+      });
       return {
         cardCount: boxes.length,
         rowCounts: rows.map((row) => boxes.filter((box) => Math.round(box.y) === row).length),
@@ -75,11 +113,19 @@ async (page) => {
         noHorizontalOverflow:
           document.documentElement.scrollWidth <= document.documentElement.clientWidth,
         headingVisible: Boolean(document.querySelector("#sessions-title")?.offsetParent),
-        headshotMediaPending: !document.querySelector(
+        headshotMediaPresent: Boolean(document.querySelector(
           '#headshots .portfolio-card__image img'
+        )),
+        renderedCards,
+        approvedImageOrder: renderedCards.every((card, index) =>
+          card.id === expectedCards[index]?.id &&
+          card.src === expectedCards[index]?.src &&
+          card.alt === expectedCards[index]?.alt &&
+          card.naturalWidth > 0 &&
+          card.currentSrc.endsWith(".webp")
         ),
       };
-    });
+    }, expectedCards);
 
     const firstCard = page.locator(".portfolio-card").first();
     const secondCard = page.locator(".portfolio-card").nth(1);
@@ -93,6 +139,26 @@ async (page) => {
         outline: `${style.outlineWidth} ${style.outlineStyle} ${style.outlineColor}`,
       };
     });
+
+    const audit = report[viewport.name];
+    if (
+      audit.cardCount !== expectedCards.length ||
+      !audit.noHorizontalOverflow ||
+      !audit.headingVisible ||
+      !audit.headshotMediaPresent ||
+      !audit.approvedImageOrder ||
+      audit.boxes.some(
+        (box) =>
+          Math.abs(box.ratio - 0.8) > 0.02 ||
+          !box.descriptionVisuallyHidden
+      ) ||
+      !audit.keyboardFocus.active ||
+      !audit.keyboardFocus.focusVisible
+    ) {
+      throw new Error(
+        `Homepage session-card QA failed at ${viewport.name}: ${JSON.stringify(audit)}`
+      );
+    }
   }
 
   report.consoleErrors = consoleErrors;
