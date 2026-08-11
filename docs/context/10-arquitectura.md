@@ -1,7 +1,7 @@
 # 10 — Arquitectura
 
 > Solo describe lo que existe y fue inspeccionado o construido con éxito el
-> 2026-08-10. Lo planeado está en `50-backlog.md`.
+> 2026-08-11. Lo planeado está en `50-backlog.md`.
 
 ## Stack
 
@@ -89,6 +89,11 @@
 - `src/content/pending.ts` centraliza hechos y media que no deben inventarse.
 - `tina/config.ts` expone modelos de contenido. Los editores pueden cambiar copy
   e imágenes, no la estructura visual de los componentes.
+- En Homepage, `meetLisa.portrait` alimenta el retrato principal en arco y el
+  campo Tina opcional `meetLisa.printImage` alimenta el print decorativo. Si
+  `printImage` falta, `MeetLisa.astro` usa `portrait` como fallback. El hero
+  conserva una fuente editorial en JSON y variantes art-directed preconstruidas
+  para desktop y móvil.
 
 ### Precios
 
@@ -115,6 +120,12 @@ booking ni un cobro.
 - `src/pages/tina-island/[name].ts` sirve refresco visual de islas Tina.
 - `src/pages/sitemap.xml.ts`, `robots.txt.ts` y `llms.txt.ts` generan salidas
   según `SITE_MODE` y el manifiesto.
+
+En Homepage, `Hero.astro` entrega la fotografía visual mediante `picture`:
+AVIF/WebP 1440×960 para desktop/tablet y un recorte AVIF/WebP 640×1024 para
+móvil, con JPEG fuente como fallback. `MeetLisa.astro` mantiene separado el
+retrato informativo principal del print pequeño decorativo, que se carga lazy y
+permanece fuera del árbol accesible.
 
 Componentes especializados existentes:
 
@@ -290,6 +301,10 @@ para evitar cambios silenciosos al repositorio.
 - `scripts/install-netlify-headers.mjs` instala el set de headers correcto.
 - `scripts/validate-site.mjs` valida las 21 rutas, canonicals, crawler outputs,
   formularios, placeholders, enlaces internos rotos y gates de publicación.
+  En Homepage fija la fuente/alt del hero, sus cuatro variantes art-directed,
+  preloads y atributos prioritarios; protege también la separación entre el
+  retrato principal y el print decorativo de Meet Lisa, además del contrato de
+  las cinco cards y el digest byte-identical de Seniors.
   Para las galerías Richland/Kennewick compara allowlists literales de `src` y
   alt, cuenta 10/5 tríos figure/image/caption, prohíbe duplicados y anchors, y
   conserva siete H2 y nueve anchors de `<main>` en ambas rutas.
@@ -379,6 +394,14 @@ Tri-Cities MOM Magazine de agosto de 2019. No emite `Service`, `FAQPage`,
   aprobado del hero, con crop `50% 24%`; los dos prints laterales permanecen
   intactos. La fuente de fondo anterior no se borró ni se reprocesó porque
   continúa utilizada por otras rutas de producción.
+- Homepage usa como hero visual
+  `/uploads/kennewick-couple-open-field-golden-hour.jpg` (2400×1600, 549817 B)
+  y cuatro derivados rastreados: desktop AVIF/WebP 1440×960 y recorte móvil
+  AVIF/WebP 640×1024. El navegador carga una sola fuente AVIF compatible, sin
+  solicitar el JPEG. La fuente anterior permanece porque Settings, Open Graph,
+  schema y otras rutas todavía la referencian. Meet Lisa conserva su retrato
+  principal y cambia solo el print pequeño a una fuente existente en blanco y
+  negro; no se borró media de producción.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

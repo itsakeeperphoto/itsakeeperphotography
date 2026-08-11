@@ -15,7 +15,7 @@ _Página 1 de 18 · Prioridad P0 · Central Entity_
 | **Canonical** | `https://www.itsakeeperphotography.com/` |
 | **OG title** | igual al title |
 | **OG description** | igual a la meta description |
-| **OG image** | hero (pareja golden hour) — mantener actual |
+| **OG image** | `/uploads/hero-couple-golden-hour-richland.jpg` — mantener global; no sigue el hero visual |
 
 ### Estructura de headings
 
@@ -217,7 +217,8 @@ _(Internal linking de footer = refuerzo de arquitectura en todo el sitio.)_
 
 ## Alt texts (imágenes actuales)
 
-- Hero: `A couple sharing a quiet embrace beneath autumn trees during a golden-hour session in Richland, WA`
+- Hero — `/uploads/kennewick-couple-open-field-golden-hour.jpg`:
+  `A couple laughing together while walking through an open field in warm evening light`
 - Card seniors — `/uploads/senior-portrait-golden-hour-richland.jpg`:
   `High school senior in a black dress photographed at golden hour in Richland`
 - Card family — `/uploads/about-belief-family-golden-hour-tricities.jpg`:
@@ -229,7 +230,23 @@ _(Internal linking de footer = refuerzo de arquitectura en todo el sitio.)_
 - Card headshots — `/uploads/review-lisa-griffith-headshot-tricities.jpg`:
   `A man in a black shirt seated against a dark studio backdrop`
 - Sección local: `Parents holding their young child in glowing Columbia Basin evening light near Pasco`
-- Meet Lisa: `Lisa Weiss, owner of It's A Keeper Photography, holding her camera in Richland, WA`
+- Meet Lisa, retrato principal en arco — `/uploads/lisa-photographer-tricities.jpg`:
+  `Lisa Weiss, owner of It's A Keeper Photography, holding her camera in Richland, WA`
+- Meet Lisa, print pequeño — `/uploads/about-lisa-camera-candid-black-white.jpg`:
+  decorativo; `alt=""` y contenedor `aria-hidden="true"`.
+
+### Media responsive aprobada
+
+- El hero visual usa la fuente 2400×1600 indicada arriba. Desktop conserva el
+  encuadre completo y sirve AVIF/WebP 1440×960; móvil usa un recorte vertical
+  640×1024 para mantener a la pareja visible. Sus focos son `50% 29%` por
+  encima de 1050 px, `50% 58%` en tablet y `50% 42%` en móvil.
+- Este cambio es solo visual: la imagen global de Open Graph/schema continúa
+  siendo la actual declarada en Settings y en el JSON-LD de este documento.
+- El retrato principal en arco de Meet Lisa permanece intacto. El print pequeño
+  carga WebP 640 en desktop y 400 en móvil, centrado y sin zoom.
+- El portfolio conserva exactamente la selección de ADR-048; Seniors permanece
+  byte a byte intacta.
 
 ---
 

@@ -60,22 +60,29 @@
   conserva dos columnas y ahora separa el ítem 01 de la hairline de segunda fila
   con 32 px exactos, frente a 8–10 px. Playwright 1440/1200/900/390, release
   21/21 e Impeccable `[]` completos; overflow permanece en cero.
-- [ ] **14. Publicar los commits locales.** About y la actualización del
-  portfolio Homepage están terminados en commits funcionales/documentales
-  locales; el cierre quedará veinticuatro commits por
-  delante de `origin/main`. El usuario publica todos los commits posteriores a
-  `ff736c6`; Codex no ejecuta push.
-- [ ] **15. Verificar Homepage, About, Richland, Kennewick, Pasco y Newborn
+- [x] **14. Renovar hero y print Biography de Homepage según ADR-049.** El hero
+  usa una pareja en campo abierto con art direction AVIF/WebP desktop/móvil; el
+  retrato principal de Lisa sigue intacto y solo el print pequeño cambia a su
+  retrato candid en blanco y negro. La media global de Open Graph/schema no
+  cambió, ADR-048 sigue exacto y Seniors permanece byte-identical. Release
+  21/21, Playwright en cinco anchos y revisión independiente están aprobados.
+- [ ] **15. Publicar los commits locales.** About y Homepage —portfolio, hero y
+  print Biography— están terminados en commits funcionales/documentales locales;
+  el cierre quedará veintiséis commits por delante de `origin/main`. El usuario
+  publica todos los commits posteriores a `ff736c6`; Codex no ejecuta push.
+- [ ] **16. Verificar Homepage, About, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
   ciudades `2026-08-09`; Newborn y About `2026-08-10`; además del cierre Pasco
   sin panel, el nuevo fondo aprobado del hero About con crop `50% 24%` y la
-  densidad Belief/Method corregida, incluido el inset tablet de 32 px.
-- [ ] **16. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+  densidad Belief/Method corregida, incluido el inset tablet de 32 px. En `/`,
+  comprobar la nueva pareja del hero y sus crops 29/58/42%, el print pequeño en
+  blanco y negro, la carga AVIF sin JPEG paralelo y las cinco cards de ADR-048.
+- [ ] **17. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **17. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **18. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -97,6 +104,15 @@ sin reemplazar el archivo.
 
 ### Homepage
 
+- [x] Sustituido el hero visual por
+  `/uploads/kennewick-couple-open-field-golden-hour.jpg`, con derivados
+  AVIF/WebP desktop y móvil, focos aprobados y sin cambiar la media global de
+  Open Graph/schema.
+- [x] Desacoplado el print pequeño de Meet Lisa mediante
+  `meetLisa.printImage`; el retrato principal permanece y el print nuevo es
+  decorativo, lazy, centrado y sin zoom.
+- [x] Confirmada sin cambios la selección de cinco cards de ADR-048; Seniors
+  conserva bytes y digest exactos.
 - [ ] Confirmar si se puede publicar la historia sobre health challenges y
   Grammy.
 - [ ] Verificar la cifra “96 five-star reviews”; mientras GBP no esté vivo usar
@@ -408,6 +424,9 @@ sin reemplazar el archivo.
 - [x] Actualizadas las cards Family, Newborn, Branding y Headshots de homepage;
   Seniors permanece byte a byte intacta. Playwright confirma cinco columnas en
   1728/1440/1200, 2–2–1 en 900 y una columna en 390.
+- [x] Renovados el hero visual y el print pequeño Biography de Homepage con art
+  direction responsive, accesibilidad y guardas de carga; el retrato principal,
+  Open Graph/schema y las cinco cards protegidas no cambiaron.
 - [ ] Completar una página Reviews especializada cuando haya testimonios reales;
   no reutilizar una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
@@ -497,3 +516,6 @@ sin reemplazar el archivo.
   y balanceada; Method conserva 4/2/1 con inset responsive válido.
 - [x] Completado el ritmo Method tablet con 32 px antes de la segunda fila a
   900 px, sin cambiar retícula, contenido ni overflow.
+- [x] Renovados hero y print Biography de Homepage en `ec4c734`, con AVIF/WebP
+  art-directed, una sola descarga del hero, portfolio ADR-048 intacto y QA en
+  cinco anchos.

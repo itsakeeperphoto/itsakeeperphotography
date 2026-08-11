@@ -920,3 +920,43 @@
   commits por delante de `origin/main` antes de este cierre y quedará
   veinticuatro tras su commit documental local. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva la publicación.
+
+### 2026-08-11 — Codex / GPT-5 — Hero y print Biography de Homepage renovados
+
+- **Objetivo:** resolver el feedback visual de `/`: hero más engaging y con un
+  fondo menos ruidoso, otra fotografía de Lisa en el print pequeño de Biography
+  y confirmación de las cards actuales sin reemplazar Seniors.
+- **Hero:** `content/homepage/index.json` usa
+  `/uploads/kennewick-couple-open-field-golden-hour.jpg` con alt literal. La
+  fuente 2400×1600 se entrega mediante cuatro derivados rastreados: AVIF/WebP
+  1440×960 para desktop/tablet y recorte AVIF/WebP 640×1024 para móvil. Los
+  focos aprobados son `50% 29%`, `50% 58%` y `50% 42%` según desktop, tablet y
+  móvil. Settings y la imagen global de Open Graph/schema no cambiaron; la
+  fuente anterior sigue disponible.
+- **Meet Lisa:** el retrato principal en arco continúa en
+  `/uploads/lisa-photographer-tricities.jpg`. El nuevo campo Tina opcional
+  `meetLisa.printImage` desacopla únicamente el print pequeño y conserva fallback
+  al retrato. El print usa
+  `/uploads/about-lisa-camera-candid-black-white.jpg`, carga lazy WebP 640/400,
+  queda centrado, sin zoom, con alt vacío y fuera del árbol accesible.
+- **Portfolio y preservación:** ADR-048 permanece exacto. Seniors conserva ruta,
+  bytes y SHA-256
+  `1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c`.
+  No se borraron ni reprocesaron fotografías de producción.
+- **Contratos:** Tina y su lock exponen el nuevo campo; el validador fija
+  source/build del hero, art direction, prioridades/preloads, print decorativo,
+  fallback, cinco cards y digest Seniors. Playwright amplía el guard de
+  Homepage a hero, Biography y portfolio.
+- **QA:** release validó 21/21 rutas. Playwright aprobó 1728×963, 1440×1000,
+  1200×900, 900×900 y 390×844 con una sola petición AVIF del hero, ningún
+  JPEG, crop o overflow defectuoso, foco de teclado visible y cero fallos
+  same-origin. Clarity puede responder 400 externo tras recargas repetidas y se
+  filtra exclusivamente por URL. La revisión independiente devolvió PASS. El
+  único detector Impeccable reportó siete falsos positivos `broken-image`
+  dentro de regex del validador; el HTML construido y el navegador refutan
+  imágenes rotas, por lo que no se documenta como `[]`.
+- **Git/operación:** la implementación quedó en `ec4c734`
+  (`feat(home): refresh hero and Lisa print`). `main` está veinticinco commits
+  por delante de `origin/main` (`ff736c6`) antes del cierre documental y quedará
+  veintiséis tras su commit local. No se ejecutó push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva la publicación.

@@ -980,3 +980,51 @@
   positivos `broken-image` sobre expresiones regulares del validador, refutados
   por el HTML construido y la carga real en navegador. No se hizo push ni otra
   mutación externa.
+
+### ADR-049 — Homepage separa hero visual, Open Graph y print decorativo de Lisa
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** En la revisión visual de `/` a 1728×963, el usuario pidió un
+  hero más engaging y con fondo menos ruidoso, otra fotografía de Lisa en el
+  print de Biography y fotografías actuales en el portfolio, conservando
+  Seniors. ADR-048 ya había resuelto y protegido las cinco cards; quedaba
+  cambiar solo las dos superficies fotográficas nuevas sin convertir una
+  selección visual en un cambio de Open Graph/schema ni borrar fuentes usadas.
+- **Decisión:** Usar
+  `/uploads/kennewick-couple-open-field-golden-hour.jpg` como hero visual, con
+  alt literal `A couple laughing together while walking through an open field
+  in warm evening light`. Servir el encuadre completo AVIF/WebP 1440×960 en
+  desktop/tablet y un recorte vertical AVIF/WebP 640×1024 en móvil; aplicar
+  focos `50% 29%` por encima de 1050 px, `50% 58%` en tablet y `50% 42%` en
+  móvil. Conservar sin cambios la media global de Settings usada por Open
+  Graph/schema. Mantener el retrato principal en arco de Meet Lisa y desacoplar
+  solo el print pequeño mediante el campo Tina opcional
+  `meetLisa.printImage`, con fallback a `portrait`; el print usa
+  `/uploads/about-lisa-camera-candid-black-white.jpg`, lazy WebP 640/400,
+  `alt=""`, `aria-hidden`, foco central y cero zoom. Mantener exactamente la
+  selección de portfolio de ADR-048 y el digest Seniors.
+- **Alternativas descartadas:** Reutilizar el hero anterior con ramas, elegir
+  un encuadre nuevo que perdiera a uno de los sujetos en móvil, descargar el
+  JPEG fuente en paralelo, sustituir el retrato principal de Biography,
+  cambiar la imagen global de Open Graph, volver a rotar las cards o borrar
+  fotografías anteriores se descartó por ruido visual, accesibilidad,
+  bandwidth, alcance o referencias activas en producción.
+- **Consecuencias:** El commit funcional `ec4c734` añade cuatro derivados
+  rastreados —desktop AVIF 86112 B, WebP 150604 B; móvil AVIF 43181 B, WebP
+  72142 B— y conserva la fuente 2400×1600 de 549817 B con SHA-256
+  `37cc4686f26b843e68b847ad033ed419fc668abd63d237040cd08fd845b0a43f`.
+  Sus digests son, en ese orden,
+  `d890163b2a6fc91704682273b7ffd8a479d38d19ad2d50150ffd170bbb8d5db1`,
+  `7a14b42ef79a0671b9ef89f0bb2e31bf7bf8af483e19b249efb26778586275d2`,
+  `1c6773948667cf3905fbbda6e7e42e9833fae8598e6e7857bd300f9d521a93a3` y
+  `d5593ba07caf5e8ba2a3b231a4995b8ea37be3b3bf29c874f2a71d464d90c412`.
+  Release valida 21/21 rutas. Playwright aprueba 1728×963, 1440×1000,
+  1200×900, 900×900 y 390×844 con una sola petición AVIF del hero, sin
+  JPEG, fallos same-origin, overflow ni pérdida de foco; los avisos 400 de
+  Clarity en recargas repetidas son externos y se filtran por URL. La revisión
+  independiente devuelve PASS. Los siete avisos `broken-image` del único pase
+  de Impeccable son falsos positivos sobre regex del validador, refutados por el
+  HTML construido y el navegador; el resultado no fue `[]`. Seniors sigue byte
+  a byte intacta con SHA-256
+  `1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c`.
+  No se borró media ni se hizo push, deploy, DNS u otra mutación externa.

@@ -1244,3 +1244,41 @@ copy, media, schema, hero e indexación.
 en las otras veinte rutas públicas. El contrato de dirección se conserva como
 comentario HTML solo en About para que una revisión futura pueda contrastar la
 tesis con el render.
+
+## 12. ADDENDUM DE MEDIA — HOMEPAGE
+
+Este addendum registra la fotografía aprobada para `/` sin modificar la
+composición que sigue siendo autoridad visual. Tampoco cambia la imagen global
+de Open Graph/schema configurada en Settings.
+
+### Hero art-directed
+
+- Fuente visual: `/uploads/kennewick-couple-open-field-golden-hour.jpg`,
+  2400×1600. La escena abierta, el gesto de la pareja y el fondo tranquilo
+  sustituyen el encuadre anterior con ramas sin alterar copy ni geometría.
+- Desktop sirve AVIF/WebP 1440×960 con foco `50% 29%` por encima de 1050 px.
+  Tablet conserva esa fuente con foco `50% 58%`.
+- Móvil sirve un recorte vertical AVIF/WebP 640×1024 con foco `50% 42%` para
+  mantener ambos sujetos reconocibles detrás del copy.
+- La carga debe resolver a una sola fuente AVIF cuando el navegador la soporta;
+  el JPEG queda como fallback semántico, no como descarga paralela.
+
+### Meet Lisa y portfolio
+
+- El retrato principal en arco permanece
+  `/uploads/lisa-photographer-tricities.jpg`.
+- Solo el print pequeño cambia a
+  `/uploads/about-lisa-camera-candid-black-white.jpg`; es decorativo,
+  `aria-hidden`, con alt vacío, `object-position: 50% 50%` y sin ampliación.
+  Carga WebP 640 en desktop y 400 en móvil. Tina expone esta media como
+  `meetLisa.printImage` opcional y usa el retrato principal como fallback.
+- Las cinco cards mantienen la selección y el orden de ADR-048. Seniors no se
+  reemplaza, reprocesa ni reencuadra.
+
+### Guardas
+
+Todo cambio futuro a estas fotografías debe conservar alt/semántica,
+art direction por breakpoint, foco visible, cero overflow y carga responsive
+sin JPEG innecesario. Las fuentes anteriores siguen disponibles mientras otra
+ruta, Settings, schema u Open Graph las referencie; este addendum no autoriza
+borrarlas.
