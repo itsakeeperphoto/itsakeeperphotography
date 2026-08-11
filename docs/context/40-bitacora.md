@@ -890,3 +890,33 @@
   por delante de `origin/main` antes del cierre documental y quedará veintidós
   por delante tras su commit local. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva la publicación.
+
+### 2026-08-10 — Codex / GPT-5 — Fotografías del portfolio de Homepage renovadas
+
+- **Objetivo:** actualizar las fotografías de las cinco cards de servicios en
+  `/`, preservando exactamente la card Seniors solicitada por el usuario.
+- **Selección:** Family usa `about-belief-family-golden-hour-tricities.jpg`;
+  Newborn, `newborn-family-at-home-west-richland.jpg`; Branding,
+  `about-lisa-camera-portrait-tricities.jpg`; y Headshots,
+  `review-lisa-griffith-headshot-tricities.jpg`. Seniors conserva ruta, bytes,
+  alt y SHA-256
+  `1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c`.
+- **Media y accesibilidad:** se reutilizaron fuentes ya conformes y variantes
+  WebP 400/640/960/1440 disponibles según su tamaño; no se descargó,
+  reprocesó, renombró ni borró media. Los cuatro alts nuevos describen
+  literalmente sujeto y escena sin claims locales no demostrados.
+- **Regresión:** `scripts/validate-site.mjs` protege el contrato fuente/build,
+  unicidad, existencia, dimensiones, lazy loading y digest Seniors.
+  `scripts/playwright-session-cards.js` cubre las cinco cards, `currentSrc`
+  WebP, foco, crops y overflow en 1728/1440/1200/900/390.
+- **QA:** optimizadores reportaron fuentes conformes y variantes al día; el
+  build release terminó correctamente y validó 21/21 rutas. Playwright confirmó
+  cinco columnas en 1728/1440/1200, 2–2–1 en 900 y una columna en 390. La
+  revisión independiente devolvió PASS sin defectos P1/P2. Los cinco avisos
+  `broken-image` de Impeccable son falsos positivos sobre regex del validador,
+  no imágenes del DOM.
+- **Git/operación:** la implementación quedó en `82af21f`
+  (`feat(home): refresh session card photography`). `main` está veintitrés
+  commits por delante de `origin/main` antes de este cierre y quedará
+  veinticuatro tras su commit documental local. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva la publicación.

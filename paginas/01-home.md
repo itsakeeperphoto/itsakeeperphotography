@@ -218,11 +218,16 @@ _(Internal linking de footer = refuerzo de arquitectura en todo el sitio.)_
 ## Alt texts (imágenes actuales)
 
 - Hero: `A couple sharing a quiet embrace beneath autumn trees during a golden-hour session in Richland, WA`
-- Card seniors: `High school senior smiling in golden evening light during senior pictures in the Tri-Cities`
-- Card family: `A family laughing together during an outdoor family photography session in Kennewick`
-- Card newborn: `A mother kissing her newborn during a gentle in-home newborn session in Richland`
-- Card branding: `Tri-Cities business owner photographed during a custom branding session`
-- Card headshots: `Professional headshot of a Tri-Cities professional in natural light`
+- Card seniors — `/uploads/senior-portrait-golden-hour-richland.jpg`:
+  `High school senior in a black dress photographed at golden hour in Richland`
+- Card family — `/uploads/about-belief-family-golden-hour-tricities.jpg`:
+  `Parents holding their young child close in warm evening light`
+- Card newborn — `/uploads/newborn-family-at-home-west-richland.jpg`:
+  `Parents and an older sister gathered around a sleeping newborn on a bed`
+- Card branding — `/uploads/about-lisa-camera-portrait-tricities.jpg`:
+  `A photographer holding her camera during an outdoor portrait`
+- Card headshots — `/uploads/review-lisa-griffith-headshot-tricities.jpg`:
+  `A man in a black shirt seated against a dark studio backdrop`
 - Sección local: `Parents holding their young child in glowing Columbia Basin evening light near Pasco`
 - Meet Lisa: `Lisa Weiss, owner of It's A Keeper Photography, holding her camera in Richland, WA`
 

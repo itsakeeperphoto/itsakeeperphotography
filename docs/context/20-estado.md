@@ -3,36 +3,39 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-10 17:55 -05
+**Última actualización:** 2026-08-10 19:29 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**Commit funcional verificado:** `0f9989c` —
-`fix(about): add tablet ledger breathing room`
+**Commit funcional verificado:** `82af21f` —
+`feat(home): refresh session card photography`
 
 **Commit documental:** este archivo pertenece al commit local inmediatamente
-posterior a `0f9989c`; consultar `git log -1` después de crearlo para obtener su
+posterior a `82af21f`; consultar `git log -1` después de crearlo para obtener su
 hash sin inventarlo aquí.
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al preparar este cierre:** `main` está veintiún commits por
-delante de `origin/main` (`ff736c6`) en `0f9989c`. El worktree contiene
-únicamente los seis documentos reconciliados de este cierre; cuando entren en
-su commit local, la rama quedará limpia y veintidós commits por delante. No se
-hizo push, deploy, DNS ni otra mutación externa; el usuario conserva la
+**Estado Git al preparar este cierre:** `main` está veintitrés commits por
+delante de `origin/main` (`ff736c6`) en `82af21f`. El worktree contiene
+únicamente los cinco documentos reconciliados de este cierre; cuando entren en
+su commit local, la rama quedará limpia y veinticuatro commits por delante. No
+se hizo push, deploy, DNS ni otra mutación externa; el usuario conserva la
 publicación.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario debe publicar los veintidós commits locales posteriores a `ff736c6`.
-Cuando Netlify termine, comprobar `/about/` en el dominio final: status 200,
-canonical `www`, meta robots index, ausencia de `X-Robots-Tag: noindex`,
+El usuario debe publicar los veinticuatro commits locales posteriores a
+`ff736c6`. Cuando Netlify termine, comprobar `/` en el dominio final: status
+200, las cinco cards de servicios en orden, Seniors sin cambios y las cuatro
+fotografías nuevas servidas como WebP responsive. Comprobar también `/about/`:
+status 200, canonical `www`, meta robots index, ausencia de
+`X-Robots-Tag: noindex`,
 membresía y `lastmod: 2026-08-10` en `/sitemap.xml`, entrada exacta en
 `/llms.txt`, las cuatro fotografías nuevas y el fondo del hero
 `/uploads/about-lisa-photographing-tricities.jpg` con crop `50% 24%`. Confirmar
@@ -51,6 +54,11 @@ documentada.
 - Release contiene nueve URLs en sitemap y ocho entradas en `llms.txt`;
   Portfolio queda fuera de `llms.txt`. Staging conserva sitemap vacío y noindex
   global.
+- Homepage conserva su card Seniors byte a byte y renueva Family, Newborn,
+  Branding y Headshots con fotografías existentes, optimizadas y alts
+  literales. No se borró ni reprocesó media.
+- La retícula mantiene cinco columnas a 1728/1440/1200, 2–2–1 a 900 y una
+  columna a 390; el conjunto de variantes 640 px pesa aproximadamente 197 KiB.
 - `/about/` quedó `ready/index`, `lastModified: 2026-08-10`, con copy definitivo,
   dirección A+C aprobada, autoridad verificable, schema propio y CSS aislado.
 - El usuario aprobó reemplazar solo el fondo del hero About por
@@ -68,8 +76,22 @@ documentada.
   en dos columnas y overflow permanece en cero.
 - Los claims pendientes de reseñas, salud, premio, Grammy, certificaciones,
   seguro, membresías y Google Business no se publican y no bloquean About.
-- El commit funcional más reciente es `0f9989c`; este cierre documental
+- El commit funcional más reciente es `82af21f`; este cierre documental
   todavía no está commiteado ni publicado.
+
+## Portfolio de servicios de Homepage
+
+- Orden preservado: Seniors, Families, Newborns, Branding y Headshots.
+- Seniors conserva `/uploads/senior-portrait-golden-hour-richland.jpg` con
+  SHA-256
+  `1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c`.
+- Families usa `/uploads/about-belief-family-golden-hour-tricities.jpg`.
+- Newborns usa `/uploads/newborn-family-at-home-west-richland.jpg`.
+- Branding usa `/uploads/about-lisa-camera-portrait-tricities.jpg`.
+- Headshots usa `/uploads/review-lisa-griffith-headshot-tricities.jpg`.
+- El validador bloquea cambios de ruta/alt, duplicados, archivos ausentes,
+  dimensiones o lazy loading incorrectos; Playwright verifica `currentSrc`
+  WebP, foco, crops y overflow en cinco viewports.
 
 ## About publicado
 
@@ -183,6 +205,11 @@ documentada.
 ## Verificación ejecutada
 
 - Release: `Validated 21 public routes in release mode.`
+- Playwright Homepage aprobó el portfolio en 1728/1440/1200/900/390: cinco
+  imágenes cargadas, variantes WebP, orden y alt exactos, Seniors protegida,
+  foco visible y cero overflow.
+- La revisión visual independiente devolvió PASS sin defectos P1/P2 ni recortes
+  problemáticos de rostros, cabezas, bebé, cámara o manos.
 - Playwright About volvió a aprobar 1440/1200/900/390 después del ajuste tablet;
   la inspección 1728×997 conserva las medidas aprobadas de Belief y Method.
 - En los cinco anchos: status 200, canonical/robots correctos, un H1, nueve
@@ -241,10 +268,15 @@ Ajuste tablet del ledger Method en `0f9989c`:
 - `.impeccable/surfaces/route-about.md`
 - `.impeccable/mocks/about-approved-manifest.json`
 
+Actualización del portfolio Homepage en `82af21f`:
+
+- `content/homepage/index.json`
+- `scripts/validate-site.mjs`
+- `scripts/playwright-session-cards.js`
+
 Documentación reconciliada en este cierre:
 
-- `paginas/08-about.md`
-- `DESIGN.md`
+- `paginas/01-home.md`
 - `docs/context/20-estado.md`
 - `docs/context/30-decisiones.md`
 - `docs/context/40-bitacora.md`
@@ -255,8 +287,9 @@ Documentación reconciliada en este cierre:
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
 | About | `ready/index` en `0f9989c` | Push del usuario y QA del deploy. |
-| Documentación About | Completa en worktree | Crear el commit local de cierre. |
-| Producción | Veintiún commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
+| Homepage | Portfolio actualizado en `82af21f`; Seniors intacta | Push del usuario y QA del deploy. |
+| Documentación Homepage | Completa en worktree | Crear el commit local de cierre. |
+| Producción | Veintitrés commits sobre `ff736c6` antes del cierre documental | Commit docs, push del usuario y QA Netlify. |
 | Newborn | `ready/index` | Verificar producción; Q41 sigue opcional/no bloqueante y sin claim. |
 | Richland/Kennewick/Pasco | `ready/index` | Verificar producción y crawler outputs tras push. |
 | Bandwidth/build | Optimizado localmente | Observar logs y bandwidth Netlify durante 48 h tras deploy. |
@@ -282,9 +315,10 @@ personalmente, porque ese script publica el repositorio.
 
 ## Bloqueadores externos
 
-1. Crear el commit documental local inmediatamente posterior a `0f9989c`.
-2. El usuario debe publicar los veintidós commits locales en el remoto oficial.
-3. Esperar el deploy Netlify y comprobar About y las cuatro rutas recientes.
+1. Crear el commit documental local inmediatamente posterior a `82af21f`.
+2. El usuario debe publicar los veinticuatro commits locales en el remoto oficial.
+3. Esperar el deploy Netlify y comprobar Homepage, About y las cuatro rutas
+   recientes.
 4. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
 5. Completar verificaciones externas de Forms, analytics, GBP y Privacy.
 
@@ -294,8 +328,6 @@ personalmente, porque ese script publica el repositorio.
   excluidos? Cada claim requiere evidencia y autorización antes de render/schema.
 - TODO(contexto): ¿Lisa tiene formación de seguridad newborn confirmable para
   Q41? No publicar el claim antes de respuesta explícita.
-- TODO(contexto): ¿qué fotografía autorizada debe ocupar la card Headshots de
-  `content/homepage/index.json`?
 - TODO(contexto): ¿cuál es el link público definitivo de Google Reviews?
 - TODO(contexto): ¿quién aprobará la revisión legal de Privacy?
 - TODO(contexto): ¿ya existen las notificaciones de los dos formularios en

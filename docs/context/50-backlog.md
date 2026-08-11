@@ -60,13 +60,15 @@
   conserva dos columnas y ahora separa el ítem 01 de la hairline de segunda fila
   con 32 px exactos, frente a 8–10 px. Playwright 1440/1200/900/390, release
   21/21 e Impeccable `[]` completos; overflow permanece en cero.
-- [ ] **14. Publicar los commits locales.** About está terminado en commits
-  funcionales y documentales locales; el cierre quedará veintidós commits por
+- [ ] **14. Publicar los commits locales.** About y la actualización del
+  portfolio Homepage están terminados en commits funcionales/documentales
+  locales; el cierre quedará veinticuatro commits por
   delante de `origin/main`. El usuario publica todos los commits posteriores a
   `ff736c6`; Codex no ejecuta push.
-- [ ] **15. Verificar About, Richland, Kennewick, Pasco y Newborn después del
-  push del usuario.** Confirmar en el dominio final status 200, meta index,
-  canonical, ausencia de header noindex, membresía de sitemap/llms y lastmod:
+- [ ] **15. Verificar Homepage, About, Richland, Kennewick, Pasco y Newborn
+  después del push del usuario.** Confirmar en el dominio final status 200,
+  meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
+  y lastmod:
   ciudades `2026-08-09`; Newborn y About `2026-08-10`; además del cierre Pasco
   sin panel, el nuevo fondo aprobado del hero About con crop `50% 24%` y la
   densidad Belief/Method corregida, incluido el inset tablet de 32 px.
@@ -99,8 +101,9 @@ sin reemplazar el archivo.
   Grammy.
 - [ ] Verificar la cifra “96 five-star reviews”; mientras GBP no esté vivo usar
   fallback sin número.
-- [ ] Elegir y autorizar la imagen Headshots para
-  `content/homepage/index.json` (`sessions.cards[4].image` está vacío).
+- [x] Elegida por solicitud explícita del usuario la imagen Headshots
+  `/uploads/review-lisa-griffith-headshot-tricities.jpg`; la card ya tiene alt
+  literal, variantes responsive y contrato de regresión.
 
 ### About
 
@@ -245,10 +248,10 @@ sin reemplazar el archivo.
   Kennewick, sus composiciones y `bd833f6`; `main` y `origin/main` coinciden en
   `ff736c6`. Codex no realizó el push. Ejecutar ahora el chequeo remoto del
   ítem 7 y la observación de bandwidth de QA.
-- [ ] Publicar los veintidós commits funcionales/documentales locales creados
+- [ ] Publicar los veinticuatro commits funcionales/documentales locales creados
   después de `ff736c6` al completar este cierre, incluidos `b3bb362`,
-  `0f9989c` y el commit documental posterior. Codex no ejecuta push; el usuario
-  conserva esa operación.
+  `0f9989c`, `82af21f` y el commit documental posterior. Codex no ejecuta push;
+  el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -402,9 +405,9 @@ sin reemplazar el archivo.
 
 ## Diseño y contenido futuro dentro del alcance
 
-- [ ] Revisar la card de Headshots de homepage cuando exista foto autorizada y
-  confirmar que las cinco cards siguen en una fila desktop y escalan en tablet/
-  móvil.
+- [x] Actualizadas las cards Family, Newborn, Branding y Headshots de homepage;
+  Seniors permanece byte a byte intacta. Playwright confirma cinco columnas en
+  1728/1440/1200, 2–2–1 en 900 y una columna en 390.
 - [ ] Completar una página Reviews especializada cuando haya testimonios reales;
   no reutilizar una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
@@ -444,8 +447,9 @@ sin reemplazar el archivo.
 ## Preguntas abiertas
 
 - [ ] TODO(contexto): ¿qué ruta debe priorizarse después de Seniors? — Lisa/William.
-- [ ] TODO(contexto): ¿qué foto autorizada debe usarse para Headshots en
-  homepage? — Lisa/William.
+- [x] Resuelto: Headshots usa
+  `/uploads/review-lisa-griffith-headshot-tricities.jpg` por instrucción
+  explícita del usuario.
 - [ ] TODO(contexto): ¿se planea publicar Elopement en otra fase? — Lisa.
 - [ ] TODO(contexto): ¿cuál es el link definitivo de Google Reviews? — Lisa.
 - [ ] TODO(contexto): ¿quién aprueba formalmente Privacy y cuándo? — cliente.

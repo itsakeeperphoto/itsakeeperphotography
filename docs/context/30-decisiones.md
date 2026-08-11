@@ -948,3 +948,35 @@
   `ready/index`, copy, media, schema y hero exactos. Release valida 21/21 rutas,
   Playwright About vuelve a aprobar 1440/1200/900/390 e Impeccable devuelve
   `[]`. No se hizo push ni otra mutación externa.
+
+### ADR-048 — Homepage renueva cuatro fotografías de servicios y congela Seniors
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada.
+- **Contexto:** En la revisión visual de `/` a 1728×963, el usuario pidió
+  actualizar las fotografías del portfolio de servicios y conservar la de
+  Seniors. La fila ya tenía cinco categorías y una geometría responsive
+  estable; el cambio autorizado era editorial, no un rediseño ni una licencia
+  para borrar fuentes usadas en producción.
+- **Decisión:** Mantener exactamente
+  `/uploads/senior-portrait-golden-hour-richland.jpg` y sustituir únicamente
+  Family, Newborn, Branding y Headshots por assets existentes, optimizados y
+  literales: `about-belief-family-golden-hour-tricities.jpg`,
+  `newborn-family-at-home-west-richland.jpg`,
+  `about-lisa-camera-portrait-tricities.jpg` y
+  `review-lisa-griffith-headshot-tricities.jpg`. Actualizar sus alt texts según
+  lo visible, sin atribuciones geográficas no verificadas. Congelar el SHA-256
+  de Seniors y el contrato exacto id/ruta/alt de las cinco cards en el
+  validador y en Playwright.
+- **Alternativas descartadas:** Reemplazar Seniors, descargar o generar media
+  adicional, reoptimizar fuentes ya conformes, borrar fotografías anteriores,
+  cambiar copy/enlaces o rediseñar la retícula se descartó por exceder el
+  feedback y aumentar bandwidth o riesgo de regresión sin beneficio.
+- **Consecuencias:** El commit funcional `82af21f` conserva el orden y copy de
+  las cinco cards, carga variantes WebP existentes y mantiene el lote 640 px en
+  aproximadamente 197 KiB. Release valida 21/21 rutas; Playwright aprueba
+  1728/1440/1200/900/390 con 5/5/5/2–2–1/1 columnas, foco visible, cero
+  overflow y media cargada. La revisión independiente no encontró defectos
+  P1/P2 ni crops problemáticos. El detector Impeccable señaló cinco falsos
+  positivos `broken-image` sobre expresiones regulares del validador, refutados
+  por el HTML construido y la carga real en navegador. No se hizo push ni otra
+  mutación externa.
