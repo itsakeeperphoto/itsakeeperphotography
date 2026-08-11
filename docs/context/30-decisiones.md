@@ -201,7 +201,8 @@
 
 ### ADR-016 — Reviews como polaroids en loop, flip no persistente
 - **Fecha:** 2026-08-08 (registro retrospectivo)
-- **Estado:** Aceptada
+- **Estado:** Aceptada; SUPERSEDIDA POR ADR-052 únicamente para tap con puntero
+  coarse. Hover/foco y loop permanecen vigentes.
 - **Contexto:** La primera versión de reviews quedó estática, no giraba y usaba
   clips cuadrados/botones que no correspondían al concepto.
 - **Decisión:** Loop continuo arqueado, clip de bronce, flip 3D por hover/focus y
@@ -213,7 +214,8 @@
 
 ### ADR-017 — Conteo GBP diario con cache y fallback sin cifra
 - **Fecha:** 2026-08-08 (registro retrospectivo)
-- **Estado:** Aceptada
+- **Estado:** SUPERSEDIDA POR ADR-052 únicamente en el fallback editorial. El
+  job diario, cache y requisito de payload válido permanecen vigentes.
 - **Contexto:** El texto “96 five-star reviews” no debe quedar congelado ni
   inventado.
 - **Decisión:** Job diario consulta GBP, guarda resumen en Netlify Blobs y un
@@ -1107,3 +1109,39 @@
   diversidad, crops, consola/red y overflow correctos; la inspección visual de
   encuadres también pasa. Branding y Headshots conservan `draft/noindex`; no se
   borró media, no se hizo push, deploy, DNS ni otra mutación externa.
+
+### ADR-052 — Kind Words publica diez reseñas verificadas sin inventar media ni schema
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada; supersede ADR-016 solo para tap con puntero coarse y
+  ADR-017 solo para el fallback editorial.
+- **Contexto:** La homepage mostraba seis testimonios, varios sin atribución o
+  con fotografías desactualizadas. El usuario entregó `Reviews.pdf` con diez
+  reseñas y pidió contrastarlas con la carpeta Assets de Google Drive. Solo
+  cinco fotografías del PDF tenían un original visualmente idéntico en Drive;
+  en los otros cinco casos, los archivos de carpetas homónimas mostraban
+  personas o familias distintas.
+- **Decisión:** Tratar el PDF como autoridad del copy y exigir coincidencia
+  visual exacta antes de asociar una foto de Drive. Publicar diez testimonios
+  `featured` en orden 1–10; conservar a Charity Neville como registro histórico
+  `featured: false` y no borrar ni sobrescribir sus assets. Incorporar siete
+  JPEG 800×1000, sRGB y ≤700 KiB con alt literal; reutilizar los tres assets
+  locales exactos restantes. Ampliar el contrato Homepage/Tina de seis a diez.
+  Mantener `100+ five-star Google reviews` como fallback respaldado por el PDF
+  y reemplazarlo solo cuando GBP entregue juntos rating y conteo válidos. En
+  puntero coarse, un tap alterna frente/reverso; hover, foco, Escape, scroll de
+  citas y reduced motion conservan sus contratos. No emitir `Review` ni
+  `AggregateRating` en JSON-LD sin URLs, fechas y procedencia estructurada de
+  cada reseña.
+- **Alternativas descartadas:** Sustituir personas por candidatos no idénticos
+  de Drive, inferir ubicación desde filenames, corregir la gramática de las
+  citas, borrar el testimonio anterior, publicar un número GBP incompleto,
+  dejar el reverso inaccesible en touch o añadir schema de reseñas no trazable
+  se descartó por fidelidad, privacidad, accesibilidad y riesgo de claims.
+- **Consecuencias:** El commit funcional `4cabb15` deja 10/10 órdenes únicos y
+  siete nuevas fuentes con WebP 400/640 regenerables. `npx astro build`, headers
+  staging y el validador aprueban 21/21 rutas. Playwright aprueba
+  1920/1440/1200/900/390 con ancho de documento exacto, 10 tarjetas, imágenes
+  cargadas, tap coarse front→back→front, foco/Escape, reduced motion y cero
+  errores de consola. El build Tina integral no se repitió porque el data layer
+  largo del usuario ocupa `:9000`; no se detuvo ese proceso. No hubo push,
+  deploy, edición de Drive ni borrado de media.

@@ -1026,3 +1026,31 @@
   concurrentes ajenos en Homepage, testimonios, Tina, scripts y media
   `review-*` permanecen sin stage y no forman parte de este lote. No se borró
   media, ni se hizo push, deploy, DNS o `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Kind Words actualizado desde PDF y Drive
+
+- **Objetivo:** actualizar fotos, autores y testimonios de `#kind-words` en la
+  homepage con las diez reseñas entregadas por el usuario.
+- **Fuentes:** se preservó literalmente el copy de `Reviews.pdf`. La auditoría
+  visual de Google Drive confirmó originales exactos para Beth, Isabella,
+  Allissa, Christina y Hanna; los candidatos de las otras cinco carpetas eran
+  personas distintas, por lo que se mantuvo la evidencia exacta del PDF/local.
+- **Contenido y media:** la rail pasa de seis a diez reseñas destacadas en orden
+  1–10. Se añadieron cinco JSON y siete JPEG 800×1000; tres imágenes exactas ya
+  existentes se reutilizan. Charity queda archivada como `featured: false` y no
+  se borró ni sobrescribió ningún asset previo.
+- **Interacción:** Tina y ambos loaders admiten diez registros. El fallback
+  visible es `100+ five-star Google reviews`; GBP solo lo sustituye si devuelve
+  rating y conteo válidos. Las tarjetas ahora alternan por tap coarse y
+  conservan hover, teclado/Escape, scroll interno y reduced motion.
+- **QA:** `npx astro build`, instalación de headers staging y
+  `validate:site` pasaron 21/21 rutas. Playwright verificó
+  1920/1440/1200/900/390, 10 tarjetas, orden/nombres, carga de imágenes,
+  overflow 0, tap front→back→front, foco/Escape y consola sin errores. El build
+  Tina integral se omitió porque el servidor largo del usuario ocupa `:9000`;
+  no se interrumpió.
+- **Git/operación:** implementación funcional en `4cabb15`
+  (`feat(home): refresh client testimonials`). Antes del cierre documental,
+  `main` está cinco commits por delante de `origin/main` y quedará seis después
+  del commit local. No se hizo push, deploy, edición de Drive ni
+  `./scripts/handoff.sh`.

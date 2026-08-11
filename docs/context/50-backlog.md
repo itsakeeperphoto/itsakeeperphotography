@@ -78,12 +78,16 @@
   Headshots 14/11, máximo dos usos por fuente; release 21/21 y Playwright
   1440/1200/900/390 pasan. Ambas rutas siguen `draft/noindex` por entregables
   pendientes y no se borró media previa.
-- [ ] **17. Publicar los cuatro commits locales pendientes.** `origin/main`
-  permanece en `b504f84`; el usuario publica los dos commits Contact y los dos
-  commits del refresh Branding/Headshots. Codex no ejecuta push y los cambios
-  concurrentes Homepage/testimonios/Tina/reviews sin stage no forman parte de
-  este lote.
-- [ ] **18. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
+- [x] **17. Actualizar Kind Words según ADR-052.** Diez reseñas del PDF quedan
+  destacadas en orden 1–10, cinco originales se confirmaron visualmente en
+  Drive, siete JPEG nuevos se optimizaron y los tres exactos existentes se
+  reutilizan. Tina, loaders, fallback GBP y tap coarse quedaron sincronizados;
+  Astro/validador 21/21 y Playwright 1920/1440/1200/900/390 pasan.
+- [ ] **18. Publicar los seis commits locales pendientes.** `origin/main`
+  permanece en `b504f84`; el usuario publica los dos commits Contact, los dos
+  del refresh Branding/Headshots y los dos de Kind Words. Codex no ejecuta
+  push.
+- [ ] **19. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
@@ -92,16 +96,17 @@
   sin panel, el nuevo fondo aprobado del hero About con crop `50% 24%` y la
   densidad Belief/Method corregida, incluido el inset tablet de 32 px. En `/`,
   comprobar la nueva pareja del hero y sus crops 29/58/42%, el print pequeño en
-  blanco y negro, la carga AVIF sin JPEG paralelo y las cinco cards de ADR-048.
+  blanco y negro, la carga AVIF sin JPEG paralelo, las cinco cards de ADR-048 y
+  las diez reseñas Kind Words de ADR-052, incluido tap y resumen GBP vivo.
   En Contact, ejecutar una prueba controlada del gate ya desplegado y confirmar
   que una respuesta real de Netlify revela el recibo sin guardar PII en git.
 - [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
   `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
   WebP responsive; no publicarlas hasta confirmar paquetes y entregables.
-- [ ] **19. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] **20. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **20. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **21. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -132,10 +137,17 @@ sin reemplazar el archivo.
   decorativo, lazy, centrado y sin zoom.
 - [x] Confirmada sin cambios la selección de cinco cards de ADR-048; Seniors
   conserva bytes y digest exactos.
+- [x] Actualizadas diez reseñas destacadas desde `Reviews.pdf`; cinco fotos
+  tienen original idéntico en Drive y las otras cinco conservan la única
+  evidencia visual exacta disponible. Copy, autores, tipos y alt están
+  sincronizados; Charity permanece archivada sin borrar.
+- [x] El fallback social proof queda en `100+ five-star Google reviews`, cifra
+  aportada en el PDF. GBP solo lo sustituye cuando devuelve juntos rating y
+  conteo válidos.
 - [ ] Confirmar si se puede publicar la historia sobre health challenges y
   Grammy.
-- [ ] Verificar la cifra “96 five-star reviews”; mientras GBP no esté vivo usar
-  fallback sin número.
+- [ ] Después del deploy, verificar que el endpoint GBP vivo sustituye el
+  fallback con rating y conteo actuales; no copiar esos valores a schema.
 - [x] Elegida por solicitud explícita del usuario la imagen Headshots
   `/uploads/review-lisa-griffith-headshot-tricities.jpg`; la card ya tiene alt
   literal, variantes responsive y contrato de regresión.
@@ -340,7 +352,8 @@ sin reemplazar el archivo.
   `GBP_LOCATION_ID`.
 - [ ] Ejecutar `refresh-gbp-review-summary` y verificar un objeto válido en Blobs.
 - [ ] Probar `/api/google-review-summary` y la actualización diaria en homepage.
-- [ ] Confirmar que el fallback sin número permanece correcto al simular error.
+- [ ] Confirmar que el fallback aprobado `100+ five-star Google reviews`
+  permanece visible al simular error o payload incompleto.
 - [ ] Confirmar el link de reviews antes de activar copy dinámico definitivo.
 
 ### TinaCMS

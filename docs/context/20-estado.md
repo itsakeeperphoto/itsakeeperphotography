@@ -3,14 +3,14 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-11 13:00 -05
+**Última actualización:** 2026-08-11 13:22 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional verificado:** `127c539` —
-`feat(media): refresh branding and headshot photography`
+**HEAD funcional verificado:** `4cabb15` —
+`feat(home): refresh client testimonials`
 
 **Cierre documental:** presente en el worktree para el commit local siguiente;
 no está staged ni commiteado en esta fotografía.
@@ -18,28 +18,24 @@ no está staged ni commiteado en esta fotografía.
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al cerrar:** antes del commit documental, `HEAD` es `127c539` y
-`main` está tres commits por delante de `origin/main` (`b504f84`). Después del
-commit documental esperado quedará cuatro por delante. Permanecen sin stage
-cambios concurrentes y ajenos a este cierre en Homepage, testimonios,
-`public/scripts/site.js`, Tina y siete JPEG `review-*`; no deben mezclarse,
-revertirse ni documentarse como parte del refresh Branding/Headshots. Todo ese
-trabajo permanece fuera de este cierre y sin stage. No se hizo push, deploy,
-DNS ni otra mutación externa.
+**Estado Git al cerrar:** antes del commit documental, `main` está cinco commits
+por delante de `origin/main` (`b504f84`) y el worktree contiene únicamente los
+cinco documentos de este cierre. Después del commit documental esperado
+quedará seis commits por delante. No se hizo push, deploy, edición de Google
+Drive, DNS ni otra mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-Crear el commit documental local que sigue a `127c539` incluyendo únicamente
-los ocho documentos de este cierre. Luego el usuario debe publicar los cuatro
-commits locales que están por delante de `origin/main`: dos de Contact y dos
-del refresh Branding/Headshots. Codex no ejecuta push por la política vigente.
+Crear el commit documental local que sigue a `4cabb15`, sin ejecutar
+`./scripts/handoff.sh` porque ese script hace push. El usuario publica después
+los seis commits locales: Contact funcional/documental, media
+Branding/Headshots funcional/documental y Kind Words funcional/documental.
 
-Después del deploy, verificar que Branding y Headshots responden 200 pero
-continúan `noindex`, ausentes de `/sitemap.xml` y `/llms.txt`, con JPEG/WebP
-disponibles y sin assets rotos. No cambiar ambas rutas a `ready/index` hasta que
-Lisa confirme entregables, cantidades y duraciones por paquete.
+Tras el deploy, comprobar en `/` que se renderizan las diez reseñas en orden,
+que tap abre/cierra el reverso en móvil y que `/api/google-review-summary`
+reemplaza el fallback solo cuando devuelve juntos rating y conteo válidos.
 
 ## Resumen ejecutivo
 
@@ -49,107 +45,92 @@ Lisa confirme entregables, cantidades y duraciones por paquete.
   `ready/noindex`; las otras 10 rutas siguen `draft/noindex`.
 - Release contiene 10 URLs en sitemap y 9 entradas en `llms.txt`; Portfolio
   queda fuera de `llms.txt`. Staging mantiene sitemap vacío y noindex global.
-- Branding y Headshots conservan `draft/noindex`, sin cambio de metadata de
-  publicación ni crawler outputs. La deuda de entregables sigue abierta.
-- El refresh incorpora 18 JPEG nuevos y 72 WebP regenerables. No se eliminó ni
-  sobrescribió fotografía anterior usada en producción.
-- La media procede de carpetas Drive verificadas de Branding photos en
-  Richland, Kennewick y West Richland, además del inventario Headshot auditado.
+- `#kind-words` muestra ahora diez reseñas destacadas del PDF aprobado, en orden
+  1–10. Charity Neville permanece preservada como registro no destacado.
+- Cinco fotografías tienen original visualmente idéntico en Drive. Para las
+  otras cinco, los candidatos de Drive eran personas distintas; se conservó la
+  única evidencia exacta del PDF/local sin inventar asociaciones.
+- No se añadió `Review` ni `AggregateRating` al schema porque no existen todavía
+  URL/fecha/procedencia estructurada por cada reseña.
 
-## Refresh cerrado en `127c539`
+## Kind Words cerrado en `4cabb15`
 
-### Diversidad de media
+### Contenido y media
 
-- Branding renderiza 13 superficies fotográficas desde 11 fuentes únicas, con
-  máximo dos apariciones por fuente. Hero y cierre son distintos; el mosaico
-  usa cuatro fuentes distintas.
-- Headshots renderiza 14 superficies desde 11 fuentes únicas, también con
-  máximo dos apariciones por fuente. Hero y cierre son distintos; el par Team
-  Headshots no repite fotografía.
-- Las imágenes informativas tienen alt literal de sujeto/acción y solo nombran
-  una ciudad respaldada por la carpeta Drive. Las repeticiones decorativas
-  pertinentes usan alt vacío para no duplicar la narración accesible.
-- `BrandingPage.astro` deriva su mosaico desde los cuatro ítems de contenido;
-  `HeadshotPage.astro` separa el print derecho del hero de la media Studio para
-  evitar repetición consecutiva.
+- Autores destacados: Gayla Worlund, Beth Granger, Isabella Neville, Kaija
+  Colburn, Annette Christensen, Allissa Empert, Lisa Griffith, Julie Hrebeniuk,
+  Christina Bergstrom y Hanna Lnenicka.
+- El copy se conserva literalmente desde `Reviews.pdf`; no se normalizó
+  gramática, puntuación ni estilo de las clientas.
+- Se añadieron cinco documentos JSON y siete JPEG 800×1000, sRGB, entre 105920
+  y 224417 bytes. El pipeline mantiene variantes WebP regenerables 400/640.
+- Los tres assets exactos ya existentes —Gayla, Lisa y Julie— se reutilizan.
+  Ninguna fotografía anterior se borró o sobrescribió.
+- Coincidencias exactas verificadas en Drive: Beth (`010A3390 copy.jpg`),
+  Isabella (`010A0106 copy.jpg`), Allissa (`010A5867 copy.jpg`), Christina
+  (`010A0618copy1.jpg`) y Hanna (`010A9907 copy.jpg`).
 
-### Pipeline SEO y privacidad
+### Contrato de render e interacción
 
-- Los 18 JPEG nuevos usan filenames descriptivos, minúsculos y kebab-case; son
-  sRGB, progresivos, ≤2400 px y ≤700 KiB.
-- `config/image-seo-metadata.json` es la allowlist de metadata del lote y
-  `scripts/lib/image-xmp.mjs` centraliza la construcción/normalización del XMP.
-- La XMP segura conserva creator, credit, rights, web statement, title,
-  description y ciudad/estado/país cuando la carpeta Drive lo verifica.
-- Se excluyen GPS, dirección, sublocation, fecha de captura, serial, nombre RAW,
-  EXIF/IPTC/ICC, `OriginalDocumentID` e historial/identificadores `xmpMM`. El
-  retrato neutral de Headshots queda sin ciudad.
-- `scripts/optimize-images.mjs` genera WebP 400/640/960/1440 y regenera los
-  allowlisted cuando cambia el manifiesto. Las 72 variantes son reproducibles
-  e ignoradas por Git.
-- `scripts/validate-site.mjs` comprueba nombres, peso/dimensiones, XMP exacta,
-  ausencia de metadata sensible, cuatro WebP por fuente y contratos exactos de
-  fuente/alt/diversidad en ambas rutas.
+- `HomepagePage.astro` y `src/lib/content.ts` admiten los primeros diez
+  testimonios `featured`; Tina valida `order` 1–10 y su lock está sincronizado.
+- `content/homepage/index.json` usa el fallback factual
+  `100+ five-star Google reviews`. `KindWords.astro` solo lo reemplaza cuando
+  GBP devuelve `averageRating` y `totalReviewCount` válidos en el mismo payload.
+- Hover con puntero fino y foco de teclado continúan revelando temporalmente el
+  reverso. En puntero coarse, tap alterna front/back; un segundo tap lo cierra.
+  Escape cierra y devuelve foco a la rail. Las citas largas conservan scroll
+  interno y señal `Scroll to finish`.
+- Los clones del loop continúan fuera del orden de tabulación y el modo reduced
+  motion desactiva el autopan y las transiciones.
 
 ## Verificación ejecutada
 
-- Build/validador release: `Validated 21 public routes in release mode.`
-- Release conserva 10 URLs exactas en sitemap y 9 entradas en `llms.txt`;
-  Branding y Headshots permanecen fuera de ambos outputs.
-- El optimizador confirmó las 72 variantes WebP al día después de su primera
-  generación.
-- El validador confirmó XMP exacta en JPEG/WebP y ausencia de
-  EXIF/IPTC/ICC/GPS u otros campos prohibidos en los 18 assets.
-- Playwright aprobó Branding y Headshots en 1440×1000, 1200×900, 900×900 y
-  390×844: status 200, imágenes cargadas, `currentSrc` WebP, dimensiones,
-  prioridades/lazy loading, alt, unicidad, hero/cierre diferentes, crops,
-  consola/red local y overflow horizontal 0.
-- La revisión visual de hero, composiciones internas y cierres en desktop y
-  móvil aprobó encuadres y legibilidad.
-- Los checks de sintaxis de Astro/Node/JSON, `git diff --check` y el parseo
-  Markdown pasaron antes del cierre.
+- Orden de datos: 10 destacados, órdenes exactos 1–10, sin imágenes ausentes ni
+  campos fuera de límites Tina.
+- Fuentes: siete JPEG nuevos son 800×1000, sRGB y ≤700 KiB; el optimizador
+  confirmó variantes responsive al día.
+- `npx astro build`: completo, incluidas las 21 rutas.
+- `npm run install:netlify-headers`: headers staging instalados.
+- `npm run validate:site`: `Validated 21 public routes in staging mode.`
+- `npm run build:local` alcanzó Tina pero no pudo iniciar un segundo data layer
+  porque el servidor largo del usuario ya ocupa `:9000`; no se detuvo ese
+  proceso. Astro y el validador se ejecutaron por separado y pasaron.
+- Playwright: 1920/1440/1200/900/390 con `documentWidth === viewport`, diez
+  tarjetas originales, imágenes visibles cargadas y cero errores/warnings de
+  consola.
+- Emulación iPhone/coarse a 390 px: `front → back → front`, reverso accesible,
+  quote visible, reduced motion activo y overflow 0.
+- Teclado desktop: Tab abre la primera reseña y Escape la cierra devolviendo
+  foco a `.kind-words__rail`.
+- Capturas inspeccionadas: composición/crops aprobados a 1920 y 390; el grupo
+  de 31 de Annette usa mat marfil para preservar a todas las personas.
+- `git diff --check` y parseo de los JSON: sin errores.
 
-## Archivos del lote
+## Archivos del lote funcional
 
-Implementación funcional en `127c539`:
-
-- `config/image-seo-metadata.json`
-- `content/pages/branding.json`
-- `content/pages/headshots.json`
-- 18 JPEG nuevos en `public/uploads/`
-- `scripts/lib/image-xmp.mjs`
-- `scripts/optimize-images.mjs`
-- `scripts/playwright-service-media.js`
-- `scripts/validate-site.mjs`
-- `src/components/pages/BrandingPage.astro`
-- `src/components/pages/HeadshotPage.astro`
-
-Documentación de este cierre:
-
-- `paginas/05-branding.md`
-- `paginas/06-headshots.md`
-- `DESIGN.md`
-- `docs/context/10-arquitectura.md`
-- `docs/context/20-estado.md`
-- `docs/context/30-decisiones.md`
-- `docs/context/40-bitacora.md`
-- `docs/context/50-backlog.md`
+- `content/homepage/index.json`
+- `content/testimonials/*.json` (once registros; diez destacados)
+- `public/scripts/site.js`
+- siete JPEG `public/uploads/review-*`
+- `src/components/HomepagePage.astro`
+- `src/components/KindWords.astro`
+- `src/lib/content.ts`
+- `tina/config.ts`
+- `tina/tina-lock.json`
 
 ## Trabajo parcial y pendientes reales
 
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
-| Branding | Media renovada en `127c539`; `draft/noindex` | Confirmar entregables, cantidad de imágenes y duración; luego revisión editorial/publicación separada. |
-| Headshots | Media renovada en `127c539`; `draft/noindex` | Confirmar duración y entregables; luego revisión editorial/publicación separada. |
-| Documentación media | Completa en worktree, sin stage | Commit documental local separado. |
-| Cambios Homepage/testimonios/Tina/reviews | Archivos modificados y untracked concurrentes, sin stage y ajenos | Su responsable debe continuarlos; no mezclar con este cierre. |
+| Kind Words | Completo en `4cabb15` | Push del usuario y QA del resumen GBP en producción. |
+| Reviews | `draft/noindex` | Definir alcance de la página, URL oficial y fuente estructurada antes de publicar/schema. |
+| Branding | Media renovada en `127c539`; `draft/noindex` | Confirmar entregables, cantidad de imágenes y duración. |
+| Headshots | Media renovada en `127c539`; `draft/noindex` | Confirmar duración y entregables. |
 | Contact | `ready/index` en dos commits locales previos | Push del usuario, deploy y prueba real controlada del gate. |
 | Privacy | `draft/noindex` | Revisión factual/legal y decisión de consentimiento. |
-| Homepage/About/Newborn/ciudades | `ready/index` | QA acumulado del dominio final tras push. |
-| Bandwidth/build | Optimizado localmente | Observar logs y consumo Netlify 48 h tras deploy. |
 | Seniors / Senior timing | Draft | Paquetes, oferta Q54, fechas editoriales y QA. |
 | Investment | Draft | Entregables, duración/cantidades y QA. |
-| Reviews | Draft | Reseñas autorizadas y link oficial. |
 | Dominio | Contradicción documentada | Elegir apex o `www` antes de tocar DNS. |
 
 ## Comandos de reanudación
@@ -169,23 +150,23 @@ propios commits, porque ese script hace push.
 
 ## Bloqueadores externos
 
-1. El usuario debe publicar los cuatro commits locales después del commit
-   documental de este cierre.
+1. El usuario debe publicar los seis commits locales después de este cierre.
 2. Netlify debe completar el deploy antes del QA del dominio final.
-3. Lisa debe confirmar entregables, cantidades y duración antes de publicar
+3. El resumen vivo GBP requiere que credenciales, cache y endpoint funcionen en
+   el deploy; el fallback permanece correcto si alguno falla.
+4. Lisa debe confirmar entregables, cantidades y duración antes de publicar
    Branding o Headshots.
-4. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
-5. Privacy requiere revisión legal autorizada antes de su propia publicación.
-6. Las verificaciones externas de analytics, GBP y Search Console continúan
-   pendientes.
+5. Resolver la divergencia apex/`www` antes de tocar canonical, DNS o redirects.
+6. Privacy requiere revisión legal autorizada antes de su propia publicación.
 
 ## Preguntas abiertas
 
+- TODO(contexto): ¿cuál es el link público definitivo de Google Reviews?
 - TODO(contexto): ¿cuáles son los entregables, cantidad de imágenes y duración
   exactos de Branding?
 - TODO(contexto): ¿cuáles son la duración y entregables exactos de Headshots?
 - TODO(contexto): ¿quién aprobará la revisión legal de Privacy?
 - TODO(contexto): ¿Lisa tiene formación de seguridad newborn confirmable para
   Q41? No publicar el claim antes de respuesta explícita.
-- TODO(contexto): ¿cuál es el link público definitivo de Google Reviews?
-- TODO(contexto): ¿quién verificará Clarity, Google Analytics y Search Console?
+- TODO(contexto): ¿quién verificará Clarity, Google Analytics, GBP y Search
+  Console después del deploy?

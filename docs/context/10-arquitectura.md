@@ -141,6 +141,14 @@ móvil, con JPEG fuente como fallback. `MeetLisa.astro` mantiene separado el
 retrato informativo principal del print pequeño decorativo, que se carga lazy y
 permanece fuera del árbol accesible.
 
+`KindWords.astro` recibe hasta diez testimonios `featured` desde
+`content/testimonials/*.json`, ordenados por `order` 1–10. Cada fotografía usa
+`Picture.astro` y variantes WebP regenerables. El archivo fuente
+`public/scripts/site.js` crea los clones decorativos del loop, los excluye del
+orden de tabulación y revela el reverso por hover con puntero fino, foco de
+teclado o toggle por tap con puntero coarse; solo una tarjeta puede permanecer
+abierta. Tina aplica el mismo rango 1–10.
+
 Componentes especializados existentes:
 
 - `FamilyPage.astro`, `SeniorPage.astro`, `NewbornPage.astro`
@@ -255,8 +263,10 @@ local de este cambio interceptó los POST y no realizó envíos reales.
 - `netlify/lib/gbp-review-summary.ts`: validación y cache en Netlify Blobs.
 - `netlify/functions/google-review-summary.mts`: endpoint público
   `/api/google-review-summary` de solo lectura.
-- `src/components/KindWords.astro`: consume el endpoint y usa un fallback sin
-  número si no hay resumen válido.
+- `src/components/KindWords.astro`: consume el endpoint y conserva el fallback
+  editorial `100+ five-star Google reviews` salvo que GBP entregue juntos un
+  `averageRating` y `totalReviewCount` válidos; solo entonces muestra ambos
+  valores actuales.
 
 El flujo requiere credenciales OAuth y IDs de GBP; no hay valores en git.
 
