@@ -134,12 +134,24 @@ Tell me where your headshot needs to work and when you need it.
 3. `/reviews/` — en "Even If You Hate Having Your Picture Taken", desde la mención de reseñas
 4. `/contact/` — CTA final
 
-## Alt texts
+## Alt texts de la implementación
 
-- `Professional headshot photographed on location at a Tri-Cities office`
-- `Portable studio lighting set up for team headshots in a Richland workplace`
-- `Warm professional headshot of a Kennewick business professional`
-- `Consistent team headshots photographed on site for a Tri-Cities company`
+Los alt informativos describen literalmente la persona, la acción y solo la
+ciudad verificada por la carpeta fuente. Entre ellos:
+
+- `Business professional working at a laptop during a Richland branding session.`
+- `Smiling woman with long blonde hair against a neutral studio backdrop.`
+- `Lisa Weiss standing with her camera beside portable lights and reflectors.`
+- `Smiling woman in a blue top photographed during a Kennewick team headshot session.`
+- `Smiling man wearing glasses photographed during a Kennewick team headshot session.`
+- `Business owner seated on a black leather sofa during a West Richland branding portrait.`
+- `Smiling woman in a black top photographed during a Kennewick team headshot session.`
+- `Lisa Weiss photographing a portrait outdoors with her camera.`
+- `Business professional holding a coffee cup during a relaxed Richland branding portrait.`
+- `Four professionals collaborating around a table in a bright Richland office.`
+
+Las repeticiones compositivas de una fotografía ya descrita usan `alt=""`; no
+duplican la narración para lectores de pantalla.
 
 ## Schema JSON-LD
 
@@ -187,3 +199,27 @@ Tell me where your headshot needs to work and when you need it.
 **El cambio grande:** "no tengo estudio" pasó de carencia implícita a titular — **"I Bring the Studio to You"**. El ejemplo de los médicos es concreto y verificable, y resuelve la fricción real de las empresas: nadie quiere mandar a doce empleados a manejar a un estudio. Es el argumento que gana cuentas B2B.
 
 **Sección de equipos ampliada:** la línea del team page hecho de selfies y fotos de 2016 nombra el problema como lo ve el cliente.
+
+## Estado de implementación y media — 2026-08-11
+
+- La ruta continúa `draft/noindex` y permanece fuera de sitemap y `llms.txt`.
+  La actualización fotográfica no resuelve el pendiente de duración y
+  entregables por paquete, por lo que no autoriza publicar.
+- La selección combina las carpetas verificadas `Branding photos` de Richland,
+  Kennewick y West Richland con el inventario Headshot auditado en Drive. El
+  render contiene 14 superficies fotográficas, 11 fuentes únicas y un máximo
+  de dos apariciones por fuente; hero y cierre son distintos y el par de Team
+  Headshots usa dos fuentes distintas.
+- Los nombres de archivo son descriptivos, en minúsculas y kebab-case. El JSON
+  visible conserva alt literal; el retrato de fondo neutral no recibe ciudad
+  porque su procedencia no la verifica.
+- Las fuentes nuevas forman parte de un lote compartido de 18 JPEG optimizados
+  y 72 WebP regenerables en 400/640/960/1440 px. La metadata XMP segura incluye
+  autoría, derechos, título y descripción; añade ciudad/estado/país solo cuando
+  la carpeta de origen la verifica. No conserva GPS, dirección, sublocation,
+  fecha de captura, serial, nombre RAW ni historial/identificadores `xmpMM`.
+- Ningún asset anterior fue borrado: varias fuentes previas continúan
+  referenciadas en páginas de producción.
+- Release validó 21/21 rutas. Playwright aprobó esta ruta en 1440, 1200, 900 y
+  390 px, incluidos unicidad, WebP responsive, carga, alt, crops, overflow,
+  consola y red local.

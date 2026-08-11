@@ -994,3 +994,35 @@
   `dd4a590` (`feat(contact): gate estimate behind inquiry`); este cierre
   documental permanece en el worktree para el commit local siguiente. No se
   hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Media Branding y Headshots renovada con SEO seguro
+
+- **Objetivo:** sustituir la rotación excesiva de fotografías en Branding y
+  Headshots por una selección real de las carpetas Drive de Richland,
+  Kennewick y West Richland, manteniendo el diseño y sin borrar fuentes usadas
+  en producción.
+- **Selección:** se incorporaron 18 JPEG nuevos, descriptivos y optimizados.
+  Branding pasa de cuatro fuentes repetidas a 13 superficies/11 únicas;
+  Headshots, a 14/11. Ninguna fuente aparece más de dos veces, los hero no
+  repiten sus cierres y las composiciones internas críticas son únicas.
+- **Entrega responsive:** el build regenera 72 WebP en 400/640/960/1440 px. El
+  manifiesto `config/image-seo-metadata.json`, su helper XMP y los guards del
+  optimizador/validador mantienen sincronizadas fuentes y variantes.
+- **SEO, accesibilidad y privacidad:** filenames en kebab-case y alt literales
+  describen sujeto/acción. XMP conserva autoría, derechos, título, descripción
+  y la ciudad demostrada por la carpeta; excluye GPS, dirección, sublocation,
+  fecha, serial, nombre RAW, EXIF/IPTC/ICC e historial/IDs `xmpMM`. El retrato
+  neutral permanece sin ciudad.
+- **Publicación:** ambas rutas continúan `draft/noindex` y fuera de sitemap y
+  `llms.txt`; siguen bloqueadas por entregables, cantidades y duraciones no
+  confirmados. La mejora visual no resolvió esos hechos por inferencia.
+- **QA:** release validó 21/21 rutas. Playwright aprobó Branding y Headshots en
+  1440/1200/900/390 con WebP responsive, alt, diversidad, carga, crops,
+  consola/red y overflow correctos; la inspección visual final también pasó.
+- **Git/operación:** la implementación funcional quedó en `127c539`
+  (`feat(media): refresh branding and headshot photography`). Antes del cierre
+  documental, `main` está tres commits por delante de `origin/main` (`b504f84`)
+  y quedará cuatro por delante después del commit documental local. Los cambios
+  concurrentes ajenos en Homepage, testimonios, Tina, scripts y media
+  `review-*` permanecen sin stage y no forman parte de este lote. No se borró
+  media, ni se hizo push, deploy, DNS o `./scripts/handoff.sh`.

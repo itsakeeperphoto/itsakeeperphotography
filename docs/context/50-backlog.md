@@ -72,10 +72,18 @@
   sin PII, `ContactPage`/breadcrumb y divulgación factual. La ruta queda
   `ready/index`, con 10 URLs release en sitemap y 9 entradas en `llms.txt`;
   validadores 21/21 y Playwright 1440/1200/900/390 completos con POST mockeados.
-- [ ] **16. Publicar los commits locales de Contact.** Al iniciar este lote,
-  `main` y `origin/main` coincidían en `b504f84`; el usuario publica los commits
-  funcional/documental de ADR-050. Codex no ejecuta push.
-- [ ] **17. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
+- [x] **16. Renovar la media Branding/Headshots según ADR-051.** Se incorporan
+  18 JPEG Drive, 72 WebP regenerables, filenames/alt descriptivos y XMP de
+  ciudad verificada sin GPS ni metadata sensible. Branding queda 13/11 y
+  Headshots 14/11, máximo dos usos por fuente; release 21/21 y Playwright
+  1440/1200/900/390 pasan. Ambas rutas siguen `draft/noindex` por entregables
+  pendientes y no se borró media previa.
+- [ ] **17. Publicar los cuatro commits locales pendientes.** `origin/main`
+  permanece en `b504f84`; el usuario publica los dos commits Contact y los dos
+  commits del refresh Branding/Headshots. Codex no ejecuta push y los cambios
+  concurrentes Homepage/testimonios/Tina/reviews sin stage no forman parte de
+  este lote.
+- [ ] **18. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
   después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
@@ -87,10 +95,13 @@
   blanco y negro, la carga AVIF sin JPEG paralelo y las cinco cards de ADR-048.
   En Contact, ejecutar una prueba controlada del gate ya desplegado y confirmar
   que una respuesta real de Netlify revela el recibo sin guardar PII en git.
-- [ ] **18. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
+- [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
+  `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
+  WebP responsive; no publicarlas hasta confirmar paquetes y entregables.
+- [ ] **19. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
-- [ ] **19. Completar Seniors con hechos confirmados.** Revisar
+- [ ] **20. Completar Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/senior.json`; obtener de Lisa el
   número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Actualizar copy sin
@@ -156,6 +167,11 @@ sin reemplazar el archivo.
 
 ### Branding y Headshots
 
+- [x] Renovadas las fotografías desde carpetas Drive verificadas de Richland,
+  Kennewick y West Richland: 18 JPEG, 72 WebP regenerables, Branding 13/11 y
+  Headshots 14/11, máximo dos usos por fuente, alt literal y XMP de ciudad sin
+  GPS ni metadata privada. QA release/Playwright completo; no se borraron
+  fuentes anteriores.
 - [ ] Confirmar entregables, número de imágenes y duración de Branding.
 - [ ] Confirmar duración y entregables de Headshots.
 - [ ] Revalidar que el copy de ambos coincide con
@@ -372,6 +388,10 @@ sin reemplazar el archivo.
   interceptando todos los POST. Verificados unlock exclusivo tras 2xx, un solo
   request, preservación de datos/retry, freeze tras éxito, foco, no-JS y
   overflow 0; no se enviaron datos reales.
+- [x] Renovada la media Branding/Headshots en `127c539`: 18 JPEG ≤2400 px/
+  700 KiB, 72 WebP regenerables, XMP segura y contratos de diversidad/alt.
+  Release validó 21/21 y Playwright aprobó 1440/1200/900/390 con crops, red,
+  consola y overflow correctos.
 - [ ] Después del push/deploy autorizado, verificar en el log Netlify que el
   guard de fuentes y las variantes terminan, comprobar que
   `journal-family-children-golden-hour-tricities.jpg` baja de 15,291,345 a
@@ -459,6 +479,9 @@ sin reemplazar el archivo.
 - [x] Convertido Contact en un estimador gated: receipt editorial locked,
   formulario mínimo, estados 2xx/error/no-JS accesibles y publicación
   `ready/index` sin duplicar el form ni inventar schema.
+- [x] Renovadas Branding y Headshots con fotografía Drive local, diversidad
+  protegida, filenames/alt descriptivos y XMP de ciudad segura; el estado
+  editorial sigue `draft/noindex` hasta confirmar paquetes.
 - [ ] Completar una página Reviews especializada cuando haya testimonios reales;
   no reutilizar una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
@@ -555,3 +578,7 @@ sin reemplazar el archivo.
 - [x] Publicado localmente Contact en `dd4a590` con gate tras 2xx, un único
   `session-estimate`, error/retry/no-JS, analítica sin PII, schema sobrio,
   sitemap 10, `llms.txt` 9 y QA mockeado en cuatro anchos.
+- [x] Renovada la fotografía de Branding/Headshots en `127c539`: 18 JPEG Drive,
+  72 WebP regenerables, 11 fuentes únicas por ruta, alt literal, XMP local sin
+  GPS y QA responsive completo, sin borrar media de producción ni publicar las
+  rutas draft.

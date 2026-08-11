@@ -1070,3 +1070,40 @@
   overflow. Ninguna prueba automatizada envió datos reales; la confirmación del
   funcionamiento productivo de Forms/notificaciones proviene del usuario. No
   se hizo push, deploy, DNS ni otra mutación externa.
+
+### ADR-051 — Branding y Headshots usan media diversa con XMP local segura
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** Branding renderizaba 13 superficies desde solo cuatro fuentes y
+  Headshots 14 desde cuatro; las repeticiones consecutivas debilitaban la
+  lectura de servicios distintos. El usuario pidió renovar ambas rutas desde
+  las carpetas Drive de branding de Richland, Kennewick y West Richland, evitar
+  repeticiones y aplicar filenames, alt y geotag útiles para SEO. Los archivos
+  fuente podían contener metadata privada o de cámara, y ambas páginas todavía
+  tienen paquetes/entregables sin confirmar.
+- **Decisión:** Incorporar 18 JPEG optimizados con filenames descriptivos en
+  minúsculas/kebab-case y alt literal. Mantener Branding en 13 superficies/11
+  fuentes únicas y Headshots en 14/11, con máximo dos usos por fuente, hero
+  distinto del cierre y guardas de unicidad para el mosaico Branding y Team
+  Headshots. Usar `config/image-seo-metadata.json` como allowlist y
+  `scripts/lib/image-xmp.mjs` como única construcción de XMP. Incluir autoría,
+  derechos, URL, título, descripción y ciudad/estado/país solo cuando la
+  carpeta Drive la verifica; el retrato neutral queda sin ciudad. Excluir GPS,
+  dirección, sublocation, fecha de captura, serial, nombre RAW, EXIF/IPTC/ICC,
+  `OriginalDocumentID` e historial/identificadores `xmpMM`. Generar cuatro WebP
+  por JPEG en 400/640/960/1440 y hacer que el manifiesto invalide esos
+  derivados. Mantener ambas rutas `draft/noindex` y fuera de sitemap/`llms.txt`
+  hasta resolver sus entregables; no borrar assets antiguos.
+- **Alternativas descartadas:** Conservar la rotación de cuatro fotografías,
+  borrar o sobrescribir fuentes previas, copiar toda la metadata de cámara,
+  inventar coordenadas o una dirección, adjudicar ciudad al retrato neutral,
+  usar filename como sustituto de alt o publicar las páginas solo por mejorar
+  la media se descartó por repetición, riesgo de romper producción, privacidad,
+  accesibilidad, claims locales no demostrados o gates editoriales abiertos.
+- **Consecuencias:** El commit funcional `127c539` añade los 18 JPEG, manifiesto
+  y helper XMP, actualiza contenido/componentes/optimizador/validador y añade el
+  QA Playwright. Las 72 variantes WebP son regenerables. Release valida 21/21
+  rutas y Playwright aprueba 1440/1200/900/390 con fuentes responsive, alt,
+  diversidad, crops, consola/red y overflow correctos; la inspección visual de
+  encuadres también pasa. Branding y Headshots conservan `draft/noindex`; no se
+  borró media, no se hizo push, deploy, DNS ni otra mutación externa.

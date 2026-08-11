@@ -151,13 +151,23 @@ Tell me about your business and where you want it to go.
 3. `/investment/` — en "How It Works", desde el proceso
 4. `/contact/` — CTA final
 
-## Alt texts
+## Alt texts de la implementación
 
-- `Tri-Cities business owner laughing during a custom branding photography session in her shop`
-- `Close-up of an entrepreneur's hands at work during a branding session in Richland, WA`
-- `Small business team photographed for brand images in Kennewick`
-- `Personal branding portrait of a Tri-Cities entrepreneur in natural light`
-- `Product and workspace details photographed for a Pasco small business`
+Los alt informativos describen literalmente el sujeto, la acción y solo la
+ciudad verificada por la carpeta fuente. Entre ellos:
+
+- `Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session.`
+- `Business owner standing beside a kitchen island during a West Richland branding session.`
+- `Business owner leaning on a kitchen counter during a West Richland personal branding session.`
+- `Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.`
+- `Pianist seated beside sheet music in a layered creative portrait made in Richland.`
+- `Chef stirring vegetables on a stovetop during a Richland business branding session.`
+- `Business owner writing at her desk during a Richland workplace branding session.`
+- `Two business professionals posing together in their Richland office.`
+- `Four business professionals standing outside their Kennewick workplace.`
+
+Las repeticiones compositivas de una fotografía ya descrita usan `alt=""`; no
+duplican la narración para lectores de pantalla.
 
 ## Schema JSON-LD
 
@@ -205,3 +215,27 @@ Tell me about your business and where you want it to go.
 **La sección nueva más valiosa:** "About Usage Rights — Read This Part". Explica en lenguaje llano la diferencia entre derechos personales y licencia comercial, que es justo lo que confunde a los clientes y lo que hace que el precio de branding parezca arbitrario. Explicarlo convierte una objeción de precio en una razón de precio. Ningún competidor local lo aborda.
 
 **"What We'll Photograph"** desglosa los cuatro tipos de imagen — hace tangible algo que suele venderse en abstracto.
+
+## Estado de implementación y media — 2026-08-11
+
+- La ruta continúa `draft/noindex` y permanece fuera de sitemap y `llms.txt`.
+  La actualización fotográfica no resuelve el pendiente de entregables,
+  cantidad de imágenes ni duración por paquete, por lo que no autoriza publicar.
+- La selección nueva procede de las carpetas verificadas `Branding photos` de
+  Richland, Kennewick y West Richland en Google Drive. El render contiene 13
+  superficies fotográficas, 11 fuentes únicas y un máximo de dos apariciones
+  por fuente; hero y cierre son distintos y el mosaico usa cuatro fuentes
+  distintas.
+- Los nombres de archivo son descriptivos, en minúsculas y kebab-case. El JSON
+  visible conserva alt literal; no atribuye una ciudad que no esté respaldada
+  por la carpeta de origen.
+- Las fuentes nuevas forman parte de un lote compartido de 18 JPEG optimizados
+  y 72 WebP regenerables en 400/640/960/1440 px. La metadata XMP segura incluye
+  autoría, derechos, título, descripción y ciudad/estado/país verificados; no
+  conserva GPS, dirección, sublocation, fecha de captura, serial, nombre RAW ni
+  historial/identificadores `xmpMM`.
+- Ningún asset anterior fue borrado: varias fuentes previas continúan
+  referenciadas en páginas de producción.
+- Release validó 21/21 rutas. Playwright aprobó esta ruta en 1440, 1200, 900 y
+  390 px, incluidos unicidad, WebP responsive, carga, alt, crops, overflow,
+  consola y red local.

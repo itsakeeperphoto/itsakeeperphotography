@@ -1358,3 +1358,60 @@ Cubrir 1440, 1200, 900 y 390 px con 2xx, 5xx, fallo de red y doble clic; exigir
 un solo POST, unlock exclusivo de 2xx, preservación de datos en error, foco
 correcto, controles congelados tras éxito, fallback sin JavaScript y cero
 overflow horizontal.
+
+## 14. ADDENDUM DE MEDIA — BRANDING Y HEADSHOTS
+
+Este addendum fija la renovación fotográfica aprobada para
+`/branding-photographer-tri-cities-wa/` y
+`/headshot-photographer-tri-cities-wa/`. Cambia la selección y su disciplina
+SEO; no modifica el lenguaje visual, el copy comercial ni el estado editorial
+de las rutas.
+
+### Selección y diversidad
+
+- Las nuevas fuentes proceden de las carpetas verificadas de Google Drive
+  `Branding photos / Richland`, `Branding photos / Kennewick` y
+  `Branding photos / West Richland`, además del inventario Headshot auditado.
+- Branding renderiza 13 superficies, 11 fuentes únicas y un máximo de dos usos
+  por fuente. Hero y cierre son distintos; sus cuatro superficies de mosaico
+  también usan fuentes distintas.
+- Headshots renderiza 14 superficies, 11 fuentes únicas y un máximo de dos usos
+  por fuente. Hero y cierre son distintos; el par de Team Headshots no repite
+  fotografía.
+- Las repeticiones compositivas usan alt vacío cuando la misma imagen ya fue
+  descrita. Las imágenes informativas conservan una descripción literal del
+  sujeto y la acción.
+- Ninguna fuente anterior se borra por esta renovación: otras rutas de
+  producción todavía pueden referenciarla.
+
+### Contrato SEO y privacidad de la imagen
+
+- Los 18 JPEG nuevos usan nombres descriptivos en minúsculas y kebab-case. La
+  ruta, el alt y la descripción XMP trabajan juntos; el filename no sustituye
+  la descripción accesible.
+- `config/image-seo-metadata.json` es la allowlist de metadata del lote. Define
+  creator, credit, rights, web statement, title, description y, cuando la
+  carpeta Drive lo prueba, ciudad, Washington, United States y `US`.
+- La ciudad es granularidad editorial, no una coordenada. No se inventa GPS,
+  dirección, venue ni sublocation. El retrato contra fondo neutral no incluye
+  ciudad porque su carpeta no la verifica.
+- `scripts/lib/image-xmp.mjs` construye y normaliza el XMP seguro. Se eliminan
+  EXIF/IPTC/ICC y cualquier GPS, fecha de captura, serial, nombre RAW,
+  `OriginalDocumentID`, historial o identificador `xmpMM`.
+- `scripts/optimize-images.mjs` añade ese XMP solo a los assets allowlisted y
+  regenera sus WebP si el manifiesto cambia. Los 18 JPEG originan 72 variantes
+  WebP de 400, 640, 960 y 1440 px.
+
+### Guardas y QA
+
+El validador exige naming, peso y dimensiones de las fuentes, metadata XMP
+exacta, ausencia de metadata sensible, cuatro variantes WebP por asset y los
+contratos de diversidad/alt de ambas rutas. Playwright comprueba en 1440, 1200,
+900 y 390 px la fuente responsive cargada, dimensiones intrínsecas, carga y
+prioridad, alt, unicidad, crops, consola, red y overflow. El cierre aprobado es
+release 21/21 y Playwright PASS en los cuatro anchos, con inspección visual de
+los crops.
+
+Ambas rutas continúan `draft/noindex` y fuera de sitemap/`llms.txt` hasta que
+se confirmen los entregables, cantidades y duraciones pendientes. La calidad
+visual no sustituye ese gate editorial.

@@ -58,9 +58,13 @@
 ├── netlify/
 │   ├── functions/                 endpoints y job GBP programado
 │   └── lib/                       cache/resumen GBP compartido
-├── config/netlify-headers/        headers staging y release
+├── config/
+│   ├── image-seo-metadata.json    allowlist XMP segura para assets locales
+│   └── netlify-headers/           headers staging y release
 ├── public/                        assets optimizados, fuentes y redirects
-├── scripts/                       build, optimización, QA y handoff
+├── scripts/
+│   ├── lib/image-xmp.mjs          construcción/normalización de XMP segura
+│   └── ...                        build, optimización, QA y handoff
 ├── .handoff/sessions/             rollouts locales ignorados por git
 └── artifacts/, .artifacts/,
     .codex-evidence/               evidencia visual histórica y puntual
@@ -340,6 +344,12 @@ para evitar cambios silenciosos al repositorio.
   analítica sin PII, disclosure de datos, `ContactPage`/`BreadcrumbList` y
   ausencia de un `Service` inventado. También fija la membresía exacta en
   sitemap/`llms.txt` y el aislamiento noindex de staging.
+- Para Branding y Headshots valida el manifiesto XMP de 18 JPEG, naming
+  descriptivo, dimensiones/peso, ausencia de metadata sensible, cuatro WebP
+  400/640/960/1440 por fuente y XMP exacto en fuente/derivados. En el HTML fija
+  fuente y alt de cada superficie, mínimo 11 fuentes únicas por ruta, máximo
+  dos usos por fuente, hero distinto del cierre y unicidad específica del
+  mosaico Branding y el par Team Headshots.
 
 ## SEO/indexación actual
 
@@ -399,6 +409,11 @@ no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
 - `scripts/optimize-images.mjs` genera las variantes 400/640/960/1440 con hasta
   cuatro workers, WebP quality 72 y effort 4. En la medición limpia del
   2026-08-09 pasó de 114.80 s a 5.09 s.
+- Para los assets incluidos explícitamente en
+  `config/image-seo-metadata.json`, `scripts/optimize-images.mjs` incorpora XMP
+  segura en cada WebP y toma el manifiesto como entrada de invalidación. El
+  helper `scripts/lib/image-xmp.mjs` permite al optimizador y al validador
+  construir y comparar exactamente la misma metadata.
 - Diez assets sin referencias en ninguna de las 21 rutas, CSS, Tina, schema u
   Open Graph fueron retirados en `bd833f6`; cualquier restauración debe añadir
   primero una referencia verificable.
@@ -434,6 +449,19 @@ no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
   schema y otras rutas todavía la referencian. Meet Lisa conserva su retrato
   principal y cambia solo el print pequeño a una fuente existente en blanco y
   negro; no se borró media de producción.
+- Branding y Headshots comparten un lote de 18 JPEG nuevos procedentes de las
+  carpetas Drive verificadas `Branding photos` de Richland, Kennewick y West
+  Richland, más el inventario Headshot auditado. Los JPEG son sRGB,
+  progresivos, ≤2400 px y ≤700 KiB; sus 72 WebP 400/640/960/1440 son
+  regenerables e ignorados por Git. Branding renderiza 13 superficies con 11
+  fuentes únicas; Headshots, 14 con 11. Ninguna fuente aparece más de dos veces
+  dentro de su ruta.
+- La metadata del lote se limita a creator, credit, rights, web statement,
+  title, description y ciudad/estado/país cuando la carpeta Drive lo verifica.
+  No se conserva GPS, dirección, sublocation, fecha de captura, serial, nombre
+  RAW, EXIF/IPTC/ICC ni historial/identificadores `xmpMM`. El retrato neutral de
+  Headshots no incluye ciudad. Los nombres descriptivos y alt literales siguen
+  siendo las señales principales; XMP no justifica inventar precisión local.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.
