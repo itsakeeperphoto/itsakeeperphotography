@@ -283,6 +283,10 @@ const htmlAttribute = (tag, name) => {
   );
   return match ? decodeHtml(match[2]).trim() : null;
 };
+const hasHtmlAttribute = (tag, name) => {
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?:^|\\s)${escapedName}(?:\\s*=|\\s|/?>)`, "i").test(tag);
+};
 const sectionById = (source, id) => {
   const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return source.match(
@@ -363,6 +367,7 @@ const indexableReleaseFiles = new Set([
   `family-photographer-tri-cities-wa${path.sep}index.html`,
   `newborn-photographer-tri-cities-wa${path.sep}index.html`,
   `about${path.sep}index.html`,
+  `contact${path.sep}index.html`,
   `richland-wa-photographer${path.sep}index.html`,
   `kennewick-wa-photographer${path.sep}index.html`,
   `pasco-wa-photographer${path.sep}index.html`,
@@ -1380,6 +1385,24 @@ for (const file of htmlFiles) {
 
 const homepage = await readFile(path.join(output, "index.html"), "utf8");
 const contact = await readFile(path.join(output, "contact", "index.html"), "utf8");
+const contactContent = JSON.parse(
+  await readFile(path.join(root, "content", "pages", "contact.json"), "utf8"),
+);
+const contactCalculatorScript = await readFile(
+  path.join(root, "src", "scripts", "session-price-calculator.ts"),
+  "utf8",
+);
+const runtimeManifestSource = await readFile(
+  path.join(root, "src", "lib", "page-manifest.ts"),
+  "utf8",
+);
+const mirrorManifestSource = await readFile(
+  path.join(root, "page-manifest.ts"),
+  "utf8",
+);
+if (runtimeManifestSource !== mirrorManifestSource) {
+  failures.push("page-manifest.ts: root mirror must exactly match src/lib/page-manifest.ts");
+}
 const homepageHero = sectionById(homepage, "home");
 const homepageHeroImageTags = [...homepageHero.matchAll(/<img\b[^>]*>/gi)].map(
   (match) => match[0],
@@ -1539,6 +1562,217 @@ for (const [label, formName, source] of [
   }
 }
 
+const contactFormMatches = [
+  ...contact.matchAll(
+    /<form\b(?=[^>]*\bname=["']session-estimate["'])[^>]*>[\s\S]*?<\/form>/gi,
+  ),
+].map((match) => match[0]);
+if (contactFormMatches.length !== 1) {
+  failures.push(
+    `contact: expected exactly one session-estimate form; found ${contactFormMatches.length}`,
+  );
+} else {
+  const formSource = contactFormMatches[0];
+  const formTag = formSource.match(/^<form\b[^>]*>/i)?.[0] || "";
+  if (
+    htmlAttribute(formTag, "name") !== "session-estimate" ||
+    htmlAttribute(formTag, "method")?.toLowerCase() !== "post" ||
+    htmlAttribute(formTag, "action") !== "/thank-you/" ||
+    htmlAttribute(formTag, "data-netlify") !== "true" ||
+    htmlAttribute(formTag, "netlify-honeypot") !== "bot-field" ||
+    !hasHtmlAttribute(formTag, "data-session-estimate-form")
+  ) {
+    failures.push("contact: Netlify form action, method, detection or fallback contract is invalid");
+  }
+
+  const inputTags = [...formSource.matchAll(/<input\b[^>]*>/gi)].map(
+    (match) => match[0],
+  );
+  const textareaTags = [...formSource.matchAll(/<textarea\b[^>]*>/gi)].map(
+    (match) => match[0],
+  );
+  const inputByName = (name) =>
+    inputTags.find((tag) => htmlAttribute(tag, "name") === name) || "";
+  const textareaByName = (name) =>
+    textareaTags.find((tag) => htmlAttribute(tag, "name") === name) || "";
+  const formNameField = inputByName("form-name");
+  const botField = inputByName("bot-field");
+  const nameField = inputByName("name");
+  const emailField = inputByName("email");
+  const phoneField = inputByName("phone");
+  const storyField = textareaByName("story");
+
+  if (
+    htmlAttribute(formNameField, "type") !== "hidden" ||
+    htmlAttribute(formNameField, "value") !== "session-estimate" ||
+    !botField ||
+    htmlAttribute(botField, "tabindex") !== "-1"
+  ) {
+    failures.push("contact: hidden form-name or honeypot field is invalid");
+  }
+  if (
+    htmlAttribute(nameField, "type") !== "text" ||
+    !hasHtmlAttribute(nameField, "required") ||
+    htmlAttribute(emailField, "type") !== "email" ||
+    !hasHtmlAttribute(emailField, "required")
+  ) {
+    failures.push("contact: name and email must be the only required contact fields");
+  }
+  if (
+    htmlAttribute(phoneField, "type") !== "tel" ||
+    hasHtmlAttribute(phoneField, "required") ||
+    !storyField ||
+    hasHtmlAttribute(storyField, "required")
+  ) {
+    failures.push("contact: phone and story must exist and remain optional");
+  }
+
+  const submitButtons = [
+    ...formSource.matchAll(
+      /<button\b(?=[^>]*\bdata-estimate-submit(?:\s|=|>))[^>]*>([\s\S]*?)<\/button>/gi,
+    ),
+  ];
+  if (
+    submitButtons.length !== 1 ||
+    htmlAttribute(submitButtons[0]?.[0]?.match(/^<button\b[^>]*>/i)?.[0] || "", "type") !==
+      "submit" ||
+    normalizedText(submitButtons[0]?.[1] || "") !==
+      "Send My Details & Reveal My Estimate"
+  ) {
+    failures.push("contact: submit CTA must be exactly “Send My Details & Reveal My Estimate”");
+  }
+}
+
+const contactTags = contact.match(/<(?:section|aside|div|strong|p|h3)\b[^>]*>/gi) || [];
+const tagWithMarker = (marker) =>
+  contactTags.find((tag) => hasHtmlAttribute(tag, marker)) || "";
+const plannerTag = tagWithMarker("data-session-planner");
+const receiptTag = tagWithMarker("data-estimate-receipt");
+const detailsTag = tagWithMarker("data-estimate-details");
+const mobileTotalTag = tagWithMarker("data-mobile-estimate-total");
+const successTag = tagWithMarker("data-estimate-success");
+const errorTag = tagWithMarker("data-estimate-error");
+const totalLiveTag = tagWithMarker("data-total-live");
+if (
+  htmlAttribute(plannerTag, "data-estimate-state") !== "locked" ||
+  htmlAttribute(receiptTag, "data-estimate-state") !== "locked" ||
+  !hasHtmlAttribute(detailsTag, "hidden") ||
+  !hasHtmlAttribute(mobileTotalTag, "hidden")
+) {
+  failures.push("contact: the initial receipt and desktop/mobile totals must be locked and hidden");
+}
+if (
+  !hasHtmlAttribute(successTag, "hidden") ||
+  htmlAttribute(successTag, "role") !== "status" ||
+  htmlAttribute(successTag, "aria-live") !== "polite" ||
+  !hasHtmlAttribute(errorTag, "hidden") ||
+  htmlAttribute(errorTag, "role") !== "alert" ||
+  htmlAttribute(errorTag, "aria-live") !== "assertive" ||
+  htmlAttribute(errorTag, "tabindex") !== "-1" ||
+  htmlAttribute(totalLiveTag, "aria-live") !== "polite"
+) {
+  failures.push("contact: success, error and total live-region semantics are invalid");
+}
+
+const ajaxContractPatterns = [
+  [/new FormData\(form\)/, "FormData serialization"],
+  [/new URLSearchParams\(\)/, "URLSearchParams encoding"],
+  [/fetch\(\s*["']\/["']\s*,/, "same-origin Netlify POST endpoint"],
+  [/method:\s*["']POST["']/, "POST method"],
+  [/["']Content-Type["']:\s*["']application\/x-www-form-urlencoded["']/, "URL-encoded content type"],
+  [/if\s*\(!response\.ok\)/, "response.ok success gate"],
+  [/event\.preventDefault\(\)/, "enhanced submit interception"],
+  [/isSubmitting\s*\|\|\s*hasSubmitted/, "duplicate submission guard"],
+  [/new AbortController\(\)/, "submission timeout controller"],
+  [/signal:\s*submissionController\.signal/, "submission timeout signal"],
+  [/receiptDetails\.hidden\s*=\s*false/, "receipt reveal marker"],
+  [/errorMessage\.focus\(/, "error focus recovery"],
+  [/\.gtag\?\.\(/, "non-PII gtag analytics bridge"],
+];
+for (const [pattern, label] of ajaxContractPatterns) {
+  if (!pattern.test(contactCalculatorScript)) {
+    failures.push(`contact calculator: missing ${label}`);
+  }
+}
+if (
+  !normalizedText(contact).includes(
+    "Submitting sends your contact details and session choices to Lisa through Netlify Forms",
+  )
+) {
+  failures.push("contact: factual form data-use disclosure is missing");
+}
+
+const contactExpectedOrigin =
+  mode === "release"
+    ? "https://www.itsakeeperphotography.com"
+    : "https://itsakeeperphotography.netlify.app";
+const contactCanonical = `${contactExpectedOrigin}/contact/`;
+const contactMain = contact
+  .replace(/<!--[\s\S]*?-->/g, "")
+  .match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] || "";
+const contactTitle = normalizedText(
+  contact.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || "",
+);
+const contactDescriptionTag = (contact.match(/<meta\b[^>]*>/gi) || []).find(
+  (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "description",
+);
+const contactRobotsTag = (contact.match(/<meta\b[^>]*>/gi) || []).find(
+  (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "robots",
+);
+const expectedContactRobots =
+  mode === "release"
+    ? "index, follow, max-image-preview:large"
+    : "noindex, nofollow, noarchive";
+if (
+  contactContent.contentStatus !== "ready" ||
+  contactContent.searchVisibility !== "index" ||
+  contactContent.schemaType !== "ContactPage" ||
+  !/data-content-status=["']ready["']/i.test(contactMain) ||
+  contactTitle !== contactContent.title ||
+  htmlAttribute(contactDescriptionTag || "", "content") !== contactContent.description ||
+  htmlAttribute(contactRobotsTag || "", "content") !== expectedContactRobots ||
+  !contact.includes(`<link rel="canonical" href="${contactCanonical}">`)
+) {
+  failures.push("contact: source state, metadata, canonical or robots contract is invalid");
+}
+
+const contactSchemas = parseJsonLd(contact, `contact${path.sep}index.html`);
+const contactPages = contactSchemas.filter(
+  (schema) => schema?.["@type"] === "ContactPage",
+);
+const contactBreadcrumbs = contactSchemas.filter(
+  (schema) => schema?.["@type"] === "BreadcrumbList",
+);
+const topLevelContactServices = contactSchemas.filter(
+  (schema) => schema?.["@type"] === "Service",
+);
+const contactPageSchema = contactPages[0];
+const contactBreadcrumbItems = contactBreadcrumbs[0]?.itemListElement || [];
+if (
+  contactPages.length !== 1 ||
+  contactPageSchema?.["@id"] !== `${contactCanonical}#webpage` ||
+  contactPageSchema?.url !== contactCanonical ||
+  contactPageSchema?.name !== contactContent.title ||
+  contactPageSchema?.description !== contactContent.description ||
+  contactPageSchema?.isPartOf?.["@id"] !== `${contactExpectedOrigin}/#website` ||
+  contactPageSchema?.about?.["@id"] !== `${contactExpectedOrigin}/#business`
+) {
+  failures.push("contact: canonical ContactPage schema graph is invalid");
+}
+if (
+  contactBreadcrumbs.length !== 1 ||
+  contactBreadcrumbItems.length !== 2 ||
+  contactBreadcrumbItems[0]?.position !== 1 ||
+  contactBreadcrumbItems[0]?.name !== "Home" ||
+  contactBreadcrumbItems[0]?.item !== `${contactExpectedOrigin}/` ||
+  contactBreadcrumbItems[1]?.position !== 2 ||
+  contactBreadcrumbItems[1]?.name !== "Session Pricing Estimate" ||
+  contactBreadcrumbItems[1]?.item !== contactCanonical ||
+  topLevelContactServices.length !== 0
+) {
+  failures.push("contact: BreadcrumbList or no-invented-Service schema contract is invalid");
+}
+
 if (htmlFiles.length !== 21) failures.push(`expected 21 public HTML routes; found ${htmlFiles.length}`);
 
 const sitemap = await readFile(path.join(output, "sitemap.xml"), "utf8");
@@ -1575,11 +1809,17 @@ const routeHeaderValues = (requestPath, name) =>
     .flatMap((block) => block.headers.get(name.toLowerCase()) || []);
 
 if (mode === "staging") {
-  if (/<url>/.test(sitemap)) failures.push("sitemap.xml: staging sitemap must be empty");
   if (
-    !/staging preview/i.test(llms) ||
-    /\/(?:about|family-photographer-tri-cities-wa)\//.test(llms)
+    /<url>/.test(sitemap) ||
+    !/<urlset\s+xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">\s*<\/urlset>/.test(
+      sitemap,
+    )
   ) {
+    failures.push("sitemap.xml: staging sitemap must be an empty valid urlset");
+  }
+  const expectedStagingLlms =
+    "# It's A Keeper Photography — staging\n\n> This build is a noindex staging preview. It is not approved for citation.\n";
+  if (llms !== expectedStagingLlms) {
     failures.push("llms.txt: staging citation gate is incorrect");
   }
   const globalRobots = netlifyHeaderBlocks
@@ -1595,6 +1835,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/about/",
+    "https://www.itsakeeperphotography.com/contact/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
@@ -1622,6 +1863,12 @@ if (mode === "staging") {
   if (!/<lastmod>2026-08-10<\/lastmod>/.test(aboutSitemapEntry)) {
     failures.push("sitemap.xml: About lastmod must be 2026-08-10");
   }
+  const contactSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/contact\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-11<\/lastmod>/.test(contactSitemapEntry)) {
+    failures.push("sitemap.xml: Contact lastmod must be 2026-08-11");
+  }
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");
   }
@@ -1632,6 +1879,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/about/",
+    "https://www.itsakeeperphotography.com/contact/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
@@ -1644,6 +1892,11 @@ if (mode === "staging") {
     "- [Meet Lisa Weiss | Tri-Cities Photographer for 20 Years](https://www.itsakeeperphotography.com/about/): Meet Lisa Weiss, the Richland photographer behind It's A Keeper Photography, with twenty years behind the camera and fourteen years in business.";
   if (!llms.includes(expectedAboutLlmsLine)) {
     failures.push("llms.txt: About title or v2 summary differs from the manifest contract");
+  }
+  const expectedContactLlmsLine =
+    "- [Session Pricing Estimate | It's A Keeper Photography](https://www.itsakeeperphotography.com/contact/): Plan a portrait session, send the details to Lisa and reveal a personalized pricing estimate.";
+  if (!llms.includes(expectedContactLlmsLine)) {
+    failures.push("llms.txt: Contact title or summary differs from the manifest contract");
   }
   if (/^\/journal\/\*\s*$/m.test(headers)) {
     failures.push("_headers: broad /journal/* noindex rule must not block the published guide");
@@ -1666,8 +1919,13 @@ if (mode === "staging") {
   ) {
     failures.push("_headers: About noindex rule must not block the published trust page");
   }
+  if (
+    routeHeaderValues("/contact/", "x-robots-tag")
+      .some((value) => /(?:^|,)\s*noindex(?:\s*,|$)/i.test(value))
+  ) {
+    failures.push("_headers: Contact noindex rule must not block the published estimate page");
+  }
   for (const route of [
-    "/contact/*",
     "/journal/",
     "/journal/when-to-book-senior-pictures-tri-cities/*",
     "/journal/in-home-vs-studio-newborn-photography/*",

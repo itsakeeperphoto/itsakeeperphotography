@@ -36,14 +36,16 @@ const pricingVersion = "2026-07-29";
   id="session-planner"
   aria-labelledby="session-planner-title"
   data-session-planner
+  data-estimate-state="locked"
 >
   <div class="contact-shell">
     <header class="session-planner__header">
       <p class="section-eyebrow">A clear place to begin</p>
       <h2 id="session-planner-title">Build Your Session Estimate</h2>
       <p>
-        Choose what fits the session you have in mind. Your estimate updates as
-        you go, then Lisa follows up personally to confirm the details.
+        Choose what fits the session you have in mind, then send your name and
+        email to reveal the complete estimate. Lisa receives the same plan and
+        follows up personally to confirm the details.
       </p>
     </header>
 
@@ -400,12 +402,13 @@ const pricingVersion = "2026-07-29";
             data-planner-phase="details"
           >
             <legend>
-              <span class="planner-phase__number">04 · Review &amp; send</span>
+              <span class="planner-phase__number">04 · Send &amp; reveal</span>
               <span class="planner-phase__title">Tell Lisa where to reach you</span>
             </legend>
             <p class="planner-phase__intro">
-              This sends your complete estimate and notes to Lisa. It does not
-              reserve a date or charge a payment.
+              Name and email are all that's required. Send your selections to
+              unlock the itemized total here; this does not reserve a date or
+              charge a payment.
             </p>
 
             <div class="planner-contact-fields">
@@ -430,18 +433,17 @@ const pricingVersion = "2026-07-29";
                 />
               </label>
               <label>
-                <span>Phone</span>
+                <span>Phone <small>(optional)</small></span>
                 <input
                   type="tel"
                   name="phone"
                   autocomplete="tel"
                   inputmode="tel"
-                  required
                   data-contact-field
                 />
               </label>
               <label>
-                <span>Preferred timing</span>
+                <span>Preferred timing <small>(optional)</small></span>
                 <input
                   type="text"
                   name="preferred_timing"
@@ -451,11 +453,10 @@ const pricingVersion = "2026-07-29";
                 />
               </label>
               <label class="planner-contact-fields__story">
-                <span>What are you hoping to keep?</span>
+                <span>What are you hoping to keep? <small>(optional)</small></span>
                 <textarea
                   name="story"
                   rows="6"
-                  required
                   placeholder="Tell Lisa who these photographs are for, what matters to you, and anything she should know."
                   data-contact-field
                 ></textarea>
@@ -464,21 +465,40 @@ const pricingVersion = "2026-07-29";
 
             <div class="planner-submit">
               <p>
-                Estimate only. Lisa will confirm the final details, send the
-                contract and payment link, and reserve the date after the
-                contract and retainer are complete.
+                Your result is a planning estimate, not a booking or payment.
+                Lisa will reply about your session and confirm every detail
+                before sending a contract. Submitting sends your contact details
+                and session choices to Lisa through Netlify Forms so she can
+                reply about this session.
               </p>
               <button class="outline-button" type="submit" data-estimate-submit>
-                Send My Estimate to Lisa
+                Send My Details &amp; Reveal My Estimate
               </button>
             </div>
+            <p
+              class="planner-submit-feedback planner-submit-feedback--success"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              hidden
+              data-estimate-success
+            ></p>
+            <p
+              class="planner-submit-feedback planner-submit-feedback--error"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+              tabindex="-1"
+              hidden
+              data-estimate-error
+            ></p>
           </fieldset>
 
           <noscript>
             <p class="planner-noscript">
-              The form is fully submittable without JavaScript. The receipt
-              will not update live, but your raw selections are sent so Lisa
-              can calculate and verify the estimate before booking.
+              The form is fully submittable without JavaScript. You will be
+              taken to a confirmation page, and your raw selections are sent
+              so Lisa can calculate and verify the estimate before booking.
             </p>
           </noscript>
         </div>
@@ -488,6 +508,7 @@ const pricingVersion = "2026-07-29";
           id="estimate-receipt"
           aria-labelledby="estimate-receipt-title"
           data-estimate-receipt
+          data-estimate-state="locked"
         >
           <img
             class="estimate-receipt__clip"
@@ -508,45 +529,66 @@ const pricingVersion = "2026-07-29";
               data-receipt-image
             />
           </div>
-          <p class="section-eyebrow">Live session receipt</p>
-          <h3 id="estimate-receipt-title">Your Estimate</h3>
-          <dl class="estimate-receipt__lines">
-            <div>
-              <dt>Session</dt>
-              <dd data-receipt-service>{initialService.name}</dd>
-            </div>
-            <div>
-              <dt>Coverage</dt>
-              <dd data-receipt-package>
-                {initialPackage.name} · {formatUsd(initialPackage.priceCents)}
-              </dd>
-            </div>
-            <div>
-              <dt>People</dt>
-              <dd data-receipt-people>{MIN_PEOPLE} · Included</dd>
-            </div>
-            <div>
-              <dt>Keepsakes</dt>
-              <dd data-receipt-collection>No collection yet</dd>
-            </div>
-            <div>
-              <dt>Add-ons</dt>
-              <dd data-receipt-addons>None</dd>
-            </div>
-          </dl>
-          <div class="estimate-receipt__total">
-            <span>Estimated total</span>
-            <strong data-estimate-total>
-              {formatUsd(initialPackage.priceCents)}
-            </strong>
+          <p class="section-eyebrow" data-receipt-eyebrow>One final step</p>
+          <h3 id="estimate-receipt-title" tabindex="-1" data-receipt-title>
+            Your Estimate Is Ready
+          </h3>
+          <div class="estimate-receipt__locked" data-estimate-lock>
+            <span class="estimate-receipt__lock-mark" aria-hidden="true"></span>
+            <p>
+              Your choices are being prepared behind this receipt. Send your
+              name and email to reveal the complete itemized estimate.
+            </p>
+            <button
+              type="button"
+              class="estimate-receipt__finish"
+              data-finish-estimate
+            >
+              Finish &amp; reveal
+            </button>
           </div>
-          <p class="estimate-receipt__note">
-            A planning estimate, not a booking. Lisa confirms everything with
-            you before a contract or payment.
-          </p>
-          <p class="sr-only" aria-live="polite" aria-atomic="true" data-total-live>
-            Estimated total {formatUsd(initialPackage.priceCents)}.
-          </p>
+          <div class="estimate-receipt__details" hidden data-estimate-details>
+            <dl class="estimate-receipt__lines">
+              <div>
+                <dt>Session</dt>
+                <dd data-receipt-service>{initialService.name}</dd>
+              </div>
+              <div>
+                <dt>Coverage</dt>
+                <dd data-receipt-package>
+                  {initialPackage.name} · {formatUsd(initialPackage.priceCents)}
+                </dd>
+              </div>
+              <div>
+                <dt>People</dt>
+                <dd data-receipt-people>{MIN_PEOPLE} · Included</dd>
+              </div>
+              <div>
+                <dt>Keepsakes</dt>
+                <dd data-receipt-collection>No collection yet</dd>
+              </div>
+              <div>
+                <dt>Add-ons</dt>
+                <dd data-receipt-addons>None</dd>
+              </div>
+            </dl>
+            <div class="estimate-receipt__total">
+              <span>Estimated total</span>
+              <strong data-estimate-total>
+                {formatUsd(initialPackage.priceCents)}
+              </strong>
+            </div>
+            <p class="estimate-receipt__note">
+              A planning estimate, not a booking. Lisa confirms everything with
+              you before a contract or payment.
+            </p>
+          </div>
+          <p
+            class="sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+            data-total-live
+          ></p>
         </aside>
       </div>
     </form>
@@ -554,12 +596,13 @@ const pricingVersion = "2026-07-29";
 
   <div class="mobile-estimate-bar" data-mobile-estimate-bar>
     <span>
-      <small>Estimated total</small>
-      <strong data-mobile-estimate-total>
+      <small data-mobile-estimate-label>Personalized estimate</small>
+      <strong data-mobile-estimate-lock>Ready to reveal</strong>
+      <strong hidden data-mobile-estimate-total>
         {formatUsd(initialPackage.priceCents)}
       </strong>
     </span>
-    <button type="button" data-review-estimate>Review estimate</button>
+    <button type="button" data-review-estimate>Finish &amp; reveal</button>
   </div>
 </section>
 

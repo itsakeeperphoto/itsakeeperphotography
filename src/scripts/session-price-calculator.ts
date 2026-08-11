@@ -15,6 +15,32 @@ import {
 } from "../lib/session-pricing";
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+const SUBMISSION_TIMEOUT_MS = 15_000;
+const ESTIMATE_CONTROL_SELECTOR = [
+  "[data-service-radio]",
+  "[data-package-radio]",
+  "[data-collection-radio]",
+  "[data-addon-checkbox]",
+  "[data-people-input]",
+  "[data-contact-field]",
+].join(", ");
+
+const ANALYTICS_EVENT_NAMES = {
+  view: "contact_gate_view",
+  started: "estimate_started",
+  "submit-attempt": "contact_gate_submit_attempt",
+  "submit-success": "contact_gate_submit_success",
+  "submit-error": "contact_gate_submit_error",
+  revealed: "estimate_revealed",
+} as const;
+
+type PlannerEventName = keyof typeof ANALYTICS_EVENT_NAMES;
+type AnalyticsWindow = Window & {
+  gtag?: (
+    command: "event",
+    eventName: (typeof ANALYTICS_EVENT_NAMES)[PlannerEventName],
+  ) => void;
+};
 
 type ValidatableControl =
   | HTMLInputElement
@@ -97,6 +123,16 @@ const isValidatableControl = (
   element instanceof HTMLSelectElement ||
   element instanceof HTMLTextAreaElement;
 
+const encodeFormData = (formData: FormData): string => {
+  const parameters = new URLSearchParams();
+
+  formData.forEach((value, key) => {
+    if (typeof value === "string") parameters.append(key, value);
+  });
+
+  return parameters.toString();
+};
+
 const initializePlanner = (planner: HTMLElement): void => {
   if (planner.hasAttribute("data-enhanced")) return;
 
@@ -127,6 +163,44 @@ const initializePlanner = (planner: HTMLElement): void => {
     planner,
     "[data-mobile-estimate-bar]",
   );
+  const mobileEstimateLabel = query<HTMLElement>(
+    planner,
+    "[data-mobile-estimate-label]",
+  );
+  const mobileEstimateLock = query<HTMLElement>(
+    planner,
+    "[data-mobile-estimate-lock]",
+  );
+  const reviewEstimateButton = query<HTMLButtonElement>(
+    planner,
+    "[data-review-estimate]",
+  );
+  const finishEstimateButton = query<HTMLButtonElement>(
+    planner,
+    "[data-finish-estimate]",
+  );
+  const receiptLock = query<HTMLElement>(planner, "[data-estimate-lock]");
+  const receiptDetails = query<HTMLElement>(
+    planner,
+    "[data-estimate-details]",
+  );
+  const receiptTitle = query<HTMLElement>(planner, "[data-receipt-title]");
+  const receiptEyebrow = query<HTMLElement>(
+    planner,
+    "[data-receipt-eyebrow]",
+  );
+  const submitButton = query<HTMLButtonElement>(
+    form || planner,
+    "[data-estimate-submit]",
+  );
+  const successMessage = query<HTMLElement>(
+    planner,
+    "[data-estimate-success]",
+  );
+  const errorMessage = query<HTMLElement>(
+    planner,
+    "[data-estimate-error]",
+  );
   const progressButtons = Array.from(
     planner.querySelectorAll<HTMLButtonElement>("[data-planner-progress]"),
   );
@@ -135,6 +209,59 @@ const initializePlanner = (planner: HTMLElement): void => {
   );
 
   if (!form || !peopleInput) return;
+
+  let estimateRevealed = false;
+  let isSubmitting = false;
+  let hasSubmitted = false;
+  let hasStarted = false;
+  const submitIdleText =
+    submitButton?.textContent?.trim() || "Send My Details & Reveal My Estimate";
+  const controlsToFreeze = Array.from(
+    form.querySelectorAll<ValidatableControl>(ESTIMATE_CONTROL_SELECTOR),
+  );
+  let priorDisabledStates = new Map<ValidatableControl, boolean>();
+
+  const emitPlannerEvent = (name: PlannerEventName): void => {
+    planner.dispatchEvent(
+      new CustomEvent(`session-estimate:${name}`, { bubbles: true }),
+    );
+    (window as AnalyticsWindow).gtag?.(
+      "event",
+      ANALYTICS_EVENT_NAMES[name],
+    );
+  };
+
+  const markPlannerStarted = (target: EventTarget | null): void => {
+    if (
+      hasStarted ||
+      !(target instanceof Element) ||
+      !target.matches(ESTIMATE_CONTROL_SELECTOR)
+    ) {
+      return;
+    }
+
+    hasStarted = true;
+    emitPlannerEvent("started");
+  };
+
+  const setSubmissionControlsFrozen = (frozen: boolean): void => {
+    if (frozen) {
+      priorDisabledStates = new Map(
+        controlsToFreeze.map((control) => [control, control.disabled]),
+      );
+      controlsToFreeze.forEach((control) => {
+        control.disabled = true;
+      });
+      if (decreaseButton) decreaseButton.disabled = true;
+      if (increaseButton) increaseButton.disabled = true;
+      return;
+    }
+
+    controlsToFreeze.forEach((control) => {
+      control.disabled = priorDisabledStates.get(control) ?? false;
+    });
+    priorDisabledStates.clear();
+  };
 
   const setActivePhase = (phaseName: string): void => {
     progressButtons.forEach((button) => {
@@ -271,7 +398,7 @@ const initializePlanner = (planner: HTMLElement): void => {
       mobileTotal?.textContent?.trim() !== formattedTotal;
     if (receiptTotal) receiptTotal.textContent = formattedTotal;
     if (mobileTotal) mobileTotal.textContent = formattedTotal;
-    if (totalChanged) {
+    if (totalChanged && estimateRevealed) {
       setText(
         planner,
         "[data-total-live]",
@@ -323,6 +450,53 @@ const initializePlanner = (planner: HTMLElement): void => {
     );
   };
 
+  const revealEstimate = (): void => {
+    estimateRevealed = true;
+    hasSubmitted = true;
+    planner.dataset.estimateState = "unlocked";
+    form.dataset.submissionState = "success";
+
+    if (receipt) receipt.dataset.estimateState = "unlocked";
+    if (receiptLock) receiptLock.hidden = true;
+    if (receiptDetails) receiptDetails.hidden = false;
+    if (receiptEyebrow) {
+      receiptEyebrow.textContent = "Personalized session receipt";
+    }
+    if (receiptTitle) receiptTitle.textContent = "Your Estimate";
+    if (mobileEstimateLabel) mobileEstimateLabel.textContent = "Estimated total";
+    if (mobileEstimateLock) mobileEstimateLock.hidden = true;
+    if (mobileTotal) mobileTotal.hidden = false;
+    if (reviewEstimateButton) {
+      reviewEstimateButton.textContent = "Review estimate";
+    }
+
+    const total = receiptTotal?.textContent?.trim();
+    if (total) {
+      setText(
+        planner,
+        "[data-total-live]",
+        `Your estimate was revealed. Estimated total ${total}.`,
+      );
+    }
+
+    if (successMessage) {
+      successMessage.textContent =
+        "Thank you — your details were sent to Lisa. Your planning estimate is now unlocked, and Lisa will reply personally about your session.";
+      successMessage.hidden = false;
+    }
+    if (errorMessage) errorMessage.hidden = true;
+
+    animateTotal(receiptTotal);
+    animateTotal(mobileTotal);
+    emitPlannerEvent("submit-success");
+    emitPlannerEvent("revealed");
+
+    if (receipt) scrollToElement(receipt);
+    window.requestAnimationFrame(() => {
+      receiptTitle?.focus({ preventScroll: true });
+    });
+  };
+
   const clearInvalidState = (target: EventTarget | null): void => {
     if (
       !(target instanceof HTMLInputElement) &&
@@ -343,6 +517,7 @@ const initializePlanner = (planner: HTMLElement): void => {
 
   form.addEventListener("input", (event) => {
     clearInvalidState(event.target);
+    markPlannerStarted(event.target);
     if (
       event.target instanceof Element &&
       event.target.matches(
@@ -354,6 +529,7 @@ const initializePlanner = (planner: HTMLElement): void => {
   });
   form.addEventListener("change", (event) => {
     clearInvalidState(event.target);
+    markPlannerStarted(event.target);
     if (
       event.target instanceof Element &&
       event.target.matches(
@@ -394,12 +570,23 @@ const initializePlanner = (planner: HTMLElement): void => {
     });
   });
 
-  query<HTMLButtonElement>(planner, "[data-review-estimate]")?.addEventListener(
-    "click",
-    () => {
+  const reviewOrFinishEstimate = (): void => {
+    if (estimateRevealed) {
       if (receipt) scrollToElement(receipt);
-    },
-  );
+      return;
+    }
+
+    const detailsPhase = phases.find((phase) => phase.id === "planner-details");
+    const nameField = query<HTMLInputElement>(form, 'input[name="name"]');
+    setActivePhase("details");
+    if (detailsPhase) scrollToElement(detailsPhase);
+    window.requestAnimationFrame(() => {
+      nameField?.focus({ preventScroll: true });
+    });
+  };
+
+  reviewEstimateButton?.addEventListener("click", reviewOrFinishEstimate);
+  finishEstimateButton?.addEventListener("click", reviewOrFinishEstimate);
 
   if (typeof window.IntersectionObserver === "function") {
     const phaseObserver = new IntersectionObserver(
@@ -491,8 +678,86 @@ const initializePlanner = (planner: HTMLElement): void => {
   form.addEventListener("input", clearResolvedInvalidState);
   form.addEventListener("change", clearResolvedInvalidState);
 
+  form.addEventListener("submit", async (event) => {
+    if (isSubmitting || hasSubmitted) {
+      event.preventDefault();
+      return;
+    }
+
+    if (!form.checkValidity()) return;
+
+    event.preventDefault();
+    updateEstimate();
+
+    const formData = new FormData(form);
+    const encodedBody = encodeFormData(formData);
+
+    isSubmitting = true;
+    form.dataset.submissionState = "submitting";
+    form.setAttribute("aria-busy", "true");
+    if (errorMessage) errorMessage.hidden = true;
+    if (successMessage) successMessage.hidden = true;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending…";
+    }
+    setSubmissionControlsFrozen(true);
+    emitPlannerEvent("submit-attempt");
+
+    const submissionController = new AbortController();
+    const submissionTimeout = window.setTimeout(() => {
+      submissionController.abort();
+    }, SUBMISSION_TIMEOUT_MS);
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: encodedBody,
+        signal: submissionController.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Netlify form submission returned ${response.status}.`);
+      }
+
+      isSubmitting = false;
+      form.removeAttribute("aria-busy");
+      form.classList.add("is-submitted");
+      if (submitButton) submitButton.textContent = "Estimate revealed";
+      revealEstimate();
+    } catch (error) {
+      console.error("The session estimate could not be submitted.", error);
+      isSubmitting = false;
+      form.dataset.submissionState = "error";
+      form.removeAttribute("aria-busy");
+      form.classList.remove("is-submitted");
+      setSubmissionControlsFrozen(false);
+      updateEstimate();
+
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = submitIdleText;
+      }
+      if (errorMessage) {
+        errorMessage.textContent =
+          "We couldn't confirm the submission, so your estimate is still locked. " +
+          "Your entries are still here — please try again, or call or text " +
+          "Lisa at (509) 948-7322.";
+        errorMessage.hidden = false;
+        errorMessage.focus({ preventScroll: true });
+      }
+      emitPlannerEvent("submit-error");
+    } finally {
+      window.clearTimeout(submissionTimeout);
+    }
+  });
+
   updateEstimate();
   planner.dataset.enhanced = "true";
+  emitPlannerEvent("view");
 };
 
 export const initSessionPriceCalculators = (

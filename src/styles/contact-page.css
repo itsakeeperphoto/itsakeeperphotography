@@ -721,6 +721,13 @@
   text-transform: uppercase;
 }
 
+.planner-contact-fields label > span small {
+  font-size: 0.72em;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-caption);
+  opacity: 0.72;
+}
+
 .planner-contact-fields input,
 .planner-contact-fields textarea {
   width: 100%;
@@ -761,7 +768,7 @@
 }
 
 .planner-contact-fields [aria-invalid="true"] {
-  border-color: var(--color-error);
+  border-color: var(--color-form-error);
   background: rgba(141, 89, 51, 0.08);
 }
 
@@ -793,6 +800,46 @@
   color: var(--contact-ink);
   border-color: var(--contact-ink);
   cursor: pointer;
+}
+
+.planner-submit .outline-button:disabled {
+  cursor: wait;
+  opacity: 0.64;
+}
+
+.session-planner__form.is-submitted .planner-submit .outline-button:disabled {
+  cursor: default;
+}
+
+.planner-submit-feedback {
+  margin: var(--space-6) 0 0;
+  padding: var(--space-5) var(--space-6);
+  border: var(--border-hairline) solid var(--contact-line);
+  font-family: var(--font-utility);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-compact);
+}
+
+.planner-submit-feedback--success {
+  border-color: var(--color-muted-olive);
+  background: rgba(113, 103, 78, 0.1);
+}
+
+.planner-submit-feedback--error {
+  border-color: var(--color-form-error);
+  background: rgba(141, 89, 51, 0.08);
+}
+
+.planner-submit-feedback--error:focus {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: var(--space-1);
+}
+
+.planner-submit-feedback[hidden],
+.estimate-receipt__details[hidden],
+.estimate-receipt__locked[hidden],
+.mobile-estimate-bar [hidden] {
+  display: none;
 }
 
 .planner-noscript {
@@ -886,6 +933,100 @@
   line-height: var(--line-height-h1);
   text-align: center;
   text-transform: uppercase;
+}
+
+.estimate-receipt h3:focus {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: var(--space-2);
+}
+
+.estimate-receipt__locked {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-4) var(--space-4);
+  border-top: var(--border-hairline) solid var(--contact-line);
+  text-align: center;
+}
+
+.estimate-receipt__lock-mark {
+  position: relative;
+  display: block;
+  width: var(--space-10);
+  height: var(--space-8);
+  margin-top: var(--space-3);
+  border: var(--border-hairline) solid var(--contact-ink);
+}
+
+.estimate-receipt__lock-mark::before {
+  position: absolute;
+  right: var(--space-2);
+  bottom: calc(100% - 1px);
+  left: var(--space-2);
+  height: var(--space-5);
+  border: var(--border-hairline) solid var(--contact-ink);
+  border-bottom: 0;
+  border-radius: var(--space-5) var(--space-5) 0 0;
+  content: "";
+}
+
+.estimate-receipt__lock-mark::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-1);
+  height: var(--space-2);
+  background: var(--contact-ink);
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.estimate-receipt__locked p {
+  max-width: 28rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-style: italic;
+  line-height: var(--line-height-body);
+}
+
+.estimate-receipt__finish {
+  min-height: var(--minimum-hit-area);
+  padding: var(--space-3) var(--space-6);
+  border: var(--border-hairline) solid var(--contact-ink);
+  color: var(--contact-ink);
+  background: transparent;
+  font-family: var(--font-utility);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--contact-transition) var(--ease-ui),
+    background-color var(--contact-transition) var(--ease-ui),
+    transform var(--duration-fast) var(--ease-interaction);
+}
+
+.estimate-receipt__finish:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: var(--space-1);
+}
+
+.estimate-receipt__details {
+  animation: estimate-receipt-reveal 360ms var(--ease-ui) both;
+}
+
+@keyframes estimate-receipt-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-3));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .estimate-receipt__lines {
@@ -1200,6 +1341,11 @@
   }
 
   .planner-submit .outline-button:hover {
+    color: var(--color-warm-ivory);
+    background: var(--contact-ink);
+  }
+
+  .estimate-receipt__finish:hover {
     color: var(--color-warm-ivory);
     background: var(--contact-ink);
   }

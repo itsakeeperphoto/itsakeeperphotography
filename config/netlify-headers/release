@@ -32,9 +32,6 @@
 /reviews/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/contact/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
 /journal/
   X-Robots-Tag: noindex, nofollow, noarchive
 
