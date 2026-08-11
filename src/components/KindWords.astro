@@ -161,11 +161,22 @@ const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3d
         .then((response) => (response.ok ? response.json() : null))
         .then((summary) => {
           const totalReviewCount = summary?.totalReviewCount;
-          if (!Number.isSafeInteger(totalReviewCount) || totalReviewCount < 0) return;
+          const averageRating = summary?.averageRating;
+          if (
+            !Number.isSafeInteger(totalReviewCount) ||
+            totalReviewCount < 0 ||
+            !Number.isFinite(averageRating) ||
+            averageRating < 0 ||
+            averageRating > 5
+          ) return;
 
           const formattedCount = new Intl.NumberFormat("en-US").format(totalReviewCount);
           const reviewNoun = totalReviewCount === 1 ? "review" : "reviews";
-          const label = `Read ${formattedCount} Google ${reviewNoun}`;
+          const formattedRating = new Intl.NumberFormat("en-US", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          }).format(averageRating);
+          const label = `${formattedRating} out of 5 from ${formattedCount} Google ${reviewNoun}`;
 
           reviewSummaryLink.textContent = label;
           reviewSummaryLink.setAttribute(

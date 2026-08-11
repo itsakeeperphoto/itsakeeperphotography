@@ -649,7 +649,8 @@ export default defineConfig({
                 type: "string",
                 name: "reviewsLine",
                 label: "Google reviews line",
-                description: "Fallback link text only. The published homepage replaces it with the current Google review count from the daily GBP sync.",
+                description:
+                  "Fallback social proof. The published homepage replaces it only when the daily GBP sync returns both a valid rating and review count.",
                 ui: { validate: maxChars(60) },
               },
               { type: "string", name: "buttonHref", label: "Reviews page destination" },
@@ -1206,8 +1207,8 @@ export default defineConfig({
             description: "Controls the order of the review photographs on the homepage.",
             ui: {
               validate: (value?: number) => {
-                if (!Number.isInteger(value) || Number(value) < 1 || Number(value) > 6) {
-                  return "Use a whole number from 1 through 6.";
+                if (!Number.isInteger(value) || Number(value) < 1 || Number(value) > 10) {
+                  return "Use a whole number from 1 through 10.";
                 }
               },
             },
@@ -1253,7 +1254,7 @@ export default defineConfig({
             name: "featured",
             label: "Show on the homepage",
             description:
-              "The homepage shows the first six kind words that have this turned on.",
+              "The homepage shows the first ten kind words that have this turned on.",
           },
         ],
       },

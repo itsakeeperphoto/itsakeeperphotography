@@ -246,8 +246,9 @@
    * The client-note archive behaves like a row of real prints: a fine pointer
    * previews a note only while it remains over a photograph. Keyboard focus is
    * the equivalent temporary interaction and closes as soon as focus leaves.
-   * Nothing can be pinned open. The inactive face is removed from the
-   * accessibility tree, and the archive resumes as soon as the interaction ends.
+   * On touch screens, tapping a print toggles its note so the copy remains
+   * readable without hover. The inactive face is removed from the accessibility
+   * tree, and the archive resumes as soon as the interaction ends.
    */
   class ReviewPolaroids extends HTMLElement {
     connectedCallback() {
@@ -561,6 +562,17 @@
 
       card.addEventListener("pointerenter", previewOpen, { signal });
       card.addEventListener("pointerleave", previewClose, { signal });
+      card.addEventListener(
+        "click",
+        () => {
+          if (this.finePointer.matches) return;
+
+          const open = card.dataset.reviewState !== "back";
+          this.focusedCard = open ? card : null;
+          this.setCardState(card, open);
+        },
+        { signal }
+      );
       card.addEventListener(
         "focusin",
         (event) => {

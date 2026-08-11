@@ -24,10 +24,10 @@ export const testimonials: Testimonial[] = Object.keys(testimonialModules)
   .map((key) => testimonialModules[key].default)
   .sort((a, b) => a.order - b.order);
 
-/** The homepage review rail shows at most six featured client stories. */
+/** The homepage review rail shows the ten approved featured client stories. */
 export const featuredTestimonials = testimonials
   .filter((t) => t.featured)
-  .slice(0, 6);
+  .slice(0, 10);
 
 /** "(509) 948-7322" -> "+15099487322" for tel: links. */
 export function telHref(phone: string): string {

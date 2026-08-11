@@ -19,7 +19,7 @@ const testimonials = (data.testimonialConnection?.edges || [])
   .filter(Boolean)
   .filter((testimonial) => testimonial.featured)
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .slice(0, 6);
+  .slice(0, 10);
 const show = (section) => section?.visible !== false;
 ---
 
