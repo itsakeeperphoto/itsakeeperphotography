@@ -1,0 +1,15 @@
+{
+  "surface": "route:/journal/in-home-vs-studio-newborn-photography",
+  "concept": "C — The quiet decision ledger",
+  "approved": false,
+  "canonical": false,
+  "prompt": "Long desktop website comp for an editorial newborn-photography comparison. Use the supplied reference only for vertical rhythm and layering. Show the shared EditorialHero, a spacious short answer, a sand-and-umber definition diptych with real in-home imagery and a text-only studio side, a four-row decision ledger, outdoor chapter, olive memory essay, ruled FAQ and full-bleed planning close. Use only authentic supplied photographs and the current warm earth-and-gold system. No copied brand, fake studio work, cards, badges, tape, splatter, gradients, shadows or rounded boxes.",
+  "references": [
+    "/Users/williammelo/Downloads/inspiration-3.jpg",
+    "/uploads/richland-mother-newborn-at-home.jpg",
+    "/uploads/newborn-family-at-home-west-richland.jpg",
+    "/uploads/family-with-baby-black-white-tricities.jpg",
+    "/uploads/maternity-waiting-to-welcome-tricities.jpg"
+  ],
+  "decision": "Rejected: the restrained ledger is strong, but the outdoor chapter drifts toward maternity and the overall composition is less specific to the in-home newborn decision than Concept B."
+}

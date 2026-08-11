@@ -9,6 +9,7 @@ import HeadshotPage from "./HeadshotPage.astro";
 import InvestmentPage from "./InvestmentPage.astro";
 import JournalPage from "./JournalPage.astro";
 import KennewickPage from "./KennewickPage.astro";
+import NewbornComparisonPage from "./NewbornComparisonPage.astro";
 import NewbornPage from "./NewbornPage.astro";
 import PascoPage from "./PascoPage.astro";
 import RichlandPage from "./RichlandPage.astro";
@@ -31,6 +32,8 @@ const isHeadshotPage = props.page.route === "/headshot-photographer-tri-cities-w
 const isInvestmentPage = props.page.route === "/investment/";
 const isJournalPage = props.page.route === "/journal/";
 const isKennewickPage = props.page.route === "/kennewick-wa-photographer/";
+const isNewbornComparisonPage =
+  props.page.route === "/journal/in-home-vs-studio-newborn-photography/";
 const isNewbornPage = props.page.route === "/newborn-photographer-tri-cities-wa/";
 const isPascoPage = props.page.route === "/pasco-wa-photographer/";
 const isRichlandPage = props.page.route === "/richland-wa-photographer/";
@@ -55,6 +58,8 @@ const isSeniorTimingPage =
     ? <JournalPage {...props} />
   : isKennewickPage
     ? <KennewickPage {...props} />
+  : isNewbornComparisonPage
+    ? <NewbornComparisonPage {...props} />
   : isNewbornPage
     ? <NewbornPage {...props} />
   : isPascoPage

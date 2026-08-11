@@ -7,6 +7,7 @@
 // CONTENT PENDING [/newborn-photographer-tri-cities-wa/]: [PENDIENTE NO BLOQUEANTE: confirmar si Lisa tiene formación de seguridad newborn (Q41) antes de publicar cualquier claim; la página no hace ese claim.]
 // CONTENT PENDING [/journal/branding-photos-vs-headshots/]: [FECHA]
 // CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [VALIDAR CON LISA]
+// CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [VALIDAR: formato exacto que ofrece Lisa]
 // CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [FECHA]
 // CONTENT PENDING [/journal/when-to-book-senior-pictures-tri-cities/]: [VALIDAR: fechas concretas de los distritos de Richland, Kennewick y Pasco — dato local que nadie más publica]
 // CONTENT PENDING [/journal/when-to-book-senior-pictures-tri-cities/]: [VALIDAR: si Lisa ofrece esto — Q54]

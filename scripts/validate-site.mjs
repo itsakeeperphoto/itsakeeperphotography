@@ -452,6 +452,8 @@ const newbornRelative = `newborn-photographer-tri-cities-wa${path.sep}index.html
 const aboutRelative = `about${path.sep}index.html`;
 const seniorTimingRelative =
   `journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`;
+const newbornComparisonRelative =
+  `journal${path.sep}in-home-vs-studio-newborn-photography${path.sep}index.html`;
 const seniorTimingSource = JSON.parse(
   await readFile(
     path.join(root, "content", "pages", "journal-senior-timing.json"),
@@ -560,6 +562,126 @@ const seniorTimingContract = {
   pending: [
     "[VALIDAR: fechas concretas de los distritos de Richland, Kennewick y Pasco — dato local que nadie más publica]",
     "[VALIDAR: si Lisa ofrece esto — Q54]",
+    "[FECHA]",
+  ],
+};
+const newbornComparisonSource = JSON.parse(
+  await readFile(
+    path.join(root, "content", "pages", "journal-newborn-comparison.json"),
+    "utf8",
+  ),
+);
+const pendingRegistrySource = await readFile(
+  path.join(root, "src", "content", "pending.ts"),
+  "utf8",
+);
+const newbornComparisonContract = {
+  title: "In-Home vs. Studio Newborn Photography: How to Choose",
+  description:
+    "In-home or studio newborn photos? An honest comparison from a Tri-Cities newborn photographer — comfort, style, timing and what each session really feels like.",
+  h1: ["In-Home vs. Studio Newborn Photography"],
+  h2: [
+    "The Short Answer",
+    "What Is In-Home Newborn Photography?",
+    "What Is Studio Newborn Photography?",
+    "The Honest Comparison",
+    "What About Outdoor Newborn Sessions?",
+    "Which One Will You Treasure More?",
+    "Common Questions",
+    "Planning Your Baby's First Photos in the Tri-Cities",
+  ],
+  h3: [
+    "Comfort (yours and baby's)",
+    "Style of the photographs",
+    "Timing and flexibility",
+    "Preparation and effort",
+    "When should I book newborn photos?",
+    "Is my house too small or too dark for in-home photos?",
+    "What if we missed the two-week window?",
+  ],
+  paragraphs: [
+    "the honest comparison",
+    "In-home or studio newborn photos? An honest comparison of comfort, style, timing and what each session really feels like.",
+    "In-home newborn photography happens in your own house — natural light, your nursery, your everyday life with baby. Studio newborn photography happens in a photographer's controlled space, usually with posed setups, props and backdrops. Neither is \"better\"; they're different kinds of memories. Here's the honest comparison I walk every expecting family through.",
+    "Also called a lifestyle newborn session, an in-home session documents your baby's real first days in the place where they're happening. Baby in the nursery you spent months preparing. Feeding in your favorite chair. Big siblings peeking into the bassinet. The window light in your own bedroom.",
+    "Nothing is staged beyond gentle guidance — the photographer works with your home's light and your baby's rhythm. Pauses for feeding, soothing and diaper changes aren't interruptions; they're the session.",
+    "Studio sessions are the posed, curled-baby portraits you've seen — baby wrapped and sleeping in a basket, on a backdrop, in themed setups. They require a controlled environment, specialized safety training for posing, and typically need to happen in the first two weeks, while babies are sleepy enough to curl.",
+    "Done well, studio work is genuinely artful. It's also a different product: styled portraits of your baby, rather than documentation of your life with your baby.",
+    "Studio is a context, not a photograph.",
+    "Recovering from birth, you may not want to pack up a days-old baby and drive anywhere. At home, everything you need is within reach — snacks, changes of clothes, your own bathroom, your own couch. Studios counter with amenities and a \"handled-for-you\" experience. For most postpartum parents, home wins on comfort.",
+    "Studio: polished, styled, timeless-formal. In-home: warm, personal, documentary — photographs where you can feel the season of life. Ask yourself which one you'll want on the wall in twenty years; that answer differs by family, and both are valid.",
+    "Studio posing usually needs the first 10–14 days. In-home sessions are far more forgiving — beautiful at two weeks or two months, because they don't depend on a curled sleepy pose. If your baby is \"already too old\" for studio work, an in-home session isn't a consolation prize; it's arguably the more meaningful record.",
+    "Studio: drive there, hand over the reins. In-home: no travel, but a little tidying — and only of the corners we'll actually use. (A good photographer needs one clean window, not a spotless house. Truly.)",
+    "In the Tri-Cities, golden-hour outdoor sessions with a newborn are possible in mild months and make especially beautiful family sessions — baby in arms, siblings around, the river light doing its thing. Many families combine: intimate photos at home, then a short golden-hour family set when baby is a bit older.",
+    "After twenty years of photographing families, here's what I've seen: the photographs families cry over a decade later are rarely the most styled ones. They're the ones with their people in their place — the nursery that got repainted, the house they moved away from, the way dad held the baby in that particular chair. Choose the session that preserves what you most want to remember.",
+    "During your second or third trimester. Photographers hold flexible space around due dates — reaching out early means your spot is safe no matter when baby arrives.",
+    "Almost never. One good window and a few honest square feet are enough — finding the light is the photographer's job, not yours.",
+    "For in-home lifestyle photos, there's no missed window. Two months old is still brand new, still tiny, still worth documenting.",
+    "If the in-home style speaks to you, that's the heart of how I photograph newborns across Richland, Kennewick and Pasco — gentle, unhurried, baby-led.",
+  ],
+  anchors: [
+    {
+      href: "/family-photographer-tri-cities-wa/",
+      label: "Family Photography",
+    },
+    {
+      href: "/newborn-photographer-tri-cities-wa/",
+      label: "See how my newborn sessions work",
+    },
+    { href: "/contact/", label: "Expecting? Let's talk early" },
+  ],
+  images: [
+    {
+      src: "/uploads/richland-mother-newborn-at-home.jpg",
+      alt: "A mother holding her sleeping newborn beside a bed.",
+    },
+    { src: "/uploads/newborn-family-at-home-west-richland.jpg", alt: "" },
+    { src: "/uploads/newborn-portrait-with-mother-richland.jpg", alt: "" },
+    {
+      src: "/uploads/family-newborn-at-home-tricities.jpg",
+      alt: "Parents and an older sister holding a sleeping newborn together on a bed.",
+    },
+    {
+      src: "/uploads/family-newborn-sunset-tricities.jpg",
+      alt: "A family gathered around a baby outdoors in warm evening light.",
+    },
+    {
+      src: "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+      alt: "Parents holding their baby close outdoors in warm evening light.",
+    },
+    {
+      src: "/uploads/family-newborn-connection-richland.jpg",
+      alt: "Parents standing close with their baby in warm evening light.",
+    },
+    {
+      src: "/uploads/family-with-baby-black-white-tricities.jpg",
+      alt: "A family holding a baby together outdoors in a black-and-white portrait.",
+    },
+    {
+      src: "/uploads/maternity-waiting-to-welcome-tricities.jpg",
+      alt: "An expecting couple standing together in warm sunset light.",
+    },
+  ],
+  faq: [
+    {
+      question: "When should I book newborn photos?",
+      answer:
+        "During your second or third trimester. Photographers hold flexible space around due dates — reaching out early means your spot is safe no matter when baby arrives.",
+    },
+    {
+      question: "Is my house too small or too dark for in-home photos?",
+      answer:
+        "Almost never. One good window and a few honest square feet are enough — finding the light is the photographer's job, not yours.",
+    },
+    {
+      question: "What if we missed the two-week window?",
+      answer:
+        "For in-home lifestyle photos, there's no missed window. Two months old is still brand new, still tiny, still worth documenting.",
+    },
+  ],
+  pending: [
+    "[VALIDAR CON LISA]",
+    "[VALIDAR: formato exacto que ofrece Lisa]",
     "[FECHA]",
   ],
 };
@@ -842,9 +964,15 @@ for (const file of htmlFiles) {
   const seniorTimingStylesheetHref = stylesheetHrefs.find((href) =>
     /(?:^|\/)journal-senior-timing-page[^/]*\.css(?:[?#]|$)/i.test(href),
   );
+  const newbornComparisonStylesheetHref = stylesheetHrefs.find((href) =>
+    /(?:^|\/)journal-newborn-comparison-page[^/]*\.css(?:[?#]|$)/i.test(href),
+  );
   const linkedAboutCss = linkedStylesheets.some((css) => /\.about-page\b/.test(css));
   const linkedSeniorTimingCss = linkedStylesheets.some((css) =>
     /\.senior-timing-page\b/.test(css),
+  );
+  const linkedNewbornComparisonCss = linkedStylesheets.some((css) =>
+    /\.newborn-comparison-page\b/.test(css),
   );
   if (relative === pascoRelative) {
     if (!pascoStylesheetHref || !internalTargetExists(pascoStylesheetHref)) {
@@ -886,6 +1014,28 @@ for (const file of htmlFiles) {
     /\.senior-timing-page\s*\{/.test(source)
   ) {
     failures.push(`${relative}: Senior Timing CSS leaked into an unrelated route`);
+  }
+  if (relative === newbornComparisonRelative) {
+    const newbornComparisonCss = newbornComparisonStylesheetHref
+      ? await readInternalStylesheet(newbornComparisonStylesheetHref)
+      : "";
+    if (
+      !newbornComparisonStylesheetHref ||
+      !internalTargetExists(newbornComparisonStylesheetHref) ||
+      !/\.newborn-comparison-page\b/.test(newbornComparisonCss)
+    ) {
+      failures.push(
+        `${relative}: route-scoped Newborn Comparison stylesheet is missing or broken`,
+      );
+    }
+  } else if (
+    newbornComparisonStylesheetHref ||
+    linkedNewbornComparisonCss ||
+    /\.newborn-comparison-page\s*\{/.test(source)
+  ) {
+    failures.push(
+      `${relative}: Newborn Comparison CSS leaked into an unrelated route`,
+    );
   }
   const aboutDirectionComment = `<!--\n${aboutDirectionContract}\n-->`;
   if (relative === aboutRelative) {
@@ -1380,6 +1530,376 @@ for (const file of htmlFiles) {
     ) {
       failures.push(
         `${relative}: BreadcrumbList must resolve Home, Journal and the Senior Timing article`,
+      );
+    }
+  }
+  if (relative === newbornComparisonRelative) {
+    const expectedOrigin = mode === "release"
+      ? "https://www.itsakeeperphotography.com"
+      : "https://itsakeeperphotography.netlify.app";
+    const canonical =
+      `${expectedOrigin}/journal/in-home-vs-studio-newborn-photography/`;
+    const expectedSectionIds = [
+      "the-short-answer",
+      "what-is-in-home-newborn-photography",
+      "what-is-studio-newborn-photography",
+      "the-honest-comparison",
+      "what-about-outdoor-newborn-sessions",
+      "which-one-will-you-treasure-more",
+      "common-questions",
+    ];
+    const sourceSectionIds = (newbornComparisonSource.sections || []).map(
+      (section) => section.id,
+    );
+    if (
+      newbornComparisonSource.route !==
+        "/journal/in-home-vs-studio-newborn-photography/" ||
+      newbornComparisonSource.family !== "article" ||
+      newbornComparisonSource.contentStatus !== "draft" ||
+      newbornComparisonSource.searchVisibility !== "noindex" ||
+      newbornComparisonSource.schemaType !== "Article" ||
+      newbornComparisonSource.signature !== "overlap" ||
+      newbornComparisonSource.title !== newbornComparisonContract.title ||
+      newbornComparisonSource.description !== newbornComparisonContract.description ||
+      JSON.stringify(sourceSectionIds) !== JSON.stringify(expectedSectionIds) ||
+      newbornComparisonSource.finalCta?.heading !==
+        "Planning Your Baby's First Photos in the Tri-Cities" ||
+      JSON.stringify(newbornComparisonSource.pending) !==
+        JSON.stringify(newbornComparisonContract.pending)
+    ) {
+      failures.push(
+        "content/pages/journal-newborn-comparison.json: draft state, complete section order, metadata or three pending facts changed",
+      );
+    }
+    const registeredPending = [...pendingRegistrySource.matchAll(
+      /^\/\/ CONTENT PENDING \[\/journal\/in-home-vs-studio-newborn-photography\/\]: (\[[^\n]+\])$/gm,
+    )].map((match) => match[1]);
+    if (
+      JSON.stringify(registeredPending) !==
+        JSON.stringify(newbornComparisonContract.pending)
+    ) {
+      failures.push(
+        "src/content/pending.ts: Newborn Comparison must register the same three pending facts in source order",
+      );
+    }
+
+    const titleText = normalizedText(
+      source.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || "",
+    );
+    const descriptionTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "description",
+    );
+    const robotsTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "robots",
+    );
+    const openGraphTypeTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "property")?.toLowerCase() === "og:type",
+    );
+    if (
+      titleText !== newbornComparisonContract.title ||
+      htmlAttribute(descriptionTag || "", "content") !==
+        newbornComparisonContract.description ||
+      htmlAttribute(robotsTag || "", "content") !==
+        "noindex, nofollow, noarchive" ||
+      htmlAttribute(openGraphTypeTag || "", "content") !== "article" ||
+      !source.includes(`<link rel="canonical" href="${canonical}">`) ||
+      !/data-content-status=["']draft["']/i.test(main) ||
+      !/data-signature-device=["']overlap["']/i.test(main)
+    ) {
+      failures.push(
+        `${relative}: title, description, canonical, article OG type or draft/noindex state is invalid`,
+      );
+    }
+
+    const h1Texts = [...main.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h3Texts = [...main.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const paragraphTexts = [...main.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+      .map((match) => normalizedText(match[1]));
+    if (JSON.stringify(h1Texts) !== JSON.stringify(newbornComparisonContract.h1)) {
+      failures.push(`${relative}: Newborn Comparison must render exactly one approved H1`);
+    }
+    if (JSON.stringify(h2Texts) !== JSON.stringify(newbornComparisonContract.h2)) {
+      failures.push(
+        `${relative}: Newborn Comparison must render the eight approved H2s in order`,
+      );
+    }
+    if (JSON.stringify(h3Texts) !== JSON.stringify(newbornComparisonContract.h3)) {
+      failures.push(
+        `${relative}: Newborn Comparison must render the seven approved H3s in order`,
+      );
+    }
+    if (
+      JSON.stringify(paragraphTexts) !==
+        JSON.stringify(newbornComparisonContract.paragraphs)
+    ) {
+      failures.push(
+        `${relative}: Newborn Comparison definitive paragraph copy or order changed`,
+      );
+    }
+
+    const bodyAnchors = [...main.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/gi)]
+      .map((match) => ({
+        href: htmlAttribute(match[0], "href") || "",
+        label: normalizedText(match[1]),
+      }));
+    if (
+      JSON.stringify(bodyAnchors) !==
+        JSON.stringify(newbornComparisonContract.anchors) ||
+      JSON.stringify(internalAnchors) !==
+        JSON.stringify(newbornComparisonContract.anchors.map((anchor) => anchor.href))
+    ) {
+      failures.push(
+        `${relative}: internal body anchors must remain Family, Newborn and Contact in order`,
+      );
+    }
+
+    const hero = main.match(
+      /<header\b(?=[^>]*data-editorial-hero-page=["']journal["'])[^>]*>([\s\S]*?)<\/header>/i,
+    )?.[1] || "";
+    const heroButtons = [...hero.matchAll(
+      /<button\b(?=[^>]*data-hero-cta)[^>]*>([\s\S]*?)<\/button>/gi,
+    )];
+    const heroPrints = [...hero.matchAll(
+      /<figure\b(?=[^>]*data-hero-print=["'](?:left|right)["'])[^>]*>[\s\S]*?<\/figure>/gi,
+    )].map((match) => match[0]);
+    if (
+      heroButtons.length !== 1 ||
+      htmlAttribute(heroButtons[0]?.[0] || "", "data-hero-scroll-target") !==
+        "the-short-answer" ||
+      htmlAttribute(heroButtons[0]?.[0] || "", "aria-controls") !==
+        "the-short-answer" ||
+      normalizedText(heroButtons[0]?.[1] || "") !== "Read the comparison" ||
+      /<a\b/i.test(hero) ||
+      heroPrints.length !== 2 ||
+      heroPrints.some((print) => {
+        const printImage = print.match(/<img\b[^>]*>/i)?.[0] || "";
+        return (
+          !/aria-hidden=["']true["']/i.test(print) ||
+          !hasHtmlAttribute(printImage, "alt") ||
+          (htmlAttribute(printImage, "alt") || "") !== ""
+        );
+      })
+    ) {
+      failures.push(
+        `${relative}: hero must use one local-scroll button, no anchor and two decorative prints`,
+      );
+    }
+
+    const byline = main.match(
+      /<div\b(?=[^>]*class=["'][^"']*\bnewborn-comparison-byline\b)[^>]*>([\s\S]*?)<\/div>/i,
+    )?.[1] || "";
+    const bylineSpans = [...byline.matchAll(/<span\b([^>]*)>([\s\S]*?)<\/span>/gi)];
+    const bylineValues = bylineSpans
+      .filter((match) => !/aria-hidden=["']true["']/i.test(match[1]))
+      .map((match) => normalizedText(match[2]));
+    if (
+      JSON.stringify(bylineValues) !==
+        JSON.stringify([
+          "By Lisa Weiss",
+          "It's A Keeper Photography",
+          "Richland, WA",
+        ]) ||
+      /<time\b|\b(?:19|20)\d{2}\b/i.test(byline)
+    ) {
+      failures.push(
+        `${relative}: byline must identify Lisa, the business and Richland without a date`,
+      );
+    }
+
+    const commonQuestions = sectionById(main, "common-questions");
+    const visibleFaq = [...commonQuestions.matchAll(
+      /<details\b([^>]*)>([\s\S]*?)<\/details>/gi,
+    )].map((match) => {
+      const summary = match[2].match(
+        /<summary\b[^>]*>([\s\S]*?)<\/summary>/i,
+      )?.[1] || "";
+      const answer = match[2].match(
+        /<div\b(?=[^>]*class=["'][^"']*\bnewborn-comparison-faq__answer\b)[^>]*>([\s\S]*?)<\/div>/i,
+      )?.[1] || "";
+      return {
+        hidden: /\bhidden\b|aria-hidden=["']true["']/i.test(match[1]),
+        open: /(?:^|\s)open(?:\s|=|$)/i.test(match[1]),
+        question: normalizedText(summary),
+        answer: normalizedText(answer),
+      };
+    });
+    if (
+      visibleFaq.length !== 3 ||
+      visibleFaq.some((item) => item.hidden) ||
+      JSON.stringify(
+        visibleFaq.map(({ question, answer }) => ({ question, answer })),
+      ) !== JSON.stringify(newbornComparisonContract.faq) ||
+      JSON.stringify(visibleFaq.map((item) => item.open)) !==
+        JSON.stringify([true, false, false])
+    ) {
+      failures.push(
+        `${relative}: Common Questions must expose three approved native disclosures`,
+      );
+    }
+
+    const pictureBlocks = [...main.matchAll(/<picture\b[^>]*>([\s\S]*?)<\/picture>/gi)]
+      .map((match) => match[1]);
+    const renderedImages = pictureBlocks.map((picture) => {
+      const tag = picture.match(/<img\b[^>]*>/i)?.[0] || "";
+      return {
+        src: htmlAttribute(tag, "src") || "",
+        alt: htmlAttribute(tag, "alt") || "",
+        width: Number(htmlAttribute(tag, "width")),
+        height: Number(htmlAttribute(tag, "height")),
+        loading: htmlAttribute(tag, "loading"),
+        decoding: htmlAttribute(tag, "decoding"),
+        fetchpriority: htmlAttribute(tag, "fetchpriority"),
+      };
+    });
+    if (
+      JSON.stringify(renderedImages.map(({ src, alt }) => ({ src, alt }))) !==
+        JSON.stringify(newbornComparisonContract.images) ||
+      new Set(renderedImages.map((image) => image.src)).size !== 9 ||
+      renderedImages.filter((image) => image.alt).length !== 7
+    ) {
+      failures.push(`${relative}: rendered nine-image src+alt order changed`);
+    }
+    for (const [index, image] of renderedImages.entries()) {
+      const picture = pictureBlocks[index] || "";
+      const webpSources = (picture.match(/<source\b[^>]*>/gi) || [])
+        .filter((tag) => htmlAttribute(tag, "type") === "image/webp");
+      const responsivePaths = webpSources.flatMap((tag) =>
+        (htmlAttribute(tag, "srcset") || "")
+          .split(",")
+          .map((candidate) => candidate.trim().split(/\s+/, 1)[0])
+          .filter(Boolean),
+      );
+      const sourcePath = path.join(root, "public", image.src.replace(/^\//, ""));
+      let sourceDimensionsMatch = false;
+      if (existsSync(sourcePath) && image.width > 0 && image.height > 0) {
+        const metadata = await sharp(sourcePath).metadata();
+        sourceDimensionsMatch =
+          metadata.width === image.width && metadata.height === image.height;
+      }
+      if (
+        image.loading !== (index < 3 ? "eager" : "lazy") ||
+        image.decoding !== "async" ||
+        (index === 0
+          ? image.fetchpriority !== "high"
+          : image.fetchpriority === "high") ||
+        !internalTargetExists(image.src) ||
+        !sourceDimensionsMatch ||
+        responsivePaths.length < 2 ||
+        responsivePaths.some(
+          (asset) => !/\.webp$/i.test(asset) || !internalTargetExists(asset),
+        )
+      ) {
+        failures.push(
+          `${relative}: image ${index + 1} violates loading, priority, intrinsic-size or responsive-WebP contract`,
+        );
+      }
+    }
+
+    const schemas = parseJsonLd(source, relative);
+    const articles = schemas.filter((schema) => schema?.["@type"] === "Article");
+    const faqSchemas = schemas.filter((schema) => schema?.["@type"] === "FAQPage");
+    const breadcrumbs = schemas.filter(
+      (schema) => schema?.["@type"] === "BreadcrumbList",
+    );
+    const topLevelServices = schemas.filter(
+      (schema) => schema?.["@type"] === "Service",
+    );
+    const schemaObjects = schemas.flatMap(nestedSchemaObjects);
+    const unsafeSchema = schemaObjects.some((schema) =>
+      ["Review", "AggregateRating", "GeoCoordinates"].includes(schema?.["@type"]) ||
+      Object.keys(schema).some((key) =>
+        ["streetaddress", "latitude", "longitude"].includes(key.toLowerCase()) ||
+        key.toLowerCase().startsWith("gps"),
+      ),
+    );
+    const article = articles[0];
+    const articleAbout = Array.isArray(article?.about)
+      ? article.about.map((item) => [item?.["@type"], item?.name])
+      : [];
+    const articleCities = Array.isArray(article?.spatialCoverage)
+      ? article.spatialCoverage.map((item) => item?.name)
+      : [];
+    if (
+      articles.length !== 1 ||
+      faqSchemas.length !== 1 ||
+      breadcrumbs.length !== 1 ||
+      topLevelServices.length !== 0 ||
+      unsafeSchema ||
+      article?.["@id"] !== `${canonical}#webpage` ||
+      article?.url !== canonical ||
+      article?.name !== newbornComparisonContract.title ||
+      article?.description !== newbornComparisonContract.description ||
+      article?.headline !== newbornComparisonContract.title ||
+      article?.author?.["@id"] !== `${expectedOrigin}/#lisa` ||
+      article?.publisher?.["@id"] !== `${expectedOrigin}/#business` ||
+      article?.image !==
+        `${expectedOrigin}/uploads/richland-mother-newborn-at-home.jpg` ||
+      article?.primaryImageOfPage?.url !==
+        `${expectedOrigin}/uploads/richland-mother-newborn-at-home.jpg` ||
+      article?.isPartOf?.["@id"] !== `${expectedOrigin}/#website` ||
+      article?.mainEntityOfPage?.["@id"] !== canonical ||
+      article?.inLanguage !== "en-US" ||
+      Object.hasOwn(article || {}, "datePublished") ||
+      Object.hasOwn(article || {}, "dateModified") ||
+      JSON.stringify(articleAbout) !==
+        JSON.stringify([
+          ["Thing", "Newborn photography"],
+          ["Place", "Tri-Cities, Washington"],
+        ]) ||
+      JSON.stringify(articleCities) !==
+        JSON.stringify(["Richland", "Kennewick", "Pasco"]) ||
+      article?.spatialCoverage?.[0]?.containedInPlace?.["@type"] !== "State" ||
+      article?.spatialCoverage?.[0]?.containedInPlace?.name !== "Washington"
+    ) {
+      failures.push(
+        `${relative}: Article/FAQ/Breadcrumb top-level schema or claim-safety contract is invalid`,
+      );
+    }
+
+    const faqEntities = faqSchemas[0]?.mainEntity || [];
+    if (
+      faqEntities.length !== 3 ||
+      newbornComparisonContract.faq.some(
+        (pair, index) =>
+          faqEntities[index]?.["@type"] !== "Question" ||
+          faqEntities[index]?.acceptedAnswer?.["@type"] !== "Answer" ||
+          faqEntities[index]?.name !== pair.question ||
+          faqEntities[index]?.acceptedAnswer?.text !== pair.answer ||
+          visibleFaq[index]?.question !== pair.question ||
+          visibleFaq[index]?.answer !== pair.answer,
+      )
+    ) {
+      failures.push(
+        `${relative}: FAQPage must map the three visible question/answer pairs 1:1`,
+      );
+    }
+
+    const breadcrumbItems = breadcrumbs[0]?.itemListElement || [];
+    const expectedBreadcrumbs = [
+      { position: 1, name: "Home", item: `${expectedOrigin}/` },
+      { position: 2, name: "Journal", item: `${expectedOrigin}/journal/` },
+      {
+        position: 3,
+        name: "In-Home vs. Studio Newborn Photography",
+        item: canonical,
+      },
+    ];
+    if (
+      breadcrumbItems.length !== 3 ||
+      breadcrumbItems.some(
+        (item, index) =>
+          item?.["@type"] !== "ListItem" ||
+          item?.position !== expectedBreadcrumbs[index].position ||
+          item?.name !== expectedBreadcrumbs[index].name ||
+          item?.item !== expectedBreadcrumbs[index].item,
+      )
+    ) {
+      failures.push(
+        `${relative}: BreadcrumbList must resolve Home, Journal and the Newborn Comparison article`,
       );
     }
   }
@@ -2168,6 +2688,24 @@ const mirrorManifestSource = await readFile(
 if (runtimeManifestSource !== mirrorManifestSource) {
   failures.push("page-manifest.ts: root mirror must exactly match src/lib/page-manifest.ts");
 }
+const newbornComparisonManifestBlock = runtimeManifestSource.match(
+  /\{\s*id:\s*"newborn-comparison",[\s\S]*?\n\s*\},/,
+)?.[0] || "";
+if (
+  !/contentStatus:\s*"draft"/.test(newbornComparisonManifestBlock) ||
+  !/searchVisibility:\s*"noindex"/.test(newbornComparisonManifestBlock) ||
+  !/schemaType:\s*"Article"/.test(newbornComparisonManifestBlock) ||
+  !/sitemap:\s*true/.test(newbornComparisonManifestBlock) ||
+  !/llms:\s*true/.test(newbornComparisonManifestBlock) ||
+  !/title:\s*"In-Home vs\. Studio Newborn Photography: How to Choose"/.test(
+    newbornComparisonManifestBlock,
+  ) ||
+  /lastModified:/.test(newbornComparisonManifestBlock)
+) {
+  failures.push(
+    "page-manifest.ts: Newborn Comparison must retain draft/noindex Article gates, exact title and no lastModified",
+  );
+}
 const homepageHero = sectionById(homepage, "home");
 const homepageHeroImageTags = [...homepageHero.matchAll(/<img\b[^>]*>/gi)].map(
   (match) => match[0],
@@ -2608,13 +3146,17 @@ const llms = await readFile(path.join(output, "llms.txt"), "utf8");
 const headers = await readFile(path.join(output, "_headers"), "utf8");
 const seniorTimingPublicationPath =
   "/journal/when-to-book-senior-pictures-tri-cities/";
-if (
-  sitemap.includes(seniorTimingPublicationPath) ||
-  llms.includes(seniorTimingPublicationPath)
-) {
-  failures.push(
-    "Senior Timing article: draft route must remain excluded from sitemap.xml and llms.txt",
-  );
+const newbornComparisonPublicationPath =
+  "/journal/in-home-vs-studio-newborn-photography/";
+for (const [label, publicationPath] of [
+  ["Senior Timing article", seniorTimingPublicationPath],
+  ["Newborn Comparison article", newbornComparisonPublicationPath],
+]) {
+  if (sitemap.includes(publicationPath) || llms.includes(publicationPath)) {
+    failures.push(
+      `${label}: draft route must remain excluded from sitemap.xml and llms.txt`,
+    );
+  }
 }
 const netlifyHeaderBlocks = [];
 let activeHeaderBlock = null;

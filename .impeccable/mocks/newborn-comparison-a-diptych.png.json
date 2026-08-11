@@ -1,0 +1,15 @@
+{
+  "surface": "route:/journal/in-home-vs-studio-newborn-photography",
+  "concept": "A — Two ways to remember",
+  "approved": false,
+  "canonical": false,
+  "prompt": "Long desktop website comp for an editorial newborn-photography comparison. Use the supplied reference only for macro geometry: full-bleed EditorialHero with two prints, ivory article sections, one arch, asymmetric authentic newborn imagery, ruled comparison ledger, native FAQ rows, and a full-bleed close. Use only supplied portfolio photographs; studio remains text-led. Preserve the projects warm ivory, sand, umber, walnut and olive visual language. No copied brand, text, tape, splatter, shadow, gradient, rounded card or fabricated studio image.",
+  "references": [
+    "/Users/williammelo/Downloads/inspiration-3.jpg",
+    "/uploads/richland-mother-newborn-at-home.jpg",
+    "/uploads/family-newborn-at-home-tricities.jpg",
+    "/uploads/newborn-portrait-with-mother-richland.jpg",
+    "/uploads/family-newborn-sunset-tricities.jpg"
+  ],
+  "decision": "Rejected: strong hierarchy, but the paired definition section is too compressed and the comparison reads more like a conventional table than the projects recent editorial ledgers."
+}

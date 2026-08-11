@@ -9,7 +9,13 @@
   "description": "In-home or studio newborn photos? An honest comparison from a Tri-Cities newborn photographer — comfort, style, timing and what each session really feels like.",
   "hero": {
     "tone": "walnut",
-    "heading": "In-Home vs. Studio Newborn Photography"
+    "heading": "In-Home vs. Studio Newborn Photography",
+    "intro": "In-home or studio newborn photos? An honest comparison of comfort, style, timing and what each session really feels like.",
+    "scriptLine": "the honest comparison",
+    "image": "/uploads/richland-mother-newborn-at-home.jpg",
+    "imageAlt": "A mother holding her sleeping newborn beside a bed.",
+    "secondaryImage": "/uploads/newborn-portrait-with-mother-richland.jpg",
+    "secondaryImageAlt": ""
   },
   "sections": [
     {
@@ -26,6 +32,8 @@
       "kind": "split",
       "tone": "sand",
       "heading": "What Is In-Home Newborn Photography?",
+      "image": "/uploads/family-newborn-at-home-tricities.jpg",
+      "imageAlt": "Parents and an older sister holding a sleeping newborn together on a bed.",
       "paragraphs": [
         "Also called a lifestyle newborn session, an in-home session documents your baby's real first days in the place where they're happening. Baby in the nursery you spent months preparing. Feeding in your favorite chair. Big siblings peeking into the bassinet. The window light in your own bedroom.",
         "Nothing is staged beyond gentle guidance — the photographer works with your home's light and your baby's rhythm. Pauses for feeding, soothing and diaper changes aren't interruptions; they're the session."
@@ -44,7 +52,7 @@
     {
       "id": "the-honest-comparison",
       "kind": "comparison",
-      "tone": "olive",
+      "tone": "ivory",
       "heading": "The Honest Comparison",
       "items": [
         {
@@ -74,10 +82,33 @@
       ]
     },
     {
+      "id": "what-about-outdoor-newborn-sessions",
+      "kind": "split",
+      "tone": "olive",
+      "heading": "What About Outdoor Newborn Sessions?",
+      "image": "/uploads/family-newborn-sunset-tricities.jpg",
+      "imageAlt": "A family gathered around a baby outdoors in warm evening light.",
+      "secondaryImage": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+      "secondaryImageAlt": "Parents holding their baby close outdoors in warm evening light.",
+      "paragraphs": [
+        "In the Tri-Cities, golden-hour outdoor sessions with a newborn are possible in mild months and make especially beautiful family sessions — baby in arms, siblings around, the river light doing its thing. Many families combine: intimate photos at home, then a short golden-hour family set when baby is a bit older."
+      ],
+      "links": [
+        {
+          "label": "Family Photography",
+          "href": "/family-photographer-tri-cities-wa/"
+        }
+      ]
+    },
+    {
       "id": "which-one-will-you-treasure-more",
       "kind": "quote",
       "tone": "sand",
       "heading": "Which One Will You Treasure More?",
+      "image": "/uploads/family-newborn-connection-richland.jpg",
+      "imageAlt": "Parents standing close with their baby in warm evening light.",
+      "secondaryImage": "/uploads/family-with-baby-black-white-tricities.jpg",
+      "secondaryImageAlt": "A family holding a baby together outdoors in a black-and-white portrait.",
       "paragraphs": [
         "After twenty years of photographing families, here's what I've seen: the photographs families cry over a decade later are rarely the most styled ones. They're the ones with their people in their place — the nursery that got repainted, the house they moved away from, the way dad held the baby in that particular chair. Choose the session that preserves what you most want to remember."
       ],
@@ -85,10 +116,6 @@
         {
           "label": "See how my newborn sessions work",
           "href": "/newborn-photographer-tri-cities-wa/"
-        },
-        {
-          "label": "Family Photography",
-          "href": "/family-photographer-tri-cities-wa/"
         }
       ]
     },
@@ -122,6 +149,11 @@
   "finalCta": {
     "tone": "umber",
     "heading": "Planning Your Baby's First Photos in the Tri-Cities",
+    "paragraphs": [
+      "If the in-home style speaks to you, that's the heart of how I photograph newborns across Richland, Kennewick and Pasco — gentle, unhurried, baby-led."
+    ],
+    "image": "/uploads/maternity-waiting-to-welcome-tricities.jpg",
+    "imageAlt": "An expecting couple standing together in warm sunset light.",
     "link": {
       "label": "Expecting? Let's talk early",
       "href": "/contact/"

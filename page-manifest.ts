@@ -270,7 +270,7 @@ export const pageManifest = [
     llms: true,
     primaryRoute: true,
     signature: "overlap",
-    title: "In-Home vs Studio Newborn Photography | Which Is Right?",
+    title: "In-Home vs. Studio Newborn Photography: How to Choose",
     summary: "An honest comparison of in-home and studio newborn photography.",
   },
   {

@@ -1,0 +1,299 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) {
+    throw new Error(`Newborn comparison article is missing the required section: ${id}`);
+  }
+  return section;
+};
+
+const shortAnswer = requireSection("the-short-answer");
+const inHome = requireSection("what-is-in-home-newborn-photography");
+const studio = requireSection("what-is-studio-newborn-photography");
+const comparison = requireSection("the-honest-comparison");
+const outdoor = requireSection("what-about-outdoor-newborn-sessions");
+const treasure = requireSection("which-one-will-you-treasure-more");
+const questions = requireSection("common-questions");
+
+const familyLink = outdoor.links?.find(
+  (link) => link.href === "/family-photographer-tri-cities-wa/",
+);
+const newbornLink = treasure.links?.find(
+  (link) => link.href === "/newborn-photographer-tri-cities-wa/",
+);
+const finalCta = page.finalCta;
+---
+
+<article
+  class="newborn-comparison-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="journal"
+    titleId="newborn-comparison-hero-title"
+    heading={page.hero.heading}
+    headingLines={["In-Home vs. Studio", "Newborn", "Photography"]}
+    scriptLine={page.hero.scriptLine}
+    intro={page.hero.intro}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="61% 48%"
+    mobileBackgroundPosition="65% 48%"
+    leftPrint={{
+      src: "/uploads/newborn-family-at-home-west-richland.jpg",
+      objectPosition: "50% 39%",
+    }}
+    rightPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 38%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel="Read the comparison"
+    buttonTargetId={shortAnswer.id}
+  />
+
+  <div class="newborn-comparison-byline" aria-label="Article author">
+    <span>By Lisa Weiss</span>
+    <span aria-hidden="true">·</span>
+    <span>It's A Keeper Photography</span>
+    <span aria-hidden="true">·</span>
+    <span>Richland, WA</span>
+  </div>
+
+  <section
+    class="newborn-comparison-answer"
+    id={shortAnswer.id}
+    aria-labelledby={`${shortAnswer.id}-title`}
+    tabindex="-1"
+  >
+    <div class="newborn-comparison-shell newborn-comparison-answer__inner">
+      <h2 id={`${shortAnswer.id}-title`}>{shortAnswer.heading}</h2>
+      <div class="newborn-comparison-answer__copy">
+        {shortAnswer.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <div class="newborn-comparison-definitions">
+    <section
+      class="newborn-comparison-in-home"
+      id={inHome.id}
+      aria-labelledby={`${inHome.id}-title`}
+    >
+      <div class="newborn-comparison-in-home__inner">
+        {inHome.image && (
+          <figure class="newborn-comparison-in-home__arch">
+            <Picture
+              src={inHome.image}
+              alt={inHome.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 43vw, 35rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        <div class="newborn-comparison-in-home__copy">
+          <h2 id={`${inHome.id}-title`}>{inHome.heading}</h2>
+          {inHome.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="newborn-comparison-studio"
+      id={studio.id}
+      aria-labelledby={`${studio.id}-title`}
+    >
+      <div class="newborn-comparison-studio__inner">
+        <div class="newborn-comparison-studio__copy">
+          <h2 id={`${studio.id}-title`}>{studio.heading}</h2>
+          {studio.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="newborn-comparison-studio__frame" aria-hidden="true">
+          <p>Studio is a context,<br />not a photograph.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section
+    class="newborn-comparison-ledger"
+    id={comparison.id}
+    aria-labelledby={`${comparison.id}-title`}
+  >
+    <div class="newborn-comparison-shell newborn-comparison-ledger__inner">
+      <header class="newborn-comparison-ledger__header">
+        <h2 id={`${comparison.id}-title`}>{comparison.heading}</h2>
+      </header>
+
+      <div class="newborn-comparison-ledger__rows">
+        {comparison.items?.map((item) => (
+          <section class="newborn-comparison-ledger__row">
+            <h3>{item.heading}</h3>
+            <div>
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              {item.detail && <p>{item.detail}</p>}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="newborn-comparison-outdoor"
+    id={outdoor.id}
+    aria-labelledby={`${outdoor.id}-title`}
+  >
+    <div class="newborn-comparison-outdoor__grid">
+      {outdoor.image && (
+        <figure class="newborn-comparison-outdoor__primary">
+          <Picture
+            src={outdoor.image}
+            alt={outdoor.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 100vw, (max-width: 1050px) 62vw, 68vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+      <div class="newborn-comparison-outdoor__copy">
+        <h2 id={`${outdoor.id}-title`}>{outdoor.heading}</h2>
+        {outdoor.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        {familyLink && (
+          <a href={familyLink.href}>{familyLink.label}</a>
+        )}
+      </div>
+      {outdoor.secondaryImage && (
+        <figure class="newborn-comparison-outdoor__secondary">
+          <Picture
+            src={outdoor.secondaryImage}
+            alt={outdoor.secondaryImageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 32vw, 25rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <section
+    class="newborn-comparison-treasure"
+    id={treasure.id}
+    aria-labelledby={`${treasure.id}-title`}
+  >
+    <div class="newborn-comparison-shell newborn-comparison-treasure__inner">
+      <div class="newborn-comparison-treasure__media">
+        {treasure.image && (
+          <figure class="newborn-comparison-treasure__image newborn-comparison-treasure__image--primary">
+            <Picture
+              src={treasure.image}
+              alt={treasure.imageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 30vw, 22rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+        {treasure.secondaryImage && (
+          <figure class="newborn-comparison-treasure__image newborn-comparison-treasure__image--secondary">
+            <Picture
+              src={treasure.secondaryImage}
+              alt={treasure.secondaryImageAlt || ""}
+              loading="lazy"
+              decoding="async"
+              responsiveSrcset
+              sizes="(max-width: 767px) 42vw, (max-width: 1050px) 20vw, 15rem"
+              imgClass="photo--editorial"
+            />
+          </figure>
+        )}
+      </div>
+      <div class="newborn-comparison-treasure__copy">
+        <h2 id={`${treasure.id}-title`}>{treasure.heading}</h2>
+        {treasure.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        {newbornLink && (
+          <a href={newbornLink.href}>{newbornLink.label}</a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="newborn-comparison-faq"
+    id={questions.id}
+    aria-labelledby={`${questions.id}-title`}
+  >
+    <div class="newborn-comparison-shell newborn-comparison-faq__inner">
+      <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+      <div class="newborn-comparison-faq__list">
+        {questions.items?.map((item, index) => (
+          <details open={index === 0}>
+            <summary>
+              <h3>
+                <span>{item.heading}</span>
+                <span class="newborn-comparison-faq__toggle" aria-hidden="true"></span>
+              </h3>
+            </summary>
+            <div class="newborn-comparison-faq__answer">
+              {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+              {item.detail && <p>{item.detail}</p>}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {finalCta && (
+    <section
+      class="newborn-comparison-final"
+      aria-labelledby="newborn-comparison-final-title"
+    >
+      {finalCta.image && (
+        <figure class="newborn-comparison-final__background">
+          <Picture
+            src={finalCta.image}
+            alt={finalCta.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="100vw"
+            imgClass="newborn-comparison-final__background-image"
+          />
+        </figure>
+      )}
+      <span class="newborn-comparison-final__wash" aria-hidden="true"></span>
+      <div class="newborn-comparison-shell newborn-comparison-final__inner">
+        <div class="newborn-comparison-final__copy">
+          <h2 id="newborn-comparison-final-title">{finalCta.heading}</h2>
+          {finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {finalCta.link && (
+            <a class="outline-button" href={finalCta.link.href}>{finalCta.link.label}</a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+</article>

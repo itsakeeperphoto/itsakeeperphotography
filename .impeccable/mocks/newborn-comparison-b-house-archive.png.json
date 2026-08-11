@@ -1,0 +1,16 @@
+{
+  "surface": "route:/journal/in-home-vs-studio-newborn-photography",
+  "concept": "B — The house as archive",
+  "approved": true,
+  "canonical": true,
+  "approvalSource": "User delegated direction selection and requested implementation without an approval pause on 2026-08-11.",
+  "prompt": "Long desktop website comp for an editorial article called In-Home vs. Studio Newborn Photography. Use the reference only for vertical rhythm: full photographic opening, ivory paper, one arch picture, asymmetric real-photo clusters and an immersive close. Use only supplied authentic newborn and family photographs, with the studio definition deliberately text-led. Build a short-answer manifesto, house-as-archive in-home spread, quiet umber studio frame, four-row comparison ledger, outdoor photo chapter, centered memory essay, three ruled FAQ rows and full-bleed closing. Use warm ivory, weathered sand, deep umber, walnut and muted olive; no copied branding, fabricated images, cards, tape, splatter, shadow, gradient or rounded surfaces.",
+  "references": [
+    "/Users/williammelo/Downloads/inspiration-3.jpg",
+    "/uploads/richland-mother-newborn-at-home.jpg",
+    "/uploads/family-newborn-at-home-tricities.jpg",
+    "/uploads/newborn-family-at-home-west-richland.jpg",
+    "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg"
+  ],
+  "decision": "Selected: it reconciles the reference geometry with the existing site, gives authentic in-home work visual authority, and makes the absence of verified studio imagery an intentional typographic contrast rather than a content gap."
+}
