@@ -34,11 +34,12 @@ entry when that date is missing.
 | `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
+| `/journal/` | Journal collection | 2026-08-11 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/journal/branding-photos-vs-headshots/` | Article | 2026-08-11 |
 | `/portfolio/` | Portfolio | 2026-07-21 |
 
-The release sitemap contains 11 canonical URLs. `llms.txt` contains 10
+The release sitemap contains 12 canonical URLs. `llms.txt` contains 11
 citations: the same indexable set except Portfolio.
 
 ## Planned public architecture
@@ -69,7 +70,8 @@ threshold. Each must retain genuinely city-specific content before it is approve
 
 ### Journal
 
-- `/journal/` — draft; excluded
+- `/journal/` — ready and indexable as a `CollectionPage`, last modified
+  `2026-08-11`
 - `/journal/family-photo-locations-tri-cities/` — ready and indexable
 - `/journal/when-to-book-senior-pictures-tri-cities/` — redesigned with a
   specialized article renderer; remains draft/noindex and excluded while the
@@ -108,7 +110,18 @@ threshold. Each must retain genuinely city-specific content before it is approve
   route anchors — Family, Newborn and Contact, in that order — while its hero
   scroll control also remains a button. Branding vs. Headshots uses exactly
   three route anchors — Branding, Headshots and Contact, in that order — while
-  its hero scroll control also remains a button.
+  its hero scroll control also remains a button. The Journal hub exposes exactly
+  four route anchors — Locations Guide, Branding vs. Headshots, Portfolio and
+  Contact. Its Senior Timing and Newborn Comparison cards remain visible but
+  non-interactive until those articles are published.
+
+The Journal hub publication contract preserves the existing overlap signature
+and four-card editorial sequence. It emits exactly one canonical
+`CollectionPage` and one `BreadcrumbList` Home → Journal, not an `Article` or
+`Service`. No ready/index route or footer may link Senior Timing or Newborn
+Comparison while either remains draft. Release includes the hub once with
+`lastmod` `2026-08-11`; staging keeps the complete 21-route surface noindex and
+its sitemap empty.
 
 The Newborn Comparison release contract is intentionally stricter than its
 visual completion: it renders one `Article`, one FAQ derived 1:1 from the three

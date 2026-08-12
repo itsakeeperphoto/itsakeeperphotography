@@ -3,20 +3,20 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 
 | # | Archivo | URL | Estado |
 |---|---|---|---|
-| 1 | 01-home.md | `/` | ✅ Completo (2 pendientes menores) |
-| 2 | 02-family.md | `/family-photographer-tri-cities-wa/` | ✅ Completo |
-| 3 | 03-seniors.md | `/senior-photographer-tri-cities-wa/` | ✅ Completo |
+| 1 | 01-home.md | `/` | ✅ Completo · `ready/index` |
+| 2 | 02-family.md | `/family-photographer-tri-cities-wa/` | ✅ Completo · `ready/index` |
+| 3 | 03-seniors.md | `/senior-photographer-tri-cities-wa/` | ⚠️ Completo visualmente · `draft/noindex` (outfits por paquete por confirmar) |
 | 4 | 04-newborn.md | `/newborn-photographer-tri-cities-wa/` | ✅ Completo · ready/index (Q41 no bloqueante omitida) |
-| 5 | 05-branding.md | `/branding-photographer-tri-cities-wa/` | ✅ Completo |
-| 6 | 06-headshots.md | `/headshot-photographer-tri-cities-wa/` | ✅ Completo |
-| 7 | 07-investment.md | `/investment/` | ⚠️ 9 pendientes (Q49–62 de Lisa) |
-| 8 | 08-about.md | `/about/` | ⚠️ Credenciales por verificar (Grammy, MOM, premio) |
+| 5 | 05-branding.md | `/branding-photographer-tri-cities-wa/` | ⚠️ Media renovada · `draft/noindex` (duración/entregables por confirmar) |
+| 6 | 06-headshots.md | `/headshot-photographer-tri-cities-wa/` | ⚠️ Media renovada · `draft/noindex` (duración/entregables por confirmar) |
+| 7 | 07-investment.md | `/investment/` | ⚠️ `draft/noindex` (modelo de paquetes y afirmaciones comerciales por confirmar) |
+| 8 | 08-about.md | `/about/` | ✅ Completo · `ready/index` |
 | 9 | 09-reviews.md | `/reviews/` | ⚠️ Necesita las 8–12 reseñas reales (Q47) |
-| 10 | 10-contact.md | `/contact/` | ✅ Completo (plazos de respuesta pendientes) |
-| 11 | 11-richland.md | `/richland-wa-photographer/` | ✅ Completo · ready/index (galería posterior opcional) |
-| 12 | 12-kennewick.md | `/kennewick-wa-photographer/` | ✅ Completo · ready/index (galería posterior opcional) |
-| 13 | 13-pasco.md | `/pasco-wa-photographer/` | ⚠️ Condicional: galería + validar spots |
-| 14 | 14-journal-hub.md | `/journal/` | ✅ Completo |
+| 10 | 10-contact.md | `/contact/` | ✅ Completo · `ready/index` |
+| 11 | 11-richland.md | `/richland-wa-photographer/` | ✅ Completo · `ready/index` (galería de 10 sesiones) |
+| 12 | 12-kennewick.md | `/kennewick-wa-photographer/` | ✅ Completo · `ready/index` (galería de 5 sesiones) |
+| 13 | 13-pasco.md | `/pasco-wa-photographer/` | ✅ Completo · `ready/index` (galería de 10 sesiones) |
+| 14 | 14-journal-hub.md | `/journal/` | ✅ Completo · `ready/index` (fecha 2026-08-11) |
 | 15 | 15-journal-locations.md | `/journal/family-photo-locations-tri-cities/` | ✅ Completo · ready/index (fecha 2026-08-08) |
 | 16 | 16-journal-senior-timing.md | `/journal/when-to-book-senior-pictures-tri-cities/` | ⚠️ Rediseñado · `draft/noindex` (fecha editorial, datos distritales y Q54 pendientes) |
 | 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ⚠️ Rediseñado · `draft/noindex` (aprobación Lisa, formato exacto y fecha real pendientes) |
@@ -26,24 +26,28 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 
 ## Orden de publicación recomendado
 
-1. Home + Contact + About (base del sitio)
-2. Journal Branding vs. Headshots ya publicado; las páginas de servicio
-   Headshots y Branding permanecen `draft/noindex` hasta confirmar sus paquetes
-3. Seniors + journal senior-timing (cluster 450/mes, KD 0)
-4. Family + journal locations
-5. Newborn ya está publicado; journal newborn solo tras aprobar el artículo,
-   confirmar el formato exacto y asignar una fecha real
-6. Investment + Reviews (cuando lleguen respuestas Q47/Q54)
-7. Richland y Kennewick publicados; Pasco solo con contenido y galería reales
+1. El núcleo publicado ya incluye Home, Family, Newborn, About, Contact,
+   Richland, Kennewick, Pasco, Journal, Locations Guide, Branding vs.
+   Headshots y Portfolio.
+2. Resolver con Lisa las páginas Seniors, Branding, Headshots e Investment
+   usando el checklist de publicación.
+3. Publicar Senior Timing solo después de asignar fecha editorial y confirmar
+   cualquier oferta mencionada; los deadlines distritales son opcionales y
+   requieren fuente primaria.
+4. Publicar Newborn Comparison solo después de aprobación factual, formato
+   exacto y fecha real.
+5. Reviews y Privacy quedan fuera de este checklist por instrucción del usuario.
 
 ## Lo que falta de Lisa (bloqueos)
 
-- **Q47:** selección de 8–12 reseñas de Google (afecta Reviews + bloques de proof en 5 páginas)
-- **Q54/Q56/Q58:** inclusiones de paquetes, turnaround, derechos (afecta
-  Investment + FAQs; Q54 permanece omitida de Senior Timing)
-- **Senior Timing:** aprobar fecha editorial; añadir datos distritales solo con
-  fuente verificable
-- **Q42–43:** links/permisos de MOM Magazine y sesión Grammy (afecta About + Home)
+- **Checklist central:** responder
+  `docs/lisa-publication-confirmation-checklist.md` o su versión Word antes de
+  levantar cualquiera de los gates siguientes. Reviews y Privacy no están
+  incluidos porque el usuario se encarga de esas dos rutas.
+- **Seniors:** confirmar outfits incluidos por paquete y la regla de outfit
+  adicional; no falta un número de imágenes para este gate.
+- **Senior Timing:** aprobar fecha editorial; confirmar Q54 solo si debe
+  aparecer y añadir datos distritales únicamente con fuente verificable.
 - **Newborn comparison:** resolver literalmente `[VALIDAR CON LISA]`,
   `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; la ruta 17 sigue
   `draft/noindex`, sin fechas y fuera de sitemap/`llms.txt`. La página de
@@ -51,5 +55,6 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 - **Branding y Headshots:** confirmar duración, cantidad de imágenes y
   entregables de las dos páginas de servicio. El artículo comparativo 18 ya está
   publicado con fecha `2026-08-11` y no comparte esos gates de paquete.
-- **Locaciones de ciudad:** validar los spots reales + 1 detalle de primera mano por lugar (afecta 13)
-- **Hija/health challenges:** confirmar si se publica (Home/About)
+- **Investment:** confirmar qué servicios usan los paquetes actuales, qué
+  incluyen las coberturas frente a las colecciones y si small elopements se
+  conserva o se omite.

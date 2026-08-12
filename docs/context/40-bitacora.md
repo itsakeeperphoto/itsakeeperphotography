@@ -1196,3 +1196,39 @@
   nueve documentos autorizados permanecen unstaged y un commit local
   `docs(journal): record branding versus headshots publication` lo dejaría
   ahead 15. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Journal publicado y checklist de confirmación para Lisa
+
+- **Objetivo:** pasar `/journal/` a `ready/index`, integrarlo en sitemap y
+  `llms.txt`, y preparar un documento compartible con toda la información que
+  Lisa debe confirmar para decidir la publicación de las rutas restantes,
+  excluyendo Reviews y Privacy.
+- **Publicación:** Journal conserva firma `overlap`, copy, cuatro cards y orden.
+  Locations Guide y Branding vs. Headshots quedan enlazados; Senior Timing y
+  Newborn Comparison conservan título/extracto sin anchor. Portfolio y Contact
+  completan cuatro enlaces exactos dentro de `<main>`. También se retiraron los
+  enlaces hacia ambos artículos draft desde footer y rutas `ready/index`;
+  Newborn conserva su copy relacionado sin link.
+- **SEO y schema:** contenido/manifiestos usan `ready/index`,
+  `lastModified: 2026-08-11`, sitemap y `llms`; el header release noindex del hub
+  se retiró. La ruta emite un único `CollectionPage` y un `BreadcrumbList` Home
+  → Journal. Release contiene 12 URLs en sitemap y 11 entradas en `llms.txt`;
+  staging mantiene sitemap vacío y noindex global.
+- **QA web:** staging y release aprobaron 21/21 rutas. Playwright aprobó Journal
+  en 1440/1200/900/390 sin overflow, imágenes rotas ni errores runtime; la suite
+  Newborn pasó de nuevo en los cuatro anchos. La revisión independiente devolvió
+  `PASS` sin P1/P2.
+- **Checklist:** se crearon
+  `docs/lisa-publication-confirmation-checklist.md` y `.docx`. Cubren Seniors,
+  Branding, Headshots, Investment, Senior Timing y Newborn Comparison; corrigen
+  que el gate Seniors es outfits por paquete, no cantidad de imágenes, y
+  separan paquetes de cobertura, colecciones, entregables, derechos, fechas y
+  aprobaciones. Reviews y Privacy se excluyeron por instrucción del usuario.
+- **QA documental:** contenido auditado `PASS`; DOCX Letter de seis páginas,
+  etiquetado, renderizado sin clipping y con accesibilidad high/medium/low
+  `0/0/0`.
+- **Git/operación:** implementación funcional en `ffe5198`
+  (`feat(journal): publish journal hub`). `origin/main` está en `a33f6ec`; antes
+  del commit documental `main` está un commit por delante y quedaría dos por
+  delante tras el cierre local. Estos documentos permanecen unstaged. No se
+  hizo push, deploy, DNS ni `./scripts/handoff.sh`.

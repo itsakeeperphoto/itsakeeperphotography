@@ -105,17 +105,26 @@
   `PASS` sin P1/P2. La ruta queda `ready/index`, fecha `2026-08-11`, sitemap 11,
   `llms.txt` 10 y Article + FAQ + Breadcrumb; las páginas de servicio siguen
   `draft/noindex`.
-- [ ] **19C. Revisar y commitear localmente el cierre documental Branding vs. Headshots.**
-  Incluir únicamente los nueve archivos autorizados, usar
-  `docs(journal): record branding versus headshots publication` y no ejecutar
-  push, deploy ni `./scripts/handoff.sh`; el usuario conserva la publicación.
-- [ ] **19D. Publicar Newborn Comparison solo después de sus tres gates.**
+- [x] **19C. Cerrar documentalmente Branding vs. Headshots.** El commit
+  `a33f6ec` registra su publicación; el usuario lo subió a `origin/main` junto
+  con el historial local anterior.
+- [x] **19D. Publicar el hub Journal según ADR-057.** `ffe5198` cambia la ruta a
+  `ready/index`, añade `CollectionPage` + breadcrumb, conserva cuatro cards y
+  expone solo Locations, Branding vs. Headshots, Portfolio y Contact. Release
+  queda en sitemap 12/`llms.txt` 11; staging/release 21/21, Playwright
+  1440/1200/900/390 y revisión independiente pasan.
+- [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
+  `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
+  respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
+  Seniors, Branding, Headshots, Investment, Senior Timing y Newborn Comparison;
+  Reviews y Privacy quedan fuera por instrucción del usuario.
+- [ ] **19F. Publicar Newborn Comparison solo después de sus tres gates.**
   Resolver `[VALIDAR CON LISA]`,
   `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; hasta entonces
   conservar `draft/noindex`, header release, ausencia de fechas y exclusión de
   sitemap/`llms.txt`.
-- [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco y Newborn
-  después del push del usuario.** Confirmar en el dominio final status 200,
+- [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco,
+  Newborn y Journal después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
   ciudades `2026-08-09`; Newborn y About `2026-08-10`; Contact `2026-08-11`;
@@ -128,6 +137,9 @@
   En Contact, confirmar `$160` visible antes de completar datos, cálculo vivo y
   un envío nativo controlado hacia Thank-you; registrar solo recepción y
   navegación, sin guardar PII en git.
+- [ ] En Journal, confirmar canonical/index, `CollectionPage` + breadcrumb,
+  membresía única en sitemap/`llms.txt`, cuatro anchors seguros y ausencia de
+  enlaces a Senior Timing/Newborn Comparison mientras continúen draft.
 - [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
   `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
   WebP responsive; no publicarlas hasta confirmar paquetes y entregables.
@@ -152,8 +164,9 @@
   1440/1200/900/390 y revisión independiente `PASS`. La ruta permanece
   `draft/noindex`, con header y exclusión sitemap/llms intactos.
 - [ ] **23. Completar el cluster Seniors con hechos confirmados.** Revisar
-  `src/content/pending.ts` y `content/pages/seniors.json`; obtener de Lisa el
-  número de imágenes por paquete, la oferta referida en Q54 y la fecha editorial
+  `src/content/pending.ts` y `content/pages/seniors.json`; obtener de Lisa los
+  outfits incluidos por paquete y la regla de outfit adicional, la oferta
+  referida en Q54 y la fecha editorial
   de `/journal/when-to-book-senior-pictures-tri-cities/`. Los datos concretos de
   deadlines distritales son una mejora opcional y solo se añaden con fuente
   verificable. Actualizar copy sin reescribir su voz.
@@ -171,6 +184,25 @@
 
 La fuente canónica es `src/content/pending.ts`. Mantener este resumen sincronizado
 sin reemplazar el archivo.
+
+### Checklist de confirmación para Lisa
+
+- [x] Creado `docs/lisa-publication-confirmation-checklist.md` y su versión
+  compartible `.docx`, con datos actuales prellenados, decisiones explícitas y
+  autorización final por ruta.
+- [x] Alcance limitado a Seniors, Branding, Headshots, Investment, Senior
+  Timing y Newborn Comparison. Reviews y Privacy quedan deliberadamente fuera
+  porque el usuario se encarga de ambas.
+- [x] Corregido el gate de Seniors: falta confirmar outfits incluidos por
+  paquete y la regla de outfit adicional, no una cantidad de imágenes.
+- [x] Registrada la inconsistencia transversal que Lisa debe resolver: el
+  estimador aplica las mismas coberturas a cinco servicios, mientras el copy de
+  Headshots describe una experiencia breve y el artículo Branding una sesión
+  típicamente de medio día. No se armoniza por inferencia.
+- [x] DOCX Letter de seis páginas, etiquetado, renderizado sin clipping y con
+  auditoría de accesibilidad high/medium/low `0/0/0`.
+- [ ] Enviar el documento a Lisa, recibir sus respuestas y registrar cada
+  confirmación antes de editar o publicar una ruta.
 
 ### Homepage
 
@@ -290,6 +322,11 @@ sin reemplazar el archivo.
 
 ### Journal
 
+- [x] Hub publicado `ready/index` en `ffe5198`, `lastModified: 2026-08-11`,
+  `CollectionPage` + breadcrumb y crawler outputs 12/11. Conserva cuatro cards,
+  pero solo enlaza Locations y Branding vs. Headshots; Portfolio y Contact
+  completan los cuatro anchors. Senior Timing y Newborn Comparison permanecen
+  visibles sin link mientras sigan draft.
 - [x] Fecha editorial para Branding Photos vs Headshots: `2026-08-11`.
 - [x] Fecha editorial para Family Photo Locations: `2026-08-08`.
 - [ ] Datos de distritos/fechas escolares para Senior timing.
@@ -389,13 +426,13 @@ sin reemplazar el archivo.
   `ff736c6`. Codex no realizó el push.
 - [x] El usuario publicó también el lote local posterior; al iniciar Contact,
   `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
-- [ ] Publicar el lote local creado a partir de `b504f84`: historial gated de
-  Contact y su reversión, media Branding/Headshots, Kind Words, Senior Timing
-  funcional `bcbadae` y cierre `2c47def`, Newborn Comparison funcional
-  `1dd00d3` y cierre `9540fe2`, y Branding vs. Headshots funcional `b22c581`.
-  Antes del cierre documental actual, `main` está 14 commits por delante de
-  `origin/main`; quedaría ahead 15 después del commit local esperado
-  `docs(journal): record branding versus headshots publication`. Codex no
+- [x] El usuario publicó el lote local completo hasta `a33f6ec`, incluido
+  Contact/reversión, media Branding/Headshots, Kind Words, Senior Timing,
+  Newborn Comparison y Branding vs. Headshots con sus cierres documentales.
+  `origin/main` apunta a `a33f6ec`; Codex no realizó el push.
+- [ ] Publicar cuando el usuario decida el lote Journal actual: funcional
+  `ffe5198` más su cierre documental. Antes del commit docs `main` está un commit
+  por delante de `origin/main`; después quedará dos por delante. Codex no
   ejecuta push y el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
@@ -522,6 +559,12 @@ sin reemplazar el archivo.
   anchors, checklist/lista, tabla de seis filas, 11 imágenes 8/3, fecha,
   FAQ/schema, foco, acordeones, reduced motion, CSS aislado, red, consola y
   overflow aprobados. Impeccable `[]`; revisión independiente `PASS` sin P1/P2.
+- [x] Verificado `/journal/` en staging/release 21/21 y Playwright
+  1440/1200/900/390: estado `ready/index`, cuatro cards, anchors exactos
+  Locations/Branding/Portfolio/Contact, cero links a artículos draft,
+  `CollectionPage` + breadcrumb, imágenes cargadas, overflow 0 y consola/runtime
+  sin fallos. La suite Newborn pasó de nuevo en los cuatro anchos y la revisión
+  independiente devolvió `PASS` sin P1/P2.
 - [x] Revalidada la guía tras las correcciones de producción en 1728×963,
   1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
   de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto
@@ -573,6 +616,10 @@ sin reemplazar el archivo.
   modificación `2026-08-11`, sin header release noindex y con membresía en
   sitemap/`llms.txt`; el release contiene ahora 11 URLs y 10 entradas citables.
   Emite `Article`, `FAQPage` y `BreadcrumbList` sin estructurar paquetes.
+- [x] Journal hub actualizado a `ready/index`, `lastModified: 2026-08-11`, sin
+  header release noindex y con membresía en sitemap/`llms.txt`; release contiene
+  ahora 12 URLs y 11 entradas citables. Emite `CollectionPage` y
+  `BreadcrumbList`, y no enlaza los dos artículos que siguen draft.
 - [x] Newborn Comparison rediseñado con Article/FAQPage/Breadcrumb y sin fechas;
   conserva `draft/noindex`, header release y exclusión sitemap/`llms.txt` hasta
   resolver sus tres gates literales.
@@ -621,6 +668,9 @@ sin reemplazar el archivo.
 - [x] Cerrado Branding vs. Headshots en `b22c581` con Comp C / Versus Axis,
   renderer y CSS aislados, copy 1/8/6/3, media existente 8/3, QA final y
   publicación `ready/index`.
+- [x] Publicado Journal hub en `ffe5198` sin rediseñarlo: cuatro cards visibles,
+  dos artículos listos enlazados, dos draft sin anchor, Portfolio y Contact;
+  schema de colección, gates crawler y regresión responsive aprobados.
 - [x] Completar About con composición A+C, hero protegido salvo la sustitución
   explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
   visible, densidad Belief/Method corregida según ADR-046/047 y autoridad
@@ -722,3 +772,6 @@ sin reemplazar el archivo.
 - [x] Rediseñado Newborn Comparison en `1dd00d3` con House Archive, renderer/CSS
   aislados, copy definitivo completo, nueve imágenes existentes y QA integral,
   preservando `draft/noindex` y sus tres gates de publicación.
+- [x] Publicado Journal hub en `ffe5198` con `ready/index`, cuatro anchors
+  seguros, `CollectionPage` + breadcrumb, sitemap 12, `llms.txt` 11 y QA
+  responsive completo; los dos artículos pendientes permanecen sin links.

@@ -3,147 +3,155 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-11 21:33 -05
+**Última actualización:** 2026-08-11 23:49 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional canónico:** `b22c581` —
-`feat(journal): publish branding versus headshots guide`
+**HEAD funcional canónico:** `ffe5198` —
+`feat(journal): publish journal hub`
 
-**Cierre documental anterior:** `9540fe2` —
-`docs(journal): record newborn comparison redesign`
+**Cierre documental anterior ya publicado:** `a33f6ec` —
+`docs(journal): record branding versus headshots publication`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git antes del commit documental:** `main` está 14 commits por delante
-de `origin/main` (`b504f84`). El worktree contiene únicamente este cierre en
-los nueve archivos documentales autorizados y permanece unstaged. El commit
-local esperado `docs(journal): record branding versus headshots publication`
-lo dejaría ahead 15. No se hizo stage, commit documental, push, deploy, DNS ni
-`./scripts/handoff.sh` durante este cierre.
+**Estado Git antes del commit documental:** `origin/main` apunta a `a33f6ec` y
+`main` está un commit por delante. El worktree contiene únicamente este cierre
+en los nueve archivos documentales autorizados y dos entregables nuevos sin
+stage:
+`docs/lisa-publication-confirmation-checklist.md` y `.docx`. Un commit local del
+cierre dejaría `main` dos commits por delante. No se hizo stage, commit docs,
+push, deploy, DNS ni `./scripts/handoff.sh`.
 
 ---
 
 ## Siguiente paso concreto
 
-Revisar y commitear localmente el cierre documental Branding vs. Headshots.
-Incluir únicamente los nueve archivos autorizados, usar
-`docs(journal): record branding versus headshots publication` y no ejecutar
-push, deploy ni `./scripts/handoff.sh`; el usuario conserva la publicación.
+Revisar y commitear localmente el cierre documental junto con las dos versiones
+del checklist, sin incluir otros archivos. Después, enviar el DOCX o Markdown a
+Lisa, registrar sus respuestas literalmente y aplicarlas ruta por ruta; ninguna
+pregunta respondida para una página levanta automáticamente los gates de otra.
 
-Después del push/deploy autorizado, verificar en el host final que
-`/journal/branding-photos-vs-headshots/` responde 200/index, no recibe header
-noindex, aparece una sola vez en sitemap y `llms.txt`, sirve sus once imágenes
-responsive y conserva el CSS aislado. Esa comprobación no publica las páginas
-de servicio Branding ni Headshots.
+No publicar Seniors, Branding, Headshots, Investment, Senior Timing ni Newborn
+Comparison hasta completar su bloque correspondiente del checklist y repetir
+QA de contenido, release y responsive. Reviews y Privacy están fuera del
+documento porque el usuario confirmó que se encargará de ambas.
 
 ## Resumen ejecutivo
 
 - El sitio Astro/Tina/Netlify construye y valida 21 rutas públicas.
-- El release contiene 11 URLs en sitemap y 10 entradas en `llms.txt`; la nueva
-  ruta pertenece a ambas salidas.
-- Branding vs. Headshots quedó publicado localmente como `ready/index`, con
-  fecha editorial `2026-08-11`, renderer especializado y dirección Comp C /
-  Impeccable `Versus Axis` en `b22c581`.
-- El artículo preserva comparación editorial y no convierte frases del copy en
-  duración, precio o entregables contractuales.
-- Branding service y Headshots service siguen `draft/noindex`; Newborn
-  Comparison y Senior Timing conservan sus gates independientes.
-- El QA funcional final está aprobado; falta el commit documental local y la
-  verificación del deploy que el usuario decida publicar.
+- `/journal/` quedó `ready/index` en `ffe5198`, con
+  `lastModified: 2026-08-11`, `CollectionPage` y `BreadcrumbList`.
+- Release contiene 12 URLs en sitemap y 11 entradas en `llms.txt`; staging
+  conserva sitemap vacío y noindex global.
+- El hub mantiene cuatro cards visibles, pero solo Locations Guide y Branding
+  vs. Headshots enlazan artículos publicados. Portfolio y Contact completan
+  cuatro anchors exactos.
+- Senior Timing y Newborn Comparison siguen `draft/noindex`; se retiraron sus
+  links del hub, footer y rutas `ready/index`. Newborn conserva el copy
+  relacionado sin anchor.
+- El checklist de Lisa cubre seis rutas pendientes y corrige el gate de Seniors:
+  deben confirmarse outfits por paquete, no un número de imágenes.
+- El QA web y documental final está aprobado. Falta el commit documental local,
+  el envío del checklist y, más adelante, el smoke test del deploy que publique
+  el usuario.
 
-## Branding vs. Headshots en `b22c581`
+## Journal en `ffe5198`
 
-### Render y dirección
+### Navegación y contenido
 
-- `BrandingHeadshotsArticlePage.astro` sustituye el fallback genérico solo para
-  `/journal/branding-photos-vs-headshots/` tanto en SSR como en refresh Tina.
-- `journal-branding-vs-headshots-page.css` se procesa mediante `?url` y se
-  enlaza solo en esa ruta; no filtra reglas a las otras veinte páginas.
-- Comp C / Impeccable `Versus Axis` es canónica: un headshot singular enfrenta
-  una biblioteca Branding asimétrica mediante una costura central `VS`.
-- Comp A `Proofbook` y Comp B `Dossier` quedaron auditadas y descartadas.
-- La costura es vertical entre 900 y 1728 px y horizontal a 390 px; a 1440,
-  `figureGap` mide 174.375 px frente a una costura de 88 px.
+- La firma visual `overlap`, hero, copy, cuatro cards y orden editorial no se
+  rediseñaron.
+- Anchors exactos dentro de `<main>`: Locations Guide → Branding vs. Headshots
+  → Portfolio → Contact.
+- Las cards Senior Timing y Newborn Comparison conservan título y extracto sin
+  anchor mientras sus rutas sigan draft.
+- El footer global ya no enlaza esos dos artículos. La sección relacionada de
+  Newborn conserva su texto y pierde únicamente el enlace.
 
-### Copy, semántica y enlaces
+### SEO y schema
 
-- Contrato visible exacto: 1 H1, 8 H2, 6 H3 y 3 FAQ.
-- El bloque de decisión conserva una lista semántica de cinco ítems y una tabla
-  accesible de seis filas.
-- Los tres anchors de `<main>` son Branding, Headshots y Contact, en ese orden.
-  `Read the comparison` en el hero es un botón local, no un cuarto anchor.
-- El artículo permanece separado de las fichas de servicio; no promete paquetes
-  ni levanta sus pendientes de cantidades, entregables o duración.
+- Contenido y manifiestos usan `contentStatus: ready`,
+  `searchVisibility: index`, `sitemap: true`, `llms: true` y
+  `lastModified: 2026-08-11`.
+- El header release noindex del hub se retiró; permanecen las reglas explícitas
+  para Senior Timing y Newborn Comparison.
+- La ruta emite exactamente un `CollectionPage` canónico y un
+  `BreadcrumbList` Home → Journal. No emite `Article`, `Service`, `Offer`,
+  reseñas ni rating.
+- El validador protege fuente, HTML, orden de anchors, ausencia de links hacia
+  artículos draft, schema y crawler membership.
 
-### Media
+## Checklist de confirmación para Lisa
 
-- La ruta reutiliza exactamente once fuentes existentes y únicas.
-- Ocho imágenes son informativas y usan alt literal; tres son decorativas y
-  usan alt vacío.
-- Las tres superficies del hero cargan eager y solo el fondo tiene prioridad
-  alta; las ocho imágenes de cuerpo cargan lazy/async con WebP responsive.
-- No se añadió, copió, recodificó, renombró ni borró media compartida.
+Entregables:
 
-### SEO, schema y publicación
+- `docs/lisa-publication-confirmation-checklist.md`
+- `docs/lisa-publication-confirmation-checklist.docx`
 
-- `contentStatus=ready`, `searchVisibility=index`, `lastModified`,
-  `datePublished` y `dateModified` usan `2026-08-11`.
-- La card del Journal enlaza la ruta y release no aplica header noindex.
-- Sitemap release contiene 11 URLs y `llms.txt` 10 entradas, con la ruta una
-  sola vez en cada salida.
-- Se emite un único `Article`, un único `FAQPage` derivado 1:1 de las tres FAQ
-  visibles y un `BreadcrumbList` Home → Journal → Branding Photos vs.
-  Headshots.
-- No se emiten `Service`, `Offer`, duración/precio estructurado, reseñas,
-  `AggregateRating`, calle ni coordenadas.
+Cobertura:
+
+1. Reglas compartidas de coberturas, colecciones, add-ons y aplicabilidad por
+   servicio.
+2. Seniors: outfits incluidos por paquete y outfit adicional.
+3. Branding: duración, entregables, selección, turnaround, equipos y derechos.
+4. Headshots: tiempo frente a cámara, setup, cantidad/selección, retoque,
+   resolución, turnaround, derechos y equipos.
+5. Investment: modelo comercial, relación entre coberturas y colecciones y
+   decisión sobre small elopements.
+6. Senior Timing: fecha editorial; Q54 y deadlines distritales solo si Lisa los
+   confirma o existe fuente primaria.
+7. Newborn Comparison: aprobación factual, formato exacto casa + golden hour y
+   fecha editorial.
+8. Autorización final separada por ruta.
+
+Reviews y Privacy están excluidos expresamente. El DOCX usa tamaño Letter, seis
+páginas, estructura etiquetada y no presenta clipping; la auditoría de
+accesibilidad registró high/medium/low `0/0/0`.
 
 ## Verificación funcional registrada
 
-- Build release definitivo: `PASS`; validador: `Validated 21 public routes in
-  release mode`.
-- Build/validador staging previo: `PASS`, 21/21 rutas.
-- Suite Playwright dedicada: `PASS` en 1440×1000, 1200×900, 900×900, 390×844
-  y 1728×963; produjo 15 capturas finales a las 21:24 en
-  `.artifacts/branding-headshots-article/`.
-- Detector Impeccable final: `[]`; revisión independiente: `PASS` sin P1/P2.
-- Contraste del texto Headshot: 4.6104:1; contraste del foco ledger: 13.479:1;
-  body y tabla móvil: mínimo 16 px.
-- Cero overflow horizontal, clipping, errores runtime o fallos same-origin.
-- El único P3 no funcional pertenece a los crops de evidencia de sección, que
-  retienen skip-link/header enfocado; las capturas full-page están limpias y el
-  comportamiento accesible es correcto.
-- Un intento de build default se bloqueó únicamente porque el servidor largo
-  del usuario ocupaba `:9000`; no se detuvo. Los builds definitivos se
-  ejecutaron aislados y pasaron.
+- Build/validador staging: `PASS`, 21/21 rutas, sitemap vacío y noindex global.
+- Build/validador release: `PASS`, 21/21 rutas, sitemap 12 y `llms.txt` 11.
+- Playwright Journal: `PASS` en 1440, 1200, 900 y 390 px; cero overflow
+  horizontal, imágenes rotas o errores runtime.
+- Suite Newborn de regresión: `PASS` en 1440, 1200, 900 y 390 px después de
+  retirar el enlace draft.
+- Revisión independiente: `PASS` sin P1/P2.
+- Auditoría de contenido del checklist: `PASS`.
+- DOCX renderizado en seis páginas Letter; auditoría de accesibilidad
+  high/medium/low `0/0/0`.
 
 ## Cierre documental actual
 
-- `paginas/18-journal-branding-vs-headshots.md` — copy, media, schema,
-  publicación y QA definitivos.
-- `paginas/00-INDICE.md` — estado `ready/index` y orden de publicación.
-- `STRUCTURE.md` — renderer, enlaces, búsqueda y salidas crawler.
-- `DESIGN.md` — addendum 18 Comp C / Versus Axis.
-- `docs/context/10-arquitectura.md` — SSR/Tina, CSS aislado, contrato y guardas.
+- `paginas/14-journal-hub.md` — publicación, enlaces, schema y QA.
+- `paginas/00-INDICE.md` — estado real de rutas y gates de Lisa.
+- `STRUCTURE.md` — sitemap 12, `llms.txt` 11 y arquitectura Journal.
+- `DESIGN.md` — addendum 19 sin inventar un rediseño.
+- `docs/context/10-arquitectura.md` — renderer, guardas, schema y checklist.
 - `docs/context/20-estado.md` — esta fotografía, reescrita al final.
-- `docs/context/30-decisiones.md` — ADR-056 append-only.
-- `docs/context/40-bitacora.md` — entrada append-only de publicación.
-- `docs/context/50-backlog.md` — cierre cumplido y operaciones pendientes.
+- `docs/context/30-decisiones.md` — ADR-057 append-only.
+- `docs/context/40-bitacora.md` — entrada append-only del rollout.
+- `docs/context/50-backlog.md` — Journal cerrado y envío a Lisa como siguiente
+  operación.
+- `docs/lisa-publication-confirmation-checklist.md` y `.docx` — entregables para
+  Lisa.
 
 ## Trabajo parcial y pendientes reales
 
 | Ruta/módulo | Estado local | Qué falta |
 |---|---|---|
-| Branding vs. Headshots article | Implementación completa en `b22c581`; `ready/index` | Commit documental local y smoke test del deploy autorizado. |
-| Newborn Comparison | Implementación completa en `1dd00d3`; `draft/noindex` | Aprobación Lisa, formato exacto y fecha real; después decisión de publicación y QA release. |
-| Senior Timing | Renderer completo; `draft/noindex` | Fecha editorial; Q54/datos distritales solo con confirmación o fuente. |
-| Seniors service | `draft/noindex` | Confirmar número de imágenes por paquete. |
-| Branding / Headshots services | Media renovada; `draft/noindex` | Confirmar entregables, cantidades y duraciones. |
-| Reviews | `draft/noindex` | Alcance, URL oficial y fuente estructurada. |
-| Privacy | `draft/noindex` | Revisión factual/legal y consentimiento. |
+| Journal hub | Implementación completa en `ffe5198`; `ready/index` | Commit documental local y smoke test tras el deploy autorizado. |
+| Seniors service | `draft/noindex` | Confirmar outfits por paquete y regla de outfit adicional; después revalidar copy/estimador. |
+| Branding service | Media renovada; `draft/noindex` | Confirmar aplicabilidad de paquetes, duración, entregables, selección, turnaround y derechos. |
+| Headshots service | Media renovada; `draft/noindex` | Confirmar tiempo/setup, entregables, selección, turnaround, derechos y reglas de equipo. |
+| Investment | `draft/noindex` | Confirmar modelo de paquetes, relación cobertura/colección y small elopements. |
+| Senior Timing | Renderer completo; `draft/noindex` | Fecha editorial; Q54 opcional solo con confirmación. Deadlines distritales son mejora opcional con fuente. |
+| Newborn Comparison | Renderer completo; `draft/noindex` | Aprobación Lisa, formato exacto casa + golden hour y fecha real. |
+| Reviews / Privacy | `draft/noindex` | Fuera del checklist; el usuario gestiona ambas. |
 | Dominio | Contradicción documentada | Elegir apex o `www` antes de tocar DNS/canonicals. |
 
 ## Comandos de reanudación
@@ -151,30 +159,26 @@ de servicio Branding ni Headshots.
 ```bash
 git remote get-url origin
 git log --oneline -20
-git status
+git status --short --branch
 git rev-list --count origin/main..HEAD
 git diff --check
-git diff -- paginas/18-journal-branding-vs-headshots.md paginas/00-INDICE.md STRUCTURE.md DESIGN.md docs/context/10-arquitectura.md docs/context/20-estado.md docs/context/30-decisiones.md docs/context/40-bitacora.md docs/context/50-backlog.md
-SITE_MODE=release SITE_ORIGIN=https://www.itsakeeperphotography.com npm run validate:site
+git diff -- paginas/14-journal-hub.md paginas/00-INDICE.md STRUCTURE.md DESIGN.md docs/context/10-arquitectura.md docs/context/20-estado.md docs/context/30-decisiones.md docs/context/40-bitacora.md docs/context/50-backlog.md
 ```
 
 No ejecutar `./scripts/handoff.sh` mientras el usuario conserve la política de
 publicar sus propios commits, porque el script hace push. Si se reconstruye Tina
 localmente y `:9000` está ocupado, usar un data layer/puerto aislado sin detener
-el servidor del usuario; revisar `git status` después del build por IDs
-generados.
+el servidor del usuario y revisar `git status` después del build.
 
 ## Bloqueadores externos y preguntas abiertas
 
-1. El usuario decide cuándo crear el commit documental y publicar los 14/15
-   commits locales; Codex no hace push.
-2. Falta el smoke test de Branding vs. Headshots en el host final después del
-   deploy autorizado.
-3. Newborn Comparison conserva tres gates literales:
-   `[VALIDAR CON LISA]`, `[VALIDAR: formato exacto que ofrece Lisa]` y
-   `[FECHA]`.
-4. Branding y Headshots service requieren confirmar entregables, cantidades y
-   duraciones antes de cualquier publicación.
-5. Senior Timing, Seniors, Reviews y Privacy conservan sus preguntas registradas
-   en backlog; ninguna se resuelve por inferencia.
-6. TODO(contexto): ¿el dominio canónico definitivo debe ser apex o `www`?
+1. Lisa debe responder el checklist antes de cambiar cualquiera de las seis
+   rutas pendientes a `ready/index`.
+2. Falta el commit documental local y el push/deploy que el usuario decida
+   publicar; Codex no ejecuta push.
+3. Después del deploy, falta smoke test de Journal en el host final: status 200,
+   canonical/index, ausencia de header noindex, schema, sitemap/`llms.txt` y
+   cuatro anchors exactos.
+4. Branding/Headshots/Investment requieren una matriz única de aplicabilidad de
+   coberturas y colecciones; el estimador no resuelve esa decisión comercial.
+5. TODO(contexto): ¿el dominio canónico definitivo debe ser apex o `www`?

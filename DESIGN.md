@@ -1787,3 +1787,35 @@ los paquetes pendientes de las páginas de servicio Branding y Headshots.
   independiente `PASS` sin P1/P2. El P3 no funcional de los crops de sección
   con header/skip-link enfocado no afecta las capturas full-page ni la
   accesibilidad real.
+
+## 19. ADDENDUM DE PUBLICACIÓN — JOURNAL HUB
+
+Este addendum fija la publicación de `/journal/` sin rediseñar su composición
+aprobada. La ruta conserva su firma `overlap`, hero walnut, listado editorial
+marfil y cierre umber; el cambio es de publicación, semántica y navegación
+segura hacia contenido ya indexable.
+
+### Jerarquía y enlaces
+
+- Se conservan H1 `The Journal`, H2 `Planning Guides` y H2 `Start With Your
+  Session`, junto con las cuatro cards y su orden editorial.
+- Locations Guide y Branding vs. Headshots son las únicas cards enlazadas.
+  Senior Timing y Newborn Comparison mantienen título y extracto visibles, pero
+  no presentan anchor mientras sigan `draft/noindex`.
+- El enlace secundario Portfolio y la CTA final Contact completan cuatro anchors
+  exactos dentro de `<main>`: Locations, Branding vs. Headshots, Portfolio y
+  Contact.
+- Footer y rutas `ready/index` tampoco enlazan los dos artículos draft. Newborn
+  conserva el copy relacionado aprobado y pierde únicamente el enlace.
+
+### Publicación y regresión
+
+- Estado canónico: `ready/index`, `lastModified: 2026-08-11`, canonical `www`,
+  sin header release noindex y con membresía única en sitemap y `llms.txt`.
+- La ruta emite un `CollectionPage` y un `BreadcrumbList` Home → Journal; no se
+  convierte en `Article`, `Service`, lista de ofertas ni schema de reseñas.
+- Release valida 21/21 rutas con 12 URLs en sitemap y 11 entradas en `llms.txt`.
+  Staging valida 21/21, mantiene sitemap vacío y noindex global.
+- Playwright aprobó Journal en 1440/1200/900/390 sin overflow, imágenes rotas ni
+  errores runtime. La suite Newborn volvió a pasar en los cuatro anchos después
+  de retirar su enlace draft; la revisión independiente dio `PASS` sin P1/P2.

@@ -39,6 +39,8 @@
 ├── paginas/*.md                   documentos fuente entregados
 ├── docs/
 │   ├── context/*.md               memoria operativa de agentes
+│   ├── lisa-publication-confirmation-checklist.{md,docx}
+│   │                                cuestionario para levantar gates editoriales
 │   ├── final-handoff.md            evidencia histórica del 2026-07-21
 │   └── legacy-redirect-inventory.md inventario de redirecciones
 ├── src/
@@ -161,6 +163,14 @@ Componentes especializados existentes:
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
 - `ContentPage.astro` para rutas aún genéricas, incluidas Reviews, Privacy,
   Thank-you y algunos artículos.
+
+`JournalPage.astro` conserva la firma visual `overlap` y cuatro cards, pero el
+hub publicado expone solo cuatro anchors seguros: Locations Guide, Branding vs.
+Headshots, Portfolio y Contact. Senior Timing y Newborn Comparison conservan
+título y extracto sin link mientras sigan `draft/noindex`. El footer tampoco
+enlaza esos artículos y Newborn mantiene su copy relacionado sin convertirlo
+en anchor. El manifiesto del hub usa `ready/index`, `CollectionPage`,
+`sitemap: true`, `llms: true` y `lastModified: 2026-08-11`.
 
 `EditorialHero.astro` materializa la estructura de hero basada en Seniors y es
 compartido por varias páginas especializadas, incluidas Kennewick y Pasco. Su frase
@@ -436,10 +446,18 @@ para evitar cambios silenciosos al repositorio.
   21/21, 15 capturas, contraste 4.6104:1, foco 13.479:1, body/tabla ≥16 px,
   costura `VS` vertical 900–1728/horizontal 390, cero overflow/runtime,
   Impeccable `[]` y revisión independiente sin P1/P2.
+- Para Journal fija estado `ready/index`, metadata exacta, firma `overlap`,
+  `lastModified: 2026-08-11`, ausencia de pendientes y membresía exacta en
+  sitemap/`llms.txt`. En fuente y HTML exige cuatro guías visibles, anchors
+  Locations → Branding vs. Headshots → Portfolio → Contact, cero links a los
+  dos artículos draft, canonical exacta, un `CollectionPage` y un
+  `BreadcrumbList` Home → Journal. El mismo guard prohíbe que cualquier ruta
+  `ready/index` vuelva a enlazar Senior Timing o Newborn Comparison antes de su
+  publicación.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para once rutas:
+En `release`, el manifiesto actualmente permite sitemap para doce rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
@@ -449,13 +467,14 @@ En `release`, el manifiesto actualmente permite sitemap para once rutas:
 - `/richland-wa-photographer/`
 - `/kennewick-wa-photographer/`
 - `/pasco-wa-photographer/`
+- `/journal/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/journal/branding-photos-vs-headshots/`
 - `/portfolio/`
 
 `llms.txt` incluye Homepage, Family, Newborn, About, Contact, Richland,
-Kennewick, Pasco, Family Photo Locations y Branding vs. Headshots; Portfolio
-está excluido de llms. Otras nueve rutas siguen `draft/noindex`.
+Kennewick, Pasco, Journal, Family Photo Locations y Branding vs. Headshots;
+Portfolio está excluido de llms. Otras ocho rutas siguen `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En
@@ -487,6 +506,13 @@ Para Contact, `Base.astro` emite un único `ContactPage` enlazado al negocio y
 `[slug].astro` añade `BreadcrumbList` Home → Session Pricing Estimate. La ruta
 no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
 `AggregateRating`.
+
+Para Journal, `Base.astro` emite un único `CollectionPage` canónico y
+`[slug].astro` añade `BreadcrumbList` Home → Journal. El hub no emite
+`Article`, `Service`, `Offer`, `Review` ni `AggregateRating`. Su publicación es
+independiente de Senior Timing y Newborn Comparison: ambos pueden seguir
+visibles como cards sin enlace, pero no reciben autoridad interna ni membresía
+en crawler outputs hasta levantar sus gates propios.
 
 Para Senior Timing, `Base.astro` emite `Article` con headline, author/publisher,
 imagen, `mainEntityOfPage`, `about` y cobertura Richland/Kennewick/Pasco;

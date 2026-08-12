@@ -1311,3 +1311,45 @@
   con cero overflow o errores runtime. El build default inicial solo chocó con
   el servidor preexistente en `:9000`; los builds definitivos se ejecutaron
   aislados. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### ADR-057 — Journal se publica como colección sin enlazar artículos draft y los gates restantes se consultan en un solo documento
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** El hub `/journal/` tenía copy, composición y cards completos,
+  pero seguía `draft/noindex` y fuera de crawler outputs. Dos de sus cuatro
+  artículos —Senior Timing y Newborn Comparison— todavía conservan gates
+  factuales y de fecha. Publicar el hub con anchors hacia esas rutas transferiría
+  navegación interna a páginas deliberadamente no indexables. El usuario pidió
+  publicar Journal y preparar una lista completa para Lisa con la información
+  que falta antes de publicar las demás rutas, excluyendo Reviews y Privacy
+  porque las gestionará directamente.
+- **Decisión:** Mantener intactos firma `overlap`, cuatro cards, copy y orden del
+  hub. Cambiar Journal a `ready/index`, `lastModified: 2026-08-11`,
+  `sitemap: true` y `llms: true`; retirar su header release noindex y emitir un
+  único `CollectionPage` más `BreadcrumbList` Home → Journal. Enlazar solo las
+  cards Locations Guide y Branding vs. Headshots, añadir Portfolio como enlace
+  editorial secundario y conservar Contact como CTA final. Senior Timing y
+  Newborn Comparison permanecen visibles como cards sin anchor; retirar además
+  sus enlaces del footer y de cualquier ruta `ready/index`. Newborn conserva el
+  copy relacionado y pierde únicamente el link. Registrar las decisiones que
+  Lisa debe confirmar en
+  `docs/lisa-publication-confirmation-checklist.md` y su versión Word: Seniors,
+  Branding, Headshots, Investment, Senior Timing y Newborn Comparison. El
+  checklist separa coberturas de colecciones, corrige que el gate Seniors es
+  outfits por paquete —no número de imágenes— y deja fuera Reviews/Privacy.
+- **Alternativas descartadas:** Enlazar las cuatro cards a pesar del estado
+  draft, ocultar completamente los dos artículos pendientes, publicar sus
+  rutas junto con el hub, inventar fechas/entregables, mezclar Reviews o Privacy
+  en el cuestionario, o resolver inconsistencias comerciales desde el
+  estimador se descartó por coherencia de indexación, continuidad editorial,
+  exactitud y alcance explícito del usuario.
+- **Consecuencias:** El commit funcional `ffe5198` eleva release a 12 URLs en
+  sitemap y 11 entradas en `llms.txt`; staging conserva sitemap vacío y noindex
+  global. Los validadores aprobaron 21/21 rutas en ambos modos. Playwright pasó
+  Journal en 1440/1200/900/390 sin overflow, imágenes rotas ni errores runtime,
+  y la suite Newborn volvió a pasar en los mismos anchos. La revisión
+  independiente devolvió `PASS` sin P1/P2. El DOCX del checklist tiene seis
+  páginas Letter, está etiquetado y su auditoría de accesibilidad reporta
+  high/medium/low `0/0/0`. Ninguna respuesta del checklist se considera
+  confirmada hasta recibirla de Lisa; las seis rutas conservan sus gates
+  independientes. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.
