@@ -1155,3 +1155,44 @@
   ahead antes del cierre documental; los documentos quedan unstaged para un
   commit local separado que lo dejaría ahead 13. No se hizo push, deploy, DNS
   ni `./scripts/handoff.sh`.
+
+### 2026-08-11 — Codex / GPT-5 — Branding vs. Headshots publicado con Versus Axis
+
+- **Objetivo:** convertir
+  `/journal/branding-photos-vs-headshots/` en una comparación editorial propia
+  y publicarla con la fecha autorizada, sin presentar el copy comparativo como
+  un paquete contractual ni levantar los gates de las páginas de servicio.
+- **Dirección:** Comp C / Impeccable `Versus Axis` quedó canónica. Un headshot
+  singular enfrenta una biblioteca Branding asimétrica mediante una costura
+  central `VS`; Comp A `Proofbook` y Comp B `Dossier` quedan como alternativas
+  auditadas no seleccionadas.
+- **Render y copy:** el contrato usa renderer especializado para SSR/refresh
+  Tina y CSS `?url` exclusivo de ruta. Preserva el copy definitivo en 1 H1, 8
+  H2, 6 H3, tres FAQ, checklist de cinco ítems, tabla semántica de seis filas y
+  tres anchors Branding → Headshots → Contact; el control hero es botón local.
+- **Media:** once fuentes existentes y únicas, ocho informativas y tres
+  decorativas. Las tres superficies hero cargan eager —solo el fondo con
+  prioridad alta— y las ocho de cuerpo lazy/async con WebP responsive. No se
+  añadió, renombró, recodificó ni borró media compartida.
+- **SEO y publicación:** el contrato cambia la ruta a `ready/index`, fecha
+  `2026-08-11`, sin header release noindex, enlazada desde el hub y miembro de
+  sitemap/`llms.txt`. Emite `Article`, `FAQPage` 1:1 y `BreadcrumbList`; no
+  `Service`, `Offer`, duración/precio estructurado, reseñas, rating, calle ni
+  coordenadas. Branding y Headshots service permanecen `draft/noindex`.
+- **QA:** build release y validadores staging/release aprobaron 21/21 rutas. La
+  suite dedicada pasó 1440×1000, 1200×900, 900×900, 390×844 y 1728×963 y dejó
+  15 capturas finales. Impeccable devolvió `[]`; la revisión independiente dio
+  `PASS` sin P1/P2. Los fixes finales dejan contraste Headshot 4.6104:1, foco
+  ledger 13.479:1, tabla/body ≥16 px, costura `VS` vertical en 900–1728 y
+  horizontal en 390, `figureGap` 174.375 px ≥ seam 88 px a 1440, y cero
+  overflow/runtime. El P3 de evidencia —crops de sección con skip-link/header
+  enfocado— no afecta las capturas full-page ni el comportamiento accesible.
+- **Build:** un intento default se bloqueó únicamente porque el servidor largo
+  del usuario ocupaba `:9000`; no se detuvo. Los builds definitivos se
+  ejecutaron aislados y pasaron.
+- **Git/operación:** implementación funcional en `b22c581`
+  (`feat(journal): publish branding versus headshots guide`). `main` está 14
+  commits por delante de `origin/main` (`b504f84`) antes de este cierre; los
+  nueve documentos autorizados permanecen unstaged y un commit local
+  `docs(journal): record branding versus headshots publication` lo dejaría
+  ahead 15. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.

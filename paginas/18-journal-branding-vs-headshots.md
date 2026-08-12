@@ -8,6 +8,7 @@ _Página 18 de 18 · Content engine → soporta Branding + Headshots · Ángulo 
 | Campo | Valor |
 |---|---|
 | **URL** | `/journal/branding-photos-vs-headshots/` |
+| **Estado** | `ready/index` · publicado el `2026-08-11` |
 | **Keyword primaria** | what are branding photos (140/mes, KD 4) |
 | **Secundarias** | branding photos (320, KD 9) · what is branding photography (260, KD 5) · headshots vs branding photos · what is a branding session (40, KD 0) · branding session (110, KD 0) · difference between headshots and branding photos |
 | **Title** (53) | `Branding Photos vs. Headshots: What's the Difference?` |
@@ -102,17 +103,44 @@ Whether you need one great headshot or a full brand library, the goal is the sam
 
 ---
 
-## Internal links
+## Enlaces internos implementados
 
-- Salientes: `/branding-photographer-tri-cities-wa/` (principal) · `/headshot-photographer-tri-cities-wa/` (principal 2) · `/contact/`.
-- Entrantes: páginas Branding y Headshots (FAQ), hub.
+El hero usa un botón local `Read the comparison` hacia `the-short-answer`; no
+cuenta como anchor. Dentro de `<main>` existen exactamente tres enlaces, en
+este orden:
 
-## Alt texts
+1. `Branding photography in the Tri-Cities` →
+   `/branding-photographer-tri-cities-wa/`
+2. `Just need the headshot?` → `/headshot-photographer-tri-cities-wa/`
+3. `Start planning` → `/contact/`
 
-- `Side-by-side comparison of a professional headshot and branding photos from a Tri-Cities session`
-- `Business owner photographed working with her hands during a branding session in Richland, WA`
-- `Warm professional headshot from a Tri-Cities branding photography session`
-- `Detail shots of products and workspace from a custom business photography session`
+La card correspondiente del hub Journal enlaza esta ruta publicada. Las páginas
+de servicio Branding y Headshots continúan `draft/noindex`; su estado no impide
+que este artículo comparativo sea `ready/index`.
+
+## Media y alt implementados
+
+La ruta usa exactamente once fuentes existentes y únicas: ocho informativas y
+tres decorativas. No se añadieron, renombraron, recodificaron ni borraron
+fotografías para el artículo.
+
+| Superficie | Fuente | Alt / función |
+|---|---|---|
+| Fondo del hero | `/uploads/branding-chef-kitchen-richland-wa.jpg` | `Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session.` |
+| Print izquierdo del hero | `/uploads/professional-headshot-woman-neutral-backdrop.jpg` | Decorativa, `alt=""` |
+| Print derecho del hero | `/uploads/pianist-creative-branding-portrait-richland-wa.jpg` | Decorativa, `alt=""` |
+| Branding: trabajo | `/uploads/business-professional-working-laptop-richland-wa.jpg` | `Business professional working at a laptop during a Richland branding session.` |
+| Branding: entorno | `/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg` | `Business owner standing beside a kitchen island during a West Richland branding session.` |
+| Branding: proceso | `/uploads/businesswoman-working-desk-richland-wa.jpg` | `Business owner writing at her desk during a Richland workplace branding session.` |
+| Headshot principal | `/uploads/professional-headshot-man-blue-shirt-kennewick-wa.jpg` | `Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.` |
+| Headshot comparativo | `/uploads/professional-headshot-woman-black-top-kennewick-wa.jpg` | `Smiling woman in a black top photographed during a Kennewick team headshot session.` |
+| Branding comparativo | `/uploads/business-partners-office-portrait-richland-wa.jpg` | `Two business professionals posing together in their Richland office.` |
+| Detalle de sesión | `/uploads/chef-saute-pan-branding-detail-richland-wa.jpg` | `Chef stirring vegetables in a pan during a close-up Richland branding photograph.` |
+| Cierre | `/uploads/business-team-meeting-richland-wa.jpg` | Decorativa, `alt=""` |
+
+Las tres superficies del hero cargan eager y solo el fondo usa prioridad alta.
+Las ocho imágenes de cuerpo cargan lazy/async. Todas conservan dimensiones
+intrínsecas y variantes WebP responsive 400/640/960/1440 existentes.
 
 ## Schema JSON-LD
 
@@ -125,16 +153,16 @@ Whether you need one great headshot or a full brand library, the goal is the sam
       "headline": "Branding Photos vs. Headshots: What's the Difference?",
       "author": {"@id": "https://www.itsakeeperphotography.com/#lisa"},
       "publisher": {"@id": "https://www.itsakeeperphotography.com/#business"},
-      "datePublished": "[FECHA]",
-      "dateModified": "[FECHA]",
+      "datePublished": "2026-08-11",
+      "dateModified": "2026-08-11",
       "url": "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/"
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": "What are branding photos?", "acceptedAnswer": {"@type": "Answer", "text": "Branding photos are a planned library of images about a business — portraits, working shots, workspace, details and lifestyle moments — designed to supply consistent marketing imagery across website, social and press."}},
-        {"@type": "Question", "name": "What's the difference between a headshot and branding photos?", "acceptedAnswer": {"@type": "Answer", "text": "A headshot is one polished portrait focused on you; branding photos are a varied library about you and your business. Headshots answer 'who is this person?' while branding photos answer 'what would it be like to work with them?'"}},
-        {"@type": "Question", "name": "How often should branding photos be updated?", "acceptedAnswer": {"@type": "Answer", "text": "Most businesses refresh branding photos once or twice a year; headshots every two to three years."}}
+        {"@type": "Question", "name": "What should I wear for branding photos?", "acceptedAnswer": {"@type": "Answer", "text": "Your brand's colors, your real working clothes, and one \"elevated\" option. We plan it together — the goal is recognizably you, one notch polished."}},
+        {"@type": "Question", "name": "How often should branding photos be updated?", "acceptedAnswer": {"@type": "Answer", "text": "Most businesses refresh once or twice a year as offers, seasons and spaces change. Headshots: every two to three years, or after any big change."}},
+        {"@type": "Question", "name": "Are branding photos worth it for a very small business?", "acceptedAnswer": {"@type": "Answer", "text": "Small businesses benefit most — you are the brand. In a community like the Tri-Cities, people hire the person they feel they already know, and branding photos are how they meet you before the first call."}}
       ]
     },
     {
@@ -148,3 +176,55 @@ Whether you need one great headshot or a full brand library, the goal is the sam
   ]
 }
 ```
+
+La implementación emite exactamente un `Article`, un `FAQPage` derivado 1:1
+de las tres preguntas visibles y un `BreadcrumbList` Home → Journal → Branding
+Photos vs. Headshots. El `Article` usa la fecha autorizada `2026-08-11`, la
+imagen real del hero, autor `#lisa`, publisher `#business`, tema Branding /
+Headshots y cobertura Richland/Kennewick/Pasco. No añade `Service`, `Offer`,
+duración estructurada, precio, `Review`, `AggregateRating`, calle ni
+coordenadas.
+
+## Dirección y contrato de implementación
+
+- Dirección canónica: Comp C / Impeccable
+  `.impeccable/mocks/branding-headshots-comparison-c-versus-axis.png`,
+  `Versus Axis`.
+- Las alternativas A `Proofbook` y B `Dossier` se conservan como comps
+  auditadas no seleccionadas. Comp C hace visible la respuesta del artículo:
+  un retrato formal enfrenta una biblioteca asimétrica de persona, proceso y
+  lugar mediante una sola costura central `VS`.
+- `BrandingHeadshotsArticlePage.astro` es el renderer especializado en SSR y
+  refresh Tina; la ruta no cae en `ContentPage`.
+- `journal-branding-vs-headshots-page.css` se procesa mediante `?url` y se
+  enlaza solo en esta ruta. Todos sus selectores permanecen bajo
+  `.branding-headshots-*` y el validador impide leakage a las otras veinte.
+- Contrato visible exacto: 1 H1, 8 H2, 6 H3, tres FAQ, una lista semántica de
+  cinco ejemplos, una tabla accesible de seis filas y tres anchors.
+- La secuencia es hero compartido, byline con fecha, Short Answer, biblioteca
+  Branding, prueba Headshot, eje comparativo, ledger de decisión, spread de
+  proceso, FAQ nativo y cierre full-bleed.
+- La única animación editorial revela la costura `VS`; el contenido ya está
+  visible por defecto y `prefers-reduced-motion` la desactiva. En móvil la
+  costura pasa de vertical a horizontal y la tabla mantiene wrapping sin
+  `min-width` que provoque overflow.
+- La ruta queda `ready/index`, `lastModified: 2026-08-11`, sin header release
+  noindex y dentro de sitemap y `llms.txt`. Staging permanece globalmente
+  noindex con sitemap vacío.
+
+## QA de cierre
+
+- Implementación funcional: `b22c581`
+  (`feat(journal): publish branding versus headshots guide`).
+- Build release y validadores staging/release: 21/21 rutas.
+- Playwright dedicado: `PASS` en 1440×1000, 1200×900, 900×900, 390×844 y
+  1728×963; 15 capturas finales en `.artifacts/branding-headshots-article/`.
+- Costura `VS`: vertical y con gutter en 900–1728; horizontal en 390. A 1440,
+  `figureGap` 174.375 px ≥ seam 88 px.
+- Accesibilidad: contraste del body Headshot 4.6104:1, foco del ledger
+  13.479:1, tabla/body mínimo 16 px, targets ≥44 px y reduced motion aprobado.
+- Cero overflow horizontal, clipping, errores runtime o requests same-origin
+  fallidos. Impeccable devolvió `[]`.
+- Revisión independiente: `PASS` sin P1/P2. Queda un P3 no funcional de
+  evidencia: los crops de sección conservan skip-link/header enfocado; las
+  capturas full-page están limpias y el comportamiento de foco es correcto.

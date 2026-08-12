@@ -98,7 +98,18 @@
   definitivo 1/8/7/3, tres anchors y nueve imágenes 7/2. Article + FAQPage +
   Breadcrumb, staging/release 21/21, Playwright 1440/1200/900/390 + spot 1728
   e Impeccable `[]` quedaron aprobados en `1dd00d3`.
-- [ ] **19B. Publicar Newborn Comparison solo después de sus tres gates.**
+- [x] **19B. Cerrar Branding vs. Headshots según ADR-056.** `b22c581` publica
+  Comp C / Impeccable `Versus Axis`, renderer/CSS aislados, copy 1/8/6/3, tres
+  anchors y 11 imágenes 8/3. Validadores 21/21, Playwright
+  1440/1200/900/390/1728, 15 capturas, Impeccable `[]` y revisión independiente
+  `PASS` sin P1/P2. La ruta queda `ready/index`, fecha `2026-08-11`, sitemap 11,
+  `llms.txt` 10 y Article + FAQ + Breadcrumb; las páginas de servicio siguen
+  `draft/noindex`.
+- [ ] **19C. Revisar y commitear localmente el cierre documental Branding vs. Headshots.**
+  Incluir únicamente los nueve archivos autorizados, usar
+  `docs(journal): record branding versus headshots publication` y no ejecutar
+  push, deploy ni `./scripts/handoff.sh`; el usuario conserva la publicación.
+- [ ] **19D. Publicar Newborn Comparison solo después de sus tres gates.**
   Resolver `[VALIDAR CON LISA]`,
   `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; hasta entonces
   conservar `draft/noindex`, header release, ausencia de fechas y exclusión de
@@ -126,6 +137,10 @@
 - [ ] Confirmar también que Newborn Comparison conserva `draft/noindex`, header
   release, exclusión de sitemap/`llms.txt`, schema sin fechas, CSS aislado y las
   nueve imágenes responsive; el push del rediseño no autoriza su publicación.
+- [ ] Confirmar que Branding vs. Headshots responde 200/index en producción,
+  carece de header noindex, usa fecha `2026-08-11`, aparece una vez en sitemap y
+  `llms.txt`, carga sus 11 imágenes responsive y mantiene el CSS aislado. Esta
+  verificación no publica Branding ni Headshots service.
 - [ ] **21. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
   tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
   filtra o se excluye antes de interpretar métricas.
@@ -219,6 +234,9 @@ sin reemplazar el archivo.
 - [ ] Confirmar duración y entregables de Headshots.
 - [ ] Revalidar que el copy de ambos coincide con
   `src/lib/session-pricing.ts` y no promete un número distinto.
+- [x] El artículo comparativo usa ese inventario real sin media nueva y tiene
+  fecha editorial autorizada `2026-08-11`; su publicación `ready/index` es
+  independiente de los gates de duración/entregables de las páginas service.
 
 ### Newborn
 
@@ -272,7 +290,7 @@ sin reemplazar el archivo.
 
 ### Journal
 
-- [ ] Fecha editorial para Branding Photos vs Headshots.
+- [x] Fecha editorial para Branding Photos vs Headshots: `2026-08-11`.
 - [x] Fecha editorial para Family Photo Locations: `2026-08-08`.
 - [ ] Datos de distritos/fechas escolares para Senior timing.
 - [ ] Respuesta/offer de Lisa referida en Q54 para Senior timing.
@@ -284,6 +302,9 @@ sin reemplazar el archivo.
   pendientes ni fechas.
 - [ ] Validación de Lisa, formato exacto y fecha real para Newborn Comparison;
   mantener `draft/noindex` y exclusión crawler mientras falte cualquiera.
+- [x] Cerrados QA y hash de Branding vs. Headshots en `b22c581`: diseño
+  `Versus Axis`, renderer/CSS, copy, media, schema y gates de publicación
+  aprobados sin P1/P2.
 
 ### Richland
 
@@ -370,10 +391,12 @@ sin reemplazar el archivo.
   `main` y `origin/main` coincidían en `b504f84`. Codex no realizó el push.
 - [ ] Publicar el lote local creado a partir de `b504f84`: historial gated de
   Contact y su reversión, media Branding/Headshots, Kind Words, Senior Timing
-  funcional `bcbadae`, cierre `2c47def` y Newborn Comparison funcional
-  `1dd00d3`. Antes del commit documental actual, `main` está 12 commits por
-  delante de `origin/main`; quedaría ahead 13 después de ese commit local.
-  Codex no ejecuta push y el usuario conserva esa operación.
+  funcional `bcbadae` y cierre `2c47def`, Newborn Comparison funcional
+  `1dd00d3` y cierre `9540fe2`, y Branding vs. Headshots funcional `b22c581`.
+  Antes del cierre documental actual, `main` está 14 commits por delante de
+  `origin/main`; quedaría ahead 15 después del commit local esperado
+  `docs(journal): record branding versus headshots publication`. Codex no
+  ejecuta push y el usuario conserva esa operación.
 - [x] Excluir `.handoff/sessions/*.jsonl` mediante `.gitignore`, pathspec y
   abortar el handoff si un transcript aparece rastreado o preparado.
 
@@ -494,6 +517,11 @@ sin reemplazar el archivo.
   Playwright 1440×1000, 1200×900, 900×900 y 390×844, más spot-check 1728:
   1/8/7/3, tres anchors, nueve imágenes 7/2, párrafos exactos, FAQ/schema,
   foco, crops, CSS aislado, red, consola y overflow correctos; Impeccable `[]`.
+- [x] Verificada `/journal/branding-photos-vs-headshots/` en staging/release y
+  Playwright 1440×1000, 1200×900, 900×900, 390×844 y 1728×963: 1/8/6/3, tres
+  anchors, checklist/lista, tabla de seis filas, 11 imágenes 8/3, fecha,
+  FAQ/schema, foco, acordeones, reduced motion, CSS aislado, red, consola y
+  overflow aprobados. Impeccable `[]`; revisión independiente `PASS` sin P1/P2.
 - [x] Revalidada la guía tras las correcciones de producción en 1728×963,
   1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
   de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto
@@ -541,6 +569,10 @@ sin reemplazar el archivo.
 - [x] Contact actualizado a `ready/index`, `lastModified: 2026-08-11`, sitemap y
   `llms.txt`; release contiene ahora diez URLs y nueve entradas citables, con
   `ContactPage`/breadcrumb y sin `Service` inventado.
+- [x] Branding vs. Headshots actualizado a `ready/index`, publicación y
+  modificación `2026-08-11`, sin header release noindex y con membresía en
+  sitemap/`llms.txt`; el release contiene ahora 11 URLs y 10 entradas citables.
+  Emite `Article`, `FAQPage` y `BreadcrumbList` sin estructurar paquetes.
 - [x] Newborn Comparison rediseñado con Article/FAQPage/Breadcrumb y sin fechas;
   conserva `draft/noindex`, header release y exclusión sitemap/`llms.txt` hasta
   resolver sus tres gates literales.
@@ -586,6 +618,9 @@ sin reemplazar el archivo.
 - [x] Completar Newborn Comparison con Concept B / House Archive, renderer y
   CSS aislados, copy 1/8/7/3, media existente 7/2 y QA responsive; su publicación
   continúa como pendiente editorial separado.
+- [x] Cerrado Branding vs. Headshots en `b22c581` con Comp C / Versus Axis,
+  renderer y CSS aislados, copy 1/8/6/3, media existente 8/3, QA final y
+  publicación `ready/index`.
 - [x] Completar About con composición A+C, hero protegido salvo la sustitución
   explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
   visible, densidad Belief/Method corregida según ADR-046/047 y autoridad

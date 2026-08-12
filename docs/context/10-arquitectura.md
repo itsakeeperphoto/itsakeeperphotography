@@ -130,8 +130,8 @@ retry, freeze tras éxito ni analítica personalizada del gate.
   `SitePreloader.astro`.
 - `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto.
 - `src/pages/journal/[slug].astro` resuelve artículos y ramifica explícitamente
-  Family Photo Locations, Senior Timing y Newborn Comparison a sus renderers
-  especializados antes del fallback `ContentPage`.
+  Family Photo Locations, Senior Timing, Newborn Comparison y Branding vs.
+  Headshots a sus renderers especializados antes del fallback `ContentPage`.
 - `src/pages/portfolio.astro` conserva el flipbook especializado.
 - `src/pages/tina-island/[name].ts` sirve refresco visual de islas Tina.
 - `src/pages/sitemap.xml.ts`, `robots.txt.ts` y `llms.txt.ts` generan salidas
@@ -157,7 +157,7 @@ Componentes especializados existentes:
 - `BrandingPage.astro`, `HeadshotPage.astro`
 - `AboutPage.astro`, `InvestmentPage.astro`, `ContactPage.astro`
 - `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`,
-  `NewbornComparisonPage.astro`
+  `NewbornComparisonPage.astro`, `BrandingHeadshotsArticlePage.astro`
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
 - `ContentPage.astro` para rutas aún genéricas, incluidas Reviews, Privacy,
   Thank-you y algunos artículos.
@@ -193,6 +193,20 @@ siete informativas y dos prints decorativos. `journal/[slug].astro` y
 lo enlaza únicamente en esta ruta; no filtra selectores a las otras veinte.
 El pase final corrigió crops por breakpoint, breathing room y balance del
 díptico, y el validador protege además la secuencia literal de párrafos.
+
+`BrandingHeadshotsArticlePage.astro` renderiza
+`/journal/branding-photos-vs-headshots/` según Comp C / Impeccable `Versus
+Axis`: hero compartido con fecha, short answer, biblioteca Branding asimétrica,
+prueba Headshot, eje `VS`, tabla semántica de seis filas, ledger de decisión,
+proceso, tres `<details>` y cierre full-bleed. El contrato exacto es 1 H1, 8 H2,
+6 H3, tres anchors —Branding, Headshots y Contact— y 11 fuentes únicas: ocho
+informativas más tres decorativas. `journal/[slug].astro` y
+`EditorialPageRouter.astro` conservan el renderer en SSR y refresh Tina. El CSS
+`journal-branding-vs-headshots-page.css` se importa mediante `?url` y
+`Base.astro` lo enlaza únicamente en esta ruta; no filtra selectores a las
+otras veinte. La ruta está `ready/index`, fechada `2026-08-11`, y su publicación
+no cambia el estado `draft/noindex` de las páginas de servicio Branding y
+Headshots.
 
 `AboutPage.astro` publica la dirección híbrida A+C aprobada —`Keeper Archive`
 más `Through Her Lens`— como página de identidad y confianza. Su
@@ -409,10 +423,23 @@ para evitar cambios silenciosos al repositorio.
   `Article`, `FAQPage` y `BreadcrumbList` con el contenido visible, sin
   `Service`, ratings, calle, geodatos, credenciales ni fechas. Playwright cubre
   1440/1200/900/390; la revisión visual añade un spot-check a 1728 px.
+- Para Branding vs. Headshots fija `ready/index`, fecha `2026-08-11`,
+  title/description/canonical, `og:type=article`, ausencia de header noindex y
+  membresía exacta en sitemap/`llms.txt`. En HTML exige 1 H1, 8 H2, 6 H3, tres
+  anchors en orden, checklist semántico de cinco ítems, tabla accesible de seis
+  filas, tres FAQ visibles y once fuentes únicas con split 8/3. Compara el copy
+  definitivo, orden, byline, imágenes/alt, carga responsive y aislamiento CSS;
+  alinea un único `Article`, `FAQPage` y `BreadcrumbList` y prohíbe `Service`,
+  `Offer`, ratings, calle, geodatos, duración o precio estructurado. Playwright
+  cubre 1440/1200/900/390 y la revisión visual añade un spot-check a 1728 px.
+  El cierre de `b22c581` aprobó esos cinco viewports, validadores staging/release
+  21/21, 15 capturas, contraste 4.6104:1, foco 13.479:1, body/tabla ≥16 px,
+  costura `VS` vertical 900–1728/horizontal 390, cero overflow/runtime,
+  Impeccable `[]` y revisión independiente sin P1/P2.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para diez rutas:
+En `release`, el manifiesto actualmente permite sitemap para once rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
@@ -423,11 +450,12 @@ En `release`, el manifiesto actualmente permite sitemap para diez rutas:
 - `/kennewick-wa-photographer/`
 - `/pasco-wa-photographer/`
 - `/journal/family-photo-locations-tri-cities/`
+- `/journal/branding-photos-vs-headshots/`
 - `/portfolio/`
 
 `llms.txt` incluye Homepage, Family, Newborn, About, Contact, Richland,
-Kennewick, Pasco y Family Photo Locations; Portfolio está excluido de llms.
-Otras 10 rutas siguen `draft/noindex`.
+Kennewick, Pasco, Family Photo Locations y Branding vs. Headshots; Portfolio
+está excluido de llms. Otras nueve rutas siguen `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En
@@ -477,6 +505,16 @@ Newborn Photography. No contiene `datePublished`, `dateModified` ni
 `lastModified`: permanece `draft/noindex`, con header release y fuera de
 sitemap/`llms.txt` hasta resolver `[VALIDAR CON LISA]`,
 `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`.
+
+Para Branding vs. Headshots, `Base.astro` emite un único `Article` y
+`journal/[slug].astro` lo enriquece con headline, `#lisa`, `#business`, fechas
+de publicación/modificación `2026-08-11`, imagen hero real,
+`mainEntityOfPage`, temas Branding/Headshots y cobertura
+Richland/Kennewick/Pasco. La ruta añade un único `FAQPage` derivado 1:1 de las
+tres preguntas visibles y `BreadcrumbList` Home → Journal → Branding Photos
+vs. Headshots. No contiene `Service`, `Offer`, duración/precio estructurado,
+`Review`, `AggregateRating`, calle ni coordenadas. Está `ready/index`, sin
+header release noindex y dentro de sitemap y `llms.txt`.
 
 ## Assets y rendimiento
 
@@ -552,6 +590,12 @@ sitemap/`llms.txt` hasta resolver `[VALIDAR CON LISA]`,
   RAW, EXIF/IPTC/ICC ni historial/identificadores `xmpMM`. El retrato neutral de
   Headshots no incluye ciudad. Los nombres descriptivos y alt literales siguen
   siendo las señales principales; XMP no justifica inventar precisión local.
+- El artículo Branding vs. Headshots reutiliza once fuentes existentes y
+  únicas del lote auditado: ocho informativas con alt literal y tres
+  decorativas con alt vacío. Sus tres superficies hero cargan eager —solo el
+  fondo con prioridad alta— y las ocho de cuerpo lazy/async, todas con
+  dimensiones intrínsecas y variantes WebP 400/640/960/1440. El rollout no
+  añade, renombra, recodifica ni borra media compartida.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
 - Portfolio carga prioritariamente solo las páginas visibles iniciales.

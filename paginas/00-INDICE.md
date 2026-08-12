@@ -20,14 +20,15 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 15 | 15-journal-locations.md | `/journal/family-photo-locations-tri-cities/` | ✅ Completo · ready/index (fecha 2026-08-08) |
 | 16 | 16-journal-senior-timing.md | `/journal/when-to-book-senior-pictures-tri-cities/` | ⚠️ Rediseñado · `draft/noindex` (fecha editorial, datos distritales y Q54 pendientes) |
 | 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ⚠️ Rediseñado · `draft/noindex` (aprobación Lisa, formato exacto y fecha real pendientes) |
-| 18 | 18-journal-branding-vs-headshots.md | `/journal/branding-photos-vs-headshots/` | ✅ Completo |
+| 18 | 18-journal-branding-vs-headshots.md | `/journal/branding-photos-vs-headshots/` | ✅ Rediseñado y publicado · `ready/index` (fecha 2026-08-11) |
 
 **Utilidad (no search-facing):** `/privacy/` (legal estándar) y `/thank-you/` (noindex, destino del formulario para medir conversiones).
 
 ## Orden de publicación recomendado
 
 1. Home + Contact + About (base del sitio)
-2. Headshots + Branding + journal branding-vs-headshots (quick wins — ya rankeamos)
+2. Journal Branding vs. Headshots ya publicado; las páginas de servicio
+   Headshots y Branding permanecen `draft/noindex` hasta confirmar sus paquetes
 3. Seniors + journal senior-timing (cluster 450/mes, KD 0)
 4. Family + journal locations
 5. Newborn ya está publicado; journal newborn solo tras aprobar el artículo,
@@ -47,5 +48,8 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
   `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; la ruta 17 sigue
   `draft/noindex`, sin fechas y fuera de sitemap/`llms.txt`. La página de
   servicio 4 ya está publicada y no comparte este gate.
+- **Branding y Headshots:** confirmar duración, cantidad de imágenes y
+  entregables de las dos páginas de servicio. El artículo comparativo 18 ya está
+  publicado con fecha `2026-08-11` y no comparte esos gates de paquete.
 - **Locaciones de ciudad:** validar los spots reales + 1 detalle de primera mano por lugar (afecta 13)
 - **Hija/health challenges:** confirmar si se publica (Home/About)

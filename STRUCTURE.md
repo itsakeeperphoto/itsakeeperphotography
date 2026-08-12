@@ -35,7 +35,11 @@ entry when that date is missing.
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
+| `/journal/branding-photos-vs-headshots/` | Article | 2026-08-11 |
 | `/portfolio/` | Portfolio | 2026-07-21 |
+
+The release sitemap contains 11 canonical URLs. `llms.txt` contains 10
+citations: the same indexable set except Portfolio.
 
 ## Planned public architecture
 
@@ -74,7 +78,9 @@ threshold. Each must retain genuinely city-specific content before it is approve
   specialized House Archive renderer and route-only CSS; remains draft/noindex,
   without dates and excluded from sitemap/`llms.txt` until Lisa approves the
   article, confirms the exact combined format and supplies a real date
-- `/journal/branding-photos-vs-headshots/` — draft; excluded
+- `/journal/branding-photos-vs-headshots/` — redesigned with the specialized
+  Versus Axis renderer and route-only CSS; ready and indexable with publication
+  and modification date `2026-08-11`
 
 ### Portfolio and utilities
 
@@ -100,7 +106,9 @@ threshold. Each must retain genuinely city-specific content before it is approve
   four route anchors — Senior twice, Locations once and Contact once — while its
   hero scroll control remains a button. Newborn Comparison uses exactly three
   route anchors — Family, Newborn and Contact, in that order — while its hero
-  scroll control also remains a button.
+  scroll control also remains a button. Branding vs. Headshots uses exactly
+  three route anchors — Branding, Headshots and Contact, in that order — while
+  its hero scroll control also remains a button.
 
 The Newborn Comparison release contract is intentionally stricter than its
 visual completion: it renders one `Article`, one FAQ derived 1:1 from the three
@@ -109,6 +117,17 @@ dates. Its exact 1 H1/8 H2/7 H3 hierarchy, complete ordered paragraph copy and
 nine-image 7-informative/2-decorative inventory are validated, but none of those
 facts authorizes indexing while `[VALIDAR CON LISA]`,
 `[VALIDAR: formato exacto que ofrece Lisa]` and `[FECHA]` remain unresolved.
+
+The Branding vs. Headshots publication contract uses Comp C / Impeccable
+`Versus Axis`: one formal headshot proof faces an asymmetric branding library
+across a central seam, followed by the source comparison as a semantic table.
+Its exact 1 H1/8 H2/6 H3 hierarchy, three visible FAQ, five-item semantic list,
+six-row table, three anchors and eleven unique images with an 8-informative /
+3-decorative split are validated. It emits one `Article` dated `2026-08-11`,
+one `FAQPage` derived 1:1 from the visible questions and one `BreadcrumbList`.
+It does not turn editorial comparisons into `Service`, `Offer`, structured
+duration or price claims. Its service destinations remain independently
+`draft/noindex`.
 
 ## Publishing a draft route
 

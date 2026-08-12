@@ -1672,3 +1672,118 @@ Los tres pendientes literales son `[VALIDAR CON LISA]`,
 `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`. Mientras cualquiera
 permanezca, no se añaden `datePublished`, `dateModified` o `lastModified`, no se
 cambia a `ready/index` y no se incorpora la URL a crawler outputs.
+
+## 18. ADDENDUM DE RUTA — BRANDING VS. HEADSHOTS VERSUS AXIS
+
+Este addendum fija el rediseño y publicación de
+`/journal/branding-photos-vs-headshots/`. La ruta es un artículo comparativo
+`ready/index`, publicado y modificado el `2026-08-11`; no publica ni resuelve
+los paquetes pendientes de las páginas de servicio Branding y Headshots.
+
+### Dirección canónica
+
+- Comp C / Impeccable,
+  `.impeccable/mocks/branding-headshots-comparison-c-versus-axis.png`, es la
+  dirección canónica: `Versus Axis`.
+- El eje hace visible la diferencia antes de la tabla: un retrato formal y
+  singular enfrenta una biblioteca asimétrica de persona, proceso y lugar. Una
+  costura central `VS` une ambas pruebas y continúa conceptualmente en la tabla
+  reglada.
+- Comp A `Proofbook` y Comp B `Dossier` se conservan como alternativas
+  auditadas no seleccionadas. A dispersaba la comparación en un archivo de
+  pruebas; B la subordinaba a una lectura de dossier menos inmediata.
+- Las comps solo gobiernan geometría, densidad y jerarquía. Personas, escenas,
+  sample copy o identidades generadas no llegan a producción.
+
+### Secuencia compositiva
+
+1. **Hero compartido:** `EditorialHero` con chef trabajando, dos prints
+   decorativos, H1/intro centrados y botón `Read the comparison` hacia
+   `the-short-answer`.
+2. **Byline:** Lisa Weiss, It's A Keeper Photography, Richland, WA y fecha
+   autorizada `August 11, 2026`.
+3. **Short Answer:** manifiesto ivory con las dos afirmaciones definitivas y su
+   énfasis semántico restaurado.
+4. **What Are Branding Photos?:** arco único, biblioteca asimétrica de tres
+   imágenes y checklist semántico de cinco ítems.
+5. **What Is a Headshot?:** columna estrecha de copy y una prueba formal
+   disciplinada; no se convierte en card.
+6. **Side by Side:** retrato singular, costura `VS`, prueba Branding más amplia
+   y tabla semántica de tres columnas/seis filas.
+7. **Which Does Your Business Need First?:** ledger deep-umber de tres
+   decisiones y enlaces Branding/Headshots en orden fuente.
+8. **What Happens in a Branding Session?:** split de acción/prosa, sin grilla
+   de cards equivalentes.
+9. **Common Questions:** tres filas `<details>` nativas; el primer detalle abre
+   por defecto y sus H3/respuestas se reflejan 1:1 en schema.
+10. **Cierre:** fotografía de equipo full-bleed, copy definitivo y CTA a
+    Contact.
+
+### Gramática, semántica y verdad
+
+- Contrato exacto: 1 H1, 8 H2, 6 H3, tres FAQ y tres anchors dentro de
+  `<main>`: Branding → Headshots → Contact. El control del hero es botón local,
+  no anchor.
+- Los cinco ejemplos Branding son un `<ul>` y la comparación fuente es una
+  `<table>` accesible. `Headshot` y `Branding photos` son headers de columna, no
+  headings falsos.
+- Superficies cuadradas, elevación plana y hairlines de 1 px. El arco de la
+  biblioteca es la única curva fuerte; la costura central no es badge.
+- Tipografía display compartida hasta `6rem`, tracking nunca menor que
+  `-0.04em`, body mínimo de `1rem` y metadata uppercase con la sans del sitio.
+- Sin gradientes, glass, sombras, cards redondeadas, tape, pins, splatter,
+  badges, textura falsa, rotación arbitraria ni identidad copiada.
+- Las comparaciones editoriales `1–3 polished portraits`, `Under an hour` y
+  `Half a day, typically` permanecen copy visible autorizado; no se modelan
+  como paquete, `Service`, `Offer`, duración o precio estructurado.
+
+### Media
+
+- Once fuentes existentes y únicas: ocho informativas con alt literal y tres
+  decorativas con alt vacío.
+- El hero usa
+  `/uploads/branding-chef-kitchen-richland-wa.jpg`,
+  `/uploads/professional-headshot-woman-neutral-backdrop.jpg` y
+  `/uploads/pianist-creative-branding-portrait-richland-wa.jpg`.
+- El cuerpo usa tres pruebas Branding, dos Headshots, una pareja de negocio,
+  un detalle de proceso y el cierre de equipo definidos en
+  `paginas/18-journal-branding-vs-headshots.md`.
+- Las tres imágenes del hero cargan eager; solo el fondo tiene prioridad alta.
+  Las otras ocho cargan lazy/async, con dimensiones intrínsecas y WebP
+  responsive 400/640/960/1440 existentes.
+- El rollout no renombra, recodifica, sobrescribe ni borra media compartida, y
+  no infiere ciudad, rol o tipo de sesión fuera del alt y metadata verificados.
+
+### Render, responsive e interacción
+
+- `BrandingHeadshotsArticlePage.astro` resuelve la ruta tanto en SSR como en el
+  refresh Tina; no existe caída a `ContentPage`.
+- `journal-branding-vs-headshots-page.css` se importa mediante `?url` y
+  `Base.astro` lo enlaza solo para esta ruta. Todos los selectores se limitan a
+  `.branding-headshots-*`; el validador debe fallar ante ausencia o leakage.
+- Breakpoints: 1250, 1050, 767 y 430 px. Desktop conserva spreads de 12
+  columnas y eje vertical; móvil respeta el orden DOM, apila las pruebas,
+  convierte la costura en regla horizontal y permite wrapping en la tabla sin
+  `min-width` que genere overflow.
+- Foco visible y superficies operables de al menos 44 px son obligatorios para
+  botón, links y summaries. La única animación revela la costura `VS`, con el
+  contenido visible por defecto y desactivación bajo `prefers-reduced-motion`.
+
+### Publicación, schema y QA requerido
+
+- La ruta usa `ready/index`, `lastModified: 2026-08-11`, canonical `www`,
+  `og:type=article`, sin header release noindex y con membresía única en sitemap
+  y `llms.txt`. Staging conserva noindex global y sitemap vacío.
+- Se emiten un `Article` fechado `2026-08-11`, un `FAQPage` derivado 1:1 de las
+  tres preguntas visibles y un `BreadcrumbList` Home → Journal → Branding
+  Photos vs. Headshots. No se emiten `Service`, `Offer`, `Review`,
+  `AggregateRating`, calle, coordenadas, duración o precio estructurado.
+- QA final: validadores staging/release 21/21 y Playwright `PASS` en
+  1440×1000, 1200×900, 900×900, 390×844 y 1728×963, con 15 capturas. La
+  costura `VS` es vertical en 900–1728 y horizontal en 390; a 1440,
+  `figureGap` 174.375 px ≥ seam 88 px. Contraste Headshot 4.6104:1, foco del
+  ledger 13.479:1, tabla/body ≥16 px, targets ≥44 px, reduced motion y cero
+  overflow/runtime quedan aprobados. Impeccable devolvió `[]` y la revisión
+  independiente `PASS` sin P1/P2. El P3 no funcional de los crops de sección
+  con header/skip-link enfocado no afecta las capturas full-page ni la
+  accesibilidad real.

@@ -1263,3 +1263,51 @@
   documental `main` está 12 commits por delante de `origin/main`; el cierre
   queda sin stage para un commit local separado, que lo dejaría ahead 13. No se
   hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### ADR-056 — Branding vs. Headshots publica un Versus Axis sin convertir comparación editorial en paquete
+- **Fecha:** 2026-08-11
+- **Estado:** Aceptada.
+- **Contexto:** El artículo
+  `/journal/branding-photos-vs-headshots/` caía en `ContentPage` aunque su copy
+  comparaba dos productos visualmente distintos y ya contaba con fotografía
+  real auditada. Conservaba `[FECHA]`, `draft/noindex` y exclusión crawler. El
+  usuario autorizó publicarlo el `2026-08-11`, delegó la selección de dirección
+  y pidió continuar sin una pausa adicional. Las páginas de servicio Branding
+  y Headshots mantienen pendientes propios de duración/entregables; el copy del
+  artículo contiene comparaciones editoriales, no especificaciones
+  contractuales de paquetes.
+- **Decisión:** Adoptar Comp C / Impeccable
+  `.impeccable/mocks/branding-headshots-comparison-c-versus-axis.png`, `Versus
+  Axis`: un headshot singular enfrenta una biblioteca Branding asimétrica de
+  persona, proceso y lugar mediante una costura central `VS`, seguida por la
+  tabla fuente. Crear `BrandingHeadshotsArticlePage.astro` para SSR y refresh
+  Tina, y aislar `journal-branding-vs-headshots-page.css` mediante `?url` para
+  que solo esta ruta lo reciba. Fijar el copy definitivo en 1 H1, 8 H2, 6 H3,
+  tres FAQ, checklist semántico de cinco ítems, tabla accesible de seis filas y
+  tres anchors Branding → Headshots → Contact; el hero usa botón local. Usar
+  once fuentes existentes y únicas, ocho informativas y tres decorativas, sin
+  editar media compartida. Publicar `ready/index` con `lastModified`,
+  `datePublished` y `dateModified` `2026-08-11`, retirar el header release
+  noindex, enlazar la card del hub y añadir la URL a sitemap/`llms.txt`. Emitir
+  exactamente un `Article`, un `FAQPage` 1:1 y un `BreadcrumbList`, sin
+  `Service`, `Offer`, duración/precio estructurado, reseñas, rating, calle ni
+  coordenadas. Mantener las páginas Branding y Headshots `draft/noindex` hasta
+  resolver sus gates separados.
+- **Alternativas descartadas:** Comp A `Proofbook`, Comp B `Dossier`, conservar
+  el renderer genérico, cargar el CSS en todas las rutas, simular la comparación
+  con cards, usar una costura como badge, generar personas/escenas nuevas,
+  duplicar imágenes o transformar `1–3 portraits`, `Under an hour` y `Half a
+  day, typically` en schema de paquetes se descartó por menor claridad,
+  leakage, pérdida semántica, falta de evidencia o riesgo de promesa comercial.
+- **Consecuencias:** El commit funcional `b22c581` eleva release a 11 URLs en
+  sitemap y 10 entradas en `llms.txt`, conserva staging globalmente noindex y
+  mantiene nueve rutas editoriales `draft/noindex` más Thank-you noindex
+  permanente. Los validadores staging/release aprobaron 21/21 rutas y la suite
+  dedicada pasó en 1440×1000, 1200×900, 900×900, 390×844 y 1728×963, con 15
+  capturas finales. El pase corrigió contraste Headshot a 4.6104:1, foco del
+  ledger a 13.479:1 y tabla/body móvil a ≥16 px; la costura `VS` queda vertical
+  en 900–1728 y horizontal en 390, con `figureGap` 174.375 px ≥ seam 88 px a
+  1440. Impeccable devolvió `[]` y la revisión independiente `PASS` sin P1/P2,
+  con cero overflow o errores runtime. El build default inicial solo chocó con
+  el servidor preexistente en `:9000`; los builds definitivos se ejecutaron
+  aislados. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.
