@@ -1,8 +1,8 @@
 {
   "route": "/journal/",
   "family": "journal-hub",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "CollectionPage",
   "signature": "overlap",
   "title": "Photography Journal | Tips & Locations From Lisa",
@@ -31,13 +31,7 @@
         },
         {
           "heading": "When to Take Senior Pictures: A Tri-Cities Timeline",
-          "detail": "The honest answer to \"is it too late?\", plus the booking calendar nobody tells you about.",
-          "links": [
-            {
-              "label": "When to Take Senior Pictures: A Tri-Cities Timeline",
-              "href": "/journal/when-to-book-senior-pictures-tri-cities/"
-            }
-          ]
+          "detail": "The honest answer to \"is it too late?\", plus the booking calendar nobody tells you about."
         },
         {
           "heading": "In-Home vs. Studio Newborn Photography",

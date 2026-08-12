@@ -22,7 +22,6 @@ async (page) => {
     ],
     links: [
       "/contact/",
-      "/journal/in-home-vs-studio-newborn-photography/",
       "/family-photographer-tri-cities-wa/",
       "/contact/",
     ],
@@ -230,6 +229,13 @@ async (page) => {
         .filter((url) => url.origin === location.origin)
         .map((url) => url.pathname);
       const h2s = [...(root?.querySelectorAll("h2") || [])];
+      const headingsFit = h2s.every((node) => {
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        const ink = range.getBoundingClientRect();
+        const container = (node.closest("section") || root).getBoundingClientRect();
+        return ink.left >= container.left - 1 && ink.right <= container.right + 1;
+      });
       const processItems = [...(process?.querySelectorAll(".newborn-process__item") || [])];
       const processItemRects = processItems.map(rect);
       const summaries = details.map((detail) => detail.querySelector("summary"));
@@ -242,7 +248,7 @@ async (page) => {
           normalize(node.textContent || ""),
         ),
         h2: h2s.map((node) => normalize(node.textContent || "")),
-        headingsFit: h2s.every((node) => node.scrollWidth <= node.clientWidth + 1),
+        headingsFit,
         internalLinks,
         faqQuestions,
         faqCount: details.length,

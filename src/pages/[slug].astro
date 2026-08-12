@@ -124,6 +124,28 @@ const contactBreadcrumbSchema =
         ],
       }
     : null;
+const journalBreadcrumbSchema =
+  entry.id === "journal"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteOrigin}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Journal",
+            item: canonical,
+          },
+        ],
+      }
+    : null;
 const cityPageDetails =
   entry.id === "richland"
     ? { city: "Richland", breadcrumb: "Richland Photographer" }
@@ -344,9 +366,11 @@ const detailedAdditionalSchema = detailedService
       ? [investmentBreadcrumbSchema]
       : contactBreadcrumbSchema
         ? [contactBreadcrumbSchema]
-        : cityBreadcrumbSchema
-          ? [...(cityServiceSchema ? [cityServiceSchema] : []), cityBreadcrumbSchema]
-          : [];
+        : journalBreadcrumbSchema
+          ? [journalBreadcrumbSchema]
+          : cityBreadcrumbSchema
+            ? [...(cityServiceSchema ? [cityServiceSchema] : []), cityBreadcrumbSchema]
+            : [];
 const pageSchemaExtra = entry.id === "about"
   ? {
       about: { "@id": aboutPersonId },
