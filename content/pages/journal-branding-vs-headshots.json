@@ -1,15 +1,21 @@
 {
   "route": "/journal/branding-photos-vs-headshots/",
   "family": "article",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Article",
   "signature": "crossing-line",
   "title": "Branding Photos vs. Headshots: What's the Difference?",
   "description": "What are branding photos, how are they different from headshots, and which does your business need first? A working photographer's plain-English breakdown.",
   "hero": {
     "tone": "earth",
-    "heading": "Branding Photos vs. Headshots: What's the Difference?"
+    "heading": "Branding Photos vs. Headshots: What's the Difference?",
+    "intro": "What are branding photos, how are they different from headshots, and which does your business need first? A working photographer's plain-English breakdown.",
+    "scriptLine": "side by side",
+    "image": "/uploads/branding-chef-kitchen-richland-wa.jpg",
+    "imageAlt": "Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session.",
+    "secondaryImage": "/uploads/professional-headshot-woman-neutral-backdrop.jpg",
+    "secondaryImageAlt": ""
   },
   "sections": [
     {
@@ -27,9 +33,15 @@
       "tone": "sand",
       "heading": "What Are Branding Photos?",
       "intro": "Branding photos (sometimes called a personal branding session or custom business photography) are a planned collection of images built around your brand. A typical branding gallery includes:",
+      "image": "/uploads/business-professional-working-laptop-richland-wa.jpg",
+      "imageAlt": "Business professional working at a laptop during a Richland branding session.",
+      "secondaryImage": "/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg",
+      "secondaryImageAlt": "Business owner standing beside a kitchen island during a West Richland branding session.",
       "items": [
         {
-          "detail": "Portraits of you that feel like your brand — not stiff, not generic"
+          "detail": "Portraits of you that feel like your brand — not stiff, not generic",
+          "image": "/uploads/businesswoman-working-desk-richland-wa.jpg",
+          "imageAlt": "Business owner writing at her desk during a Richland workplace branding session."
         },
         {
           "detail": "You doing the work: hands, tools, process, craft"
@@ -53,6 +65,8 @@
       "kind": "split",
       "tone": "olive",
       "heading": "What Is a Headshot?",
+      "image": "/uploads/professional-headshot-man-blue-shirt-kennewick-wa.jpg",
+      "imageAlt": "Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.",
       "paragraphs": [
         "A headshot is a professional portrait — usually shoulders-up, clean background, focused entirely on you. It lives on LinkedIn, your company's team page, conference programs, proposals and anywhere your name appears. A great headshot is warm, confident and current (that last one matters — a ten-year-old headshot works against you)."
       ]
@@ -62,6 +76,10 @@
       "kind": "comparison",
       "tone": "earth",
       "heading": "Side by Side: Branding Photos vs. Headshots",
+      "image": "/uploads/professional-headshot-woman-black-top-kennewick-wa.jpg",
+      "imageAlt": "Smiling woman in a black top photographed during a Kennewick team headshot session.",
+      "secondaryImage": "/uploads/business-partners-office-portrait-richland-wa.jpg",
+      "secondaryImageAlt": "Two business professionals posing together in their Richland office.",
       "items": [
         {
           "heading": "Headshot",
@@ -128,6 +146,8 @@
       "kind": "prose",
       "tone": "olive",
       "heading": "What Happens in a Branding Session?",
+      "image": "/uploads/chef-saute-pan-branding-detail-richland-wa.jpg",
+      "imageAlt": "Chef stirring vegetables in a pan during a close-up Richland branding photograph.",
       "paragraphs": [
         "With me, it starts with a strategy call: where will these images live, what do clients need to feel, what makes your business unmistakably yours. Then we shoot on location at your workspace or a Tri-Cities spot that fits your brand — guided the entire time, because feeling awkward in front of a camera at your own business is completely normal and completely fixable. You walk away with a warm, consistent library sized for real use."
       ]
@@ -165,12 +185,12 @@
     "paragraphs": [
       "Whether you need one great headshot or a full brand library, the goal is the same: when someone finds your business, they should meet a real person they'd want to work with."
     ],
+    "image": "/uploads/business-team-meeting-richland-wa.jpg",
+    "imageAlt": "",
     "link": {
       "label": "Start planning",
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[FECHA]"
-  ]
+  "pending": []
 }

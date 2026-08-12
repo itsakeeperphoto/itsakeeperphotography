@@ -1,6 +1,7 @@
 ---
 import type { EditorialPageData } from "../../content/page-types";
 import AboutPage from "./AboutPage.astro";
+import BrandingHeadshotsArticlePage from "./BrandingHeadshotsArticlePage.astro";
 import BrandingPage from "./BrandingPage.astro";
 import ContentPage from "./ContentPage.astro";
 import ContactPage from "./ContactPage.astro";
@@ -26,6 +27,8 @@ const props = Astro.props;
 const isAboutPage = props.page.route === "/about/";
 const isBrandingPage =
   props.page.route === "/branding-photographer-tri-cities-wa/";
+const isBrandingHeadshotsArticlePage =
+  props.page.route === "/journal/branding-photos-vs-headshots/";
 const isContactPage = props.page.route === "/contact/";
 const isFamilyPage = props.page.route === "/family-photographer-tri-cities-wa/";
 const isHeadshotPage = props.page.route === "/headshot-photographer-tri-cities-wa/";
@@ -44,6 +47,8 @@ const isSeniorTimingPage =
 
 {isAboutPage
   ? <AboutPage {...props} />
+  : isBrandingHeadshotsArticlePage
+    ? <BrandingHeadshotsArticlePage {...props} />
   : isBrandingPage
     ? <BrandingPage {...props} />
   : isContactPage

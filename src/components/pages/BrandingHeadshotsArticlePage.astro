@@ -1,0 +1,492 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+}
+
+interface ComparisonRow {
+  label: string;
+  headshot: string;
+  branding: string;
+}
+
+interface EmphasisParts {
+  before: string;
+  emphasis: string;
+  after: string;
+}
+
+const { page } = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) {
+    throw new Error(
+      `Branding photos vs. headshots article is missing the required section: ${id}`,
+    );
+  }
+  return section;
+};
+
+const requireText = (value: string | undefined, context: string): string => {
+  if (!value) throw new Error(`Branding photos vs. headshots article requires ${context}.`);
+  return value;
+};
+
+const splitComparisonLine = (line: string) => {
+  const separator = line.indexOf(":");
+  if (separator < 1) {
+    throw new Error(`Comparison line must use "Label: value": ${line}`);
+  }
+  return {
+    label: line.slice(0, separator).trim(),
+    value: line.slice(separator + 1).trim(),
+  };
+};
+
+const emphasizeWithin = (
+  text: string,
+  marker: string,
+  emphasis: string,
+): EmphasisParts => {
+  const markerStart = text.indexOf(marker);
+  const emphasisOffset = marker.indexOf(emphasis);
+  if (markerStart < 0 || emphasisOffset < 0) {
+    throw new Error(`Required emphasis marker is missing: ${marker}`);
+  }
+  const emphasisStart = markerStart + emphasisOffset;
+  return {
+    before: text.slice(0, emphasisStart),
+    emphasis,
+    after: text.slice(emphasisStart + emphasis.length),
+  };
+};
+
+const shortAnswer = requireSection("the-short-answer");
+const branding = requireSection("what-are-branding-photos");
+const headshot = requireSection("what-is-a-headshot");
+const comparison = requireSection("side-by-side");
+const decision = requireSection("which-does-your-business-need-first");
+const session = requireSection("what-happens-in-a-branding-session");
+const questions = requireSection("common-questions");
+const finalCta = page.finalCta;
+
+if (!finalCta) throw new Error("Branding photos vs. headshots article requires a final CTA.");
+
+const shortAnswerText = requireText(shortAnswer.paragraphs?.[0], "the Short Answer copy");
+const shortHeadshotLead = "A headshot is one great portrait of you.";
+const shortBrandingLead =
+  "Branding photos are a full library of images about your business";
+const shortLead = `${shortHeadshotLead} ${shortBrandingLead}`;
+if (!shortAnswerText.startsWith(shortLead)) {
+  throw new Error("The definitive Short Answer emphasis contract changed.");
+}
+const shortAnswerRemainder = shortAnswerText.slice(shortLead.length);
+
+const brandingClosing = requireText(
+  branding.paragraphs?.[0],
+  "the Branding Photos closing paragraph",
+);
+const brandingClosingParts = emphasizeWithin(
+  brandingClosing,
+  "look like your business",
+  "look like your business",
+);
+
+const personalDecisionText = requireText(
+  decision.items?.[1]?.paragraphs?.[0],
+  "the branding-first decision copy",
+);
+const personalDecisionParts = emphasizeWithin(
+  personalDecisionText,
+  "Your business is personal.",
+  "is",
+);
+
+const wardrobeText = requireText(
+  questions.items?.[0]?.paragraphs?.[0],
+  "the branding wardrobe answer",
+);
+const wardrobeParts = emphasizeWithin(wardrobeText, "recognizably you", "you");
+const smallBusinessText = requireText(
+  questions.items?.[2]?.paragraphs?.[0],
+  "the small-business answer",
+);
+const smallBusinessParts = emphasizeWithin(smallBusinessText, "you are the brand", "are");
+
+const comparisonItems = comparison.items || [];
+if (comparisonItems.length !== 2) {
+  throw new Error("The comparison table requires Headshot and Branding photos columns.");
+}
+const headshotLines = comparisonItems[0].paragraphs || [];
+const brandingLines = comparisonItems[1].paragraphs || [];
+if (headshotLines.length !== 6 || brandingLines.length !== 6) {
+  throw new Error("The comparison table requires six matched rows.");
+}
+const comparisonRows: ComparisonRow[] = headshotLines.map((line, index) => {
+  const left = splitComparisonLine(line);
+  const right = splitComparisonLine(brandingLines[index]);
+  if (left.label !== right.label) {
+    throw new Error(`Comparison row labels do not match: ${left.label} / ${right.label}`);
+  }
+  return { label: left.label, headshot: left.value, branding: right.value };
+});
+
+const brandingProcessProof = branding.items?.find((item) => item.image);
+const brandingLink = decision.links?.find(
+  (link) => link.href === "/branding-photographer-tri-cities-wa/",
+);
+const headshotLink = decision.links?.find(
+  (link) => link.href === "/headshot-photographer-tri-cities-wa/",
+);
+if (!brandingLink || !headshotLink) {
+  throw new Error("The decision section requires Branding and Headshots service links.");
+}
+
+const brandingWorkImage = requireText(branding.image, "the branding work image");
+const brandingEnvironmentImage = requireText(
+  branding.secondaryImage,
+  "the branding environment image",
+);
+const brandingProcessImage = requireText(
+  brandingProcessProof?.image,
+  "the branding process image",
+);
+const headshotImage = requireText(headshot.image, "the primary headshot proof");
+const comparisonHeadshotImage = requireText(
+  comparison.image,
+  "the comparison headshot proof",
+);
+const comparisonBrandingImage = requireText(
+  comparison.secondaryImage,
+  "the comparison branding proof",
+);
+const sessionImage = requireText(session.image, "the branding session detail image");
+const finalImage = requireText(finalCta.image, "the final CTA image");
+---
+
+<article
+  class="branding-headshots-page"
+  data-branding-headshots-page
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="journal"
+    titleId="branding-headshots-hero-title"
+    heading={page.hero.heading}
+    headingLines={["Branding Photos", "vs. Headshots:", "What's the Difference?"]}
+    scriptLine={page.hero.scriptLine}
+    intro={page.hero.intro}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="50% 39%"
+    mobileBackgroundPosition="58% 43%"
+    leftPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 30%",
+    }}
+    rightPrint={{
+      src: "/uploads/pianist-creative-branding-portrait-richland-wa.jpg",
+      objectPosition: "50% 35%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel="Read the comparison"
+    buttonTargetId={shortAnswer.id}
+  />
+
+  <div class="branding-headshots-byline" aria-label="Article author and publication date">
+    <span>By Lisa Weiss</span>
+    <span aria-hidden="true">·</span>
+    <span>It's A Keeper Photography</span>
+    <span aria-hidden="true">·</span>
+    <span>Richland, WA</span>
+    <span aria-hidden="true">·</span>
+    <time datetime="2026-08-11">August 11, 2026</time>
+  </div>
+
+  <section
+    class="branding-headshots-answer"
+    id={shortAnswer.id}
+    aria-labelledby={`${shortAnswer.id}-title`}
+    tabindex="-1"
+  >
+    <div class="branding-headshots-shell branding-headshots-answer__inner">
+      <h2 id={`${shortAnswer.id}-title`}>{shortAnswer.heading}</h2>
+      <p>
+        <strong>{shortHeadshotLead}</strong>{" "}<strong>{shortBrandingLead}</strong>{shortAnswerRemainder}
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-library"
+    id={branding.id}
+    aria-labelledby={`${branding.id}-title`}
+  >
+    <div class="branding-headshots-shell branding-headshots-library__inner">
+      <div class="branding-headshots-library__copy">
+        <h2 id={`${branding.id}-title`}>{branding.heading}</h2>
+        {branding.intro && <p class="branding-headshots-library__intro">{branding.intro}</p>}
+        <ul>
+          {branding.items?.map((item) => (
+            <li>
+              <span aria-hidden="true"></span>
+              {item.detail}
+            </li>
+          ))}
+        </ul>
+        <p>
+          {brandingClosingParts.before}<em>{brandingClosingParts.emphasis}</em>{brandingClosingParts.after}
+        </p>
+      </div>
+
+      <div class="branding-headshots-library__media">
+        <span class="branding-headshots-library__line" aria-hidden="true"></span>
+        <figure class="branding-headshots-library__arch">
+          <Picture
+            src={brandingWorkImage}
+            alt={branding.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 45vw, 33rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <figure class="branding-headshots-library__proof branding-headshots-library__proof--environment">
+          <Picture
+            src={brandingEnvironmentImage}
+            alt={branding.secondaryImageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 46vw, (max-width: 1050px) 24vw, 18rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <figure class="branding-headshots-library__proof branding-headshots-library__proof--process">
+          <Picture
+            src={brandingProcessImage}
+            alt={brandingProcessProof?.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 54vw, (max-width: 1050px) 29vw, 21rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-headshot"
+    id={headshot.id}
+    aria-labelledby={`${headshot.id}-title`}
+  >
+    <div class="branding-headshots-shell branding-headshots-headshot__inner">
+      <div class="branding-headshots-headshot__copy">
+        <h2 id={`${headshot.id}-title`}>{headshot.heading}</h2>
+        {headshot.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <figure class="branding-headshots-headshot__proof">
+        <Picture
+          src={headshotImage}
+          alt={headshot.imageAlt || ""}
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) min(82vw, 30rem), (max-width: 1050px) 43vw, 32rem"
+          imgClass="photo--editorial"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-comparison"
+    id={comparison.id}
+    aria-labelledby={`${comparison.id}-title`}
+  >
+    <div class="branding-headshots-shell branding-headshots-comparison__inner">
+      <h2 id={`${comparison.id}-title`}>{comparison.heading}</h2>
+
+      <div class="branding-headshots-comparison__axis" data-versus-axis>
+        <figure class="branding-headshots-comparison__headshot">
+          <Picture
+            src={comparisonHeadshotImage}
+            alt={comparison.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 40vw, 28rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <div class="branding-headshots-comparison__seam" aria-hidden="true">
+          <span class="branding-headshots-comparison__seam-line"></span>
+          <span class="branding-headshots-comparison__versus">VS</span>
+          <span class="branding-headshots-comparison__seam-line"></span>
+        </div>
+        <figure class="branding-headshots-comparison__branding">
+          <Picture
+            src={comparisonBrandingImage}
+            alt={comparison.secondaryImageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1050px) 45vw, 35rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+
+      <div class="branding-headshots-comparison__table-wrap">
+        <table
+          class="branding-headshots-comparison__table"
+          aria-labelledby={`${comparison.id}-title`}
+        >
+          <thead>
+            <tr>
+              <th scope="col">
+                <span class="branding-headshots-visually-hidden">Comparison point</span>
+              </th>
+              <th scope="col">{comparisonItems[0].heading}</th>
+              <th scope="col">{comparisonItems[1].heading}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td>{row.headshot}</td>
+                <td>{row.branding}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-decision"
+    id={decision.id}
+    aria-labelledby={`${decision.id}-title`}
+  >
+    <div class="branding-headshots-shell branding-headshots-decision__inner">
+      <h2 id={`${decision.id}-title`}>{decision.heading}</h2>
+      <ol class="branding-headshots-decision__list">
+        {decision.items?.map((item, itemIndex) => (
+          <li>
+            <span class="branding-headshots-decision__number" aria-hidden="true">
+              {String(itemIndex + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h3>{item.heading}</h3>
+              {item.paragraphs?.map((paragraph, paragraphIndex) => (
+                itemIndex === 1 && paragraphIndex === 0 ? (
+                  <p>
+                    {personalDecisionParts.before}<em>{personalDecisionParts.emphasis}</em>{personalDecisionParts.after}
+                  </p>
+                ) : <p>{paragraph}</p>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <nav class="branding-headshots-decision__links" aria-label="Choose a photography service">
+        <a href={brandingLink.href}>{brandingLink.label}<span aria-hidden="true">→</span></a>
+        <a href={headshotLink.href}>{headshotLink.label}<span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-session"
+    id={session.id}
+    aria-labelledby={`${session.id}-title`}
+  >
+    <div class="branding-headshots-session__inner">
+      <figure class="branding-headshots-session__image">
+        <Picture
+          src={sessionImage}
+          alt={session.imageAlt || ""}
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="(max-width: 767px) 100vw, (max-width: 1050px) 48vw, 52vw"
+          imgClass="photo--editorial"
+        />
+      </figure>
+      <div class="branding-headshots-session__copy">
+        <h2 id={`${session.id}-title`}>{session.heading}</h2>
+        {session.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-faq"
+    id={questions.id}
+    aria-labelledby={`${questions.id}-title`}
+  >
+    <div class="branding-headshots-shell branding-headshots-faq__inner">
+      <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+      <div class="branding-headshots-faq__list">
+        {questions.items?.map((item, index) => (
+          <details class="branding-headshots-faq__item" open={index === 0}>
+            <summary>
+              <h3>
+                <span>{item.heading}</span>
+                <span class="branding-headshots-faq__mark" aria-hidden="true"></span>
+              </h3>
+            </summary>
+            <div class="branding-headshots-faq__answer">
+              {item.paragraphs?.map((paragraph, paragraphIndex) => (
+                index === 0 && paragraphIndex === 0 ? (
+                  <p>{wardrobeParts.before}<em>{wardrobeParts.emphasis}</em>{wardrobeParts.after}</p>
+                ) : index === 2 && paragraphIndex === 0 ? (
+                  <p>{smallBusinessParts.before}<em>{smallBusinessParts.emphasis}</em>{smallBusinessParts.after}</p>
+                ) : <p>{paragraph}</p>
+              ))}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="branding-headshots-final"
+    id="show-them-who-you-are"
+    aria-labelledby="show-them-who-you-are-title"
+  >
+    <figure class="branding-headshots-final__background" aria-hidden="true">
+      <Picture
+        src={finalImage}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        responsiveSrcset
+        sizes="100vw"
+        imgClass="branding-headshots-final__background-image"
+      />
+    </figure>
+    <span class="branding-headshots-final__wash" aria-hidden="true"></span>
+    <div class="branding-headshots-shell branding-headshots-final__inner">
+      <div class="branding-headshots-final__copy">
+        <h2 id="show-them-who-you-are-title">{finalCta.heading}</h2>
+        {finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        {finalCta.link && (
+          <a class="outline-button" href={finalCta.link.href}>{finalCta.link.label}</a>
+        )}
+      </div>
+    </div>
+  </section>
+</article>

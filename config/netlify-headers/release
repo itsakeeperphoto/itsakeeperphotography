@@ -41,9 +41,6 @@
 /journal/in-home-vs-studio-newborn-photography/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/journal/branding-photos-vs-headshots/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 

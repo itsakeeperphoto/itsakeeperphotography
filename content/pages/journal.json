@@ -45,7 +45,13 @@
         },
         {
           "heading": "Branding Photos vs. Headshots: What Your Business Actually Needs",
-          "detail": "The difference, the overlap, and how to decide where to start."
+          "detail": "The difference, the overlap, and how to decide where to start.",
+          "links": [
+            {
+              "label": "Branding Photos vs. Headshots: What Your Business Actually Needs",
+              "href": "/journal/branding-photos-vs-headshots/"
+            }
+          ]
         }
       ],
       "links": [

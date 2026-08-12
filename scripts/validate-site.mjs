@@ -440,6 +440,7 @@ const indexableReleaseFiles = new Set([
   `kennewick-wa-photographer${path.sep}index.html`,
   `pasco-wa-photographer${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
+  `journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`,
   `portfolio${path.sep}index.html`,
 ]);
 const expandedDirectoryLinkCounts = new Map([
@@ -454,6 +455,9 @@ const seniorTimingRelative =
   `journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`;
 const newbornComparisonRelative =
   `journal${path.sep}in-home-vs-studio-newborn-photography${path.sep}index.html`;
+const brandingHeadshotsRelative =
+  `journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`;
+const journalHubRelative = `journal${path.sep}index.html`;
 const seniorTimingSource = JSON.parse(
   await readFile(
     path.join(root, "content", "pages", "journal-senior-timing.json"),
@@ -685,6 +689,177 @@ const newbornComparisonContract = {
     "[FECHA]",
   ],
 };
+const brandingHeadshotsSource = JSON.parse(
+  await readFile(
+    path.join(root, "content", "pages", "journal-branding-vs-headshots.json"),
+    "utf8",
+  ),
+);
+const brandingHeadshotsDirectionContract =
+  "Branding vs. Headshots Versus Axis: shared EditorialHero; one headshot proof faces an asymmetric branding library across a central seam; semantic checklist, table and FAQ with verified photography only; no package promises, gradients, rounded cards, tape, splatter, badges or shadows.";
+const brandingHeadshotsContract = {
+  title: "Branding Photos vs. Headshots: What's the Difference?",
+  description:
+    "What are branding photos, how are they different from headshots, and which does your business need first? A working photographer's plain-English breakdown.",
+  h1: ["Branding Photos vs. Headshots: What's the Difference?"],
+  h2: [
+    "The Short Answer",
+    "What Are Branding Photos?",
+    "What Is a Headshot?",
+    "Side by Side: Branding Photos vs. Headshots",
+    "Which Does Your Business Need First?",
+    "What Happens in a Branding Session?",
+    "Common Questions",
+    "Show Them Who You Are",
+  ],
+  h3: [
+    "Start with a headshot if…",
+    "Start with a branding session if…",
+    "The honest truth: most businesses end up with both",
+    "What should I wear for branding photos?",
+    "How often should branding photos be updated?",
+    "Are branding photos worth it for a very small business?",
+  ],
+  sectionIds: [
+    "the-short-answer",
+    "what-are-branding-photos",
+    "what-is-a-headshot",
+    "side-by-side",
+    "which-does-your-business-need-first",
+    "what-happens-in-a-branding-session",
+    "common-questions",
+  ],
+  sectionParagraphs: {
+    "the-short-answer": [
+      "A headshot is one great portrait of you. Branding photos are a full library of images about your business — you working, your space, your tools, your process, your personality. A headshot answers \"who is this person?\"; branding photos answer \"what would it be like to work with them?\" Most businesses eventually need both, but they solve different problems.",
+    ],
+    "what-are-branding-photos": [
+      "Branding photos (sometimes called a personal branding session or custom business photography) are a planned collection of images built around your brand. A typical branding gallery includes:",
+      "The point is variety and consistency: months of website, social, newsletter and press images that all look like your business.",
+    ],
+    "what-is-a-headshot": [
+      "A headshot is a professional portrait — usually shoulders-up, clean background, focused entirely on you. It lives on LinkedIn, your company's team page, conference programs, proposals and anywhere your name appears. A great headshot is warm, confident and current (that last one matters — a ten-year-old headshot works against you).",
+    ],
+    "which-does-your-business-need-first": [
+      "You mainly need to look credible and current — you work for a company, you're job hunting, or your face appears in bios and proposals more than in marketing.",
+      "Your business is personal. Clients choose you — your style, your process, your story — and your marketing needs a steady supply of images that feel like you. If you're posting on social weekly and reusing the same three photos, you're overdue.",
+      "Every branding session I photograph includes headshots — it's the natural starting point of the session. So if you're unsure, a branding session is the answer that covers both.",
+    ],
+    "what-happens-in-a-branding-session": [
+      "With me, it starts with a strategy call: where will these images live, what do clients need to feel, what makes your business unmistakably yours. Then we shoot on location at your workspace or a Tri-Cities spot that fits your brand — guided the entire time, because feeling awkward in front of a camera at your own business is completely normal and completely fixable. You walk away with a warm, consistent library sized for real use.",
+    ],
+    "common-questions": [
+      "Your brand's colors, your real working clothes, and one \"elevated\" option. We plan it together — the goal is recognizably you, one notch polished.",
+      "Most businesses refresh once or twice a year as offers, seasons and spaces change. Headshots: every two to three years, or after any big change.",
+      "Small businesses benefit most — you are the brand. In a community like the Tri-Cities, people hire the person they feel they already know, and branding photos are how they meet you before the first call.",
+    ],
+    "show-them-who-you-are": [
+      "Whether you need one great headshot or a full brand library, the goal is the same: when someone finds your business, they should meet a real person they'd want to work with.",
+    ],
+  },
+  checklist: [
+    "Portraits of you that feel like your brand — not stiff, not generic",
+    "You doing the work: hands, tools, process, craft",
+    "Your space — studio, shop, office, or wherever the magic happens",
+    "Details: products, textures, materials, the things clients notice",
+    "Lifestyle moments that show the experience of working with you",
+  ],
+  comparisonRows: [
+    ["What you get", "1–3 polished portraits", "A full library of varied images"],
+    ["Focus", "You", "You + your work + your space + your story"],
+    ["Session length", "Under an hour", "Half a day, typically"],
+    ["Where it lives", "LinkedIn, team page, bios", "Website, social, marketing, press"],
+    ["Refresh cycle", "Every 2–3 years", "1–2 times a year"],
+    [
+      "Best first step for",
+      "Employees, job seekers, professionals",
+      "Business owners, personal brands",
+    ],
+  ],
+  anchors: [
+    {
+      href: "/branding-photographer-tri-cities-wa/",
+      label: "Branding photography in the Tri-Cities",
+    },
+    {
+      href: "/headshot-photographer-tri-cities-wa/",
+      label: "Just need the headshot?",
+    },
+    { href: "/contact/", label: "Start planning" },
+  ],
+  images: [
+    {
+      src: "/uploads/branding-chef-kitchen-richland-wa.jpg",
+      alt: "Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session.",
+    },
+    { src: "/uploads/professional-headshot-woman-neutral-backdrop.jpg", alt: "" },
+    { src: "/uploads/pianist-creative-branding-portrait-richland-wa.jpg", alt: "" },
+    {
+      src: "/uploads/business-professional-working-laptop-richland-wa.jpg",
+      alt: "Business professional working at a laptop during a Richland branding session.",
+    },
+    {
+      src: "/uploads/personal-branding-portrait-kitchen-west-richland-wa.jpg",
+      alt: "Business owner standing beside a kitchen island during a West Richland branding session.",
+    },
+    {
+      src: "/uploads/businesswoman-working-desk-richland-wa.jpg",
+      alt: "Business owner writing at her desk during a Richland workplace branding session.",
+    },
+    {
+      src: "/uploads/professional-headshot-man-blue-shirt-kennewick-wa.jpg",
+      alt: "Smiling man in a blue shirt photographed against a warm stone backdrop in Kennewick.",
+    },
+    {
+      src: "/uploads/professional-headshot-woman-black-top-kennewick-wa.jpg",
+      alt: "Smiling woman in a black top photographed during a Kennewick team headshot session.",
+    },
+    {
+      src: "/uploads/business-partners-office-portrait-richland-wa.jpg",
+      alt: "Two business professionals posing together in their Richland office.",
+    },
+    {
+      src: "/uploads/chef-saute-pan-branding-detail-richland-wa.jpg",
+      alt: "Chef stirring vegetables in a pan during a close-up Richland branding photograph.",
+    },
+    { src: "/uploads/business-team-meeting-richland-wa.jpg", alt: "" },
+  ],
+  faq: [
+    {
+      question: "What should I wear for branding photos?",
+      answer:
+        "Your brand's colors, your real working clothes, and one \"elevated\" option. We plan it together — the goal is recognizably you, one notch polished.",
+    },
+    {
+      question: "How often should branding photos be updated?",
+      answer:
+        "Most businesses refresh once or twice a year as offers, seasons and spaces change. Headshots: every two to three years, or after any big change.",
+    },
+    {
+      question: "Are branding photos worth it for a very small business?",
+      answer:
+        "Small businesses benefit most — you are the brand. In a community like the Tri-Cities, people hire the person they feel they already know, and branding photos are how they meet you before the first call.",
+    },
+  ],
+};
+const journalHubSource = JSON.parse(
+  await readFile(path.join(root, "content", "pages", "journal.json"), "utf8"),
+);
+const journalBrandingGuide = journalHubSource.sections
+  ?.find((section) => section.id === "planning-guides")
+  ?.items?.find((item) =>
+    item.heading ===
+      "Branding Photos vs. Headshots: What Your Business Actually Needs"
+  );
+if (
+  journalBrandingGuide?.links?.length !== 1 ||
+  journalBrandingGuide.links[0]?.href !==
+    "/journal/branding-photos-vs-headshots/"
+) {
+  failures.push(
+    "content/pages/journal.json: Branding vs. Headshots guide card must link to the published article",
+  );
+}
 const serviceMediaContracts = new Map([
   [
     `branding-photographer-tri-cities-wa${path.sep}index.html`,
@@ -967,12 +1142,18 @@ for (const file of htmlFiles) {
   const newbornComparisonStylesheetHref = stylesheetHrefs.find((href) =>
     /(?:^|\/)journal-newborn-comparison-page[^/]*\.css(?:[?#]|$)/i.test(href),
   );
+  const brandingHeadshotsStylesheetHref = stylesheetHrefs.find((href) =>
+    /(?:^|\/)journal-branding-vs-headshots-page[^/]*\.css(?:[?#]|$)/i.test(href),
+  );
   const linkedAboutCss = linkedStylesheets.some((css) => /\.about-page\b/.test(css));
   const linkedSeniorTimingCss = linkedStylesheets.some((css) =>
     /\.senior-timing-page\b/.test(css),
   );
   const linkedNewbornComparisonCss = linkedStylesheets.some((css) =>
     /\.newborn-comparison-page\b/.test(css),
+  );
+  const linkedBrandingHeadshotsCss = linkedStylesheets.some((css) =>
+    /\.branding-headshots-page\b/.test(css),
   );
   if (relative === pascoRelative) {
     if (!pascoStylesheetHref || !internalTargetExists(pascoStylesheetHref)) {
@@ -1037,6 +1218,28 @@ for (const file of htmlFiles) {
       `${relative}: Newborn Comparison CSS leaked into an unrelated route`,
     );
   }
+  if (relative === brandingHeadshotsRelative) {
+    const brandingHeadshotsCss = brandingHeadshotsStylesheetHref
+      ? await readInternalStylesheet(brandingHeadshotsStylesheetHref)
+      : "";
+    if (
+      !brandingHeadshotsStylesheetHref ||
+      !internalTargetExists(brandingHeadshotsStylesheetHref) ||
+      !/\.branding-headshots-page\b/.test(brandingHeadshotsCss)
+    ) {
+      failures.push(
+        `${relative}: route-scoped Branding vs. Headshots stylesheet is missing or broken`,
+      );
+    }
+  } else if (
+    brandingHeadshotsStylesheetHref ||
+    linkedBrandingHeadshotsCss ||
+    /\.branding-headshots-page\s*\{/.test(source)
+  ) {
+    failures.push(
+      `${relative}: Branding vs. Headshots CSS leaked into an unrelated route`,
+    );
+  }
   const aboutDirectionComment = `<!--\n${aboutDirectionContract}\n-->`;
   if (relative === aboutRelative) {
     const bodyContent = source.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1] || "";
@@ -1053,11 +1256,32 @@ for (const file of htmlFiles) {
   ) {
     failures.push(`${relative}: About direction contract leaked into an unrelated route`);
   }
+  if (relative === brandingHeadshotsRelative) {
+    if (!source.includes(`<!--\n${brandingHeadshotsDirectionContract}\n-->`)) {
+      failures.push(
+        `${relative}: Branding vs. Headshots direction contract is missing`,
+      );
+    }
+  } else if (source.includes("Branding vs. Headshots Versus Axis:")) {
+    failures.push(
+      `${relative}: Branding vs. Headshots direction contract leaked into an unrelated route`,
+    );
+  }
   const withoutComments = source.replace(/<!--[\s\S]*?-->/g, "");
   const main = withoutComments.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] || "";
   const internalAnchors = [...main.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)]
     .map((match) => match[1])
     .filter((href) => href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/#"));
+  if (
+    relative === journalHubRelative &&
+    internalAnchors.filter(
+      (href) => href === "/journal/branding-photos-vs-headshots/",
+    ).length !== 1
+  ) {
+    failures.push(
+      `${relative}: Journal hub must expose one link to Branding vs. Headshots`,
+    );
+  }
 
   const brokenInternalAnchors = [
     ...new Set(internalAnchors.filter((href) => !internalTargetExists(href))),
@@ -1903,6 +2127,525 @@ for (const file of htmlFiles) {
       );
     }
   }
+  if (relative === brandingHeadshotsRelative) {
+    const expectedOrigin = mode === "release"
+      ? "https://www.itsakeeperphotography.com"
+      : "https://itsakeeperphotography.netlify.app";
+    const canonical =
+      `${expectedOrigin}/journal/branding-photos-vs-headshots/`;
+    const sourceSectionIds = (brandingHeadshotsSource.sections || []).map(
+      (section) => section.id,
+    );
+    const registeredPending = [...pendingRegistrySource.matchAll(
+      /^\/\/ CONTENT PENDING \[\/journal\/branding-photos-vs-headshots\/\]: (\[[^\n]+\])$/gm,
+    )].map((match) => match[1]);
+    if (
+      brandingHeadshotsSource.route !==
+        "/journal/branding-photos-vs-headshots/" ||
+      brandingHeadshotsSource.family !== "article" ||
+      brandingHeadshotsSource.contentStatus !== "ready" ||
+      brandingHeadshotsSource.searchVisibility !== "index" ||
+      brandingHeadshotsSource.schemaType !== "Article" ||
+      brandingHeadshotsSource.signature !== "crossing-line" ||
+      brandingHeadshotsSource.title !== brandingHeadshotsContract.title ||
+      brandingHeadshotsSource.description !==
+        brandingHeadshotsContract.description ||
+      brandingHeadshotsSource.hero?.image !==
+        "/uploads/branding-chef-kitchen-richland-wa.jpg" ||
+      brandingHeadshotsSource.hero?.imageAlt !==
+        "Chef smiling while stirring vegetables in a modern kitchen during a Richland branding session." ||
+      JSON.stringify(sourceSectionIds) !==
+        JSON.stringify(brandingHeadshotsContract.sectionIds) ||
+      brandingHeadshotsSource.finalCta?.heading !== "Show Them Who You Are" ||
+      brandingHeadshotsSource.finalCta?.image !==
+        "/uploads/business-team-meeting-richland-wa.jpg" ||
+      brandingHeadshotsSource.finalCta?.imageAlt !== "" ||
+      JSON.stringify(brandingHeadshotsSource.pending) !== "[]" ||
+      registeredPending.length !== 0
+    ) {
+      failures.push(
+        "content/pages/journal-branding-vs-headshots.json: ready/index state, exact metadata, media, section order or empty pending contract changed",
+      );
+    }
+    const brandingDefinitionSource = brandingHeadshotsSource.sections?.find(
+      (section) => section.id === "what-are-branding-photos",
+    );
+    const headshotDefinitionSource = brandingHeadshotsSource.sections?.find(
+      (section) => section.id === "what-is-a-headshot",
+    );
+    const comparisonSource = brandingHeadshotsSource.sections?.find(
+      (section) => section.id === "side-by-side",
+    );
+    const processSource = brandingHeadshotsSource.sections?.find(
+      (section) => section.id === "what-happens-in-a-branding-session",
+    );
+    const sourceImages = [
+      [brandingHeadshotsSource.hero?.image, brandingHeadshotsSource.hero?.imageAlt],
+      [
+        brandingHeadshotsSource.hero?.secondaryImage,
+        brandingHeadshotsSource.hero?.secondaryImageAlt,
+      ],
+      [brandingDefinitionSource?.image, brandingDefinitionSource?.imageAlt],
+      [
+        brandingDefinitionSource?.secondaryImage,
+        brandingDefinitionSource?.secondaryImageAlt,
+      ],
+      [
+        brandingDefinitionSource?.items?.[0]?.image,
+        brandingDefinitionSource?.items?.[0]?.imageAlt,
+      ],
+      [headshotDefinitionSource?.image, headshotDefinitionSource?.imageAlt],
+      [comparisonSource?.image, comparisonSource?.imageAlt],
+      [comparisonSource?.secondaryImage, comparisonSource?.secondaryImageAlt],
+      [processSource?.image, processSource?.imageAlt],
+      [
+        brandingHeadshotsSource.finalCta?.image,
+        brandingHeadshotsSource.finalCta?.imageAlt,
+      ],
+    ].map(([src, alt]) => ({ src, alt }));
+    const expectedSourceImages = brandingHeadshotsContract.images
+      .filter((_image, index) => index !== 2)
+      .map(({ src, alt }) => ({ src, alt }));
+    if (JSON.stringify(sourceImages) !== JSON.stringify(expectedSourceImages)) {
+      failures.push(
+        "content/pages/journal-branding-vs-headshots.json: approved source media or alt order changed",
+      );
+    }
+
+    const titleText = normalizedText(
+      source.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || "",
+    );
+    const descriptionTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "description",
+    );
+    const robotsTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "robots",
+    );
+    const openGraphTypeTag = (source.match(/<meta\b[^>]*>/gi) || []).find(
+      (tag) => htmlAttribute(tag, "property")?.toLowerCase() === "og:type",
+    );
+    const expectedRobots = mode === "release"
+      ? "index, follow, max-image-preview:large"
+      : "noindex, nofollow, noarchive";
+    if (
+      titleText !== brandingHeadshotsContract.title ||
+      htmlAttribute(descriptionTag || "", "content") !==
+        brandingHeadshotsContract.description ||
+      htmlAttribute(robotsTag || "", "content") !== expectedRobots ||
+      htmlAttribute(openGraphTypeTag || "", "content") !== "article" ||
+      !source.includes(`<link rel="canonical" href="${canonical}">`) ||
+      !/<article\b[^>]*class=["'][^"']*\bbranding-headshots-page\b/i.test(main) ||
+      !/data-content-status=["']ready["']/i.test(main) ||
+      !/data-signature-device=["']crossing-line["']/i.test(main)
+    ) {
+      failures.push(
+        `${relative}: title, description, canonical, Article OG type or ready/index SSR state is invalid`,
+      );
+    }
+
+    const h1Texts = [...main.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+      .map((match) => normalizedText(match[1]));
+    const h3Texts = [...main.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)]
+      .map((match) => normalizedText(match[1]));
+    if (JSON.stringify(h1Texts) !== JSON.stringify(brandingHeadshotsContract.h1)) {
+      failures.push(
+        `${relative}: Branding vs. Headshots must render exactly one approved H1`,
+      );
+    }
+    if (JSON.stringify(h2Texts) !== JSON.stringify(brandingHeadshotsContract.h2)) {
+      failures.push(
+        `${relative}: Branding vs. Headshots must render the eight approved H2s in order`,
+      );
+    }
+    if (JSON.stringify(h3Texts) !== JSON.stringify(brandingHeadshotsContract.h3)) {
+      failures.push(
+        `${relative}: comparison labels must remain table headers and the six approved H3s must remain in order`,
+      );
+    }
+
+    const normalizedBrandingProse = (value = "") =>
+      normalizedText(value).replace(/\s+([,.;:!?])/g, "$1");
+    const sectionParagraphs = (id) => [
+      ...sectionById(main, id).matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi),
+    ].map((match) => normalizedBrandingProse(match[1]));
+    for (const [id, expectedParagraphs] of Object.entries(
+      brandingHeadshotsContract.sectionParagraphs,
+    )) {
+      if (
+        JSON.stringify(sectionParagraphs(id)) !==
+          JSON.stringify(expectedParagraphs)
+      ) {
+        failures.push(
+          `${relative}: definitive paragraph copy or order changed in #${id}`,
+        );
+      }
+    }
+
+    const brandingDefinition = sectionById(main, "what-are-branding-photos");
+    const checklist = [...brandingDefinition.matchAll(
+      /<li\b[^>]*>([\s\S]*?)<\/li>/gi,
+    )].map((match) => normalizedText(match[1]));
+    if (
+      (brandingDefinition.match(/<ul\b/gi) || []).length !== 1 ||
+      JSON.stringify(checklist) !==
+        JSON.stringify(brandingHeadshotsContract.checklist)
+    ) {
+      failures.push(
+        `${relative}: five branding examples must remain one semantic unordered list`,
+      );
+    }
+
+    const comparison = sectionById(main, "side-by-side");
+    const tables = [...comparison.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)];
+    const table = tables[0]?.[1] || "";
+    const columnHeaders = [...table.matchAll(
+      /<thead\b[^>]*>[\s\S]*?<\/thead>/gi,
+    )].flatMap((thead) =>
+      [...thead[0].matchAll(/<th\b([^>]*)>([\s\S]*?)<\/th>/gi)].map(
+        (match) => ({ attrs: match[1], text: normalizedText(match[2]) }),
+      ),
+    );
+    const bodyRows = [...table.matchAll(
+      /<tbody\b[^>]*>([\s\S]*?)<\/tbody>/gi,
+    )].flatMap((tbody) =>
+      [...tbody[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map((row) =>
+        [...row[1].matchAll(/<(th|td)\b([^>]*)>([\s\S]*?)<\/\1>/gi)].map(
+          (cell) => normalizedText(cell[3]),
+        ),
+      ),
+    );
+    const rowHeaders = [...table.matchAll(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/gi)]
+      .flatMap((tbody) => [...tbody[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)])
+      .map((row) => row[1].match(/<th\b([^>]*)>/i)?.[1] || "");
+    if (
+      tables.length !== 1 ||
+      columnHeaders.length !== 3 ||
+      columnHeaders.at(-2)?.text !== "Headshot" ||
+      columnHeaders.at(-1)?.text !== "Branding photos" ||
+      columnHeaders.some(({ attrs }) => !/\bscope=["']col["']/i.test(attrs)) ||
+      rowHeaders.length !== 6 ||
+      rowHeaders.some((attrs) => !/\bscope=["']row["']/i.test(attrs)) ||
+      JSON.stringify(bodyRows) !==
+        JSON.stringify(brandingHeadshotsContract.comparisonRows)
+    ) {
+      failures.push(
+        `${relative}: comparison must remain one accessible three-column table with six exact rows`,
+      );
+    }
+
+    const shortAnswer = sectionById(main, "the-short-answer");
+    const decision = sectionById(main, "which-does-your-business-need-first");
+    const questions = sectionById(main, "common-questions");
+    const strongTexts = [...shortAnswer.matchAll(
+      /<strong\b[^>]*>([\s\S]*?)<\/strong>/gi,
+    )].map((match) => normalizedText(match[1]));
+    const emphasisTexts = [brandingDefinition, decision, questions].flatMap(
+      (section) => [...section.matchAll(/<em\b[^>]*>([\s\S]*?)<\/em>/gi)]
+        .map((match) => normalizedText(match[1])),
+    );
+    if (
+      JSON.stringify(strongTexts) !==
+        JSON.stringify([
+          "A headshot is one great portrait of you.",
+          "Branding photos are a full library of images about your business",
+        ]) ||
+      JSON.stringify(emphasisTexts) !==
+        JSON.stringify(["look like your business", "is", "you", "are"])
+    ) {
+      failures.push(
+        `${relative}: definitive strong and emphasis semantics changed`,
+      );
+    }
+
+    const bodyAnchors = [...main.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/gi)]
+      .map((match) => ({
+        href: htmlAttribute(match[0], "href") || "",
+        label: normalizedText(
+          match[1].replace(
+            /<span\b[^>]*aria-hidden=["']true["'][^>]*>[\s\S]*?<\/span>/gi,
+            "",
+          ),
+        ),
+      }));
+    if (
+      JSON.stringify(bodyAnchors) !==
+        JSON.stringify(brandingHeadshotsContract.anchors) ||
+      JSON.stringify(internalAnchors) !==
+        JSON.stringify(brandingHeadshotsContract.anchors.map((anchor) => anchor.href))
+    ) {
+      failures.push(
+        `${relative}: internal body anchors must remain Branding, Headshots and Contact in order`,
+      );
+    }
+
+    const hero = main.match(
+      /<header\b(?=[^>]*data-editorial-hero-page=["']journal["'])[^>]*>([\s\S]*?)<\/header>/i,
+    )?.[1] || "";
+    const heroButtons = [...hero.matchAll(
+      /<button\b(?=[^>]*data-hero-cta)[^>]*>([\s\S]*?)<\/button>/gi,
+    )];
+    const heroPrints = [...hero.matchAll(
+      /<figure\b(?=[^>]*data-hero-print=["'](?:left|right)["'])[^>]*>[\s\S]*?<\/figure>/gi,
+    )].map((match) => match[0]);
+    if (
+      heroButtons.length !== 1 ||
+      htmlAttribute(heroButtons[0]?.[0] || "", "data-hero-scroll-target") !==
+        "the-short-answer" ||
+      htmlAttribute(heroButtons[0]?.[0] || "", "aria-controls") !==
+        "the-short-answer" ||
+      normalizedText(heroButtons[0]?.[1] || "") !== "Read the comparison" ||
+      /<a\b/i.test(hero) ||
+      heroPrints.length !== 2 ||
+      heroPrints.some((print) => {
+        const image = print.match(/<img\b[^>]*>/i)?.[0] || "";
+        return (
+          !/aria-hidden=["']true["']/i.test(print) ||
+          !hasHtmlAttribute(image, "alt") ||
+          (htmlAttribute(image, "alt") || "") !== ""
+        );
+      })
+    ) {
+      failures.push(
+        `${relative}: hero must use one local-scroll button, no anchor and two decorative prints`,
+      );
+    }
+
+    const byline = main.match(
+      /<div\b(?=[^>]*class=["'][^"']*\bbranding-headshots-byline\b)[^>]*>([\s\S]*?)<\/div>/i,
+    )?.[1] || "";
+    const bylineValues = [...byline.matchAll(/<span\b([^>]*)>([\s\S]*?)<\/span>/gi)]
+      .filter((match) => !/aria-hidden=["']true["']/i.test(match[1]))
+      .map((match) => normalizedText(match[2]));
+    const publicationTime = byline.match(
+      /<time\b([^>]*)>([\s\S]*?)<\/time>/i,
+    );
+    if (
+      JSON.stringify(bylineValues) !==
+        JSON.stringify([
+          "By Lisa Weiss",
+          "It's A Keeper Photography",
+          "Richland, WA",
+        ]) ||
+      htmlAttribute(publicationTime?.[0] || "", "datetime") !== "2026-08-11" ||
+      normalizedText(publicationTime?.[2] || "") !== "August 11, 2026"
+    ) {
+      failures.push(
+        `${relative}: byline must identify Lisa, the business, Richland and the authorized publication date`,
+      );
+    }
+
+    const visibleFaq = [...questions.matchAll(
+      /<details\b([^>]*)>([\s\S]*?)<\/details>/gi,
+    )].map((match) => ({
+      hidden: /\bhidden\b|aria-hidden=["']true["']/i.test(match[1]),
+      open: /(?:^|\s)open(?:\s|=|$)/i.test(match[1]),
+      question: normalizedBrandingProse(
+        match[2].match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/i)?.[1] || "",
+      ),
+      answer: normalizedBrandingProse(
+        match[2].match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] || "",
+      ),
+    }));
+    if (
+      visibleFaq.length !== 3 ||
+      visibleFaq.some((item) => item.hidden) ||
+      JSON.stringify(
+        visibleFaq.map(({ question, answer }) => ({ question, answer })),
+      ) !== JSON.stringify(brandingHeadshotsContract.faq) ||
+      JSON.stringify(visibleFaq.map((item) => item.open)) !==
+        JSON.stringify([true, false, false])
+    ) {
+      failures.push(
+        `${relative}: Common Questions must expose three exact native disclosures`,
+      );
+    }
+
+    const pictureBlocks = [...main.matchAll(/<picture\b[^>]*>([\s\S]*?)<\/picture>/gi)]
+      .map((match) => match[1]);
+    const renderedImages = pictureBlocks.map((picture) => {
+      const tag = picture.match(/<img\b[^>]*>/i)?.[0] || "";
+      return {
+        src: htmlAttribute(tag, "src") || "",
+        alt: htmlAttribute(tag, "alt") || "",
+        width: Number(htmlAttribute(tag, "width")),
+        height: Number(htmlAttribute(tag, "height")),
+        loading: htmlAttribute(tag, "loading"),
+        decoding: htmlAttribute(tag, "decoding"),
+        fetchpriority: htmlAttribute(tag, "fetchpriority"),
+      };
+    });
+    if (
+      JSON.stringify(renderedImages.map(({ src, alt }) => ({ src, alt }))) !==
+        JSON.stringify(brandingHeadshotsContract.images) ||
+      new Set(renderedImages.map((image) => image.src)).size !== 11 ||
+      renderedImages.filter((image) => image.alt).length !== 8
+    ) {
+      failures.push(
+        `${relative}: rendered 11-image unique src+alt order or 8/3 informative/decorative split changed`,
+      );
+    }
+    for (const [index, image] of renderedImages.entries()) {
+      const picture = pictureBlocks[index] || "";
+      const responsivePaths = (picture.match(/<source\b[^>]*>/gi) || [])
+        .filter((tag) => htmlAttribute(tag, "type") === "image/webp")
+        .flatMap((tag) =>
+          (htmlAttribute(tag, "srcset") || "")
+            .split(",")
+            .map((candidate) => candidate.trim().split(/\s+/, 1)[0])
+            .filter(Boolean),
+        );
+      const sourcePath = path.join(root, "public", image.src.replace(/^\//, ""));
+      let sourceDimensionsMatch = false;
+      if (existsSync(sourcePath) && image.width > 0 && image.height > 0) {
+        const metadata = await sharp(sourcePath).metadata();
+        sourceDimensionsMatch =
+          metadata.width === image.width && metadata.height === image.height;
+      }
+      if (
+        image.loading !== (index < 3 ? "eager" : "lazy") ||
+        image.decoding !== "async" ||
+        (index === 0
+          ? image.fetchpriority !== "high"
+          : image.fetchpriority === "high") ||
+        !internalTargetExists(image.src) ||
+        !sourceDimensionsMatch ||
+        responsivePaths.length < 2 ||
+        responsivePaths.some(
+          (asset) => !/\.webp$/i.test(asset) || !internalTargetExists(asset),
+        )
+      ) {
+        failures.push(
+          `${relative}: image ${index + 1} violates priority, loading, intrinsic-size or responsive-WebP contract`,
+        );
+      }
+    }
+
+    const finalSection = sectionById(main, "show-them-who-you-are");
+    const finalFigure = finalSection.match(/<figure\b([^>]*)>[\s\S]*?<\/figure>/i);
+    const finalImage = finalFigure?.[0].match(/<img\b[^>]*>/i)?.[0] || "";
+    if (
+      !finalFigure ||
+      !/aria-hidden=["']true["']/i.test(finalFigure[1]) ||
+      htmlAttribute(finalImage, "src") !==
+        "/uploads/business-team-meeting-richland-wa.jpg" ||
+      !hasHtmlAttribute(finalImage, "alt") ||
+      (htmlAttribute(finalImage, "alt") || "") !== ""
+    ) {
+      failures.push(
+        `${relative}: final team image must remain decorative and hidden from accessibility APIs`,
+      );
+    }
+
+    const schemas = parseJsonLd(source, relative);
+    const articles = schemas.filter((schema) => schema?.["@type"] === "Article");
+    const faqSchemas = schemas.filter((schema) => schema?.["@type"] === "FAQPage");
+    const breadcrumbs = schemas.filter(
+      (schema) => schema?.["@type"] === "BreadcrumbList",
+    );
+    const topLevelServices = schemas.filter(
+      (schema) => schema?.["@type"] === "Service",
+    );
+    const schemaObjects = schemas.flatMap(nestedSchemaObjects);
+    const unsafeSchema = schemaObjects.some((schema) =>
+      ["Review", "AggregateRating", "GeoCoordinates"].includes(schema?.["@type"]) ||
+      Object.keys(schema).some((key) =>
+        ["streetaddress", "latitude", "longitude"].includes(key.toLowerCase()) ||
+        key.toLowerCase().startsWith("gps"),
+      ),
+    );
+    const article = articles[0];
+    const articleAbout = Array.isArray(article?.about)
+      ? article.about.map((item) => [item?.["@type"], item?.name])
+      : [];
+    const articleCities = Array.isArray(article?.spatialCoverage)
+      ? article.spatialCoverage.map((item) => item?.name)
+      : [];
+    if (
+      articles.length !== 1 ||
+      faqSchemas.length !== 1 ||
+      breadcrumbs.length !== 1 ||
+      topLevelServices.length !== 0 ||
+      unsafeSchema ||
+      article?.["@id"] !== `${canonical}#webpage` ||
+      article?.url !== canonical ||
+      article?.name !== brandingHeadshotsContract.title ||
+      article?.description !== brandingHeadshotsContract.description ||
+      article?.headline !== brandingHeadshotsContract.title ||
+      article?.author?.["@id"] !== `${expectedOrigin}/#lisa` ||
+      article?.publisher?.["@id"] !== `${expectedOrigin}/#business` ||
+      article?.datePublished !== "2026-08-11" ||
+      article?.dateModified !== "2026-08-11" ||
+      article?.image !==
+        `${expectedOrigin}/uploads/branding-chef-kitchen-richland-wa.jpg` ||
+      article?.primaryImageOfPage?.url !==
+        `${expectedOrigin}/uploads/branding-chef-kitchen-richland-wa.jpg` ||
+      article?.isPartOf?.["@id"] !== `${expectedOrigin}/#website` ||
+      article?.mainEntityOfPage?.["@id"] !== canonical ||
+      article?.inLanguage !== "en-US" ||
+      JSON.stringify(articleAbout) !==
+        JSON.stringify([
+          ["Thing", "Branding photography"],
+          ["Thing", "Professional headshots"],
+          ["Place", "Tri-Cities, Washington"],
+        ]) ||
+      JSON.stringify(articleCities) !==
+        JSON.stringify(["Richland", "Kennewick", "Pasco"]) ||
+      article?.spatialCoverage?.[0]?.containedInPlace?.["@type"] !== "State" ||
+      article?.spatialCoverage?.[0]?.containedInPlace?.name !== "Washington" ||
+      ["duration", "timeRequired", "offers", "price"].some((key) =>
+        Object.hasOwn(article || {}, key),
+      )
+    ) {
+      failures.push(
+        `${relative}: canonical Article/FAQ/Breadcrumb publication or claim-safety contract is invalid`,
+      );
+    }
+
+    const faqEntities = faqSchemas[0]?.mainEntity || [];
+    if (
+      faqEntities.length !== 3 ||
+      brandingHeadshotsContract.faq.some(
+        (pair, index) =>
+          faqEntities[index]?.["@type"] !== "Question" ||
+          faqEntities[index]?.acceptedAnswer?.["@type"] !== "Answer" ||
+          faqEntities[index]?.name !== pair.question ||
+          faqEntities[index]?.acceptedAnswer?.text !== pair.answer ||
+          visibleFaq[index]?.question !== pair.question ||
+          visibleFaq[index]?.answer !== pair.answer,
+      )
+    ) {
+      failures.push(
+        `${relative}: FAQPage must map the three visible Common Questions 1:1`,
+      );
+    }
+
+    const breadcrumbItems = breadcrumbs[0]?.itemListElement || [];
+    const expectedBreadcrumbs = [
+      { position: 1, name: "Home", item: `${expectedOrigin}/` },
+      { position: 2, name: "Journal", item: `${expectedOrigin}/journal/` },
+      {
+        position: 3,
+        name: "Branding Photos vs. Headshots",
+        item: canonical,
+      },
+    ];
+    if (
+      breadcrumbItems.length !== 3 ||
+      breadcrumbItems.some(
+        (item, index) =>
+          item?.["@type"] !== "ListItem" ||
+          item?.position !== expectedBreadcrumbs[index].position ||
+          item?.name !== expectedBreadcrumbs[index].name ||
+          item?.item !== expectedBreadcrumbs[index].item,
+      )
+    ) {
+      failures.push(
+        `${relative}: BreadcrumbList must resolve Home, Journal and Branding Photos vs. Headshots`,
+      );
+    }
+  }
   if (relative === aboutRelative) {
     const expectedOrigin = mode === "release"
       ? "https://www.itsakeeperphotography.com"
@@ -2706,6 +3449,24 @@ if (
     "page-manifest.ts: Newborn Comparison must retain draft/noindex Article gates, exact title and no lastModified",
   );
 }
+const brandingHeadshotsManifestBlock = runtimeManifestSource.match(
+  /\{\s*id:\s*"branding-vs-headshots",[\s\S]*?\n\s*\},/,
+)?.[0] || "";
+if (
+  !/contentStatus:\s*"ready"/.test(brandingHeadshotsManifestBlock) ||
+  !/searchVisibility:\s*"index"/.test(brandingHeadshotsManifestBlock) ||
+  !/schemaType:\s*"Article"/.test(brandingHeadshotsManifestBlock) ||
+  !/sitemap:\s*true/.test(brandingHeadshotsManifestBlock) ||
+  !/llms:\s*true/.test(brandingHeadshotsManifestBlock) ||
+  !/lastModified:\s*"2026-08-11"/.test(brandingHeadshotsManifestBlock) ||
+  !/title:\s*"Branding Photos vs\. Headshots: What's the Difference\?"/.test(
+    brandingHeadshotsManifestBlock,
+  )
+) {
+  failures.push(
+    "page-manifest.ts: Branding vs. Headshots must retain ready/index Article gates, exact title and 2026-08-11 lastModified",
+  );
+}
 const homepageHero = sectionById(homepage, "home");
 const homepageHeroImageTags = [...homepageHero.matchAll(/<img\b[^>]*>/gi)].map(
   (match) => match[0],
@@ -3219,6 +3980,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
+    "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/",
     "https://www.itsakeeperphotography.com/portfolio/",
   ];
   if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) {
@@ -3248,6 +4010,14 @@ if (mode === "staging") {
   if (!/<lastmod>2026-08-11<\/lastmod>/.test(contactSitemapEntry)) {
     failures.push("sitemap.xml: Contact lastmod must be 2026-08-11");
   }
+  const brandingHeadshotsSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/branding-photos-vs-headshots\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-11<\/lastmod>/.test(brandingHeadshotsSitemapEntry)) {
+    failures.push(
+      "sitemap.xml: Branding vs. Headshots lastmod must be 2026-08-11",
+    );
+  }
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");
   }
@@ -3263,6 +4033,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
+    "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/",
   ];
   if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
     failures.push(`llms.txt: release membership is ${llmsUrls.join(", ") || "empty"}`);
@@ -3276,6 +4047,13 @@ if (mode === "staging") {
     "- [Session Pricing Estimate | It's A Keeper Photography](https://www.itsakeeperphotography.com/contact/): Build a personalized photography session pricing estimate, then plan the details with Lisa.";
   if (!llms.includes(expectedContactLlmsLine)) {
     failures.push("llms.txt: Contact title or summary differs from the manifest contract");
+  }
+  const expectedBrandingHeadshotsLlmsLine =
+    "- [Branding Photos vs. Headshots: What's the Difference?](https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/): A plain-English comparison of branding photos and professional headshots.";
+  if (!llms.includes(expectedBrandingHeadshotsLlmsLine)) {
+    failures.push(
+      "llms.txt: Branding vs. Headshots title or summary differs from the manifest contract",
+    );
   }
   if (/^\/journal\/\*\s*$/m.test(headers)) {
     failures.push("_headers: broad /journal/* noindex rule must not block the published guide");
@@ -3304,11 +4082,20 @@ if (mode === "staging") {
   ) {
     failures.push("_headers: Contact noindex rule must not block the published estimate page");
   }
+  if (
+    routeHeaderValues(
+      "/journal/branding-photos-vs-headshots/",
+      "x-robots-tag",
+    ).some((value) => /(?:^|,)\s*noindex(?:\s*,|$)/i.test(value))
+  ) {
+    failures.push(
+      "_headers: Branding vs. Headshots noindex rule must not block the published article",
+    );
+  }
   for (const route of [
     "/journal/",
     "/journal/when-to-book-senior-pictures-tri-cities/*",
     "/journal/in-home-vs-studio-newborn-photography/*",
-    "/journal/branding-photos-vs-headshots/*",
     "/privacy/*",
     "/thank-you/*",
   ]) {

@@ -5,7 +5,6 @@
 // CONTENT PENDING [/headshot-photographer-tri-cities-wa/]: [PENDIENTE: duración y entregables exactos por paquete]
 // CONTENT PENDING [/investment/]: [PENDIENTE: número de imágenes / duración por paquete — Lisa envió el pricing por separado. Añadir aquí una línea neutral por tipo de sesión, sin cifras de dinero.]
 // CONTENT PENDING [/newborn-photographer-tri-cities-wa/]: [PENDIENTE NO BLOQUEANTE: confirmar si Lisa tiene formación de seguridad newborn (Q41) antes de publicar cualquier claim; la página no hace ese claim.]
-// CONTENT PENDING [/journal/branding-photos-vs-headshots/]: [FECHA]
 // CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [VALIDAR CON LISA]
 // CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [VALIDAR: formato exacto que ofrece Lisa]
 // CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [FECHA]
