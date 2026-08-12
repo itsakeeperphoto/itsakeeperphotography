@@ -276,6 +276,7 @@
       this.sequenceSpan = 0;
       this.loopStart = 0;
       this.loopInitialized = false;
+      this.imagesPrimed = false;
       this.hoveredCard = null;
       this.focusedCard = null;
       this.resizeObserver = null;
@@ -360,11 +361,14 @@
         this.intersectionObserver = new IntersectionObserver(
           ([entry]) => {
             this.inView = Boolean(entry?.isIntersecting);
+            if (this.inView) this.primeArchiveImages();
             this.syncMotion();
           },
           { rootMargin: "12% 0px", threshold: 0.01 }
         );
         this.intersectionObserver.observe(this);
+      } else {
+        this.primeArchiveImages();
       }
 
       if ("ResizeObserver" in window) {
@@ -408,6 +412,16 @@
       this.frame = 0;
       this.arcFrame = 0;
       this.manualResumeTimer = 0;
+    }
+
+    primeArchiveImages() {
+      if (this.imagesPrimed) return;
+      this.imagesPrimed = true;
+
+      this.querySelectorAll(".review-polaroid__image").forEach((image) => {
+        image.loading = "eager";
+        image.fetchPriority = "low";
+      });
     }
 
     createLoopClones() {

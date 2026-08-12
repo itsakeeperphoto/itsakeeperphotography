@@ -159,7 +159,12 @@ orden de tabulación y revela el reverso por hover con puntero fino, foco de
 teclado o toggle por tap con puntero coarse; solo una tarjeta puede permanecer
 abierta. Tina aplica el mismo rango 1–10. Homepage mantiene el resumen como
 anchor hacia Reviews; dentro de Reviews el mismo componente lo presenta como
-texto estático para evitar un enlace autorreferente o fabricar una URL externa.
+texto estático para evitar un enlace autorreferente. El opt-in
+`showReviewAction` añade debajo el CTA externo seguro usando
+`settings.social.googleProfile`; Homepage no lo muestra. Cuando el archive entra
+en viewport, su observer cambia originales y clones a carga eager de prioridad
+baja para que el auto-pan nunca revele un placeholder; antes de ese punto el
+HTML conserva `loading="lazy"`.
 
 Componentes especializados existentes:
 
@@ -190,17 +195,22 @@ líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
 
 `ReviewsPage.astro` implementa `/reviews/` con la dirección canónica
 `Words Become Pictures / At Ease, on Purpose`: el mismo `EditorialHero` de
-Seniors, Family y Newborn; un arco con print B/N y líneas cruzadas; el
-`KindWords` exacto de Homepage; el libro de seis páginas; y un cierre
-fotográfico con un único anchor a Contact. `reviews-page.css` se procesa con
+Seniors, Family y Newborn; un arco con print B/N superpuesto y sin líneas de
+intersección; el `KindWords` de Homepage con CTA Google opt-in; el libro de seis
+páginas; y un cierre fotográfico con anchor a Contact. `reviews-page.css` se procesa con
 `?url` y solo se enlaza en esta ruta. El contrato visible es 1 H1, 4 H2, 6 H3,
-10 testimonios originales y un anchor dentro de `<main>`.
+10 testimonios originales y dos anchors dentro de `<main>`: Google externo
+primero y Contact interno después. La firma publicada cambia a `arch`.
 
 `JournalBook.astro` contiene la UI reutilizable extraída del Portfolio.
 `JournalPortfolio.astro` permanece como wrapper de esa ruta y carga su primera
 página eager; Reviews usa otro `instanceId`, conserva las seis páginas lazy y
 solo hidrata el flip al entrar en viewport. El controlador mantiene página por
-instancia, IDs/ARIA únicos y cambia a crossfade bajo reduced motion.
+instancia, IDs/ARIA únicos y cambia a crossfade bajo reduced motion. En modo
+normal cada `journal-sheet` declara densidad `hard`; PageFlip gira desde la
+esquina inferior durante 1200 ms, con sombra máxima `0.50`, para producir las
+dos caras `matrix3d` de una hoja rígida. Esta configuración compartida también
+aplica a Portfolio sin alterar su prioridad de imágenes.
 
 `SeniorTimingPage.astro` renderiza el artículo
 `/journal/when-to-book-senior-pictures-tri-cities/` como field guide
@@ -435,11 +445,14 @@ para evitar cambios silenciosos al repositorio.
 - Para Reviews fija estado `ready/index`, fecha `2026-08-12`, metadata,
   canonical, hero compartido y primer comentario de dirección. En HTML exige
   1 H1, 4 H2, 6 H3, diez testimonios fuente, seis páginas lazy del libro, un
-  único anchor a Contact y resumen social estático. Alinea `WebPage` y
+  CTA Google externo seguro seguido del anchor a Contact, resumen social
+  estático, firma `arch`, ausencia de reglas cruzadas y seis hojas `hard`.
+  Alinea `WebPage` y
   `BreadcrumbList`, prohíbe `Review`/`AggregateRating` no sustentados y compara
   la membresía exacta de sitemap/`llms.txt`. Playwright cubre
-  1440/1200/900/390, teclado, page flip, reduced motion, tipografía, imágenes,
-  runtime y overflow; también protege la instancia original de Portfolio.
+  1920/1440/1200/900/390, teclado, giro 3D a mitad de animación, CTA animado,
+  contraste, gap, reduced motion, tipografía, imágenes, runtime y overflow;
+  también protege la instancia original de Portfolio.
 - Para Branding y Headshots valida el manifiesto XMP de 18 JPEG, naming
   descriptivo, dimensiones/peso, ausencia de metadata sensible, cuatro WebP
   400/640/960/1440 por fuente y XMP exacto en fuente/derivados. En el HTML fija

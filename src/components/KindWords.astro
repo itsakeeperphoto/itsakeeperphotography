@@ -7,6 +7,7 @@ interface Props {
   settings: any;
   testimonials?: any[];
   summaryAsLink?: boolean;
+  showReviewAction?: boolean;
 }
 
 const {
@@ -14,7 +15,10 @@ const {
   settings,
   testimonials = [],
   summaryAsLink = true,
+  showReviewAction = false,
 } = Astro.props;
+const reviewActionHref = String(settings?.social?.googleProfile || "").trim();
+const hasReviewAction = showReviewAction && reviewActionHref.length > 0;
 const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3deg"];
 ---
 
@@ -163,6 +167,21 @@ const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3d
           data-business-name={settings.businessName}
           data-tina-field={tinaField(kindWords, "reviewsLine")}
         >{kindWords.reviewsLine}</span>
+      )}
+      {hasReviewAction && (
+        <a
+          class="outline-button kind-words__review-button"
+          href={reviewActionHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Leave us a review on Google (opens in a new tab)"
+          data-review-action
+        >
+          <span>Leave us a review</span>
+          <svg viewBox="0 0 34 18" aria-hidden="true" focusable="false">
+            <path d="M1 9h30M23 1l8 8-8 8"></path>
+          </svg>
+        </a>
       )}
     </p>
   )}

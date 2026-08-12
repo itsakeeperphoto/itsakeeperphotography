@@ -141,7 +141,7 @@ export const pageManifest = [
     llms: true,
     lastModified: "2026-08-12",
     primaryRoute: true,
-    signature: "crossing-line",
+    signature: "arch",
     title: "Client Reviews | It's A Keeper Photography",
     summary:
       "Read verified client stories from Tri-Cities families, seniors, couples and business clients photographed by Lisa Weiss.",

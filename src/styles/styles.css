@@ -2548,7 +2548,7 @@ footer[id] {
   display: inline-flex;
   min-height: var(--minimum-hit-area);
   align-items: center;
-  color: var(--color-utility);
+  color: var(--color-warm-ivory);
   font-family: var(--font-utility);
   font-size: var(--font-size-nav);
   letter-spacing: var(--tracking-label);

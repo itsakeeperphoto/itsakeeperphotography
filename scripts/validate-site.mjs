@@ -95,6 +95,15 @@ for (const [filename, asset] of Object.entries(imageSeoManifest.assets)) {
 const homepageContent = JSON.parse(
   await readFile(path.join(root, "content", "homepage", "index.json"), "utf8"),
 );
+const settingsContent = JSON.parse(
+  await readFile(path.join(root, "content", "settings", "index.json"), "utf8"),
+);
+const reviewsGoogleReviewUrl = "https://g.page/r/CZnCWAWyBWnQEBM/review";
+if (settingsContent.social?.googleProfile !== reviewsGoogleReviewUrl) {
+  failures.push(
+    "content/settings/index.json: Google reviews link must retain the user-confirmed public URL",
+  );
+}
 const homepageHeroContract = {
   image: "/uploads/kennewick-couple-open-field-golden-hour.jpg",
   imageAlt:
@@ -227,6 +236,7 @@ if (
   reviewsSource.contentStatus !== "ready" ||
   reviewsSource.searchVisibility !== "index" ||
   reviewsSource.schemaType !== "WebPage" ||
+  reviewsSource.signature !== "arch" ||
   reviewsSource.title !== "Client Reviews | It's A Keeper Photography" ||
   reviewsSource.description !==
     "Read verified client stories from Tri-Cities families, seniors, couples and business clients photographed by Lisa Weiss." ||
@@ -1070,7 +1080,7 @@ FIRST VIEWPORT: The existing hero remains exact; below its torn edge, Lisa's por
 FORM: User-approved A+C — Keeper Archive plus Through Her Lens — pinned 2026-08-10.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
 const reviewsDirectionContract = `THESIS: Client words become photographic proof; Reviews refuses the generic testimonial grid.
-OWN-WORLD: Ivory paper, umber and olive fields, real black-and-white photographs, square white mats, one portrait arch and one-pixel crossing lines.
+OWN-WORLD: Ivory paper, umber and olive fields, real black-and-white photographs, square white mats, one portrait arch and one overlapping black-and-white print.
 STORY: Visitors recognize deliberate ease, hear ten verified clients, turn through the work and then begin planning.
 FIRST VIEWPORT: The shared EditorialHero fills the exact remaining viewport with a family embrace, two corner prints, centered promise and torn seam.
 FORM: Candidate 5, Words Become Pictures / At Ease, on Purpose; seed c2ad8044; approved comp C.
@@ -1390,6 +1400,34 @@ for (const file of htmlFiles) {
         `${relative}: ready/index route must not link unpublished Journal articles (${linkedUnpublishedJournalPaths.join(
           ", ",
         )})`,
+      );
+    }
+  }
+  if (relative === reviewsRelative) {
+    const reviewAnchors = [...main.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+      .map((match) => ({
+        href: match[1],
+        label: decodeHtml(match[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()),
+        tag: match[0].slice(0, match[0].indexOf(">") + 1),
+      }));
+    const reviewAction = reviewAnchors[0];
+    const contactAction = reviewAnchors[1];
+    if (
+      reviewAnchors.length !== 2 ||
+      reviewAction?.href !== reviewsGoogleReviewUrl ||
+      reviewAction?.label !== "Leave us a review" ||
+      htmlAttribute(reviewAction?.tag || "", "target") !== "_blank" ||
+      htmlAttribute(reviewAction?.tag || "", "rel") !== "noopener noreferrer" ||
+      contactAction?.href !== "/contact/" ||
+      contactAction?.label !== "Start planning your session" ||
+      !/<span\b(?=[^>]*data-google-review-summary)[^>]*>/i.test(main) ||
+      /kind-words__google[^>]*>[\s\S]*?<a\b[^>]*href=["']\/reviews\//i.test(main) ||
+      /reviews-ease__rule/i.test(main) ||
+      !/data-signature-device=["']arch["']/i.test(main) ||
+      (main.match(/data-density=["']hard["']/gi) || []).length !== 6
+    ) {
+      failures.push(
+        `${relative}: Reviews must retain the static proof summary, safe Google CTA, Contact CTA, arch composition and six hard 3D journal pages`,
       );
     }
   }
@@ -3626,6 +3664,7 @@ if (
   !/schemaType:\s*"WebPage"/.test(reviewsManifestBlock) ||
   !/sitemap:\s*true/.test(reviewsManifestBlock) ||
   !/llms:\s*true/.test(reviewsManifestBlock) ||
+  !/signature:\s*"arch"/.test(reviewsManifestBlock) ||
   !/lastModified:\s*"2026-08-12"/.test(reviewsManifestBlock) ||
   !/title:\s*"Client Reviews \| It's A Keeper Photography"/.test(
     reviewsManifestBlock,

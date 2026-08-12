@@ -1395,3 +1395,52 @@
   de Google permanece como mejora no bloqueante. No se hizo push, deploy, DNS
   ni `./scripts/handoff.sh` porque el script termina con `git push` y la política
   operativa vigente reserva el push al usuario.
+
+### ADR-059 — Reviews confirma el CTA Google y recupera un giro de álbum 3D
+
+- **Fecha:** 2026-08-12
+- **Estado:** Aceptada; supersede parcialmente ADR-058 en el enlace externo, la
+  firma visual de At Ease y la física del libro.
+- **Contexto:** El usuario revisó `/reviews/` a 1920×963 y confirmó cinco ajustes:
+  añadir un CTA directo para dejar una reseña, devolver al libro una animación de
+  hojas claramente tridimensional, compactar el paso de KindWords al Journal,
+  retirar las líneas que formaban una intersección en At Ease y aclarar el
+  resumen `100+ five-star Google reviews`. La auditoría midió solo 2.05:1 de
+  contraste, unos 314 px entre resumen y siguiente introducción, y comprobó que
+  PageFlip 2.0.7 sí funcionaba pero interpretaba las hojas como `soft`; por eso
+  aplicaba clip/curva 2D sin caras `rotateY`. El usuario aportó como fuente la
+  URL directa `https://g.page/r/CZnCWAWyBWnQEBM/review`.
+- **Decisión:** Guardar la URL confirmada en `settings.social.googleProfile` y
+  hacer que `KindWords` exponga un CTA opt-in solo en Reviews, con `target` nueva
+  y `noopener noreferrer`; el resumen continúa como texto estático y Homepage
+  permanece sin el nuevo botón. Animar el CTA mediante relleno de papel y
+  desplazamiento de flecha CSS, sin loop y sin transición bajo reduced motion.
+  Usar marfil para el resumen sobre oliva. Eliminar las dos reglas de At Ease
+  tanto del DOM como del CSS y cambiar la firma de Reviews de `crossing-line` a
+  `arch`, conservando arco y print superpuesto. Retirar el `min-height`
+  artificial de KindWords y reducir el padding superior del Journal. Para el
+  libro compartido, declarar cada hoja `data-density="hard"`, mantener el motor
+  StPageFlip existente, girar desde la esquina inferior durante 1200 ms y usar
+  sombra máxima `0.50`; no añadir GSAP a la física de página. Mantener el
+  crossfade actual bajo reduced motion y la política lazy/eager separada entre
+  Reviews y Portfolio. Al entrar KindWords en viewport, activar las imágenes
+  originales y clonadas del loop como eager de prioridad baja; así se conserva
+  el lazy inicial de una sección lejana y se evita que el auto-pan muestre
+  placeholders aún no solicitados.
+- **Alternativas descartadas:** Añadir GSAP o un segundo motor de flip, mantener
+  hojas `soft` con más duración, ocultar las reglas solo con `display:none`,
+  convertir el resumen social en enlace, aplicar el CTA también a Homepage o
+  derivar schema de reseñas desde la URL global se descartó por duplicación,
+  menor profundidad perceptiva, DOM muerto, cambio de contrato compartido o
+  evidencia estructurada insuficiente.
+- **Consecuencias:** Reviews contiene ahora dos anchors dentro de `<main>`, en
+  orden Google externo → Contact interno. El resumen logra 4.61:1 y el gap
+  CTA→Journal mide 184/172.8/148/144/144 px en
+  1920/1440/1200/900/390. A mitad del giro, Playwright verifica estado
+  `flipping`, caras `matrix3d` y sombras rígidas; reduced motion conserva
+  crossfade sin transiciones y Portfolio mantiene seis hojas con su primera
+  página eager/high. Release valida 21/21 rutas, sitemap 13 y `llms.txt` 12;
+  no cambian `WebPage`/`BreadcrumbList` ni la omisión de
+  `Review`/`AggregateRating`. El detector Impeccable devuelve `[]`. No se hizo
+  push, deploy, DNS ni `./scripts/handoff.sh`; el usuario conserva el control del
+  push.

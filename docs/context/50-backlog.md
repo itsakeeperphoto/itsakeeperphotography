@@ -115,9 +115,10 @@
   1440/1200/900/390 y revisión independiente pasan.
 - [x] **19D.1. Rediseñar y publicar Reviews según ADR-058.** La ruta usa
   `ReviewsPage`, el hero compartido, `KindWords` exacto y `JournalBook`;
-  conserva diez testimonios atribuidos, un solo CTA y schema sobrio. Queda
+  conserva diez testimonios atribuidos y schema sobrio. El follow-up ADR-059
+  confirma el CTA Google, retira las líneas cruzadas y recupera el flip 3D. Queda
   `ready/index` con fecha `2026-08-12`, sitemap 13/`llms.txt` 12, QA
-  1440/1200/900/390 e Impeccable `ship`.
+  1920/1440/1200/900/390 e Impeccable limpio.
 - [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
   `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
@@ -406,13 +407,21 @@ sin reemplazar el archivo.
   Homepage/PDF, en orden 1–10; Charity permanece archivada sin borrarse.
 - [x] Conservados nombres, citas, tipo de sesión y alt text atribuidos de la
   fuente, sin anonimización ni reescritura inventada.
-- [ ] Confirmar link público oficial de Google Reviews.
+- [x] Confirmado por el usuario el link público oficial de Google Reviews:
+  `https://g.page/r/CZnCWAWyBWnQEBM/review`; se guarda en Settings y se publica
+  como CTA externo seguro.
 - [x] Publicadas las categorías realmente disponibles —Family, Seniors,
   Couple, Branding y Headshots—; no se inventó una reseña Newborn ausente.
 - [x] Evaluado `Review`/`AggregateRating` y omitido deliberadamente: faltan
   URL, fecha, rating y procedencia estructurada individual suficientes.
 - [x] Implementado renderer especializado sin grilla genérica: hero compartido,
-  `At Ease`, `KindWords`, libro de seis páginas y cierre con un anchor a Contact.
+  `At Ease`, `KindWords`, libro de seis páginas y cierre con anchor a Contact.
+- [x] Aplicado feedback visual: sin reglas cruzadas, firma `arch`, contraste
+  4.61:1, transición compacta hacia Journal y CTA Google animado con fallback
+  reduced-motion.
+- [x] Restaurado el giro físico del libro compartido con hojas `hard`, 1200 ms,
+  sombra `0.50` y esquina inferior; validado `matrix3d` en cinco viewports y sin
+  regresión de Portfolio.
 - [x] Publicada `ready/index`, `lastModified: 2026-08-12`, sin header noindex y
   con membresía sitemap/`llms.txt`; release queda 13/12.
 
@@ -485,7 +494,9 @@ sin reemplazar el archivo.
 - [ ] Probar `/api/google-review-summary` y la actualización diaria en homepage.
 - [ ] Confirmar que el fallback aprobado `100+ five-star Google reviews`
   permanece visible al simular error o payload incompleto.
-- [ ] Confirmar el link de reviews antes de activar copy dinámico definitivo.
+- [x] Confirmado el link directo de reviews y almacenado en
+  `settings.social.googleProfile`; el copy dinámico de conteo/rating conserva su
+  gate separado de credenciales y payload GBP.
 
 ### TinaCMS
 

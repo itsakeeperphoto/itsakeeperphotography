@@ -132,11 +132,11 @@ class JournalBookElement extends HTMLElement {
         maxHeight: 650,
         startPage: safeStartPage,
         drawShadow: true,
-        flippingTime: 800,
+        flippingTime: 1200,
         usePortrait: true,
         startZIndex: 10,
         autoSize: true,
-        maxShadowOpacity: 0.42,
+        maxShadowOpacity: 0.5,
         showCover: false,
         mobileScrollSupport: true,
         swipeDistance: 20,
@@ -192,8 +192,8 @@ class JournalBookElement extends HTMLElement {
 
     if (this.#pageFlip) {
       if (this.#pageFlip.getState() !== "read") return;
-      if (direction > 0) this.#pageFlip.flipNext("top");
-      else this.#pageFlip.flipPrev("top");
+      if (direction > 0) this.#pageFlip.flipNext("bottom");
+      else this.#pageFlip.flipPrev("bottom");
       return;
     }
 

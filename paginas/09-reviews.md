@@ -6,9 +6,9 @@ _Página 9 de 18 · Trust & conversion · Proof · `ready/index`_
 La ruta publica el mismo inventario de diez testimonios reales y atribuidos de
 `content/testimonials/*.json` que usa `KindWords` en Homepage. El PDF de Reviews
 es la autoridad del copy según ADR-052; Charity Neville permanece archivada y no
-se renderiza. La ausencia de una URL pública oficial de Google no bloquea esta
-página: el resumen visible usa el fallback editorial existente y no se enlaza a
-un destino no confirmado.
+se renderiza. El usuario confirmó la URL pública directa de Google Reviews; se
+guarda en `settings.social.googleProfile` y alimenta un CTA explícito, mientras
+el resumen visible sigue siendo texto estático.
 
 ---
 
@@ -74,8 +74,9 @@ orden 1–10, sin reescribir citas, autores, tipos ni alt text:
 
 El resumen `100+ five-star Google reviews` permanece como fallback. El endpoint
 GBP solo lo sustituye cuando entrega conjuntamente rating y conteo válidos. En
-Reviews el resumen es texto, no un enlace autorreferente ni un link externo sin
-confirmar.
+Reviews el resumen es texto estático con contraste 4.61:1; debajo aparece
+**Leave us a review** → `https://g.page/r/CZnCWAWyBWnQEBM/review`, en una pestaña
+nueva con `noopener noreferrer`.
 
 ### The Photographs Behind the Words
 
@@ -84,7 +85,8 @@ worth holding on to.
 
 La página reutiliza el libro interactivo de Portfolio y su única fuente de
 páginas en `content/journal-pages/*.json`. No duplica el H1 ni la introducción
-de `/portfolio/`; en reduced motion conserva una transición legible sin flip.
+de `/portfolio/`. Las hojas rígidas giran en 3D desde la esquina inferior durante
+1200 ms; en reduced motion conserva una transición legible sin flip.
 
 ### Leave the Nerves at Home
 
@@ -92,7 +94,7 @@ If you noticed a theme — “I was so nervous, and then…” — that’s the 
 you to hear. Almost everyone arrives a little unsure. Almost everyone leaves
 saying it was actually fun. You will too.
 
-El cierre `Leave the Nerves at Home` integra el único CTA de ruta:
+El cierre `Leave the Nerves at Home` integra el CTA interno de ruta:
 **Start planning your session** → `/contact/`.
 
 ---
@@ -100,9 +102,10 @@ El cierre `Leave the Nerves at Home` integra el único CTA de ruta:
 ## Internal links
 
 - El control del hero es un botón de scroll local y no consume anchor.
-- `KindWords` muestra el resumen como texto estático en esta ruta.
+- `KindWords` muestra el resumen como texto estático y un CTA Google externo.
 - El libro no añade destinos.
-- Único anchor dentro de `<main>`: `/contact/`.
+- Dos anchors dentro de `<main>`, en este orden: Google Reviews externo y
+  `/contact/` interno.
 
 ## Schema JSON-LD
 
@@ -120,3 +123,16 @@ deben fabricar. Tampoco se copia un rating vivo de GBP al schema.
 - `lastModified: 2026-08-12`
 - Sin regla `/reviews/*` de `X-Robots-Tag` en headers release.
 - Staging conserva el `noindex` global.
+
+## Ajustes de feedback y QA
+
+- Se retiraron del DOM/CSS las reglas que se cruzaban en `At Ease`; la firma
+  publicada ahora es `arch` y el print B/N conserva el solape.
+- El CTA Google usa una animación de relleno de papel y desplazamiento de flecha;
+  bajo reduced motion ambas transiciones son inmediatas.
+- Se eliminó el `min-height` artificial de KindWords y se compactó el paso al
+  Journal. Gap medido: 184/172.8/148/144/144 px en
+  1920/1440/1200/900/390.
+- Playwright aprobó los cinco viewports, el giro `matrix3d`, teclado, targets
+  ≥44 px, contraste, las 30 imágenes originales/clonadas del archive, cero
+  overflow/runtime y las regresiones de Portfolio y Homepage.

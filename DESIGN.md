@@ -1837,7 +1837,7 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
   comodidad deliberada, después diez testimonios como prueba y finalmente las
   fotografías que respaldan esas palabras.
 - El mundo propio usa marfil, umber, oliva y arena; fotografía real, mats
-  cuadrados, un solo arco, hairlines de 1 px, seam rasgado y script restringida.
+  cuadrados, un solo arco, print superpuesto, seam rasgado y script restringida.
   No usa gradientes, glass, badges, grids de testimonial cards ni sombras
   decorativas genéricas.
 
@@ -1847,15 +1847,17 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
    y Newborn, con fondo B/N, dos prints inferiores, copy centrado y botón local
    `Read their stories`. Ocupa exactamente el viewport restante: 882 px a
    1440×1000, 782 px a 1200×900, 688 px a 900×900 y 656 px a 390×844.
-2. **At Ease, on Purpose:** superficie marfil, retrato familiar en arco, print
-   B/N superpuesto y dos reglas cruzadas. La prosa explica que la comodidad es
-   un método deliberado, no una promesa ornamental.
-3. **What Tri-Cities Clients Remember:** reutiliza `KindWords.astro` sin
-   variaciones visuales: clothesline, clips físicos, diez fotografías, reverso
-   legible por hover/foco/tap y resumen social estático dentro de Reviews.
+2. **At Ease, on Purpose:** superficie marfil, retrato familiar en arco y print
+   B/N superpuesto, sin la intersección de reglas del primer pase. La prosa
+   explica que la comodidad es un método deliberado, no una promesa ornamental.
+3. **What Tri-Cities Clients Remember:** reutiliza `KindWords.astro`: clothesline,
+   clips físicos, diez fotografías, reverso legible por hover/foco/tap y resumen
+   social estático. Reviews añade debajo un CTA externo `Leave us a review` con
+   relleno de papel y flecha animados; Homepage no recibe ese CTA.
 4. **The Photographs Behind the Words:** capítulo oliva con el libro canónico de
-   seis páginas de Portfolio. Reviews carga todas sus fotos lazy; la instancia
-   de Portfolio conserva la primera página eager/high.
+   seis páginas de Portfolio. Sus hojas rígidas usan el giro 3D nativo desde la
+   esquina inferior; Reviews carga todas sus fotos lazy y Portfolio conserva la
+   primera página eager/high.
 5. **Leave the Nerves at Home:** fotografía familiar B/N full-bleed, copy corto
    y único anchor de la ruta hacia Contact.
 
@@ -1864,12 +1866,14 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
 - `ReviewsPage.astro` se resuelve en SSR y refresh Tina; `reviews-page.css` se
   enlaza solo en `/reviews/` mediante `?url`.
 - `JournalBook.astro` es el componente compartido; cada instancia tiene IDs,
-  ARIA y memoria de página independientes. El flip se hidrata al entrar en
-  viewport y pasa a crossfade con instrucciones específicas bajo reduced
-  motion.
+  ARIA y memoria de página independientes. Cada hoja declara densidad `hard` y
+  PageFlip usa 1200 ms, sombra máxima `0.50` y esquina inferior, produciendo
+  caras `matrix3d`/`rotateY`. El flip se hidrata al entrar en viewport y pasa a
+  crossfade con instrucciones específicas bajo reduced motion.
 - Contrato semántico exacto: 1 H1, 4 H2, 6 H3, diez testimonios originales,
-  seis páginas de libro y un anchor dentro de `<main>`. Hero y libro usan
-  botones; el resumen KindWords no se enlaza a sí mismo.
+  seis páginas de libro y dos anchors dentro de `<main>`: Google externo seguro
+  y Contact interno. Hero y libro usan botones; el resumen KindWords no se
+  enlaza a sí mismo.
 - A 900 px se conserva la composición en dos columnas donde existe espacio; a
   390 px arco/copy se apilan, el clothesline mantiene scroll horizontal y el
   libro presenta una página. Ningún título se recorta, el body permanece
@@ -1878,7 +1882,7 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
 ### Media, publicación y QA
 
 - Toda fotografía proviene de `public/uploads/`; ninguna región image-native
-  usa un recorte de la comp generada. Papeles, seam, líneas, mats, wire, libro y
+  usa un recorte de la comp generada. Papeles, seam, mats, wire, libro y
   controles permanecen HTML/CSS/SVG. El print pequeño de At Ease se desatura
   con CSS para conservar el rol monocromo de la dirección.
 - La ruta usa `ready/index`, `lastModified: 2026-08-12`, canonical `www`, sin
@@ -1886,10 +1890,13 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
   `WebPage` y `BreadcrumbList`; no emite `Review` ni `AggregateRating` sin URL,
   fecha, rating y fuente individual verificables.
 - Staging y release validan 21/21 rutas. Release contiene 13 URLs en sitemap y
-  12 entradas en `llms.txt`. Playwright pasa 1440×1000, 1200×900, 900×900 y
-  390×844, además de teclado, page flip, reduced motion, imágenes, consola/red,
-  tipografía y regresión de Portfolio. El detector de los archivos propios
-  devuelve `[]`; el único aviso del HTML compilado pertenece a una transición
-  histórica de `journal-page.css` ajena a Reviews. La revisión independiente
-  Impeccable finaliza con `disposition: ship`, `ceiling: reached` y ningún fix
-  material.
+  12 entradas en `llms.txt`. Playwright pasa 1920×963, 1440×1000, 1200×900,
+  900×900 y 390×844, además de teclado, giro 3D, reduced motion, imágenes,
+  consola/red, tipografía y regresión de Portfolio. El gap CTA→Journal queda en
+  184/172.8/148/144/144 px y el resumen logra 4.61:1. El detector de los
+  archivos propios devuelve `[]`. Las 30 instancias de imagen del archive
+  —diez originales y dos juegos clonados— deben tener `currentSrc`, estar
+  completas y decodificar a ancho natural positivo tras entrar en viewport;
+  Homepage conserva el resumen enlazado y cero CTAs Google. La revisión
+  independiente original finalizó
+  con `disposition: ship`, `ceiling: reached` y ningún fix material.

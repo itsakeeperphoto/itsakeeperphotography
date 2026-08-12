@@ -4,7 +4,9 @@ async (page) => {
 
   const route = "/reviews/";
   const releaseOrigin = "https://www.itsakeeperphotography.com";
+  const reviewUrl = "https://g.page/r/CZnCWAWyBWnQEBM/review";
   const viewports = [
+    { id: "1920", width: 1920, height: 963, heroHeight: 845 },
     { id: "1440", width: 1440, height: 1000, heroHeight: 882 },
     { id: "1200", width: 1200, height: 900, heroHeight: 782 },
     { id: "900", width: 900, height: 900, heroHeight: 688 },
@@ -21,6 +23,7 @@ async (page) => {
       "The Photographs Behind the Words",
       "Leave the Nerves at Home",
     ],
+    reviewLabel: "Leave us a review",
     contactLabel: "Start planning your session",
   };
 
@@ -108,6 +111,18 @@ async (page) => {
             fontSize: getComputedStyle(element).fontSize,
           };
         };
+        const contrastRatio = (foreground, background) => {
+          const luminance = (color) => {
+            const channels = (color.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+            const linear = channels.map((channel) => {
+              const value = channel / 255;
+              return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+            });
+            return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+          };
+          const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+          return Number(((values[0] + 0.05) / (values[1] + 0.05)).toFixed(2));
+        };
         const schemas = [...document.querySelectorAll('script[type="application/ld+json"]')]
           .map((node) => {
             try { return JSON.parse(node.textContent || "{}"); } catch { return null; }
@@ -121,11 +136,20 @@ async (page) => {
         const mainAnchors = [...document.querySelectorAll("main a")].map((anchor) => ({
           href: anchor.getAttribute("href"),
           label: normalize(anchor.textContent),
+          target: anchor.getAttribute("target"),
+          rel: anchor.getAttribute("rel"),
         }));
         const hero = rect(".editorial-hero");
         const heroTitle = document.querySelector(".editorial-hero__title");
         const heroTitleRect = heroTitle?.getBoundingClientRect();
         const heroCopyRect = document.querySelector(".editorial-hero__copy")?.getBoundingClientRect();
+        const summary = document.querySelector(".kind-words__google > span");
+        const reviewButton = document.querySelector("[data-review-action]");
+        const journalIntro = document.querySelector(".reviews-journal__intro");
+        const summaryColor = summary ? getComputedStyle(summary).color : "";
+        const summaryBackground = summary
+          ? getComputedStyle(summary.closest(".kind-words")).backgroundColor
+          : "";
         return {
           title: document.title,
           description: document.querySelector('meta[name="description"]')?.getAttribute("content"),
@@ -151,6 +175,16 @@ async (page) => {
           reviewOriginals: document.querySelectorAll("[data-review-group] [data-review-card]").length,
           journalPages: document.querySelectorAll('[data-journal-instance="reviews-journal"] .journal-sheet').length,
           bookLoading: [...document.querySelectorAll('[data-journal-instance="reviews-journal"] img')].map((image) => image.loading),
+          journalDensity: [...document.querySelectorAll('[data-journal-instance="reviews-journal"] .journal-sheet')]
+            .map((sheet) => sheet.getAttribute("data-density")),
+          easeRules: document.querySelectorAll(".reviews-ease__rule").length,
+          signature: document.querySelector(".reviews-page")?.getAttribute("data-signature-device"),
+          summaryColor,
+          summaryContrast: summary ? contrastRatio(summaryColor, summaryBackground) : 0,
+          reviewButtonHeight: reviewButton?.getBoundingClientRect().height || 0,
+          proofToJournalGap: reviewButton && journalIntro
+            ? Number((journalIntro.getBoundingClientRect().top - reviewButton.getBoundingClientRect().bottom).toFixed(2))
+            : null,
           directionFirst: document.body.firstChild?.nodeType === Node.COMMENT_NODE &&
             (document.body.firstChild.textContent || "").includes("seed c2ad8044"),
           titleMatches: document.title === expected.title,
@@ -180,15 +214,42 @@ async (page) => {
         );
       }
       if (initial.reviewOriginals !== 10) failures.push(`${viewport.id}: expected 10 source testimonials`);
-      if (initial.journalPages !== 6 || initial.bookLoading.some((value) => value !== "lazy")) {
-        failures.push(`${viewport.id}: Reviews journal must have six lazy-loaded pages`);
+      if (
+        initial.journalPages !== 6 ||
+        initial.bookLoading.some((value) => value !== "lazy") ||
+        initial.journalDensity.some((value) => value !== "hard")
+      ) {
+        failures.push(`${viewport.id}: Reviews journal must have six lazy hard-cover pages`);
       }
       if (
-        initial.mainAnchors.length !== 1 ||
-        initial.mainAnchors[0]?.href !== "/contact/" ||
-        initial.mainAnchors[0]?.label !== expected.contactLabel
+        initial.mainAnchors.length !== 2 ||
+        initial.mainAnchors[0]?.href !== reviewUrl ||
+        initial.mainAnchors[0]?.label !== expected.reviewLabel ||
+        initial.mainAnchors[0]?.target !== "_blank" ||
+        initial.mainAnchors[0]?.rel !== "noopener noreferrer" ||
+        initial.mainAnchors[1]?.href !== "/contact/" ||
+        initial.mainAnchors[1]?.label !== expected.contactLabel
       ) {
-        failures.push(`${viewport.id}: main must contain only the Contact anchor`);
+        failures.push(`${viewport.id}: main must contain the safe Google review anchor followed by Contact`);
+      }
+      if (
+        initial.easeRules !== 0 ||
+        initial.signature !== "arch" ||
+        initial.summaryContrast < 4.5 ||
+        initial.reviewButtonHeight < 44 ||
+        initial.proofToJournalGap === null ||
+        initial.proofToJournalGap > 210
+      ) {
+        failures.push(
+          `${viewport.id}: feedback geometry or contrast failed ${JSON.stringify({
+            easeRules: initial.easeRules,
+            signature: initial.signature,
+            summaryColor: initial.summaryColor,
+            summaryContrast: initial.summaryContrast,
+            reviewButtonHeight: initial.reviewButtonHeight,
+            proofToJournalGap: initial.proofToJournalGap,
+          })}`
+        );
       }
       if (
         !initial.schemaTypes.includes("WebPage") ||
@@ -224,6 +285,37 @@ async (page) => {
       await page.waitForFunction(() =>
         document.querySelector("[data-review-group] [data-review-card]")?.getAttribute("data-review-state") === "front"
       );
+      await page.waitForFunction(
+        () => [...document.querySelectorAll(".review-polaroid__image")]
+          .every((image) => Boolean(image.currentSrc) && image.complete && image.naturalWidth > 0),
+        null,
+        { timeout: 10_000 }
+      );
+
+      if (viewport.id === "1920") {
+        const reviewButton = page.locator("[data-review-action]");
+        await reviewButton.scrollIntoViewIfNeeded();
+        const buttonBefore = await reviewButton.evaluate((element) => ({
+          fillTransform: getComputedStyle(element, "::before").transform,
+          arrowTransform: getComputedStyle(element.querySelector("svg")).transform,
+          color: getComputedStyle(element).color,
+        }));
+        await reviewButton.hover();
+        await page.waitForTimeout(380);
+        const buttonAfter = await reviewButton.evaluate((element) => ({
+          fillTransform: getComputedStyle(element, "::before").transform,
+          arrowTransform: getComputedStyle(element.querySelector("svg")).transform,
+          color: getComputedStyle(element).color,
+        }));
+        if (
+          buttonBefore.fillTransform === buttonAfter.fillTransform ||
+          buttonBefore.arrowTransform === buttonAfter.arrowTransform ||
+          buttonBefore.color === buttonAfter.color
+        ) {
+          failures.push(`1920: Google review CTA hover animation did not produce fill, arrow and color feedback`);
+        }
+        await page.mouse.move(viewport.width - 2, 2);
+      }
 
       const book = page.locator('[data-journal-instance="reviews-journal"]');
       await book.scrollIntoViewIfNeeded();
@@ -237,7 +329,37 @@ async (page) => {
       if (!(await nextButton.isEnabled())) failures.push(`${viewport.id}: journal Next control did not enable`);
       else {
         await nextButton.click();
-        await page.waitForTimeout(900);
+        await page.waitForTimeout(420);
+        const midTurn = await book.evaluate((element) => {
+          const transforms = [...element.querySelectorAll(".stf__item")]
+            .map((item) => getComputedStyle(item).transform)
+            .filter((transform) => transform && transform !== "none");
+          return {
+            state: element.getAttribute("data-flip-state"),
+            transforms,
+            hasThreeDimensionalPage: transforms.some((transform) => transform.startsWith("matrix3d(")),
+            hardShadowsVisible: [...element.querySelectorAll(".stf__hardShadow")]
+              .some((shadow) => getComputedStyle(shadow).display !== "none"),
+          };
+        });
+        if (
+          midTurn.state !== "flipping" ||
+          !midTurn.hasThreeDimensionalPage ||
+          !midTurn.hardShadowsVisible
+        ) {
+          failures.push(`${viewport.id}: physical 3D page turn is not visible (${JSON.stringify(midTurn)})`);
+        }
+        if (viewport.id === "1920") {
+          await book.screenshot({
+            path: ".artifacts/reviews-2026-08-12/feedback/book-midturn-hard.png",
+            animations: "allow",
+          });
+        }
+        await page.waitForFunction(
+          () => document.querySelector('[data-journal-instance="reviews-journal"]')?.getAttribute("data-flip-state") === "read",
+          null,
+          { timeout: 3_000 }
+        );
         const afterPage = await book.locator("[data-journal-current]").textContent();
         if (beforePage === afterPage) failures.push(`${viewport.id}: journal Next did not advance`);
       }
@@ -255,7 +377,7 @@ async (page) => {
           ".reviews-ease__copy > p:last-child, .reviews-journal__lede, .reviews-final__inner > p:not(.reviews-final__script)"
         )];
         const controls = [...document.querySelectorAll(
-          ".editorial-hero__actions button, .journal-book__button, .reviews-final .outline-button"
+          ".editorial-hero__actions button, .journal-book__button, .kind-words__review-button, .reviews-final .outline-button"
         )];
         return {
           overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - document.documentElement.clientWidth,
@@ -268,16 +390,19 @@ async (page) => {
           journalMode: document.querySelector('[data-journal-instance="reviews-journal"]')?.getAttribute("data-mode"),
           summaryIsSpan: document.querySelector(".kind-words__google > span") !== null,
           summarySelfLink: document.querySelector('.kind-words__google a[href="/reviews/"]') !== null,
+          reviewActionCount: document.querySelectorAll('[data-review-action]').length,
+          reviewImagesReady: [...document.querySelectorAll(".review-polaroid__image")]
+            .every((image) => Boolean(image.currentSrc) && image.complete && image.naturalWidth > 0),
         };
       });
       if (final.overflow > 1) failures.push(`${viewport.id}: horizontal overflow is ${final.overflow}px`);
       if (final.brokenImages.length) failures.push(`${viewport.id}: broken images ${final.brokenImages.join(", ")}`);
       if (final.minimumBodySize < 16) failures.push(`${viewport.id}: body copy falls below 16px`);
       if (final.minimumControlHeight < 44) failures.push(`${viewport.id}: a control falls below 44px`);
-      if (!final.reviewEnhanced || final.journalMode !== "page-flip") {
+      if (!final.reviewEnhanced || final.journalMode !== "page-flip" || !final.reviewImagesReady) {
         failures.push(`${viewport.id}: testimonial or journal enhancement did not initialize`);
       }
-      if (!final.summaryIsSpan || final.summarySelfLink) {
+      if (!final.summaryIsSpan || final.summarySelfLink || final.reviewActionCount !== 1) {
         failures.push(`${viewport.id}: Reviews summary must remain static text without self-link`);
       }
       if (consoleErrors.length || pageErrors.length || failedRequests.length || failedResponses.length) {
@@ -316,18 +441,23 @@ async (page) => {
     const book = document.querySelector('[data-journal-instance="reviews-journal"]');
     const motionHint = book?.querySelector(".journal-book__hint-motion");
     const reducedHint = book?.querySelector(".journal-book__hint-reduced");
+    const reviewButton = document.querySelector("[data-review-action]");
     return {
       mode: book?.getAttribute("data-mode"),
       motionHintDisplay: motionHint ? getComputedStyle(motionHint).display : "missing",
       reducedHintDisplay: reducedHint ? getComputedStyle(reducedHint).display : "missing",
       easePrintTransform: getComputedStyle(document.querySelector(".reviews-ease__print")).transform,
+      reviewFillTransition: reviewButton ? getComputedStyle(reviewButton, "::before").transitionDuration : "missing",
+      reviewArrowTransition: reviewButton ? getComputedStyle(reviewButton.querySelector("svg")).transitionDuration : "missing",
     };
   });
   if (
     reduced.mode !== "crossfade" ||
     reduced.motionHintDisplay !== "none" ||
     reduced.reducedHintDisplay === "none" ||
-    reduced.easePrintTransform !== "none"
+    reduced.easePrintTransform !== "none" ||
+    reduced.reviewFillTransition !== "0s" ||
+    reduced.reviewArrowTransition !== "0s"
   ) {
     failures.push(`reduced motion: fallback contract failed (${JSON.stringify(reduced)})`);
   }
@@ -339,6 +469,8 @@ async (page) => {
     h1: document.querySelector("main h1")?.textContent?.replace(/\s+/g, " ").trim(),
     bookCount: document.querySelectorAll('[data-journal-instance="portfolio-journal"]').length,
     pageCount: document.querySelectorAll('[data-journal-instance="portfolio-journal"] .journal-sheet').length,
+    density: [...document.querySelectorAll('[data-journal-instance="portfolio-journal"] .journal-sheet')]
+      .map((sheet) => sheet.getAttribute("data-density")),
     firstPageLoading: [...document.querySelectorAll('[data-journal-instance="portfolio-journal"] .journal-sheet:first-child img')]
       .map((image) => ({ loading: image.loading, fetchpriority: image.getAttribute("fetchpriority") })),
   }));
@@ -346,10 +478,34 @@ async (page) => {
     portfolio.h1 !== "The Journal" ||
     portfolio.bookCount !== 1 ||
     portfolio.pageCount !== 6 ||
+    portfolio.density.some((value) => value !== "hard") ||
     portfolio.firstPageLoading.some((image) => image.loading !== "eager") ||
     portfolio.firstPageLoading[0]?.fetchpriority !== "high"
   ) {
     failures.push(`portfolio regression: ${JSON.stringify(portfolio)}`);
+  }
+
+  await page.goto(`${baseUrl}/`, { waitUntil: "domcontentloaded" });
+  await page.locator("review-polaroids").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.querySelector("review-polaroids")?.classList.contains("is-enhanced"));
+  await page.waitForFunction(
+    () => [...document.querySelectorAll(".review-polaroid__image")]
+      .every((image) => Boolean(image.currentSrc) && image.complete && image.naturalWidth > 0),
+    null,
+    { timeout: 10_000 }
+  );
+  const homepage = await page.evaluate(() => ({
+    reviewActionCount: document.querySelectorAll("[data-review-action]").length,
+    summaryHref: document.querySelector(".kind-words__google > a")?.getAttribute("href"),
+    reviewImagesReady: [...document.querySelectorAll(".review-polaroid__image")]
+      .every((image) => Boolean(image.currentSrc) && image.complete && image.naturalWidth > 0),
+  }));
+  if (
+    homepage.reviewActionCount !== 0 ||
+    homepage.summaryHref !== "/reviews/" ||
+    !homepage.reviewImagesReady
+  ) {
+    failures.push(`homepage KindWords regression: ${JSON.stringify(homepage)}`);
   }
 
   const crawler = await page.evaluate(async ({ baseUrl }) => {
@@ -374,5 +530,5 @@ async (page) => {
   }
 
   if (failures.length) throw new Error(`Reviews QA failed:\n- ${failures.join("\n- ")}`);
-  return { status: "PASS", viewports: results, reducedMotion: reduced, portfolio, crawler };
+  return { status: "PASS", viewports: results, reducedMotion: reduced, portfolio, homepage, crawler };
 }

@@ -115,15 +115,18 @@ threshold. Each must retain genuinely city-specific content before it is approve
   four route anchors — Locations Guide, Branding vs. Headshots, Portfolio and
   Contact. Its Senior Timing and Newborn Comparison cards remain visible but
   non-interactive until those articles are published. Reviews exposes exactly
-  one route anchor to Contact; its hero scroll remains a button, its Home
-  social-proof summary is static text, and its journal adds no links.
+  two anchors inside `<main>`: the confirmed external Google review action and
+  the internal Contact action, in that order. Its hero scroll remains a button,
+  its Home social-proof summary is static text, and its journal adds no links.
 
 The Reviews publication contract uses the shared service-page hero, the exact
 Home `KindWords` component and the reusable six-page Portfolio book. It
 contains 1 H1, 4 H2, 6 H3 and ten attributed testimonials, emits `WebPage` plus
 `BreadcrumbList`, and deliberately omits `Review` and `AggregateRating` until
 individual source URL/date/rating fields exist. It is `ready/index` with
-`lastModified` `2026-08-12`; staging remains globally noindex.
+`lastModified` `2026-08-12`; staging remains globally noindex. The shared book
+uses hard-page 3D transforms for normal motion and preserves the direct
+crossfade fallback under reduced motion.
 
 The Journal hub publication contract preserves the existing overlap signature
 and four-card editorial sequence. It emits exactly one canonical
