@@ -1232,3 +1232,32 @@
   del commit documental `main` está un commit por delante y quedaría dos por
   delante tras el cierre local. Estos documentos permanecen unstaged. No se
   hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-12 — Codex / GPT-5 — Reviews publicado con Words Become Pictures
+
+- **Objetivo:** auditar y rediseñar `/reviews/` con la geometría editorial de la
+  referencia sin copiar su identidad, preservar el hero compartido, reutilizar
+  KindWords y el libro de Portfolio, y dejar la ruta `ready/index`.
+- **Auditoría y concepto:** se verificaron la ruta genérica previa, diez
+  testimonios atribuidos, seis páginas de Journal y la media local. Se generaron
+  tres comps antes del código; Comp C `Words Become Pictures / At Ease, on
+  Purpose`, seed `c2ad8044`, quedó canónica. A/B se conservan como evidencia.
+- **Implementación:** `ReviewsPage` compone hero compartido, arco/print/líneas,
+  `KindWords` exacto, `JournalBook` y cierre B/N con único CTA a Contact.
+  `JournalBook` se extrajo de Portfolio con estado, IDs y ARIA por instancia;
+  Reviews carga lazy y Portfolio conserva eager/high. SSR, contenido estático y
+  refresh Tina reciben los mismos testimonials/journal pages.
+- **Contenido y SEO:** Reviews quedó `ready/index`, fecha `2026-08-12`, canonical
+  `www`, sin header noindex y dentro de sitemap 13/`llms.txt` 12. Emite
+  `WebPage` + breadcrumb; se omiten `Review`/`AggregateRating`, categoría
+  Newborn y URL Google no sustentados.
+- **QA:** staging y release validaron 21/21 rutas. Playwright pasó
+  1440/1200/900/390, teclado, flip, reduced motion, tipografía sin clipping,
+  targets, imágenes, red/consola, overflow y regresión de Portfolio. Detector
+  propio `[]`; Finish Reviewer `ship`, ceiling `reached`, sin fixes. Revisión
+  técnica paralela: sin P1/P2.
+- **Git/operación:** implementación y documentación estructural en `075df78`
+  (`feat(reviews): publish client stories page`). Este cierre actualiza estado y
+  bitácora en un commit local separado. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el script empuja al remoto y la política vigente
+  reserva el push al usuario.
