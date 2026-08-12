@@ -1261,3 +1261,38 @@
   bitácora en un commit local separado. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el script empuja al remoto y la política vigente
   reserva el push al usuario.
+
+### 2026-08-12 — Codex / GPT-5 — Feedback de Reviews: CTA Google y álbum 3D
+
+- **Objetivo:** aplicar los cinco puntos de feedback del usuario a `/reviews/`:
+  CTA directo para reseña, giro físico del libro, menor espacio entre prueba y
+  Journal, retirada de líneas cruzadas y contraste del resumen social.
+- **Auditoría:** a 1920×963 el resumen medía 2.05:1, KindWords más Journal
+  acumulaban aproximadamente 314 px desde el resumen a la siguiente
+  introducción y las dos reglas de At Ease seguían en DOM. StPageFlip 2.0.7
+  estaba activo, pero todas las hojas se interpretaban como `soft`, sin caras
+  `rotateY`/`matrix3d`; GSAP solo intervenía en el reveal, no en la física.
+- **Implementación:** el enlace confirmado
+  `https://g.page/r/CZnCWAWyBWnQEBM/review` quedó en Settings y alimenta un CTA
+  opt-in de KindWords exclusivo de Reviews, con navegación externa segura,
+  relleno de papel/flecha animados y fallback reduced-motion. El resumen usa
+  marfil, se eliminaron las reglas cruzadas, la firma cambió a `arch` y se
+  compactaron los paddings. JournalBook compartido usa hojas `hard`, esquina
+  inferior, 1200 ms y sombra `0.50`; reduced motion mantiene crossfade.
+- **Pase de revisión:** el revisor detectó un P2 real: Headshot y Branding
+  aparecían como placeholders porque el loop movía clones lazy aún no
+  solicitados. El observer de KindWords ahora prima originales y clones como
+  eager/low al entrar en viewport; el gate exige carga real de las 30 instancias
+  en Reviews y Homepage. La captura final de 1920 muestra ambas tarjetas y el
+  revisor confirmó el P2 resuelto sin hallazgos adicionales.
+- **QA:** staging y release aprobaron 21/21 rutas. Playwright pasó
+  1920×963/1440×1000/1200×900/900×900/390×844: contraste 4.61:1, gaps
+  184/172.8/148/144/144 px, CTA hover/foco/reduced-motion, dos anchors seguros,
+  seis hojas `hard`, estado intermedio `flipping` con `matrix3d` y sombra,
+  imágenes completas, cero overflow/runtime y regresiones de Portfolio/Home.
+  Sitemap permanece 13 y `llms.txt` 12. Detector Impeccable: `[]`.
+- **Git/operación:** implementación y documentación estructural en `8e79a40`
+  (`fix(reviews): refine proof actions and page turn`). Con este cierre
+  documental `main` queda cuatro commits por delante de `origin/main`. No se
+  hizo push, deploy, DNS ni `./scripts/handoff.sh`; el usuario conserva el
+  control del push.

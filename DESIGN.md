@@ -1859,7 +1859,7 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
    esquina inferior; Reviews carga todas sus fotos lazy y Portfolio conserva la
    primera página eager/high.
 5. **Leave the Nerves at Home:** fotografía familiar B/N full-bleed, copy corto
-   y único anchor de la ruta hacia Contact.
+   y anchor interno de cierre hacia Contact.
 
 ### Componentes, interacción y responsive
 

@@ -3,14 +3,14 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-12 11:32 -05
+**Última actualización:** 2026-08-12 12:19 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional canónico:** `075df78` —
-`feat(reviews): publish client stories page`
+**HEAD funcional canónico:** `8e79a40` —
+`fix(reviews): refine proof actions and page turn`
 
 **Base remota al iniciar:** `0e13801` —
 `docs(journal): record hub publication and Lisa checklist`
@@ -18,148 +18,114 @@
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al cerrar implementación:** `main` está un commit por delante de
-`origin/main`; el worktree quedó limpio antes de preparar este cierre
-documental. Este estado y la bitácora se commitean aparte. No se hizo push,
-deploy, DNS ni mutación externa.
+**Estado Git al cerrar:** tras este commit documental, `main` queda cuatro
+commits por delante de `origin/main` y el worktree queda limpio. No se hizo
+push, deploy, DNS ni otra mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario puede revisar y subir los commits locales. Después del deploy
+El usuario puede revisar y subir los cuatro commits locales. Después del deploy
 release, ejecutar un smoke test de `/reviews/`, `/portfolio/` y Homepage en el
 dominio final: status 200, canonical/index, ausencia de header noindex,
-membresía única en sitemap/`llms.txt`, diez testimonios, flip del libro y CTA a
-Contact. Si Lisa aporta la URL pública oficial de Google Reviews, evaluar un
-enlace externo explícito; no bloquea la publicación actual.
+membresía única en sitemap/`llms.txt`, las diez fotografías de KindWords, CTA
+Google, giro 3D del libro y CTA Contact.
 
 ## Resumen ejecutivo
 
-- El sitio Astro/Tina/Netlify sigue construyendo y validando 21 rutas públicas.
-- `/reviews/` quedó especializado, `ready/index` y fechado `2026-08-12`.
-- Release contiene 13 URLs en sitemap y 12 entradas en `llms.txt`; Portfolio es
-  la única ruta indexable excluida de `llms.txt`. Staging conserva sitemap vacío
-  y noindex global.
-- Reviews usa el mismo `EditorialHero` de Seniors, Family y Newborn, reutiliza
-  exactamente `What Tri-Cities Clients Remember` de Homepage, integra el libro
-  canónico de Portfolio y termina con un único CTA a `/contact/`.
-- El inventario visible contiene diez testimonios reales y atribuidos. No se
-  inventó una categoría Newborn, URL de Google, rating, fecha o procedencia.
-- Schema queda en `WebPage` + `BreadcrumbList`; `Review` y `AggregateRating` se
-  omiten hasta contar con campos individuales verificables.
-- QA responsive, funcional, de indexación y de acabado está aprobada. La
-  revisión técnica paralela no encontró hallazgos P1/P2 y la revisión final
-  Impeccable devolvió `disposition: ship`, `ceiling: reached` y cero fixes
-  materiales.
+- `/reviews/` continúa `ready/index`, fechado `2026-08-12`, dentro de sitemap
+  13 y `llms.txt` 12.
+- El usuario confirmó el destino directo
+  `https://g.page/r/CZnCWAWyBWnQEBM/review`. Está en
+  `content/settings/index.json`; Reviews presenta `Leave us a review` como
+  anchor externo seguro y mantiene el resumen social como texto estático.
+- El resumen cambió a marfil sobre oliva y alcanza 4.61:1. El CTA usa relleno de
+  papel y desplazamiento de flecha; reduced motion elimina las transiciones.
+- `At Ease` ya no contiene las reglas cruzadas. La firma de Reviews es `arch` y
+  el arco con print B/N superpuesto permanece.
+- Se retiró el `min-height` artificial de KindWords y se redujo el padding del
+  Journal. El gap CTA→Journal mide 184/172.8/148/144/144 px en
+  1920/1440/1200/900/390.
+- `JournalBook` compartido usa hojas `hard`, giro desde la esquina inferior de
+  1200 ms y sombra máxima `0.50`. En movimiento normal PageFlip produce caras
+  `matrix3d`; reduced motion conserva crossfade.
+- La revisión independiente encontró un P2 de imágenes lazy vacías en dos
+  clones visibles. Se resolvió primando originales y clones, con prioridad baja,
+  solo cuando KindWords entra en viewport. El revisor confirmó el fix y no dejó
+  hallazgos adicionales.
 
-## Reviews publicado en `075df78`
+## Contrato visible y técnico
 
-### Dirección y composición
-
-- Comp C `.impeccable/mocks/reviews-c-at-ease-purpose.png`, `Words Become
-  Pictures / At Ease, on Purpose`, seed `c2ad8044`, es la dirección canónica.
-- Las comps A/B quedan versionadas como alternativas auditadas no seleccionadas.
-- Secuencia: hero compartido → `At Ease, on Purpose` → diez pruebas KindWords →
-  libro de seis páginas → `Leave the Nerves at Home`.
-- Las fotografías provienen de `public/uploads/`; no se copiaron marca, paleta,
-  textos o sujetos de la referencia. Seam, papel, mats, arco, wire, reglas y
-  libro son HTML/CSS/SVG.
-- Contrato visible: 1 H1, 4 H2, 6 H3, diez testimonios originales, seis páginas
-  del libro y un anchor dentro de `<main>`.
-
-### Render y contenido
-
-- `src/components/pages/ReviewsPage.astro` y
-  `src/styles/reviews-page.css` forman el renderer/CSS aislado de ruta.
-- `src/pages/[slug].astro` y `EditorialPageRouter.astro` resuelven Reviews en
-  SSR y refresh Tina sin caer a `ContentPage`.
-- `getStaticReviewsPage()`, la query Tina y la isla pasan el mismo inventario de
-  testimonials/journal. Ambos manifiestos de página permanecen byte-identical.
-- `KindWords.astro` conserva Homepage enlazado hacia Reviews, pero en Reviews
-  presenta el resumen social como texto estático para evitar autorreferencia o
-  un destino Google no confirmado.
-- `JournalBook.astro` se extrajo de `JournalPortfolio.astro`: cada instancia
-  tiene IDs/ARIA/memoria propios. Reviews carga las seis páginas lazy; Portfolio
-  conserva su primera página eager/high. Reduced motion usa crossfade.
-
-### Publicación y SEO
-
-- `contentStatus: ready`, `searchVisibility: index`, `sitemap: true`,
-  `llms: true`, `lastModified: 2026-08-12`.
-- Canonical release:
-  `https://www.itsakeeperphotography.com/reviews/`.
-- Se retiró la regla release `X-Robots-Tag: noindex` de Reviews.
-- Release queda en sitemap 13 y `llms.txt` 12; staging mantiene su aislamiento.
-- Único enlace de body: `Start planning your session` → `/contact/`.
-- `WebPage` y `BreadcrumbList` Home → Client Reviews; sin schema de reseñas,
-  rating, dirección o geodatos fabricados.
+- 1 H1, 4 H2, 6 H3, diez testimonios originales y seis páginas del libro.
+- Dos anchors dentro de `<main>`, en orden: Google externo y Contact interno.
+  Hero y libro continúan usando botones; el resumen no se enlaza a sí mismo.
+- Reviews conserva sus imágenes de Journal lazy en SSR; Portfolio conserva la
+  primera página eager/high. La activación runtime del archive no ocurre hasta
+  que esa sección se aproxima al viewport.
+- Schema permanece en `WebPage` + `BreadcrumbList`; no se añadió
+  `Review`/`AggregateRating` porque la URL global no aporta rating, fecha y
+  procedencia individual por testimonio.
+- `src/pages/[slug].astro`, el contrato de dirección, contenido y ambos
+  manifiestos describen arco + print superpuesto; los manifiestos son idénticos.
 
 ## QA ejecutada
 
-### Build y validación
+### Build y validadores
 
-- `SITE_MODE=release ./node_modules/.bin/astro build` — PASS.
-- `SITE_MODE=release npm run install:netlify-headers` — PASS.
-- `SITE_MODE=release npm run validate:site` — PASS, 21/21 rutas.
-- `SITE_MODE=staging ./node_modules/.bin/astro build` — PASS.
-- `SITE_MODE=staging npm run install:netlify-headers` — PASS.
-- `SITE_MODE=staging npm run validate:site` — PASS, 21/21 rutas.
-- Se restauró un build release y se repitió su validador — PASS.
-- `git diff --check`, JSON, sintaxis del validador y equivalencia de
-  manifiestos — PASS.
-
-El wrapper integral `npm run build:local` no pudo apropiarse del datalayer Tina
-`:9000`, ocupado por un proceso preexistente del usuario; no se detuvo. La query
-Tina se regeneró en puertos aislados y los builds Astro/validadores definitivos
-pasaron en ambos modos.
+- Build Astro staging — PASS.
+- Headers + `scripts/validate-site.mjs` staging — PASS, 21/21 rutas.
+- Build Astro release restaurado — PASS.
+- Headers + `scripts/validate-site.mjs` release — PASS, 21/21 rutas.
+- `node --check public/scripts/site.js` — PASS.
+- `node --check scripts/playwright-reviews.js` — PASS.
+- `git diff --check` — PASS.
+- `cmp page-manifest.ts src/lib/page-manifest.ts` — PASS.
 
 ### Playwright CLI
 
-`scripts/playwright-reviews.js` aprobó:
+`scripts/playwright-reviews.js` aprobó en una sesión Chromium limpia:
 
-- 1440×1000, 1200×900, 900×900 y 390×844;
-- alturas exactas del hero compartido: 882/782/688/656 px;
-- title, description, robots, canonical, headings y comentario de dirección;
-- diez testimonios, teclado/Escape, resumen sin self-link;
-- seis páginas lazy, Next funcional, page-flip y regresión de Portfolio;
-- reduced motion con crossfade e instrucciones específicas;
-- tipografía sin clipping, body ≥17.28 px, targets ≥44 px;
-- cero overflow, imágenes rotas, errores runtime o fallos de red locales;
-- sitemap 13, `llms.txt` 12 y presencia única de Reviews.
+- 1920×963, 1440×1000, 1200×900, 900×900 y 390×844;
+- alturas exactas del hero: 845/882/782/688/656 px;
+- CTA Google exacto, `target="_blank"`, `noopener noreferrer`, hover animado y
+  target de 70 px;
+- contraste 4.61:1, gap máximo 184 px y cero reglas cruzadas;
+- diez testimonios fuente y carga real de las 30 imágenes del archive
+  —originales y clones— mediante `currentSrc`, `complete` y `naturalWidth > 0`;
+- seis páginas `hard`, estado `flipping`, caras `matrix3d`, sombra rígida y
+  avance de página en los cinco anchos;
+- crossfade e instrucciones específicas bajo reduced motion;
+- cero overflow, imágenes rotas, errores runtime o fallos locales de red;
+- regresión de Portfolio y Homepage, sitemap 13 y `llms.txt` 12.
 
-Las capturas finales permanecen ignoradas en
-`.artifacts/reviews-2026-08-12/final/`.
+Las capturas finales y el giro intermedio permanecen ignorados en
+`.artifacts/reviews-2026-08-12/`.
 
-### Impeccable y revisión técnica
+### Impeccable y revisión independiente
 
-- Detector sobre los archivos propios de Reviews/JournalBook: `[]`.
-- El HTML compilado señaló solo `transition: width` en
-  `src/styles/journal-page.css`, regla histórica ajena a Reviews.
-- Asset Producer: ningún raster nuevo requerido; toda región image-native usa
-  fuentes independientes y suficientes. El print pequeño de At Ease se fijó en
-  monocromo por CSS.
-- Finish Reviewer independiente: `ship`, persistencia `pass`, fidelidad
-  `match/acceptable adaptation`, ceiling `reached`, `material_fixes: none`.
-- Revisión de código independiente de datos/routing y JournalBook/a11y:
-  `no P1/P2 findings`.
+- Detector Impeccable batched sobre los archivos visuales: `[]`.
+- Revisión final del follow-up: un P2 de lazy/clones detectado, corregido y
+  confirmado como resuelto; no quedan P1/P2.
+- La implementación usa StPageFlip ya instalado para la física 3D; GSAP no se
+  añadió al libro y sigue limitado al reveal/scroll editorial existente.
 
 ## Pendientes no bloqueantes
 
-- Confirmar la URL pública oficial de Google Reviews si se desea enlazar el
-  resumen social.
-- Probar el endpoint GBP y su actualización diaria en el deploy cuando existan
-  credenciales/Blobs operativos; el fallback editorial sigue siendo válido.
-- Ejecutar el smoke test post-deploy y verificar Search Console solo después del
-  push/deploy administrado por el usuario.
-- Privacy y las rutas comerciales todavía draft conservan sus gates propios.
+- Ejecutar el smoke test post-deploy después del push administrado por el
+  usuario.
+- Configurar y verificar las credenciales/Blobs de GBP para actualizar
+  dinámicamente conteo y rating; el CTA directo y el fallback editorial no
+  dependen de ese flujo.
+- Privacy y las rutas comerciales aún draft conservan sus gates propios.
 
 ## Operación Git y handoff
 
-- Commit funcional local: `075df78`.
-- Este cierre documental actualiza `20-estado.md` y agrega una entrada a
-  `40-bitacora.md`; ADR-058, arquitectura, backlog, DESIGN y STRUCTURE ya están
-  en el commit funcional.
-- No se ejecutó `./scripts/handoff.sh`: el script termina con `git push` y la
-  política operativa vigente reserva el push al usuario. Los transcripts
+- Commit funcional del feedback: `8e79a40`.
+- ADR-059, arquitectura, backlog, DESIGN, STRUCTURE, página fuente y surface
+  brief quedaron actualizados junto al cambio funcional.
+- Este cierre actualiza `20-estado.md` y agrega la entrada correspondiente en
+  `40-bitacora.md`.
+- No se ejecutó `./scripts/handoff.sh`: termina con `git push` y la política
+  operativa vigente reserva el push al usuario. Los transcripts
   `.handoff/sessions/*.jsonl` siguen locales e ignorados.
