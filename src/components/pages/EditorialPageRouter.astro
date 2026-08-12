@@ -14,6 +14,7 @@ import NewbornComparisonPage from "./NewbornComparisonPage.astro";
 import NewbornPage from "./NewbornPage.astro";
 import PascoPage from "./PascoPage.astro";
 import RichlandPage from "./RichlandPage.astro";
+import ReviewsPage from "./ReviewsPage.astro";
 import SeniorPage from "./SeniorPage.astro";
 import SeniorTimingPage from "./SeniorTimingPage.astro";
 
@@ -21,6 +22,10 @@ interface Props {
   page: EditorialPageData;
   settings: any;
   inquiry?: any;
+  kindWords?: any;
+  testimonials?: any[];
+  journalPages?: any[];
+  journalData?: any;
 }
 
 const props = Astro.props;
@@ -40,6 +45,7 @@ const isNewbornComparisonPage =
 const isNewbornPage = props.page.route === "/newborn-photographer-tri-cities-wa/";
 const isPascoPage = props.page.route === "/pasco-wa-photographer/";
 const isRichlandPage = props.page.route === "/richland-wa-photographer/";
+const isReviewsPage = props.page.route === "/reviews/";
 const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
 const isSeniorTimingPage =
   props.page.route === "/journal/when-to-book-senior-pictures-tri-cities/";
@@ -71,6 +77,8 @@ const isSeniorTimingPage =
     ? <PascoPage {...props} />
   : isRichlandPage
     ? <RichlandPage {...props} />
+  : isReviewsPage
+    ? <ReviewsPage {...props} />
   : isSeniorPage
     ? <SeniorPage {...props} />
   : isSeniorTimingPage

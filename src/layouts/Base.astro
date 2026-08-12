@@ -311,8 +311,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
     )}
   </head>
 
-  <body>
-    <Fragment set:html={directionContract ? `<!--\n${directionContract}\n-->` : ""} />
+  <body><Fragment set:html={directionContract ? `<!--\n${directionContract}\n-->` : ""} />
     <slot name="preloader" />
     <a class="skip-link" href="#main-content">Skip to content</a>
     <slot />

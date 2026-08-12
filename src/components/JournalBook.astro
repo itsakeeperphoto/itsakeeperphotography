@@ -1,0 +1,255 @@
+---
+import { tinaField } from "@tinacms/astro/tina-field";
+import Picture from "./Picture.astro";
+import "../styles/journal.css";
+
+interface Props {
+  pages?: any[];
+  instanceId?: string;
+  ariaLabel?: string;
+  eagerFirstPage?: boolean;
+  pageTitleLevel?: 2 | 3;
+}
+
+const {
+  pages: suppliedPages = [],
+  instanceId = "journal-book",
+  ariaLabel = "It’s A Keeper photography journal",
+  eagerFirstPage = false,
+  pageTitleLevel = 2,
+} = Astro.props;
+const PageTitle = pageTitleLevel === 3 ? "h3" : "h2";
+
+const layoutPresets = new Set([
+  "hero-note",
+  "offset-pair",
+  "story-grid",
+  "tall-stack",
+]);
+const tapePresets = new Set(["sage", "oatmeal", "sand"]);
+const pageWidth = 520;
+const photoWidthPercentages: Record<string, number[]> = {
+  "hero-note": [62, 37, 29, 31],
+  "offset-pair": [50, 47, 29, 30],
+  "story-grid": [55, 35, 49, 31],
+  "tall-stack": [55, 42, 36, 30],
+};
+const photoSizes = (layout: string, photoIndex: number) => {
+  const widthPercentage = photoWidthPercentages[layout]?.[photoIndex] || 50;
+  const maximumWidth = Math.ceil(pageWidth * (widthPercentage / 100));
+  return `(max-width: 768px) ${widthPercentage}vw, ${maximumWidth}px`;
+};
+const pages = suppliedPages
+  .filter(Boolean)
+  .sort((a: any, b: any) => {
+    const orderDifference = Number(a.order || 0) - Number(b.order || 0);
+    if (orderDifference !== 0) return orderDifference;
+    const aPath = a?._sys?.relativePath || a?.title || "";
+    const bPath = b?._sys?.relativePath || b?.title || "";
+    return aPath.localeCompare(bPath);
+  })
+  .slice(0, 6);
+
+const safeInstanceId = String(instanceId).replace(/[^a-zA-Z0-9_-]/g, "-") || "journal-book";
+const stageId = `${safeInstanceId}-stage`;
+const hintId = `${safeInstanceId}-hint`;
+const statusId = `${safeInstanceId}-status`;
+
+const formatDate = (value?: string) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+};
+---
+
+<journal-book
+  class="journal-book"
+  role="group"
+  aria-roledescription="book"
+  aria-label={ariaLabel}
+  aria-describedby={hintId}
+  tabindex="0"
+  data-page-count={pages.length}
+  data-journal-instance={safeInstanceId}
+  data-eager-first-page={eagerFirstPage ? "true" : "false"}
+>
+  <div class="journal-book__volume">
+    <div class="journal-book__edge-stack" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((edge) => (
+        <span class="journal-book__edge journal-book__edge--left" style={`--edge-index: ${edge}`}></span>
+      ))}
+      {[0, 1, 2, 3, 4].map((edge) => (
+        <span class="journal-book__edge journal-book__edge--right" style={`--edge-index: ${edge}`}></span>
+      ))}
+    </div>
+
+    <div class="journal-book__stage" id={stageId} data-journal-stage>
+      {pages.map((page: any, pageIndex: number) => {
+        const layout = layoutPresets.has(page.layout) ? page.layout : "offset-pair";
+        const tape = tapePresets.has(page.tapeStyle) ? page.tapeStyle : "oatmeal";
+        const pageNumber = String(pageIndex + 1).padStart(2, "0");
+        return (
+          <article
+            class={`journal-sheet journal-sheet--${layout} journal-sheet--tape-${tape}`}
+            aria-label={`Page ${pageIndex + 1}${page.title ? `: ${page.title}` : ""}`}
+            data-page-number={pageIndex + 1}
+            data-page-title={page.title || `Journal page ${pageIndex + 1}`}
+            data-page-path={page?._sys?.relativePath || page.title || pageNumber}
+            data-tina-field={tinaField(page)}
+          >
+            <div class="journal-sheet__texture" aria-hidden="true"></div>
+
+            {page.title && (
+              <PageTitle class="journal-sheet__title" data-tina-field={tinaField(page, "title")}>
+                {page.title}
+              </PageTitle>
+            )}
+
+            <div class="journal-sheet__photos">
+              {(page.photos || []).slice(0, 4).map((photo: any, photoIndex: number) => {
+                const formattedDate = formatDate(photo.date);
+                const isInitiallyEager = eagerFirstPage && pageIndex === 0;
+                const isInitialLcpCandidate = isInitiallyEager && photoIndex === 0;
+                return (
+                  <figure
+                    class={`journal-photo journal-photo--${photoIndex + 1}`}
+                    data-tina-field={tinaField(page, "photos", photoIndex)}
+                  >
+                    <span class="journal-photo__tape" aria-hidden="true"></span>
+                    <Picture
+                      pictureClass="journal-photo__picture"
+                      imgClass="journal-photo__image"
+                      src={photo.image}
+                      alt={photo.alt}
+                      loading={isInitiallyEager ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchpriority={isInitialLcpCandidate ? "high" : isInitiallyEager ? "auto" : "low"}
+                      sizes={photoSizes(layout, photoIndex)}
+                      responsiveSrcset
+                      dataTinaField={tinaField(photo, "image")}
+                    />
+                    {(photo.caption || formattedDate) && (
+                      <figcaption class="journal-photo__caption">
+                        {photo.caption && (
+                          <span data-tina-field={tinaField(photo, "caption")}>{photo.caption}</span>
+                        )}
+                        {formattedDate && (
+                          <time datetime={photo.date} data-tina-field={tinaField(photo, "date")}>
+                            {formattedDate}
+                          </time>
+                        )}
+                      </figcaption>
+                    )}
+                  </figure>
+                );
+              })}
+            </div>
+
+            {pageIndex % 3 === 0 && (
+              <svg class="journal-doodle journal-doodle--spark" viewBox="0 0 96 82" aria-hidden="true">
+                <path d="M48 7v18M48 57v18M13 41h18M65 41h18M23 16l13 13M60 53l13 13M73 16 60 29M36 53 23 66" />
+                <circle cx="48" cy="41" r="8" />
+              </svg>
+            )}
+            {pageIndex % 3 === 1 && (
+              <svg class="journal-doodle journal-doodle--heart" viewBox="0 0 118 76" aria-hidden="true">
+                <path d="M10 61c20-6 30-15 39-25 8-9 10-24 0-28-12-5-18 12-11 20 7 9 25 5 34-5 8-9 23-8 27 2 5 13-9 28-20 37" />
+              </svg>
+            )}
+            {pageIndex % 3 === 2 && (
+              <svg class="journal-doodle journal-doodle--sprig" viewBox="0 0 102 118" aria-hidden="true">
+                <path d="M18 105c24-27 38-57 51-92M44 63c-16-3-24-13-23-27 15 1 25 10 23 27ZM55 42c2-15 12-24 27-25-1 15-11 25-27 25ZM34 83c-13 0-22-7-26-19 13-3 24 3 26 19ZM63 24c-5-7-4-14 2-21 8 5 8 14-2 21Z" />
+              </svg>
+            )}
+
+            <span class="journal-sheet__page-number" aria-hidden="true">{pageNumber}</span>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+
+  <div class="journal-book__controls" data-journal-controls aria-label={`${ariaLabel} controls`}>
+    <button
+      class="journal-book__button"
+      type="button"
+      data-journal-previous
+      aria-controls={stageId}
+      disabled
+    >
+      <svg viewBox="0 0 48 24" aria-hidden="true"><path d="M46 12H3M13 2 3 12l10 10" /></svg>
+      <span>Previous</span>
+    </button>
+    <p class="journal-book__progress" aria-hidden="true">
+      <span data-journal-current>{pages.length > 1 ? "02" : "01"}</span>
+      <span class="journal-book__progress-line"></span>
+      <span>{String(pages.length).padStart(2, "0")}</span>
+    </p>
+    <button
+      class="journal-book__button"
+      type="button"
+      data-journal-next
+      aria-controls={stageId}
+      disabled
+    >
+      <span>Next</span>
+      <svg viewBox="0 0 48 24" aria-hidden="true"><path d="M2 12h43M35 2l10 10-10 10" /></svg>
+    </button>
+  </div>
+
+  <p class="journal-book__hint" id={hintId}>
+    <span class="journal-book__hint-motion">Drag a page corner, swipe, or use the arrow keys.</span>
+    <span class="journal-book__hint-reduced">Use Previous, Next, or the arrow keys to change pages.</span>
+  </p>
+  <p class="sr-only" id={statusId} aria-live="polite" aria-atomic="true" data-journal-status>
+    Pages 1 and 2 of {pages.length}
+  </p>
+</journal-book>
+
+<script>
+  const initializeJournalBookController = () => {
+    const journals = Array.from(
+      document.querySelectorAll<HTMLElement>("journal-book:not([data-controller-watch])")
+    );
+    if (!journals.length || customElements.get("journal-book")) return;
+
+    let controllerRequested = false;
+    const loadController = () => {
+      if (controllerRequested) return;
+      controllerRequested = true;
+
+      const queueController = () => {
+        window.setTimeout(() => void import("../scripts/journal-book"), 250);
+      };
+
+      if (document.readyState === "complete") queueController();
+      else window.addEventListener("load", queueController, { once: true });
+    };
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          observer.disconnect();
+          loadController();
+        },
+        { rootMargin: "400px 0px" }
+      );
+      journals.forEach((journal) => {
+        journal.dataset.controllerWatch = "true";
+        observer.observe(journal);
+      });
+    } else {
+      journals.forEach((journal) => (journal.dataset.controllerWatch = "true"));
+      loadController();
+    }
+  };
+
+  initializeJournalBookController();
+  document.addEventListener("astro:page-load", initializeJournalBookController);
+</script>

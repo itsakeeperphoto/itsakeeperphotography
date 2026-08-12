@@ -100,6 +100,10 @@
   `printImage` falta, `MeetLisa.astro` usa `portrait` como fallback. El hero
   conserva una fuente editorial en JSON y variantes art-directed preconstruidas
   para desktop y móvil.
+- Reviews consume `homepage.kindWords`, las diez entradas `featured` de
+  `content/testimonials/` y las seis páginas de `content/journal-pages/` desde
+  `getStaticReviewsPage()`. La query y la isla Tina solicitan las mismas
+  conexiones y límites para que el refresh editorial no degrade la superficie.
 
 ### Precios
 
@@ -130,7 +134,9 @@ retry, freeze tras éxito ni analítica personalizada del gate.
 
 - `src/pages/index.astro` compone la homepage y es la única ruta que incluye
   `SitePreloader.astro`.
-- `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto.
+- `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto y
+  ramifica Reviews a su renderer especializado tanto en SSR como en refresh
+  Tina.
 - `src/pages/journal/[slug].astro` resuelve artículos y ramifica explícitamente
   Family Photo Locations, Senior Timing, Newborn Comparison y Branding vs.
   Headshots a sus renderers especializados antes del fallback `ContentPage`.
@@ -151,18 +157,21 @@ permanece fuera del árbol accesible.
 `public/scripts/site.js` crea los clones decorativos del loop, los excluye del
 orden de tabulación y revela el reverso por hover con puntero fino, foco de
 teclado o toggle por tap con puntero coarse; solo una tarjeta puede permanecer
-abierta. Tina aplica el mismo rango 1–10.
+abierta. Tina aplica el mismo rango 1–10. Homepage mantiene el resumen como
+anchor hacia Reviews; dentro de Reviews el mismo componente lo presenta como
+texto estático para evitar un enlace autorreferente o fabricar una URL externa.
 
 Componentes especializados existentes:
 
 - `FamilyPage.astro`, `SeniorPage.astro`, `NewbornPage.astro`
 - `BrandingPage.astro`, `HeadshotPage.astro`
 - `AboutPage.astro`, `InvestmentPage.astro`, `ContactPage.astro`
+- `ReviewsPage.astro`
 - `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`,
   `NewbornComparisonPage.astro`, `BrandingHeadshotsArticlePage.astro`
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
-- `ContentPage.astro` para rutas aún genéricas, incluidas Reviews, Privacy,
-  Thank-you y algunos artículos.
+- `ContentPage.astro` para rutas aún genéricas, incluidas Privacy, Thank-you y
+  algunos artículos.
 
 `JournalPage.astro` conserva la firma visual `overlap` y cuatro cards, pero el
 hub publicado expone solo cuatro anchors seguros: Locations Guide, Branding vs.
@@ -178,6 +187,20 @@ script es opcional: cuando no existe contenido aprobado, el nodo no se emite.
 Admite CTA como enlaces o como botón de desplazamiento; Kennewick y Pasco usan
 botones hacia sus cierres, por lo que el hero no añade un anchor. Su título en
 líneas conserva espacios explícitos para que el texto DOM siga siendo exacto.
+
+`ReviewsPage.astro` implementa `/reviews/` con la dirección canónica
+`Words Become Pictures / At Ease, on Purpose`: el mismo `EditorialHero` de
+Seniors, Family y Newborn; un arco con print B/N y líneas cruzadas; el
+`KindWords` exacto de Homepage; el libro de seis páginas; y un cierre
+fotográfico con un único anchor a Contact. `reviews-page.css` se procesa con
+`?url` y solo se enlaza en esta ruta. El contrato visible es 1 H1, 4 H2, 6 H3,
+10 testimonios originales y un anchor dentro de `<main>`.
+
+`JournalBook.astro` contiene la UI reutilizable extraída del Portfolio.
+`JournalPortfolio.astro` permanece como wrapper de esa ruta y carga su primera
+página eager; Reviews usa otro `instanceId`, conserva las seis páginas lazy y
+solo hidrata el flip al entrar en viewport. El controlador mantiene página por
+instancia, IDs/ARIA únicos y cambia a crossfade bajo reduced motion.
 
 `SeniorTimingPage.astro` renderiza el artículo
 `/journal/when-to-book-senior-pictures-tri-cities/` como field guide
@@ -409,6 +432,14 @@ para evitar cambios silenciosos al repositorio.
   el fallback sin JavaScript a 390 px. El contrato conserva
   `ContactPage`/`BreadcrumbList`, ausencia de un `Service` inventado, membresía
   exacta en sitemap/`llms.txt` y aislamiento noindex de staging.
+- Para Reviews fija estado `ready/index`, fecha `2026-08-12`, metadata,
+  canonical, hero compartido y primer comentario de dirección. En HTML exige
+  1 H1, 4 H2, 6 H3, diez testimonios fuente, seis páginas lazy del libro, un
+  único anchor a Contact y resumen social estático. Alinea `WebPage` y
+  `BreadcrumbList`, prohíbe `Review`/`AggregateRating` no sustentados y compara
+  la membresía exacta de sitemap/`llms.txt`. Playwright cubre
+  1440/1200/900/390, teclado, page flip, reduced motion, tipografía, imágenes,
+  runtime y overflow; también protege la instancia original de Portfolio.
 - Para Branding y Headshots valida el manifiesto XMP de 18 JPEG, naming
   descriptivo, dimensiones/peso, ausencia de metadata sensible, cuatro WebP
   400/640/960/1440 por fuente y XMP exacto en fuente/derivados. En el HTML fija
@@ -457,12 +488,13 @@ para evitar cambios silenciosos al repositorio.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para doce rutas:
+En `release`, el manifiesto actualmente permite sitemap para trece rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
 - `/newborn-photographer-tri-cities-wa/`
 - `/about/`
+- `/reviews/`
 - `/contact/`
 - `/richland-wa-photographer/`
 - `/kennewick-wa-photographer/`
@@ -472,9 +504,11 @@ En `release`, el manifiesto actualmente permite sitemap para doce rutas:
 - `/journal/branding-photos-vs-headshots/`
 - `/portfolio/`
 
-`llms.txt` incluye Homepage, Family, Newborn, About, Contact, Richland,
-Kennewick, Pasco, Journal, Family Photo Locations y Branding vs. Headshots;
-Portfolio está excluido de llms. Otras ocho rutas siguen `draft/noindex`.
+`llms.txt` incluye Homepage, Family, Newborn, About, Reviews, Contact,
+Richland, Kennewick, Pasco, Journal, Family Photo Locations y Branding vs.
+Headshots; Portfolio está excluido de llms. Seniors, Branding, Headshots,
+Investment, Senior Timing, Newborn Comparison y Privacy siguen
+`draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En

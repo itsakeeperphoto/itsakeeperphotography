@@ -36,3 +36,12 @@ export const getStaticPortfolioPage = () => ({
     journalPageConnection: { edges: nodes(journalModules) },
   },
 });
+
+export const getStaticReviewsPage = () => ({
+  data: {
+    homepage,
+    settings,
+    testimonialConnection: { edges: nodes(testimonialModules) },
+    journalPageConnection: { edges: nodes(journalModules) },
+  },
+});

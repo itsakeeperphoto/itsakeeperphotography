@@ -1,0 +1,9 @@
+{
+  "surface": "route:/reviews/",
+  "concept": "B — Comfort Quote",
+  "approved": false,
+  "canonical": false,
+  "generatedAt": "2026-08-12",
+  "promptFile": "reviews-b-comfort-quote.prompt.txt",
+  "decision": "Rejected: a single quotation overweights one client before the full verified set appears."
+}

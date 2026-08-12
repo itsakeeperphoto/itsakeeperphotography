@@ -11,7 +11,7 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 6 | 06-headshots.md | `/headshot-photographer-tri-cities-wa/` | ⚠️ Media renovada · `draft/noindex` (duración/entregables por confirmar) |
 | 7 | 07-investment.md | `/investment/` | ⚠️ `draft/noindex` (modelo de paquetes y afirmaciones comerciales por confirmar) |
 | 8 | 08-about.md | `/about/` | ✅ Completo · `ready/index` |
-| 9 | 09-reviews.md | `/reviews/` | ⚠️ Necesita las 8–12 reseñas reales (Q47) |
+| 9 | 09-reviews.md | `/reviews/` | ✅ Rediseñado y publicado · `ready/index` (fecha 2026-08-12) |
 | 10 | 10-contact.md | `/contact/` | ✅ Completo · `ready/index` |
 | 11 | 11-richland.md | `/richland-wa-photographer/` | ✅ Completo · `ready/index` (galería de 10 sesiones) |
 | 12 | 12-kennewick.md | `/kennewick-wa-photographer/` | ✅ Completo · `ready/index` (galería de 5 sesiones) |
@@ -26,8 +26,8 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 
 ## Orden de publicación recomendado
 
-1. El núcleo publicado ya incluye Home, Family, Newborn, About, Contact,
-   Richland, Kennewick, Pasco, Journal, Locations Guide, Branding vs.
+1. El núcleo publicado ya incluye Home, Family, Newborn, About, Reviews,
+   Contact, Richland, Kennewick, Pasco, Journal, Locations Guide, Branding vs.
    Headshots y Portfolio.
 2. Resolver con Lisa las páginas Seniors, Branding, Headshots e Investment
    usando el checklist de publicación.
@@ -36,14 +36,15 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
    requieren fuente primaria.
 4. Publicar Newborn Comparison solo después de aprobación factual, formato
    exacto y fecha real.
-5. Reviews y Privacy quedan fuera de este checklist por instrucción del usuario.
+5. Privacy queda fuera de este checklist por instrucción del usuario; Reviews
+   ya se resolvió en una intervención independiente.
 
 ## Lo que falta de Lisa (bloqueos)
 
 - **Checklist central:** responder
   `docs/lisa-publication-confirmation-checklist.md` o su versión Word antes de
-  levantar cualquiera de los gates siguientes. Reviews y Privacy no están
-  incluidos porque el usuario se encarga de esas dos rutas.
+  levantar cualquiera de los gates siguientes. Privacy no está incluida;
+  Reviews ya está publicada y no comparte esos gates.
 - **Seniors:** confirmar outfits incluidos por paquete y la regla de outfit
   adicional; no falta un número de imágenes para este gate.
 - **Senior Timing:** aprobar fecha editorial; confirmar Q54 solo si debe
@@ -58,3 +59,5 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 - **Investment:** confirmar qué servicios usan los paquetes actuales, qué
   incluyen las coberturas frente a las colecciones y si small elopements se
   conserva o se omite.
+- **Reviews (no bloqueante):** aportar el enlace público oficial de Google si
+  se desea convertir el resumen estático en un destino externo verificable.

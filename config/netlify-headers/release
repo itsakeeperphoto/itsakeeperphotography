@@ -29,9 +29,6 @@
 /investment/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/reviews/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
 /journal/when-to-book-senior-pictures-tri-cities/*
   X-Robots-Tag: noindex, nofollow, noarchive
 

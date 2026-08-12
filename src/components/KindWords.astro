@@ -2,7 +2,19 @@
 import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "./Picture.astro";
 
-const { kindWords, settings, testimonials = [] } = Astro.props;
+interface Props {
+  kindWords: any;
+  settings: any;
+  testimonials?: any[];
+  summaryAsLink?: boolean;
+}
+
+const {
+  kindWords,
+  settings,
+  testimonials = [],
+  summaryAsLink = true,
+} = Astro.props;
 const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3deg"];
 ---
 
@@ -132,26 +144,36 @@ const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3d
     </div>
   </review-polaroids>
 
-  {kindWords.reviewsLine && kindWords.buttonHref && (
+  {kindWords.reviewsLine && (
     <p class="kind-words__google content-shell">
-      <a
-        href={kindWords.buttonHref}
-        aria-label={`${kindWords.reviewsLine} for ${settings.businessName}`}
-        data-google-review-summary
-        data-google-review-summary-endpoint="/api/google-review-summary"
-        data-business-name={settings.businessName}
-        data-tina-field={tinaField(kindWords, "reviewsLine")}
-      >{kindWords.reviewsLine}</a>
+      {summaryAsLink && kindWords.buttonHref ? (
+        <a
+          href={kindWords.buttonHref}
+          aria-label={`${kindWords.reviewsLine} for ${settings.businessName}`}
+          data-google-review-summary
+          data-google-review-summary-endpoint="/api/google-review-summary"
+          data-business-name={settings.businessName}
+          data-tina-field={tinaField(kindWords, "reviewsLine")}
+        >{kindWords.reviewsLine}</a>
+      ) : (
+        <span
+          aria-live="polite"
+          data-google-review-summary
+          data-google-review-summary-endpoint="/api/google-review-summary"
+          data-business-name={settings.businessName}
+          data-tina-field={tinaField(kindWords, "reviewsLine")}
+        >{kindWords.reviewsLine}</span>
+      )}
     </p>
   )}
 </section>
 
 <script>
-  const reviewSummaryLink = document.querySelector("[data-google-review-summary]");
-
-  if (reviewSummaryLink instanceof HTMLAnchorElement) {
-    const endpoint = reviewSummaryLink.dataset.googleReviewSummaryEndpoint;
-    const businessName = reviewSummaryLink.dataset.businessName;
+  document.querySelectorAll<HTMLElement>("[data-google-review-summary]").forEach((reviewSummary) => {
+    if (reviewSummary.dataset.googleReviewSummaryBound === "true") return;
+    reviewSummary.dataset.googleReviewSummaryBound = "true";
+    const endpoint = reviewSummary.dataset.googleReviewSummaryEndpoint;
+    const businessName = reviewSummary.dataset.businessName;
 
     if (endpoint) {
       fetch(endpoint, {
@@ -178,15 +200,15 @@ const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3d
           }).format(averageRating);
           const label = `${formattedRating} out of 5 from ${formattedCount} Google ${reviewNoun}`;
 
-          reviewSummaryLink.textContent = label;
-          reviewSummaryLink.setAttribute(
+          reviewSummary.textContent = label;
+          reviewSummary.setAttribute(
             "aria-label",
             businessName ? `${label} for ${businessName}` : label
           );
         })
         .catch(() => {
-          // The server-rendered link remains usable when the cached summary is unavailable.
+          // The server-rendered summary remains usable when the cached summary is unavailable.
         });
     }
-  }
+  });
 </script>

@@ -1,26 +1,52 @@
 {
   "route": "/reviews/",
   "family": "trust",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "WebPage",
   "signature": "crossing-line",
   "title": "Client Reviews | It's A Keeper Photography",
-  "description": "96 five-star Google reviews from Tri-Cities families, seniors and business owners. Read what it's really like to be photographed by Lisa.",
+  "description": "Read verified client stories from Tri-Cities families, seniors, couples and business clients photographed by Lisa Weiss.",
   "hero": {
-    "tone": "olive",
-    "eyebrow": "★★★★★ 96 five-star reviews on Google",
-    "heading": "What Tri-Cities Families Say",
-    "intro": "I could tell you what a session with me feels like — but the people who've stood in front of my camera say it better."
+    "tone": "earth",
+    "heading": "Client Reviews in the Tri-Cities",
+    "intro": "I could tell you what a session with me feels like — but the people who’ve stood in front of my camera say it better.",
+    "scriptLine": "kind words",
+    "image": "/uploads/richland-family-embrace-black-white.jpg",
+    "imageAlt": "A Tri-Cities family sharing a close embrace in black and white",
+    "secondaryImage": "/uploads/west-richland-senior-woodpile-portrait.jpg",
+    "secondaryImageAlt": ""
   },
   "sections": [
     {
-      "id": "every-one-is-a-story",
-      "kind": "prose",
+      "id": "at-ease",
+      "kind": "split",
       "tone": "ivory",
-      "heading": "96 Five-Star Reviews — and Every One Is a Story",
+      "eyebrow": "The thread through every note",
+      "heading": "At Ease, on Purpose",
+      "image": "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg",
+      "imageAlt": "Parents embracing their baby at golden hour in the Tri-Cities",
+      "secondaryImage": "/uploads/kennewick-couple-laughing-golden-hour.jpg",
+      "secondaryImageAlt": "",
       "paragraphs": [
-        "The compliment I treasure most, and the one that appears again and again in my reviews, is this: how comfortable and at ease people felt — even the ones who normally hate being photographed. That's not an accident. It's the entire way I've built my sessions for twenty years."
+        "The compliment I treasure most, and the one that appears again and again in my reviews, is this: how comfortable and at ease people felt — even the ones who normally hate being photographed. That’s not an accident. It’s the entire way I’ve built my sessions for twenty years."
+      ]
+    },
+    {
+      "id": "what-tri-cities-clients-remember",
+      "kind": "reviews",
+      "tone": "ivory",
+      "eyebrow": "Kind words",
+      "heading": "What Tri-Cities Clients Remember"
+    },
+    {
+      "id": "the-photographs-behind-the-words",
+      "kind": "article-list",
+      "tone": "olive",
+      "eyebrow": "The work behind the words",
+      "heading": "The Photographs Behind the Words",
+      "paragraphs": [
+        "Turn the pages slowly. Every frame is part of a story that felt worth holding on to."
       ]
     },
     {
@@ -30,27 +56,20 @@
       "heading": "Leave the Nerves at Home",
       "items": [
         {
-          "quote": "If you noticed a theme — \"I was so nervous, and then…\" — that's the part I want you to hear. Almost everyone arrives a little unsure. Almost everyone leaves saying it was actually fun. You will too."
+          "quote": "If you noticed a theme — “I was so nervous, and then…” — that’s the part I want you to hear. Almost everyone arrives a little unsure. Almost everyone leaves saying it was actually fun. You will too."
         }
       ]
     }
   ],
   "finalCta": {
     "tone": "umber",
-    "heading": "Your Story Could Be Next",
+    "heading": "Leave the Nerves at Home",
+    "image": "/uploads/family-laughter-black-white-tricities.jpg",
+    "imageAlt": "Family laughing together during a year-round Tri-Cities portrait session",
     "link": {
       "label": "Start planning your session",
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE CRÍTICO: Q47 — selección de 8–12 reseñas reales de Google con permiso/nombres. La estructura queda lista; las citas de ejemplo son placeholders de las 3 del sitio actual.]",
-    "[link al perfil de Google]",
-    "[Nombre, Richland]",
-    "[PENDIENTE: +2 reseñas de familias]",
-    "[PENDIENTE: reseñas de seniors — priorizar las que mencionen confianza/comodidad y el reveal]",
-    "[PENDIENTE: reseñas newborn]",
-    "[PENDIENTE: reseñas de branding/headshots]",
-    "[link externo]"
-  ]
+  "pending": []
 }

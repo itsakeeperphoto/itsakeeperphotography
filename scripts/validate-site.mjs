@@ -218,6 +218,36 @@ if (
 const aboutSource = JSON.parse(
   await readFile(path.join(root, "content", "pages", "about.json"), "utf8"),
 );
+const reviewsSource = JSON.parse(
+  await readFile(path.join(root, "content", "pages", "reviews.json"), "utf8"),
+);
+const reviewsSectionIds = (reviewsSource.sections || []).map((section) => section.id);
+if (
+  reviewsSource.route !== "/reviews/" ||
+  reviewsSource.contentStatus !== "ready" ||
+  reviewsSource.searchVisibility !== "index" ||
+  reviewsSource.schemaType !== "WebPage" ||
+  reviewsSource.title !== "Client Reviews | It's A Keeper Photography" ||
+  reviewsSource.description !==
+    "Read verified client stories from Tri-Cities families, seniors, couples and business clients photographed by Lisa Weiss." ||
+  reviewsSource.hero?.heading !== "Client Reviews in the Tri-Cities" ||
+  reviewsSource.hero?.intro !==
+    "I could tell you what a session with me feels like — but the people who’ve stood in front of my camera say it better." ||
+  JSON.stringify(reviewsSectionIds) !==
+    JSON.stringify([
+      "at-ease",
+      "what-tri-cities-clients-remember",
+      "the-photographs-behind-the-words",
+      "leave-the-nerves-at-home",
+    ]) ||
+  !Array.isArray(reviewsSource.pending) ||
+  reviewsSource.pending.length !== 0 ||
+  reviewsSource.finalCta?.link?.href !== "/contact/"
+) {
+  failures.push(
+    "content/pages/reviews.json: Reviews must retain its approved ready/index copy, section order, Contact CTA and empty pending contract",
+  );
+}
 const aboutHeroDigest = createHash("sha256")
   .update(JSON.stringify(aboutSource.hero))
   .digest("hex");
@@ -435,6 +465,7 @@ const indexableReleaseFiles = new Set([
   `family-photographer-tri-cities-wa${path.sep}index.html`,
   `newborn-photographer-tri-cities-wa${path.sep}index.html`,
   `about${path.sep}index.html`,
+  `reviews${path.sep}index.html`,
   `contact${path.sep}index.html`,
   `richland-wa-photographer${path.sep}index.html`,
   `kennewick-wa-photographer${path.sep}index.html`,
@@ -452,6 +483,7 @@ const expandedDirectoryLinkCounts = new Map([
 const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
 const newbornRelative = `newborn-photographer-tri-cities-wa${path.sep}index.html`;
 const aboutRelative = `about${path.sep}index.html`;
+const reviewsRelative = `reviews${path.sep}index.html`;
 const seniorTimingRelative =
   `journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`;
 const newbornComparisonRelative =
@@ -1037,6 +1069,12 @@ STORY: Her children begin the work, the name and camera open the door, twenty ye
 FIRST VIEWPORT: The existing hero remains exact; below its torn edge, Lisa's portrait arch faces the origin story and one line resolves into the name ledger.
 FORM: User-approved A+C — Keeper Archive plus Through Her Lens — pinned 2026-08-10.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
+const reviewsDirectionContract = `THESIS: Client words become photographic proof; Reviews refuses the generic testimonial grid.
+OWN-WORLD: Ivory paper, umber and olive fields, real black-and-white photographs, square white mats, one portrait arch and one-pixel crossing lines.
+STORY: Visitors recognize deliberate ease, hear ten verified clients, turn through the work and then begin planning.
+FIRST VIEWPORT: The shared EditorialHero fills the exact remaining viewport with a family embrace, two corner prints, centered promise and torn seam.
+FORM: Candidate 5, Words Become Pictures / At Ease, on Purpose; seed c2ad8044; approved comp C.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
 const activeCityGalleryContracts = new Map([
   [
     `richland-wa-photographer${path.sep}index.html`,
@@ -1295,10 +1333,21 @@ for (const file of htmlFiles) {
       failures.push(`${relative}: About direction contract must be the first body child`);
     }
   } else if (
-    source.includes("THESIS: Lisa's About page is a keeper archive") ||
-    source.includes("FINISH: unreviewed and undocumented is unfinished")
+    source.includes("THESIS: Lisa's About page is a keeper archive")
   ) {
     failures.push(`${relative}: About direction contract leaked into an unrelated route`);
+  }
+  const reviewsDirectionComment = `<!--\n${reviewsDirectionContract}\n-->`;
+  if (relative === reviewsRelative) {
+    const bodyContent = source.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1] || "";
+    if (
+      !bodyContent.trimStart().startsWith(reviewsDirectionComment) ||
+      !source.includes("FORM: Candidate 5, Words Become Pictures / At Ease, on Purpose; seed c2ad8044")
+    ) {
+      failures.push(`${relative}: Reviews direction contract must be the first body child`);
+    }
+  } else if (source.includes("THESIS: Client words become photographic proof")) {
+    failures.push(`${relative}: Reviews direction contract leaked into an unrelated route`);
   }
   if (relative === brandingHeadshotsRelative) {
     if (!source.includes(`<!--\n${brandingHeadshotsDirectionContract}\n-->`)) {
@@ -3568,6 +3617,24 @@ if (
     "page-manifest.ts: Journal hub must retain ready/index CollectionPage gates, exact title and 2026-08-11 lastModified",
   );
 }
+const reviewsManifestBlock = runtimeManifestSource.match(
+  /\{\s*id:\s*"reviews",[\s\S]*?\n\s*\},/,
+)?.[0] || "";
+if (
+  !/contentStatus:\s*"ready"/.test(reviewsManifestBlock) ||
+  !/searchVisibility:\s*"index"/.test(reviewsManifestBlock) ||
+  !/schemaType:\s*"WebPage"/.test(reviewsManifestBlock) ||
+  !/sitemap:\s*true/.test(reviewsManifestBlock) ||
+  !/llms:\s*true/.test(reviewsManifestBlock) ||
+  !/lastModified:\s*"2026-08-12"/.test(reviewsManifestBlock) ||
+  !/title:\s*"Client Reviews \| It's A Keeper Photography"/.test(
+    reviewsManifestBlock,
+  )
+) {
+  failures.push(
+    "page-manifest.ts: Reviews must retain ready/index WebPage gates, exact title and 2026-08-12 lastModified",
+  );
+}
 const newbornComparisonManifestBlock = runtimeManifestSource.match(
   /\{\s*id:\s*"newborn-comparison",[\s\S]*?\n\s*\},/,
 )?.[0] || "";
@@ -4112,6 +4179,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/about/",
+    "https://www.itsakeeperphotography.com/reviews/",
     "https://www.itsakeeperphotography.com/contact/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
@@ -4141,6 +4209,12 @@ if (mode === "staging") {
   )?.[0] || "";
   if (!/<lastmod>2026-08-10<\/lastmod>/.test(aboutSitemapEntry)) {
     failures.push("sitemap.xml: About lastmod must be 2026-08-10");
+  }
+  const reviewsSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/reviews\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-12<\/lastmod>/.test(reviewsSitemapEntry)) {
+    failures.push("sitemap.xml: Reviews lastmod must be 2026-08-12");
   }
   const contactSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/contact\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
@@ -4172,6 +4246,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/about/",
+    "https://www.itsakeeperphotography.com/reviews/",
     "https://www.itsakeeperphotography.com/contact/",
     "https://www.itsakeeperphotography.com/richland-wa-photographer/",
     "https://www.itsakeeperphotography.com/kennewick-wa-photographer/",
@@ -4187,6 +4262,11 @@ if (mode === "staging") {
     "- [Meet Lisa Weiss | Tri-Cities Photographer for 20 Years](https://www.itsakeeperphotography.com/about/): Meet Lisa Weiss, the Richland photographer behind It's A Keeper Photography, with twenty years behind the camera and fourteen years in business.";
   if (!llms.includes(expectedAboutLlmsLine)) {
     failures.push("llms.txt: About title or v2 summary differs from the manifest contract");
+  }
+  const expectedReviewsLlmsLine =
+    "- [Client Reviews | It's A Keeper Photography](https://www.itsakeeperphotography.com/reviews/): Read verified client stories from Tri-Cities families, seniors, couples and business clients photographed by Lisa Weiss.";
+  if (!llms.includes(expectedReviewsLlmsLine)) {
+    failures.push("llms.txt: Reviews title or summary differs from the manifest contract");
   }
   const expectedContactLlmsLine =
     "- [Session Pricing Estimate | It's A Keeper Photography](https://www.itsakeeperphotography.com/contact/): Build a personalized photography session pricing estimate, then plan the details with Lisa.";
@@ -4225,6 +4305,12 @@ if (mode === "staging") {
       .some((value) => /(?:^|,)\s*noindex(?:\s*,|$)/i.test(value))
   ) {
     failures.push("_headers: About noindex rule must not block the published trust page");
+  }
+  if (
+    routeHeaderValues("/reviews/", "x-robots-tag")
+      .some((value) => /(?:^|,)\s*noindex(?:\s*,|$)/i.test(value))
+  ) {
+    failures.push("_headers: Reviews noindex rule must not block the published trust page");
   }
   if (
     routeHeaderValues("/contact/", "x-robots-tag")

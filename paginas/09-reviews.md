@@ -1,7 +1,14 @@
 # REVIEWS — `/reviews/`
-_Página 9 de 18 · Trust & conversion · Proof_
+_Página 9 de 18 · Trust & conversion · Proof · `ready/index`_
 
-> `[PENDIENTE CRÍTICO: Q47 — selección de 8–12 reseñas reales de Google con permiso/nombres. La estructura queda lista; las citas de ejemplo son placeholders de las 3 del sitio actual.]`
+## Estado editorial
+
+La ruta publica el mismo inventario de diez testimonios reales y atribuidos de
+`content/testimonials/*.json` que usa `KindWords` en Homepage. El PDF de Reviews
+es la autoridad del copy según ADR-052; Charity Neville permanece archivada y no
+se renderiza. La ausencia de una URL pública oficial de Google no bloquea esta
+página: el resumen visible usa el fallback editorial existente y no se enlaza a
+un destino no confirmado.
 
 ---
 
@@ -10,106 +17,106 @@ _Página 9 de 18 · Trust & conversion · Proof_
 | Campo | Valor |
 |---|---|
 | **URL** | `/reviews/` |
-| **Keyword objetivo** | it's a keeper photography reviews (marca) · secundaria: best photographers in tri cities wa |
-| **Title** (42) | `Client Reviews | It's A Keeper Photography` |
-| **Meta description** (145) | `96 five-star Google reviews from Tri-Cities families, seniors and business owners. Read what it's really like to be photographed by Lisa.` |
+| **Estado** | `ready` |
+| **Robots release** | `index, follow, max-image-preview:large` |
+| **Title** | `Client Reviews | It's A Keeper Photography` |
+| **Meta description** | `Read verified client stories from Tri-Cities families, seniors, couples and business clients photographed by Lisa Weiss.` |
+| **Schema principal** | `WebPage` |
+| **Last modified** | `2026-08-12` |
 
-### Estructura de headings
+### Estructura visible
 
-```
-H1  What Tri-Cities Families Say
- H2  96 Five-Star Reviews — and Every One Is a Story
- H2  From Families
- H2  From Seniors & Their Parents
- H2  From Newborn Families
- H2  From Business Owners
+```text
+H1  Client Reviews in the Tri-Cities
+ H2  At Ease, on Purpose
+ H2  What Tri-Cities Clients Remember
+ H2  The Photographs Behind the Words
  H2  Leave the Nerves at Home
- H2  Your Story Could Be Next
 ```
 
 ---
 
-## COPY
+## Copy aprobado
 
 ### Hero
 
-**H1:** What Tri-Cities Families Say
+**Script:** kind words
 
-**Subhead:** I could tell you what a session with me feels like — but the people who've stood in front of my camera say it better.
+**H1:** Client Reviews in the Tri-Cities
 
-**Trust bar:** ★★★★★ 96 five-star reviews on Google → [link al perfil de Google]
+**Intro:** I could tell you what a session with me feels like — but the people
+who’ve stood in front of my camera say it better.
 
-### Sección 2
+**Control local:** Read their stories → `#at-ease`
 
-**H2:** 96 Five-Star Reviews — and Every One Is a Story
+### At Ease, on Purpose
 
-The compliment I treasure most, and the one that appears again and again in my reviews, is this: *how comfortable and at ease people felt* — even the ones who normally hate being photographed. That's not an accident. It's the entire way I've built my sessions for twenty years.
+The compliment I treasure most, and the one that appears again and again in my
+reviews, is this: how comfortable and at ease people felt — even the ones who
+normally hate being photographed. That’s not an accident. It’s the entire way
+I’ve built my sessions for twenty years.
 
-### Secciones por servicio
+### What Tri-Cities Clients Remember
 
-_(Estructura por servicio con 2–3 reseñas cada una. Cada bloque termina con link a su página de servicio. Placeholders actuales:)_
+Esta sección reutiliza `KindWords.astro` y los diez registros `featured` en
+orden 1–10, sin reescribir citas, autores, tipos ni alt text:
 
-**H2: From Families**
-> "Lisa's patience helps the whole session feel easy, even with little ones moving everywhere." — `[Nombre, Richland]`
-`[PENDIENTE: +2 reseñas de familias]`
-→ Family Photography → `/family-photographer-tri-cities-wa/`
+1. Gayla Worlund — Family
+2. Beth Granger — Senior
+3. Isabella Neville — Senior
+4. Kaija Colburn — Headshot
+5. Annette Christensen — Family
+6. Allissa Empert — Couple
+7. Lisa Griffith — Headshot
+8. Julie Hrebeniuk — Branding, según la fuente testimonial
+9. Christina Bergstrom — Senior
+10. Hanna Lnenicka — Family
 
-**H2: From Seniors & Their Parents**
-> `[PENDIENTE: reseñas de seniors — priorizar las que mencionen confianza/comodidad y el reveal]`
-→ Senior Pictures → `/senior-photographer-tri-cities-wa/`
+El resumen `100+ five-star Google reviews` permanece como fallback. El endpoint
+GBP solo lo sustituye cuando entrega conjuntamente rating y conteo válidos. En
+Reviews el resumen es texto, no un enlace autorreferente ni un link externo sin
+confirmar.
 
-**H2: From Newborn Families**
-> `[PENDIENTE: reseñas newborn]`
-→ Newborn Photography → `/newborn-photographer-tri-cities-wa/`
+### The Photographs Behind the Words
 
-**H2: From Business Owners**
-> `[PENDIENTE: reseñas de branding/headshots]`
-→ Branding Photography → `/branding-photographer-tri-cities-wa/` · Professional Headshots → `/headshot-photographer-tri-cities-wa/`
+**Intro:** Turn the pages slowly. Every frame is part of a story that felt
+worth holding on to.
 
-### Sección — puente emocional
+La página reutiliza el libro interactivo de Portfolio y su única fuente de
+páginas en `content/journal-pages/*.json`. No duplica el H1 ni la introducción
+de `/portfolio/`; en reduced motion conserva una transición legible sin flip.
 
-**H2:** Leave the Nerves at Home
+### Leave the Nerves at Home
 
-If you noticed a theme — "I was so nervous, and then…" — that's the part I want you to hear. Almost everyone arrives a little unsure. Almost everyone leaves saying it was actually fun. You will too.
+If you noticed a theme — “I was so nervous, and then…” — that’s the part I want
+you to hear. Almost everyone arrives a little unsure. Almost everyone leaves
+saying it was actually fun. You will too.
 
-### CTA final
-
-**H2:** Your Story Could Be Next
-**CTA:** Start planning your session → `/contact/`
-**CTA secundario:** Read all reviews on Google → [link externo]
+El cierre `Leave the Nerves at Home` integra el único CTA de ruta:
+**Start planning your session** → `/contact/`.
 
 ---
 
 ## Internal links
 
-- Entrantes: Home, todas las páginas de servicio ("More client reviews").
-- Salientes: las 5 páginas de servicio + `/contact/`.
+- El control del hero es un botón de scroll local y no consume anchor.
+- `KindWords` muestra el resumen como texto estático en esta ruta.
+- El libro no añade destinos.
+- Único anchor dentro de `<main>`: `/contact/`.
 
 ## Schema JSON-LD
 
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "name": "Client Reviews",
-      "url": "https://www.itsakeeperphotography.com/reviews/",
-      "about": {"@id": "https://www.itsakeeperphotography.com/#business"}
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itsakeeperphotography.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Reviews", "item": "https://www.itsakeeperphotography.com/reviews/"}
-      ]
-    }
-  ]
-}
-```
+La ruta emite un `WebPage` canónico y un `BreadcrumbList` Home → Reviews. No
+emite `Review` ni `AggregateRating`: los registros disponibles no contienen una
+URL, fecha, rating y procedencia estructurada individual suficientes, y no se
+deben fabricar. Tampoco se copia un rating vivo de GBP al schema.
 
-_Notas de schema: cuando existan las reseñas reales, añadir `Review` items individuales (author + reviewBody + reviewRating) dentro del LocalBusiness — NO inventar. El `aggregateRating` global ya vive en el schema de la homepage; no duplicarlo aquí salvo que se muestre el widget con las reseñas._
+## Publicación y crawler outputs
 
-## Nota de implementación
-
-Si es posible, embeber/sincronizar reseñas reales de Google (widget o copia manual con fecha). Cada reseña copiada debe ser textual y atribuible — es evidencia E-E-A-T verificable, no marketing.
+- `contentStatus: ready`
+- `searchVisibility: index`
+- `sitemap: true`
+- `llms: true`
+- `lastModified: 2026-08-12`
+- Sin regla `/reviews/*` de `X-Robots-Tag` en headers release.
+- Staging conserva el `noindex` global.

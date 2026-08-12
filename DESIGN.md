@@ -1819,3 +1819,77 @@ segura hacia contenido ya indexable.
 - Playwright aprobó Journal en 1440/1200/900/390 sin overflow, imágenes rotas ni
   errores runtime. La suite Newborn volvió a pasar en los cuatro anchos después
   de retirar su enlace draft; la revisión independiente dio `PASS` sin P1/P2.
+
+## 20. ADDENDUM DE RUTA — REVIEWS / WORDS BECOME PICTURES
+
+Este addendum fija el rediseño y publicación de `/reviews/`. La referencia
+externa gobierna geometría y ritmo —hero fotográfico, seam, prints, arco y
+capítulos inmersivos—, pero no aporta marca, colores, sujetos ni textos. La
+ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
+
+### Dirección canónica
+
+- Comp C / Impeccable,
+  `.impeccable/mocks/reviews-c-at-ease-purpose.png`, es la dirección canónica:
+  `Words Become Pictures / At Ease, on Purpose`, seed `c2ad8044`.
+- Las comps A `Words Kept` y B `Comfort Quote` quedan como alternativas
+  auditadas no seleccionadas. C articula mejor la promesa principal: primero la
+  comodidad deliberada, después diez testimonios como prueba y finalmente las
+  fotografías que respaldan esas palabras.
+- El mundo propio usa marfil, umber, oliva y arena; fotografía real, mats
+  cuadrados, un solo arco, hairlines de 1 px, seam rasgado y script restringida.
+  No usa gradientes, glass, badges, grids de testimonial cards ni sombras
+  decorativas genéricas.
+
+### Secuencia y geometría
+
+1. **Hero compartido:** `EditorialHero` idéntico al sistema de Seniors, Family
+   y Newborn, con fondo B/N, dos prints inferiores, copy centrado y botón local
+   `Read their stories`. Ocupa exactamente el viewport restante: 882 px a
+   1440×1000, 782 px a 1200×900, 688 px a 900×900 y 656 px a 390×844.
+2. **At Ease, on Purpose:** superficie marfil, retrato familiar en arco, print
+   B/N superpuesto y dos reglas cruzadas. La prosa explica que la comodidad es
+   un método deliberado, no una promesa ornamental.
+3. **What Tri-Cities Clients Remember:** reutiliza `KindWords.astro` sin
+   variaciones visuales: clothesline, clips físicos, diez fotografías, reverso
+   legible por hover/foco/tap y resumen social estático dentro de Reviews.
+4. **The Photographs Behind the Words:** capítulo oliva con el libro canónico de
+   seis páginas de Portfolio. Reviews carga todas sus fotos lazy; la instancia
+   de Portfolio conserva la primera página eager/high.
+5. **Leave the Nerves at Home:** fotografía familiar B/N full-bleed, copy corto
+   y único anchor de la ruta hacia Contact.
+
+### Componentes, interacción y responsive
+
+- `ReviewsPage.astro` se resuelve en SSR y refresh Tina; `reviews-page.css` se
+  enlaza solo en `/reviews/` mediante `?url`.
+- `JournalBook.astro` es el componente compartido; cada instancia tiene IDs,
+  ARIA y memoria de página independientes. El flip se hidrata al entrar en
+  viewport y pasa a crossfade con instrucciones específicas bajo reduced
+  motion.
+- Contrato semántico exacto: 1 H1, 4 H2, 6 H3, diez testimonios originales,
+  seis páginas de libro y un anchor dentro de `<main>`. Hero y libro usan
+  botones; el resumen KindWords no se enlaza a sí mismo.
+- A 900 px se conserva la composición en dos columnas donde existe espacio; a
+  390 px arco/copy se apilan, el clothesline mantiene scroll horizontal y el
+  libro presenta una página. Ningún título se recorta, el body permanece
+  ≥17.28 px, los controles ≥44 px y el overflow horizontal es cero.
+
+### Media, publicación y QA
+
+- Toda fotografía proviene de `public/uploads/`; ninguna región image-native
+  usa un recorte de la comp generada. Papeles, seam, líneas, mats, wire, libro y
+  controles permanecen HTML/CSS/SVG. El print pequeño de At Ease se desatura
+  con CSS para conservar el rol monocromo de la dirección.
+- La ruta usa `ready/index`, `lastModified: 2026-08-12`, canonical `www`, sin
+  header release noindex y con membresía única en sitemap/`llms.txt`. Emite
+  `WebPage` y `BreadcrumbList`; no emite `Review` ni `AggregateRating` sin URL,
+  fecha, rating y fuente individual verificables.
+- Staging y release validan 21/21 rutas. Release contiene 13 URLs en sitemap y
+  12 entradas en `llms.txt`. Playwright pasa 1440×1000, 1200×900, 900×900 y
+  390×844, además de teclado, page flip, reduced motion, imágenes, consola/red,
+  tipografía y regresión de Portfolio. El detector de los archivos propios
+  devuelve `[]`; el único aviso del HTML compilado pertenece a una transición
+  histórica de `journal-page.css` ajena a Reviews. La revisión independiente
+  Impeccable finaliza con `disposition: ship`, `ceiling: reached` y ningún fix
+  material.

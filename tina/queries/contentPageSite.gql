@@ -2,6 +2,8 @@ query contentPageSite(
   $pagePath: String!
   $homepagePath: String!
   $settingsPath: String!
+  $testimonialLimit: Float!
+  $journalPageLimit: Float!
 ) {
   contentPage(relativePath: $pagePath) {
     ...ContentPageParts
@@ -11,5 +13,22 @@ query contentPageSite(
   }
   settings(relativePath: $settingsPath) {
     ...SettingsParts
+  }
+  testimonialConnection(first: $testimonialLimit) {
+    edges {
+      node {
+        ...TestimonialParts
+      }
+    }
+  }
+  journalPageConnection(first: $journalPageLimit, sort: "order") {
+    edges {
+      node {
+        _sys {
+          relativePath
+        }
+        ...JournalPageParts
+      }
+    }
   }
 }

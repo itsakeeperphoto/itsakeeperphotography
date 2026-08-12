@@ -5,11 +5,12 @@ import EditorialPageRouter from "../components/pages/EditorialPageRouter.astro";
 import SiteShell from "../components/SiteShell.astro";
 import { getContentPage } from "../lib/content-pages";
 import { topLevelEditorialManifest } from "../lib/page-manifest";
-import { getStaticHomepagePage } from "../lib/static-content";
+import { getStaticHomepagePage, getStaticReviewsPage } from "../lib/static-content";
 import { absoluteUrl, siteOrigin } from "../lib/site-environment";
 import { contentPageWrapper } from "../lib/tina/wrappers";
 import aboutStylesheet from "../styles/about-page.css?url";
 import pascoStylesheet from "../styles/pasco-page.css?url";
+import reviewsStylesheet from "../styles/reviews-page.css?url";
 
 export function getStaticPaths() {
   return topLevelEditorialManifest.map((entry) => ({
@@ -20,13 +21,30 @@ export function getStaticPaths() {
 
 const { entry } = Astro.props;
 const page = getContentPage(entry.contentPath);
-const shared = getStaticHomepagePage();
+const shared = entry.id === "reviews"
+  ? getStaticReviewsPage()
+  : getStaticHomepagePage();
 const { homepage, settings } = shared.data;
+const testimonials = entry.id === "reviews"
+  ? (shared.data.testimonialConnection?.edges || [])
+      .map((edge: any) => edge?.node)
+      .filter(Boolean)
+      .filter((testimonial: any) => testimonial.featured)
+      .sort((left: any, right: any) => (left.order ?? 0) - (right.order ?? 0))
+      .slice(0, 10)
+  : [];
+const journalPages = entry.id === "reviews"
+  ? (shared.data.journalPageConnection?.edges || [])
+      .map((edge: any) => edge?.node)
+      .filter(Boolean)
+  : [];
 const canonical = absoluteUrl(entry.path);
 const pageStylesheet = entry.id === "about"
   ? aboutStylesheet
   : entry.id === "pasco"
     ? pascoStylesheet
+    : entry.id === "reviews"
+      ? reviewsStylesheet
     : undefined;
 const directionContract = entry.id === "about"
   ? `THESIS: Lisa's About page is a keeper archive of why and how she photographs; it refuses generic credential cards.
@@ -34,6 +52,13 @@ OWN-WORLD: Warm ivory, sand, olive, walnut and umber fields; arched portraits, s
 STORY: Her children begin the work, the name and camera open the door, twenty years shape the method, and verified recognition earns the inquiry.
 FIRST VIEWPORT: The existing hero remains exact; below its torn edge, Lisa's portrait arch faces the origin story and one line resolves into the name ledger.
 FORM: User-approved A+C — Keeper Archive plus Through Her Lens — pinned 2026-08-10.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`
+  : entry.id === "reviews"
+    ? `THESIS: Client words become photographic proof; Reviews refuses the generic testimonial grid.
+OWN-WORLD: Ivory paper, umber and olive fields, real black-and-white photographs, square white mats, one portrait arch and one-pixel crossing lines.
+STORY: Visitors recognize deliberate ease, hear ten verified clients, turn through the work and then begin planning.
+FIRST VIEWPORT: The shared EditorialHero fills the exact remaining viewport with a family embrace, two corner prints, centered promise and torn seam.
+FORM: Candidate 5, Words Become Pictures / At Ease, on Purpose; seed c2ad8044; approved comp C.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`
   : undefined;
 const detailedService =
@@ -275,6 +300,28 @@ const aboutBreadcrumbSchema =
         ],
       }
     : null;
+const reviewsBreadcrumbSchema =
+  entry.id === "reviews"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteOrigin}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Client Reviews",
+            item: canonical,
+          },
+        ],
+      }
+    : null;
 const detailedFaqSchema =
   entry.id === "branding"
     ? {
@@ -362,6 +409,8 @@ const detailedAdditionalSchema = detailedService
     ]
   : aboutPersonSchema && aboutBreadcrumbSchema
     ? [aboutPersonSchema, aboutBreadcrumbSchema]
+    : reviewsBreadcrumbSchema
+      ? [reviewsBreadcrumbSchema]
     : investmentBreadcrumbSchema
       ? [investmentBreadcrumbSchema]
       : contactBreadcrumbSchema
@@ -391,14 +440,21 @@ const pageSchemaExtra = entry.id === "about"
   additionalSchema={detailedAdditionalSchema}
   pageSpatialCoverage={citySpatialCoverage}
   pageSchemaExtra={pageSchemaExtra}
-  loadEditorialMotion={entry.id === "contact"}
+  loadEditorialMotion={entry.id === "contact" || entry.id === "reviews"}
   pageStylesheet={pageStylesheet}
   directionContract={directionContract}
   founderReferenceOnly={entry.id === "about"}
 >
   <SiteShell settings={settings} homepage={homepage} currentPath={entry.path}>
     <TinaIsland name="contentPage" wrapper={contentPageWrapper} params={{ path: entry.contentPath }} primary>
-      <EditorialPageRouter page={page} settings={settings} inquiry={homepage.inquiry} />
+      <EditorialPageRouter
+        page={page}
+        settings={settings}
+        inquiry={homepage.inquiry}
+        kindWords={entry.id === "reviews" ? homepage.kindWords : undefined}
+        testimonials={testimonials}
+        journalPages={journalPages}
+      />
     </TinaIsland>
   </SiteShell>
 </Base>

@@ -1,0 +1,193 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import JournalBook from "../JournalBook.astro";
+import KindWords from "../KindWords.astro";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+  kindWords?: any;
+  testimonials?: any[];
+  journalPages?: any[];
+  journalData?: any;
+  inquiry?: any;
+}
+
+const {
+  page,
+  settings,
+  kindWords,
+  testimonials = [],
+  journalPages: suppliedJournalPages,
+  journalData,
+} = Astro.props;
+
+const requireSection = (id: string): PageSection => {
+  const section = page.sections.find((candidate) => candidate.id === id);
+  if (!section) throw new Error(`Reviews page is missing the required section: ${id}`);
+  return section;
+};
+
+const ease =
+  page.sections.find((section) => section.id === "at-ease") ||
+  page.sections.find((section) => section.id === "every-one-is-a-story") ||
+  requireSection("every-one-is-a-story");
+const nerves =
+  page.sections.find((section) => section.id === "leave-the-nerves-at-home") ||
+  requireSection("leave-the-nerves-at-home");
+const journal =
+  page.sections.find((section) => section.id === "the-photographs-behind-the-words") ||
+  requireSection("the-photographs-behind-the-words");
+const journalPages = (
+  suppliedJournalPages ||
+  (journalData?.journalPageConnection?.edges || [])
+    .map((edge: any) => edge?.node)
+    .filter(Boolean)
+)
+  .slice()
+  .sort((a: any, b: any) => {
+    const orderDifference = Number(a?.order || 0) - Number(b?.order || 0);
+    if (orderDifference !== 0) return orderDifference;
+    const aPath = a?._sys?.relativePath || a?.title || "";
+    const bPath = b?._sys?.relativePath || b?.title || "";
+    return aPath.localeCompare(bPath);
+  })
+  .slice(0, 6);
+
+const easeParagraph =
+  ease.paragraphs?.[0] ||
+  "The compliment I treasure most, and the one that appears again and again in my reviews, is this: how comfortable and at ease people felt — even the ones who normally hate being photographed. That’s not an accident. It’s the entire way I’ve built my sessions for twenty years.";
+const nervesQuote =
+  nerves.items?.[0]?.quote ||
+  nerves.paragraphs?.[0] ||
+  "If you noticed a theme — “I was so nervous, and then…” — that’s the part I want you to hear. Almost everyone arrives a little unsure. Almost everyone leaves saying it was actually fun. You will too.";
+const heroHeading = page.hero.heading;
+const heroIntro = page.hero.intro;
+---
+
+<article
+  class="reviews-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="reviews"
+    titleId="reviews-hero-title"
+    heading={heroHeading}
+    headingLines={["Client Reviews", "in the Tri-Cities"]}
+    scriptLine={page.hero.scriptLine}
+    intro={heroIntro}
+    backgroundImage={page.hero.image}
+    backgroundAlt={page.hero.imageAlt}
+    backgroundPosition="52% 47%"
+    mobileBackgroundPosition="51% 50%"
+    leftPrint={{
+      src: page.hero.secondaryImage,
+      objectPosition: "50% 44%",
+    }}
+    rightPrint={{
+      src: "/uploads/business-owner-kitchen-branding-west-richland-wa.jpg",
+      objectPosition: "50% 47%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel="Read their stories"
+    buttonTargetId="at-ease"
+  />
+
+  <section
+    class="reviews-ease"
+    id="at-ease"
+    aria-labelledby="at-ease-title"
+    tabindex="-1"
+  >
+    <span class="reviews-ease__rule reviews-ease__rule--horizontal" aria-hidden="true"></span>
+    <span class="reviews-ease__rule reviews-ease__rule--vertical" aria-hidden="true"></span>
+    <div class="reviews-shell reviews-ease__inner">
+      <div class="reviews-ease__media">
+        <figure class="reviews-ease__arch">
+          <Picture
+            src={ease.image || "/uploads/family-with-baby-golden-hour-embrace-tricities.jpg"}
+            alt={ease.imageAlt || ""}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) min(82vw, 25rem), (max-width: 1050px) 39vw, 30rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+        <figure class="reviews-ease__print" aria-hidden="true">
+          <Picture
+            src={ease.secondaryImage || "/uploads/kennewick-couple-laughing-golden-hour.jpg"}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            optimizedMobileWidth={400}
+            optimizedDesktopWidth={640}
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+      <div class="reviews-ease__copy">
+        {ease.eyebrow && <p class="reviews-eyebrow">{ease.eyebrow}</p>}
+        <h2 id="at-ease-title">{ease.heading}</h2>
+        <p>{easeParagraph}</p>
+      </div>
+    </div>
+  </section>
+
+  {kindWords && (
+    <KindWords
+      kindWords={kindWords}
+      settings={settings}
+      testimonials={testimonials}
+      summaryAsLink={false}
+    />
+  )}
+
+  {journalPages.length > 0 && (
+    <section class="reviews-journal" aria-labelledby="reviews-journal-title">
+      <header class="reviews-journal__intro reviews-shell">
+        {journal.eyebrow && <p class="reviews-eyebrow">{journal.eyebrow}</p>}
+        <h2 id="reviews-journal-title">{journal.heading}</h2>
+        <p class="reviews-journal__script" aria-hidden="true">moments worth keeping</p>
+        <p class="reviews-journal__lede">
+          {journal.paragraphs?.[0] || "Turn the pages slowly. Every frame is part of a story that felt worth holding on to."}
+        </p>
+      </header>
+      <JournalBook
+        pages={journalPages}
+        instanceId="reviews-journal"
+        ariaLabel="Client review photography journal"
+        eagerFirstPage={false}
+        pageTitleLevel={3}
+      />
+    </section>
+  )}
+
+  <section class="reviews-final" aria-labelledby="reviews-final-title">
+    <div class="reviews-final__background" aria-hidden="true">
+      <Picture
+        src={page.finalCta?.image || "/uploads/family-laughter-black-white-tricities.jpg"}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        responsiveSrcset
+        sizes="100vw"
+        imgClass="reviews-final__background-image"
+      />
+      <div class="reviews-final__wash"></div>
+    </div>
+    <div class="reviews-shell reviews-final__inner">
+      <p class="reviews-final__script" aria-hidden="true">you will too</p>
+      <h2 id="reviews-final-title">{nerves.heading}</h2>
+      <p>{nervesQuote}</p>
+      {page.finalCta?.link && (
+        <a class="outline-button" href={page.finalCta.link.href}>
+          {page.finalCta.link.label}
+        </a>
+      )}
+    </div>
+  </section>
+</article>

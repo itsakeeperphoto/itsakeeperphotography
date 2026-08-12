@@ -30,6 +30,7 @@ entry when that date is missing.
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
 | `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-10 |
 | `/about/` | About / trust | 2026-08-10 |
+| `/reviews/` | Reviews / trust | 2026-08-12 |
 | `/contact/` | Contact / conversion | 2026-08-11 |
 | `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
@@ -39,7 +40,7 @@ entry when that date is missing.
 | `/journal/branding-photos-vs-headshots/` | Article | 2026-08-11 |
 | `/portfolio/` | Portfolio | 2026-07-21 |
 
-The release sitemap contains 12 canonical URLs. `llms.txt` contains 11
+The release sitemap contains 13 canonical URLs. `llms.txt` contains 12
 citations: the same indexable set except Portfolio.
 
 ## Planned public architecture
@@ -56,7 +57,7 @@ citations: the same indexable set except Portfolio.
 
 - `/investment/` — draft; excluded
 - `/about/` — ready and indexable
-- `/reviews/` — draft; excluded
+- `/reviews/` — ready and indexable
 - `/contact/` — ready and indexable
 
 ### Service areas
@@ -113,7 +114,16 @@ threshold. Each must retain genuinely city-specific content before it is approve
   its hero scroll control also remains a button. The Journal hub exposes exactly
   four route anchors — Locations Guide, Branding vs. Headshots, Portfolio and
   Contact. Its Senior Timing and Newborn Comparison cards remain visible but
-  non-interactive until those articles are published.
+  non-interactive until those articles are published. Reviews exposes exactly
+  one route anchor to Contact; its hero scroll remains a button, its Home
+  social-proof summary is static text, and its journal adds no links.
+
+The Reviews publication contract uses the shared service-page hero, the exact
+Home `KindWords` component and the reusable six-page Portfolio book. It
+contains 1 H1, 4 H2, 6 H3 and ten attributed testimonials, emits `WebPage` plus
+`BreadcrumbList`, and deliberately omits `Review` and `AggregateRating` until
+individual source URL/date/rating fields exist. It is `ready/index` with
+`lastModified` `2026-08-12`; staging remains globally noindex.
 
 The Journal hub publication contract preserves the existing overlap signature
 and four-card editorial sequence. It emits exactly one canonical

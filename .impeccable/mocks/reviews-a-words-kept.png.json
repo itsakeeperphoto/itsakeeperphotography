@@ -1,0 +1,9 @@
+{
+  "surface": "route:/reviews/",
+  "concept": "A — Words Kept",
+  "approved": false,
+  "canonical": false,
+  "generatedAt": "2026-08-12",
+  "promptFile": "reviews-a-words-kept.prompt.txt",
+  "decision": "Rejected: the archive metaphor is coherent, but the testimonial proof arrives with less immediacy than the selected comfort-led concept."
+}

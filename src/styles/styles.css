@@ -2544,7 +2544,7 @@ footer[id] {
   text-align: center;
 }
 
-.kind-words__google a {
+.kind-words__google :is(a, span) {
   display: inline-flex;
   min-height: var(--minimum-hit-area);
   align-items: center;

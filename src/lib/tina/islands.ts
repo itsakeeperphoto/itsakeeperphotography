@@ -36,10 +36,22 @@ export const islands: IslandRegistry = {
     wrapper: contentPageWrapper,
     propsFromData: (result) => {
       const data = (result as QueryResult<Record<string, any>>).data;
+      const testimonials = (data.testimonialConnection?.edges || [])
+        .map((edge: any) => edge?.node)
+        .filter(Boolean)
+        .filter((testimonial: any) => testimonial.featured)
+        .sort((left: any, right: any) => (left.order ?? 0) - (right.order ?? 0))
+        .slice(0, 10);
+      const journalPages = (data.journalPageConnection?.edges || [])
+        .map((edge: any) => edge?.node)
+        .filter(Boolean);
       return {
         page: data.contentPage,
         settings: data.settings,
         inquiry: data.homepage?.inquiry,
+        kindWords: data.homepage?.kindWords,
+        testimonials,
+        journalPages,
       };
     },
   },

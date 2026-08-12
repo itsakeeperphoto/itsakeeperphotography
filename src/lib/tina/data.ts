@@ -27,6 +27,8 @@ export const getContentPageTina = (pagePath: string) =>
       pagePath,
       homepagePath: "index.json",
       settingsPath: "index.json",
+      testimonialLimit: 50,
+      journalPageLimit: 6,
     }),
     { priority: "primary" }
   );

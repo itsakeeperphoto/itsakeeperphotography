@@ -113,18 +113,24 @@
   expone solo Locations, Branding vs. Headshots, Portfolio y Contact. Release
   queda en sitemap 12/`llms.txt` 11; staging/release 21/21, Playwright
   1440/1200/900/390 y revisión independiente pasan.
+- [x] **19D.1. Rediseñar y publicar Reviews según ADR-058.** La ruta usa
+  `ReviewsPage`, el hero compartido, `KindWords` exacto y `JournalBook`;
+  conserva diez testimonios atribuidos, un solo CTA y schema sobrio. Queda
+  `ready/index` con fecha `2026-08-12`, sitemap 13/`llms.txt` 12, QA
+  1440/1200/900/390 e Impeccable `ship`.
 - [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
   `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
   Seniors, Branding, Headshots, Investment, Senior Timing y Newborn Comparison;
-  Reviews y Privacy quedan fuera por instrucción del usuario.
+  Reviews se resolvió aparte en ADR-058; Privacy permanece fuera por
+  instrucción del usuario.
 - [ ] **19F. Publicar Newborn Comparison solo después de sus tres gates.**
   Resolver `[VALIDAR CON LISA]`,
   `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; hasta entonces
   conservar `draft/noindex`, header release, ausencia de fechas y exclusión de
   sitemap/`llms.txt`.
-- [ ] **20. Verificar Homepage, About, Contact, Richland, Kennewick, Pasco,
-  Newborn y Journal después del push del usuario.** Confirmar en el dominio final status 200,
+- [ ] **20. Verificar Homepage, About, Reviews, Contact, Richland, Kennewick,
+  Pasco, Newborn y Journal después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
   ciudades `2026-08-09`; Newborn y About `2026-08-10`; Contact `2026-08-11`;
@@ -191,8 +197,8 @@ sin reemplazar el archivo.
   compartible `.docx`, con datos actuales prellenados, decisiones explícitas y
   autorización final por ruta.
 - [x] Alcance limitado a Seniors, Branding, Headshots, Investment, Senior
-  Timing y Newborn Comparison. Reviews y Privacy quedan deliberadamente fuera
-  porque el usuario se encarga de ambas.
+  Timing y Newborn Comparison. Privacy queda fuera; Reviews se completó
+  posteriormente como rollout independiente en ADR-058.
 - [x] Corregido el gate de Seniors: falta confirmar outfits incluidos por
   paquete y la regla de outfit adicional, no una cantidad de imágenes.
 - [x] Registrada la inconsistencia transversal que Lisa debe resolver: el
@@ -396,12 +402,19 @@ sin reemplazar el archivo.
 
 ### Reviews
 
-- [ ] Obtener 8–12 reseñas reales con permiso/atribución.
-- [ ] Confirmar nombres o formato de anonimización autorizado.
+- [x] Auditadas y publicadas diez reseñas reales del inventario canónico de
+  Homepage/PDF, en orden 1–10; Charity permanece archivada sin borrarse.
+- [x] Conservados nombres, citas, tipo de sesión y alt text atribuidos de la
+  fuente, sin anonimización ni reescritura inventada.
 - [ ] Confirmar link público oficial de Google Reviews.
-- [ ] Añadir reseñas verificadas de Family, Seniors, Newborn y
-  Branding/Headshots sin inventar categorías.
-- [ ] Solo después evaluar schema Review/AggregateRating con datos actuales.
+- [x] Publicadas las categorías realmente disponibles —Family, Seniors,
+  Couple, Branding y Headshots—; no se inventó una reseña Newborn ausente.
+- [x] Evaluado `Review`/`AggregateRating` y omitido deliberadamente: faltan
+  URL, fecha, rating y procedencia estructurada individual suficientes.
+- [x] Implementado renderer especializado sin grilla genérica: hero compartido,
+  `At Ease`, `KindWords`, libro de seis páginas y cierre con un anchor a Contact.
+- [x] Publicada `ready/index`, `lastModified: 2026-08-12`, sin header noindex y
+  con membresía sitemap/`llms.txt`; release queda 13/12.
 
 ### Privacy
 
@@ -620,6 +633,10 @@ sin reemplazar el archivo.
   header release noindex y con membresía en sitemap/`llms.txt`; release contiene
   ahora 12 URLs y 11 entradas citables. Emite `CollectionPage` y
   `BreadcrumbList`, y no enlaza los dos artículos que siguen draft.
+- [x] Reviews actualizado a `ready/index`, `lastModified: 2026-08-12`, sin
+  header release noindex y con membresía en sitemap/`llms.txt`; release contiene
+  ahora 13 URLs y 12 entradas citables. Emite `WebPage` y `BreadcrumbList`, sin
+  schema de reseñas o rating fabricado.
 - [x] Newborn Comparison rediseñado con Article/FAQPage/Breadcrumb y sin fechas;
   conserva `draft/noindex`, header release y exclusión sitemap/`llms.txt` hasta
   resolver sus tres gates literales.
@@ -656,8 +673,8 @@ sin reemplazar el archivo.
 - [x] Renovadas Branding y Headshots con fotografía Drive local, diversidad
   protegida, filenames/alt descriptivos y XMP de ciudad segura; el estado
   editorial sigue `draft/noindex` hasta confirmar paquetes.
-- [ ] Completar una página Reviews especializada cuando haya testimonios reales;
-  no reutilizar una grilla genérica.
+- [x] Completar Reviews con `Words Become Pictures`, testimonios reales,
+  `KindWords` exacto y libro reutilizable; no se usó una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
   sesiones verificadas.
 - [x] Completar Newborn con composición A+C, fuente v2 reconciliada, hero y
@@ -775,3 +792,6 @@ sin reemplazar el archivo.
 - [x] Publicado Journal hub en `ffe5198` con `ready/index`, cuatro anchors
   seguros, `CollectionPage` + breadcrumb, sitemap 12, `llms.txt` 11 y QA
   responsive completo; los dos artículos pendientes permanecen sin links.
+- [x] Rediseñado y publicado Reviews con dirección `Words Become Pictures`,
+  hero compartido, diez testimonios, `JournalBook`, un único CTA, sitemap 13,
+  `llms.txt` 12 y QA responsive/accesible completo.

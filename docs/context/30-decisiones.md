@@ -1353,3 +1353,45 @@
   high/medium/low `0/0/0`. Ninguna respuesta del checklist se considera
   confirmada hasta recibirla de Lisa; las seis rutas conservan sus gates
   independientes. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### ADR-058 — Reviews convierte palabras verificadas en prueba fotográfica y se publica sin fabricar rating
+
+- **Fecha:** 2026-08-12
+- **Estado:** Aceptada.
+- **Contexto:** `/reviews/` caía en el renderer genérico y no mostraba el
+  inventario real ya utilizado en Homepage, aunque existían diez testimonios
+  atribuidos y fotografiados. El usuario pidió auditar copy/media, conservar el
+  hero de Seniors/Newborn/Family, reutilizar exactamente `What Tri-Cities
+  Clients Remember`, incorporar el libro interactivo de Portfolio, previsualizar
+  antes de codificar y publicar `ready/index`. La referencia aportaba una
+  topología editorial útil, pero su marca, paleta, textos y sujetos no podían
+  copiarse. No existe aún una URL pública oficial de Google ni campos
+  individuales completos de URL/fecha/rating/procedencia para schema de reseña.
+- **Decisión:** Adoptar Comp C / Impeccable `Words Become Pictures / At Ease,
+  on Purpose`, seed `c2ad8044`; conservar las comps A/B como alternativas no
+  seleccionadas. Crear `ReviewsPage.astro` y CSS `?url` de ruta; usar el
+  `EditorialHero` compartido con hero B/N y dos prints, seguido de `At Ease`, el
+  `KindWords` exacto de Homepage, un libro de seis páginas y un cierre B/N con
+  único CTA a Contact. Extraer `JournalBook.astro` de Portfolio para reutilizar
+  la misma fuente de páginas sin duplicar el wrapper, aislar memoria/IDs/ARIA
+  por instancia, cargar Reviews lazy y conservar Portfolio eager. Pasar las
+  conexiones Testimonial/Journal por contenido estático y Tina. Publicar
+  Reviews como `ready/index`, `lastModified: 2026-08-12`, sitemap/`llms.txt`,
+  `WebPage` y `BreadcrumbList`; mantener el resumen social como texto y omitir
+  `Review`/`AggregateRating` hasta contar con evidencia estructurada suficiente.
+- **Alternativas descartadas:** Conservar el fallback genérico, usar una grilla
+  de cards, duplicar el libro completo, copiar marca/copy/colores de la
+  referencia, inventar una reseña Newborn, un enlace Google, rating o fechas,
+  y seleccionar A/B se descartó por menor prueba visual, autorreferencia,
+  mantenimiento duplicado, riesgo factual o menor claridad narrativa.
+- **Consecuencias:** El contrato visible queda en 1 H1, 4 H2, 6 H3, diez
+  testimonios originales, seis páginas lazy y un anchor. Staging/release
+  validan 21/21; release contiene 13 URLs en sitemap y 12 entradas en
+  `llms.txt`. Playwright aprueba 1440/1200/900/390, teclado, page flip, reduced
+  motion, crops, tipografía sin clipping, assets, red/consola, overflow cero y
+  regresión de Portfolio. El detector propio devuelve `[]`; el aviso compilado
+  restante es preexistente y ajeno a Reviews. El revisor independiente entrega
+  `disposition: ship`, `ceiling: reached` y ningún fix material. El link oficial
+  de Google permanece como mejora no bloqueante. No se hizo push, deploy, DNS
+  ni `./scripts/handoff.sh` porque el script termina con `git push` y la política
+  operativa vigente reserva el push al usuario.

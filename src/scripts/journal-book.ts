@@ -5,7 +5,7 @@ import type {
 
 const MOBILE_QUERY = "(max-width: 768px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-let rememberedPagePath = "";
+const rememberedPagePaths = new Map<string, string>();
 
 class JournalBookElement extends HTMLElement {
   #abortController: AbortController | null = null;
@@ -22,6 +22,7 @@ class JournalBookElement extends HTMLElement {
   #pageMarkup = "";
   #pageTitles: string[] = [];
   #pagePaths: string[] = [];
+  #instanceId = "journal-book";
   #activePage = 0;
   #hasHydrated = false;
   #reinitializing = false;
@@ -38,6 +39,7 @@ class JournalBookElement extends HTMLElement {
     this.#nextButton = this.querySelector<HTMLButtonElement>("[data-journal-next]");
     this.#currentLabel = this.querySelector<HTMLElement>("[data-journal-current]");
     this.#status = this.querySelector<HTMLElement>("[data-journal-status]");
+    this.#instanceId = this.dataset.journalInstance || this.id || "journal-book";
 
     const originalPages = this.#pages();
     this.#pageMarkup = originalPages.map((page) => page.outerHTML).join("");
@@ -79,7 +81,8 @@ class JournalBookElement extends HTMLElement {
 
   disconnectedCallback() {
     const currentPage = this.#pageFlip?.getCurrentPageIndex() ?? this.#activePage;
-    rememberedPagePath = this.#pagePaths[currentPage] || rememberedPagePath;
+    const currentPath = this.#pagePaths[currentPage];
+    if (currentPath) rememberedPagePaths.set(this.#instanceId, currentPath);
     window.clearTimeout(this.#crossfadeTimer);
     this.#intersectionObserver?.disconnect();
     this.#motionPreference?.removeEventListener("change", this.#onMotionPreferenceChange);
@@ -145,6 +148,8 @@ class JournalBookElement extends HTMLElement {
 
       this.#pageFlip.on<number>("flip", ({ data }) => {
         this.#activePage = data;
+        const activePath = this.#pagePaths[data];
+        if (activePath) rememberedPagePaths.set(this.#instanceId, activePath);
         this.#updateControls(data, this.#pageFlip?.getOrientation() || "landscape");
       });
       this.#pageFlip.on<PageFlipOrientation>("changeOrientation", ({ data }) => {
@@ -248,6 +253,7 @@ class JournalBookElement extends HTMLElement {
   }
 
   #rememberedStartPage() {
+    const rememberedPagePath = rememberedPagePaths.get(this.#instanceId);
     if (!rememberedPagePath) return 0;
     const index = this.#pagePaths.indexOf(rememberedPagePath);
     return index >= 0 ? index : 0;
