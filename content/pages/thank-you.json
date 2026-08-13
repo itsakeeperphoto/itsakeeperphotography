@@ -6,19 +6,59 @@
   "schemaType": "WebPage",
   "signature": "arch",
   "title": "Thank You | It's A Keeper Photography",
-  "description": "A warm confirmation after sending an inquiry.",
+  "description": "Your photography inquiry is with Lisa. She reads every message herself and replies personally.",
   "hero": {
-    "tone": "sand",
-    "heading": "Thank you for reaching out.",
-    "intro": "Your message has been sent. I'm glad you're here."
-  },
-  "sections": [],
-  "finalCta": {
     "tone": "umber",
-    "heading": "Keep exploring",
+    "heading": "Thank You for Reaching Out",
+    "scriptLine": "message received",
+    "intro": "Your message is with me. I read every inquiry myself and will write back personally.",
+    "image": "/uploads/family-golden-hour-columbia-basin.jpg",
+    "imageAlt": "A family held close in warm golden-hour light in the Tri-Cities",
+    "secondaryImage": "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+    "secondaryImageAlt": "A high school senior photographed in glowing garden light"
+  },
+  "sections": [
+    {
+      "id": "your-message-is-with-me",
+      "kind": "steps",
+      "tone": "ivory",
+      "heading": "Your Message Is With Me",
+      "scriptLine": "— Lisa",
+      "paragraphs": [
+        "I read every inquiry myself. I’ll write back personally, usually with a couple of questions so I can understand what you’re hoping for before I start suggesting things.",
+        "From there, we can set up a phone call and talk through dates, locations, wardrobe and timing together."
+      ],
+      "image": "/uploads/investment-lisa-studio-portrait-camera.jpg",
+      "imageAlt": "Lisa Weiss smiling with her camera in her Richland studio",
+      "secondaryImage": "/uploads/lisa-photographer-at-work-black-white.jpg",
+      "secondaryImageAlt": "Lisa reviewing her camera while working in black and white",
+      "items": [
+        {
+          "heading": "Read with Care",
+          "detail": "I take in what you shared before I start suggesting anything."
+        },
+        {
+          "heading": "A Personal Reply",
+          "detail": "You’ll hear from me, not an assistant — usually with a couple of questions."
+        },
+        {
+          "heading": "Plan Together",
+          "detail": "If it feels like a fit, we’ll set up a phone call and talk through the details."
+        }
+      ]
+    }
+  ],
+  "finalCta": {
+    "tone": "walnut",
+    "heading": "A Little More Light, While You Wait",
+    "paragraphs": [
+      "The portfolio is here whenever you want to spend a little more time with the work."
+    ],
+    "image": "/uploads/kennewick-couple-open-field-golden-hour.jpg",
+    "imageAlt": "A couple walking together through a field at golden hour in Kennewick",
     "link": {
-      "label": "Return home",
-      "href": "/"
+      "label": "View the Portfolio",
+      "href": "/portfolio/"
     }
   },
   "pending": []

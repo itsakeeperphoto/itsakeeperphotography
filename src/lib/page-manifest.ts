@@ -335,7 +335,7 @@ export const pageManifest = [
     primaryRoute: false,
     signature: "arch",
     title: "Thank You | It's A Keeper Photography",
-    summary: "A warm confirmation after sending an inquiry.",
+    summary: "Your photography inquiry is with Lisa. She reads every message herself and replies personally.",
   },
 ] as const satisfies readonly PageManifestEntry[];
 

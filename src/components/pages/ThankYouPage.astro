@@ -1,0 +1,140 @@
+---
+import type { EditorialPageData, PageSection } from "../../content/page-types";
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+
+interface Props {
+  page: EditorialPageData;
+  settings: any;
+  inquiry?: any;
+}
+
+const { page } = Astro.props;
+
+const note = page.sections.find((section) => section.id === "your-message-is-with-me") as
+  | PageSection
+  | undefined;
+
+if (!note) {
+  throw new Error("Thank-you page is missing the required section: your-message-is-with-me");
+}
+
+const steps = note.items || [];
+const final = page.finalCta;
+const finalImage = final?.image || "/uploads/kennewick-couple-open-field-golden-hour.jpg";
+const finalImageAlt =
+  final?.imageAlt || "A couple walking together through a field at golden hour in Kennewick";
+---
+
+<article
+  class="thank-you-page"
+  data-content-status={page.contentStatus}
+  data-signature-device={page.signature}
+>
+  <EditorialHero
+    pageKey="thank-you"
+    titleId="thank-you-hero-title"
+    heading={page.hero.heading}
+    headingLines={["Thank you for", "reaching out"]}
+    scriptLine={page.hero.scriptLine || "message received"}
+    intro={page.hero.intro}
+    backgroundImage={page.hero.image || "/uploads/family-golden-hour-columbia-basin.jpg"}
+    backgroundAlt={page.hero.imageAlt || "A family held close in warm golden-hour light in the Tri-Cities"}
+    backgroundPosition="50% 50%"
+    mobileBackgroundPosition="68% 50%"
+    leftPrint={{
+      src: "/uploads/newborn-family-at-home-west-richland.jpg",
+      objectPosition: "50% 52%",
+    }}
+    rightPrint={{
+      src:
+        page.hero.secondaryImage ||
+        "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+      objectPosition: "50% 42%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel="What happens next"
+    buttonTargetId="your-message-is-with-me"
+  />
+
+  <section
+    class="thank-you-note"
+    id={note.id}
+    aria-labelledby={`${note.id}-title`}
+    tabindex="-1"
+  >
+    <div class="thank-you-shell thank-you-note__inner">
+      <div class="thank-you-note__copy">
+        <h2 id={`${note.id}-title`}>{note.heading}</h2>
+        <div class="thank-you-note__prose">
+          {note.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        {note.scriptLine && (
+          <p class="thank-you-note__signature" aria-hidden="true">{note.scriptLine}</p>
+        )}
+      </div>
+
+      <div class="thank-you-note__media">
+        <figure class="thank-you-note__arch">
+          <Picture
+            src={note.image || "/uploads/investment-lisa-studio-portrait-camera.jpg"}
+            alt={note.imageAlt || "Lisa Weiss smiling with her camera in her Richland studio"}
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 767px) 78vw, (max-width: 1050px) 44vw, 30rem"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure class="thank-you-note__print" aria-hidden="true">
+          <Picture
+            src={note.secondaryImage || "/uploads/lisa-photographer-at-work-black-white.jpg"}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            optimizedMobileWidth={640}
+            optimizedDesktopWidth={960}
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+
+      <div class="thank-you-next" aria-labelledby="thank-you-next-title">
+        <h2 id="thank-you-next-title">What Happens Next</h2>
+        <ol>
+          {steps.map((item) => (
+            <li>
+              {item.heading && <h3>{item.heading}</h3>}
+              {item.detail && <p>{item.detail}</p>}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {final && (
+    <section class="thank-you-close" aria-labelledby="thank-you-close-title">
+      <div class="thank-you-close__media">
+        <Picture
+          src={finalImage}
+          alt={finalImageAlt}
+          loading="lazy"
+          decoding="async"
+          responsiveSrcset
+          sizes="100vw"
+          imgClass="thank-you-close__image"
+        />
+        <div class="thank-you-close__wash" aria-hidden="true"></div>
+      </div>
+      <div class="thank-you-shell thank-you-close__inner">
+        <h2 id="thank-you-close-title">{final.heading}</h2>
+        {final.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        {final.link && (
+          <a class="outline-button" href={final.link.href}>{final.link.label}</a>
+        )}
+      </div>
+    </section>
+  )}
+</article>

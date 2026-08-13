@@ -17,6 +17,7 @@ import RichlandPage from "./RichlandPage.astro";
 import ReviewsPage from "./ReviewsPage.astro";
 import SeniorPage from "./SeniorPage.astro";
 import SeniorTimingPage from "./SeniorTimingPage.astro";
+import ThankYouPage from "./ThankYouPage.astro";
 
 interface Props {
   page: EditorialPageData;
@@ -49,6 +50,7 @@ const isReviewsPage = props.page.route === "/reviews/";
 const isSeniorPage = props.page.route === "/senior-photographer-tri-cities-wa/";
 const isSeniorTimingPage =
   props.page.route === "/journal/when-to-book-senior-pictures-tri-cities/";
+const isThankYouPage = props.page.route === "/thank-you/";
 ---
 
 {isAboutPage
@@ -83,4 +85,6 @@ const isSeniorTimingPage =
     ? <SeniorPage {...props} />
   : isSeniorTimingPage
     ? <SeniorTimingPage {...props} />
+  : isThankYouPage
+    ? <ThankYouPage {...props} />
     : <ContentPage {...props} />}

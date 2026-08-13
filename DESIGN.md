@@ -1900,3 +1900,62 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
   Homepage conserva el resumen enlazado y cero CTAs Google. La revisión
   independiente original finalizó
   con `disposition: ship`, `ceiling: reached` y ningún fix material.
+
+## 21. ADDENDUM DE RUTA — THANK-YOU / YOUR MESSAGE IS WITH ME
+
+Este addendum fija el rediseño de `/thank-you/` como utilidad posterior al
+envío. La referencia externa aporta proporciones —hero fotográfico, seam,
+prints, arco y banda final— pero no marca, paleta, copy ni sujetos. La dirección
+canónica es la comp C
+`.impeccable/mocks/thank-you-c-message-with-me.png`, seleccionada tras tres
+previsualizaciones auditables y documentada con surface seed `02ea6a91`.
+
+### Tesis y secuencia
+
+- La página confirma que el mensaje ya está en manos de una persona real; no es
+  una alerta de sistema ni una segunda landing de venta.
+- El hero usa exactamente `EditorialHero`, como Seniors, Family y Newborn:
+  fondo familiar, script `message received`, H1 en dos líneas, intro, dos prints,
+  seam rasgado y botón local `What happens next`.
+- La sección `Your Message Is With Me` coloca el copy verificado a la izquierda,
+  a Lisa en un arco central, un print B/N de trabajo superpuesto y tres pasos en
+  un `<ol>`: `Read with Care`, `A Personal Reply` y `Plan Together`.
+- El cierre full-bleed `A Little More Light, While You Wait` ofrece el único
+  anchor del cuerpo: `View the Portfolio`. No añade Contact, otro formulario,
+  precio, booking, fecha de respuesta, testimonial ni promesa comercial.
+
+### Sistema visual y responsive
+
+- Mundo propio: Warm Ivory, Deep Umber y fotografía existente; tipografía
+  display serif, prosa itálica y una firma script. Sin gradientes, glass,
+  badges, cards, radios grandes ni sombras decorativas.
+- Desktop usa una grilla de 12 columnas para copy 3/12, arco 4/12 y pasos 3/12.
+  A 900 px el bloque se convierte en dos columnas con los tres pasos en un
+  ledger horizontal. A 390 px el orden es copy → arco/print → pasos → cierre.
+- Las seis fotografías proceden de `public/uploads/`: hero familiar, dos prints
+  de hero, retrato informativo de Lisa, print B/N decorativo y cierre de pareja.
+  Las tres imágenes informativas tienen alt literal; las tres decorativas usan
+  alt vacío. Ninguna región image-native usa el raster de la comp.
+- GSAP orquesta entradas de una sola ejecución para hero, nota y cierre usando
+  transform/opacity; no hay loops. Sin GSAP o con
+  `prefers-reduced-motion: reduce`, todo el contenido permanece visible y sin
+  transformaciones residuales. CTA y controles superan 44 px y tienen estados
+  hover, focus y active.
+
+### Contrato semántico y publicación
+
+- `ThankYouPage.astro` se resuelve en SSR y refresh Tina;
+  `thank-you-page.css?url` solo se carga en `/thank-you/`.
+- Contrato exacto: 1 H1, 3 H2, 3 H3, seis imágenes, un botón local de hero y un
+  anchor `/portfolio/` dentro de `<main>`. La sección destino tiene
+  `tabindex="-1"` para recibir foco después del scroll.
+- La ruta está `ready/noindex`, con `WebPage`, canonical propio,
+  `sitemap: false`, `llms: false`, `primaryRoute: false` y sin `lastModified`.
+  Staging y release usan `noindex, nofollow, noarchive` en meta; release lo
+  replica como `X-Robots-Tag`. `robots.txt` no bloquea la URL, porque el crawler
+  debe poder leer el `noindex`.
+- El validador protege contenido, manifest espejo, CSS de ruta, contrato de
+  dirección como primer hijo de body, headings, acciones, imágenes, schema y
+  exclusión crawler. Staging/release aprueban 21/21. Playwright CLI aprueba
+  1440×1000, 1200×900, 900×900 y 390×844, con seis imágenes cargadas, cero
+  overflow, errores de consola/red o contenido oculto bajo reduced motion.

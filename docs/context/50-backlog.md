@@ -703,8 +703,10 @@ sin reemplazar el archivo.
   explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
   visible, densidad Belief/Method corregida según ADR-046/047 y autoridad
   verificable sin badges ni claims pendientes.
-- [ ] Evaluar composición individual de Privacy/Thank-you sin afectar su noindex;
-  Thank-you debe permanecer simple y cálida.
+- [x] Rediseñada Thank-you con `Your Message Is With Me`, renderer/CSS aislados,
+  hero compartido, copy factual, un único anchor a Portfolio y QA responsive;
+  permanece `ready/noindex` y fuera de sitemap/`llms.txt`. Privacy conserva su
+  evaluación independiente.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,
   precios, deliverables, copy, ruta y schema. No añadirlo solo porque una
   conversación dijo que add-ons podrían aplicar.

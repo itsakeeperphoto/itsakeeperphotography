@@ -89,7 +89,9 @@ threshold. Each must retain genuinely city-specific content before it is approve
 
 - `/portfolio/` — ready and indexable
 - `/privacy/` — noindex; excluded until the factual policy is approved
-- `/thank-you/` — permanently noindex and excluded
+- `/thank-you/` — specialized post-submit confirmation; permanently noindex,
+  excluded from sitemap/`llms.txt`, and still crawlable so robots can read the
+  `noindex` directive
 - `/admin/` and `/tina-island/` — administrative routes; excluded and blocked from indexing
 
 ## Quality rules
@@ -118,6 +120,8 @@ threshold. Each must retain genuinely city-specific content before it is approve
   two anchors inside `<main>`: the confirmed external Google review action and
   the internal Contact action, in that order. Its hero scroll remains a button,
   its Home social-proof summary is static text, and its journal adds no links.
+  Thank-you exposes one Portfolio anchor inside `<main>`; its hero scroll
+  control remains a button and it must never add a second form or Contact CTA.
 
 The Reviews publication contract uses the shared service-page hero, the exact
 Home `KindWords` component and the reusable six-page Portfolio book. It

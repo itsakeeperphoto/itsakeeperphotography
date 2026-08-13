@@ -1,4 +1,4 @@
-# Índice — Contenido de las 18 páginas
+# Índice — Contenido de las 19 páginas documentadas
 _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, meta), estructura de headings, copy completo en inglés (voz de Lisa), alt texts, internal links y schema JSON-LD._
 
 | # | Archivo | URL | Estado |
@@ -21,8 +21,11 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 16 | 16-journal-senior-timing.md | `/journal/when-to-book-senior-pictures-tri-cities/` | ⚠️ Rediseñado · `draft/noindex` (fecha editorial, datos distritales y Q54 pendientes) |
 | 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ⚠️ Rediseñado · `draft/noindex` (aprobación Lisa, formato exacto y fecha real pendientes) |
 | 18 | 18-journal-branding-vs-headshots.md | `/journal/branding-photos-vs-headshots/` | ✅ Rediseñado y publicado · `ready/index` (fecha 2026-08-11) |
+| 19 | 19-thank-you.md | `/thank-you/` | ✅ Rediseñado · `ready/noindex` permanente · fuera de sitemap/llms |
 
-**Utilidad (no search-facing):** `/privacy/` (legal estándar) y `/thank-you/` (noindex, destino del formulario para medir conversiones).
+**Utilidades no search-facing:** `/privacy/` (legal estándar) y `/thank-you/`
+(confirmación documentada en la fila 19; destino del formulario y `noindex`
+permanente).
 
 ## Orden de publicación recomendado
 

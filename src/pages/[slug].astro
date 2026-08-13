@@ -11,6 +11,7 @@ import { contentPageWrapper } from "../lib/tina/wrappers";
 import aboutStylesheet from "../styles/about-page.css?url";
 import pascoStylesheet from "../styles/pasco-page.css?url";
 import reviewsStylesheet from "../styles/reviews-page.css?url";
+import thankYouStylesheet from "../styles/thank-you-page.css?url";
 
 export function getStaticPaths() {
   return topLevelEditorialManifest.map((entry) => ({
@@ -45,7 +46,9 @@ const pageStylesheet = entry.id === "about"
     ? pascoStylesheet
     : entry.id === "reviews"
       ? reviewsStylesheet
-    : undefined;
+    : entry.id === "thank-you"
+      ? thankYouStylesheet
+      : undefined;
 const directionContract = entry.id === "about"
   ? `THESIS: Lisa's About page is a keeper archive of why and how she photographs; it refuses generic credential cards.
 OWN-WORLD: Warm ivory, sand, olive, walnut and umber fields; arched portraits, square prints and one-pixel ledgers; no badges or decorative shadows.
@@ -59,6 +62,13 @@ OWN-WORLD: Ivory paper, umber and olive fields, real black-and-white photographs
 STORY: Visitors recognize deliberate ease, hear ten verified clients, turn through the work and then begin planning.
 FIRST VIEWPORT: The shared EditorialHero fills the exact remaining viewport with a family embrace, two corner prints, centered promise and torn seam.
 FORM: Candidate 5, Words Become Pictures / At Ease, on Purpose; seed c2ad8044; approved comp C.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`
+  : entry.id === "thank-you"
+    ? `THESIS: A submitted inquiry already feels held by a real person; Thank-you refuses the generic success alert and the second sales pitch.
+OWN-WORLD: Warm ivory paper, umber photography, one Lisa portrait arch, one overlapping black-and-white print, short hairline annotations and one full-bleed close.
+STORY: The visitor sees that the message arrived, understands that Lisa reads and replies personally, knows the next conversation is collaborative and may quietly revisit the work.
+FIRST VIEWPORT: The shared service hero fills the exact remaining viewport with a family photograph, two corner prints, centered confirmation and torn seam; no second conversion action competes with receipt.
+FORM: Your Message Is With Me, approved comp C; surface seed 02ea6a91; delegated by the user's explicit no-pause instruction.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`
   : undefined;
 const detailedService =
@@ -440,7 +450,9 @@ const pageSchemaExtra = entry.id === "about"
   additionalSchema={detailedAdditionalSchema}
   pageSpatialCoverage={citySpatialCoverage}
   pageSchemaExtra={pageSchemaExtra}
-  loadEditorialMotion={entry.id === "contact" || entry.id === "reviews"}
+  loadEditorialMotion={
+    entry.id === "contact" || entry.id === "reviews" || entry.id === "thank-you"
+  }
   pageStylesheet={pageStylesheet}
   directionContract={directionContract}
   founderReferenceOnly={entry.id === "about"}

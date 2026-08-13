@@ -230,6 +230,9 @@ const aboutSource = JSON.parse(
 const reviewsSource = JSON.parse(
   await readFile(path.join(root, "content", "pages", "reviews.json"), "utf8"),
 );
+const thankYouSource = JSON.parse(
+  await readFile(path.join(root, "content", "pages", "thank-you.json"), "utf8"),
+);
 const reviewsSectionIds = (reviewsSource.sections || []).map((section) => section.id);
 if (
   reviewsSource.route !== "/reviews/" ||
@@ -256,6 +259,33 @@ if (
 ) {
   failures.push(
     "content/pages/reviews.json: Reviews must retain its approved ready/index copy, section order, Contact CTA and empty pending contract",
+  );
+}
+const thankYouSectionIds = (thankYouSource.sections || []).map(
+  (section) => section.id,
+);
+if (
+  thankYouSource.route !== "/thank-you/" ||
+  thankYouSource.family !== "utility" ||
+  thankYouSource.contentStatus !== "ready" ||
+  thankYouSource.searchVisibility !== "noindex" ||
+  thankYouSource.schemaType !== "WebPage" ||
+  thankYouSource.signature !== "arch" ||
+  thankYouSource.title !== "Thank You | It's A Keeper Photography" ||
+  thankYouSource.description !==
+    "Your photography inquiry is with Lisa. She reads every message herself and replies personally." ||
+  thankYouSource.hero?.heading !== "Thank You for Reaching Out" ||
+  thankYouSource.hero?.intro !==
+    "Your message is with me. I read every inquiry myself and will write back personally." ||
+  JSON.stringify(thankYouSectionIds) !==
+    JSON.stringify(["your-message-is-with-me"]) ||
+  thankYouSource.sections?.[0]?.items?.length !== 3 ||
+  !Array.isArray(thankYouSource.pending) ||
+  thankYouSource.pending.length !== 0 ||
+  thankYouSource.finalCta?.link?.href !== "/portfolio/"
+) {
+  failures.push(
+    "content/pages/thank-you.json: Thank-you must retain its approved ready/noindex confirmation, three verified next steps, Portfolio close and empty pending contract",
   );
 }
 const aboutHeroDigest = createHash("sha256")
@@ -494,6 +524,7 @@ const pascoRelative = `pasco-wa-photographer${path.sep}index.html`;
 const newbornRelative = `newborn-photographer-tri-cities-wa${path.sep}index.html`;
 const aboutRelative = `about${path.sep}index.html`;
 const reviewsRelative = `reviews${path.sep}index.html`;
+const thankYouRelative = `thank-you${path.sep}index.html`;
 const seniorTimingRelative =
   `journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`;
 const newbornComparisonRelative =
@@ -1085,6 +1116,12 @@ STORY: Visitors recognize deliberate ease, hear ten verified clients, turn throu
 FIRST VIEWPORT: The shared EditorialHero fills the exact remaining viewport with a family embrace, two corner prints, centered promise and torn seam.
 FORM: Candidate 5, Words Become Pictures / At Ease, on Purpose; seed c2ad8044; approved comp C.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
+const thankYouDirectionContract = `THESIS: A submitted inquiry already feels held by a real person; Thank-you refuses the generic success alert and the second sales pitch.
+OWN-WORLD: Warm ivory paper, umber photography, one Lisa portrait arch, one overlapping black-and-white print, short hairline annotations and one full-bleed close.
+STORY: The visitor sees that the message arrived, understands that Lisa reads and replies personally, knows the next conversation is collaborative and may quietly revisit the work.
+FIRST VIEWPORT: The shared service hero fills the exact remaining viewport with a family photograph, two corner prints, centered confirmation and torn seam; no second conversion action competes with receipt.
+FORM: Your Message Is With Me, approved comp C; surface seed 02ea6a91; delegated by the user's explicit no-pause instruction.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
 const activeCityGalleryContracts = new Map([
   [
     `richland-wa-photographer${path.sep}index.html`,
@@ -1237,6 +1274,9 @@ for (const file of htmlFiles) {
   const brandingHeadshotsStylesheetHref = stylesheetHrefs.find((href) =>
     /(?:^|\/)journal-branding-vs-headshots-page[^/]*\.css(?:[?#]|$)/i.test(href),
   );
+  const thankYouStylesheetHref = stylesheetHrefs.find((href) =>
+    /(?:^|\/)thank-you-page[^/]*\.css(?:[?#]|$)/i.test(href),
+  );
   const linkedAboutCss = linkedStylesheets.some((css) => /\.about-page\b/.test(css));
   const linkedSeniorTimingCss = linkedStylesheets.some((css) =>
     /\.senior-timing-page\b/.test(css),
@@ -1246,6 +1286,9 @@ for (const file of htmlFiles) {
   );
   const linkedBrandingHeadshotsCss = linkedStylesheets.some((css) =>
     /\.branding-headshots-page\b/.test(css),
+  );
+  const linkedThankYouCss = linkedStylesheets.some((css) =>
+    /\.thank-you-page\b/.test(css),
   );
   if (relative === pascoRelative) {
     if (!pascoStylesheetHref || !internalTargetExists(pascoStylesheetHref)) {
@@ -1332,6 +1375,26 @@ for (const file of htmlFiles) {
       `${relative}: Branding vs. Headshots CSS leaked into an unrelated route`,
     );
   }
+  if (relative === thankYouRelative) {
+    const thankYouCss = thankYouStylesheetHref
+      ? await readInternalStylesheet(thankYouStylesheetHref)
+      : "";
+    if (
+      !thankYouStylesheetHref ||
+      !internalTargetExists(thankYouStylesheetHref) ||
+      !/\.thank-you-page\b/.test(thankYouCss)
+    ) {
+      failures.push(
+        `${relative}: route-scoped Thank-you stylesheet is missing or broken`,
+      );
+    }
+  } else if (
+    thankYouStylesheetHref ||
+    linkedThankYouCss ||
+    /\.thank-you-page\s*\{/.test(source)
+  ) {
+    failures.push(`${relative}: Thank-you CSS leaked into an unrelated route`);
+  }
   const aboutDirectionComment = `<!--\n${aboutDirectionContract}\n-->`;
   if (relative === aboutRelative) {
     const bodyContent = source.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1] || "";
@@ -1358,6 +1421,24 @@ for (const file of htmlFiles) {
     }
   } else if (source.includes("THESIS: Client words become photographic proof")) {
     failures.push(`${relative}: Reviews direction contract leaked into an unrelated route`);
+  }
+  const thankYouDirectionComment = `<!--\n${thankYouDirectionContract}\n-->`;
+  if (relative === thankYouRelative) {
+    const bodyContent = source.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1] || "";
+    if (
+      !bodyContent.trimStart().startsWith(thankYouDirectionComment) ||
+      !source.includes("FORM: Your Message Is With Me, approved comp C; surface seed 02ea6a91")
+    ) {
+      failures.push(
+        `${relative}: Thank-you direction contract must be the first body child`,
+      );
+    }
+  } else if (
+    source.includes("THESIS: A submitted inquiry already feels held by a real person")
+  ) {
+    failures.push(
+      `${relative}: Thank-you direction contract leaked into an unrelated route`,
+    );
   }
   if (relative === brandingHeadshotsRelative) {
     if (!source.includes(`<!--\n${brandingHeadshotsDirectionContract}\n-->`)) {
@@ -1428,6 +1509,70 @@ for (const file of htmlFiles) {
     ) {
       failures.push(
         `${relative}: Reviews must retain the static proof summary, safe Google CTA, Contact CTA, arch composition and six hard 3D journal pages`,
+      );
+    }
+  }
+  if (relative === thankYouRelative) {
+    const h1Texts = [...main.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map(
+      (match) => normalizedText(match[1]),
+    );
+    const h2Texts = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)].map(
+      (match) => normalizedText(match[1]),
+    );
+    const h3Texts = [...main.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)].map(
+      (match) => normalizedText(match[1]),
+    );
+    const mainAnchors = [
+      ...main.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi),
+    ].map((match) => ({ href: match[1], label: normalizedText(match[2]) }));
+    const heroButtonTag = main.match(
+      /<button\b(?=[^>]*data-hero-scroll-target)[^>]*>/i,
+    )?.[0] || "";
+    const imageTags = [...main.matchAll(/<img\b[^>]*>/gi)].map(
+      (match) => match[0],
+    );
+    const nonDecorativeImageAlts = imageTags
+      .map((tag) => htmlAttribute(tag, "alt"))
+      .filter((alt) => alt);
+    const schemas = parseJsonLd(source, relative);
+    const webPages = schemas.filter((schema) => schema?.["@type"] === "WebPage");
+    const breadcrumbs = schemas.filter(
+      (schema) => schema?.["@type"] === "BreadcrumbList",
+    );
+    const expectedOrigin = mode === "release"
+      ? "https://www.itsakeeperphotography.com"
+      : "https://itsakeeperphotography.netlify.app";
+    if (
+      !/data-content-status=["']ready["']/i.test(main) ||
+      !/data-signature-device=["']arch["']/i.test(main) ||
+      !/data-editorial-hero-page=["']thank-you["']/i.test(main) ||
+      JSON.stringify(h1Texts) !== JSON.stringify(["Thank you for reaching out"]) ||
+      JSON.stringify(h2Texts) !==
+        JSON.stringify([
+          "Your Message Is With Me",
+          "What Happens Next",
+          "A Little More Light, While You Wait",
+        ]) ||
+      JSON.stringify(h3Texts) !==
+        JSON.stringify(["Read with Care", "A Personal Reply", "Plan Together"]) ||
+      JSON.stringify(mainAnchors) !==
+        JSON.stringify([{ href: "/portfolio/", label: "View the Portfolio" }]) ||
+      htmlAttribute(heroButtonTag, "data-hero-scroll-target") !==
+        "your-message-is-with-me" ||
+      normalizedText(
+        main.match(/<button\b(?=[^>]*data-hero-scroll-target)[^>]*>([\s\S]*?)<\/button>/i)?.[1] || "",
+      ) !== "What happens next" ||
+      !/<section\b(?=[^>]*id=["']your-message-is-with-me["'])(?=[^>]*tabindex=["']-1["'])/i.test(main) ||
+      imageTags.length !== 6 ||
+      nonDecorativeImageAlts.length !== 3 ||
+      /<form\b/i.test(main) ||
+      /href=["']\/contact\//i.test(main) ||
+      webPages.length !== 1 ||
+      webPages[0]?.url !== `${expectedOrigin}/thank-you/` ||
+      breadcrumbs.length !== 0
+    ) {
+      failures.push(
+        `${relative}: Thank-you must retain one shared hero scroll control, the approved note/three-step structure, six-image composition, one Portfolio anchor and a single canonical WebPage schema`,
       );
     }
   }
@@ -3674,6 +3819,26 @@ if (
     "page-manifest.ts: Reviews must retain ready/index WebPage gates, exact title and 2026-08-12 lastModified",
   );
 }
+const thankYouManifestBlock = runtimeManifestSource.match(
+  /\{\s*id:\s*"thank-you",[\s\S]*?\n\s*\},/,
+)?.[0] || "";
+if (
+  !/contentStatus:\s*"ready"/.test(thankYouManifestBlock) ||
+  !/searchVisibility:\s*"noindex"/.test(thankYouManifestBlock) ||
+  !/schemaType:\s*"WebPage"/.test(thankYouManifestBlock) ||
+  !/sitemap:\s*false/.test(thankYouManifestBlock) ||
+  !/llms:\s*false/.test(thankYouManifestBlock) ||
+  !/primaryRoute:\s*false/.test(thankYouManifestBlock) ||
+  !/signature:\s*"arch"/.test(thankYouManifestBlock) ||
+  !/title:\s*"Thank You \| It's A Keeper Photography"/.test(
+    thankYouManifestBlock,
+  ) ||
+  /lastModified:/.test(thankYouManifestBlock)
+) {
+  failures.push(
+    "page-manifest.ts: Thank-you must retain ready/noindex WebPage gates, crawler exclusions, arch signature, exact title and no lastModified",
+  );
+}
 const newbornComparisonManifestBlock = runtimeManifestSource.match(
   /\{\s*id:\s*"newborn-comparison",[\s\S]*?\n\s*\},/,
 )?.[0] || "";
@@ -4148,6 +4313,11 @@ const sitemap = await readFile(path.join(output, "sitemap.xml"), "utf8");
 const robots = await readFile(path.join(output, "robots.txt"), "utf8");
 const llms = await readFile(path.join(output, "llms.txt"), "utf8");
 const headers = await readFile(path.join(output, "_headers"), "utf8");
+if (sitemap.includes("/thank-you/") || llms.includes("/thank-you/")) {
+  failures.push(
+    "thank-you: utility confirmation must remain excluded from sitemap.xml and llms.txt",
+  );
+}
 const seniorTimingPublicationPath =
   "/journal/when-to-book-senior-pictures-tri-cities/";
 const newbornComparisonPublicationPath =

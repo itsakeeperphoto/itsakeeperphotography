@@ -171,12 +171,12 @@ Componentes especializados existentes:
 - `FamilyPage.astro`, `SeniorPage.astro`, `NewbornPage.astro`
 - `BrandingPage.astro`, `HeadshotPage.astro`
 - `AboutPage.astro`, `InvestmentPage.astro`, `ContactPage.astro`
-- `ReviewsPage.astro`
+- `ReviewsPage.astro`, `ThankYouPage.astro`
 - `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`,
   `NewbornComparisonPage.astro`, `BrandingHeadshotsArticlePage.astro`
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
-- `ContentPage.astro` para rutas aún genéricas, incluidas Privacy, Thank-you y
-  algunos artículos.
+- `ContentPage.astro` para rutas aún genéricas, incluida Privacy y algunos
+  artículos.
 
 `JournalPage.astro` conserva la firma visual `overlap` y cuatro cards, pero el
 hub publicado expone solo cuatro anchors seguros: Locations Guide, Branding vs.
@@ -201,6 +201,18 @@ páginas; y un cierre fotográfico con anchor a Contact. `reviews-page.css` se p
 `?url` y solo se enlaza en esta ruta. El contrato visible es 1 H1, 4 H2, 6 H3,
 10 testimonios originales y dos anchors dentro de `<main>`: Google externo
 primero y Contact interno después. La firma publicada cambia a `arch`.
+
+`ThankYouPage.astro` implementa `/thank-you/` como confirmación posterior al
+único POST nativo de Contact. Reutiliza `EditorialHero` con botón local hacia
+`#your-message-is-with-me`, luego compone el mensaje personal de Lisa alrededor
+de un retrato en arco y un print B/N superpuesto, presenta tres próximos pasos
+verificados en un `<ol>` y termina con una sola ruta silenciosa a Portfolio.
+`thank-you-page.css` se procesa con `?url` y solo se enlaza en esta ruta; el
+renderer especializado se conserva tanto en SSR como en refresh Tina. El
+contrato visible es 1 H1, 3 H2, 3 H3, seis imágenes y un único anchor dentro de
+`<main>`. El manifest mantiene `ready/noindex`, `sitemap: false`, `llms: false`,
+`primaryRoute: false` y no declara `lastModified`; release añade meta y header
+`noindex, nofollow, noarchive`, sin bloquear la URL en `robots.txt`.
 
 `JournalBook.astro` contiene la UI reutilizable extraída del Portfolio.
 `JournalPortfolio.astro` permanece como wrapper de esa ruta y carga su primera

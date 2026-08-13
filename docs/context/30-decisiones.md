@@ -1444,3 +1444,45 @@
   `Review`/`AggregateRating`. El detector Impeccable devuelve `[]`. No se hizo
   push, deploy, DNS ni `./scripts/handoff.sh`; el usuario conserva el control del
   push.
+
+### ADR-060 — Thank-you confirma recepción sin convertirse en una segunda landing
+
+- **Fecha:** 2026-08-13
+- **Estado:** Aceptada.
+- **Contexto:** `/thank-you/` era una utilidad genérica con un H1, una frase y
+  un enlace a Home, aunque Contact ya la usa como destino del único POST nativo.
+  El usuario pidió reconciliar la geometría de una referencia editorial con las
+  páginas Seniors/Newborn/Family, auditar copy y fotografías, visualizar antes
+  de codificar y recomendar la política SEO. La auditoría confirmó que Lisa lee
+  cada inquiry, responde personalmente, suele hacer un par de preguntas y luego
+  planifica por teléfono; no existe un tiempo de respuesta verificado. Como
+  confirmación posterior al envío, la ruta no aporta intención de búsqueda
+  independiente.
+- **Decisión:** Adoptar Comp C / Impeccable `Your Message Is With Me`, surface
+  seed `02ea6a91`, entre tres previsualizaciones generadas y conservar A/B como
+  alternativas no seleccionadas. Crear `ThankYouPage.astro` y CSS `?url` de
+  ruta; usar `EditorialHero` compartido con botón local, dos prints y seam;
+  componer la nota con copy, retrato de Lisa en arco, print B/N superpuesto y
+  tres próximos pasos semánticos; terminar con una sola fotografía full-bleed y
+  un único anchor a Portfolio. Añadir una orquestación GSAP de entrada limitada
+  a transform/opacity y conservar contenido visible sin dependencia de JS o
+  bajo reduced motion. Mantener `ready/noindex`, `WebPage`, canonical propio,
+  `sitemap:false`, `llms:false`, `primaryRoute:false`, sin `lastModified`, meta
+  y header release `noindex,nofollow,noarchive`, y no bloquear la ruta mediante
+  `robots.txt` para que los crawlers puedan leer el `noindex`.
+- **Alternativas descartadas:** Mantener el renderer genérico, copiar marca,
+  copy o color de la referencia, usar la comp como imagen final, añadir otro
+  formulario/Contact CTA, prometer una respuesta en 24–48 horas, afirmar una
+  reserva, indexar la utilidad, añadirla al sitemap o impedir crawling con
+  `robots.txt` se descartó por menor confianza, duplicación de conversión,
+  evidencia insuficiente o política SEO incorrecta.
+- **Consecuencias:** El contrato visible queda en 1 H1, 3 H2, 3 H3, seis
+  imágenes, un botón local y un anchor a Portfolio. El validador fija contenido,
+  manifiestos espejo, aislamiento CSS, dirección, headings, acciones, media,
+  schema y exclusión crawler. Staging/release aprueban 21/21; Playwright CLI
+  pasa 1440×1000, 1200×900, 900×900 y 390×844 con seis imágenes cargadas, cero
+  overflow y errores runtime, foco correcto, estados del CTA y reduced motion
+  visible. El detector propio queda limpio; su único warning compilado procede
+  de `journal-page.css` preexistente. El finish reviewer devuelve `SHIP`,
+  `ceiling: reached` y ningún hallazgo material. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva el control del push.

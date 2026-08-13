@@ -1540,6 +1540,140 @@
             stagger: motion.stagger,
           });
         });
+
+        const thankYouPage = document.querySelector(".thank-you-page");
+        if (thankYouPage) {
+          const hero = thankYouPage.querySelector(".editorial-hero");
+          const heroBackground = hero?.querySelector("[data-hero-background]");
+          const heroCopy = hero?.querySelector("[data-hero-copy]");
+          const heroPrints = hero
+            ? [...hero.querySelectorAll("[data-hero-print]")]
+            : [];
+          const heroTargets = [heroBackground, heroCopy, ...heroPrints].filter(Boolean);
+          if (hero && heroTargets.length) {
+            const timeline = gsap.timeline({ delay: motion.heroDelay });
+            timeline.eventCallback("onStart", () => prepare(heroTargets));
+            timeline.eventCallback("onComplete", () => clear(heroTargets));
+            if (heroBackground) {
+              timeline.from(heroBackground, {
+                autoAlpha: 0.82,
+                scale: 1.025,
+                duration: motion.heroImage,
+                ease: motion.imageEase,
+              });
+            }
+            if (heroCopy) {
+              timeline.from(
+                heroCopy,
+                {
+                  autoAlpha: 0,
+                  y: motion.heroY,
+                  duration: motion.hero,
+                  ease: motion.ease,
+                },
+                motion.heroStagger,
+              );
+            }
+            if (heroPrints.length) {
+              timeline.from(
+                heroPrints,
+                {
+                  autoAlpha: 0,
+                  y: motion.overlapY,
+                  duration: motion.reveal,
+                  ease: motion.ease,
+                  stagger: motion.stagger,
+                },
+                motion.heroStagger * 2,
+              );
+            }
+          }
+
+          const note = thankYouPage.querySelector(".thank-you-note");
+          if (note) {
+            const copy = note.querySelector(".thank-you-note__copy");
+            const arch = note.querySelector(".thank-you-note__arch");
+            const print = note.querySelector(".thank-you-note__print");
+            const steps = [
+              ...note.querySelectorAll(".thank-you-next > h2, .thank-you-next li"),
+            ];
+            const targets = [copy, arch, print, ...steps].filter(Boolean);
+            const timeline = makeTimeline(note, targets);
+            if (copy) {
+              timeline.from(copy, {
+                autoAlpha: 0,
+                y: motion.y,
+                duration: motion.reveal,
+                ease: motion.ease,
+              });
+            }
+            if (arch) {
+              timeline.from(
+                arch,
+                {
+                  autoAlpha: 0,
+                  y: motion.overlapY,
+                  duration: motion.reveal,
+                  ease: motion.ease,
+                },
+                motion.stagger,
+              );
+            }
+            if (print) {
+              timeline.from(
+                print,
+                {
+                  autoAlpha: 0,
+                  y: motion.overlapY,
+                  duration: motion.reveal,
+                  ease: motion.ease,
+                },
+                motion.stagger * 2,
+              );
+            }
+            if (steps.length) {
+              timeline.from(
+                steps,
+                {
+                  autoAlpha: 0,
+                  y: motion.y,
+                  duration: motion.reveal,
+                  ease: motion.ease,
+                  stagger: motion.stagger,
+                },
+                motion.stagger * 2,
+              );
+            }
+          }
+
+          const close = thankYouPage.querySelector(".thank-you-close");
+          if (close) {
+            const image = close.querySelector(".thank-you-close__image");
+            const inner = close.querySelector(".thank-you-close__inner");
+            const targets = [image, inner].filter(Boolean);
+            const timeline = makeTimeline(close, targets);
+            if (image) {
+              timeline.from(image, {
+                autoAlpha: 0.8,
+                scale: motion.sectionScale,
+                duration: motion.reveal * 1.2,
+                ease: motion.imageEase,
+              });
+            }
+            if (inner) {
+              timeline.from(
+                inner,
+                {
+                  autoAlpha: 0,
+                  y: motion.y,
+                  duration: motion.reveal,
+                  ease: motion.ease,
+                },
+                motion.stagger,
+              );
+            }
+          }
+        }
       });
 
       const refresh = () => {
