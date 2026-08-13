@@ -1296,3 +1296,36 @@
   documental `main` queda cuatro commits por delante de `origin/main`. No se
   hizo push, deploy, DNS ni `./scripts/handoff.sh`; el usuario conserva el
   control del push.
+
+### 2026-08-13 — Codex / GPT-5 — Thank-you rediseñado como confirmación personal
+
+- **Objetivo:** convertir `/thank-you/` en una confirmación cálida y útil sin
+  transformarla en otra landing de venta ni darle visibilidad orgánica.
+- **Auditoría y dirección:** se verificaron la fuente JSON, el flujo POST de
+  Contact, las afirmaciones disponibles y la biblioteca fotográfica. No se
+  inventó tiempo de respuesta. Image-to-code extrajo la topología de la
+  referencia y la generación visual produjo tres comps; C / `Your Message Is
+  With Me`, seed `02ea6a91`, quedó canónica por claridad y continuidad.
+- **Implementación:** `ThankYouPage.astro` y `thank-you-page.css?url` conservan
+  el renderer en SSR/refresh Tina. El hero compartido usa botón local; la nota
+  combina copy verificado, arco de Lisa, print B/N y tres pasos; el cierre usa
+  una sola acción a Portfolio. GSAP orquesta una entrada discreta y reduced
+  motion mantiene contenido visible.
+- **SEO:** la ruta sigue `ready/noindex`, `WebPage`, canonical propia,
+  `sitemap:false`, `llms:false`, sin `lastModified`; staging y release emiten
+  `noindex,nofollow,noarchive`. No se bloquea en `robots.txt`, de modo que el
+  crawler puede leer la directiva. El validador protege el contrato completo.
+- **QA:** staging/release aprobaron 21/21. Playwright CLI pasó
+  1440×1000/1200×900/900×900/390×844: alturas hero 882/782/796/656, seis fotos
+  cargadas, acción/foco/hover correctos, cero overflow, errores runtime o fallos
+  locales de red y reduced motion visible. Las capturas finales quedan en
+  `.artifacts/thank-you-2026-08-13/final/`. Detector Impeccable propio limpio;
+  el warning compilado de `transition: width` pertenece a Journal preexistente.
+- **Finish:** el revisor fresco devolvió `SHIP / ceiling reached`, sin P1/P2 ni
+  hallazgos materiales de fidelidad, craft, responsive, accesibilidad o SEO. El
+  documenter fresco reconciliado confirmó que DESIGN y el surface brief
+  describen el render final.
+- **Git/operación:** implementación y documentación estructural en `fc29eec`
+  (`feat(thank-you): redesign inquiry confirmation`). Este estado y la bitácora
+  forman un commit local de cierre separado. No se hizo push, deploy, DNS ni
+  `./scripts/handoff.sh`; el usuario conserva el control del push.
