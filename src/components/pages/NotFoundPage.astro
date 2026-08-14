@@ -1,0 +1,81 @@
+---
+import Picture from "../Picture.astro";
+import EditorialHero from "./EditorialHero.astro";
+---
+
+<article class="not-found-page" data-not-found-page>
+  <EditorialHero
+    pageKey="not-found"
+    titleId="not-found-hero-title"
+    heading="This Page Is Out of Frame"
+    headingLines={["This Page Is", "Out of Frame"]}
+    scriptLine="just a wrong turn"
+    intro="The address may have changed, but the photographs are still right here."
+    backgroundImage="/uploads/kennewick-couple-walking-golden-hour.jpg"
+    backgroundAlt="A couple holding hands while walking through a sunlit field."
+    backgroundPosition="50% 42%"
+    mobileBackgroundPosition="52% 50%"
+    leftPrint={{
+      src: "/uploads/journal-locations-final-family-richland-tricities.jpg",
+      objectPosition: "55% 50%",
+    }}
+    rightPrint={{
+      src: "/uploads/family-laughter-black-white-tricities.jpg",
+      objectPosition: "48% 50%",
+    }}
+    paperEdgeColor="var(--color-warm-ivory)"
+    buttonLabel="Find your way back"
+    buttonTargetId="find-your-way-back"
+  />
+
+  <section
+    class="not-found-recovery"
+    id="find-your-way-back"
+    aria-labelledby="not-found-recovery-title"
+    tabindex="-1"
+  >
+    <div class="not-found-shell not-found-recovery__inner">
+      <span class="not-found-recovery__digit not-found-recovery__digit--left" aria-hidden="true">4</span>
+
+      <div class="not-found-recovery__mount" data-not-found-mount>
+        <figure class="not-found-recovery__arch">
+          <Picture
+            src="/uploads/journal-family-golden-hour-tricities.jpg"
+            alt="Parents holding their baby in golden evening light."
+            loading="lazy"
+            decoding="async"
+            responsiveSrcset
+            sizes="(max-width: 479px) 72vw, (max-width: 1050px) 48vw, 30vw"
+            imgClass="photo--editorial"
+          />
+        </figure>
+
+        <figure class="not-found-recovery__print" aria-hidden="true">
+          <Picture
+            src="/uploads/richland-family-field-black-white.jpg"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            optimizedMobileWidth={400}
+            optimizedDesktopWidth={640}
+            imgClass="photo--editorial"
+          />
+        </figure>
+      </div>
+
+      <div class="not-found-recovery__copy">
+        <h2 id="not-found-recovery-title">Nothing Is Lost</h2>
+        <p class="not-found-recovery__status">Error 404 — page not found.</p>
+        <p class="not-found-recovery__body">
+          Start again from the homepage, or spend a little more time with client stories.
+        </p>
+        <nav class="not-found-recovery__actions" aria-label="Page recovery">
+          <a class="outline-button" href="/">Return Home</a>
+          <a class="outline-button" href="/reviews/">Read Client Reviews</a>
+        </nav>
+      </div>
+
+      <span class="not-found-recovery__digit not-found-recovery__digit--right" aria-hidden="true">4</span>
+    </div>
+  </section>
+</article>

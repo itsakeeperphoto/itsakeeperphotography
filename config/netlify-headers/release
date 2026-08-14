@@ -14,6 +14,12 @@
 /thank-you/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
+/404.html
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/404/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
 /privacy/*
   X-Robots-Tag: noindex, nofollow, noarchive
 

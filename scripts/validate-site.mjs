@@ -367,7 +367,7 @@ const aboutHeroInvocationDigest = createHash("sha256")
   .digest("hex");
 if (
   aboutHeroInvocationDigest !==
-  "8ddaf0424452d0e5bab30a198a4ef545070d63cedfe7808a87f1507a615eddc3"
+  "2d9de890906c9ed7f9564d54b1f8a599c82a0f1c756a112371407fb59fc6d465"
 ) {
   failures.push(
     `src/components/pages/AboutPage.astro: protected EditorialHero invocation changed (${aboutHeroInvocationDigest})`,
@@ -4316,6 +4316,111 @@ if (
   failures.push("contact: BreadcrumbList or no-invented-Service schema contract is invalid");
 }
 
+const notFoundPath = path.join(output, "404.html");
+const notFound = existsSync(notFoundPath)
+  ? await readFile(notFoundPath, "utf8")
+  : "";
+if (!notFound) {
+  failures.push("404: dist/client/404.html must exist as the host error artifact");
+} else {
+  const notFoundMain = notFound
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] || "";
+  const notFoundTitle = normalizedText(
+    notFound.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || "",
+  );
+  const notFoundDescriptionTag = (notFound.match(/<meta\b[^>]*>/gi) || []).find(
+    (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "description",
+  );
+  const notFoundRobotsTag = (notFound.match(/<meta\b[^>]*>/gi) || []).find(
+    (tag) => htmlAttribute(tag, "name")?.toLowerCase() === "robots",
+  );
+  const notFoundCanonical = (notFound.match(/<link\b[^>]*>/gi) || []).find(
+    (tag) => htmlAttribute(tag, "rel")?.toLowerCase() === "canonical",
+  );
+  const notFoundOgUrl = (notFound.match(/<meta\b[^>]*>/gi) || []).find(
+    (tag) => htmlAttribute(tag, "property")?.toLowerCase() === "og:url",
+  );
+  const notFoundH1 = notFoundMain.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/i)?.[0] || "";
+  const notFoundH2 = notFoundMain.match(/<h2\b[^>]*>([\s\S]*?)<\/h2>/i)?.[1] || "";
+  const notFoundAnchors = [...notFoundMain.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)]
+    .map((match) => htmlAttribute(match[0].match(/^<a\b[^>]*>/i)?.[0] || "", "href"));
+  const notFoundImages = [...notFoundMain.matchAll(/<img\b[^>]*>/gi)].map((match) => ({
+    src: htmlAttribute(match[0], "src"),
+    alt: htmlAttribute(match[0], "alt") ?? "",
+    loading: htmlAttribute(match[0], "loading"),
+  }));
+  const expectedNotFoundImages = [
+    {
+      src: "/uploads/kennewick-couple-walking-golden-hour.jpg",
+      alt: "A couple holding hands while walking through a sunlit field.",
+      loading: "eager",
+    },
+    {
+      src: "/uploads/journal-locations-final-family-richland-tricities.jpg",
+      alt: "",
+      loading: "eager",
+    },
+    {
+      src: "/uploads/family-laughter-black-white-tricities.jpg",
+      alt: "",
+      loading: "eager",
+    },
+    {
+      src: "/uploads/journal-family-golden-hour-tricities.jpg",
+      alt: "Parents holding their baby in golden evening light.",
+      loading: "lazy",
+    },
+    {
+      src: "/uploads/richland-family-field-black-white.jpg",
+      alt: "",
+      loading: "lazy",
+    },
+  ];
+
+  if (
+    notFoundTitle !== "Page Not Found | It's A Keeper Photography" ||
+    htmlAttribute(notFoundDescriptionTag || "", "content") !==
+      "That page could not be found. Return to It's A Keeper Photography or continue to client reviews." ||
+    htmlAttribute(notFoundRobotsTag || "", "content") !==
+      "noindex, nofollow, noarchive" ||
+    notFoundCanonical ||
+    notFoundOgUrl ||
+    parseJsonLd(notFound, "404.html").length !== 0
+  ) {
+    failures.push(
+      "404: metadata must remain noindex with no canonical, og:url or JSON-LD graph",
+    );
+  }
+  if (
+    !/data-editorial-hero-page=["']not-found["']/i.test(notFoundMain) ||
+    htmlAttribute(notFoundH1.match(/^<h1\b[^>]*>/i)?.[0] || "", "aria-label") !==
+      "This Page Is Out of Frame" ||
+    normalizedText(notFoundH2) !== "Nothing Is Lost" ||
+    !notFoundMain.includes("Error 404 — page not found.") ||
+    JSON.stringify(notFoundAnchors) !== JSON.stringify(["/", "/reviews/"]) ||
+    JSON.stringify(notFoundImages) !== JSON.stringify(expectedNotFoundImages) ||
+    !notFoundMain.includes("data-hero-scroll-target=\"find-your-way-back\"") ||
+    !notFound.includes("seed 4fdd61c5")
+  ) {
+    failures.push(
+      "404: EditorialHero, recovery copy, action order, image or direction contract is invalid",
+    );
+  }
+  if (!/href=["'][^"']*not-found-page\.[^"']*\.css["']/i.test(notFound)) {
+    failures.push("404: route-scoped stylesheet is missing");
+  }
+}
+
+for (const file of htmlFiles) {
+  const source = await readFile(file, "utf8");
+  if (/href=["'][^"']*not-found-page\.[^"']*\.css["']/i.test(source)) {
+    failures.push(
+      `${path.relative(output, file)}: 404 route stylesheet must not leak into editorial routes`,
+    );
+  }
+}
+
 if (htmlFiles.length !== 20) failures.push(`expected 20 public HTML routes; found ${htmlFiles.length}`);
 
 if (existsSync(path.join(output, "portfolio", "index.html"))) {
@@ -4344,6 +4449,12 @@ if (sitemap.includes("/thank-you/") || llms.includes("/thank-you/")) {
   failures.push(
     "thank-you: utility confirmation must remain excluded from sitemap.xml and llms.txt",
   );
+}
+if (
+  /(?:\/404(?:\.html|\/)|Page Not Found)/i.test(sitemap) ||
+  /(?:\/404(?:\.html|\/)|Page Not Found)/i.test(llms)
+) {
+  failures.push("404: error artifact must remain excluded from sitemap.xml and llms.txt");
 }
 const seniorTimingPublicationPath =
   "/journal/when-to-book-senior-pictures-tri-cities/";
@@ -4577,6 +4688,8 @@ if (mode === "staging") {
     "/journal/in-home-vs-studio-newborn-photography/*",
     "/privacy/*",
     "/thank-you/*",
+    "/404.html",
+    "/404/*",
   ]) {
     const escapedRoute = route.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const noindexRule = new RegExp(

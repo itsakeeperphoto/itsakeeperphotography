@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import NotFoundPage from "../components/pages/NotFoundPage.astro";
+import SiteShell from "../components/SiteShell.astro";
+import { getStaticHomepagePage } from "../lib/static-content";
+import notFoundStylesheet from "../styles/not-found-page.css?url";
+
+const { homepage, settings } = getStaticHomepagePage().data;
+const title = "Page Not Found | It's A Keeper Photography";
+const description =
+  "That page could not be found. Return to It's A Keeper Photography or continue to client reviews.";
+const heroImage = "/uploads/kennewick-couple-walking-golden-hour.jpg";
+const heroImageAlt = "A couple holding hands while walking through a sunlit field.";
+const directionContract = `THESIS: An incorrect address becomes a missing photographic mount; 404 refuses the generic error card and catch-all redirect.
+OWN-WORLD: Warm ivory paper, deep umber photography, two monumental outline glyphs, one family arch, one loose black-and-white print and square controls.
+STORY: The visitor understands the address failed, sees that the work remains intact and chooses Home or Client Reviews without friction.
+FIRST VIEWPORT: The shared EditorialHero fills the remaining viewport with a walking couple, centered two-line error message, corner prints, local scroll button and torn seam.
+FORM: Candidate 4, The Empty Mount / Split Path; seed 4fdd61c5; delegated comp B.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
+---
+
+<Base
+  title={title}
+  description={description}
+  settings={settings}
+  canonicalPath="/404/"
+  seoImage={heroImage}
+  seoImageAlt={heroImageAlt}
+  searchVisibility="noindex"
+  loadEditorialMotion
+  pageStylesheet={notFoundStylesheet}
+  directionContract={directionContract}
+  isErrorPage
+>
+  <SiteShell settings={settings} homepage={homepage} currentPath="/404/">
+    <NotFoundPage />
+  </SiteShell>
+</Base>

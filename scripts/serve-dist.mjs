@@ -44,9 +44,12 @@ createServer((request, response) => {
   }
   const relative = normalize(requested).replace(/^(\.\.[/\\])+/, "").replace(/^[/\\]+/, "");
   let file = join(root, relative);
+  let statusCode = 200;
 
   if (!existsSync(file) || !statSync(file).isFile()) {
-    file = join(root, "index.html");
+    const notFound = join(root, "404.html");
+    file = existsSync(notFound) ? notFound : join(root, "index.html");
+    statusCode = 404;
   }
 
   const extension = extname(file).toLowerCase();
@@ -54,6 +57,7 @@ createServer((request, response) => {
   const shouldCompress = compressible.has(extension);
   const source = createReadStream(file);
 
+  response.statusCode = statusCode;
   response.setHeader("Content-Type", contentTypes[extension] || "application/octet-stream");
   response.setHeader("Cache-Control", extension === ".html" ? "no-cache" : "public, max-age=31536000, immutable");
   response.setHeader("Vary", "Accept-Encoding");

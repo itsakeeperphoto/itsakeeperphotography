@@ -23,6 +23,7 @@ interface Props {
   pageStylesheet?: string;
   directionContract?: string;
   founderReferenceOnly?: boolean;
+  isErrorPage?: boolean;
 }
 
 const {
@@ -42,6 +43,7 @@ const {
   pageStylesheet,
   directionContract,
   founderReferenceOnly = false,
+  isErrorPage = false,
 } = Astro.props;
 const isDevelopment = import.meta.env.DEV;
 
@@ -128,7 +130,7 @@ const webSiteSchema = {
   inLanguage: "en-US",
 };
 
-const webPageSchema = normalizedCanonicalPath !== "/"
+const webPageSchema = !isErrorPage && normalizedCanonicalPath !== "/"
   ? {
       "@context": "https://schema.org",
       "@type": schemaType,
@@ -209,7 +211,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
     <meta name="theme-color" content="#281E10" />
-    <link rel="canonical" href={canonical} />
+    {!isErrorPage && <link rel="canonical" href={canonical} />}
     {pageStylesheet && <link rel="stylesheet" href={pageStylesheet} />}
     <link
       rel="icon"
@@ -229,7 +231,7 @@ const webPageSchema = normalizedCanonicalPath !== "/"
     <meta property="og:type" content={openGraphType} />
     <meta property="og:site_name" content={settings.businessName} />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content={canonical} />
+    {!isErrorPage && <meta property="og:url" content={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absolute(seoImage)} />
@@ -243,14 +245,18 @@ const webPageSchema = normalizedCanonicalPath !== "/"
     <meta name="twitter:image" content={absolute(seoImage)} />
     <meta name="twitter:image:alt" content={seoImageAlt} />
 
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(webSiteSchema)} />
-    {webPageSchema && (
-      <script type="application/ld+json" is:inline set:html={JSON.stringify(webPageSchema)} />
+    {!isErrorPage && (
+      <>
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(webSiteSchema)} />
+        {webPageSchema && (
+          <script type="application/ld+json" is:inline set:html={JSON.stringify(webPageSchema)} />
+        )}
+        {additionalSchema.map((schema) => (
+          <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+        ))}
+      </>
     )}
-    {additionalSchema.map((schema) => (
-      <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
-    ))}
 
     {hero?.visible !== false && (heroMeta.mobileAvif || heroMeta.mobileWebp) && (
       <link

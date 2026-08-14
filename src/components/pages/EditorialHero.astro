@@ -23,7 +23,8 @@ interface Props {
     | "richland"
     | "kennewick"
     | "pasco"
-    | "thank-you";
+    | "thank-you"
+    | "not-found";
   titleId: string;
   heading: string;
   headingLines: string[];
@@ -39,6 +40,7 @@ interface Props {
   paperEdgeColor?: string;
   buttonLabel?: string;
   buttonTargetId?: string;
+  dataTinaField?: string;
 }
 
 const {
@@ -58,6 +60,7 @@ const {
   paperEdgeColor = "var(--color-weathered-sand)",
   buttonLabel,
   buttonTargetId,
+  dataTinaField,
 } = Astro.props;
 
 const heroStyle = [
@@ -74,6 +77,7 @@ const heroStyle = [
   aria-labelledby={titleId}
   data-editorial-hero
   data-editorial-hero-page={pageKey}
+  data-tina-field={dataTinaField || undefined}
   style={heroStyle}
 >
   <div class="editorial-hero__background" data-hero-background>
@@ -179,10 +183,14 @@ const heroStyle = [
 </header>
 
 <script>
-  document.querySelectorAll<HTMLElement>("[data-hero-scroll-target]").forEach((control) => {
-    if (control.dataset.heroScrollBound === "true") return;
-    control.dataset.heroScrollBound = "true";
-    control.addEventListener("click", () => {
+  const root = document.documentElement;
+  if (root.dataset.editorialHeroScrollBound !== "true") {
+    root.dataset.editorialHeroScrollBound = "true";
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const control = event.target.closest<HTMLElement>("[data-hero-scroll-target]");
+      if (!control) return;
+
       const targetId = control.dataset.heroScrollTarget;
       const target = targetId ? document.getElementById(targetId) : null;
       if (!target) return;
@@ -190,5 +198,5 @@ const heroStyle = [
       target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
       target.focus({ preventScroll: true });
     });
-  });
+  }
 </script>

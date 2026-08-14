@@ -1,4 +1,4 @@
-# Índice — Contenido de las 19 páginas documentadas
+# Índice — Contenido de las 20 páginas documentadas
 _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, meta), estructura de headings, copy completo en inglés (voz de Lisa), alt texts, internal links y schema JSON-LD._
 
 | # | Archivo | URL | Estado |
@@ -22,10 +22,11 @@ _Todas listas en `/paginas/`. Cada archivo incluye: SEO técnico (URL, title, me
 | 17 | 17-journal-newborn.md | `/journal/in-home-vs-studio-newborn-photography/` | ⚠️ Rediseñado · `draft/noindex` (aprobación Lisa, formato exacto y fecha real pendientes) |
 | 18 | 18-journal-branding-vs-headshots.md | `/journal/branding-photos-vs-headshots/` | ✅ Rediseñado y publicado · `ready/index` (fecha 2026-08-11) |
 | 19 | 19-thank-you.md | `/thank-you/` | ✅ Rediseñado · `ready/noindex` permanente · fuera de sitemap/llms |
+| 20 | 20-404.md | `404.html` / cualquier URL inexistente | ✅ Implementado · HTTP 404 · `noindex` permanente · fuera de manifest/sitemap/llms |
 
-**Utilidades no search-facing:** `/privacy/` (legal estándar) y `/thank-you/`
-(confirmación documentada en la fila 19; destino del formulario y `noindex`
-permanente).
+**Utilidades no search-facing:** `/privacy/` (legal estándar), `/thank-you/`
+(confirmación documentada en la fila 19) y el artefacto `404.html` de la fila
+20. Ninguna URL inexistente se redirige a Home.
 
 ## Orden de publicación recomendado
 
