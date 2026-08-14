@@ -89,13 +89,13 @@ Reading is planning — but the light won't wait forever.
 }
 ```
 
-## Publicación y QA verificados — 2026-08-11
+## Publicación y QA verificados — 2026-08-14
 
 - `contentStatus: ready`, `searchVisibility: index`, `sitemap: true`,
-  `llms: true` y `lastModified: 2026-08-11` están sincronizados en contenido y
+  `llms: true` y `lastModified: 2026-08-14` están sincronizados en contenido y
   manifiestos.
-- Release valida 21/21 rutas, incluye 12 URLs en sitemap y 11 entradas en
-  `llms.txt`. Staging valida 21/21, mantiene sitemap vacío y noindex global.
+- Release valida 20/20 rutas e incluye 12 URLs tanto en sitemap como en
+  `llms.txt`. Staging valida 20/20, mantiene sitemap vacío y noindex global.
 - La ruta emite exactamente un `CollectionPage` y un `BreadcrumbList` Home →
   Journal; no se modela como `Article` ni como `Service`.
 - Playwright aprobó 1440, 1200, 900 y 390 px sin overflow horizontal, imágenes

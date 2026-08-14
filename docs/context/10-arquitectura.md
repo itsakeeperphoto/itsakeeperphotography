@@ -617,7 +617,7 @@ header release noindex y dentro de sitemap y `llms.txt`.
   segura en cada WebP y toma el manifiesto como entrada de invalidación. El
   helper `scripts/lib/image-xmp.mjs` permite al optimizador y al validador
   construir y comparar exactamente la misma metadata.
-- Diez assets sin referencias en ninguna de las 21 rutas, CSS, Tina, schema u
+- Diez assets sin referencias en ninguna de las 20 rutas, CSS, Tina, schema u
   Open Graph fueron retirados en `bd833f6`; cualquier restauración debe añadir
   primero una referencia verificable.
 - Richland incorpora diez JPEG fuente optimizados de diez sesiones distintas

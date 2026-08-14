@@ -1356,3 +1356,33 @@
   (`feat(brand): replace site logo`). El worktree conserva sin stage otro
   rollout que retira Portfolio; no se revirtió ni se incluyó. No hubo push,
   deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-14 — Codex / GPT-5 — Portfolio retirado; el libro vive solo en Reviews
+
+- **Objetivo:** borrar `/portfolio/` y toda navegación hacia ella, sustituir los
+  destinos pertinentes por `/reviews/`, retirarla del sitemap/footer y cerrar
+  el cambio en commits locales sin push.
+- **Auditoría:** se separó el pipeline exclusivo de la ruta de los recursos
+  compartidos que Reviews todavía necesita. `JournalBook`, seis JSON de páginas,
+  estilos, controlador, colección Tina y `page-flip` se conservaron; borrar ese
+  conjunto habría roto el capítulo fotográfico de Reviews.
+- **Implementación:** se eliminaron página Astro, wrapper visual, query Tina,
+  loaders, isla, wrapper de hidratación, familia y manifest de Portfolio.
+  Journal y Thank-you ahora enlazan Client Reviews; Footer contiene Reviews una
+  sola vez. El router Tina de las páginas del libro abre `/reviews/`.
+- **SEO y continuidad:** `/portfolio/` y seis galerías legacy redirigen directo
+  a `/reviews/` con 301. Journal cambia a `lastModified: 2026-08-14`. Release
+  queda en 20 rutas, sitemap 12 y `llms.txt` 12; validadores impiden reintroducir
+  HTML, anchors o crawler outputs de la ruta retirada. ADR-061 supersede ADR-018
+  y las cláusulas identificadas de ADR-057/058/059/060.
+- **QA:** Tina/Astro y el validador activo aprobaron staging/release 20/20.
+  Playwright pasó Reviews en 1920/1440/1200/900/390, Thank-you en
+  1440/1200/900/390 y Journal en 1440/390; confirmó libro 3D, reduced motion,
+  imágenes, foco, enlaces, overflow cero y sitemap/llms 12/12. `/admin/` carga
+  su shell; la autenticación cloud no se prueba sin app id/credenciales en el
+  preview estático. El redirect HTTP real queda para smoke post-deploy.
+- **Git/operación:** implementación y documentación estructural en `84d07e5`
+  (`refactor(portfolio): retire standalone route`). Este cierre actualiza estado,
+  bitácora y reconciliaciones documentales finales en un segundo commit local.
+  No se hizo push, deploy, DNS ni `./scripts/handoff.sh`; el usuario pidió
+  explícitamente commits sin push.

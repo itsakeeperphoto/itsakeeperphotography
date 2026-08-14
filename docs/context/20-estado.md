@@ -3,14 +3,14 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-14 12:03 -05
+**Última actualización:** 2026-08-14 12:09 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional canónico:** `0058d2e` —
-`feat(brand): replace site logo`
+**HEAD funcional canónico:** `84d07e5` —
+`refactor(portfolio): retire standalone route`
 
 **Base remota al iniciar:** `b01dbe0` —
 `docs(reviews): record feedback refinements`
@@ -18,86 +18,108 @@
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al cierre funcional:** el cambio de marca está commiteado en
-`0058d2e`; `main` queda tres commits por delante de `origin/main`. En el mismo
-worktree existe otro rollout no commiteado, ajeno a esta intervención, que
-retira Portfolio y actualiza Journal/Thank-you, routing, Tina, validadores y
-documentación. Codex no preparó, revirtió ni incluyó esos cambios en el commit
-del logo. No se hizo push, deploy, DNS ni otra mutación externa.
+**Estado Git al cierre:** la implementación está commiteada en `84d07e5`.
+Este documento, la entrada final de bitácora y las últimas reconciliaciones de
+fuentes documentales forman un segundo commit local de cierre; `main` queda seis
+commits por delante de `origin/main` y el worktree queda limpio. Codex no hizo
+push, deploy, DNS ni otra mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-El usuario puede inspeccionar el logo en header/footer y publicar `0058d2e`
-cuando lo decida. El rollout ajeno que retira Portfolio debe terminar sus
-propios validadores y cierre documental antes de preparar un commit separado;
-no mezclarlo con el cambio de marca.
+Después del próximo deploy, comprobar que `/portfolio` y `/portfolio/`
+responden con 301 directo a `/reviews/` y que Reviews termina en 200. Luego se
+retoma la solicitud del usuario de auditar en detalle la accesibilidad y
+editabilidad de todas las páginas desde TinaCMS, usando Homepage como patrón.
 
 ## Resumen ejecutivo
 
-- El usuario suministró un nuevo PNG negro sobre transparencia. El arte tenía
-  un lienzo de 1031×797, pero su caja visible real medía 688×417.
-- El asset publicado conserva el dibujo exacto, añade 16 px transparentes de
-  margen técnico y queda en 720×449. Se retiraron EXIF/XMP de Canva, incluidos
-  identificadores internos de documento, usuario y brand kit.
-- La URL pública estable permanece
-  `/uploads/its-a-keeper-photography-logo.png`, por lo que Header, Footer,
-  Settings y `LocalBusiness.logo` siguen sincronizados sin migración de
-  contenido ni canonical nuevo.
-- Se regeneraron PNG fallback y WebP completo; el pipeline produce variantes
-  400/640. El PNG bajó de 67,534 a 49,984 bytes y el WebP completo de 36,864 a
-  32,388 bytes.
-- `logoAlt` queda en `It’s A Keeper Photography logo`: conciso, literal y sin
-  keyword stuffing. El enlace conserva `aria-label="It’s A Keeper Photography,
-  home"` y foco visible de 2 px.
-- Header usa `loading="eager"` y `decoding="async"`, sin competir con el hero
-  mediante `fetchpriority="high"`. Footer usa lazy/async y selecciona 400 o
-  640 según viewport.
-- Los tokens de ancho se reconciliaron con la relación 1.60:1 del nuevo logo
-  para conservar headers de 118/104/92 px. El override responsive de paleta usa
-  tres columnas simétricas, corrigiendo un descentramiento previo en ≤1250 px.
-- El favicon existente no cambió: el archivo entregado no es cuadrado y
-  reducir el wordmark completo a 16–32 px perdería legibilidad.
+- `/portfolio/` fue retirada como ruta pública. Ya no existen su página Astro,
+  componente, query, loaders, isla, wrapper, familia ni entrada de manifiesto.
+- El libro aprobado no se borró: `JournalBook`, las seis fuentes en
+  `content/journal-pages/`, estilos, controlador, colección Tina y `page-flip`
+  permanecen activos dentro de `/reviews/`.
+- Journal y Thank-you ahora enlazan `Client Reviews`; el footer conserva una
+  sola entrada Reviews y no contiene Portfolio.
+- `/portfolio/` y las seis galerías legacy redirigen directamente a
+  `/reviews/` con 301 en ambos archivos `_redirects`.
+- El sitio construye 20 rutas públicas. Release contiene 12 URLs en sitemap y
+  12 entradas en `llms.txt`; Portfolio no aparece en ninguno.
+- Journal conserva `ready/index` y cambia a `lastModified: 2026-08-14` por la
+  modificación sustancial de navegación.
+- ADR-061 supersede ADR-018 y las cláusulas concretas de ADR-057/058/059/060.
+
+## TinaCMS
+
+- La colección `journalPage` se conserva como `Reviews · Photo Journal Pages`;
+  su router abre `/reviews/`, no la ruta retirada.
+- La generación Tina release termina correctamente y no produce
+  `portfolioPage` ni referencias a la isla eliminada.
+- El shell estático `/admin/` carga con título `TinaCMS`, raíz presente y estado
+  de espera. En el preview local de release no puede autenticarse: la build no
+  tiene un app id/credenciales Tina y las llamadas `identity.tinajs.io/v2/apps/null`
+  son rechazadas por CORS. Esto no se trató como regresión de Portfolio; la
+  auditoría funcional autenticada del CMS es el siguiente trabajo solicitado.
+
+## Contrato técnico verificado
+
+- `page-manifest.ts` y `src/lib/page-manifest.ts` son idénticos y contienen 20
+  entradas; los espejos de `page-types.ts` también coinciden.
+- No existe `dist/client/portfolio/index.html` ni enlace activo a
+  `/portfolio/`; solo quedan la regla de redirect y guardas negativas de QA.
+- `scripts/validate-site.mjs` exige 20 HTML, ausencia de Portfolio, los siete
+  redirects directos, sitemap/llms sin la ruta retirada y los nuevos contratos
+  de Journal/Thank-you.
+- `scripts/playwright-evidence.js` cubre ahora 20 rutas × 4 viewports = 80
+  capturas. Las suites de Reviews y Thank-you ya no esperan una regresión
+  standalone de Portfolio.
+- El `validate-site.mjs` de raíz permanece como espejo legado no ejecutado por
+  `package.json`: su sintaxis está validada, pero su contrato antiguo de
+  redirects hostname no coincide con `public/_redirects`. El validador activo
+  y autoritativo es `scripts/validate-site.mjs`.
 
 ## QA ejecutada
 
-### Build y assets
+### Build y validadores
 
-- `node --check scripts/validate-site.mjs` — PASS.
-- `npm run build:scripts` — PASS.
-- `npm run optimize:source-images` — PASS.
-- `npm run optimize:images` — PASS.
-- Primer build Astro staging y `validate:site` — PASS, 21/21 rutas, antes de
-  que comenzara el rollout ajeno de retirada de Portfolio.
-- Sharp/SIPS — PNG y WebP 720×449, alpha presente, sin EXIF, IPTC, XMP, ICC ni
-  orientation.
-- `git diff --check` sobre los archivos propios — PASS.
+- Tina + Astro staging, usando puertos locales aislados — PASS.
+- `SITE_MODE=staging npm run install:netlify-headers` — PASS.
+- `SITE_MODE=staging npm run validate:site` — PASS, 20/20 rutas.
+- Tina + Astro release con origen canónico — PASS.
+- `SITE_MODE=release npm run install:netlify-headers` — PASS.
+- `SITE_MODE=release npm run validate:site` — PASS, 20/20 rutas.
+- `node --check` sobre ambos validadores y los tres scripts Playwright
+  modificados — PASS.
+- `cmp` de manifiestos y tipos espejo, JSON y `git diff --check` — PASS.
 
 ### Playwright CLI
 
-- 1440×1000: header 118 px, logo 128×79.67, WebP 400 cargado.
-- 1200×900: header 118 px, logo 124×77.19, centro exacto y overflow 0.
-- 900×900: header 104.2 px, logo 116×72.2, centro exacto y overflow 0.
-- 390×844: header 92 px, logo 112×69.72, centro exacto y overflow 0.
-- Footer desktop: logo 192×119.69; al entrar en viewport carga lazy el WebP
-  640 y queda completo con `naturalWidth=640`.
-- Enlace Header enfocable, destino `/`, nombre accesible correcto y outline
-  sólido de 2 px. La única respuesta local 404 observada fue el endpoint GBP
-  opcional en el servidor estático, no un asset del logo.
+- Reviews — PASS en 1920×963, 1440×1000, 1200×900, 900×900 y 390×844:
+  seis páginas `hard`, giro 3D, crossfade reduced-motion, 10 testimonios,
+  imágenes completas, controles ≥44 px, overflow 0 y sin errores runtime.
+- Thank-you — PASS en 1440×1000, 1200×900, 900×900 y 390×844: único anchor
+  `Read Client Reviews`, seis imágenes, foco/hover/reduced-motion y overflow 0.
+- Journal — PASS manual en 1440×1000 y 390×844: anchors exactos Locations,
+  Branding vs. Headshots, Reviews y Contact; footer sin Portfolio y overflow 0.
+- Homepage conserva su resumen hacia `/reviews/`; crawler outputs comprobados
+  en navegador: sitemap 12 y `llms.txt` 12.
 
-Las capturas puntuales permanecen locales en:
+## Pendientes no bloqueantes
 
-- `/private/tmp/logo-home-1440.png`
-- `/private/tmp/logo-home-390-final.png`
-- `/private/tmp/logo-footer-1440-final.png`
+- Smoke test post-deploy de los dos formatos de URL Portfolio y las seis URLs
+  legacy; Netlify interpreta `_redirects`, pero el servidor estático local no.
+- Auditoría autenticada y rediseño de la experiencia editorial de TinaCMS en
+  `/admin/`, solicitada por el usuario y deliberadamente pospuesta hasta cerrar
+  primero esta eliminación.
+- Privacy y las rutas comerciales/editoriales draft conservan sus gates
+  independientes.
 
 ## Operación Git y handoff
 
-- Commit funcional: `0058d2e` (`feat(brand): replace site logo`).
-- Solo incluye Settings, los dos assets rastreados, Header, Footer y los tokens
-  CSS propios. No contiene la retirada paralela de Portfolio.
-- La auditoría `seo-images` se escribió en `.seo-cache/`, que permanece ignorado
-  y no entra en commits.
-- No se ejecutó `./scripts/handoff.sh`: termina con `git push` y la política
-  operativa vigente reserva el push al usuario.
+- Commit funcional y documental estructural: `84d07e5`.
+- Este cierre actualiza estado, bitácora y las últimas fuentes documentales en
+  un commit local separado.
+- No se ejecutó `./scripts/handoff.sh`: termina con `git push` y el usuario
+  pidió explícitamente commits locales sin push.
+- Los transcripts `.handoff/sessions/*.jsonl` siguen locales e ignorados.

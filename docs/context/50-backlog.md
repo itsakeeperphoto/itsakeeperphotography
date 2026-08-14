@@ -110,14 +110,15 @@
   con el historial local anterior.
 - [x] **19D. Publicar el hub Journal según ADR-057.** `ffe5198` cambia la ruta a
   `ready/index`, añade `CollectionPage` + breadcrumb, conserva cuatro cards y
-  expone solo Locations, Branding vs. Headshots, Portfolio y Contact. Release
-  queda en sitemap 12/`llms.txt` 11; staging/release 21/21, Playwright
-  1440/1200/900/390 y revisión independiente pasan.
+  originalmente expuso Locations, Branding vs. Headshots, Portfolio y Contact.
+  ADR-061 sustituyó Portfolio por Reviews y actualizó la fecha a `2026-08-14`;
+  el estado vigente valida 20/20 y crawler outputs 12/12.
 - [x] **19D.1. Rediseñar y publicar Reviews según ADR-058.** La ruta usa
   `ReviewsPage`, el hero compartido, `KindWords` exacto y `JournalBook`;
   conserva diez testimonios atribuidos y schema sobrio. El follow-up ADR-059
   confirma el CTA Google, retira las líneas cruzadas y recupera el flip 3D. Queda
-  `ready/index` con fecha `2026-08-12`, sitemap 13/`llms.txt` 12, QA
+  `ready/index` con fecha `2026-08-12`; tras ADR-061 crawler outputs quedan
+  12/12, con QA
   1920/1440/1200/900/390 e Impeccable limpio.
 - [x] **19D.2. Retirar la ruta Portfolio según ADR-061.** Se eliminaron la página,
   el manifiesto y el pipeline Tina exclusivos; el libro permanece en Reviews,
@@ -337,9 +338,9 @@ sin reemplazar el archivo.
 
 ### Journal
 
-- [x] Hub publicado `ready/index` en `ffe5198`, `lastModified: 2026-08-11`,
-  `CollectionPage` + breadcrumb y crawler outputs 12/11. Conserva cuatro cards,
-  pero solo enlaza Locations y Branding vs. Headshots; Portfolio y Contact
+- [x] Hub publicado `ready/index` en `ffe5198`, `lastModified: 2026-08-14`,
+  `CollectionPage` + breadcrumb y crawler outputs 12/12. Conserva cuatro cards,
+  pero solo enlaza Locations y Branding vs. Headshots; Reviews y Contact
   completan los cuatro anchors. Senior Timing y Newborn Comparison permanecen
   visibles sin link mientras sigan draft.
 - [x] Fecha editorial para Branding Photos vs Headshots: `2026-08-11`.
@@ -428,10 +429,10 @@ sin reemplazar el archivo.
   4.61:1, transición compacta hacia Journal y CTA Google animado con fallback
   reduced-motion.
 - [x] Restaurado el giro físico del libro compartido con hojas `hard`, 1200 ms,
-  sombra `0.50` y esquina inferior; validado `matrix3d` en cinco viewports y sin
-  regresión de Portfolio.
+  sombra `0.50` y esquina inferior; validado `matrix3d` en cinco viewports. El
+  libro permanece solo en Reviews tras retirar la ruta Portfolio.
 - [x] Publicada `ready/index`, `lastModified: 2026-08-12`, sin header noindex y
-  con membresía sitemap/`llms.txt`; release queda 13/12.
+  con membresía sitemap/`llms.txt`; release vigente queda 12/12.
 
 ### Privacy
 
@@ -517,7 +518,7 @@ sin reemplazar el archivo.
 
 - [x] Reducir originales web usados: once JPEG optimizados, incluidos los ocho
   mayores de 80.38 MiB a 3.30 MiB, sin eliminar ninguna foto referenciada.
-- [x] Retirar diez fuentes sin uso demostrado en las 21 rutas/CSS/Tina/schema y
+- [x] Retirar diez fuentes sin uso demostrado en las 20 rutas/CSS/Tina/schema y
   confirmar cero referencias `/uploads/` faltantes en release.
 - [x] Paralelizar Sharp y bajar effort 6→4: generación limpia 114.80 s→5.09 s;
   `public` ~130→40 MiB y `dist` ~148→51 MiB.
@@ -591,12 +592,11 @@ sin reemplazar el archivo.
   anchors, checklist/lista, tabla de seis filas, 11 imágenes 8/3, fecha,
   FAQ/schema, foco, acordeones, reduced motion, CSS aislado, red, consola y
   overflow aprobados. Impeccable `[]`; revisión independiente `PASS` sin P1/P2.
-- [x] Verificado `/journal/` en staging/release 21/21 y Playwright
-  1440/1200/900/390: estado `ready/index`, cuatro cards, anchors exactos
-  Locations/Branding/Portfolio/Contact, cero links a artículos draft,
-  `CollectionPage` + breadcrumb, imágenes cargadas, overflow 0 y consola/runtime
-  sin fallos. La suite Newborn pasó de nuevo en los cuatro anchos y la revisión
-  independiente devolvió `PASS` sin P1/P2.
+- [x] Verificado `/journal/` en staging/release 20/20. El QA original cubrió
+  1440/1200/900/390 y el cierre ADR-061 revalidó 1440/390: estado `ready/index`,
+  cuatro cards, anchors exactos Locations/Branding/Reviews/Contact, cero links a
+  artículos draft, `CollectionPage` + breadcrumb, imágenes cargadas, overflow 0
+  y consola/runtime sin fallos.
 - [x] Revalidada la guía tras las correcciones de producción en 1728×963,
   1440×1000, 1200×1000, 900×1000 y 390×844: overflow horizontal 0, solapamiento
   de Seasons 0 px, líneas retiradas, contraste del script 7.10:1, nueva foto
