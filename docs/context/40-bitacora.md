@@ -1329,3 +1329,30 @@
   (`feat(thank-you): redesign inquiry confirmation`). Este estado y la bitácora
   forman un commit local de cierre separado. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva el control del push.
+
+### 2026-08-14 — Codex / GPT-5 — Nuevo logo global optimizado y accesible
+
+- **Objetivo:** sustituir el logo visible del sitio por el PNG entregado por el
+  usuario, mantener la identidad legible en header/footer y optimizar alt,
+  peso, transparencia, carga y estabilidad visual.
+- **Auditoría:** el archivo 1031×797 contenía una marca negra con caja visible
+  688×417, 57% de lienzo transparente y XMP/EXIF de Canva con identificadores
+  internos. El logo anterior era horizontal 600×200; usar el nuevo con los
+  mismos anchos habría aumentado el header de forma material.
+- **Implementación:** se recortó sin alterar el trazo, se añadió un margen
+  transparente de 16 px y se publicó a 720×449 bajo la URL estable. PNG y WebP
+  quedaron sin metadata privada; el pipeline sirve 400/640. Settings usa alt
+  literal, Header eager/async y Footer lazy/async. Los tokens de ancho preservan
+  la altura del header y la retícula responsive se corrigió para centrar la
+  marca exactamente en ≤1250 px. El favicon no cambió porque el wordmark
+  rectangular no es adecuado a 16–32 px.
+- **QA:** el primer build staging y el validador aprobaron 21/21 antes de que
+  comenzara un rollout paralelo ajeno. Playwright CLI aprobó
+  1440/1200/900/390 con centro exacto, overflow 0, WebP cargado, dimensiones
+  naturales positivas y foco visible; Footer seleccionó el WebP 640 solo al
+  entrar en viewport. PNG 49,984 B y WebP 32,388 B; ambos 720×449, con alpha y
+  sin EXIF/IPTC/XMP/ICC.
+- **Git/operación:** cambio funcional aislado en `0058d2e`
+  (`feat(brand): replace site logo`). El worktree conserva sin stage otro
+  rollout que retira Portfolio; no se revirtió ni se incluyó. No hubo push,
+  deploy, DNS ni `./scripts/handoff.sh`.
