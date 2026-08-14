@@ -405,10 +405,10 @@
 
   /* Client identity and added conversion sections */
   --client-header-logo-column: 24%;
-  --brand-logo-width: 15rem;
-  --brand-logo-tablet-width: 13rem;
-  --brand-logo-mobile-width: 11.5rem;
-  --brand-logo-footer-width: 18rem;
+  --brand-logo-width: 8rem;
+  --brand-logo-tablet-width: 7.25rem;
+  --brand-logo-mobile-width: 7rem;
+  --brand-logo-footer-width: 12rem;
   --section-intro-width: 44rem;
   --section-intro-gap: 4.5rem;
   --section-eyebrow-gap: 0.75rem;
@@ -3223,7 +3223,7 @@ footer[id] {
 
 @media (max-width: 1250px) {
   :root {
-    --brand-logo-width: 13.5rem;
+    --brand-logo-width: 7.75rem;
     --inquiry-confirmation-image-width: 22rem;
     --review-card-width: 17.5rem;
     --review-track-gap: 2.25rem;

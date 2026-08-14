@@ -558,7 +558,8 @@ body {
   }
 
   .header-inner {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: var(--minimum-hit-area) 1fr var(--minimum-hit-area);
+    grid-template-areas: "toggle logo spacer";
   }
 
   .brand-logo {

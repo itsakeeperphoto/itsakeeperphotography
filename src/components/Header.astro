@@ -31,6 +31,8 @@ const { settings, currentPath = "/" } = Astro.props;
       <Picture
         src={settings.logo}
         alt={settings.logoAlt}
+        loading="eager"
+        decoding="async"
         optimizedMobileWidth={400}
         optimizedDesktopWidth={400}
         dataTinaField={tinaField(settings, "logo")}
