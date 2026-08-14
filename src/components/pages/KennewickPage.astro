@@ -4,6 +4,7 @@ import type {
   PageLink,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/kennewick-page.css";
@@ -150,6 +151,7 @@ const faqSchema = faqItems.map((item) => ({
   class="kennewick-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <!-- THESIS: verified Kennewick portrait work moves from atmosphere to local context, style, practical fit, services, questions, and one invitation. OWN-WORLD: the established editorial hero, warm tonal surfaces, square prints, arches, and hairlines. FIRST VIEWPORT: the shared service-page hero with exact H1, local intro, one scroll action, and two restrained prints. -->
   <EditorialHero
@@ -167,12 +169,14 @@ const faqSchema = faqItems.map((item) => ({
     paperEdgeColor="var(--color-weathered-sand)"
     buttonLabel={heroAction.label}
     buttonTargetId="kennewick-final"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     id={introduction.id}
     class:list={["kennewick-intro", `tone-${introduction.tone}`]}
     aria-labelledby={`${introduction.id}-title`}
+    data-tina-field={tinaField(introduction)}
   >
     <div class="kennewick-intro__rule" aria-hidden="true"></div>
     <div class="kennewick-shell kennewick-intro__grid">
@@ -218,6 +222,7 @@ const faqSchema = faqItems.map((item) => ({
     id={style.id}
     class:list={["kennewick-style", `tone-${style.tone}`]}
     aria-labelledby={`${style.id}-title`}
+    data-tina-field={tinaField(style)}
   >
     <div class="kennewick-shell">
       <header class="kennewick-style__header">
@@ -280,6 +285,7 @@ const faqSchema = faqItems.map((item) => ({
     id={setting.id}
     class:list={["kennewick-setting", `tone-${setting.tone}`]}
     aria-labelledby={`${setting.id}-title`}
+    data-tina-field={tinaField(setting)}
   >
     <div class="kennewick-shell kennewick-setting__grid">
       <header class="kennewick-setting__header">
@@ -307,6 +313,7 @@ const faqSchema = faqItems.map((item) => ({
     id={directory.id}
     class:list={["kennewick-directory", `tone-${directory.tone}`]}
     aria-labelledby={`${directory.id}-title`}
+    data-tina-field={tinaField(directory)}
   >
     <div class="kennewick-shell kennewick-directory__layout">
       <div class="kennewick-directory__content">
@@ -319,7 +326,7 @@ const faqSchema = faqItems.map((item) => ({
           {serviceItems.map((item) => {
             const link = item.links![0];
             return (
-              <li>
+              <li data-tina-field={tinaField(item)}>
                 <a class="kennewick-directory__row" href={link.href}>
                   <span class="kennewick-directory__name">{item.heading}</span>
                   <span class="kennewick-directory__detail">{item.detail}</span>
@@ -371,6 +378,7 @@ const faqSchema = faqItems.map((item) => ({
       id={recent.id}
       class:list={["kennewick-recent", `tone-${recent.tone}`]}
       aria-labelledby={`${recent.id}-title`}
+      data-tina-field={tinaField(recent)}
     >
       <div class="kennewick-shell">
         <h2 id={`${recent.id}-title`}>{recent.heading}</h2>
@@ -381,6 +389,7 @@ const faqSchema = faqItems.map((item) => ({
                 "kennewick-recent__photo",
                 index === 0 && "kennewick-recent__photo--featured",
               ]}
+              data-tina-field={tinaField(item)}
             >
               <Picture
                 src={item.image!}
@@ -405,6 +414,7 @@ const faqSchema = faqItems.map((item) => ({
     id={questions.id}
     class:list={["kennewick-faq", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="kennewick-shell kennewick-faq__grid">
       <header class="kennewick-faq__header">
@@ -413,7 +423,10 @@ const faqSchema = faqItems.map((item) => ({
 
       <div class="kennewick-faq__list">
         {faqItems.map((item, index) => (
-          <details open={index === 0}>
+          <details
+            open={index === 0}
+            data-tina-field={tinaField(item)}
+          >
             <summary>
               <h3 class="kennewick-faq__question">{item.heading}</h3>
               <span class="kennewick-faq__mark" aria-hidden="true"></span>
@@ -433,6 +446,7 @@ const faqSchema = faqItems.map((item) => ({
       class:list={["kennewick-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="kennewick-final-title"
       tabindex="-1"
+      data-tina-field={tinaField(page, "finalCta")}
     >
       {page.finalCta.image && page.finalCta.imageAlt && (
           <figure class="kennewick-final__background">

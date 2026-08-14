@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import GuidedInquiry from "../GuidedInquiry.astro";
 import Picture from "../Picture.astro";
 import "../../styles/content-page.css";
@@ -32,8 +33,12 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
   class:list={["content-page", `content-page--${page.family}`, `content-page--${page.signature}`]}
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
-  <header class:list={["page-hero", `tone-${page.hero.tone}`, { "page-hero--with-media": page.hero.image }]}> 
+  <header
+    class:list={["page-hero", `tone-${page.hero.tone}`, { "page-hero--with-media": page.hero.image }]}
+    data-tina-field={tinaField(page, "hero")}
+  >
     <div class="page-hero__construction" aria-hidden="true"></div>
     {page.hero.image && (
       <div class="page-hero__media">
@@ -44,6 +49,7 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
           fetchpriority="high"
           responsive
           imgClass="photo--editorial"
+          dataTinaField={tinaField(page.hero, "image")}
         />
         {page.hero.secondaryImage && (
           <Picture
@@ -53,18 +59,39 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
             optimizedMobileWidth={640}
             optimizedDesktopWidth={960}
             imgClass="photo--editorial"
+            dataTinaField={tinaField(page.hero, "secondaryImage")}
           />
         )}
       </div>
     )}
     <div class="page-hero__copy">
-      {page.hero.eyebrow && <p class="page-eyebrow">{page.hero.eyebrow}</p>}
-      <h1>{page.hero.heading}</h1>
-      {page.hero.scriptLine && <p class="page-script" aria-hidden="true">{page.hero.scriptLine}</p>}
-      {page.hero.intro && <p class="page-dek">{page.hero.intro}</p>}
+      {page.hero.eyebrow && (
+        <p class="page-eyebrow" data-tina-field={tinaField(page.hero, "eyebrow")}>
+          {page.hero.eyebrow}
+        </p>
+      )}
+      <h1 data-tina-field={tinaField(page.hero, "heading")}>{page.hero.heading}</h1>
+      {page.hero.scriptLine && (
+        <p
+          class="page-script"
+          aria-hidden="true"
+          data-tina-field={tinaField(page.hero, "scriptLine")}
+        >{page.hero.scriptLine}</p>
+      )}
+      {page.hero.intro && (
+        <p class="page-dek" data-tina-field={tinaField(page.hero, "intro")}>
+          {page.hero.intro}
+        </p>
+      )}
       {page.hero.links?.length && (
         <div class="page-actions">
-          {page.hero.links.map((link) => <a class="outline-button" href={link.href}>{link.label}</a>)}
+          {page.hero.links.map((link, linkIndex) => (
+            <a
+              class="outline-button"
+              href={link.href}
+              data-tina-field={tinaField(page.hero, "links", linkIndex)}
+            >{link.label}</a>
+          ))}
         </div>
       )}
     </div>
@@ -80,6 +107,7 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
       ]}
       id={section.id}
       aria-labelledby={section.heading ? `${section.id}-title` : undefined}
+      data-tina-field={tinaField(page, "sections", sectionIndex)}
     >
       <div class="editorial-section__line" aria-hidden="true"></div>
       <div class="editorial-section__inner">
@@ -94,6 +122,7 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
                   optimizedMobileWidth={640}
                   optimizedDesktopWidth={960}
                   imgClass="photo--editorial"
+                  dataTinaField={tinaField(section, "image")}
                 />
               </figure>
             )}
@@ -106,18 +135,42 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
                   optimizedMobileWidth={400}
                   optimizedDesktopWidth={640}
                   imgClass="photo--editorial"
+                  dataTinaField={tinaField(section, "secondaryImage")}
                 />
               </figure>
             )}
-            {section.scriptLine && <p class="page-script" aria-hidden="true">{section.scriptLine}</p>}
+            {section.scriptLine && (
+              <p
+                class="page-script"
+                aria-hidden="true"
+                data-tina-field={tinaField(section, "scriptLine")}
+              >{section.scriptLine}</p>
+            )}
           </div>
         )}
 
         <div class="editorial-section__copy">
-          {section.eyebrow && <p class="page-eyebrow">{section.eyebrow}</p>}
-          {section.heading && <h2 id={`${section.id}-title`}>{section.heading}</h2>}
-          {section.intro && <p class="editorial-lead">{section.intro}</p>}
-          {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {section.eyebrow && (
+            <p class="page-eyebrow" data-tina-field={tinaField(section, "eyebrow")}>
+              {section.eyebrow}
+            </p>
+          )}
+          {section.heading && (
+            <h2
+              id={`${section.id}-title`}
+              data-tina-field={tinaField(section, "heading")}
+            >{section.heading}</h2>
+          )}
+          {section.intro && (
+            <p class="editorial-lead" data-tina-field={tinaField(section, "intro")}>
+              {section.intro}
+            </p>
+          )}
+          {section.paragraphs?.map((paragraph, paragraphIndex) => (
+            <p data-tina-field={tinaField(section, "paragraphs", paragraphIndex)}>
+              {paragraph}
+            </p>
+          ))}
 
           {section.kind === "form" && inquiry && (
             <GuidedInquiry inquiry={inquiry} settings={settings} embedded />
@@ -126,15 +179,48 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
           {section.items?.length && (
             <div class:list={["editorial-items", `editorial-items--${section.kind}`]}>
               {section.items.map((item, itemIndex) => (
-                <article class="editorial-item">
+                <article
+                  class="editorial-item"
+                  data-tina-field={tinaField(section, "items", itemIndex)}
+                >
                   <span class="editorial-item__number" aria-hidden="true">{String(itemIndex + 1).padStart(2, "0")}</span>
-                  {item.eyebrow && <p class="page-eyebrow">{item.eyebrow}</p>}
-                  {item.heading && <h3>{item.heading}</h3>}
-                  {item.quote && <blockquote><p>{item.quote}</p></blockquote>}
-                  {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-                  {item.detail && <p class="editorial-item__detail">{item.detail}</p>}
-                  {item.attribution && <p class="editorial-item__attribution">{item.attribution}</p>}
-                  {item.links?.map((link) => <a class="text-link" href={link.href}>{link.label}</a>)}
+                  {item.eyebrow && (
+                    <p class="page-eyebrow" data-tina-field={tinaField(item, "eyebrow")}>
+                      {item.eyebrow}
+                    </p>
+                  )}
+                  {item.heading && (
+                    <h3 data-tina-field={tinaField(item, "heading")}>{item.heading}</h3>
+                  )}
+                  {item.quote && (
+                    <blockquote data-tina-field={tinaField(item, "quote")}>
+                      <p>{item.quote}</p>
+                    </blockquote>
+                  )}
+                  {item.paragraphs?.map((paragraph, paragraphIndex) => (
+                    <p data-tina-field={tinaField(item, "paragraphs", paragraphIndex)}>
+                      {paragraph}
+                    </p>
+                  ))}
+                  {item.detail && (
+                    <p
+                      class="editorial-item__detail"
+                      data-tina-field={tinaField(item, "detail")}
+                    >{item.detail}</p>
+                  )}
+                  {item.attribution && (
+                    <p
+                      class="editorial-item__attribution"
+                      data-tina-field={tinaField(item, "attribution")}
+                    >{item.attribution}</p>
+                  )}
+                  {item.links?.map((link, linkIndex) => (
+                    <a
+                      class="text-link"
+                      href={link.href}
+                      data-tina-field={tinaField(item, "links", linkIndex)}
+                    >{link.label}</a>
+                  ))}
                 </article>
               ))}
             </div>
@@ -142,12 +228,13 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
 
           {section.links?.length && (
             <div class="section-links">
-              {section.links.map((link) => (
+              {section.links.map((link, linkIndex) => (
                 <a
                   class="text-link"
                   href={link.href}
                   target={link.external ? "_blank" : undefined}
                   rel={link.external ? "noopener noreferrer" : undefined}
+                  data-tina-field={tinaField(section, "links", linkIndex)}
                 >{link.label}</a>
               ))}
             </div>
@@ -158,13 +245,35 @@ const hasMedia = (section: PageSection) => Boolean(section.image || section.seco
   ))}
 
   {page.finalCta && (
-    <section class:list={["page-final", `tone-${page.finalCta.tone}`]} aria-labelledby="page-final-title">
+    <section
+      class:list={["page-final", `tone-${page.finalCta.tone}`]}
+      aria-labelledby="page-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
+    >
       <div class="page-final__line" aria-hidden="true"></div>
       <div class="page-final__inner">
-        {page.finalCta.eyebrow && <p class="page-eyebrow">{page.finalCta.eyebrow}</p>}
-        <h2 id="page-final-title">{page.finalCta.heading}</h2>
-        {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-        {page.finalCta.link && <a class="outline-button" href={page.finalCta.link.href}>{page.finalCta.link.label}</a>}
+        {page.finalCta.eyebrow && (
+          <p
+            class="page-eyebrow"
+            data-tina-field={tinaField(page.finalCta, "eyebrow")}
+          >{page.finalCta.eyebrow}</p>
+        )}
+        <h2
+          id="page-final-title"
+          data-tina-field={tinaField(page.finalCta, "heading")}
+        >{page.finalCta.heading}</h2>
+        {page.finalCta.paragraphs?.map((paragraph, paragraphIndex) => (
+          <p data-tina-field={tinaField(page.finalCta, "paragraphs", paragraphIndex)}>
+            {paragraph}
+          </p>
+        ))}
+        {page.finalCta.link && (
+          <a
+            class="outline-button"
+            href={page.finalCta.link.href}
+            data-tina-field={tinaField(page.finalCta, "link")}
+          >{page.finalCta.link.label}</a>
+        )}
       </div>
     </section>
   )}

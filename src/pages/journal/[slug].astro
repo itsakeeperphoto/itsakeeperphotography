@@ -1,11 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import TinaIsland from "@tinacms/astro/TinaIsland.astro";
-import BrandingHeadshotsArticlePage from "../../components/pages/BrandingHeadshotsArticlePage.astro";
-import ContentPage from "../../components/pages/ContentPage.astro";
-import LocationsGuidePage from "../../components/pages/LocationsGuidePage.astro";
-import NewbornComparisonPage from "../../components/pages/NewbornComparisonPage.astro";
-import SeniorTimingPage from "../../components/pages/SeniorTimingPage.astro";
+import EditorialPageRouter from "../../components/pages/EditorialPageRouter.astro";
 import SiteShell from "../../components/SiteShell.astro";
 import brandingHeadshotsStylesheet from "../../styles/journal-branding-vs-headshots-page.css?url";
 import newbornComparisonStylesheet from "../../styles/journal-newborn-comparison-page.css?url";
@@ -332,15 +328,7 @@ const directionContract = isSeniorTiming
 >
   <SiteShell settings={settings} homepage={homepage} currentPath={entry.path}>
     <TinaIsland name="contentPage" wrapper={contentPageWrapper} params={{ path: entry.contentPath }} primary>
-      {isLocationsGuide
-        ? <LocationsGuidePage page={page} settings={settings} />
-        : isSeniorTiming
-          ? <SeniorTimingPage page={page} settings={settings} />
-          : isNewbornComparison
-            ? <NewbornComparisonPage page={page} settings={settings} />
-          : isBrandingHeadshots
-            ? <BrandingHeadshotsArticlePage page={page} settings={settings} />
-            : <ContentPage page={page} settings={settings} />}
+      <EditorialPageRouter page={page} settings={settings} />
     </TinaIsland>
   </SiteShell>
 </Base>

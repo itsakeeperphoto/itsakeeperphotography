@@ -1,5 +1,6 @@
 import { defineConfig } from "tinacms";
-import type { TinaField } from "tinacms"; 
+import type { TinaField } from "tinacms";
+import { resolveContentPageRoute } from "./content-page-routes";
 
 /*
  * TinaCMS schema for It's A Keeper Photography.
@@ -53,6 +54,22 @@ function maxChars(limit: number) {
   };
 }
 
+const hiddenSystemField = { component: "hidden" } as const;
+
+const listLabel = (
+  item?: { heading?: string; eyebrow?: string; attribution?: string; detail?: string; id?: string },
+) =>
+  item?.heading ||
+  item?.eyebrow ||
+  item?.attribution ||
+  item?.detail ||
+  item?.id ||
+  "Untitled entry";
+
+const linkItemProps = (item?: { label?: string; href?: string }) => ({
+  label: item?.label || item?.href || "New link",
+});
+
 const visibilityToggle: TinaField = {
   type: "boolean",
   name: "visible",
@@ -61,7 +78,13 @@ const visibilityToggle: TinaField = {
 };
 
 const pageLinkFields: TinaField[] = [
-  { type: "string", name: "label", label: "Link text", required: true },
+  {
+    type: "string",
+    name: "label",
+    label: "Link text",
+    required: true,
+    ui: { validate: maxChars(80) },
+  },
   { type: "string", name: "href", label: "Destination", required: true },
   { type: "boolean", name: "external", label: "External link" },
 ];
@@ -74,18 +97,37 @@ const pageItemFields: TinaField[] = [
   { type: "string", name: "quote", label: "Quotation", ui: { component: "textarea" } },
   { type: "string", name: "attribution", label: "Attribution" },
   { type: "image", name: "image", label: "Photograph" },
-  { type: "string", name: "imageAlt", label: "Photograph description" },
-  { type: "object", name: "links", label: "Links", list: true, fields: pageLinkFields },
+  {
+    type: "string",
+    name: "imageAlt",
+    label: "Photograph description",
+    ui: { validate: maxChars(160) },
+  },
+  {
+    type: "object",
+    name: "links",
+    label: "Links",
+    list: true,
+    fields: pageLinkFields,
+    ui: { itemProps: linkItemProps },
+  },
 ];
 
 const pageSectionFields: TinaField[] = [
-  { type: "string", name: "id", label: "Section ID", required: true },
+  {
+    type: "string",
+    name: "id",
+    label: "Section ID",
+    required: true,
+    ui: hiddenSystemField,
+  },
   {
     type: "string",
     name: "kind",
     label: "Composition",
     required: true,
     options: ["prose", "split", "steps", "faq", "quote", "reviews", "locations", "services", "comparison", "checklist", "article-list", "form"],
+    ui: hiddenSystemField,
   },
   {
     type: "string",
@@ -93,18 +135,43 @@ const pageSectionFields: TinaField[] = [
     label: "Surface tone",
     required: true,
     options: ["umber", "walnut", "earth", "olive", "sand", "ivory"],
+    ui: hiddenSystemField,
   },
   { type: "string", name: "eyebrow", label: "Small label" },
   { type: "string", name: "heading", label: "Heading" },
   { type: "string", name: "intro", label: "Intro", ui: { component: "textarea" } },
   { type: "string", name: "paragraphs", label: "Paragraphs", list: true, ui: { component: "textarea" } },
-  { type: "object", name: "items", label: "Section entries", list: true, fields: pageItemFields },
+  {
+    type: "object",
+    name: "items",
+    label: "Section entries",
+    list: true,
+    fields: pageItemFields,
+    ui: { itemProps: (item) => ({ label: listLabel(item) }) },
+  },
   { type: "image", name: "image", label: "Primary photograph" },
-  { type: "string", name: "imageAlt", label: "Primary photograph description" },
+  {
+    type: "string",
+    name: "imageAlt",
+    label: "Primary photograph description",
+    ui: { validate: maxChars(160) },
+  },
   { type: "image", name: "secondaryImage", label: "Overlapping photograph" },
-  { type: "string", name: "secondaryImageAlt", label: "Overlapping photograph description" },
+  {
+    type: "string",
+    name: "secondaryImageAlt",
+    label: "Overlapping photograph description",
+    ui: { validate: maxChars(160) },
+  },
   { type: "string", name: "scriptLine", label: "Short handwritten phrase" },
-  { type: "object", name: "links", label: "Links", list: true, fields: pageLinkFields },
+  {
+    type: "object",
+    name: "links",
+    label: "Links",
+    list: true,
+    fields: pageLinkFields,
+    ui: { itemProps: linkItemProps },
+  },
 ];
 
 export default defineConfig({
@@ -138,7 +205,14 @@ export default defineConfig({
         path: "content/settings",
         format: "json",
         ui: {
-          allowedActions: { create: false, delete: false },
+          router: () => "/",
+          filename: { readonly: true },
+          allowedActions: {
+            create: false,
+            delete: false,
+            createFolder: false,
+            createNestedFolder: false,
+          },
         },
         fields: [
           {
@@ -146,6 +220,7 @@ export default defineConfig({
             name: "businessName",
             label: "Business name",
             required: true,
+            isTitle: true,
             ui: { validate: maxChars(60) },
           },
           ...imageWithAlt(
@@ -178,6 +253,7 @@ export default defineConfig({
             name: "address",
             label: "Legacy studio address (not published)",
             description: "Retained only for internal records. The public site displays Lisa's Richland service area, not a street address or map pin.",
+            ui: hiddenSystemField,
             fields: [
               { type: "string", name: "street", label: "Street" },
               { type: "string", name: "city", label: "City" },
@@ -191,7 +267,7 @@ export default defineConfig({
             label: "Cities you serve",
             list: true,
             description:
-              "Shown in the footer, separated by dots (e.g. Richland · Kennewick · Pasco). 2 to 5 cities.",
+              "Used in search-engine business information. The footer wording stays design-controlled. Add 2 to 5 cities.",
             ui: {
               min: 2,
               max: 5,
@@ -227,6 +303,7 @@ export default defineConfig({
                 name: "siteUrl",
                 label: "Website address",
                 description: "Leave as is unless the domain changes.",
+                ui: hiddenSystemField,
               },
               {
                 type: "string",
@@ -235,8 +312,8 @@ export default defineConfig({
                 ui: { component: "textarea", validate: maxChars(300) },
               },
               { type: "string", name: "founderName", label: "Owner's name" },
-              { type: "number", name: "latitude", label: "Map latitude" },
-              { type: "number", name: "longitude", label: "Map longitude" },
+              { type: "number", name: "latitude", label: "Map latitude", ui: hiddenSystemField },
+              { type: "number", name: "longitude", label: "Map longitude", ui: hiddenSystemField },
               {
                 type: "string",
                 name: "services",
@@ -257,7 +334,14 @@ export default defineConfig({
         path: "content/homepage",
         format: "json",
         ui: {
-          allowedActions: { create: false, delete: false },
+          router: () => "/",
+          filename: { readonly: true },
+          allowedActions: {
+            create: false,
+            delete: false,
+            createFolder: false,
+            createNestedFolder: false,
+          },
         },
         fields: [
           {
@@ -439,7 +523,7 @@ export default defineConfig({
                   {
                     type: "string",
                     name: "label",
-                    label: "Name on the card (also appears in the top menu)",
+                    label: "Name on the card",
                     required: true,
                     ui: { validate: maxChars(20) },
                   },
@@ -960,21 +1044,53 @@ export default defineConfig({
       /* ------------------------------------------------------------------ */
       {
         name: "contentPage",
-        label: "Site Pages",
+        label: "Website Pages",
         path: "content/pages",
         format: "json",
+        indexes: [
+          {
+            name: "title",
+            fields: [{ name: "title" }],
+          },
+        ],
         ui: {
-          router: ({ document }) => document.route || "/",
-          allowedActions: { create: false, delete: false },
+          router: ({ document }) => {
+            const route = resolveContentPageRoute(
+              document._sys.relativePath || document._sys.filename,
+            );
+            if (!route) {
+              throw new Error(
+                `No visual-editor route is registered for ${document._sys.relativePath}.`,
+              );
+            }
+            return route;
+          },
+          filename: {
+            readonly: true,
+            description: "The filename is connected to the page route and cannot be renamed.",
+          },
+          allowedActions: {
+            create: false,
+            delete: false,
+            createFolder: false,
+            createNestedFolder: false,
+          },
         },
         fields: [
-          { type: "string", name: "route", label: "Route", required: true },
+          {
+            type: "string",
+            name: "route",
+            label: "Route",
+            required: true,
+            ui: hiddenSystemField,
+          },
           {
             type: "string",
             name: "family",
             label: "Page family",
             required: true,
             options: ["service", "trust", "city", "journal-hub", "article", "utility"],
+            ui: hiddenSystemField,
           },
           {
             type: "string",
@@ -983,6 +1099,7 @@ export default defineConfig({
             required: true,
             options: ["draft", "ready"],
             description: "Only change to ready after facts, media, links and QA have all been approved.",
+            ui: hiddenSystemField,
           },
           {
             type: "string",
@@ -990,6 +1107,7 @@ export default defineConfig({
             label: "Search visibility",
             required: true,
             options: ["index", "noindex"],
+            ui: hiddenSystemField,
           },
           {
             type: "string",
@@ -997,6 +1115,7 @@ export default defineConfig({
             label: "Structured data type",
             required: true,
             options: ["WebPage", "Service", "AboutPage", "ContactPage", "CollectionPage", "Article"],
+            ui: hiddenSystemField,
           },
           {
             type: "string",
@@ -1004,9 +1123,24 @@ export default defineConfig({
             label: "Signature composition device",
             required: true,
             options: ["arch", "overlap", "crossing-line"],
+            ui: hiddenSystemField,
           },
-          { type: "string", name: "title", label: "Search title", required: true },
-          { type: "string", name: "description", label: "Search description", required: true, ui: { component: "textarea" } },
+          {
+            type: "string",
+            name: "title",
+            label: "Page name and Google title",
+            required: true,
+            isTitle: true,
+            description: "This title also makes the page easy to find in Tina.",
+            ui: { validate: maxChars(70) },
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Google search description",
+            required: true,
+            ui: { component: "textarea", validate: maxChars(165) },
+          },
           {
             type: "object",
             name: "hero",
@@ -1019,19 +1153,45 @@ export default defineConfig({
                 label: "Opening tone",
                 required: true,
                 options: ["umber", "walnut", "earth", "olive", "sand", "ivory"],
+                ui: hiddenSystemField,
               },
               { type: "string", name: "eyebrow", label: "Small label" },
               { type: "string", name: "heading", label: "Main heading", required: true },
               { type: "string", name: "intro", label: "Introduction", ui: { component: "textarea" } },
               { type: "string", name: "scriptLine", label: "Short handwritten phrase" },
               { type: "image", name: "image", label: "Primary photograph" },
-              { type: "string", name: "imageAlt", label: "Primary photograph description" },
+              {
+                type: "string",
+                name: "imageAlt",
+                label: "Primary photograph description",
+                ui: { validate: maxChars(160) },
+              },
               { type: "image", name: "secondaryImage", label: "Overlapping photograph" },
-              { type: "string", name: "secondaryImageAlt", label: "Overlapping photograph description" },
-              { type: "object", name: "links", label: "Opening links", list: true, fields: pageLinkFields },
+              {
+                type: "string",
+                name: "secondaryImageAlt",
+                label: "Overlapping photograph description",
+                ui: { validate: maxChars(160) },
+              },
+              {
+                type: "object",
+                name: "links",
+                label: "Opening links",
+                list: true,
+                fields: pageLinkFields,
+                ui: { itemProps: linkItemProps },
+              },
             ],
           },
-          { type: "object", name: "sections", label: "Page sections", list: true, fields: pageSectionFields },
+          {
+            type: "object",
+            name: "sections",
+            label: "Page sections",
+            list: true,
+            description: "Choose a section by its heading. Layout and colors stay locked to the approved design.",
+            fields: pageSectionFields,
+            ui: { itemProps: (item) => ({ label: listLabel(item) }) },
+          },
           {
             type: "object",
             name: "finalCta",
@@ -1043,19 +1203,25 @@ export default defineConfig({
                 label: "Surface tone",
                 required: true,
                 options: ["umber", "walnut", "earth", "olive", "sand", "ivory"],
+                ui: hiddenSystemField,
               },
               { type: "string", name: "eyebrow", label: "Small label" },
               { type: "string", name: "heading", label: "Heading", required: true },
               { type: "string", name: "paragraphs", label: "Paragraphs", list: true, ui: { component: "textarea" } },
               { type: "image", name: "image", label: "Background photograph" },
-              { type: "string", name: "imageAlt", label: "Background photograph description" },
+              {
+                type: "string",
+                name: "imageAlt",
+                label: "Background photograph description",
+                ui: { validate: maxChars(160) },
+              },
               { type: "object", name: "link", label: "Final link", fields: pageLinkFields },
             ],
           },
           {
             type: "string",
             name: "pending",
-            label: "Unresolved facts and media",
+            label: "Internal publishing notes (not shown on the site)",
             list: true,
             description: "Never render these notes. Resolve them before changing this page to ready.",
             ui: { component: "textarea" },
@@ -1079,7 +1245,13 @@ export default defineConfig({
         ],
         ui: {
           router: () => "/reviews/",
-          allowedActions: { create: false, delete: false },
+          filename: { readonly: true },
+          allowedActions: {
+            create: false,
+            delete: false,
+            createFolder: false,
+            createNestedFolder: false,
+          },
         },
         fields: [
           {
@@ -1100,7 +1272,9 @@ export default defineConfig({
           {
             type: "string",
             name: "title",
-            label: "Page title (optional)",
+            label: "Page title",
+            required: true,
+            isTitle: true,
             description: "A short handwritten-style heading for this page.",
             ui: { validate: maxChars(40) },
           },
@@ -1194,9 +1368,13 @@ export default defineConfig({
           },
         ],
         ui: {
-          itemProps: (item?: { name?: string; sessionType?: string }) => ({
-            label: [item?.name, item?.sessionType].filter(Boolean).join(" · ") || "New kind word",
-          }),
+          router: () => "/reviews/",
+          allowedActions: {
+            create: true,
+            delete: false,
+            createFolder: false,
+            createNestedFolder: false,
+          },
         },
         fields: [
           {
@@ -1225,7 +1403,9 @@ export default defineConfig({
             type: "string",
             name: "name",
             label: "Who said it",
-            description: "Leave empty when the client's name has not been supplied.",
+            required: true,
+            isTitle: true,
+            description: "The client name used to identify this testimonial in Tina.",
             ui: { validate: maxChars(40) },
           },
           {

@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageLink, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/senior-page.css";
@@ -74,6 +75,7 @@ const faqSchema = visibleQuestions
   class="senior-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="senior"
@@ -90,9 +92,10 @@ const faqSchema = visibleQuestions
     leftPrint={{ src: heroSideImage, objectPosition: "50% 45%" }}
     rightPrint={{ src: page.hero.secondaryImage, objectPosition: "50% 48%" }}
     paperEdgeColor="var(--color-weathered-sand)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
-  <section class:list={["senior-year", `tone-${yearOnly.tone}`]} aria-labelledby={`${yearOnly.id}-title`}>
+  <section class:list={["senior-year", `tone-${yearOnly.tone}`]} aria-labelledby={`${yearOnly.id}-title`} data-tina-field={tinaField(yearOnly)}>
     <div class="senior-year__rule" aria-hidden="true"></div>
     <div class="senior-shell senior-year__inner">
       {yearOnly.image && (
@@ -105,25 +108,26 @@ const faqSchema = visibleQuestions
             responsiveSrcset
             sizes="(max-width: 767px) min(82vw, 26rem), (max-width: 1050px) 35vw, 31rem"
             imgClass="photo--editorial"
+            dataTinaField={tinaField(yearOnly, "image")}
           />
         </figure>
       )}
       <div class="senior-year__copy">
         {yearOnly.eyebrow && <p class="senior-eyebrow">{yearOnly.eyebrow}</p>}
-        <h2 id={`${yearOnly.id}-title`}>{yearOnly.heading}</h2>
-        <div class="senior-prose">
+        <h2 id={`${yearOnly.id}-title`} data-tina-field={tinaField(yearOnly, "heading")}>{yearOnly.heading}</h2>
+        <div class="senior-prose" data-tina-field={tinaField(yearOnly, "paragraphs")}>
           {yearOnly.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
     </div>
   </section>
 
-  <section class:list={["senior-confidence", `tone-${photogenic.tone}`]} aria-labelledby={`${photogenic.id}-title`}>
+  <section class:list={["senior-confidence", `tone-${photogenic.tone}`]} aria-labelledby={`${photogenic.id}-title`} data-tina-field={tinaField(photogenic)}>
     <div class="senior-shell senior-confidence__inner">
       <div class="senior-confidence__copy">
         {photogenic.eyebrow && <p class="senior-eyebrow">{photogenic.eyebrow}</p>}
-        <h2 id={`${photogenic.id}-title`}>{photogenic.heading}</h2>
-        <div class="senior-prose">
+        <h2 id={`${photogenic.id}-title`} data-tina-field={tinaField(photogenic, "heading")}>{photogenic.heading}</h2>
+        <div class="senior-prose" data-tina-field={tinaField(photogenic, "paragraphs")}>
           {photogenic.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -131,11 +135,11 @@ const faqSchema = visibleQuestions
         <div class="senior-confidence__media">
           <figure class="senior-print senior-confidence__primary">
             <span class="senior-tape senior-tape--top" aria-hidden="true"></span>
-            <Picture src={photogenic.image} alt={photogenic.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 76vw, (max-width: 1050px) 44vw, 36rem" imgClass="photo--editorial" />
+            <Picture src={photogenic.image} alt={photogenic.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 76vw, (max-width: 1050px) 44vw, 36rem" imgClass="photo--editorial" dataTinaField={tinaField(photogenic, "image")} />
           </figure>
           {photogenic.secondaryImage && (
             <figure class="senior-print senior-confidence__secondary" aria-hidden="true">
-              <Picture src={photogenic.secondaryImage} alt="" loading="lazy" decoding="async" optimizedMobileWidth={400} optimizedDesktopWidth={640} imgClass="photo--editorial" />
+              <Picture src={photogenic.secondaryImage} alt="" loading="lazy" decoding="async" optimizedMobileWidth={400} optimizedDesktopWidth={640} imgClass="photo--editorial" dataTinaField={tinaField(photogenic, "secondaryImage")} />
             </figure>
           )}
           {photogenic.scriptLine && <p class="senior-script senior-confidence__script" aria-hidden="true">{photogenic.scriptLine}</p>}
@@ -144,37 +148,37 @@ const faqSchema = visibleQuestions
     </div>
   </section>
 
-  <section class:list={["senior-locations", `tone-${locations.tone}`]} aria-labelledby={`${locations.id}-title`}>
+  <section class:list={["senior-locations", `tone-${locations.tone}`]} aria-labelledby={`${locations.id}-title`} data-tina-field={tinaField(locations)}>
     <div class="senior-shell senior-locations__inner">
       <header class="senior-locations__heading">
         {locations.eyebrow && <p class="senior-eyebrow">{locations.eyebrow}</p>}
-        <h2 id={`${locations.id}-title`}>{locations.heading}</h2>
-        <div class="senior-prose">
+        <h2 id={`${locations.id}-title`} data-tina-field={tinaField(locations, "heading")}>{locations.heading}</h2>
+        <div class="senior-prose" data-tina-field={tinaField(locations, "paragraphs")}>
           {locations.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </header>
       <div class="senior-locations__contact-sheet" aria-label={locations.imageAlt || undefined}>
         {locations.image && (
           <figure class="senior-print senior-locations__print senior-locations__print--one">
-            <Picture src={locations.image} alt={locations.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 74vw, (max-width: 1050px) 47vw, 34rem" imgClass="photo--editorial" />
+            <Picture src={locations.image} alt={locations.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 74vw, (max-width: 1050px) 47vw, 34rem" imgClass="photo--editorial" dataTinaField={tinaField(locations, "image")} />
           </figure>
         )}
         {locations.secondaryImage && (
           <figure class="senior-print senior-locations__print senior-locations__print--two">
             <span class="senior-tape senior-tape--top" aria-hidden="true"></span>
-            <Picture src={locations.secondaryImage} alt={locations.secondaryImageAlt || ""} loading="lazy" decoding="async" optimizedMobileWidth={640} optimizedDesktopWidth={960} imgClass="photo--editorial" />
+            <Picture src={locations.secondaryImage} alt={locations.secondaryImageAlt || ""} loading="lazy" decoding="async" optimizedMobileWidth={640} optimizedDesktopWidth={960} imgClass="photo--editorial" dataTinaField={tinaField(locations, "secondaryImage")} />
           </figure>
         )}
         {page.hero.secondaryImage && (
           <figure class="senior-print senior-locations__print senior-locations__print--three" aria-hidden="true">
-            <Picture src={page.hero.secondaryImage} alt="" loading="lazy" decoding="async" optimizedMobileWidth={400} optimizedDesktopWidth={640} imgClass="photo--editorial" />
+            <Picture src={page.hero.secondaryImage} alt="" loading="lazy" decoding="async" optimizedMobileWidth={400} optimizedDesktopWidth={640} imgClass="photo--editorial" dataTinaField={tinaField(page.hero, "secondaryImage")} />
           </figure>
         )}
       </div>
     </div>
   </section>
 
-  <section class:list={["senior-plan", `tone-${planning.tone}`]} aria-labelledby={`${planning.id}-title`}>
+  <section class:list={["senior-plan", `tone-${planning.tone}`]} aria-labelledby={`${planning.id}-title`} data-tina-field={tinaField(planning)}>
     <div class="senior-shell senior-plan__inner">
       <header
         class:list={[
@@ -184,11 +188,11 @@ const faqSchema = visibleQuestions
       >
         <div class="senior-plan__title">
           {planning.eyebrow && <p class="senior-eyebrow">{planning.eyebrow}</p>}
-          <h2 id={`${planning.id}-title`}>{planning.heading}</h2>
+          <h2 id={`${planning.id}-title`} data-tina-field={tinaField(planning, "heading")}>{planning.heading}</h2>
         </div>
         {planning.image && (
           <figure class="senior-plan__portrait">
-            <Picture src={planning.image} alt={planning.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 58vw, (max-width: 1050px) 23vw, 17rem" imgClass="photo--editorial" />
+            <Picture src={planning.image} alt={planning.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 58vw, (max-width: 1050px) 23vw, 17rem" imgClass="photo--editorial" dataTinaField={tinaField(planning, "image")} />
           </figure>
         )}
         {planning.intro && <p class="senior-plan__intro">{planning.intro}</p>}
@@ -196,7 +200,7 @@ const faqSchema = visibleQuestions
       {planning.items?.length && (
         <ol class="senior-plan__ledger">
           {planning.items.map((item, index) => (
-            <li>
+            <li data-tina-field={tinaField(planning, "items", index)}>
               <span class="senior-plan__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               {item.heading && <h3>{item.heading}</h3>}
               {item.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
@@ -207,17 +211,17 @@ const faqSchema = visibleQuestions
     </div>
   </section>
 
-  <section class:list={["senior-parents", `tone-${parents.tone}`]} aria-labelledby={`${parents.id}-title`}>
+  <section class:list={["senior-parents", `tone-${parents.tone}`]} aria-labelledby={`${parents.id}-title`} data-tina-field={tinaField(parents)}>
     <div class="senior-parents__background" aria-hidden="true">
-      {parents.image && <Picture src={parents.image} alt="" loading="lazy" decoding="async" responsiveSrcset sizes="100vw" imgClass="senior-parents__background-image" />}
+      {parents.image && <Picture src={parents.image} alt="" loading="lazy" decoding="async" responsiveSrcset sizes="100vw" imgClass="senior-parents__background-image" dataTinaField={tinaField(parents, "image")} />}
       <div class="senior-parents__wash"></div>
     </div>
     <div class="senior-parents__rule" aria-hidden="true"></div>
     <div class="senior-shell senior-parents__inner">
       <div class="senior-parents__copy">
         {parents.eyebrow && <p class="senior-eyebrow">{parents.eyebrow}</p>}
-        <h2 id={`${parents.id}-title`}>{parents.heading}</h2>
-        <div class="senior-prose">
+        <h2 id={`${parents.id}-title`} data-tina-field={tinaField(parents, "heading")}>{parents.heading}</h2>
+        <div class="senior-prose" data-tina-field={tinaField(parents, "paragraphs")}>
           {parents.paragraphs?.map((paragraph) => {
             const linked = linkedParagraph(paragraph, aboutPhrase, parentAboutLink);
             return <p>{linked ? <>{linked.before}<a href={linked.href}>{linked.linked}</a>{linked.after}</> : paragraph}</p>;
@@ -231,31 +235,31 @@ const faqSchema = visibleQuestions
         {parents.secondaryImage && (
           <figure class="senior-print senior-parents__print senior-parents__print--front">
             <span class="senior-tape senior-tape--corner" aria-hidden="true"></span>
-            <Picture src={parents.secondaryImage} alt={parents.secondaryImageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 57vw, (max-width: 1050px) 32vw, 22rem" imgClass="photo--editorial" />
+            <Picture src={parents.secondaryImage} alt={parents.secondaryImageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 57vw, (max-width: 1050px) 32vw, 22rem" imgClass="photo--editorial" dataTinaField={tinaField(parents, "secondaryImage")} />
           </figure>
         )}
       </div>
     </div>
   </section>
 
-  <section class:list={["senior-booking", `tone-${booking.tone}`]} aria-labelledby={`${booking.id}-title`}>
+  <section class:list={["senior-booking", `tone-${booking.tone}`]} aria-labelledby={`${booking.id}-title`} data-tina-field={tinaField(booking)}>
     <div class="senior-shell senior-booking__inner">
       <div class="senior-booking__media">
         {booking.image && (
           <figure class="senior-booking__image">
-            <Picture src={booking.image} alt={booking.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 82vw, (max-width: 1050px) 40vw, 31rem" imgClass="photo--editorial" />
+            <Picture src={booking.image} alt={booking.imageAlt || ""} loading="lazy" decoding="async" responsiveSrcset sizes="(max-width: 767px) 82vw, (max-width: 1050px) 40vw, 31rem" imgClass="photo--editorial" dataTinaField={tinaField(booking, "image")} />
           </figure>
         )}
         {booking.secondaryImage && (
           <figure class="senior-print senior-booking__print" aria-hidden="true">
-            <Picture src={booking.secondaryImage} alt="" loading="lazy" decoding="async" optimizedMobileWidth={400} optimizedDesktopWidth={640} imgClass="photo--editorial" />
+            <Picture src={booking.secondaryImage} alt="" loading="lazy" decoding="async" optimizedMobileWidth={400} optimizedDesktopWidth={640} imgClass="photo--editorial" dataTinaField={tinaField(booking, "secondaryImage")} />
           </figure>
         )}
       </div>
       <div class="senior-booking__copy">
         {booking.eyebrow && <p class="senior-eyebrow">{booking.eyebrow}</p>}
-        <h2 id={`${booking.id}-title`}>{booking.heading}</h2>
-        <div class="senior-prose">
+        <h2 id={`${booking.id}-title`} data-tina-field={tinaField(booking, "heading")}>{booking.heading}</h2>
+        <div class="senior-prose" data-tina-field={tinaField(booking, "paragraphs")}>
           {booking.paragraphs?.map((paragraph) => {
             const linked = linkedParagraph(paragraph, latePhrase, bookingArticleLink);
             return <p>{linked ? <>{linked.before}<a href={linked.href}>{linked.linked}</a>{linked.after}</> : paragraph}</p>;
@@ -265,17 +269,17 @@ const faqSchema = visibleQuestions
     </div>
   </section>
 
-  <section class:list={["senior-faq", `tone-${questions.tone}`]} aria-labelledby={`${questions.id}-title`}>
+  <section class:list={["senior-faq", `tone-${questions.tone}`]} aria-labelledby={`${questions.id}-title`} data-tina-field={tinaField(questions)}>
     <div class="senior-shell senior-faq__inner">
       <header class="senior-faq__heading">
         {questions.eyebrow && <p class="senior-eyebrow">{questions.eyebrow}</p>}
-        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        <h2 id={`${questions.id}-title`} data-tina-field={tinaField(questions, "heading")}>{questions.heading}</h2>
       </header>
       {visibleQuestions.length > 0 && (
         <div class="senior-faq__list">
           {/* CONTENT PENDING [How many outfits can I bring?]: [PENDIENTE: número por paquete]. The verified surrounding answer remains visible; no quantity is invented. */}
           {visibleQuestions.map((item, index) => (
-            <details class="senior-faq__item" open={index === 0}>
+            <details class="senior-faq__item" open={index === 0} data-tina-field={tinaField(questions, "items", index)}>
               <summary>
                 <span class="senior-faq__number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
@@ -298,15 +302,15 @@ const faqSchema = visibleQuestions
   </section>
 
   {page.finalCta && (
-    <section id="senior-final-cta" class:list={["senior-final", `tone-${page.finalCta.tone}`]} aria-labelledby="senior-final-title">
+    <section id="senior-final-cta" class:list={["senior-final", `tone-${page.finalCta.tone}`]} aria-labelledby="senior-final-title" data-tina-field={tinaField(page, "finalCta")}>
       <div class="senior-final__background" aria-hidden="true">
-        <Picture src={page.finalCta.image || finalBackgroundImage} alt="" loading="lazy" decoding="async" responsiveSrcset sizes="100vw" imgClass="senior-final__background-image" />
+        <Picture src={page.finalCta.image || finalBackgroundImage} alt="" loading="lazy" decoding="async" responsiveSrcset sizes="100vw" imgClass="senior-final__background-image" dataTinaField={page.finalCta.image ? tinaField(page.finalCta, "image") : undefined} />
         <div class="senior-final__wash"></div>
       </div>
       <div class="senior-shell senior-final__inner">
         {page.finalCta.eyebrow && <p class="senior-script" aria-hidden="true">{page.finalCta.eyebrow}</p>}
-        <h2 id="senior-final-title">{page.finalCta.heading}</h2>
-        {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        <h2 id="senior-final-title" data-tina-field={tinaField(page.finalCta, "heading")}>{page.finalCta.heading}</h2>
+        {page.finalCta.paragraphs?.map((paragraph) => <p data-tina-field={tinaField(page.finalCta, "paragraphs")}>{paragraph}</p>)}
         {page.finalCta.link && <a class="outline-button" href={page.finalCta.link.href}>{page.finalCta.link.label}</a>}
       </div>
     </section>

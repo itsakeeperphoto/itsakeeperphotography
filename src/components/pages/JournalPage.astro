@@ -4,6 +4,7 @@ import type {
   PageItem,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/journal-page.css";
@@ -88,6 +89,7 @@ const finalCta = page.finalCta;
   class="journal-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="journal"
@@ -109,9 +111,14 @@ const finalCta = page.finalCta;
       objectPosition: "50% 44%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
-  <section class="journal-planning" aria-labelledby="journal-planning-guides-title">
+  <section
+    class="journal-planning"
+    aria-labelledby="journal-planning-guides-title"
+    data-tina-field={tinaField(planning)}
+  >
     <div class="journal-feature">
       <span class="journal-feature__line" aria-hidden="true"></span>
       <div class="journal-shell">
@@ -119,6 +126,7 @@ const finalCta = page.finalCta;
           class="journal-feature__link"
           href={featuredHref}
           aria-labelledby="journal-feature-title"
+          data-tina-field={tinaField(featuredGuide)}
         >
           <div class="journal-feature__media">
             <figure class="journal-feature__arch">
@@ -170,6 +178,7 @@ const finalCta = page.finalCta;
                 class:list={["journal-guide", `journal-guide--${guide.shape}`]}
                 href={guide.href}
                 aria-labelledby={`journal-guide-${index + 2}-title`}
+                data-tina-field={tinaField(guide.item)}
               >
                 <div class="journal-guide__stage">
                   <figure class="journal-guide__image">
@@ -197,6 +206,7 @@ const finalCta = page.finalCta;
               <article
                 class:list={["journal-guide", `journal-guide--${guide.shape}`]}
                 aria-labelledby={`journal-guide-${index + 2}-title`}
+                data-tina-field={tinaField(guide.item)}
               >
                 <div class="journal-guide__stage">
                   <figure class="journal-guide__image">
@@ -226,7 +236,11 @@ const finalCta = page.finalCta;
     </div>
   </section>
 
-  <section class="journal-portfolio" aria-label={interludeLabel}>
+  <section
+    class="journal-portfolio"
+    aria-label={interludeLabel}
+    data-tina-field={tinaField(planning, "links", 0)}
+  >
     <a
       class="journal-shell journal-portfolio__inner"
       href={interludeHref}
@@ -267,7 +281,11 @@ const finalCta = page.finalCta;
   </section>
 
   {finalCta && (
-    <section class="journal-final" aria-labelledby="journal-final-title">
+    <section
+      class="journal-final"
+      aria-labelledby="journal-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
+    >
       <div class="journal-final__background" aria-hidden="true">
         <Picture
           src="/uploads/about-final-couple-golden-hour-tricities.jpg"

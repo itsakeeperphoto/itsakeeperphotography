@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/family-page.css";
@@ -45,6 +46,7 @@ const faqSchema = (questions.items || [])
   class="family-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="family"
@@ -67,11 +69,13 @@ const faqSchema = (questions.items || [])
       objectPosition: "50% 43%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     class="family-play"
     aria-labelledby={`${play.id}-title`}
+    data-tina-field={tinaField(play)}
   >
     <div class="family-shell family-play__inner">
       {play.image && (
@@ -89,6 +93,7 @@ const faqSchema = (questions.items || [])
             responsiveSrcset
             sizes="(max-width: 767px) min(82vw, 25rem), (max-width: 1050px) 40vw, 30vw"
             imgClass="photo--editorial"
+            dataTinaField={tinaField(play, "image")}
           />
         </figure>
       )}
@@ -103,8 +108,8 @@ const faqSchema = (questions.items || [])
 
       <div class="family-play__copy">
         <span class="family-section-number" aria-hidden="true">02</span>
-        <h2 id={`${play.id}-title`}>{play.heading}</h2>
-        <div class="family-prose">
+        <h2 id={`${play.id}-title`} data-tina-field={tinaField(play, "heading")}>{play.heading}</h2>
+        <div class="family-prose" data-tina-field={tinaField(play, "paragraphs")}>
           {play.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -114,12 +119,13 @@ const faqSchema = (questions.items || [])
   <section
     class="family-kids"
     aria-labelledby={`${kids.id}-title`}
+    data-tina-field={tinaField(kids)}
   >
     <div class="family-shell">
       <header class="family-kids__header">
         <span class="family-section-number" aria-hidden="true">03</span>
-        <h2 id={`${kids.id}-title`}>{kids.heading}</h2>
-        {kids.intro && <p class="family-section-intro">{kids.intro}</p>}
+        <h2 id={`${kids.id}-title`} data-tina-field={tinaField(kids, "heading")}>{kids.heading}</h2>
+        {kids.intro && <p class="family-section-intro" data-tina-field={tinaField(kids, "intro")}>{kids.intro}</p>}
       </header>
 
       <div class="family-kids__composition">
@@ -139,6 +145,7 @@ const faqSchema = (questions.items || [])
                   responsiveSrcset
                   sizes="(max-width: 767px) 80vw, (max-width: 1050px) 48vw, 31vw"
                   imgClass="photo--editorial"
+                  dataTinaField={tinaField(kids, "image")}
                 />
               </figure>
             )}
@@ -157,6 +164,7 @@ const faqSchema = (questions.items || [])
                   optimizedMobileWidth={640}
                   optimizedDesktopWidth={960}
                   imgClass="photo--editorial"
+                  dataTinaField={tinaField(kids, "secondaryImage")}
                 />
               </figure>
             )}
@@ -166,8 +174,8 @@ const faqSchema = (questions.items || [])
         <div class="family-kids__ledger">
           {kids.items?.length && (
             <ul>
-              {kids.items.map((item) => (
-                <li>
+              {kids.items.map((item, index) => (
+                <li data-tina-field={tinaField(kids, "items", index)}>
                   <span class="family-kids__node" aria-hidden="true"></span>
                   <div>
                     {item.heading && <h3>{item.heading}</h3>}
@@ -179,7 +187,7 @@ const faqSchema = (questions.items || [])
           )}
 
           {kids.paragraphs?.length && (
-            <aside class="family-kids__parent-note" aria-label="A note for parents">
+            <aside class="family-kids__parent-note" aria-label="A note for parents" data-tina-field={tinaField(kids, "paragraphs")}>
               {kids.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
             </aside>
           )}
@@ -191,23 +199,24 @@ const faqSchema = (questions.items || [])
   <section
     class="family-preparation"
     aria-labelledby={`${preparation.id}-title`}
+    data-tina-field={tinaField(preparation)}
   >
     <div class="family-shell">
       <header class="family-preparation__header">
         <div>
           <span class="family-section-number" aria-hidden="true">04</span>
-          <h2 id={`${preparation.id}-title`}>{preparation.heading}</h2>
+          <h2 id={`${preparation.id}-title`} data-tina-field={tinaField(preparation, "heading")}>{preparation.heading}</h2>
         </div>
         {preparation.intro && (
-          <p class="family-section-intro">{preparation.intro}</p>
+          <p class="family-section-intro" data-tina-field={tinaField(preparation, "intro")}>{preparation.intro}</p>
         )}
       </header>
 
       <div class="family-preparation__body">
         {preparation.items?.length && (
           <ul class="family-preparation__ledger">
-            {preparation.items.map((item) => (
-              <li>
+            {preparation.items.map((item, index) => (
+              <li data-tina-field={tinaField(preparation, "items", index)}>
                 <span class="family-preparation__mark" aria-hidden="true"></span>
                 <div>
                   {item.heading && <h3>{item.heading}</h3>}
@@ -233,6 +242,7 @@ const faqSchema = (questions.items || [])
                   responsiveSrcset
                   sizes="(max-width: 767px) 88vw, (max-width: 1050px) 52vw, 35vw"
                   imgClass="photo--editorial"
+                  dataTinaField={tinaField(preparation, "image")}
                 />
               </figure>
             )}
@@ -251,6 +261,7 @@ const faqSchema = (questions.items || [])
                   optimizedMobileWidth={640}
                   optimizedDesktopWidth={960}
                   imgClass="photo--editorial"
+                  dataTinaField={tinaField(preparation, "secondaryImage")}
                 />
               </figure>
             )}
@@ -263,6 +274,7 @@ const faqSchema = (questions.items || [])
   <section
     class="family-how"
     aria-labelledby={`${howItWorks.id}-title`}
+    data-tina-field={tinaField(howItWorks)}
   >
     <div class="family-shell">
       <div class="family-how__lead">
@@ -277,9 +289,9 @@ const faqSchema = (questions.items || [])
 
         <div class="family-how__title">
           <span class="family-section-number" aria-hidden="true">05</span>
-          <h2 id={`${howItWorks.id}-title`}>{howItWorks.heading}</h2>
+          <h2 id={`${howItWorks.id}-title`} data-tina-field={tinaField(howItWorks, "heading")}>{howItWorks.heading}</h2>
           {howItWorks.intro && (
-            <p class="family-section-intro">{howItWorks.intro}</p>
+            <p class="family-section-intro" data-tina-field={tinaField(howItWorks, "intro")}>{howItWorks.intro}</p>
           )}
         </div>
       </div>
@@ -299,6 +311,7 @@ const faqSchema = (questions.items || [])
                 responsiveSrcset
                 sizes="(max-width: 767px) 88vw, (max-width: 1050px) 67vw, 53vw"
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(howItWorks, "image")}
               />
             </figure>
           )}
@@ -317,6 +330,7 @@ const faqSchema = (questions.items || [])
                 optimizedMobileWidth={640}
                 optimizedDesktopWidth={960}
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(howItWorks, "secondaryImage")}
               />
             </figure>
           )}
@@ -326,7 +340,7 @@ const faqSchema = (questions.items || [])
       {howItWorks.items?.length && (
         <ol class="family-how__ledger">
           {howItWorks.items.map((item, index) => (
-            <li>
+            <li data-tina-field={tinaField(howItWorks, "items", index)}>
               <span class="family-how__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -364,14 +378,15 @@ const faqSchema = (questions.items || [])
   <section
     class="family-seasonality"
     aria-labelledby={`${seasonality.id}-title`}
+    data-tina-field={tinaField(seasonality)}
   >
     <div class="family-shell family-seasonality__inner">
       <div class="family-seasonality__copy">
         <span class="family-section-number" aria-hidden="true">06</span>
-        <h2 id={`${seasonality.id}-title`}>{seasonality.heading}</h2>
+        <h2 id={`${seasonality.id}-title`} data-tina-field={tinaField(seasonality, "heading")}>{seasonality.heading}</h2>
 
         {seasonality.paragraphs?.length && (
-          <div class="family-seasonality__seasons">
+          <div class="family-seasonality__seasons" data-tina-field={tinaField(seasonality, "paragraphs")}>
             {seasonality.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         )}
@@ -406,6 +421,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 100vw, (max-width: 1050px) 68vw, 52vw"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(seasonality, "image")}
             />
           </figure>
         )}
@@ -424,6 +440,7 @@ const faqSchema = (questions.items || [])
               optimizedMobileWidth={640}
               optimizedDesktopWidth={960}
               imgClass="photo--editorial"
+              dataTinaField={tinaField(seasonality, "secondaryImage")}
             />
           </figure>
         )}
@@ -434,6 +451,7 @@ const faqSchema = (questions.items || [])
   <section
     class="family-heirlooms"
     aria-labelledby={`${heirlooms.id}-title`}
+    data-tina-field={tinaField(heirlooms)}
   >
     {heirlooms.image && (
       <div class="family-heirlooms__background">
@@ -445,6 +463,7 @@ const faqSchema = (questions.items || [])
           responsiveSrcset
           sizes="100vw"
           imgClass="family-heirlooms__background-image"
+          dataTinaField={tinaField(heirlooms, "image")}
         />
         <div class="family-heirlooms__wash" aria-hidden="true"></div>
       </div>
@@ -453,8 +472,8 @@ const faqSchema = (questions.items || [])
     <div class="family-shell family-heirlooms__inner">
       <div class="family-heirlooms__copy">
         <span class="family-section-number" aria-hidden="true">07</span>
-        <h2 id={`${heirlooms.id}-title`}>{heirlooms.heading}</h2>
-        <div class="family-prose">
+        <h2 id={`${heirlooms.id}-title`} data-tina-field={tinaField(heirlooms, "heading")}>{heirlooms.heading}</h2>
+        <div class="family-prose" data-tina-field={tinaField(heirlooms, "paragraphs")}>
           {heirlooms.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
 
@@ -485,6 +504,7 @@ const faqSchema = (questions.items || [])
               optimizedMobileWidth={640}
               optimizedDesktopWidth={960}
               imgClass="photo--editorial"
+              dataTinaField={tinaField(heirlooms, "secondaryImage")}
             />
           </figure>
         </div>
@@ -495,19 +515,20 @@ const faqSchema = (questions.items || [])
   <section
     class="family-faq"
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="family-shell family-faq__inner">
       <div class="family-faq__content">
         <header class="family-faq__heading">
           <span class="family-faq__title-rule" aria-hidden="true"></span>
           <span class="family-section-number" aria-hidden="true">08</span>
-          <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+          <h2 id={`${questions.id}-title`} data-tina-field={tinaField(questions, "heading")}>{questions.heading}</h2>
         </header>
 
         {questions.items?.length && (
           <div class="family-faq__list">
             {questions.items.map((item, index) => (
-              <details class="family-faq__item" open={index === 0}>
+              <details class="family-faq__item" open={index === 0} data-tina-field={tinaField(questions, "items", index)}>
                 <summary>
                   <span class="family-faq__number" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
@@ -531,6 +552,7 @@ const faqSchema = (questions.items || [])
           id="family-final-cta"
           class="family-faq__note"
           aria-labelledby="family-faq-note-title"
+          data-tina-field={tinaField(page, "finalCta")}
         >
           <div class="family-faq__note-paper" aria-hidden="true">
             <Picture
@@ -544,8 +566,10 @@ const faqSchema = (questions.items || [])
             />
           </div>
           <div class="family-faq__note-content">
-            <h2 id="family-faq-note-title">{page.finalCta.heading}</h2>
-            {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            <h2 id="family-faq-note-title" data-tina-field={tinaField(page.finalCta, "heading")}>{page.finalCta.heading}</h2>
+            {page.finalCta.paragraphs?.map((paragraph) => (
+              <p data-tina-field={tinaField(page.finalCta, "paragraphs")}>{paragraph}</p>
+            ))}
             {page.finalCta.link && (
               <a class="outline-button" href={page.finalCta.link.href}>
                 {page.finalCta.link.label}

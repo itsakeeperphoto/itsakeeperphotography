@@ -253,4 +253,24 @@ const formatDate = (value?: string) => {
 
   initializeJournalBookController();
   document.addEventListener("astro:page-load", initializeJournalBookController);
+
+  const root = document.documentElement;
+  if (root.dataset.journalBookObserver !== "true") {
+    root.dataset.journalBookObserver = "true";
+    let refreshFrame = 0;
+    const observer = new MutationObserver((records) => {
+      const replacedIsland = records.some(
+        (record) =>
+          record.type === "childList" &&
+          record.target instanceof Element &&
+          record.target.matches("[data-tina-island]"),
+      );
+      if (!replacedIsland || refreshFrame) return;
+      refreshFrame = window.requestAnimationFrame(() => {
+        refreshFrame = 0;
+        initializeJournalBookController();
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 </script>

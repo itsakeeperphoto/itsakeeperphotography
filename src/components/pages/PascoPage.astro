@@ -4,6 +4,7 @@ import type {
   PageLink,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import { absoluteUrl } from "../../lib/site-environment";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
@@ -176,6 +177,7 @@ const seasonsImages = [
   class="pasco-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <!-- THESIS: Pasco's open light leads from local coverage to setting, landscape, service fit, verified work, planning, practical questions and one invitation. OWN-WORLD: the shared editorial hero, warm tonal surfaces, square prints, one arch and ruled ledgers. FIRST VIEWPORT: exact local H1, real Pasco work, a local-scroll action and two restrained prints. -->
   <EditorialHero
@@ -193,12 +195,14 @@ const seasonsImages = [
     paperEdgeColor="var(--color-warm-ivory)"
     buttonLabel={heroAction.label}
     buttonTargetId="pasco-final"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     id={introduction.id}
     class:list={["pasco-intro", `tone-${introduction.tone}`]}
     aria-labelledby={`${introduction.id}-title`}
+    data-tina-field={tinaField(introduction)}
   >
     <div class="pasco-shell pasco-intro__grid">
       <figure class="pasco-intro__media">
@@ -233,6 +237,7 @@ const seasonsImages = [
     id={rivers.id}
     class:list={["pasco-rivers", `tone-${rivers.tone}`]}
     aria-labelledby={`${rivers.id}-title`}
+    data-tina-field={tinaField(rivers)}
   >
     <div class="pasco-shell pasco-rivers__grid">
       <div class="pasco-rivers__copy">
@@ -282,6 +287,7 @@ const seasonsImages = [
     id={farmland.id}
     class:list={["pasco-farmland", `tone-${farmland.tone}`]}
     aria-labelledby={`${farmland.id}-title`}
+    data-tina-field={tinaField(farmland)}
   >
     <div class="pasco-shell">
       <header class="pasco-farmland__header">
@@ -336,6 +342,7 @@ const seasonsImages = [
     id={directory.id}
     class:list={["pasco-directory", `tone-${directory.tone}`]}
     aria-labelledby={`${directory.id}-title`}
+    data-tina-field={tinaField(directory)}
   >
     <div class="pasco-shell pasco-directory__layout">
       <div class="pasco-directory__content">
@@ -349,7 +356,7 @@ const seasonsImages = [
             {serviceItems.map((item, index) => {
               const link = item.links![0];
               return (
-                <li>
+                <li data-tina-field={tinaField(item)}>
                   <a class="pasco-directory__row" href={link.href}>
                     <span class="pasco-directory__number">{String(index + 1).padStart(2, "0")}</span>
                     <span class="pasco-directory__name">{item.heading}</span>
@@ -394,6 +401,7 @@ const seasonsImages = [
     id={recent.id}
     class:list={["pasco-gallery", `tone-${recent.tone}`]}
     aria-labelledby={`${recent.id}-title`}
+    data-tina-field={tinaField(recent)}
   >
     <div class="pasco-shell">
       <header class="pasco-gallery__header">
@@ -403,7 +411,10 @@ const seasonsImages = [
       </header>
       <div class="pasco-gallery__grid">
         {recentItems.map((item, index) => (
-          <figure class={`pasco-gallery__item pasco-gallery__item--${index + 1}`}>
+          <figure
+            class={`pasco-gallery__item pasco-gallery__item--${index + 1}`}
+            data-tina-field={tinaField(item)}
+          >
             <Picture
               src={item.image!}
               alt={item.imageAlt!}
@@ -425,6 +436,7 @@ const seasonsImages = [
     id={seasons.id}
     class:list={["pasco-seasons", `tone-${seasons.tone}`]}
     aria-labelledby={`${seasons.id}-title`}
+    data-tina-field={tinaField(seasons)}
   >
     <div class="pasco-shell pasco-seasons__grid">
       <div class="pasco-seasons__copy">
@@ -442,7 +454,10 @@ const seasonsImages = [
       </div>
       <div class="pasco-seasons__media">
         {seasonsImages.map((item, index) => (
-          <figure class={`pasco-seasons__photo pasco-seasons__photo--${index + 1}`}>
+          <figure
+            class={`pasco-seasons__photo pasco-seasons__photo--${index + 1}`}
+            data-tina-field={tinaField(item)}
+          >
             <Picture
               src={item.image!}
               alt={item.imageAlt!}
@@ -462,6 +477,7 @@ const seasonsImages = [
     id={questions.id}
     class:list={["pasco-faq", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="pasco-shell pasco-faq__grid">
       <header class="pasco-faq__header">
@@ -471,7 +487,10 @@ const seasonsImages = [
       </header>
       <div class="pasco-faq__list">
         {faqItems.map((item, index) => (
-          <details open={index === 0}>
+          <details
+            open={index === 0}
+            data-tina-field={tinaField(item)}
+          >
             <summary>
               <span class="pasco-faq__number">{String(index + 1).padStart(2, "0")}</span>
               <h3>{item.heading}</h3>
@@ -491,6 +510,7 @@ const seasonsImages = [
     class:list={["pasco-final", `tone-${page.finalCta.tone}`]}
     aria-labelledby="pasco-final-title"
     tabindex="-1"
+    data-tina-field={tinaField(page, "finalCta")}
   >
     <figure class="pasco-final__background">
       <Picture

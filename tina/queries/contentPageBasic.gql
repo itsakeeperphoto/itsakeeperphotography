@@ -1,0 +1,5 @@
+query contentPageBasic($pagePath: String!) {
+  contentPage(relativePath: $pagePath) {
+    ...ContentPageParts
+  }
+}

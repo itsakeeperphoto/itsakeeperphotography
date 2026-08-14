@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import JournalBook from "../JournalBook.astro";
 import KindWords from "../KindWords.astro";
 import Picture from "../Picture.astro";
@@ -71,6 +72,7 @@ const heroIntro = page.hero.intro;
   class="reviews-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="reviews"
@@ -94,6 +96,7 @@ const heroIntro = page.hero.intro;
     paperEdgeColor="var(--color-warm-ivory)"
     buttonLabel="Read their stories"
     buttonTargetId="at-ease"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
@@ -101,6 +104,7 @@ const heroIntro = page.hero.intro;
     id="at-ease"
     aria-labelledby="at-ease-title"
     tabindex="-1"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(ease))}
   >
     <div class="reviews-shell reviews-ease__inner">
       <div class="reviews-ease__media">
@@ -146,7 +150,11 @@ const heroIntro = page.hero.intro;
   )}
 
   {journalPages.length > 0 && (
-    <section class="reviews-journal" aria-labelledby="reviews-journal-title">
+    <section
+      class="reviews-journal"
+      aria-labelledby="reviews-journal-title"
+      data-tina-field={tinaField(page, "sections", page.sections.indexOf(journal))}
+    >
       <header class="reviews-journal__intro reviews-shell">
         {journal.eyebrow && <p class="reviews-eyebrow">{journal.eyebrow}</p>}
         <h2 id="reviews-journal-title">{journal.heading}</h2>
@@ -165,7 +173,11 @@ const heroIntro = page.hero.intro;
     </section>
   )}
 
-  <section class="reviews-final" aria-labelledby="reviews-final-title">
+  <section
+    class="reviews-final"
+    aria-labelledby="reviews-final-title"
+    data-tina-field={tinaField(page, "finalCta")}
+  >
     <div class="reviews-final__background" aria-hidden="true">
       <Picture
         src={page.finalCta?.image || "/uploads/family-laughter-black-white-tricities.jpg"}
@@ -178,10 +190,16 @@ const heroIntro = page.hero.intro;
       />
       <div class="reviews-final__wash"></div>
     </div>
-    <div class="reviews-shell reviews-final__inner">
+    <div
+      class="reviews-shell reviews-final__inner"
+      data-tina-field={tinaField(page, "sections", page.sections.indexOf(nerves))}
+    >
       <p class="reviews-final__script" aria-hidden="true">you will too</p>
-      <h2 id="reviews-final-title">{nerves.heading}</h2>
-      <p>{nervesQuote}</p>
+      <h2
+        id="reviews-final-title"
+        data-tina-field={tinaField(nerves, "heading")}
+      >{nerves.heading}</h2>
+      <p data-tina-field={tinaField(nerves, "items", 0)}>{nervesQuote}</p>
       {page.finalCta?.link && (
         <a class="outline-button" href={page.finalCta.link.href}>
           {page.finalCta.link.label}

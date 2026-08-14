@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import InlineLinkedText from "../InlineLinkedText.astro";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
@@ -49,6 +50,7 @@ const finalCta = page.finalCta;
   class="senior-timing-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="journal"
@@ -72,6 +74,7 @@ const finalCta = page.finalCta;
     paperEdgeColor="var(--color-warm-ivory)"
     buttonLabel="Read the timeline"
     buttonTargetId={shortAnswer.id}
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <div class="senior-timing-byline" aria-label="Article author">
@@ -87,6 +90,7 @@ const finalCta = page.finalCta;
     id={shortAnswer.id}
     aria-labelledby={`${shortAnswer.id}-title`}
     tabindex="-1"
+    data-tina-field={tinaField(shortAnswer)}
   >
     <div class="senior-timing-shell senior-timing-answer__inner">
       <div class="senior-timing-answer__arch">
@@ -103,6 +107,7 @@ const finalCta = page.finalCta;
     class="senior-timing-yearbook"
     id={yearbook.id}
     aria-labelledby={`${yearbook.id}-title`}
+    data-tina-field={tinaField(yearbook)}
   >
     <div class="senior-timing-shell senior-timing-yearbook__inner">
       {yearbook.image && (
@@ -139,6 +144,7 @@ const finalCta = page.finalCta;
     class="senior-timing-seasons"
     id={seasons.id}
     aria-labelledby={`${seasons.id}-title`}
+    data-tina-field={tinaField(seasons)}
   >
     <div class="senior-timing-shell senior-timing-seasons__inner">
       <header class="senior-timing-seasons__header">
@@ -148,7 +154,10 @@ const finalCta = page.finalCta;
 
       <ol class="senior-timing-seasons__contact-sheet">
         {seasons.items?.map((item, index) => (
-          <li class:list={["senior-timing-season", `senior-timing-season--${index + 1}`]}>
+          <li
+            class:list={["senior-timing-season", `senior-timing-season--${index + 1}`]}
+            data-tina-field={tinaField(item)}
+          >
             {item.image && (
               <figure class="senior-timing-season__image">
                 <Picture
@@ -176,6 +185,7 @@ const finalCta = page.finalCta;
     class="senior-timing-too-late"
     id={tooLate.id}
     aria-labelledby={`${tooLate.id}-title`}
+    data-tina-field={tinaField(tooLate)}
   >
     <div class="senior-timing-shell senior-timing-too-late__inner">
       <h2 id={`${tooLate.id}-title`}>{tooLate.heading}</h2>
@@ -189,6 +199,7 @@ const finalCta = page.finalCta;
     class="senior-timing-golden"
     id={goldenHour.id}
     aria-labelledby={`${goldenHour.id}-title`}
+    data-tina-field={tinaField(goldenHour)}
   >
     <div class="senior-timing-shell senior-timing-golden__inner">
       {goldenHour.image && (
@@ -215,6 +226,7 @@ const finalCta = page.finalCta;
     class="senior-timing-booking"
     id={booking.id}
     aria-labelledby={`${booking.id}-title`}
+    data-tina-field={tinaField(booking)}
   >
     <div class="senior-timing-shell senior-timing-booking__inner">
       <div class="senior-timing-booking__copy">
@@ -249,12 +261,16 @@ const finalCta = page.finalCta;
     class="senior-timing-faq"
     id={quickAnswers.id}
     aria-labelledby={`${quickAnswers.id}-title`}
+    data-tina-field={tinaField(quickAnswers)}
   >
     <div class="senior-timing-shell senior-timing-faq__inner">
       <h2 id={`${quickAnswers.id}-title`}>{quickAnswers.heading}</h2>
       <div class="senior-timing-faq__list">
         {quickAnswers.items?.map((item, index) => (
-          <details open={index === 0}>
+          <details
+            open={index === 0}
+            data-tina-field={tinaField(item)}
+          >
             <summary>
               <h3>
                 <span>{item.heading}</span>
@@ -272,7 +288,11 @@ const finalCta = page.finalCta;
   </section>
 
   {finalCta && (
-    <section class="senior-timing-final" aria-labelledby="senior-timing-final-title">
+    <section
+      class="senior-timing-final"
+      aria-labelledby="senior-timing-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
+    >
       {finalCta.image && (
         <figure class="senior-timing-final__background">
           <Picture

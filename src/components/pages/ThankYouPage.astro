@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 
@@ -30,6 +31,7 @@ const finalImageAlt =
   class="thank-you-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="thank-you"
@@ -55,6 +57,7 @@ const finalImageAlt =
     paperEdgeColor="var(--color-warm-ivory)"
     buttonLabel="What happens next"
     buttonTargetId="your-message-is-with-me"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
@@ -62,6 +65,7 @@ const finalImageAlt =
     id={note.id}
     aria-labelledby={`${note.id}-title`}
     tabindex="-1"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(note))}
   >
     <div class="thank-you-shell thank-you-note__inner">
       <div class="thank-you-note__copy">
@@ -103,8 +107,8 @@ const finalImageAlt =
       <div class="thank-you-next" aria-labelledby="thank-you-next-title">
         <h2 id="thank-you-next-title">What Happens Next</h2>
         <ol>
-          {steps.map((item) => (
-            <li>
+          {steps.map((item, index) => (
+            <li data-tina-field={tinaField(note, "items", index)}>
               {item.heading && <h3>{item.heading}</h3>}
               {item.detail && <p>{item.detail}</p>}
             </li>
@@ -115,7 +119,11 @@ const finalImageAlt =
   </section>
 
   {final && (
-    <section class="thank-you-close" aria-labelledby="thank-you-close-title">
+    <section
+      class="thank-you-close"
+      aria-labelledby="thank-you-close-title"
+      data-tina-field={tinaField(page, "finalCta")}
+    >
       <div class="thank-you-close__media">
         <Picture
           src={finalImage}

@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import InlineLinkedText from "../InlineLinkedText.astro";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
@@ -43,6 +44,7 @@ const locationKindSizes = [
   class="locations-guide-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="journal"
@@ -57,6 +59,7 @@ const locationKindSizes = [
     leftPrint={{ src: heroLeftImage, objectPosition: "50% 45%" }}
     rightPrint={{ src: heroRightImage, objectPosition: "67% 50%" }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <div class="locations-guide__byline" aria-label="Article author">
@@ -71,6 +74,7 @@ const locationKindSizes = [
     class="locations-answer tone-ivory"
     id={shortAnswer.id}
     aria-labelledby={`${shortAnswer.id}-title`}
+    data-tina-field={tinaField(shortAnswer)}
   >
     <div class="locations-shell locations-answer__inner">
       <header class="locations-answer__heading">
@@ -90,6 +94,7 @@ const locationKindSizes = [
     class="locations-thesis tone-earth"
     id={lightThesis.id}
     aria-labelledby={`${lightThesis.id}-title`}
+    data-tina-field={tinaField(lightThesis)}
   >
     <div class="locations-thesis__rule" aria-hidden="true"></div>
     <div class="locations-shell locations-thesis__inner">
@@ -121,6 +126,7 @@ const locationKindSizes = [
     class="locations-kinds tone-sand"
     id={locationKinds.id}
     aria-labelledby={`${locationKinds.id}-title`}
+    data-tina-field={tinaField(locationKinds)}
   >
     <div class="locations-shell locations-kinds__inner">
       <header class="locations-kinds__header">
@@ -134,6 +140,7 @@ const locationKindSizes = [
           <article
             class:list={["location-kind", `location-kind--${index + 1}`]}
             aria-labelledby={`${locationKinds.id}-kind-${index + 1}`}
+            data-tina-field={tinaField(item)}
           >
             {item.image && (
               <figure class="location-kind__print">
@@ -163,6 +170,7 @@ const locationKindSizes = [
     class="locations-fit tone-olive"
     id={sessionFit.id}
     aria-labelledby={`${sessionFit.id}-title`}
+    data-tina-field={tinaField(sessionFit)}
   >
     <div class="locations-shell locations-fit__inner">
       <header class="locations-fit__header">
@@ -176,7 +184,7 @@ const locationKindSizes = [
           const paragraph = item.paragraphs?.[0] || "";
           const link = item.links?.[0];
           return (
-            <li>
+            <li data-tina-field={tinaField(item)}>
               <span class="locations-fit__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               {item.image && (
                 <figure class:list={["locations-fit__print", { "locations-fit__print--arch": index === 0 }]}>
@@ -208,6 +216,7 @@ const locationKindSizes = [
     class="locations-seasons tone-ivory"
     id={seasons.id}
     aria-labelledby={`${seasons.id}-title`}
+    data-tina-field={tinaField(seasons)}
   >
     <div class="locations-seasons__heading">
       <div>
@@ -218,7 +227,10 @@ const locationKindSizes = [
     </div>
     <div class="locations-seasons__timeline">
       {seasons.items?.map((item, index) => (
-        <article class:list={["season-stop", `season-stop--${index + 1}`]}>
+        <article
+          class:list={["season-stop", `season-stop--${index + 1}`]}
+          data-tina-field={tinaField(item)}
+        >
           <div class="season-stop__marker" aria-hidden="true"></div>
           {item.image && (
             <figure class:list={["season-stop__print", { "season-stop__print--arch": index === 3 }]}>
@@ -249,6 +261,7 @@ const locationKindSizes = [
     class="locations-winter tone-olive"
     id={winter.id}
     aria-labelledby={`${winter.id}-title`}
+    data-tina-field={tinaField(winter)}
   >
     <div class="locations-shell locations-winter__inner">
       {winter.image && (
@@ -278,6 +291,7 @@ const locationKindSizes = [
     class="locations-choosing tone-sand"
     id={choosing.id}
     aria-labelledby={`${choosing.id}-title`}
+    data-tina-field={tinaField(choosing)}
   >
     <div class="locations-shell locations-choosing__inner">
       <div class="locations-choosing__copy">
@@ -329,6 +343,7 @@ const locationKindSizes = [
     class="locations-faq tone-ivory"
     id={questions.id}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="locations-shell locations-faq__inner">
       <header class="locations-faq__header">
@@ -337,7 +352,10 @@ const locationKindSizes = [
       </header>
       <div class="locations-faq__list">
         {questions.items?.map((item, index) => (
-          <details open={index === 0}>
+          <details
+            open={index === 0}
+            data-tina-field={tinaField(item)}
+          >
             <summary>
               <h3>
                 <span class="locations-faq__number" aria-hidden="true">
@@ -357,7 +375,11 @@ const locationKindSizes = [
   </section>
 
   {page.finalCta && (
-    <section class="locations-final tone-umber" aria-labelledby="locations-final-title">
+    <section
+      class="locations-final tone-umber"
+      aria-labelledby="locations-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
+    >
       {page.finalCta.image && (
         <div class="locations-final__background" aria-hidden="true">
           <Picture

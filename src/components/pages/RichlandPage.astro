@@ -4,6 +4,7 @@ import type {
   PageLink,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/richland-page.css";
@@ -115,6 +116,7 @@ const faqSchema = faqItems.map((item) => ({
   class="richland-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <!-- Direction contract: editorial heirloom; persuade + read; Richland residence, local light knowledge, and an asymmetrical photographic rhythm. -->
   <EditorialHero
@@ -137,12 +139,14 @@ const faqSchema = faqItems.map((item) => ({
         }
       : undefined}
     paperEdgeColor="var(--color-weathered-sand)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     id={introduction.id}
     class:list={["richland-residence", `tone-${introduction.tone}`]}
     aria-labelledby={`${introduction.id}-title`}
+    data-tina-field={tinaField(introduction)}
   >
     <div class="richland-shell richland-residence__grid">
       <div class="richland-residence__media">
@@ -209,6 +213,7 @@ const faqSchema = faqItems.map((item) => ({
     id={light.id}
     class:list={["richland-light", `tone-${light.tone}`]}
     aria-labelledby={`${light.id}-title`}
+    data-tina-field={tinaField(light)}
   >
     <div class="richland-shell">
       <header class="richland-light__header">
@@ -278,6 +283,7 @@ const faqSchema = faqItems.map((item) => ({
     id={directory.id}
     class:list={["richland-directory", `tone-${directory.tone}`]}
     aria-labelledby={`${directory.id}-title`}
+    data-tina-field={tinaField(directory)}
   >
     <div class="richland-shell">
       <header class="richland-directory__header">
@@ -296,7 +302,7 @@ const faqSchema = faqItems.map((item) => ({
             const Row = link ? "a" : "div";
 
             return (
-              <li>
+              <li data-tina-field={tinaField(item)}>
                 <Row
                   class:list={[
                     "richland-directory__row",
@@ -378,6 +384,7 @@ const faqSchema = faqItems.map((item) => ({
       id={recent.id}
       class:list={["richland-recent", `tone-${recent.tone}`]}
       aria-labelledby={`${recent.id}-title`}
+      data-tina-field={tinaField(recent)}
     >
       <div class="richland-shell">
         <header class="richland-recent__header">
@@ -393,6 +400,7 @@ const faqSchema = faqItems.map((item) => ({
                 `richland-recent__photo--${(index % 4) + 1}`,
                 index === 4 && "richland-recent__photo--landscape",
               ]}
+              data-tina-field={tinaField(item)}
             >
               <Picture
                 src={item.image!}
@@ -415,6 +423,7 @@ const faqSchema = faqItems.map((item) => ({
     id={planning.id}
     class:list={["richland-planning", `tone-${planning.tone}`]}
     aria-labelledby={`${planning.id}-title`}
+    data-tina-field={tinaField(planning)}
   >
     <div class="richland-shell richland-planning__grid">
       <div class="richland-planning__copy">
@@ -479,6 +488,7 @@ const faqSchema = faqItems.map((item) => ({
     id={questions.id}
     class:list={["richland-faq", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="richland-shell richland-faq__grid">
       <header class="richland-faq__header">
@@ -490,7 +500,10 @@ const faqSchema = faqItems.map((item) => ({
       {faqItems.length > 0 && (
         <div class="richland-faq__list">
           {faqItems.map((item, index) => (
-            <details open={index === 0}>
+            <details
+              open={index === 0}
+              data-tina-field={tinaField(item)}
+            >
               <summary>
                 <span class="richland-faq__number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
@@ -516,6 +529,7 @@ const faqSchema = faqItems.map((item) => ({
       class:list={["richland-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="richland-final-title"
       tabindex="-1"
+      data-tina-field={tinaField(page, "finalCta")}
     >
       {page.finalCta.image && (
         <div class="richland-final__background" aria-hidden="true">

@@ -3,6 +3,7 @@ import type {
   EditorialPageData,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import SessionPriceCalculator from "../SessionPriceCalculator.astro";
 import EditorialHero from "./EditorialHero.astro";
@@ -36,6 +37,7 @@ const notificationRecipient =
   class="contact-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="contact"
@@ -60,6 +62,7 @@ const notificationRecipient =
       objectPosition: "50% 46%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <SessionPriceCalculator notificationRecipient={notificationRecipient} />
@@ -67,6 +70,7 @@ const notificationRecipient =
   <section
     class="contact-next"
     aria-labelledby="contact-next-title"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(next))}
   >
     <div class="contact-shell">
       <header class="contact-next__header">
@@ -76,7 +80,7 @@ const notificationRecipient =
 
       <ol class="contact-next__ledger">
         {next.items?.map((item, index) => (
-          <li>
+          <li data-tina-field={tinaField(next, "items", index)}>
             <span>{String(index + 1).padStart(2, "0")}</span>
             {item.heading && <h3>{item.heading.replace(/^\d+\.\s*/, "")}</h3>}
             {item.detail && <p>{item.detail}</p>}
@@ -93,6 +97,7 @@ const notificationRecipient =
   <section
     class="contact-reassurance"
     aria-labelledby="contact-talk-title"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(talk))}
   >
     <div class="contact-shell contact-reassurance__inner">
       <div class="contact-reassurance__copy">
@@ -125,7 +130,10 @@ const notificationRecipient =
             imgClass="photo--editorial"
           />
         </figure>
-        <div class="contact-reassurance__place">
+        <div
+          class="contact-reassurance__place"
+          data-tina-field={tinaField(page, "sections", page.sections.indexOf(where))}
+        >
           <p class="section-eyebrow">{where.heading}</p>
           {where.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>

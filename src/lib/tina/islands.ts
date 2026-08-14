@@ -6,6 +6,30 @@ import { editorialManifest } from "../page-manifest";
 import { getContentPageTina, getHomepagePage } from "./data";
 import { contentPageWrapper, homepageWrapper } from "./wrappers";
 
+const normalizeContentPageLists = (page: Record<string, any> | undefined) => {
+  if (!page) return page;
+
+  page.pending ??= [];
+  page.sections ??= [];
+  if (page.hero) page.hero.links ??= [];
+  if (page.finalCta) page.finalCta.paragraphs ??= [];
+
+  for (const section of page.sections) {
+    if (!section) continue;
+    section.paragraphs ??= [];
+    section.items ??= [];
+    section.links ??= [];
+
+    for (const item of section.items) {
+      if (!item) continue;
+      item.paragraphs ??= [];
+      item.links ??= [];
+    }
+  }
+
+  return page;
+};
+
 export const islands: IslandRegistry = {
   homepage: {
     fetch: () => getHomepagePage(),
@@ -27,6 +51,7 @@ export const islands: IslandRegistry = {
     wrapper: contentPageWrapper,
     propsFromData: (result) => {
       const data = (result as QueryResult<Record<string, any>>).data;
+      const page = normalizeContentPageLists(data.contentPage);
       const testimonials = (data.testimonialConnection?.edges || [])
         .map((edge: any) => edge?.node)
         .filter(Boolean)
@@ -37,7 +62,7 @@ export const islands: IslandRegistry = {
         .map((edge: any) => edge?.node)
         .filter(Boolean);
       return {
-        page: data.contentPage,
+        page,
         settings: data.settings,
         inquiry: data.homepage?.inquiry,
         kindWords: data.homepage?.kindWords,

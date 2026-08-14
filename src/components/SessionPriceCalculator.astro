@@ -567,4 +567,24 @@ const pricingVersion = "2026-07-29";
   import { initSessionPriceCalculators } from "../scripts/session-price-calculator";
 
   initSessionPriceCalculators();
+
+  const root = document.documentElement;
+  if (root.dataset.sessionCalculatorObserver !== "true") {
+    root.dataset.sessionCalculatorObserver = "true";
+    let refreshFrame = 0;
+    const observer = new MutationObserver((records) => {
+      const replacedIsland = records.some(
+        (record) =>
+          record.type === "childList" &&
+          record.target instanceof Element &&
+          record.target.matches("[data-tina-island]"),
+      );
+      if (!replacedIsland || refreshFrame) return;
+      refreshFrame = window.requestAnimationFrame(() => {
+        refreshFrame = 0;
+        initSessionPriceCalculators();
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 </script>

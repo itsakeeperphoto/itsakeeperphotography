@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 
@@ -174,6 +175,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
   data-branding-headshots-page
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="journal"
@@ -197,6 +199,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     paperEdgeColor="var(--color-warm-ivory)"
     buttonLabel="Read the comparison"
     buttonTargetId={shortAnswer.id}
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <div class="branding-headshots-byline" aria-label="Article author and publication date">
@@ -214,6 +217,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     id={shortAnswer.id}
     aria-labelledby={`${shortAnswer.id}-title`}
     tabindex="-1"
+    data-tina-field={tinaField(shortAnswer)}
   >
     <div class="branding-headshots-shell branding-headshots-answer__inner">
       <h2 id={`${shortAnswer.id}-title`}>{shortAnswer.heading}</h2>
@@ -227,6 +231,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-library"
     id={branding.id}
     aria-labelledby={`${branding.id}-title`}
+    data-tina-field={tinaField(branding)}
   >
     <div class="branding-headshots-shell branding-headshots-library__inner">
       <div class="branding-headshots-library__copy">
@@ -234,7 +239,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
         {branding.intro && <p class="branding-headshots-library__intro">{branding.intro}</p>}
         <ul>
           {branding.items?.map((item) => (
-            <li>
+            <li data-tina-field={tinaField(item)}>
               <span aria-hidden="true"></span>
               {item.detail}
             </li>
@@ -269,7 +274,10 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
             imgClass="photo--editorial"
           />
         </figure>
-        <figure class="branding-headshots-library__proof branding-headshots-library__proof--process">
+        <figure
+          class="branding-headshots-library__proof branding-headshots-library__proof--process"
+          data-tina-field={tinaField(brandingProcessProof)}
+        >
           <Picture
             src={brandingProcessImage}
             alt={brandingProcessProof?.imageAlt || ""}
@@ -288,6 +296,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-headshot"
     id={headshot.id}
     aria-labelledby={`${headshot.id}-title`}
+    data-tina-field={tinaField(headshot)}
   >
     <div class="branding-headshots-shell branding-headshots-headshot__inner">
       <div class="branding-headshots-headshot__copy">
@@ -312,6 +321,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-comparison"
     id={comparison.id}
     aria-labelledby={`${comparison.id}-title`}
+    data-tina-field={tinaField(comparison)}
   >
     <div class="branding-headshots-shell branding-headshots-comparison__inner">
       <h2 id={`${comparison.id}-title`}>{comparison.heading}</h2>
@@ -356,8 +366,18 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
               <th scope="col">
                 <span class="branding-headshots-visually-hidden">Comparison point</span>
               </th>
-              <th scope="col">{comparisonItems[0].heading}</th>
-              <th scope="col">{comparisonItems[1].heading}</th>
+              <th
+                scope="col"
+                data-tina-field={tinaField(comparison, "items", 0)}
+              >
+                {comparisonItems[0].heading}
+              </th>
+              <th
+                scope="col"
+                data-tina-field={tinaField(comparison, "items", 1)}
+              >
+                {comparisonItems[1].heading}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -378,12 +398,13 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-decision"
     id={decision.id}
     aria-labelledby={`${decision.id}-title`}
+    data-tina-field={tinaField(decision)}
   >
     <div class="branding-headshots-shell branding-headshots-decision__inner">
       <h2 id={`${decision.id}-title`}>{decision.heading}</h2>
       <ol class="branding-headshots-decision__list">
         {decision.items?.map((item, itemIndex) => (
-          <li>
+          <li data-tina-field={tinaField(item)}>
             <span class="branding-headshots-decision__number" aria-hidden="true">
               {String(itemIndex + 1).padStart(2, "0")}
             </span>
@@ -411,6 +432,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-session"
     id={session.id}
     aria-labelledby={`${session.id}-title`}
+    data-tina-field={tinaField(session)}
   >
     <div class="branding-headshots-session__inner">
       <figure class="branding-headshots-session__image">
@@ -435,12 +457,17 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-faq"
     id={questions.id}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="branding-headshots-shell branding-headshots-faq__inner">
       <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
       <div class="branding-headshots-faq__list">
         {questions.items?.map((item, index) => (
-          <details class="branding-headshots-faq__item" open={index === 0}>
+          <details
+            class="branding-headshots-faq__item"
+            open={index === 0}
+            data-tina-field={tinaField(item)}
+          >
             <summary>
               <h3>
                 <span>{item.heading}</span>
@@ -466,6 +493,7 @@ const finalImage = requireText(finalCta.image, "the final CTA image");
     class="branding-headshots-final"
     id="show-them-who-you-are"
     aria-labelledby="show-them-who-you-are-title"
+    data-tina-field={tinaField(page, "finalCta")}
   >
     <figure class="branding-headshots-final__background" aria-hidden="true">
       <Picture

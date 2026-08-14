@@ -6,14 +6,15 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "npm run build:scripts && tinacms dev -c \"astro dev\"",
+    "dev": "npm run validate:tina && npm run build:scripts && tinacms dev -c \"astro dev\"",
     "build:scripts": "esbuild public/scripts/site.js public/scripts/chrome.js --minify --outdir=public/scripts --out-extension:.js=.min.js",
     "optimize:source-images": "node scripts/optimize-source-images.mjs",
     "optimize:images": "node scripts/optimize-images.mjs",
-    "build": "npm run build:scripts && npm run optimize:source-images && npm run optimize:images && tinacms build --content=local -c \"astro build\" && npm run install:netlify-headers && npm run validate:site",
-    "build:local": "npm run build:scripts && npm run optimize:source-images && npm run optimize:images && tinacms build --local --skip-cloud-checks --skip-indexing -c \"astro build\" && npm run install:netlify-headers && npm run validate:site",
+    "build": "npm run validate:tina && npm run build:scripts && npm run optimize:source-images && npm run optimize:images && tinacms build --content=local -c \"astro build\" && npm run install:netlify-headers && npm run validate:site",
+    "build:local": "npm run validate:tina && npm run build:scripts && npm run optimize:source-images && npm run optimize:images && tinacms build --local --skip-cloud-checks --skip-indexing -c \"astro build\" && npm run install:netlify-headers && npm run validate:site",
     "install:netlify-headers": "node scripts/install-netlify-headers.mjs",
     "validate:site": "node scripts/validate-site.mjs",
+    "validate:tina": "node scripts/validate-tina-editor.mjs",
     "preview": "astro preview",
     "preview:static": "node scripts/serve-dist.mjs",
     "audit:lighthouse": "npm run build:local && npm run preview:static",

@@ -1,5 +1,6 @@
 ---
 import type { EditorialPageData, PageSection } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/newborn-page.css";
@@ -50,6 +51,7 @@ const faqSchema = (questions.items || [])
   class="newborn-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="newborn"
@@ -72,17 +74,19 @@ const faqSchema = (questions.items || [])
       objectPosition: "50% 48%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     class:list={["newborn-short-answer", `tone-${babyLed.tone}`]}
     aria-labelledby={`${babyLed.id}-title`}
+    data-tina-field={tinaField(babyLed)}
   >
     <div class="newborn-shell newborn-short-answer__inner">
       <div class="newborn-short-answer__copy">
         <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${babyLed.id}-title`}>{babyLed.heading}</h2>
-        <div class="newborn-prose">
+        <h2 id={`${babyLed.id}-title`} data-tina-field={tinaField(babyLed, "heading")}>{babyLed.heading}</h2>
+        <div class="newborn-prose" data-tina-field={tinaField(babyLed, "paragraphs")}>
           {babyLed.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -97,6 +101,7 @@ const faqSchema = (questions.items || [])
             responsiveSrcset
             sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1050px) 46vw, 34rem"
             imgClass="photo--editorial"
+            dataTinaField={tinaField(babyLed, "image")}
           />
         </figure>
       )}
@@ -106,6 +111,7 @@ const faqSchema = (questions.items || [])
   <section
     class:list={["newborn-these-days", `tone-${firstDays.tone}`]}
     aria-labelledby={`${firstDays.id}-title`}
+    data-tina-field={tinaField(firstDays)}
   >
     <div class="newborn-shell newborn-these-days__inner">
       {firstDays.image && (
@@ -118,14 +124,15 @@ const faqSchema = (questions.items || [])
             responsiveSrcset
             sizes="(max-width: 767px) min(82vw, 22rem), (max-width: 1050px) 36vw, 25rem"
             imgClass="photo--editorial"
+            dataTinaField={tinaField(firstDays, "image")}
           />
         </figure>
       )}
 
       <div class="newborn-these-days__copy">
         <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${firstDays.id}-title`}>{firstDays.heading}</h2>
-        <div class="newborn-prose">
+        <h2 id={`${firstDays.id}-title`} data-tina-field={tinaField(firstDays, "heading")}>{firstDays.heading}</h2>
+        <div class="newborn-prose" data-tina-field={tinaField(firstDays, "paragraphs")}>
           {firstDays.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -135,17 +142,18 @@ const faqSchema = (questions.items || [])
   <section
     class:list={["newborn-process", `tone-${process.tone}`]}
     aria-labelledby={`${process.id}-title`}
+    data-tina-field={tinaField(process)}
   >
     <div class="newborn-shell newborn-process__inner">
       <header class="newborn-process__heading">
         <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${process.id}-title`}>{process.heading}</h2>
+        <h2 id={`${process.id}-title`} data-tina-field={tinaField(process, "heading")}>{process.heading}</h2>
       </header>
 
       {processItems.length > 0 && (
         <ol class="newborn-process__triptych">
           {processItems.map((item, index) => (
-            <li class:list={["newborn-process__item", { "newborn-process__item--arch": index === 1 }]}>
+            <li class:list={["newborn-process__item", { "newborn-process__item--arch": index === 1 }]} data-tina-field={tinaField(process, "items", index)}>
               <div class="newborn-process__image-row">
                 {index === 1 && process.eyebrow && (
                   <svg
@@ -174,6 +182,7 @@ const faqSchema = (questions.items || [])
                       responsiveSrcset
                       sizes="(max-width: 767px) 82vw, (max-width: 1050px) 30vw, 23rem"
                       imgClass="photo--editorial"
+                      dataTinaField={tinaField(item, "image")}
                     />
                   </figure>
                 )}
@@ -197,15 +206,16 @@ const faqSchema = (questions.items || [])
   <section
     class:list={["newborn-booking", `tone-${booking.tone}`]}
     aria-labelledby={`${booking.id}-title`}
+    data-tina-field={tinaField(booking)}
   >
     <div class="newborn-shell newborn-booking__inner">
       <header class="newborn-booking__heading">
         <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${booking.id}-title`}>{booking.heading}</h2>
+        <h2 id={`${booking.id}-title`} data-tina-field={tinaField(booking, "heading")}>{booking.heading}</h2>
       </header>
 
       <div class="newborn-booking__spread">
-        <div class="newborn-booking__statement">
+        <div class="newborn-booking__statement" data-tina-field={bookingStatement ? tinaField(booking, "items", 0) : undefined}>
           {bookingStatement?.heading && <h3>{bookingStatement.heading}</h3>}
           {booking.image && (
             <figure class="newborn-booking__photo">
@@ -217,6 +227,7 @@ const faqSchema = (questions.items || [])
                 responsiveSrcset
                 sizes="(max-width: 767px) min(76vw, 21rem), (max-width: 1050px) 34vw, 23rem"
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(booking, "image")}
               />
             </figure>
           )}
@@ -239,12 +250,13 @@ const faqSchema = (questions.items || [])
   <section
     class:list={["newborn-archive", `tone-${growing.tone}`]}
     aria-labelledby={`${growing.id}-title`}
+    data-tina-field={tinaField(growing)}
   >
     <div class="newborn-shell newborn-archive__inner">
       <div class="newborn-archive__copy">
         <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${growing.id}-title`}>{growing.heading}</h2>
-        <div class="newborn-prose">
+        <h2 id={`${growing.id}-title`} data-tina-field={tinaField(growing, "heading")}>{growing.heading}</h2>
+        <div class="newborn-prose" data-tina-field={tinaField(growing, "paragraphs")}>
           <p>{growing.paragraphs?.[0]}{growingLink && (
             <a href={growingLink.href}>{growingLink.label}</a>
           )}{growing.paragraphs?.[1]}</p>
@@ -264,6 +276,7 @@ const faqSchema = (questions.items || [])
                 responsiveSrcset
                 sizes="(max-width: 767px) 72vw, (max-width: 1050px) 32vw, 22rem"
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(growing, "image")}
               />
             </figure>
           )}
@@ -277,6 +290,7 @@ const faqSchema = (questions.items || [])
                 responsiveSrcset
                 sizes="(max-width: 767px) 52vw, (max-width: 1050px) 23vw, 15rem"
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(growing, "secondaryImage")}
               />
             </figure>
           )}
@@ -288,17 +302,18 @@ const faqSchema = (questions.items || [])
   <section
     class:list={["newborn-questions", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="newborn-shell newborn-questions__inner">
       <header class="newborn-questions__heading">
         <span class="newborn-rule" aria-hidden="true"></span>
-        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        <h2 id={`${questions.id}-title`} data-tina-field={tinaField(questions, "heading")}>{questions.heading}</h2>
       </header>
 
       {questions.items?.length && (
         <div class="newborn-questions__list">
           {questions.items.map((item, index) => (
-            <details class="newborn-questions__item" open={index === 0}>
+            <details class="newborn-questions__item" open={index === 0} data-tina-field={tinaField(questions, "items", index)}>
               <summary>
                 <span class="newborn-questions__number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
@@ -322,12 +337,13 @@ const faqSchema = (questions.items || [])
     <section
       class:list={["newborn-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="newborn-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
     >
       <div class="newborn-final__inner">
         <div class="newborn-final__copy">
           <span class="newborn-rule" aria-hidden="true"></span>
-          <h2 id="newborn-final-title">{page.finalCta.heading}</h2>
-          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          <h2 id="newborn-final-title" data-tina-field={tinaField(page.finalCta, "heading")}>{page.finalCta.heading}</h2>
+          {page.finalCta.paragraphs?.map((paragraph) => <p data-tina-field={tinaField(page.finalCta, "paragraphs")}>{paragraph}</p>)}
           {page.finalCta.link && (
             <a class="outline-button" href={page.finalCta.link.href}>
               {page.finalCta.link.label}
@@ -344,6 +360,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 100vw, 55vw"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(page.finalCta, "image")}
             />
           </figure>
         )}

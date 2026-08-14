@@ -10,6 +10,7 @@ import HeadshotPage from "./HeadshotPage.astro";
 import InvestmentPage from "./InvestmentPage.astro";
 import JournalPage from "./JournalPage.astro";
 import KennewickPage from "./KennewickPage.astro";
+import LocationsGuidePage from "./LocationsGuidePage.astro";
 import NewbornComparisonPage from "./NewbornComparisonPage.astro";
 import NewbornPage from "./NewbornPage.astro";
 import PascoPage from "./PascoPage.astro";
@@ -21,7 +22,7 @@ import ThankYouPage from "./ThankYouPage.astro";
 
 interface Props {
   page: EditorialPageData;
-  settings: any;
+  settings?: any;
   inquiry?: any;
   kindWords?: any;
   testimonials?: any[];
@@ -41,6 +42,8 @@ const isHeadshotPage = props.page.route === "/headshot-photographer-tri-cities-w
 const isInvestmentPage = props.page.route === "/investment/";
 const isJournalPage = props.page.route === "/journal/";
 const isKennewickPage = props.page.route === "/kennewick-wa-photographer/";
+const isLocationsGuidePage =
+  props.page.route === "/journal/family-photo-locations-tri-cities/";
 const isNewbornComparisonPage =
   props.page.route === "/journal/in-home-vs-studio-newborn-photography/";
 const isNewbornPage = props.page.route === "/newborn-photographer-tri-cities-wa/";
@@ -71,6 +74,8 @@ const isThankYouPage = props.page.route === "/thank-you/";
     ? <JournalPage {...props} />
   : isKennewickPage
     ? <KennewickPage {...props} />
+  : isLocationsGuidePage
+    ? <LocationsGuidePage {...props} />
   : isNewbornComparisonPage
     ? <NewbornComparisonPage {...props} />
   : isNewbornPage

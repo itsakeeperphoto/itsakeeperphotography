@@ -188,46 +188,70 @@ const cardTilts = ["-0.7deg", "0.45deg", "-0.35deg", "0.65deg", "-0.5deg", "0.3d
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>("[data-google-review-summary]").forEach((reviewSummary) => {
-    if (reviewSummary.dataset.googleReviewSummaryBound === "true") return;
-    reviewSummary.dataset.googleReviewSummaryBound = "true";
-    const endpoint = reviewSummary.dataset.googleReviewSummaryEndpoint;
-    const businessName = reviewSummary.dataset.businessName;
+  const refreshGoogleReviewSummaries = () => {
+    document.querySelectorAll<HTMLElement>("[data-google-review-summary]").forEach((reviewSummary) => {
+      if (reviewSummary.dataset.googleReviewSummaryBound === "true") return;
+      reviewSummary.dataset.googleReviewSummaryBound = "true";
+      const endpoint = reviewSummary.dataset.googleReviewSummaryEndpoint;
+      const businessName = reviewSummary.dataset.businessName;
 
-    if (endpoint) {
-      fetch(endpoint, {
-        headers: { Accept: "application/json" },
-        credentials: "same-origin",
-      })
-        .then((response) => (response.ok ? response.json() : null))
-        .then((summary) => {
-          const totalReviewCount = summary?.totalReviewCount;
-          const averageRating = summary?.averageRating;
-          if (
-            !Number.isSafeInteger(totalReviewCount) ||
-            totalReviewCount < 0 ||
-            !Number.isFinite(averageRating) ||
-            averageRating < 0 ||
-            averageRating > 5
-          ) return;
-
-          const formattedCount = new Intl.NumberFormat("en-US").format(totalReviewCount);
-          const reviewNoun = totalReviewCount === 1 ? "review" : "reviews";
-          const formattedRating = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
-          }).format(averageRating);
-          const label = `${formattedRating} out of 5 from ${formattedCount} Google ${reviewNoun}`;
-
-          reviewSummary.textContent = label;
-          reviewSummary.setAttribute(
-            "aria-label",
-            businessName ? `${label} for ${businessName}` : label
-          );
+      if (endpoint) {
+        fetch(endpoint, {
+          headers: { Accept: "application/json" },
+          credentials: "same-origin",
         })
-        .catch(() => {
-          // The server-rendered summary remains usable when the cached summary is unavailable.
-        });
-    }
-  });
+          .then((response) => (response.ok ? response.json() : null))
+          .then((summary) => {
+            const totalReviewCount = summary?.totalReviewCount;
+            const averageRating = summary?.averageRating;
+            if (
+              !Number.isSafeInteger(totalReviewCount) ||
+              totalReviewCount < 0 ||
+              !Number.isFinite(averageRating) ||
+              averageRating < 0 ||
+              averageRating > 5
+            ) return;
+
+            const formattedCount = new Intl.NumberFormat("en-US").format(totalReviewCount);
+            const reviewNoun = totalReviewCount === 1 ? "review" : "reviews";
+            const formattedRating = new Intl.NumberFormat("en-US", {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            }).format(averageRating);
+            const label = `${formattedRating} out of 5 from ${formattedCount} Google ${reviewNoun}`;
+
+            reviewSummary.textContent = label;
+            reviewSummary.setAttribute(
+              "aria-label",
+              businessName ? `${label} for ${businessName}` : label
+            );
+          })
+          .catch(() => {
+            // The server-rendered summary remains usable when the cached summary is unavailable.
+          });
+      }
+    });
+  };
+
+  refreshGoogleReviewSummaries();
+
+  const root = document.documentElement;
+  if (root.dataset.googleReviewObserver !== "true") {
+    root.dataset.googleReviewObserver = "true";
+    let refreshFrame = 0;
+    const observer = new MutationObserver((records) => {
+      const replacedIsland = records.some(
+        (record) =>
+          record.type === "childList" &&
+          record.target instanceof Element &&
+          record.target.matches("[data-tina-island]"),
+      );
+      if (!replacedIsland || refreshFrame) return;
+      refreshFrame = window.requestAnimationFrame(() => {
+        refreshFrame = 0;
+        refreshGoogleReviewSummaries();
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 </script>

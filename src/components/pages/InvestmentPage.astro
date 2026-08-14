@@ -3,6 +3,7 @@ import type {
   EditorialPageData,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import { absoluteUrl, siteOrigin } from "../../lib/site-environment";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
@@ -114,6 +115,7 @@ const investmentSchema = {
   data-investment-page
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="investment"
@@ -144,12 +146,14 @@ const investmentSchema = {
       objectPosition: "50% 43%",
     }}
     paperEdgeColor="var(--color-muted-olive)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     class="investment-value"
     aria-labelledby={`${value.id}-title`}
     data-investment-section="value"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(value))}
   >
     <div class="investment-shell investment-value__inner">
       <div class="investment-value__media" data-line-target="value-media">
@@ -203,6 +207,7 @@ const investmentSchema = {
     class="investment-includes"
     aria-labelledby={`${includes.id}-title`}
     data-investment-section="includes"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(includes))}
   >
     <div class="investment-shell investment-includes__inner">
       <header class="investment-includes__heading">
@@ -212,7 +217,7 @@ const investmentSchema = {
 
       <ol class="investment-includes__ledger">
         {includes.items?.map((item, index) => (
-          <li>
+          <li data-tina-field={tinaField(includes, "items", index)}>
             <span class="investment-ledger-number">
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -230,6 +235,7 @@ const investmentSchema = {
     class="investment-journey"
     aria-labelledby={`${journey.id}-title`}
     data-investment-section="journey"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(journey))}
   >
     <div class="investment-shell investment-journey__inner">
       <div class="investment-journey__lead">
@@ -263,7 +269,7 @@ const investmentSchema = {
 
       <ol class="investment-journey__steps">
         {journeyItems.map((item, index) => (
-          <li>
+          <li data-tina-field={tinaField(journey, "items", index)}>
             <span class="investment-journey__number">
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -281,6 +287,7 @@ const investmentSchema = {
     class="investment-pricing"
     aria-labelledby={`${pricing.id}-title`}
     data-investment-section="pricing"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(pricing))}
   >
     <div class="investment-shell investment-pricing__sheet">
       <header class="investment-pricing__lead">
@@ -319,6 +326,7 @@ const investmentSchema = {
     class="investment-prints"
     aria-labelledby={`${printed.id}-title`}
     data-investment-section="prints"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(printed))}
   >
     <div class="investment-prints__copy">
       <div class="investment-prints__copy-inner">
@@ -377,6 +385,7 @@ const investmentSchema = {
     class="investment-timeline"
     aria-labelledby={`${timeline.id}-title`}
     data-investment-section="timeline"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(timeline))}
   >
     <div class="investment-shell investment-timeline__inner">
       <header class="investment-timeline__heading">
@@ -398,7 +407,7 @@ const investmentSchema = {
 
       <ol class="investment-timeline__ledger">
         {timeline.items?.map((item, index) => (
-          <li>
+          <li data-tina-field={tinaField(timeline, "items", index)}>
             <span class="investment-timeline__number">
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -421,6 +430,7 @@ const investmentSchema = {
     class="investment-policies"
     aria-labelledby={`${policies.id}-title`}
     data-investment-section="policies"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(policies))}
   >
     <div class="investment-shell investment-policies__inner">
       <header>
@@ -429,7 +439,7 @@ const investmentSchema = {
 
       <ol class="investment-policies__ledger">
         {policies.items?.map((item, index) => (
-          <li>
+          <li data-tina-field={tinaField(policies, "items", index)}>
             <span class="investment-ledger-number">
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -447,6 +457,7 @@ const investmentSchema = {
     class="investment-faq"
     aria-labelledby={`${questions.id}-title`}
     data-investment-section="faq"
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(questions))}
   >
     <div class="investment-shell investment-faq__inner">
       <div class="investment-faq__questions">
@@ -456,7 +467,10 @@ const investmentSchema = {
 
         <div class="investment-faq__ledger">
           {faqItems.map((item, index) => (
-            <details open={index === 0}>
+            <details
+              open={index === 0}
+              data-tina-field={tinaField(questions, "items", index)}
+            >
               <summary>
                 <span class="investment-faq__number">
                   {String(index + 1).padStart(2, "0")}
@@ -473,7 +487,11 @@ const investmentSchema = {
       </div>
 
       {page.finalCta && (
-        <aside class="investment-final" aria-labelledby="investment-final-title">
+        <aside
+          class="investment-final"
+          aria-labelledby="investment-final-title"
+          data-tina-field={tinaField(page, "finalCta")}
+        >
           <figure class="investment-print investment-final__portrait">
             <Picture
               src={finalImage}

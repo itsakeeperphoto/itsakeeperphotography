@@ -4,6 +4,7 @@ import type {
   PageLink,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 
@@ -31,7 +32,8 @@ const offCamera = requireSection("lisa-off-camera");
 const credentials = requireSection("experience-and-credentials");
 
 const lessonPrints = (lessons.items || []).filter((item) => item.image).slice(0, 3);
-const beliefQuote = belief.items?.find((item) => item.quote)?.quote;
+const beliefQuoteItem = belief.items?.find((item) => item.quote);
+const beliefQuote = beliefQuoteItem?.quote;
 const originNote = origin.paragraphs?.[0];
 const originParagraphs = origin.paragraphs?.slice(originNote ? 1 : 0);
 const lessonLead = lessons.paragraphs?.[0];
@@ -65,6 +67,7 @@ const linkedParts = (text: string, link?: PageLink) => {
   class="about-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="about"
@@ -87,12 +90,14 @@ const linkedParts = (text: string, link?: PageLink) => {
       objectPosition: "50% 48%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     id={origin.id}
     class:list={["about-origin", `tone-${origin.tone}`]}
     aria-labelledby={`${origin.id}-title`}
+    data-tina-field={tinaField(origin)}
   >
     <div class="about-shell about-origin__inner">
       <div class="about-origin__media">
@@ -110,6 +115,7 @@ const linkedParts = (text: string, link?: PageLink) => {
               responsiveSrcset
               sizes="(max-width: 767px) 86vw, (max-width: 1050px) 44vw, 31rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(origin, "image")}
             />
           </figure>
         )}
@@ -124,6 +130,7 @@ const linkedParts = (text: string, link?: PageLink) => {
               optimizedMobileWidth={400}
               optimizedDesktopWidth={640}
               imgClass="photo--editorial"
+              dataTinaField={tinaField(origin, "secondaryImage")}
             />
           </figure>
         )}
@@ -136,8 +143,8 @@ const linkedParts = (text: string, link?: PageLink) => {
       </div>
 
       <div class="about-origin__copy">
-        <h2 id={`${origin.id}-title`}>{origin.heading}</h2>
-        <div class="about-prose">
+        <h2 id={`${origin.id}-title`} data-tina-field={tinaField(origin, "heading")}>{origin.heading}</h2>
+        <div class="about-prose" data-tina-field={tinaField(origin, "paragraphs")}>
           {originParagraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -155,13 +162,14 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={nameStory.id}
     class:list={["about-name", `tone-${nameStory.tone}`]}
     aria-labelledby={`${nameStory.id}-title`}
+    data-tina-field={tinaField(nameStory)}
   >
     <div class="about-shell about-name__inner">
       <div class="about-name__heading">
-        <h2 id={`${nameStory.id}-title`}>{nameStory.heading}</h2>
+        <h2 id={`${nameStory.id}-title`} data-tina-field={tinaField(nameStory, "heading")}>{nameStory.heading}</h2>
       </div>
       <div class="about-name__copy">
-        <div class="about-name__story">
+        <div class="about-name__story" data-tina-field={tinaField(nameStory, "paragraphs")}>
           {nameStory.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
         <p class="about-name__payoff" aria-label="Keepers">Keepers.</p>
@@ -173,6 +181,7 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={cameraStory.id}
     class:list={["about-camera", `tone-${cameraStory.tone}`]}
     aria-labelledby={`${cameraStory.id}-title`}
+    data-tina-field={tinaField(cameraStory)}
   >
     <div class="about-shell about-camera__inner">
       {cameraStory.image && (
@@ -185,13 +194,14 @@ const linkedParts = (text: string, link?: PageLink) => {
             responsiveSrcset
             sizes="(max-width: 767px) 88vw, (max-width: 1050px) 43vw, 34rem"
             imgClass="photo--editorial"
+            dataTinaField={tinaField(cameraStory, "image")}
           />
         </figure>
       )}
 
       <div class="about-camera__copy">
-        <h2 id={`${cameraStory.id}-title`}>{cameraStory.heading}</h2>
-        <div class="about-prose about-camera__paragraphs">
+        <h2 id={`${cameraStory.id}-title`} data-tina-field={tinaField(cameraStory, "heading")}>{cameraStory.heading}</h2>
+        <div class="about-prose about-camera__paragraphs" data-tina-field={tinaField(cameraStory, "paragraphs")}>
           {cameraStory.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -202,10 +212,11 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={lessons.id}
     class:list={["about-lessons", `tone-${lessons.tone}`]}
     aria-labelledby={`${lessons.id}-title`}
+    data-tina-field={tinaField(lessons)}
   >
     <div class="about-shell about-lessons__inner">
       <header class="about-lessons__heading">
-        <h2 id={`${lessons.id}-title`}>{lessons.heading}</h2>
+        <h2 id={`${lessons.id}-title`} data-tina-field={tinaField(lessons, "heading")}>{lessons.heading}</h2>
         {lessonLead && <p>{lessonLead}</p>}
       </header>
 
@@ -222,6 +233,7 @@ const linkedParts = (text: string, link?: PageLink) => {
                 { "about-lessons__photo--arch": index === 1 },
               ]}
               data-about-arch={index === 1 ? "lessons" : undefined}
+              data-tina-field={tinaField(item)}
             >
               <Picture
                 src={item.image!}
@@ -231,6 +243,7 @@ const linkedParts = (text: string, link?: PageLink) => {
                 responsiveSrcset
                 sizes="(max-width: 767px) 84vw, (max-width: 1050px) 38vw, 33vw"
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(item, "image")}
               />
             </figure>
           ))}
@@ -265,6 +278,7 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={belief.id}
     class:list={["about-belief", `tone-${belief.tone}`]}
     aria-labelledby={`${belief.id}-title`}
+    data-tina-field={tinaField(belief)}
   >
     <div class="about-shell about-belief__inner">
       {belief.image && (
@@ -277,18 +291,19 @@ const linkedParts = (text: string, link?: PageLink) => {
             responsiveSrcset
             sizes="(max-width: 767px) 88vw, (max-width: 1050px) 48vw, 50vw"
             imgClass="about-belief__portrait photo--editorial"
+            dataTinaField={tinaField(belief, "image")}
           />
         </figure>
       )}
 
       <div class="about-belief__copy">
         <header class="about-belief__heading">
-        <h2 id={`${belief.id}-title`}>{belief.heading}</h2>
-        {beliefQuote && <blockquote><p>{beliefQuote}</p></blockquote>}
+        <h2 id={`${belief.id}-title`} data-tina-field={tinaField(belief, "heading")}>{belief.heading}</h2>
+        {beliefQuote && <blockquote data-tina-field={beliefQuoteItem ? tinaField(beliefQuoteItem) : undefined}><p>{beliefQuote}</p></blockquote>}
         </header>
 
         <div class="about-paper-note about-belief__note">
-          <div class="about-belief__prose">
+          <div class="about-belief__prose" data-tina-field={tinaField(belief, "paragraphs")}>
             {belief.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         </div>
@@ -300,17 +315,18 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={method.id}
     class:list={["about-method", `tone-${method.tone}`]}
     aria-labelledby={`${method.id}-title`}
+    data-tina-field={tinaField(method)}
   >
     <div class="about-shell about-method__inner">
       <header class="about-method__heading">
-        <h2 id={`${method.id}-title`}>{method.heading}</h2>
+        <h2 id={`${method.id}-title`} data-tina-field={tinaField(method, "heading")}>{method.heading}</h2>
         {method.intro && <p>{method.intro}</p>}
       </header>
 
       {method.items?.length && (
         <ol class="about-method__ledger">
           {method.items.map((item, index) => (
-            <li>
+            <li data-tina-field={tinaField(method, "items", index)}>
               <span class="about-method__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -341,11 +357,12 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={offCamera.id}
     class:list={["about-personal", `tone-${offCamera.tone}`]}
     aria-labelledby={`${offCamera.id}-title`}
+    data-tina-field={tinaField(offCamera)}
   >
     <div class="about-shell about-personal__inner">
       <div class="about-personal__copy">
-        <h2 id={`${offCamera.id}-title`}>{offCamera.heading}</h2>
-        <div class="about-prose">
+        <h2 id={`${offCamera.id}-title`} data-tina-field={tinaField(offCamera, "heading")}>{offCamera.heading}</h2>
+        <div class="about-prose" data-tina-field={tinaField(offCamera, "paragraphs")}>
           {offCamera.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -365,6 +382,7 @@ const linkedParts = (text: string, link?: PageLink) => {
                 responsiveSrcset
                 sizes="(max-width: 767px) 74vw, (max-width: 1050px) 42vw, 32rem"
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(offCamera, "image")}
               />
             </figure>
           )}
@@ -381,6 +399,7 @@ const linkedParts = (text: string, link?: PageLink) => {
                 optimizedMobileWidth={400}
                 optimizedDesktopWidth={640}
                 imgClass="photo--editorial"
+                dataTinaField={tinaField(offCamera, "secondaryImage")}
               />
             </figure>
           )}
@@ -393,10 +412,11 @@ const linkedParts = (text: string, link?: PageLink) => {
     id={credentials.id}
     class:list={["about-proof", `tone-${credentials.tone}`]}
     aria-labelledby={`${credentials.id}-title`}
+    data-tina-field={tinaField(credentials)}
   >
     <div class="about-shell about-proof__inner">
       <div class="about-proof__heading">
-        <h2 id={`${credentials.id}-title`}>{credentials.heading}</h2>
+        <h2 id={`${credentials.id}-title`} data-tina-field={tinaField(credentials, "heading")}>{credentials.heading}</h2>
         {credentials.intro && (
           <p class="about-proof__identity">{credentials.intro}</p>
         )}
@@ -404,7 +424,7 @@ const linkedParts = (text: string, link?: PageLink) => {
       {credentials.items?.length && (
         <ul class="about-proof__ledger">
           {credentials.items.map((item, index) => (
-            <li>
+            <li data-tina-field={tinaField(credentials, "items", index)}>
               <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <div class="about-proof__entry">
                 {item.heading && <strong>{item.heading}</strong>}
@@ -431,6 +451,7 @@ const linkedParts = (text: string, link?: PageLink) => {
       id="about-final"
       class:list={["about-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="about-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
     >
       {finalImage && (
         <figure class="about-final__media">
@@ -442,14 +463,15 @@ const linkedParts = (text: string, link?: PageLink) => {
             responsiveSrcset
             sizes="100vw"
             imgClass="about-final__photo photo--editorial"
+            dataTinaField={tinaField(page.finalCta, "image")}
           />
         </figure>
       )}
       <div class="about-final__wash" aria-hidden="true"></div>
       <div class="about-shell about-final__inner">
         <div class="about-final__frame">
-          <h2 id="about-final-title">{page.finalCta.heading}</h2>
-          <div class="about-final__invitation">
+          <h2 id="about-final-title" data-tina-field={tinaField(page.finalCta, "heading")}>{page.finalCta.heading}</h2>
+          <div class="about-final__invitation" data-tina-field={tinaField(page.finalCta, "paragraphs")}>
             {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
             {page.finalCta.link && (
               <a class="outline-button" href={page.finalCta.link.href}>

@@ -1,0 +1,8 @@
+query contentPageContact($pagePath: String!, $settingsPath: String!) {
+  contentPage(relativePath: $pagePath) {
+    ...ContentPageParts
+  }
+  settings(relativePath: $settingsPath) {
+    ...SettingsParts
+  }
+}

@@ -4,6 +4,7 @@ import type {
   PageLink,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/branding-page.css";
@@ -32,21 +33,26 @@ const requireSection = (id: string): PageSection => {
 };
 
 const linkParagraphs = (
-  paragraphs: string[] = [],
-  links: PageLink[] = [],
+  paragraphs: Array<string | null> | null = [],
+  links: Array<PageLink | null> | null = [],
 ): LinkedParagraph[] =>
-  paragraphs.map((paragraph) => {
-    const link = links.find((candidate) => paragraph.includes(candidate.label));
-    if (!link) return { text: paragraph };
+  (paragraphs ?? [])
+    .filter((paragraph): paragraph is string => Boolean(paragraph))
+    .map((paragraph) => {
+      const link = (links ?? []).find(
+        (candidate): candidate is PageLink =>
+          Boolean(candidate && paragraph.includes(candidate.label)),
+      );
+      if (!link) return { text: paragraph };
 
-    const start = paragraph.indexOf(link.label);
-    return {
-      text: paragraph,
-      before: paragraph.slice(0, start),
-      after: paragraph.slice(start + link.label.length),
-      link,
-    };
-  });
+      const start = paragraph.indexOf(link.label);
+      return {
+        text: paragraph,
+        before: paragraph.slice(0, start),
+        after: paragraph.slice(start + link.label.length),
+        link,
+      };
+    });
 
 const people = requireSection("people-hire-people");
 const custom = requireSection("custom-business-photography");
@@ -91,6 +97,7 @@ const businessHeadshotImage =
   data-branding-page
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="branding"
@@ -117,12 +124,14 @@ const businessHeadshotImage =
       objectPosition: "50% 42%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     class="branding-face"
     data-branding-section="people"
     aria-labelledby={`${people.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(people))}
   >
     <div class="branding-shell branding-face__inner">
       <div class="branding-face__media" data-line-target="people-media">
@@ -181,6 +190,7 @@ const businessHeadshotImage =
     class="branding-custom"
     data-branding-section="custom"
     aria-labelledby={`${custom.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(custom))}
   >
     <div class="branding-shell branding-custom__inner">
       <div class="branding-custom__copy">
@@ -280,6 +290,7 @@ const businessHeadshotImage =
     class="branding-library"
     data-branding-section="photograph"
     aria-labelledby={`${photograph.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(photograph))}
   >
     <div class="branding-shell branding-library__inner">
       <header class="branding-library__heading">
@@ -290,7 +301,7 @@ const businessHeadshotImage =
       {photograph.items?.length && (
         <ol class="branding-library__list" data-line-target="brand-library">
           {photograph.items.map((item, index) => (
-            <li>
+            <li data-tina-field={tinaField(photograph, "items", index)}>
               <span class="branding-library__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -307,6 +318,7 @@ const businessHeadshotImage =
     class="branding-rights"
     data-branding-section="rights"
     aria-labelledby={`${rights.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(rights))}
   >
     <div class="branding-shell branding-rights__inner">
       <header class="branding-rights__heading">
@@ -320,6 +332,7 @@ const businessHeadshotImage =
             <article
               class="branding-rights__item"
               data-rights-tier={index === 1 ? "commercial" : "personal"}
+              data-tina-field={tinaField(rights, "items", index)}
             >
               <span class="branding-rights__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
@@ -341,6 +354,7 @@ const businessHeadshotImage =
     class="branding-audiences"
     data-branding-section="audiences"
     aria-labelledby={`${audiences.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(audiences))}
   >
     <div class="branding-shell branding-audiences__inner">
       <header class="branding-audiences__heading">
@@ -422,6 +436,7 @@ const businessHeadshotImage =
     class="branding-includes"
     data-branding-section="process"
     aria-labelledby={`${process.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(process))}
   >
     <div class="branding-shell branding-includes__inner">
       <header class="branding-includes__heading">
@@ -440,7 +455,10 @@ const businessHeadshotImage =
             );
 
             return (
-              <li data-branding-step>
+              <li
+                data-branding-step
+                data-tina-field={tinaField(process, "items", index)}
+              >
                 <span class="branding-includes__number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -470,6 +488,7 @@ const businessHeadshotImage =
     data-branding-faq
     data-branding-section="questions"
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(page, "sections", page.sections.indexOf(questions))}
   >
     <div class="branding-shell branding-faq__inner">
       <header class="branding-faq__heading">
@@ -479,7 +498,11 @@ const businessHeadshotImage =
       {faqItems.length > 0 && (
         <div class="branding-faq__list">
           {faqItems.map((item, index) => (
-            <details class="branding-faq__item" open={index === 0}>
+            <details
+              class="branding-faq__item"
+              open={index === 0}
+              data-tina-field={tinaField(questions, "items", index)}
+            >
               <summary>
                 <span class="branding-faq__number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
@@ -518,6 +541,7 @@ const businessHeadshotImage =
       class="branding-final"
       data-branding-final
       aria-labelledby="branding-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
     >
       <div class="branding-final__background" aria-hidden="true">
         <Picture

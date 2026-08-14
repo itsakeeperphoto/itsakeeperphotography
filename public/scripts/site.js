@@ -6,15 +6,13 @@
   root.classList.add("js");
 
   const body = document.body;
-  const header = document.querySelector("[data-site-header]");
-  const hero = document.querySelector(".hero");
-  const menuToggle = document.querySelector("[data-menu-toggle]");
-  const primaryNav = document.querySelector("[data-primary-nav]");
   const compactNavigation = window.matchMedia("(max-width: 1250px)");
   const mobileNavigation = window.matchMedia("(max-width: 1050px)");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const setMenuState = (open, returnFocus = false) => {
+    const menuToggle = document.querySelector("[data-menu-toggle]");
+    const primaryNav = document.querySelector("[data-primary-nav]");
     if (!menuToggle || !primaryNav) return;
 
     menuToggle.setAttribute("aria-expanded", String(open));
@@ -25,17 +23,21 @@
     if (!open && returnFocus) menuToggle.focus();
   };
 
-  menuToggle?.addEventListener("click", () => {
-    setMenuState(menuToggle.getAttribute("aria-expanded") !== "true");
-  });
-
-  primaryNav?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      if (compactNavigation.matches) setMenuState(false);
-    });
-  });
-
   document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const menuToggle = event.target.closest("[data-menu-toggle]");
+    const primaryNav = document.querySelector("[data-primary-nav]");
+
+    if (menuToggle) {
+      setMenuState(menuToggle.getAttribute("aria-expanded") !== "true");
+      return;
+    }
+
+    if (compactNavigation.matches && event.target.closest("[data-primary-nav] a")) {
+      setMenuState(false);
+      return;
+    }
+
     if (
       compactNavigation.matches &&
       primaryNav?.classList.contains("is-open") &&
@@ -47,6 +49,7 @@
   });
 
   document.addEventListener("keydown", (event) => {
+    const primaryNav = document.querySelector("[data-primary-nav]");
     if (event.key === "Escape" && primaryNav?.classList.contains("is-open")) {
       setMenuState(false, true);
     }
@@ -109,6 +112,7 @@
     if (!target) return false;
 
     cancelAnchorScroll();
+    const header = document.querySelector("[data-site-header]");
     const headerOffset = header?.offsetHeight || 0;
     const targetY = Math.max(
       0,
@@ -150,25 +154,25 @@
     return true;
   };
 
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    if (link.matches(".skip-link, [data-session-prefill]")) return;
-    link.addEventListener("click", (event) => {
-      if (
-        event.defaultPrevented ||
-        event.button !== 0 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey
-      ) {
-        return;
-      }
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || link.matches(".skip-link, [data-session-prefill]")) return;
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
 
-      const hash = link.getAttribute("href");
-      if (!resolveHashTarget(hash)) return;
-      event.preventDefault();
-      scrollToHash(hash, { animate: event.detail > 0 });
-    });
+    const hash = link.getAttribute("href");
+    if (!resolveHashTarget(hash)) return;
+    event.preventDefault();
+    scrollToHash(hash, { animate: event.detail > 0 });
   });
 
   ["wheel", "touchstart", "pointerdown"].forEach((eventName) => {
@@ -194,6 +198,8 @@
   /* The header shadow appears after the hero has moved behind the sticky bar. */
   let scrollTicking = false;
   const updateStickyState = () => {
+    const header = document.querySelector("[data-site-header]");
+    const hero = document.querySelector(".hero, .editorial-hero");
     if (!header || !hero) {
       scrollTicking = false;
       return;
@@ -790,6 +796,8 @@
     const progressFrames = [...document.querySelectorAll("[data-progress-step]")];
 
     if (!intro || !workspace || !startButton || !form || !confirmation || !steps.length) return;
+    if (form.dataset.inquiryEnhanced === "true") return;
+    form.dataset.inquiryEnhanced = "true";
 
     const stepNames = ["Session type", "Season", "Location", "Your story", "Contact details"];
     let currentStep = 1;
@@ -1373,6 +1381,33 @@
 
   initInquiry();
 
+  const renderCurrentYear = () => {
+    const year = String(new Date().getFullYear());
+    document.querySelectorAll("[data-current-year]").forEach((node) => {
+      node.textContent = year;
+    });
+  };
+
+  let tinaRefreshFrame = 0;
+  const tinaIslandObserver = new MutationObserver((records) => {
+    const replacedIsland = records.some(
+      (record) =>
+        record.type === "childList" &&
+        record.target instanceof Element &&
+        record.target.matches("[data-tina-island]"),
+    );
+    if (!replacedIsland || tinaRefreshFrame) return;
+
+    tinaRefreshFrame = window.requestAnimationFrame(() => {
+      tinaRefreshFrame = 0;
+      initInquiry();
+      renderGoldenHour();
+      renderCurrentYear();
+      updateStickyState();
+    });
+  });
+  tinaIslandObserver.observe(document.body, { childList: true, subtree: true });
+
   /*
    * Editorial GSAP scroll reveals. Nothing is hidden if the CDN fails or the
    * visitor requests reduced motion. Timelines animate transform and opacity only.
@@ -1697,8 +1732,5 @@
     });
   }
 
-  const year = String(new Date().getFullYear());
-  document.querySelectorAll("[data-current-year]").forEach((node) => {
-    node.textContent = year;
-  });
+  renderCurrentYear();
 })();

@@ -4,6 +4,7 @@ import type {
   PageLink,
   PageSection,
 } from "../../content/page-types";
+import { tinaField } from "@tinacms/astro/tina-field";
 import Picture from "../Picture.astro";
 import EditorialHero from "./EditorialHero.astro";
 import "../../styles/headshot-page.css";
@@ -41,9 +42,10 @@ const heroHeadingLines = heroHeadingMatch
 
 const splitWithLinks = (
   paragraph: string,
-  links: PageLink[] = [],
+  links: Array<PageLink | null> | null = [],
 ): LinkedSegment[] => {
-  const matches = links
+  const matches = (links ?? [])
+    .filter((link): link is PageLink => Boolean(link))
     .map((link) => ({
       link,
       start: paragraph.indexOf(link.label),
@@ -88,6 +90,7 @@ const faqSchema = (questions.items || [])
   class="headshot-page"
   data-content-status={page.contentStatus}
   data-signature-device={page.signature}
+  data-tina-field={tinaField(page)}
 >
   <EditorialHero
     pageKey="headshots"
@@ -110,18 +113,20 @@ const faqSchema = (questions.items || [])
       objectPosition: "50% 34%",
     }}
     paperEdgeColor="var(--color-warm-ivory)"
+    dataTinaField={tinaField(page, "hero")}
   />
 
   <section
     id={studio.id}
     class:list={["headshot-studio", `tone-${studio.tone}`]}
     aria-labelledby={`${studio.id}-title`}
+    data-tina-field={tinaField(studio)}
   >
     <div class="headshot-shell headshot-studio__inner">
       <div class="headshot-studio__copy">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${studio.id}-title`}>{studio.heading}</h2>
-        <div class="headshot-prose">
+        <h2 id={`${studio.id}-title`} data-tina-field={tinaField(studio, "heading")}>{studio.heading}</h2>
+        <div class="headshot-prose" data-tina-field={tinaField(studio, "paragraphs")}>
           {studio.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -138,6 +143,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 82vw, (max-width: 1050px) 46vw, 31rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(studio, "image")}
             />
           </figure>
         )}
@@ -152,6 +158,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 42vw, (max-width: 1050px) 22vw, 14rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(studio, "secondaryImage")}
             />
           </figure>
         )}
@@ -163,6 +170,7 @@ const faqSchema = (questions.items || [])
     id={useful.id}
     class:list={["headshot-useful", `tone-${useful.tone}`]}
     aria-labelledby={`${useful.id}-title`}
+    data-tina-field={tinaField(useful)}
   >
     <div class="headshot-shell headshot-useful__inner">
       <div class="headshot-useful__media">
@@ -177,6 +185,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 78vw, (max-width: 1050px) 40vw, 25rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(useful, "image")}
             />
           </figure>
         )}
@@ -190,6 +199,7 @@ const faqSchema = (questions.items || [])
               optimizedMobileWidth={360}
               optimizedDesktopWidth={520}
               imgClass="photo--editorial"
+              dataTinaField={tinaField(useful, "secondaryImage")}
             />
           </figure>
         )}
@@ -197,8 +207,8 @@ const faqSchema = (questions.items || [])
 
       <div class="headshot-useful__copy">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${useful.id}-title`}>{useful.heading}</h2>
-        <div class="headshot-prose">
+        <h2 id={`${useful.id}-title`} data-tina-field={tinaField(useful, "heading")}>{useful.heading}</h2>
+        <div class="headshot-prose" data-tina-field={tinaField(useful, "paragraphs")}>
           {useful.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
@@ -209,12 +219,13 @@ const faqSchema = (questions.items || [])
     id={guided.id}
     class:list={["headshot-guided", `tone-${guided.tone}`]}
     aria-labelledby={`${guided.id}-title`}
+    data-tina-field={tinaField(guided)}
   >
     <div class="headshot-shell headshot-guided__inner">
       <div class="headshot-guided__copy">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${guided.id}-title`}>{guided.heading}</h2>
-        <div class="headshot-prose">
+        <h2 id={`${guided.id}-title`} data-tina-field={tinaField(guided, "heading")}>{guided.heading}</h2>
+        <div class="headshot-prose" data-tina-field={tinaField(guided, "paragraphs")}>
           {guided.paragraphs?.map((paragraph) => (
             <p>
               {splitWithLinks(paragraph, guided.links).map((segment) =>
@@ -241,6 +252,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 76vw, (max-width: 1050px) 42vw, 28rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(guided, "image")}
             />
           </figure>
         )}
@@ -255,6 +267,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 42vw, (max-width: 1050px) 24vw, 16rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(guided, "secondaryImage")}
             />
           </figure>
         )}
@@ -266,14 +279,15 @@ const faqSchema = (questions.items || [])
     id={teams.id}
     class:list={["headshot-teams", `tone-${teams.tone}`]}
     aria-labelledby={`${teams.id}-title`}
+    data-tina-field={tinaField(teams)}
   >
     <div class="headshot-shell headshot-teams__inner">
       <header class="headshot-teams__heading">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${teams.id}-title`}>{teams.heading}</h2>
+        <h2 id={`${teams.id}-title`} data-tina-field={tinaField(teams, "heading")}>{teams.heading}</h2>
       </header>
 
-      <div class="headshot-teams__copy headshot-prose">
+      <div class="headshot-teams__copy headshot-prose" data-tina-field={tinaField(teams, "paragraphs")}>
         {teams.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
       </div>
 
@@ -289,6 +303,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 55vw, (max-width: 1050px) 28vw, 19rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(teams, "image")}
             />
           </figure>
         )}
@@ -302,6 +317,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 52vw, (max-width: 1050px) 26vw, 18rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(teams, "secondaryImage")}
             />
           </figure>
         )}
@@ -313,11 +329,12 @@ const faqSchema = (questions.items || [])
     id={process.id}
     class:list={["headshot-process", `tone-${process.tone}`]}
     aria-labelledby={`${process.id}-title`}
+    data-tina-field={tinaField(process)}
   >
     <div class="headshot-shell headshot-process__inner">
       <header class="headshot-process__heading">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${process.id}-title`}>{process.heading}</h2>
+        <h2 id={`${process.id}-title`} data-tina-field={tinaField(process, "heading")}>{process.heading}</h2>
       </header>
 
       {process.image && (
@@ -330,6 +347,7 @@ const faqSchema = (questions.items || [])
             responsiveSrcset
             sizes="(max-width: 767px) 88vw, (max-width: 1050px) 42vw, 28rem"
             imgClass="photo--editorial"
+            dataTinaField={tinaField(process, "image")}
           />
         </figure>
       )}
@@ -337,7 +355,7 @@ const faqSchema = (questions.items || [])
       {process.items?.length && (
         <ol class="headshot-process__steps">
           {process.items.map((item, index) => (
-            <li>
+            <li data-tina-field={tinaField(process, "items", index)}>
               <span class="headshot-process__number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -358,11 +376,12 @@ const faqSchema = (questions.items || [])
     id={questions.id}
     class:list={["headshot-faq", `tone-${questions.tone}`]}
     aria-labelledby={`${questions.id}-title`}
+    data-tina-field={tinaField(questions)}
   >
     <div class="headshot-shell headshot-faq__inner">
       <header class="headshot-faq__heading">
         <span class="headshot-rule" aria-hidden="true"></span>
-        <h2 id={`${questions.id}-title`}>{questions.heading}</h2>
+        <h2 id={`${questions.id}-title`} data-tina-field={tinaField(questions, "heading")}>{questions.heading}</h2>
         {questions.image && (
           <figure class="headshot-faq__arch">
             <Picture
@@ -373,6 +392,7 @@ const faqSchema = (questions.items || [])
               responsiveSrcset
               sizes="(max-width: 767px) 60vw, (max-width: 1050px) 28vw, 18rem"
               imgClass="photo--editorial"
+              dataTinaField={tinaField(questions, "image")}
             />
           </figure>
         )}
@@ -381,7 +401,7 @@ const faqSchema = (questions.items || [])
       {questions.items?.length && (
         <div class="headshot-faq__list">
           {questions.items.map((item, index) => (
-            <details class="headshot-faq__item" open={index === 0}>
+            <details class="headshot-faq__item" open={index === 0} data-tina-field={tinaField(questions, "items", index)}>
               <summary>
                 <span class="headshot-faq__number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
@@ -414,6 +434,7 @@ const faqSchema = (questions.items || [])
       id="headshot-final-cta"
       class:list={["headshot-final", `tone-${page.finalCta.tone}`]}
       aria-labelledby="headshot-final-title"
+      data-tina-field={tinaField(page, "finalCta")}
     >
       {page.finalCta.image && (
         <div class="headshot-final__background" aria-hidden="true">
@@ -425,6 +446,7 @@ const faqSchema = (questions.items || [])
             responsiveSrcset
             sizes="100vw"
             imgClass="headshot-final__background-image"
+            dataTinaField={tinaField(page.finalCta, "image")}
           />
           <div class="headshot-final__wash" aria-hidden="true"></div>
         </div>
@@ -432,8 +454,8 @@ const faqSchema = (questions.items || [])
 
       <div class="headshot-shell headshot-final__inner">
         <div class="headshot-final__copy">
-          <h2 id="headshot-final-title">{page.finalCta.heading}</h2>
-          {page.finalCta.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          <h2 id="headshot-final-title" data-tina-field={tinaField(page.finalCta, "heading")}>{page.finalCta.heading}</h2>
+          {page.finalCta.paragraphs?.map((paragraph) => <p data-tina-field={tinaField(page.finalCta, "paragraphs")}>{paragraph}</p>)}
           {page.finalCta.link && (
             <a
               class="outline-button"

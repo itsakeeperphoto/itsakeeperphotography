@@ -32,13 +32,21 @@ export type SectionKind =
   | "article-list"
   | "form";
 
-export interface PageLink {
+/** Tina adds this source pointer only while a document is open in visual editing. */
+export interface TinaEditableSource {
+  _content_source?: {
+    queryId: string;
+    path: Array<string | number>;
+  };
+}
+
+export interface PageLink extends TinaEditableSource {
   label: string;
   href: string;
   external?: boolean;
 }
 
-export interface PageItem {
+export interface PageItem extends TinaEditableSource {
   eyebrow?: string;
   heading?: string;
   detail?: string;
@@ -50,7 +58,7 @@ export interface PageItem {
   links?: PageLink[];
 }
 
-export interface PageSection {
+export interface PageSection extends TinaEditableSource {
   id: string;
   kind: SectionKind;
   tone: SurfaceTone;
@@ -67,7 +75,7 @@ export interface PageSection {
   links?: PageLink[];
 }
 
-export interface EditorialPageData {
+export interface EditorialPageData extends TinaEditableSource {
   route: `/${string}`;
   family: PageFamily;
   contentStatus: ContentStatus;
@@ -76,7 +84,7 @@ export interface EditorialPageData {
   signature: SignatureDevice;
   title: string;
   description: string;
-  hero: {
+  hero: TinaEditableSource & {
     tone: SurfaceTone;
     eyebrow?: string;
     heading: string;
@@ -89,7 +97,7 @@ export interface EditorialPageData {
     links?: PageLink[];
   };
   sections: PageSection[];
-  finalCta?: {
+  finalCta?: TinaEditableSource & {
     tone: SurfaceTone;
     eyebrow?: string;
     heading: string;
