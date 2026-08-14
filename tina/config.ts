@@ -1064,11 +1064,11 @@ export default defineConfig({
       },
 
       /* ------------------------------------------------------------------ */
-      /* Journal portfolio pages                                             */
+      /* Reviews photo-journal pages                                         */
       /* ------------------------------------------------------------------ */
       {
         name: "journalPage",
-        label: "Journal Pages",
+        label: "Reviews · Photo Journal Pages",
         path: "content/journal-pages",
         format: "json",
         indexes: [
@@ -1078,7 +1078,7 @@ export default defineConfig({
           },
         ],
         ui: {
-          router: () => "/portfolio/",
+          router: () => "/reviews/",
           allowedActions: { create: false, delete: false },
         },
         fields: [

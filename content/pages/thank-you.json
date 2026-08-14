@@ -52,13 +52,13 @@
     "tone": "walnut",
     "heading": "A Little More Light, While You Wait",
     "paragraphs": [
-      "The portfolio is here whenever you want to spend a little more time with the work."
+      "Client reviews are here whenever you want to spend a little more time with the work."
     ],
     "image": "/uploads/kennewick-couple-open-field-golden-hour.jpg",
     "imageAlt": "A couple walking together through a field at golden hour in Kennewick",
     "link": {
-      "label": "View the Portfolio",
-      "href": "/portfolio/"
+      "label": "Read Client Reviews",
+      "href": "/reviews/"
     }
   },
   "pending": []

@@ -105,7 +105,7 @@ export interface PageManifestEntry {
   id: string;
   path: `/${string}`;
   contentPath?: string;
-  family: PageFamily | "home" | "portfolio";
+  family: PageFamily | "home";
   contentStatus: ContentStatus;
   searchVisibility: SearchVisibility;
   schemaType: SchemaType;

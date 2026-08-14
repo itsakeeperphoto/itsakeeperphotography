@@ -35,13 +35,11 @@ entry when that date is missing.
 | `/richland-wa-photographer/` | Service area | 2026-08-09 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-09 |
-| `/journal/` | Journal collection | 2026-08-11 |
+| `/journal/` | Journal collection | 2026-08-14 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/journal/branding-photos-vs-headshots/` | Article | 2026-08-11 |
-| `/portfolio/` | Portfolio | 2026-07-21 |
 
-The release sitemap contains 13 canonical URLs. `llms.txt` contains 12
-citations: the same indexable set except Portfolio.
+The release sitemap and `llms.txt` each contain the same 12 canonical URLs.
 
 ## Planned public architecture
 
@@ -72,7 +70,7 @@ threshold. Each must retain genuinely city-specific content before it is approve
 ### Journal
 
 - `/journal/` — ready and indexable as a `CollectionPage`, last modified
-  `2026-08-11`
+  `2026-08-14`
 - `/journal/family-photo-locations-tri-cities/` — ready and indexable
 - `/journal/when-to-book-senior-pictures-tri-cities/` — redesigned with a
   specialized article renderer; remains draft/noindex and excluded while the
@@ -85,9 +83,8 @@ threshold. Each must retain genuinely city-specific content before it is approve
   Versus Axis renderer and route-only CSS; ready and indexable with publication
   and modification date `2026-08-11`
 
-### Portfolio and utilities
+### Utilities
 
-- `/portfolio/` — ready and indexable
 - `/privacy/` — noindex; excluded until the factual policy is approved
 - `/thank-you/` — specialized post-submit confirmation; permanently noindex,
   excluded from sitemap/`llms.txt`, and still crawlable so robots can read the
@@ -114,17 +111,17 @@ threshold. Each must retain genuinely city-specific content before it is approve
   scroll control also remains a button. Branding vs. Headshots uses exactly
   three route anchors — Branding, Headshots and Contact, in that order — while
   its hero scroll control also remains a button. The Journal hub exposes exactly
-  four route anchors — Locations Guide, Branding vs. Headshots, Portfolio and
+  four route anchors — Locations Guide, Branding vs. Headshots, Reviews and
   Contact. Its Senior Timing and Newborn Comparison cards remain visible but
   non-interactive until those articles are published. Reviews exposes exactly
   two anchors inside `<main>`: the confirmed external Google review action and
   the internal Contact action, in that order. Its hero scroll remains a button,
   its Home social-proof summary is static text, and its journal adds no links.
-  Thank-you exposes one Portfolio anchor inside `<main>`; its hero scroll
+  Thank-you exposes one Reviews anchor inside `<main>`; its hero scroll
   control remains a button and it must never add a second form or Contact CTA.
 
 The Reviews publication contract uses the shared service-page hero, the exact
-Home `KindWords` component and the reusable six-page Portfolio book. It
+Home `KindWords` component and the reusable six-page photo journal. It
 contains 1 H1, 4 H2, 6 H3 and ten attributed testimonials, emits `WebPage` plus
 `BreadcrumbList`, and deliberately omits `Review` and `AggregateRating` until
 individual source URL/date/rating fields exist. It is `ready/index` with
@@ -137,7 +134,7 @@ and four-card editorial sequence. It emits exactly one canonical
 `CollectionPage` and one `BreadcrumbList` Home → Journal, not an `Article` or
 `Service`. No ready/index route or footer may link Senior Timing or Newborn
 Comparison while either remains draft. Release includes the hub once with
-`lastmod` `2026-08-11`; staging keeps the complete 21-route surface noindex and
+`lastmod` `2026-08-14`; staging keeps the complete 20-route surface noindex and
 its sitemap empty.
 
 The Newborn Comparison release contract is intentionally stricter than its

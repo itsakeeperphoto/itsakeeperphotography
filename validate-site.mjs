@@ -108,6 +108,10 @@ for (const file of htmlFiles) {
     .map((match) => match[1])
     .filter((href) => href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/#"));
 
+  if (internalAnchors.includes("/portfolio/")) {
+    failures.push(`${relative}: retired Portfolio route must not remain linked`);
+  }
+
   const brokenInternalAnchors = [
     ...new Set(internalAnchors.filter((href) => !internalTargetExists(href))),
   ];
@@ -148,7 +152,7 @@ for (const file of htmlFiles) {
     if (shouldIndex && canonical) indexableReleaseCanonicals.add(canonical);
   }
   if (
-    !["index.html", `portfolio${path.sep}index.html`].includes(relative) &&
+    relative !== "index.html" &&
     !/data-signature-device="(?:arch|overlap|crossing-line)"/.test(source)
   ) {
     failures.push(`${relative}: signature composition marker is missing`);
@@ -176,7 +180,10 @@ for (const [label, formName, source] of [
   }
 }
 
-if (htmlFiles.length !== 21) failures.push(`expected 21 public HTML routes; found ${htmlFiles.length}`);
+if (htmlFiles.length !== 20) failures.push(`expected 20 public HTML routes; found ${htmlFiles.length}`);
+if (existsSync(path.join(output, "portfolio", "index.html"))) {
+  failures.push("portfolio: retired page must not generate public HTML");
+}
 
 const sitemap = await readFile(path.join(output, "sitemap.xml"), "utf8");
 const robots = await readFile(path.join(output, "robots.txt"), "utf8");
@@ -230,6 +237,19 @@ for (const rule of [
 ]) {
   if (!redirects.includes(rule)) {
     failures.push(`_redirects: canonical hostname rule is missing (${rule})`);
+  }
+}
+for (const rule of [
+  "/portfolio/ /reviews/ 301",
+  "/dana-buckley /reviews/ 301",
+  "/jonathan-miller-1 /reviews/ 301",
+  "/heinrich-harrison /reviews/ 301",
+  "/emily-london /reviews/ 301",
+  "/sir-james-condi /reviews/ 301",
+  "/new-gallery-wexley /reviews/ 301",
+]) {
+  if (!redirects.includes(rule)) {
+    failures.push(`_redirects: retired Portfolio destination is not reconciled (${rule})`);
   }
 }
 

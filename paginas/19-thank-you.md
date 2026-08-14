@@ -58,11 +58,11 @@ entra en sitemap.
 
 ## H2 — A Little More Light, While You Wait
 
-`The portfolio is here whenever you want to spend a little more time with the work.`
+`Client reviews are here whenever you want to spend a little more time with the work.`
 
 - **Imagen:** `/uploads/kennewick-couple-open-field-golden-hour.jpg`
 - **Alt:** `A couple walking together through a field at golden hour in Kennewick`
-- **Único anchor en `<main>`:** `View the Portfolio` → `/portfolio/`
+- **Único anchor en `<main>`:** `Read Client Reviews` → `/reviews/`
 
 ## Contrato de experiencia
 

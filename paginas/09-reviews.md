@@ -83,10 +83,10 @@ nueva con `noopener noreferrer`.
 **Intro:** Turn the pages slowly. Every frame is part of a story that felt
 worth holding on to.
 
-La página reutiliza el libro interactivo de Portfolio y su única fuente de
-páginas en `content/journal-pages/*.json`. No duplica el H1 ni la introducción
-de `/portfolio/`. Las hojas rígidas giran en 3D desde la esquina inferior durante
-1200 ms; en reduced motion conserva una transición legible sin flip.
+La página conserva el libro interactivo como su única superficie pública y usa
+la fuente única de páginas en `content/journal-pages/*.json`. Las hojas rígidas
+giran en 3D desde la esquina inferior durante 1200 ms; en reduced motion
+conserva una transición legible sin flip.
 
 ### Leave the Nerves at Home
 
@@ -135,4 +135,4 @@ deben fabricar. Tampoco se copia un rating vivo de GBP al schema.
   1920/1440/1200/900/390.
 - Playwright aprobó los cinco viewports, el giro `matrix3d`, teclado, targets
   ≥44 px, contraste, las 30 imágenes originales/clonadas del archive, cero
-  overflow/runtime y las regresiones de Portfolio y Homepage.
+  overflow/runtime y la regresión de Homepage.

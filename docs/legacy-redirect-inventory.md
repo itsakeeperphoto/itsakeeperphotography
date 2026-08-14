@@ -6,7 +6,8 @@ Source inventory: Firecrawl URL map of `https://www.itsakeeperphotography.com` o
 | --- | --- | --- |
 | `/home`, `/welcome` | `/` | Former entry pages |
 | `/seniors` | `/senior-photographer-tri-cities-wa/` | Senior service |
-| `/dana-buckley`, `/jonathan-miller-1`, `/heinrich-harrison`, `/emily-london`, `/sir-james-condi`, `/new-gallery-wexley` | `/portfolio/` | Image-only portfolio galleries |
+| `/portfolio/` | `/reviews/` | Retired standalone portfolio; its photo journal now lives inside Reviews |
+| `/dana-buckley`, `/jonathan-miller-1`, `/heinrich-harrison`, `/emily-london`, `/sir-james-condi`, `/new-gallery-wexley` | `/reviews/` | Image-only galleries now resolve to the retained photo journal in Reviews |
 | `/info-wexley`, `/info-2`, `/info-wexley/2016/3/2/man-vs-wild-x2w4a` | `/investment/` | Session booking and preparation information |
 | `/info` | `/about/` | Photographer introduction |
 | Legacy Photography category and general photographer tag | `/journal/` | Former editorial/directory context |

@@ -15,7 +15,7 @@
 | Formularios | Netlify Forms | HTML estático | `session-inquiry` y `session-estimate`. |
 | Funciones/cache | Netlify Functions + Blobs | SDK en `package.json` | Resumen diario de reseñas GBP. |
 | Imágenes | Sharp + script propio | Sharp 0.34.5 | AVIF/WebP/JPEG responsivos y metadatos explícitos. |
-| Flipbook | `page-flip` | 2.0.7 | Solo Portfolio. |
+| Flipbook | `page-flip` | 2.0.7 | Libro fotográfico dentro de Reviews. |
 | Analítica | Microsoft Clarity + Google tag (GA4) | Snippets globales en `src/layouts/Base.astro` | Clarity `xyqkkqom4v`; GA4 `G-0YW8M601L1`. |
 | Anotación dev | Agentation | 3.0.2 | Solo integración de desarrollo. |
 | Base de datos | Ninguna | — | Contenido en JSON/Markdown; cache GBP en Blobs. |
@@ -34,7 +34,7 @@
 │   ├── homepage/index.json        contenido de homepage
 │   ├── settings/index.json        datos compartidos y navegación
 │   ├── pages/*.json               contenido de rutas generales
-│   ├── journal-pages/*.json       contenido del libro Portfolio
+│   ├── journal-pages/*.json       contenido del libro fotográfico de Reviews
 │   └── testimonials/*.json        testimonios almacenados
 ├── paginas/*.md                   documentos fuente entregados
 ├── docs/
@@ -48,7 +48,7 @@
 │   ├── content/pending.ts         registro de hechos/media pendientes
 │   ├── layouts/Base.astro         metadata, schema, header/footer y scripts
 │   ├── lib/
-│   │   ├── page-manifest.ts       21 rutas y estado de búsqueda
+│   │   ├── page-manifest.ts       20 rutas y estado de búsqueda
 │   │   ├── content-pages.ts       resolución de contenido
 │   │   ├── static-content.ts      fallback/contenido tipado
 │   │   ├── session-pricing.ts     única fuente de precios del estimador
@@ -140,10 +140,12 @@ retry, freeze tras éxito ni analítica personalizada del gate.
 - `src/pages/journal/[slug].astro` resuelve artículos y ramifica explícitamente
   Family Photo Locations, Senior Timing, Newborn Comparison y Branding vs.
   Headshots a sus renderers especializados antes del fallback `ContentPage`.
-- `src/pages/portfolio.astro` conserva el flipbook especializado.
 - `src/pages/tina-island/[name].ts` sirve refresco visual de islas Tina.
 - `src/pages/sitemap.xml.ts`, `robots.txt.ts` y `llms.txt.ts` generan salidas
   según `SITE_MODE` y el manifiesto.
+- La antigua `/portfolio/` no tiene página ni entrada de manifiesto. Netlify la
+  redirige con 301 a `/reviews/`, igual que las seis galerías legacy que antes
+  desembocaban en Portfolio.
 
 En Homepage, `Hero.astro` entrega la fotografía visual mediante `picture`:
 AVIF/WebP 1440×960 para desktop/tablet y un recorte AVIF/WebP 640×1024 para
@@ -180,11 +182,11 @@ Componentes especializados existentes:
 
 `JournalPage.astro` conserva la firma visual `overlap` y cuatro cards, pero el
 hub publicado expone solo cuatro anchors seguros: Locations Guide, Branding vs.
-Headshots, Portfolio y Contact. Senior Timing y Newborn Comparison conservan
+Headshots, Reviews y Contact. Senior Timing y Newborn Comparison conservan
 título y extracto sin link mientras sigan `draft/noindex`. El footer tampoco
 enlaza esos artículos y Newborn mantiene su copy relacionado sin convertirlo
 en anchor. El manifiesto del hub usa `ready/index`, `CollectionPage`,
-`sitemap: true`, `llms: true` y `lastModified: 2026-08-11`.
+`sitemap: true`, `llms: true` y `lastModified: 2026-08-14`.
 
 `EditorialHero.astro` materializa la estructura de hero basada en Seniors y es
 compartido por varias páginas especializadas, incluidas Kennewick y Pasco. Su frase
@@ -206,7 +208,7 @@ primero y Contact interno después. La firma publicada cambia a `arch`.
 único POST nativo de Contact. Reutiliza `EditorialHero` con botón local hacia
 `#your-message-is-with-me`, luego compone el mensaje personal de Lisa alrededor
 de un retrato en arco y un print B/N superpuesto, presenta tres próximos pasos
-verificados en un `<ol>` y termina con una sola ruta silenciosa a Portfolio.
+verificados en un `<ol>` y termina con una sola ruta silenciosa a Reviews.
 `thank-you-page.css` se procesa con `?url` y solo se enlaza en esta ruta; el
 renderer especializado se conserva tanto en SSR como en refresh Tina. El
 contrato visible es 1 H1, 3 H2, 3 H3, seis imágenes y un único anchor dentro de
@@ -214,15 +216,16 @@ contrato visible es 1 H1, 3 H2, 3 H3, seis imágenes y un único anchor dentro d
 `primaryRoute: false` y no declara `lastModified`; release añade meta y header
 `noindex, nofollow, noarchive`, sin bloquear la URL en `robots.txt`.
 
-`JournalBook.astro` contiene la UI reutilizable extraída del Portfolio.
-`JournalPortfolio.astro` permanece como wrapper de esa ruta y carga su primera
-página eager; Reviews usa otro `instanceId`, conserva las seis páginas lazy y
-solo hidrata el flip al entrar en viewport. El controlador mantiene página por
-instancia, IDs/ARIA únicos y cambia a crossfade bajo reduced motion. En modo
+`JournalBook.astro` contiene la UI reutilizable del libro fotográfico que vive
+en Reviews. Sus seis páginas cargan lazy y el flip solo se hidrata al entrar en
+viewport. El controlador mantiene página por instancia, IDs/ARIA únicos y
+cambia a crossfade bajo reduced motion. En modo
 normal cada `journal-sheet` declara densidad `hard`; PageFlip gira desde la
 esquina inferior durante 1200 ms, con sombra máxima `0.50`, para producir las
-dos caras `matrix3d` de una hoja rígida. Esta configuración compartida también
-aplica a Portfolio sin alterar su prioridad de imágenes.
+dos caras `matrix3d` de una hoja rígida.
+La colección Tina `journalPage` conserva esos seis JSON y abre su preview en
+`/reviews/`; la query, isla y wrapper exclusivos de la ruta retirada ya no
+existen.
 
 `SeniorTimingPage.astro` renderiza el artículo
 `/journal/when-to-book-senior-pictures-tri-cities/` como field guide
@@ -347,7 +350,7 @@ los POST como navegaciones de documento y no realizó envíos reales.
 - `src/layouts/Base.astro` carga Microsoft Clarity con project ID público
   `xyqkkqom4v` y Google tag/GA4 con measurement ID público
   `G-0YW8M601L1` dentro del `<head>` compartido.
-- Los snippets se renderizan en las 21 rutas públicas, tanto en staging como en
+- Los snippets se renderizan en las 20 rutas públicas, tanto en staging como en
   release. No existe gating por entorno ni por consentimiento en el código
   actual.
 - La revisión humana pendiente de Privacy debe considerar ambas herramientas;
@@ -430,7 +433,7 @@ para evitar cambios silenciosos al repositorio.
 - `astro.config.mjs` rechaza combinaciones incoherentes de modo/contexto y elige
   adaptador Netlify, Vercel o Node; la salida pública es estática.
 - `scripts/install-netlify-headers.mjs` instala el set de headers correcto.
-- `scripts/validate-site.mjs` valida las 21 rutas, canonicals, crawler outputs,
+- `scripts/validate-site.mjs` valida las 20 rutas, canonicals, crawler outputs,
   formularios, placeholders, enlaces internos rotos y gates de publicación.
   En Homepage fija la fuente/alt del hero, sus cuatro variantes art-directed,
   preloads y atributos prioritarios; protege también la separación entre el
@@ -463,8 +466,7 @@ para evitar cambios silenciosos al repositorio.
   `BreadcrumbList`, prohíbe `Review`/`AggregateRating` no sustentados y compara
   la membresía exacta de sitemap/`llms.txt`. Playwright cubre
   1920/1440/1200/900/390, teclado, giro 3D a mitad de animación, CTA animado,
-  contraste, gap, reduced motion, tipografía, imágenes, runtime y overflow;
-  también protege la instancia original de Portfolio.
+  contraste, gap, reduced motion, tipografía, imágenes, runtime y overflow.
 - Para Branding y Headshots valida el manifiesto XMP de 18 JPEG, naming
   descriptivo, dimensiones/peso, ausencia de metadata sensible, cuatro WebP
   400/640/960/1440 por fuente y XMP exacto en fuente/derivados. En el HTML fija
@@ -479,7 +481,7 @@ para evitar cambios silenciosos al repositorio.
   `BreadcrumbList` con el copy visible y prohíbe fechas, Q54, deadlines
   distritales, `Service`, ratings, calle y geodatos inventados. Playwright cubre
   1440/1200/900/390, foco, acordeones, reduced motion, crops, carga WebP,
-  consola/red, overflow y ausencia de regresión de `og:type` en las 21 rutas.
+  consola/red, overflow y ausencia de regresión de `og:type` en las 20 rutas.
 - Para Newborn Comparison fija el estado `draft/noindex`, title/description,
   canonical, `og:type=article`, los tres pendientes literales y la exclusión de
   sitemap/`llms.txt`. En HTML exige 1 H1, 8 H2, 7 H3, tres anchors en orden,
@@ -503,9 +505,9 @@ para evitar cambios silenciosos al repositorio.
   costura `VS` vertical 900–1728/horizontal 390, cero overflow/runtime,
   Impeccable `[]` y revisión independiente sin P1/P2.
 - Para Journal fija estado `ready/index`, metadata exacta, firma `overlap`,
-  `lastModified: 2026-08-11`, ausencia de pendientes y membresía exacta en
+  `lastModified: 2026-08-14`, ausencia de pendientes y membresía exacta en
   sitemap/`llms.txt`. En fuente y HTML exige cuatro guías visibles, anchors
-  Locations → Branding vs. Headshots → Portfolio → Contact, cero links a los
+  Locations → Branding vs. Headshots → Reviews → Contact, cero links a los
   dos artículos draft, canonical exacta, un `CollectionPage` y un
   `BreadcrumbList` Home → Journal. El mismo guard prohíbe que cualquier ruta
   `ready/index` vuelva a enlazar Senior Timing o Newborn Comparison antes de su
@@ -513,7 +515,7 @@ para evitar cambios silenciosos al repositorio.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para trece rutas:
+En `release`, el manifiesto actualmente permite sitemap para doce rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
@@ -527,11 +529,10 @@ En `release`, el manifiesto actualmente permite sitemap para trece rutas:
 - `/journal/`
 - `/journal/family-photo-locations-tri-cities/`
 - `/journal/branding-photos-vs-headshots/`
-- `/portfolio/`
 
 `llms.txt` incluye Homepage, Family, Newborn, About, Reviews, Contact,
 Richland, Kennewick, Pasco, Journal, Family Photo Locations y Branding vs.
-Headshots; Portfolio está excluido de llms. Seniors, Branding, Headshots,
+Headshots. Seniors, Branding, Headshots,
 Investment, Senior Timing, Newborn Comparison y Privacy siguen
 `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
@@ -683,7 +684,6 @@ header release noindex y dentro de sitemap y `llms.txt`.
   añade, renombra, recodifica ni borra media compartida.
 - GSAP no es una dependencia global. Los scripts de interacción se cargan solo
   en las rutas/composiciones que los necesitan.
-- Portfolio carga prioritariamente solo las páginas visibles iniciales.
 - El preloader usa SVG inline y Web Animations API; anima transform/opacity,
   respeta reduced motion, permite Escape/Tab y elimina el overlay al finalizar.
 

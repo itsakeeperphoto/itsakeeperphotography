@@ -119,6 +119,13 @@
   confirma el CTA Google, retira las líneas cruzadas y recupera el flip 3D. Queda
   `ready/index` con fecha `2026-08-12`, sitemap 13/`llms.txt` 12, QA
   1920/1440/1200/900/390 e Impeccable limpio.
+- [x] **19D.2. Retirar la ruta Portfolio según ADR-061.** Se eliminaron la página,
+  el manifiesto y el pipeline Tina exclusivos; el libro permanece en Reviews,
+  `/portfolio/` y las seis galerías legacy redirigen a `/reviews/`, y Journal,
+  Thank-you y Footer ya no la enlazan. Staging/release validan 20/20;
+  sitemap/`llms.txt` quedan 12/12. Playwright aprobó Reviews en cinco anchos,
+  Thank-you en cuatro y Journal en 1440/390. Queda solo el smoke HTTP
+  post-deploy de los redirects; no se hizo push.
 - [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
   `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
@@ -145,7 +152,8 @@
   un envío nativo controlado hacia Thank-you; registrar solo recepción y
   navegación, sin guardar PII en git.
 - [ ] En Journal, confirmar canonical/index, `CollectionPage` + breadcrumb,
-  membresía única en sitemap/`llms.txt`, cuatro anchors seguros y ausencia de
+  `lastModified: 2026-08-14`, membresía única en sitemap/`llms.txt`, cuatro
+  anchors Locations/Branding/Reviews/Contact y ausencia de
   enlaces a Senior Timing/Newborn Comparison mientras continúen draft.
 - [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
   `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
@@ -178,7 +186,7 @@
   deadlines distritales son una mejora opcional y solo se añaden con fuente
   verificable. Actualizar copy sin reescribir su voz.
 - [ ] Después de editar esos hechos, ejecutar `npm run build:local`, confirmar
-  `Validated 21 public routes in staging mode.` y revisar inmediatamente
+  `Validated 20 public routes in staging mode.` y revisar inmediatamente
   `git status --short` por IDs de forms generados.
 - [ ] Repetir Playwright para la página de servicio Seniors y el artículo en
   1440×1000, 1200×900, 900×900 y 390×844; verificar overflow, crops, foco,
@@ -600,13 +608,13 @@ sin reemplazar el archivo.
 - [x] Verificada Pasco en 1440×1000, 1200×1000, 900×1000 y 390×844: overflow 0,
   diez sesiones, H1 + ocho H2 contenidos, ocho anchors, cuatro FAQ, texto de
   lectura ≥16 px, foco marfil, reduced motion y cero imágenes rotas.
-- [ ] Rehacer 84 capturas actuales: 18 rutas primarias × 4 breakpoints y
-  Portfolio/Privacy/Thank-you × 4. No reutilizar como prueba final las del
+- [ ] Rehacer 80 capturas actuales: 18 rutas primarias × 4 breakpoints y
+  Privacy/Thank-you × 4. No reutilizar como prueba final las del
   2026-07-21.
-- [ ] Para las 21 rutas verificar: overflow, crops, dimensiones, body ≥16px,
+- [ ] Para las 20 rutas verificar: overflow, crops, dimensiones, body ≥16px,
   arcos/overlaps móvil, teclado/focus, menú/current, reduced motion, consola/red,
   placeholders, máximo cuatro links, robots y dispositivo compositivo.
-- [ ] Ejecutar Lighthouse mobile y desktop en las 21 rutas sobre build release;
+- [ ] Ejecutar Lighthouse mobile y desktop en las 20 rutas sobre build release;
   registrar Performance, Accessibility, Best Practices y SEO por ruta.
 - [ ] Corregir LCP/CLS/fonts/images que fallen y repetir auditorías.
 - [ ] Validar contraste normal/hover/focus/error/disabled y simulación de baja
@@ -614,8 +622,9 @@ sin reemplazar el archivo.
 - [ ] Crear un índice único que mapee ruta + viewport + screenshot + score; hoy la
   evidencia está distribuida entre `artifacts/`, `.artifacts/` y
   `.codex-evidence/`.
-- [ ] Verificar que Portfolio solo eager-loads páginas inicialmente visibles.
-- [ ] Verificar que Agentation/Tina/Portfolio/preloader no contaminan bundles de
+- [ ] Verificar que el libro de Reviews conserva carga lazy hasta aproximarse a
+  viewport.
+- [ ] Verificar que Agentation/Tina/libro/preloader no contaminan bundles de
   rutas que no los usan.
 
 ## SEO, indexación y lanzamiento
@@ -653,7 +662,7 @@ sin reemplazar el archivo.
   resolver sus tres gates literales.
 - [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
   contenido visible actual; no crear ratings no verificados.
-- [ ] Actualizar `README.md` para reflejar las 21 rutas, forms reales, modos de
+- [ ] Actualizar `README.md` para reflejar las 20 rutas, forms reales, modos de
   deploy y comandos actuales.
 - [ ] Crear un nuevo handoff final; conservar `docs/final-handoff.md` como
   evidencia histórica o renombrarlo explícitamente sin perder historial.
@@ -697,14 +706,14 @@ sin reemplazar el archivo.
   renderer y CSS aislados, copy 1/8/6/3, media existente 8/3, QA final y
   publicación `ready/index`.
 - [x] Publicado Journal hub en `ffe5198` sin rediseñarlo: cuatro cards visibles,
-  dos artículos listos enlazados, dos draft sin anchor, Portfolio y Contact;
+  dos artículos listos enlazados, dos draft sin anchor, Reviews y Contact;
   schema de colección, gates crawler y regresión responsive aprobados.
 - [x] Completar About con composición A+C, hero protegido salvo la sustitución
   explícita de fondo registrada en ADR-045, fuente v2 reconciliada, método
   visible, densidad Belief/Method corregida según ADR-046/047 y autoridad
   verificable sin badges ni claims pendientes.
 - [x] Rediseñada Thank-you con `Your Message Is With Me`, renderer/CSS aislados,
-  hero compartido, copy factual, un único anchor a Portfolio y QA responsive;
+  hero compartido, copy factual, un único anchor a Reviews y QA responsive;
   permanece `ready/noindex` y fuera de sitemap/`llms.txt`. Privacy conserva su
   evaluación independiente.
 - [ ] Si el usuario desea Elopement en el futuro, primero definir servicio,
@@ -751,7 +760,8 @@ sin reemplazar el archivo.
 
 - [x] Corregida la autoridad visual a la homepage Netlify.
 - [x] Migrada la paleta earth-and-gold.
-- [x] Creadas y validadas 21 rutas Astro.
+- [x] Creadas y validadas 20 rutas Astro; la antigua Portfolio fue retirada y
+  conserva un 301 hacia Reviews.
 - [x] Centralizado el hero editorial con Seniors como base.
 - [x] Integrados formularios reales de Netlify y Thank-you.
 - [x] Implementado session estimates con precios centralizados.

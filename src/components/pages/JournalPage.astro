@@ -76,10 +76,10 @@ const guideCards: JournalGuide[] = [
   },
 ];
 
-const portfolioLabel = planning.links?.[0]?.label || "Photography Portfolio";
-const portfolioHref = planning.links?.[0]?.href;
-if (!portfolioHref) {
-  throw new Error("The Journal portfolio interlude requires a destination.");
+const interludeLabel = planning.links?.[0]?.label || "Client Reviews";
+const interludeHref = planning.links?.[0]?.href;
+if (!interludeHref) {
+  throw new Error("The Journal editorial interlude requires a destination.");
 }
 const finalCta = page.finalCta;
 ---
@@ -226,15 +226,15 @@ const finalCta = page.finalCta;
     </div>
   </section>
 
-  <section class="journal-portfolio" aria-label={portfolioLabel}>
+  <section class="journal-portfolio" aria-label={interludeLabel}>
     <a
       class="journal-shell journal-portfolio__inner"
-      href={portfolioHref}
+      href={interludeHref}
       aria-labelledby="journal-portfolio-title"
     >
       <div class="journal-portfolio__copy">
         <p class="journal-portfolio__script" aria-hidden="true">where the light falls</p>
-        <h2 id="journal-portfolio-title">{portfolioLabel}</h2>
+        <h2 id="journal-portfolio-title">{interludeLabel}</h2>
       </div>
 
       <div class="journal-portfolio__media">

@@ -462,29 +462,6 @@ async (page) => {
     failures.push(`reduced motion: fallback contract failed (${JSON.stringify(reduced)})`);
   }
 
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto(`${baseUrl}/portfolio/`, { waitUntil: "domcontentloaded" });
-  const portfolio = await page.evaluate(() => ({
-    h1: document.querySelector("main h1")?.textContent?.replace(/\s+/g, " ").trim(),
-    bookCount: document.querySelectorAll('[data-journal-instance="portfolio-journal"]').length,
-    pageCount: document.querySelectorAll('[data-journal-instance="portfolio-journal"] .journal-sheet').length,
-    density: [...document.querySelectorAll('[data-journal-instance="portfolio-journal"] .journal-sheet')]
-      .map((sheet) => sheet.getAttribute("data-density")),
-    firstPageLoading: [...document.querySelectorAll('[data-journal-instance="portfolio-journal"] .journal-sheet:first-child img')]
-      .map((image) => ({ loading: image.loading, fetchpriority: image.getAttribute("fetchpriority") })),
-  }));
-  if (
-    portfolio.h1 !== "The Journal" ||
-    portfolio.bookCount !== 1 ||
-    portfolio.pageCount !== 6 ||
-    portfolio.density.some((value) => value !== "hard") ||
-    portfolio.firstPageLoading.some((image) => image.loading !== "eager") ||
-    portfolio.firstPageLoading[0]?.fetchpriority !== "high"
-  ) {
-    failures.push(`portfolio regression: ${JSON.stringify(portfolio)}`);
-  }
-
   await page.goto(`${baseUrl}/`, { waitUntil: "domcontentloaded" });
   await page.locator("review-polaroids").scrollIntoViewIfNeeded();
   await page.waitForFunction(() => document.querySelector("review-polaroids")?.classList.contains("is-enhanced"));
@@ -521,7 +498,7 @@ async (page) => {
     };
   }, { baseUrl });
   if (
-    crawler.sitemapCount !== 13 ||
+    crawler.sitemapCount !== 12 ||
     crawler.llmsCount !== 12 ||
     !crawler.sitemapHasReviews ||
     !crawler.llmsHasReviews
@@ -530,5 +507,5 @@ async (page) => {
   }
 
   if (failures.length) throw new Error(`Reviews QA failed:\n- ${failures.join("\n- ")}`);
-  return { status: "PASS", viewports: results, reducedMotion: reduced, portfolio, homepage, crawler };
+  return { status: "PASS", viewports: results, reducedMotion: reduced, homepage, crawler };
 }

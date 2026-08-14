@@ -31,7 +31,8 @@ permanente).
 
 1. El núcleo publicado ya incluye Home, Family, Newborn, About, Reviews,
    Contact, Richland, Kennewick, Pasco, Journal, Locations Guide, Branding vs.
-   Headshots y Portfolio.
+   Headshots. El libro fotográfico se conserva dentro de Reviews; la antigua
+   ruta independiente Portfolio fue retirada.
 2. Resolver con Lisa las páginas Seniors, Branding, Headshots e Investment
    usando el checklist de publicación.
 3. Publicar Senior Timing solo después de asignar fecha editorial y confirmar

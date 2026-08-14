@@ -24,7 +24,7 @@ formularios de Netlify y un estimador de sesión.
 
 Mantener y completar una experiencia editorial, cálida y publicable en Netlify:
 
-- 21 rutas públicas construibles en Astro.
+- 20 rutas públicas construibles en Astro.
 - Contenido exacto de los documentos fuente, sin inventar hechos.
 - Diseño oscuro, terroso y dorado, inspirado en fotografía impresa y anclado en
   la homepage aprobada de staging.
@@ -86,10 +86,9 @@ Mantener y completar una experiencia editorial, cálida y publicable en Netlify:
 
 ## Rutas públicas verificadas
 
-### Homepage y portfolio
+### Homepage
 
 - `/`
-- `/portfolio/`
 
 ### Servicios
 

@@ -29,14 +29,6 @@ export const getStaticHomepagePage = () => ({
   },
 });
 
-export const getStaticPortfolioPage = () => ({
-  data: {
-    homepage,
-    settings,
-    journalPageConnection: { edges: nodes(journalModules) },
-  },
-});
-
 export const getStaticReviewsPage = () => ({
   data: {
     homepage,

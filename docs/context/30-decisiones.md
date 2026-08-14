@@ -227,7 +227,7 @@
 
 ### ADR-018 — Portfolio se conserva y Journal es el hub de planificación
 - **Fecha:** 2026-08-08 (registro retrospectivo)
-- **Estado:** Aceptada
+- **Estado:** SUPERSEDIDA POR ADR-061.
 - **Contexto:** El plan original enumeró 18 páginas, pero el deployment ya tenía
   un Portfolio con composición de libro aprobada.
 - **Decisión:** Mantener `/portfolio/` como ruta pública adicional; `/journal/`
@@ -1314,7 +1314,8 @@
 
 ### ADR-057 — Journal se publica como colección sin enlazar artículos draft y los gates restantes se consultan en un solo documento
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-061 únicamente en el
+  enlace secundario a Portfolio, la fecha de Journal y los conteos derivados.
 - **Contexto:** El hub `/journal/` tenía copy, composición y cards completos,
   pero seguía `draft/noindex` y fuera de crawler outputs. Dos de sus cuatro
   artículos —Senior Timing y Newborn Comparison— todavía conservan gates
@@ -1357,7 +1358,8 @@
 ### ADR-058 — Reviews convierte palabras verificadas en prueba fotográfica y se publica sin fabricar rating
 
 - **Fecha:** 2026-08-12
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-061 únicamente en la
+  conservación de una segunda instancia pública del libro en Portfolio.
 - **Contexto:** `/reviews/` caía en el renderer genérico y no mostraba el
   inventario real ya utilizado en Homepage, aunque existían diez testimonios
   atribuidos y fotografiados. El usuario pidió auditar copy/media, conservar el
@@ -1400,7 +1402,8 @@
 
 - **Fecha:** 2026-08-12
 - **Estado:** Aceptada; supersede parcialmente ADR-058 en el enlace externo, la
-  firma visual de At Ease y la física del libro.
+  firma visual de At Ease y la física del libro; SUPERSEDIDA PARCIALMENTE POR
+  ADR-061 únicamente en la instancia eager y regresión de Portfolio.
 - **Contexto:** El usuario revisó `/reviews/` a 1920×963 y confirmó cinco ajustes:
   añadir un CTA directo para dejar una reseña, devolver al libro una animación de
   hojas claramente tridimensional, compactar el paso de KindWords al Journal,
@@ -1448,7 +1451,8 @@
 ### ADR-060 — Thank-you confirma recepción sin convertirse en una segunda landing
 
 - **Fecha:** 2026-08-13
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-061 únicamente en el
+  destino y texto de su anchor final.
 - **Contexto:** `/thank-you/` era una utilidad genérica con un H1, una frase y
   un enlace a Home, aunque Contact ya la usa como destino del único POST nativo.
   El usuario pidió reconciliar la geometría de una referencia editorial con las
@@ -1486,3 +1490,36 @@
   de `journal-page.css` preexistente. El finish reviewer devuelve `SHIP`,
   `ceiling: reached` y ningún hallazgo material. No se hizo push, deploy, DNS ni
   `./scripts/handoff.sh`; el usuario conserva el control del push.
+
+### ADR-061 — Portfolio se retira y Reviews conserva el libro como única superficie pública
+
+- **Fecha:** 2026-08-14
+- **Estado:** Aceptada; supersede ADR-018 y las cláusulas identificadas de
+  ADR-057, ADR-058, ADR-059 y ADR-060.
+- **Contexto:** El usuario pidió borrar `/portfolio/`, retirar su presencia de
+  sitemap, footer y navegación, y dirigir los enlaces relacionados a
+  `/reviews/`. Reviews ya contiene el mismo libro de seis páginas, por lo que
+  mantener ambas rutas duplicaba superficie pública y complejidad del editor.
+- **Decisión:** Eliminar la página, componente, query, loaders, isla, wrapper,
+  familia y entrada de manifiesto exclusivos de Portfolio. Conservar
+  `JournalBook`, `content/journal-pages/`, su colección Tina, estilos,
+  controlador y dependencia `page-flip`, porque Reviews los consume; el router
+  editorial de esa colección abre `/reviews/`. Journal y Thank-you enlazan
+  Client Reviews; Footer conserva una sola entrada Reviews. `/portfolio/` y las
+  seis galerías legacy redirigen directamente a `/reviews/` con 301. Journal
+  pasa a `lastModified: 2026-08-14`; el release queda en 20 rutas y
+  sitemap/`llms.txt` 12/12. Los validadores impiden regenerar HTML, enlaces o
+  crawler outputs de Portfolio.
+- **Alternativas descartadas:** Mantener Portfolio oculto o `noindex`, borrar
+  también el libro, dejar un 404, duplicar Reviews en el footer o encadenar los
+  redirects legacy a través de Portfolio se descartó por duplicación, pérdida
+  de contenido aprobado, mala continuidad y mayor deuda operativa.
+- **Consecuencias:** Tina y Astro compilan en staging y release; el validador
+  activo aprueba 20/20 en ambos modos. Playwright confirma Reviews en cinco
+  anchos, Thank-you en cuatro y Journal en desktop/móvil, sin overflow ni
+  enlaces Portfolio; el libro conserva seis hojas, interacción 3D y fallback de
+  movimiento reducido. El shell estático de `/admin/` carga y el router
+  generado apunta a Reviews; su autenticación cloud no es comprobable desde el
+  preview sin credenciales Tina. La ausencia del HTML y las reglas de redirect
+  quedan verificadas localmente; el estado HTTP real se comprobará después del
+  deploy. No se hizo push ni deploy.

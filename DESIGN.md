@@ -1802,20 +1802,20 @@ segura hacia contenido ya indexable.
 - Locations Guide y Branding vs. Headshots son las únicas cards enlazadas.
   Senior Timing y Newborn Comparison mantienen título y extracto visibles, pero
   no presentan anchor mientras sigan `draft/noindex`.
-- El enlace secundario Portfolio y la CTA final Contact completan cuatro anchors
-  exactos dentro de `<main>`: Locations, Branding vs. Headshots, Portfolio y
+- El enlace secundario Client Reviews y la CTA final Contact completan cuatro
+  anchors exactos dentro de `<main>`: Locations, Branding vs. Headshots, Reviews y
   Contact.
 - Footer y rutas `ready/index` tampoco enlazan los dos artículos draft. Newborn
   conserva el copy relacionado aprobado y pierde únicamente el enlace.
 
 ### Publicación y regresión
 
-- Estado canónico: `ready/index`, `lastModified: 2026-08-11`, canonical `www`,
+- Estado canónico: `ready/index`, `lastModified: 2026-08-14`, canonical `www`,
   sin header release noindex y con membresía única en sitemap y `llms.txt`.
 - La ruta emite un `CollectionPage` y un `BreadcrumbList` Home → Journal; no se
   convierte en `Article`, `Service`, lista de ofertas ni schema de reseñas.
-- Release valida 21/21 rutas con 12 URLs en sitemap y 11 entradas en `llms.txt`.
-  Staging valida 21/21, mantiene sitemap vacío y noindex global.
+- Release valida 20/20 rutas con 12 URLs en sitemap y 12 entradas en `llms.txt`.
+  Staging valida 20/20, mantiene sitemap vacío y noindex global.
 - Playwright aprobó Journal en 1440/1200/900/390 sin overflow, imágenes rotas ni
   errores runtime. La suite Newborn volvió a pasar en los cuatro anchos después
   de retirar su enlace draft; la revisión independiente dio `PASS` sin P1/P2.
@@ -1855,9 +1855,9 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
    social estático. Reviews añade debajo un CTA externo `Leave us a review` con
    relleno de papel y flecha animados; Homepage no recibe ese CTA.
 4. **The Photographs Behind the Words:** capítulo oliva con el libro canónico de
-   seis páginas de Portfolio. Sus hojas rígidas usan el giro 3D nativo desde la
-   esquina inferior; Reviews carga todas sus fotos lazy y Portfolio conserva la
-   primera página eager/high.
+   seis páginas preservado desde la antigua ruta Portfolio. Sus hojas rígidas
+   usan el giro 3D nativo desde la esquina inferior y Reviews carga todas sus
+   fotos lazy; ya no existe una segunda instancia pública eager del libro.
 5. **Leave the Nerves at Home:** fotografía familiar B/N full-bleed, copy corto
    y anchor interno de cierre hacia Contact.
 
@@ -1889,10 +1889,10 @@ ruta permanece dentro del lenguaje earth-and-gold de It's A Keeper Photography.
   header release noindex y con membresía única en sitemap/`llms.txt`. Emite
   `WebPage` y `BreadcrumbList`; no emite `Review` ni `AggregateRating` sin URL,
   fecha, rating y fuente individual verificables.
-- Staging y release validan 21/21 rutas. Release contiene 13 URLs en sitemap y
+- Staging y release validan 20/20 rutas. Release contiene 12 URLs en sitemap y
   12 entradas en `llms.txt`. Playwright pasa 1920×963, 1440×1000, 1200×900,
   900×900 y 390×844, además de teclado, giro 3D, reduced motion, imágenes,
-  consola/red, tipografía y regresión de Portfolio. El gap CTA→Journal queda en
+  consola/red, tipografía y ausencia de la antigua ruta Portfolio. El gap CTA→Journal queda en
   184/172.8/148/144/144 px y el resumen logra 4.61:1. El detector de los
   archivos propios devuelve `[]`. Las 30 instancias de imagen del archive
   —diez originales y dos juegos clonados— deben tener `currentSrc`, estar
@@ -1921,7 +1921,7 @@ previsualizaciones auditables y documentada con surface seed `02ea6a91`.
   a Lisa en un arco central, un print B/N de trabajo superpuesto y tres pasos en
   un `<ol>`: `Read with Care`, `A Personal Reply` y `Plan Together`.
 - El cierre full-bleed `A Little More Light, While You Wait` ofrece el único
-  anchor del cuerpo: `View the Portfolio`. No añade Contact, otro formulario,
+  anchor del cuerpo: `Read Client Reviews`. No añade Contact, otro formulario,
   precio, booking, fecha de respuesta, testimonial ni promesa comercial.
 
 ### Sistema visual y responsive
@@ -1947,7 +1947,7 @@ previsualizaciones auditables y documentada con surface seed `02ea6a91`.
 - `ThankYouPage.astro` se resuelve en SSR y refresh Tina;
   `thank-you-page.css?url` solo se carga en `/thank-you/`.
 - Contrato exacto: 1 H1, 3 H2, 3 H3, seis imágenes, un botón local de hero y un
-  anchor `/portfolio/` dentro de `<main>`. La sección destino tiene
+  anchor `/reviews/` dentro de `<main>`. La sección destino tiene
   `tabindex="-1"` para recibir foco después del scroll.
 - La ruta está `ready/noindex`, con `WebPage`, canonical propio,
   `sitemap: false`, `llms: false`, `primaryRoute: false` y sin `lastModified`.
@@ -1956,6 +1956,6 @@ previsualizaciones auditables y documentada con surface seed `02ea6a91`.
   debe poder leer el `noindex`.
 - El validador protege contenido, manifest espejo, CSS de ruta, contrato de
   dirección como primer hijo de body, headings, acciones, imágenes, schema y
-  exclusión crawler. Staging/release aprueban 21/21. Playwright CLI aprueba
+  exclusión crawler. Staging/release aprueban 20/20. Playwright CLI aprueba
   1440×1000, 1200×900, 900×900 y 390×844, con seis imágenes cargadas, cero
   overflow, errores de consola/red o contenido oculto bajo reduced motion.

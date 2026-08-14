@@ -19,7 +19,6 @@ async (page) => {
     ["journal-senior-timing", "/journal/when-to-book-senior-pictures-tri-cities/"],
     ["journal-newborn-comparison", "/journal/in-home-vs-studio-newborn-photography/"],
     ["journal-branding-vs-headshots", "/journal/branding-photos-vs-headshots/"],
-    ["portfolio", "/portfolio/"],
     ["privacy", "/privacy/"],
     ["thank-you", "/thank-you/"],
   ];

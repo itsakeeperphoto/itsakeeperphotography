@@ -89,8 +89,8 @@ async (page) => {
         }));
         const hero = document.querySelector(".editorial-hero")?.getBoundingClientRect();
         const header = document.querySelector(".site-header")?.getBoundingClientRect();
-        const portfolio = document.querySelector(".thank-you-close .outline-button");
-        const portfolioStyle = portfolio ? getComputedStyle(portfolio) : null;
+        const reviews = document.querySelector(".thank-you-close .outline-button");
+        const reviewsStyle = reviews ? getComputedStyle(reviews) : null;
         return {
           title: document.title,
           description: document.querySelector('meta[name="description"]')?.getAttribute("content"),
@@ -121,8 +121,8 @@ async (page) => {
             (document.body.firstChild.textContent || "").includes("surface seed 02ea6a91"),
           webPageSchemas: schemas.filter((schema) => schema?.["@type"] === "WebPage").length,
           breadcrumbSchemas: schemas.filter((schema) => schema?.["@type"] === "BreadcrumbList").length,
-          portfolioHeight: portfolio?.getBoundingClientRect().height || 0,
-          portfolioColor: portfolioStyle?.color || "",
+          reviewsHeight: reviews?.getBoundingClientRect().height || 0,
+          reviewsColor: reviewsStyle?.color || "",
           expected,
         };
       }, expected);
@@ -144,7 +144,7 @@ async (page) => {
       }
       if (
         JSON.stringify(initial.mainAnchors) !==
-        JSON.stringify([{ href: "/portfolio/", label: "View the Portfolio" }]) ||
+        JSON.stringify([{ href: "/reviews/", label: "Read Client Reviews" }]) ||
         initial.heroButtonTarget !== "your-message-is-with-me" ||
         initial.heroButtonLabel !== "What happens next"
       ) {
@@ -159,7 +159,7 @@ async (page) => {
         !initial.directionFirst ||
         initial.webPageSchemas !== 1 ||
         initial.breadcrumbSchemas !== 0 ||
-        initial.portfolioHeight < 44
+        initial.reviewsHeight < 44
       ) {
         failures.push(`${viewport.id}: structure, responsive fit, schema or control-size gate failed`);
       }
@@ -183,15 +183,15 @@ async (page) => {
         failures.push(`${viewport.id}: hero control did not focus the note section`);
       }
 
-      const portfolio = page.getByRole("link", { name: "View the Portfolio" });
-      await portfolio.scrollIntoViewIfNeeded();
-      const beforeHover = await portfolio.evaluate((element) => ({
+      const reviews = page.getByRole("link", { name: "Read Client Reviews" });
+      await reviews.scrollIntoViewIfNeeded();
+      const beforeHover = await reviews.evaluate((element) => ({
         color: getComputedStyle(element).color,
         background: getComputedStyle(element).backgroundColor,
       }));
-      await portfolio.hover();
+      await reviews.hover();
       await page.waitForTimeout(160);
-      const afterHover = await portfolio.evaluate((element) => ({
+      const afterHover = await reviews.evaluate((element) => ({
         color: getComputedStyle(element).color,
         background: getComputedStyle(element).backgroundColor,
       }));
@@ -199,7 +199,7 @@ async (page) => {
         beforeHover.color === afterHover.color ||
         beforeHover.background === afterHover.background
       ) {
-        failures.push(`${viewport.id}: Portfolio CTA has no visible hover feedback`);
+        failures.push(`${viewport.id}: Reviews CTA has no visible hover feedback`);
       }
 
       const scrollHeight = await page.evaluate(() => document.documentElement.scrollHeight);

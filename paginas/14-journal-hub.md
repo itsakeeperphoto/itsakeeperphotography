@@ -45,7 +45,7 @@ cerrar sus propios gates. Orden por relevancia estacional, editable.)_
 3. **In-Home vs. Studio Newborn Photography** — An honest comparison to help you choose what's right for your family's first days. _(Card sin enlace mientras el artículo siga `draft/noindex`.)_
 4. **Branding Photos vs. Headshots: What Your Business Actually Needs** — The difference, the overlap, and how to decide where to start. → `/journal/branding-photos-vs-headshots/`
 
-**Enlace editorial secundario:** Photography Portfolio → `/portfolio/`
+**Enlace editorial secundario:** Client Reviews → `/reviews/`
 
 ### Sección 3 — CTA
 
@@ -59,7 +59,7 @@ Reading is planning — but the light won't wait forever.
 
 - Entrantes: Home (nav "Journal"), footer global.
 - Salientes exactos en `<main>`: Locations Guide, Branding vs. Headshots,
-  Portfolio y Contact.
+  Reviews y Contact.
 - Senior Timing y Newborn Comparison conservan card/copy visible, pero no
   exponen anchor desde ninguna ruta `ready/index` ni desde el footer mientras
   sigan `draft/noindex`.

@@ -282,10 +282,13 @@ if (
   thankYouSource.sections?.[0]?.items?.length !== 3 ||
   !Array.isArray(thankYouSource.pending) ||
   thankYouSource.pending.length !== 0 ||
-  thankYouSource.finalCta?.link?.href !== "/portfolio/"
+  thankYouSource.finalCta?.paragraphs?.[0] !==
+    "Client reviews are here whenever you want to spend a little more time with the work." ||
+  thankYouSource.finalCta?.link?.label !== "Read Client Reviews" ||
+  thankYouSource.finalCta?.link?.href !== "/reviews/"
 ) {
   failures.push(
-    "content/pages/thank-you.json: Thank-you must retain its approved ready/noindex confirmation, three verified next steps, Portfolio close and empty pending contract",
+    "content/pages/thank-you.json: Thank-you must retain its approved ready/noindex confirmation, three verified next steps, Reviews close and empty pending contract",
   );
 }
 const aboutHeroDigest = createHash("sha256")
@@ -513,7 +516,6 @@ const indexableReleaseFiles = new Set([
   `journal${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
   `journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`,
-  `portfolio${path.sep}index.html`,
 ]);
 const expandedDirectoryLinkCounts = new Map([
   [`richland-wa-photographer${path.sep}index.html`, 9],
@@ -970,11 +972,12 @@ if (
   journalBrandingGuide.links[0]?.href !==
     "/journal/branding-photos-vs-headshots/" ||
   journalPlanningGuides?.links?.length !== 1 ||
-  journalPlanningGuides.links[0]?.href !== "/portfolio/" ||
+  journalPlanningGuides.links[0]?.label !== "Client Reviews" ||
+  journalPlanningGuides.links[0]?.href !== "/reviews/" ||
   journalHubSource.finalCta?.link?.href !== "/contact/"
 ) {
   failures.push(
-    "content/pages/journal.json: Journal must link only Locations, Branding vs. Headshots, Portfolio and Contact; draft Senior/Newborn cards must have no links",
+    "content/pages/journal.json: Journal must link only Locations, Branding vs. Headshots, Reviews and Contact; draft Senior/Newborn cards must have no links",
   );
 }
 const serviceMediaContracts = new Map([
@@ -1468,6 +1471,9 @@ for (const file of htmlFiles) {
       ? ["/"]
       : [`/${url.pathname.replace(/^\/+|\/+$/g, "")}/`];
   });
+  if (normalizedDocumentInternalPaths.includes("/portfolio/")) {
+    failures.push(`${relative}: retired Portfolio route must not remain linked`);
+  }
   const internalAnchors = [...main.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)]
     .map((match) => match[1])
     .filter((href) => href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/#"));
@@ -1556,7 +1562,7 @@ for (const file of htmlFiles) {
       JSON.stringify(h3Texts) !==
         JSON.stringify(["Read with Care", "A Personal Reply", "Plan Together"]) ||
       JSON.stringify(mainAnchors) !==
-        JSON.stringify([{ href: "/portfolio/", label: "View the Portfolio" }]) ||
+        JSON.stringify([{ href: "/reviews/", label: "Read Client Reviews" }]) ||
       htmlAttribute(heroButtonTag, "data-hero-scroll-target") !==
         "your-message-is-with-me" ||
       normalizedText(
@@ -1572,7 +1578,7 @@ for (const file of htmlFiles) {
       breadcrumbs.length !== 0
     ) {
       failures.push(
-        `${relative}: Thank-you must retain one shared hero scroll control, the approved note/three-step structure, six-image composition, one Portfolio anchor and a single canonical WebPage schema`,
+        `${relative}: Thank-you must retain one shared hero scroll control, the approved note/three-step structure, six-image composition, one Reviews anchor and a single canonical WebPage schema`,
       );
     }
   }
@@ -1583,7 +1589,7 @@ for (const file of htmlFiles) {
     const expectedJournalAnchors = [
       "/journal/family-photo-locations-tri-cities/",
       "/journal/branding-photos-vs-headshots/",
-      "/portfolio/",
+      "/reviews/",
       "/contact/",
     ];
     if (
@@ -1591,7 +1597,7 @@ for (const file of htmlFiles) {
       unpublishedJournalPaths.some((href) => internalAnchors.includes(href))
     ) {
       failures.push(
-        `${relative}: Journal body anchors must be Locations, Branding vs. Headshots, Portfolio and Contact only; draft articles must expose zero anchors`,
+        `${relative}: Journal body anchors must be Locations, Branding vs. Headshots, Reviews and Contact only; draft articles must expose zero anchors`,
       );
     }
     if (
@@ -3755,7 +3761,7 @@ for (const file of htmlFiles) {
     }
   }
   if (
-    !["index.html", `portfolio${path.sep}index.html`].includes(relative) &&
+    relative !== "index.html" &&
     !/data-signature-device="(?:arch|overlap|crossing-line)"/.test(source)
   ) {
     failures.push(`${relative}: signature composition marker is missing`);
@@ -3782,6 +3788,9 @@ const mirrorManifestSource = await readFile(
 if (runtimeManifestSource !== mirrorManifestSource) {
   failures.push("page-manifest.ts: root mirror must exactly match src/lib/page-manifest.ts");
 }
+if (/\bid:\s*"portfolio"/.test(runtimeManifestSource)) {
+  failures.push("page-manifest.ts: retired Portfolio route must remain absent");
+}
 const journalHubManifestBlock = runtimeManifestSource.match(
   /\{\s*id:\s*"journal",[\s\S]*?\n\s*\},/,
 )?.[0] || "";
@@ -3791,13 +3800,13 @@ if (
   !/schemaType:\s*"CollectionPage"/.test(journalHubManifestBlock) ||
   !/sitemap:\s*true/.test(journalHubManifestBlock) ||
   !/llms:\s*true/.test(journalHubManifestBlock) ||
-  !/lastModified:\s*"2026-08-11"/.test(journalHubManifestBlock) ||
+  !/lastModified:\s*"2026-08-14"/.test(journalHubManifestBlock) ||
   !/title:\s*"Photography Journal \| Tips & Locations From Lisa"/.test(
     journalHubManifestBlock,
   )
 ) {
   failures.push(
-    "page-manifest.ts: Journal hub must retain ready/index CollectionPage gates, exact title and 2026-08-11 lastModified",
+    "page-manifest.ts: Journal hub must retain ready/index CollectionPage gates, exact title and 2026-08-14 lastModified",
   );
 }
 const reviewsManifestBlock = runtimeManifestSource.match(
@@ -4307,12 +4316,30 @@ if (
   failures.push("contact: BreadcrumbList or no-invented-Service schema contract is invalid");
 }
 
-if (htmlFiles.length !== 21) failures.push(`expected 21 public HTML routes; found ${htmlFiles.length}`);
+if (htmlFiles.length !== 20) failures.push(`expected 20 public HTML routes; found ${htmlFiles.length}`);
+
+if (existsSync(path.join(output, "portfolio", "index.html"))) {
+  failures.push("portfolio: retired page must not generate public HTML");
+}
 
 const sitemap = await readFile(path.join(output, "sitemap.xml"), "utf8");
 const robots = await readFile(path.join(output, "robots.txt"), "utf8");
 const llms = await readFile(path.join(output, "llms.txt"), "utf8");
 const headers = await readFile(path.join(output, "_headers"), "utf8");
+const redirects = await readFile(path.join(output, "_redirects"), "utf8");
+for (const rule of [
+  "/portfolio/ /reviews/ 301",
+  "/dana-buckley /reviews/ 301",
+  "/jonathan-miller-1 /reviews/ 301",
+  "/heinrich-harrison /reviews/ 301",
+  "/emily-london /reviews/ 301",
+  "/sir-james-condi /reviews/ 301",
+  "/new-gallery-wexley /reviews/ 301",
+]) {
+  if (!redirects.includes(rule)) {
+    failures.push(`_redirects: retired Portfolio destination is not reconciled (${rule})`);
+  }
+}
 if (sitemap.includes("/thank-you/") || llms.includes("/thank-you/")) {
   failures.push(
     "thank-you: utility confirmation must remain excluded from sitemap.xml and llms.txt",
@@ -4396,10 +4423,12 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/journal/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
     "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/",
-    "https://www.itsakeeperphotography.com/portfolio/",
   ];
   if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) {
     failures.push(`sitemap.xml: release membership is ${sitemapUrls.join(", ") || "empty"}`);
+  }
+  if (sitemap.includes("/portfolio/") || llms.includes("/portfolio/")) {
+    failures.push("crawler outputs: retired Portfolio route must remain absent");
   }
   const pascoSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/pasco-wa-photographer\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
@@ -4434,8 +4463,8 @@ if (mode === "staging") {
   const journalHubSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
   )?.[0] || "";
-  if (!/<lastmod>2026-08-11<\/lastmod>/.test(journalHubSitemapEntry)) {
-    failures.push("sitemap.xml: Journal hub lastmod must be 2026-08-11");
+  if (!/<lastmod>2026-08-14<\/lastmod>/.test(journalHubSitemapEntry)) {
+    failures.push("sitemap.xml: Journal hub lastmod must be 2026-08-14");
   }
   const brandingHeadshotsSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/branding-photos-vs-headshots\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,

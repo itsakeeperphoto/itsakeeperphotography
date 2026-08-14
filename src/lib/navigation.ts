@@ -17,7 +17,6 @@ export const footerNavigation = {
     { label: "Reviews", href: "/reviews/" },
     { label: "Investment", href: "/investment/" },
     { label: "Journal", href: "/journal/" },
-    { label: "Portfolio", href: "/portfolio/" },
     { label: "Contact", href: "/contact/" },
     { label: "Privacy", href: "/privacy/" },
   ],

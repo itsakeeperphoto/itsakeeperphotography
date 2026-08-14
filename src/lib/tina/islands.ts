@@ -1,25 +1,16 @@
 import type { QueryResult } from "@tinacms/astro/data";
 import type { IslandRegistry } from "@tinacms/astro/experimental";
 import HomepagePage from "../../components/HomepagePage.astro";
-import JournalPortfolio from "../../components/JournalPortfolio.astro";
 import EditorialPageRouter from "../../components/pages/EditorialPageRouter.astro";
 import { editorialManifest } from "../page-manifest";
-import { getContentPageTina, getHomepagePage, getPortfolioPage } from "./data";
-import { contentPageWrapper, homepageWrapper, portfolioWrapper } from "./wrappers";
+import { getContentPageTina, getHomepagePage } from "./data";
+import { contentPageWrapper, homepageWrapper } from "./wrappers";
 
 export const islands: IslandRegistry = {
   homepage: {
     fetch: () => getHomepagePage(),
     component: HomepagePage,
     wrapper: homepageWrapper,
-    propsFromData: (result) => ({
-      data: (result as QueryResult<Record<string, unknown>>).data,
-    }),
-  },
-  portfolio: {
-    fetch: () => getPortfolioPage(),
-    component: JournalPortfolio,
-    wrapper: portfolioWrapper,
     propsFromData: (result) => ({
       data: (result as QueryResult<Record<string, unknown>>).data,
     }),
