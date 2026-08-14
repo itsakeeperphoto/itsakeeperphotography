@@ -89,6 +89,9 @@ threshold. Each must retain genuinely city-specific content before it is approve
 - `/thank-you/` — specialized post-submit confirmation; permanently noindex,
   excluded from sitemap/`llms.txt`, and still crawlable so robots can read the
   `noindex` directive
+- `404.html` — host error artifact for every unknown URL; permanently noindex,
+  omitted from the page manifest, sitemap and `llms.txt`, and served with an
+  actual HTTP 404 instead of redirecting to Home
 - `/admin/` and `/tina-island/` — administrative routes; excluded and blocked from indexing
 
 ## Quality rules
@@ -119,6 +122,8 @@ threshold. Each must retain genuinely city-specific content before it is approve
   its Home social-proof summary is static text, and its journal adds no links.
   Thank-you exposes one Reviews anchor inside `<main>`; its hero scroll
   control remains a button and it must never add a second form or Contact CTA.
+  The 404 artifact exposes exactly two recovery anchors inside `<main>`, Home
+  followed by Reviews; its hero scroll remains a button.
 
 The Reviews publication contract uses the shared service-page hero, the exact
 Home `KindWords` component and the reusable six-page photo journal. It

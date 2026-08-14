@@ -1,7 +1,7 @@
 # 10 — Arquitectura
 
 > Solo describe lo que existe y fue inspeccionado o construido con éxito el
-> 2026-08-11. Lo planeado está en `50-backlog.md`.
+> 2026-08-14. Lo planeado está en `50-backlog.md`.
 
 ## Stack
 
@@ -48,15 +48,18 @@
 │   ├── content/pending.ts         registro de hechos/media pendientes
 │   ├── layouts/Base.astro         metadata, schema, header/footer y scripts
 │   ├── lib/
-│   │   ├── page-manifest.ts       20 rutas y estado de búsqueda
+│   │   ├── page-manifest.ts       20 rutas editoriales y estado de búsqueda
 │   │   ├── content-pages.ts       resolución de contenido
 │   │   ├── static-content.ts      fallback/contenido tipado
 │   │   ├── session-pricing.ts     única fuente de precios del estimador
 │   │   └── tina/                  acceso e islas de edición
-│   ├── pages/                     rutas Astro, robots/sitemap/llms/endpoints
+│   ├── pages/                     rutas Astro, 404 estático, robots/sitemap/llms/endpoints
 │   ├── scripts/                   interacción pública minificada al build
 │   └── styles/                    CSS global y por familia de página
-├── tina/config.ts                 modelos de contenido de Tina
+├── tina/
+│   ├── config.ts                 modelos y experiencia editorial de Tina
+│   ├── content-page-routes.ts    filename → preview canónico de 19 páginas
+│   └── queries/                  queries Basic, Contact y Site/Reviews
 ├── netlify/
 │   ├── functions/                 endpoints y job GBP programado
 │   └── lib/                       cache/resumen GBP compartido
@@ -65,6 +68,7 @@
 │   └── netlify-headers/           headers staging y release
 ├── public/                        assets optimizados, fuentes y redirects
 ├── scripts/
+│   ├── validate-tina-editor.mjs  paridad CMS/manifest/renderers
 │   ├── lib/image-xmp.mjs          construcción/normalización de XMP segura
 │   └── ...                        build, optimización, QA y handoff
 ├── .handoff/sessions/             rollouts locales ignorados por git
@@ -95,6 +99,16 @@
 - `src/content/pending.ts` centraliza hechos y media que no deben inventarse.
 - `tina/config.ts` expone modelos de contenido. Los editores pueden cambiar copy
   e imágenes, no la estructura visual de los componentes.
+- Tina expone cinco colecciones y 38 documentos: Settings (1), Homepage (1),
+  Website Pages (19), Photo Journal (6) y Testimonials (11). Los documentos
+  fijos no se crean, eliminan ni renombran desde el panel; títulos humanos,
+  labels de listas y validaciones hacen legible el editor.
+- Rutas, familias, estados de publicación, schema, firma visual, IDs de sección,
+  composición y tonos son contratos de código ocultos en Tina. El preview de
+  Website Pages se resuelve por filename mediante
+  `tina/content-page-routes.ts`, no por el campo mutable `route`.
+- `TinaEditableSource` tipa la metadata opcional `_content_source` que Tina
+  añade a los objetos para quick edit; no forma parte del JSON publicado.
 - En Homepage, `meetLisa.portrait` alimenta el retrato principal en arco y el
   campo Tina opcional `meetLisa.printImage` alimenta el print decorativo. Si
   `printImage` falta, `MeetLisa.astro` usa `portrait` como fallback. El hero
@@ -134,12 +148,10 @@ retry, freeze tras éxito ni analítica personalizada del gate.
 
 - `src/pages/index.astro` compone la homepage y es la única ruta que incluye
   `SitePreloader.astro`.
-- `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto y
-  ramifica Reviews a su renderer especializado tanto en SSR como en refresh
-  Tina.
-- `src/pages/journal/[slug].astro` resuelve artículos y ramifica explícitamente
-  Family Photo Locations, Senior Timing, Newborn Comparison y Branding vs.
-  Headshots a sus renderers especializados antes del fallback `ContentPage`.
+- `src/pages/[slug].astro` resuelve páginas top-level desde el manifiesto.
+- `EditorialPageRouter.astro` es el dispatcher único de los 18 renderers
+  especializados y el fallback Privacy, tanto durante SSR como después de un
+  refresh Tina. `src/pages/journal/[slug].astro` ya no duplica esas ramas.
 - `src/pages/tina-island/[name].ts` sirve refresco visual de islas Tina.
 - `src/pages/sitemap.xml.ts`, `robots.txt.ts` y `llms.txt.ts` generan salidas
   según `SITE_MODE` y el manifiesto.
@@ -177,8 +189,7 @@ Componentes especializados existentes:
 - `JournalPage.astro`, `LocationsGuidePage.astro`, `SeniorTimingPage.astro`,
   `NewbornComparisonPage.astro`, `BrandingHeadshotsArticlePage.astro`
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
-- `ContentPage.astro` para rutas aún genéricas, incluida Privacy y algunos
-  artículos.
+- `ContentPage.astro` como fallback genérico de Privacy.
 
 `JournalPage.astro` conserva la firma visual `overlap` y cuatro cards, pero el
 hub publicado expone solo cuatro anchors seguros: Locations Guide, Branding vs.
@@ -215,6 +226,16 @@ contrato visible es 1 H1, 3 H2, 3 H3, seis imágenes y un único anchor dentro d
 `<main>`. El manifest mantiene `ready/noindex`, `sitemap: false`, `llms: false`,
 `primaryRoute: false` y no declara `lastModified`; release añade meta y header
 `noindex, nofollow, noarchive`, sin bloquear la URL en `robots.txt`.
+
+`src/pages/404.astro` genera `dist/client/404.html` fuera del manifiesto
+editorial. `NotFoundPage.astro` reutiliza `EditorialHero` y compone la
+recuperación `The Empty Mount / Split Path` con dos glyphs 4, un arco y un print
+B/N; `not-found-page.css?url` no se carga en otras rutas. `Base.astro` recibe
+`isErrorPage` para omitir canonical, `og:url` y todo JSON-LD sin alterar las 20
+rutas editoriales. `scripts/serve-dist.mjs` sirve este artefacto con status 404
+para una URL inexistente. El cuerpo contiene exactamente un botón local y dos
+anchors en orden Home → Reviews; no se añade al manifiesto, sitemap ni
+`llms.txt`.
 
 `JournalBook.astro` contiene la UI reutilizable del libro fotográfico que vive
 en Reviews. Sus seis páginas cargan lazy y el flip solo se hidrata al entrar en
@@ -373,8 +394,25 @@ El flujo requiere credenciales OAuth y IDs de GBP; no hay valores en git.
 ### Tina visual editing
 
 `TinaIsland.astro`, `src/lib/tina/data.ts` y `src/lib/tina/islands.ts` separan
-registro de islas, queries y render público para evitar cargar CSS/JS de páginas
-no utilizadas en homepage.
+registro de islas, queries y render público. Los 19 contratos de página y
+`EditorialHero` emiten `data-tina-field` sobre el DOM existente: habilitan
+selección directa de documento, hero, secciones, ítems, media y cierre sin
+cambiar copy, CSS, clases ni composición visual.
+
+La carga editorial usa tres niveles tipados: `contentPageBasic` obtiene solo la
+página para 17 rutas; `contentPageContact` añade Settings para Contact; y
+`contentPageSite` reserva Homepage, Settings, Testimonials y Photo Journal para
+Reviews. Los loaders consumen las queries generadas sin `as any`. La isla
+normaliza en el mismo objeto las listas opcionales que GraphQL entrega como
+`null`, preservando `_content_source`; los helpers que las recorren mantienen
+además defensas null-safe.
+
+El reemplazo de una isla conserva la interacción: eventos delegados y
+observadores idempotentes reactivan el menú/inquiry de Homepage, el botón local
+de `EditorialHero`, la calculadora de Contact, el resumen GBP de Kind Words y
+`JournalBook`. `npm run validate:tina` exige el inventario 5/38, la paridad de
+20 rutas y 19 documentos con manifiesto/preview, los renderers especializados,
+los markers y las tres queries antes de `dev`, `build:local` y `build`.
 
 ## Variables de entorno
 
@@ -405,6 +443,7 @@ el 2026-08-11.
 
 ```bash
 npm install
+npm run validate:tina
 npm run dev
 npm run build:local
 npm run build
@@ -414,7 +453,8 @@ npm run optimize:images
 npm run audit:lighthouse
 ```
 
-`npm run build:local` valida primero que los JPEG fuente no excedan 2400 px ni
+`npm run dev`, `npm run build:local` y `npm run build` ejecutan primero el gate
+determinista de Tina. `npm run build:local` valida después que los JPEG fuente no excedan 2400 px ni
 700 KiB, genera variantes responsive, inicia Tina local, compila Astro, instala
 headers de staging y ejecuta `scripts/validate-site.mjs`. `npm run build`
 realiza la misma disciplina de assets y además indexación/build Tina según el
@@ -433,7 +473,8 @@ para evitar cambios silenciosos al repositorio.
 - `astro.config.mjs` rechaza combinaciones incoherentes de modo/contexto y elige
   adaptador Netlify, Vercel o Node; la salida pública es estática.
 - `scripts/install-netlify-headers.mjs` instala el set de headers correcto.
-- `scripts/validate-site.mjs` valida las 20 rutas, canonicals, crawler outputs,
+- `scripts/validate-site.mjs` valida las 20 rutas editoriales y, por separado,
+  el artefacto `404.html`, canonicals, crawler outputs,
   formularios, placeholders, enlaces internos rotos y gates de publicación.
   En Homepage fija la fuente/alt del hero, sus cuatro variantes art-directed,
   preloads y atributos prioritarios; protege también la separación entre el
@@ -539,6 +580,9 @@ Investment, Senior Timing, Newborn Comparison y Privacy siguen
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
 también los artículos publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
+`404.html` también es noindex permanente, no declara canonical ni schema y
+permanece fuera del manifest, sitemap y `llms.txt`; no se bloquea en
+`robots.txt`, porque el status 404 y la meta son sus señales primarias.
 
 `Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.
 También deriva `og:type`: `article` únicamente cuando `schemaType` es

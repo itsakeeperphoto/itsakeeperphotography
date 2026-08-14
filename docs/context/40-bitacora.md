@@ -1386,3 +1386,63 @@
   bitácora y reconciliaciones documentales finales en un segundo commit local.
   No se hizo push, deploy, DNS ni `./scripts/handoff.sh`; el usuario pidió
   explícitamente commits sin push.
+
+### 2026-08-14 — Codex / GPT-5 — 404 editorial con status real y recuperación segura
+
+- **Objetivo:** sustituir el fallback Homepage/200 por una página Not Found
+  propia, coherente con los heroes editoriales y útil para recuperar navegación.
+- **Auditoría y dirección:** no existía ruta 404 ni copy fuente; se auditó la
+  biblioteca y la referencia 800×1596. Image-to-code extrajo sus proporciones,
+  la generación visual produjo tres comps y B / `The Empty Mount · Split Path`,
+  seed `4fdd61c5`, quedó seleccionada. Un productor independiente fijó cinco
+  fotos, roles alt, carga y crops; no fue necesario generar fotografía.
+- **Implementación:** `404.astro`, `NotFoundPage.astro` y CSS `?url` reutilizan
+  `EditorialHero`; la recuperación compone dos 4 outline, arco, print B/N y dos
+  salidas Home/Reviews. `Base.isErrorPage` omite canonical, `og:url` y JSON-LD;
+  `serve-dist` usa `404.html` con status 404. Release añade X-Robots-Tag para el
+  artefacto directo.
+- **SEO:** 404 permanente, meta `noindex,nofollow,noarchive`, fuera de manifest,
+  sitemap y `llms.txt`. No redirect a Home, canonical o schema: se evita el
+  soft 404 y las señales contradictorias.
+- **QA:** staging/release construyen el artefacto y el contrato 404 pasa. El
+  validador global conserva un único fallo ajeno por el digest About modificado
+  en un rollout Tina paralelo. Playwright confirmó status 404, metadata,
+  imágenes, 44 px y overflow 0 en el primer pase 1440/390. El finish reviewer
+  encontró solapamiento desktop; mover el mount a columnas 4–7 eliminó el P1.
+  La cuota bloqueó la recaptura post-fix hasta 2026-08-20, por lo que queda un
+  P2 de evidencia y `conditional PASS` de implementación. Detector Impeccable:
+  `[]`.
+- **Git/operación:** no se pudo stagear/commitear porque la cuota también negó
+  la escalación necesaria para escribir `.git`. Los cambios Tina ajenos se
+  preservaron. No se hizo push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-14 — Codex / GPT-5 — TinaCMS editable por página sin cambiar el diseño
+
+- **Objetivo:** llevar a las 19 Website Pages la claridad de acceso y edición
+  visual que ya tenía Homepage, sin alterar su diseño público.
+- **Auditoría:** se verificaron cinco colecciones, 38 documentos, 20 rutas y 19
+  renderers. Los problemas eran títulos por filename, preview mutable,
+  controles técnicos visibles, ausencia de quick edit, una rama faltante para
+  Family Photo Locations, overfetch y listeners que podían perderse al
+  reemplazar una isla.
+- **Implementación:** Tina usa títulos/labels humanos, filenames y acciones
+  estructurales protegidos, campos de sistema ocultos y un mapa cerrado de 19
+  previews. Los renderers comparten `EditorialPageRouter`, emiten markers desde
+  documento hasta CTA y cargan queries Basic/Contact/Site tipadas. Eventos
+  delegados y observers idempotentes conservan menú, inquiry, hero scroll,
+  calculadora, resumen GBP y libro tras refresh. La isla normaliza listas
+  GraphQL `null` sin clonar metadata y dos helpers conservan defensa local.
+- **Diseño:** no cambiaron JSON de contenido, copy, CSS, clases ni composición;
+  los cambios visibles existen solo dentro del panel editorial.
+- **QA:** `validate:tina` PASS 5/38/20/19; esquema Tina recompilado e indexado;
+  `/admin/` local mostró las cinco colecciones, 19 títulos humanos, navegación
+  canónica y selección de sección en Locations Guide. Astro parseó 40
+  componentes, construyó 20 rutas editoriales y release validó 20/20. TypeScript
+  conserva únicamente los errores baseline de espejos raíz y módulos Astro.
+  La cuota local impidió repetir la matriz Playwright completa después del fix
+  nullable; el smoke autenticado TinaCloud queda post-deploy.
+- **Git/operación:** implementación en `334281a`
+  (`feat(cms): simplify Tina visual editing`). El marker/observer compartido de
+  `EditorialHero` y el digest About quedaron en el commit 404 concurrente
+  `f341a15`; no se reescribió ese historial. Este cierre documental forma un
+  commit local separado, sin push, deploy, DNS ni `./scripts/handoff.sh`.

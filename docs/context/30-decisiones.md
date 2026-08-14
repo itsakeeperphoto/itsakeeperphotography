@@ -1523,3 +1523,73 @@
   preview sin credenciales Tina. La ausencia del HTML y las reglas de redirect
   quedan verificadas localmente; el estado HTTP real se comprobará después del
   deploy. No se hizo push ni deploy.
+
+### ADR-062 — Las URLs inexistentes conservan un 404 real y una recuperación editorial
+
+- **Fecha:** 2026-08-14
+- **Estado:** Aceptada; cierre visual independiente pendiente de recaptura.
+- **Contexto:** El sitio no tenía `src/pages/404.astro` y el servidor de preview
+  devolvía Homepage con status 200 para cualquier ruta desconocida, creando un
+  soft 404 local. El usuario pidió una página Not Found coherente con Seniors,
+  Family y Newborn, derivada de la geometría de una referencia sin copiar su
+  marca, colores o textos, con auditoría fotográfica, previsualización y QA en
+  cuatro anchos. Una página de error no representa intención de búsqueda.
+- **Decisión:** Adoptar Comp B / `The Empty Mount · Split Path`, seed
+  `4fdd61c5`, entre tres visualizaciones generadas. Crear `404.astro`,
+  `NotFoundPage.astro` y CSS `?url`; reutilizar `EditorialHero`, cinco fotos
+  existentes y una recuperación de dos anchors Home → Reviews. Mantener el
+  artefacto fuera de manifest, sitemap y `llms.txt`; emitir HTTP 404,
+  `noindex,nofollow,noarchive` y omitir canonical, `og:url` y todo JSON-LD.
+  Añadir a `Base.astro` un opt-out explícito solo para páginas de error y hacer
+  que el servidor estático use `404.html` con status 404 en lugar de Homepage.
+- **Alternativas descartadas:** Redirigir a Home, devolver 200, registrar la
+  utilidad como página editorial, canonicalizar `/404/`, añadir schema o un
+  formulario, copiar el layout completo de la referencia, usar el raster de la
+  comp como UI o generar fotografías nuevas se descartó por soft-404, señales
+  SEO contradictorias, duplicación o pérdida de autenticidad.
+- **Consecuencias:** Astro genera `dist/client/404.html`; el contrato activo fija
+  metadata, ausencia de schema/canonical, dirección, headings, dos anchors,
+  cinco imágenes, aislamiento CSS y exclusión crawler. Playwright confirmó en
+  el primer pase status 404, metadata, imágenes completas, controles de 44 px y
+  overflow 0 en 1440/390. El finish reviewer detectó un solapamiento desktop;
+  el mount se desplazó a columnas 4–7 y el copy comienza en línea 8, eliminando
+  la superficie compartida. La cuota local de Playwright bloqueó la recaptura
+  post-fix de 1440/1200/900/390 hasta 2026-08-20, por lo que el veredicto queda
+  `conditional PASS` de implementación y `FAIL` solo de evidencia final. El
+  detector Impeccable devolvió `[]`. No se hizo push ni deploy.
+
+### ADR-063 — Tina prioriza edición por página sin exponer contratos visuales
+
+- **Fecha:** 2026-08-14
+- **Estado:** Aceptada.
+- **Contexto:** Homepage ofrecía una experiencia Tina clara, pero Website Pages
+  mostraba filenames y controles técnicos, resolvía el preview desde una ruta
+  editable, no tenía quick edit completo en sus renderers especializados y
+  cargaba Homepage, Settings, Testimonials y Photo Journal en todas las páginas.
+  Family Photo Locations además degradaba al renderer genérico tras un refresh.
+  El reemplazo HTML de una isla podía dejar inertes botones, menú, inquiry,
+  calculadora, resumen GBP o libro porque sus listeners pertenecían al DOM
+  anterior.
+- **Decisión:** Mantener un solo modelo `contentPage` y la composición en Astro.
+  Dar títulos y labels humanos, fijar filenames/acciones destructivas, ocultar
+  rutas, gates, schema, firma, IDs, composición y tonos, y resolver los 19
+  previews mediante un mapa cerrado filename → ruta canónica. Compartir
+  `EditorialPageRouter` entre SSR y refresh; marcar documento, hero, secciones,
+  ítems, media y cierre con metadata Tina sobre el DOM existente. Dividir la
+  carga en queries Basic, Contact y Site/Reviews tipadas; normalizar listas
+  opcionales GraphQL en el objeto original para conservar metadata. Usar
+  eventos delegados e inicializadores idempotentes después de un reemplazo de
+  isla. Ejecutar `validate:tina` antes
+  de dev y build para fijar inventario 5/38, 20 rutas y 19 renderers.
+- **Alternativas descartadas:** Crear una colección por página/familia, permitir
+  layout libre desde el CMS, seguir exponiendo rutas/publicación como controles
+  editoriales, aceptar overfetch o recargar toda la página tras cada cambio se
+  descartó por migración innecesaria, riesgo visual, señales SEO falsas, mayor
+  payload o peor experiencia de edición.
+- **Consecuencias:** El admin local abre cada documento en su página exacta y
+  permite seleccionar contenido visual sin cambiar copy, CSS, clases ni
+  composición. Añadir o renombrar una página exige actualizar manifiesto, JSON,
+  mapa y router; el gate falla si divergen. El refresh conserva interacciones y
+  Reviews sigue recibiendo sus datos ampliados sin imponerlos al resto. La
+  autenticación, permisos, guardado y CSP de TinaCloud requieren un smoke
+  post-deploy con credenciales fuera de git. No se hizo push ni deploy.

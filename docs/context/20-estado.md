@@ -3,123 +3,134 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-14 12:09 -05
+**Última actualización:** 2026-08-14 13:52 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional canónico:** `84d07e5` —
-`refactor(portfolio): retire standalone route`
-
-**Base remota al iniciar:** `b01dbe0` —
-`docs(reviews): record feedback refinements`
+**HEAD funcional actual:** `334281a` —
+`feat(cms): simplify Tina visual editing`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git al cierre:** la implementación está commiteada en `84d07e5`.
-Este documento, la entrada final de bitácora y las últimas reconciliaciones de
-fuentes documentales forman un segundo commit local de cierre; `main` queda seis
-commits por delante de `origin/main` y el worktree queda limpio. Codex no hizo
-push, deploy, DNS ni otra mutación externa.
+**Base remota actual:** `f341a15` — `404 page`
+
+**Estado Git:** `main` queda dos commits por delante de `origin/main`: la mejora
+Tina en `334281a` y este cierre documental. El worktree conserva sin stage
+evidencia Impeccable del rollout 404 concurrente. Codex no hizo push, deploy,
+DNS ni mutaciones externas.
 
 ---
 
 ## Siguiente paso concreto
 
-Después del próximo deploy, comprobar que `/portfolio` y `/portfolio/`
-responden con 301 directo a `/reviews/` y que Reviews termina en 200. Luego se
-retoma la solicitud del usuario de auditar en detalle la accesibilidad y
-editabilidad de todas las páginas desde TinaCMS, usando Homepage como patrón.
+Cuando vuelva la cuota local, recapturar el 404 corregido en 1440×1000,
+1200×900, 900×900 y 390×844 y cerrar su review. En el próximo deploy, hacer un smoke autenticado TinaCloud:
+abrir Homepage y una muestra de cada familia, guardar/revertir una edición en
+una página draft y confirmar permisos, preview y CSP/headers. Continúa también
+pendiente el smoke HTTP Portfolio → Reviews.
 
 ## Resumen ejecutivo
 
-- `/portfolio/` fue retirada como ruta pública. Ya no existen su página Astro,
-  componente, query, loaders, isla, wrapper, familia ni entrada de manifiesto.
-- El libro aprobado no se borró: `JournalBook`, las seis fuentes en
-  `content/journal-pages/`, estilos, controlador, colección Tina y `page-flip`
-  permanecen activos dentro de `/reviews/`.
-- Journal y Thank-you ahora enlazan `Client Reviews`; el footer conserva una
-  sola entrada Reviews y no contiene Portfolio.
-- `/portfolio/` y las seis galerías legacy redirigen directamente a
-  `/reviews/` con 301 en ambos archivos `_redirects`.
-- El sitio construye 20 rutas públicas. Release contiene 12 URLs en sitemap y
-  12 entradas en `llms.txt`; Portfolio no aparece en ninguno.
-- Journal conserva `ready/index` y cambia a `lastModified: 2026-08-14` por la
-  modificación sustancial de navegación.
-- ADR-061 supersede ADR-018 y las cláusulas concretas de ADR-057/058/059/060.
+- Tina expone cinco colecciones y 38 documentos con nombres editoriales. Las 19
+  Website Pages abren en su ruta canónica mediante filename, no mediante el
+  campo `route` editable.
+- Filenames, acciones destructivas, rutas, gates de publicación, schema, firma,
+  IDs, composición y tonos están protegidos. Copy, media, secciones, ítems y CTA
+  siguen editables.
+- Los 19 contratos de página y `EditorialHero` tienen quick edit sin cambios de
+  JSON de contenido, copy, CSS, clases o composición pública.
+- `EditorialPageRouter` es el dispatcher único para SSR y refresh. Family Photo
+  Locations ya no degrada a `ContentPage` después de una edición.
+- Las queries se dividen en Basic (17 rutas), Contact (+Settings) y Site/Reviews
+  (+Homepage, Settings, Testimonials y Photo Journal), usando tipos generados.
+- Menú/inquiry, hero scroll, calculadora, resumen GBP y JournalBook se
+  reinicializan de forma idempotente después de un reemplazo de isla.
+- `validate:tina` fija 5 colecciones, 38 documentos, 20 rutas y 19 renderers y
+  se ejecuta antes de `dev`, `build:local` y `build`.
+- El rollout paralelo 404 permanece como artefacto real noindex fuera de
+  manifest/sitemap/llms. Su implementación está completa; falta recaptura
+  visual post-fix por la misma cuota externa.
 
-## TinaCMS
+## TinaCMS verificado
 
-- La colección `journalPage` se conserva como `Reviews · Photo Journal Pages`;
-  su router abre `/reviews/`, no la ruta retirada.
-- La generación Tina release termina correctamente y no produce
-  `portfolioPage` ni referencias a la isla eliminada.
-- El shell estático `/admin/` carga con título `TinaCMS`, raíz presente y estado
-  de espera. En el preview local de release no puede autenticarse: la build no
-  tiene un app id/credenciales Tina y las llamadas `identity.tinajs.io/v2/apps/null`
-  son rechazadas por CORS. Esto no se trató como regresión de Portfolio; la
-  auditoría funcional autenticada del CMS es el siguiente trabajo solicitado.
-
-## Contrato técnico verificado
-
-- `page-manifest.ts` y `src/lib/page-manifest.ts` son idénticos y contienen 20
-  entradas; los espejos de `page-types.ts` también coinciden.
-- No existe `dist/client/portfolio/index.html` ni enlace activo a
-  `/portfolio/`; solo quedan la regla de redirect y guardas negativas de QA.
-- `scripts/validate-site.mjs` exige 20 HTML, ausencia de Portfolio, los siete
-  redirects directos, sitemap/llms sin la ruta retirada y los nuevos contratos
-  de Journal/Thank-you.
-- `scripts/playwright-evidence.js` cubre ahora 20 rutas × 4 viewports = 80
-  capturas. Las suites de Reviews y Thank-you ya no esperan una regresión
-  standalone de Portfolio.
-- El `validate-site.mjs` de raíz permanece como espejo legado no ejecutado por
-  `package.json`: su sintaxis está validada, pero su contrato antiguo de
-  redirects hostname no coincide con `public/_redirects`. El validador activo
-  y autoritativo es `scripts/validate-site.mjs`.
+- El esquema final recompiló, reindexó y regeneró `tina-lock` sin errores.
+- `/admin/` local mostró las cinco colecciones; Website Pages listó las 19
+  páginas por título humano y Testimonials quedó identificado por nombre.
+- Abrir Family Photo Locations llevó a su URL exacta y conservó
+  `.locations-guide-page`; se observaron 29 markers Tina, nueve de sección,
+  hero enlazado y cero overflow horizontal.
+- Seleccionar la sección “The four kinds of locations…” enfocó su grupo exacto
+  en el panel sin exponer ID, kind o tone.
+- About, Contact, Family e Investment refrescaron con markers y sin overflow.
+  Branding y Headshots revelaron un contrato nullable de GraphQL: listas
+  opcionales omitidas llegaban como `null`; la isla ahora las normaliza sin
+  clonar `_content_source`, ambos helpers usan `links ?? []` y el gate impide
+  regresión.
+- Settings/Home abren `/`; Photo Journal y Testimonials abren `/reviews/`.
+  La autenticación y el guardado TinaCloud no se pueden certificar localmente
+  sin client id, token y rol Editor reales.
 
 ## QA ejecutada
 
-### Build y validadores
+### Tina, build y contratos
 
-- Tina + Astro staging, usando puertos locales aislados — PASS.
-- `SITE_MODE=staging npm run install:netlify-headers` — PASS.
-- `SITE_MODE=staging npm run validate:site` — PASS, 20/20 rutas.
-- Tina + Astro release con origen canónico — PASS.
+- `npm run validate:tina` — PASS: 5/38/20/19.
+- Rebuild/index del servidor Tina local aislado — PASS después de la
+  configuración final.
+- Parser `@astrojs/compiler` — PASS en 40 componentes Astro.
+- `npm run build:scripts` — PASS.
+- `SITE_MODE=release PUBLICATION_MODE=release
+  SITE_ORIGIN=https://www.itsakeeperphotography.com npx astro build` — PASS;
+  20 rutas editoriales más `404.html`.
 - `SITE_MODE=release npm run install:netlify-headers` — PASS.
 - `SITE_MODE=release npm run validate:site` — PASS, 20/20 rutas.
-- `node --check` sobre ambos validadores y los tres scripts Playwright
-  modificados — PASS.
-- `cmp` de manifiestos y tipos espejo, JSON y `git diff --check` — PASS.
+- `git diff --check` — PASS.
+- `npx tsc --noEmit` conserva solo errores baseline: imports de espejos raíz y
+  declaraciones de módulos `.astro` en `src/lib/tina/islands.ts`; no reportó
+  errores nuevos de schema, route map, queries o componentes modificados.
 
-### Playwright CLI
+### Playwright/editor local
 
-- Reviews — PASS en 1920×963, 1440×1000, 1200×900, 900×900 y 390×844:
-  seis páginas `hard`, giro 3D, crossfade reduced-motion, 10 testimonios,
-  imágenes completas, controles ≥44 px, overflow 0 y sin errores runtime.
-- Thank-you — PASS en 1440×1000, 1200×900, 900×900 y 390×844: único anchor
-  `Read Client Reviews`, seis imágenes, foco/hover/reduced-motion y overflow 0.
-- Journal — PASS manual en 1440×1000 y 390×844: anchors exactos Locations,
-  Branding vs. Headshots, Reviews y Contact; footer sin Portfolio y overflow 0.
-- Homepage conserva su resumen hacia `/reviews/`; crawler outputs comprobados
-  en navegador: sitemap 12 y `llms.txt` 12.
+- Se verificaron navegación del admin, inventario, títulos, ruta/renderer de
+  Locations Guide, click-to-focus y una muestra de páginas antes de agotarse la
+  cuota local.
+- La cuota bloqueó repetir la matriz completa después del fix nullable y la
+  recaptura 404 post-fix; no se fabricó evidencia. El validador determinista,
+  recompilación Tina y build release cubren el cierre local disponible.
 
-## Pendientes no bloqueantes
+## Archivos Tina del rollout ADR-063
 
-- Smoke test post-deploy de los dos formatos de URL Portfolio y las seis URLs
-  legacy; Netlify interpreta `_redirects`, pero el servidor estático local no.
-- Auditoría autenticada y rediseño de la experiencia editorial de TinaCMS en
-  `/admin/`, solicitada por el usuario y deliberadamente pospuesta hasta cerrar
-  primero esta eliminación.
-- Privacy y las rutas comerciales/editoriales draft conservan sus gates
-  independientes.
+- `tina/config.ts`, `tina/tina-lock.json`,
+  `tina/content-page-routes.ts` y queries `contentPageBasic/Contact/Site`.
+- `src/lib/tina/data.ts`, `src/content/page-types.ts`,
+  `src/components/pages/EditorialPageRouter.astro` y
+  `src/pages/journal/[slug].astro`.
+- Los 19 renderers bajo `src/components/pages/`, `EditorialHero.astro`,
+  `JournalBook.astro`, `KindWords.astro` y `SessionPriceCalculator.astro`.
+- `public/scripts/site.js`, `package.json`,
+  `scripts/validate-tina-editor.mjs`. El marker/observer compartido de
+  `EditorialHero` y el digest About de `scripts/validate-site.mjs` quedaron en
+  `f341a15` porque el commit 404 concurrente cerró primero esos dos archivos.
+- Documentación vigente en `10-arquitectura.md`, ADR-063,
+  `40-bitacora.md` y `50-backlog.md`.
+
+## Bloqueadores y pendientes
+
+- Recaptura 404 post-fix y review visual absoluto cuando vuelva la cuota.
+- Smoke autenticado de TinaCloud/guardado/permisos/CSP después del deploy.
+- Confirmar que secretos Tina existen solo en Netlify/TinaCloud; nunca en git.
+- Smoke post-deploy de `/portfolio` y `/portfolio/` hacia `/reviews/`.
+- Publicar los commits locales solo cuando el usuario lo decida; Codex mantiene
+  la prohibición de push.
 
 ## Operación Git y handoff
 
-- Commit funcional y documental estructural: `84d07e5`.
-- Este cierre actualiza estado, bitácora y las últimas fuentes documentales en
-  un commit local separado.
-- No se ejecutó `./scripts/handoff.sh`: termina con `git push` y el usuario
-  pidió explícitamente commits locales sin push.
-- Los transcripts `.handoff/sessions/*.jsonl` siguen locales e ignorados.
+- No se ejecutó `./scripts/handoff.sh` porque termina con `git push` y el usuario
+  autorizó commits locales, no pushes.
+- No se prepararon transcripts `.handoff/sessions/*.jsonl` para commit.
+- Implementación Tina en `334281a`; los dos hunks compartidos quedaron en
+  `f341a15`. Este cierre documental se commitea por separado. La evidencia 404
+  que continúa untracked se preserva sin añadirla ni borrarla.

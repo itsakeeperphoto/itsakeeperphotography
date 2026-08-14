@@ -127,6 +127,23 @@
   sitemap/`llms.txt` quedan 12/12. Playwright aprobó Reviews en cinco anchos,
   Thank-you en cuatro y Journal en 1440/390. Queda solo el smoke HTTP
   post-deploy de los redirects; no se hizo push.
+- [x] **19D.3. Implementar el artefacto 404 según ADR-062.** `404.html` queda
+  fuera del manifest/crawler outputs, usa el hero editorial compartido y una
+  recuperación Home → Reviews. El servidor estático devuelve HTTP 404; meta,
+  headers, ausencia de canonical/schema y cinco imágenes quedan validados.
+- [ ] **19D.4. Recapturar el 404 después del fix desktop.** Repetir Playwright
+  en 1440×1000, 1200×900, 900×900 y 390×844 cuando se restablezca la cuota
+  local. El P1 de solapamiento ya fue corregido en CSS; falta solo evidencia
+  visual post-fix para convertir el finish review condicional en PASS absoluto.
+- [x] **19D.5. Simplificar y blindar TinaCMS según ADR-063.** El editor local
+  presenta cinco colecciones y 38 documentos con títulos legibles, abre las 19
+  Website Pages en su ruta exacta, oculta contratos técnicos, preserva sus
+  renderers especializados tras refresh y habilita quick edit sin cambiar
+  copy, CSS ni composición. `validate:tina` aprueba 5/38/20/19.
+- [ ] **19D.6. Verificar TinaCloud después del próximo deploy.** Iniciar sesión
+  como Editor, abrir Homepage y una muestra de cada familia, guardar y revertir
+  un cambio controlado en una página draft, y confirmar preview, permisos y
+  CSP/headers sin registrar credenciales ni contenido personal en git.
 - [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
   `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
@@ -509,8 +526,15 @@ sin reemplazar el archivo.
 
 ### TinaCMS
 
-- [ ] Verificar en un deploy de edición que Tina visual editing sigue funcionando
-  con CSP/headers actuales.
+- [x] Auditar cinco colecciones, 38 documentos, 20 rutas y 19 renderers;
+  proteger filenames, routing, campos técnicos y composición visual.
+- [x] Añadir navegación de preview determinista, títulos/labels editoriales y
+  quick edit en las 19 páginas sin cambiar su diseño público.
+- [x] Unificar SSR/refresh, dividir queries Basic/Contact/Site, conservar las
+  interacciones tras reemplazo de isla y ejecutar `validate:tina` antes de
+  dev/build. Gate actual: 5/38/20/19 PASS.
+- [ ] Verificar en un deploy autenticado que Tina visual editing, guardado y
+  permisos funcionan con CSP/headers actuales.
 - [ ] Confirmar que credenciales de producción están solo en Netlify/TinaCloud y
   que `.env` nunca se commitea.
 
@@ -758,6 +782,9 @@ sin reemplazar el archivo.
 
 ## Hecho recientemente
 
+- [x] Simplificado TinaCMS con previews deterministas para 19 páginas,
+  quick edit completo, campos de sistema protegidos, queries por necesidad y
+  validación 5 colecciones/38 documentos/20 rutas/19 renderers, sin rediseño.
 - [x] Corregida la autoridad visual a la homepage Netlify.
 - [x] Migrada la paleta earth-and-gold.
 - [x] Creadas y validadas 20 rutas Astro; la antigua Portfolio fue retirada y
