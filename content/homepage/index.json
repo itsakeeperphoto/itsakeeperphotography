@@ -25,10 +25,10 @@
     "reassurance": "You never have to worry about knowing how to pose — that's my job. I'll help you plan what to wear ahead of time, and during the session I'll give you simple prompts that help you relax and just be yourselves. Most people tell me the same thing afterward: \"That was actually fun.\"",
     "buttonLabel": "How it works",
     "scriptLine": "let the real moments lead",
-    "rearImage": "/uploads/autumn-senior-portrait-tricities.jpg",
-    "rearImageAlt": "A high school senior standing among warm autumn leaves in the Tri-Cities",
-    "frontImage": "/uploads/family-golden-light-richland.jpg",
-    "frontImageAlt": "A couple holding their baby close in golden autumn light near Richland"
+    "rearImage": "/uploads/1.jpg",
+    "rearImageAlt": "Golden-hour senior portrait of a young woman in a natural outdoor setting, featuring warm sunset in Benton City Tricities, WA",
+    "frontImage": "/uploads/7.jpg",
+    "frontImageAlt": "A joyful family of seven gathered together in a warm golden-hour field, surrounded by tall grasses and natural greener in Pasco Tricities, WA"
   },
   "sessions": {
     "visible": true,
