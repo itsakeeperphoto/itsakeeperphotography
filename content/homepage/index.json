@@ -38,7 +38,7 @@
     "cards": [
       {
         "label": "Seniors",
-        "image": "/uploads/senior-portrait-golden-hour-richland.jpg",
+        "image": "/uploads/13.jpg",
         "imageAlt": "High school senior in a black dress photographed at golden hour in Richland",
         "link": "#inquire",
         "prefill": "Senior",
@@ -70,7 +70,7 @@
       },
       {
         "label": "Headshots",
-        "image": "/uploads/8.jpg",
+        "image": "/uploads/11.jpg",
         "imageAlt": "A man in a blue suit seated against a dark studio backdrop",
         "link": "#inquire",
         "prefill": "Headshot",
