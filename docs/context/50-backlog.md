@@ -454,8 +454,11 @@ sin reemplazar el archivo.
   como CTA externo seguro.
 - [x] Publicadas las categorías realmente disponibles —Family, Seniors,
   Couple, Branding y Headshots—; no se inventó una reseña Newborn ausente.
-- [x] Evaluado `Review`/`AggregateRating` y omitido deliberadamente: faltan
-  URL, fecha, rating y procedencia estructurada individual suficientes.
+- [x] El usuario confirmó el 2026-08-17 que las diez citas son textos literales
+  de reseñas reales del Google Business Profile. `Review`/`AggregateRating`
+  sigue omitido deliberadamente: faltan URL, fecha y rating individual, y la
+  política Google no habilita snippets autorreferenciales del propio
+  LocalBusiness ni agregados importados desde otra plataforma.
 - [x] Implementado renderer especializado sin grilla genérica: hero compartido,
   `At Ease`, `KindWords`, libro de seis páginas y cierre con anchor a Contact.
 - [x] Aplicado feedback visual: sin reglas cruzadas, firma `arch`, contraste
@@ -550,6 +553,9 @@ sin reemplazar el archivo.
 - [x] Unificar SSR/refresh, dividir queries Basic/Contact/Site, conservar las
   interacciones tras reemplazo de isla y ejecutar `validate:tina` antes de
   dev/build. Gate actual: 5/38/20/19 PASS.
+- [x] Reparar Homepage después de borrar `7.jpg`: conservar la misma foto con
+  `/uploads/7-640.webp`, alt literal y guard global que rechaza cualquier media
+  `/uploads/...` inexistente. Tina local guardó el documento con éxito.
 - [ ] Verificar en un deploy autenticado que Tina visual editing, guardado y
   permisos funcionan con CSP/headers actuales.
 - [ ] Confirmar que credenciales de producción están solo en Netlify/TinaCloud y

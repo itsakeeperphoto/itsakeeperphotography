@@ -114,6 +114,10 @@
   `printImage` falta, `MeetLisa.astro` usa `portrait` como fallback. El hero
   conserva una fuente editorial en JSON y variantes art-directed preconstruidas
   para desktop y móvil.
+- `why.frontImage` usa `/uploads/7-640.webp`: es la variante versionada de la
+  misma fotografía después de retirar su JPG fuente, y cubre el marco máximo de
+  398 px sin modificar composición. `validate:tina` recorre referencias
+  `/uploads/...` de los 38 JSON y falla si una ruta no existe.
 - Reviews consume `homepage.kindWords`, las diez entradas `featured` de
   `content/testimonials/` y las seis páginas de `content/journal-pages/` desde
   `getStaticReviewsPage()`. La query y la isla Tina solicitan las mismas
@@ -403,6 +407,11 @@ los POST como navegaciones de documento y no realizó envíos reales.
   valores actuales.
 
 El flujo requiere credenciales OAuth y IDs de GBP; no hay valores en git.
+El usuario confirmó el 2026-08-17 que las diez citas visibles fueron copiadas
+literalmente de reseñas reales del perfil. Se conservan como contenido, pero no
+se emiten `Review` o `AggregateRating` del propio `LocalBusiness`: Google no
+habilita review snippets autorreferenciales ni agregados importados de otra
+plataforma, y los documentos tampoco almacenan rating, fecha y URL individual.
 
 ### Tina visual editing
 
@@ -425,7 +434,8 @@ observadores idempotentes reactivan el menú/inquiry de Homepage, el botón loca
 de `EditorialHero`, la calculadora de Contact, el resumen GBP de Kind Words y
 `JournalBook`. `npm run validate:tina` exige el inventario 5/38, la paridad de
 20 rutas y 19 documentos con manifiesto/preview, los renderers especializados,
-los markers y las tres queries antes de `dev`, `build:local` y `build`.
+los markers, las tres queries y la existencia de toda media referenciada antes
+de `dev`, `build:local` y `build`.
 
 ## Variables de entorno
 

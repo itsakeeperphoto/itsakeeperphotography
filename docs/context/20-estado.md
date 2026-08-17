@@ -3,97 +3,85 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 11:21 -05
+**Última actualización:** 2026-08-17 12:55 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional actual:** `c9befdc` —
-`feat(seo): publish headshots and harden site signals`
+**HEAD funcional actual:** `dbc8371` —
+`fix(cms): repair deleted homepage media reference`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Base remota al inicio:** `a792e17` — `TinaCMS content update`
+**Base remota al inicio:** `1d9009c` — merge que contiene el borrado de
+`7.jpg` y los commits SEO anteriores.
 
-**Estado Git:** antes del commit documental, `main` está tres commits por
-delante de `origin/main`. No se hizo push, deploy, Search Console ni otra
-mutación externa.
+**Estado Git:** antes del commit documental, `main` está un commit por delante
+de `origin/main`. No se hizo push, deploy, Search Console ni mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-William publica los commits cuando lo decida. Después se verifica en el dominio
-oficial que Headshots responde 200/index, aparece una vez en sitemap y
-`llms.txt`, y registra una visita controlada en Realtime de GA4 y Clarity. Con
-ese deploy confirmado se envía
-`https://www.itsakeeperphotography.com/sitemap.xml` a Search Console.
+William publica los commits cuando lo decida. Después se recarga `/admin/`
+contra el deploy nuevo y se realiza un guardado controlado de Homepage para
+confirmar TinaCloud. En el mismo deploy se verifica Headshots 200/index,
+Realtime de GA4/Clarity y el sitemap antes de enviarlo a Search Console.
 
 ## Resultado funcional
 
-- `/headshot-photographer-tri-cities-wa/` está `ready/index`, fechado
-  `2026-08-17`, sin header release noindex y dentro de sitemap/`llms.txt`.
-- Conserva el paquete confirmado de `$175 + tax`, 20–30 minutos, una descarga
-  digital high-resolution con commercial usage y galería online. Equipos siguen
-  en cotización personalizada, sin tarifa inventada.
-- `Base.astro` usa un único `LocalBusiness` canónico `#business`, enlaza el
-  perfil Google Business verificado por `sameAs` y no inventa un Knowledge
-  Graph MID. No expone calle, código postal ni coordenadas privadas.
-- Home ahora emite su `WebPage`; las 13 URLs indexables tienen tipo principal,
-  `WebSite`, `LocalBusiness`, breadcrumbs y referencias Service/Article
-  coherentes con el contenido visible. No se añadieron Review/AggregateRating.
-- `llms.txt` sigue la estructura v2, agrupa las 13 fuentes citables y excluye
-  drafts y utilidades noindex.
-- GA4 `G-0YW8M601L1` y Clarity `xyqkkqom4v` cargan una sola vez en release;
-  staging y desarrollo no envían telemetría.
-
-## SEO e indexación
-
-- Release contiene 20 rutas públicas y sitemap/`llms.txt` con 13 URLs
-  `ready/index`.
-- Candidatas pendientes: Seniors, Branding, Investment, Senior Timing y Newborn
-  Comparison. Privacy requiere aprobación legal y no es una landing de ranking;
-  Thank-you es `ready/noindex` permanente.
-- Seniors espera outfits por paquete y regla del outfit adicional; Branding,
-  duración/cantidad/entregables; Investment, alcance y duración por oferta;
-  Senior Timing, oferta Q54 y fecha editorial; Newborn Comparison, aprobación,
-  formato exacto y fecha.
+- El borrado de `public/uploads/7.jpg` dejó
+  `content/homepage/index.json > why.frontImage` apuntando a un asset
+  inexistente. JSON y schema eran válidos, pero el documento quedaba
+  inconsistente para el editor.
+- Homepage usa ahora `/uploads/7-640.webp`, variante versionada de la misma
+  fotografía y suficiente para el marco de 398 px. No se restauró el JPG, no se
+  inventó una imagen y no cambió la composición.
+- El alt se corrigió a una descripción literal de la familia de ocho personas.
+- `validate:tina` recorre los 38 documentos JSON y reporta cualquier referencia
+  `/uploads/...` inexistente con archivo y ruta exactos.
+- El usuario confirmó que las diez reseñas visibles son textos literales y
+  reales del Google Business Profile. Se registra la procedencia, pero no se
+  emite `Review`/`AggregateRating` autorreferencial: faltan rating, fecha y URL
+  individual, y Google no habilita ese snippet para el propio LocalBusiness ni
+  agregados importados.
+- Headshots continúa `ready/index`; release conserva 20 rutas y 13/13 URLs en
+  sitemap/`llms.txt`.
 
 ## QA ejecutada
 
-- `npm run validate:tina` — PASS: 5 colecciones, 38 documentos, 20 rutas y 19
-  renderers.
-- `npm run optimize:images` — PASS: 47 variantes responsive.
-- Tina/Astro release con puertos alternos — PASS: 20 rutas.
-- Headers release + `SITE_MODE=release npm run validate:site` — PASS 20/20.
-- Tina/Astro staging + validator — PASS 20/20, sitemap vacío, noindex global y
-  cero GA4/Clarity.
-- Playwright CLI sobre Headshots release local — PASS: un único request
-  interceptado `page_view` a GA4 con `tid=G-0YW8M601L1`, un loader, Clarity
-  inicializada, canonical/robots correctos y schemas LocalBusiness, WebSite,
-  WebPage, Service, FAQPage y BreadcrumbList; consola 0/0.
-- `node --check scripts/validate-site.mjs`, manifests espejo y
-  `git diff --check` — PASS.
+- `npm run validate:tina` — PASS: 5 colecciones, 38 documentos, 20 rutas, 19
+  renderers y media referenciada existente.
+- Tina/Astro aislado en 4002/9001/4322 — Homepage HTTP 200.
+- Playwright 1440×900 — ambas imágenes de `#the-why` cargadas a 640 px, alt
+  correcto y overflow 0.
+- `/admin/` local abrió Homepage, mostró el nuevo Front photo y un cambio
+  reversible produjo `Document saved!`, sin diálogo de error PUT.
+- La única consola local fue `/api/google-review-summary` 404, esperada porque
+  Astro dev no ejecuta la función Netlify GBP; no afecta Tina ni producción.
+- JSON, `git diff --check` y guard de media — PASS.
 
 ## Bloqueadores y pendientes operativos
 
-- `SITE_MODE=release npm run build:local` se detiene antes de Astro por siete
-  JPEG preexistentes que incumplen el gate fuente de 2400 px/700 KiB:
-  `010A0319copy-2.jpg`, `1.jpg`, `11.jpg`, `14.jpg`, `5.jpg`, `6.jpg` y `7.jpg`.
-  No se recomprimieron porque son assets ajenos a este alcance. El build
-  Tina/Astro directo y ambos validadores sí pasan.
-- Realtime de GA4/Clarity, canonicals/headers del deploy y Search Console solo
-  pueden verificarse después de publicar.
-- Smoke autenticado TinaCloud y recaptura final del 404 siguen como tareas
-  operativas independientes.
+- El error está corregido y reproducido como PASS local. TinaCloud requiere
+  recargar el editor después del deploy para descartar estado anterior en la
+  pestaña y repetir un save autenticado.
+- Para cualquier posible schema de reseñas faltan rating, fecha y URL
+  individuales; aun con ellos, no se añadirá al LocalBusiness mientras la
+  política Google lo considere autorreferencial.
+- Realtime de GA4/Clarity, canonicals/headers y Search Console se verifican
+  después de publicar.
+- Las páginas pendientes de confirmación siguen siendo Seniors, Branding,
+  Investment, Senior Timing y Newborn Comparison. Privacy permanece pendiente
+  de revisión legal; Thank-you es noindex permanente.
 
 ## Operación Git
 
-- Commit funcional: `c9befdc`.
-- Este archivo, arquitectura, ADR-065, backlog, STRUCTURE, DESIGN y bitácora
-  forman el commit documental de cierre.
+- Commit funcional: `dbc8371`.
+- Arquitectura, ADR-066/067, backlog, estado y bitácora forman el commit
+  documental de cierre.
 - No se ejecuta `./scripts/handoff.sh` porque hace push y el usuario autorizó
   commits locales, no pushes.
 - No se prepararon transcripts `.handoff/sessions/*.jsonl` para commit.

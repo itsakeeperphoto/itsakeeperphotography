@@ -1500,3 +1500,27 @@
   (`feat(seo): publish headshots and harden site signals`) y cierre documental
   local separado. No se hizo push, deploy, Search Console ni
   `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Referencia Homepage reparada y reseñas GBP documentadas
+
+- **Objetivo:** resolver el error PUT de Tina en Homepage después de borrar
+  `7.jpg` y registrar la procedencia confirmada de los testimonios.
+- **Diagnóstico:** `content/homepage/index.json` seguía usando el JPG eliminado
+  como `why.frontImage`; era la única referencia `/uploads/...` rota entre los
+  38 documentos. JSON, schema y routing Tina pasaban, por lo que el mensaje
+  cloud era genérico y no describía la inconsistencia de media.
+- **Implementación:** Homepage apunta a la variante existente
+  `/uploads/7-640.webp`, conserva la misma fotografía/composición y usa alt
+  literal. `validate:tina` ahora comprueba toda media referenciada antes de dev
+  o build.
+- **Reviews/schema:** el usuario confirmó que las diez citas son copias reales
+  y literales del Google Business Profile. ADR-066 conserva su uso visible pero
+  omite `Review`/`AggregateRating` autorreferencial por política Google y por no
+  disponer de rating, fecha y URL individual.
+- **QA:** Tina PASS 5/38/20/19; servidor aislado HTTP 200; Playwright 1440
+  confirmó dos imágenes cargadas a 640 px y overflow cero. El admin local mostró
+  la nueva referencia y guardó con `Document saved!`, sin error PUT. Solo el
+  endpoint GBP ausente en Astro dev devolvió el 404 esperado.
+- **Git/operación:** implementación en `dbc8371`
+  (`fix(cms): repair deleted homepage media reference`) y cierre documental
+  local separado. No se hizo push, deploy ni `./scripts/handoff.sh`.

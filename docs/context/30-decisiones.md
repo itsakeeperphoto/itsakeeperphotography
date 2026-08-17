@@ -1657,3 +1657,51 @@
   tráfico GA4/Clarity. Headshots publica `WebPage`, `Service` con `Offer`,
   `FAQPage` y `BreadcrumbList`. El smoke real de dashboards y Search Console
   permanece post-deploy. No se hizo push.
+
+### ADR-066 — Las reseñas GBP reales permanecen visibles sin schema autorreferencial
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada.
+- **Contexto:** El usuario confirmó que todos los testimonios publicados fueron
+  copiados literalmente de reseñas reales del Google Business Profile de It's
+  A Keeper Photography. Esta confirmación resuelve su procedencia editorial,
+  pero los JSON no conservan rating, fecha ni URL individual. Google limita los
+  review snippets de `LocalBusiness` a sitios que recogen reseñas sobre otros
+  negocios, considera autorreferenciales las del propio negocio y prohíbe
+  agregar ratings desde otros sitios en su
+  [política vigente](https://developers.google.com/search/docs/appearance/structured-data/review-snippet).
+- **Decisión:** Conservar las diez reseñas visibles, sus autores y el enlace al
+  perfil Google como contenido real y evidencia de confianza. No emitir
+  `Review` ni `AggregateRating` sobre `#business`, aunque las citas sean
+  auténticas. El resumen vivo de GBP puede mostrar rating y conteo en HTML
+  cuando la API entrega ambos, pero no se transforma en rating estructurado.
+- **Alternativas descartadas:** Asumir cinco estrellas para cada cita, añadir
+  una media fija desde Google, inventar fechas/URLs individuales o marcar el
+  negocio propio para buscar estrellas en SERP se descartó por datos
+  incompletos y política de review snippets.
+- **Consecuencias:** Reviews conserva contenido verificable sin solicitar un
+  rich result no elegible ni crear señales engañosas. Si Google cambia su
+  política o Lisa aporta un corpus propio de first-party reviews con rating,
+  fecha y consentimiento, se reevalúa en un ADR nuevo.
+
+### ADR-067 — Borrar media exige retirar o reparar sus referencias Tina
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada.
+- **Contexto:** Se eliminó `public/uploads/7.jpg` mientras
+  `content/homepage/index.json` todavía la usaba como `why.frontImage`, campo
+  obligatorio. Tina Cloud mostró un error genérico al guardar Homepage; JSON y
+  schema eran válidos, pero el documento apuntaba a media inexistente. Las
+  variantes WebP generadas seguían versionadas.
+- **Decisión:** Mantener la composición y la misma fotografía mediante la
+  variante existente `/uploads/7-640.webp`, suficiente para el marco de 398 px,
+  y corregir su alt literal. Extender `validate:tina` para recorrer los 38 JSON
+  y fallar con ruta exacta cuando cualquier valor `/uploads/...` no exista.
+- **Alternativas descartadas:** Restaurar el JPG borrado, inventar otra foto,
+  ocultar el segundo print o aceptar una referencia rota se descartó por
+  contradecir la eliminación, cambiar diseño sin autorización o perpetuar el
+  fallo.
+- **Consecuencias:** Homepage mantiene su apariencia, el documento vuelve a
+  guardar en Tina local y futuras eliminaciones referenciadas fallan antes del
+  dev/build con un mensaje accionable. El smoke TinaCloud autenticado se repite
+  después del deploy. No se hizo push.
