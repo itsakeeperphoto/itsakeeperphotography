@@ -1,8 +1,8 @@
 {
   "route": "/journal/in-home-vs-studio-newborn-photography/",
   "family": "article",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Article",
   "signature": "overlap",
   "title": "In-Home vs. Studio Newborn Photography: How to Choose",
@@ -128,7 +128,7 @@
         {
           "heading": "When should I book newborn photos?",
           "paragraphs": [
-            "During your second or third trimester. Photographers hold flexible space around due dates — reaching out early means your spot is safe no matter when baby arrives."
+            "During your second or third trimester. Reaching out early gives us room to plan around baby's arrival, and I recommend reserving at least two hours for a newborn session."
           ]
         },
         {
@@ -159,9 +159,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[VALIDAR CON LISA]",
-    "[VALIDAR: formato exacto que ofrece Lisa]",
-    "[FECHA]"
-  ]
+  "pending": []
 }

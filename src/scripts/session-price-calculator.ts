@@ -206,11 +206,17 @@ const initializePlanner = (planner: HTMLElement): void => {
       });
 
     const isHeadshot = serviceId === "headshots";
+    const isBranding = serviceId === "branding";
     const headshotPurchaseNote = query<HTMLElement>(
       form,
       "[data-headshot-purchase-note]",
     );
     if (headshotPurchaseNote) headshotPurchaseNote.hidden = !isHeadshot;
+    const brandingPurchaseNote = query<HTMLElement>(
+      form,
+      "[data-branding-purchase-note]",
+    );
+    if (brandingPurchaseNote) brandingPurchaseNote.hidden = !isBranding;
     setText(
       form,
       "[data-people-policy]",
@@ -342,6 +348,8 @@ const initializePlanner = (planner: HTMLElement): void => {
         ? "No collection yet"
         : collection.id === "headshotGallery"
           ? "Included online gallery"
+          : collection.id === "brandingImages"
+            ? "$75 per selected image · purchased after the session"
         : `Collection ${collection.name} · ${formattedCollectionPrice}`;
     const addOnReceiptLabel =
       selectedAddOns.length > 0

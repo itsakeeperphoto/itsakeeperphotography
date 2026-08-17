@@ -506,8 +506,11 @@ const readInternalStylesheet = async (href) => {
 const indexableReleaseFiles = new Set([
   "index.html",
   `family-photographer-tri-cities-wa${path.sep}index.html`,
+  `senior-photographer-tri-cities-wa${path.sep}index.html`,
   `newborn-photographer-tri-cities-wa${path.sep}index.html`,
+  `branding-photographer-tri-cities-wa${path.sep}index.html`,
   `headshot-photographer-tri-cities-wa${path.sep}index.html`,
+  `investment${path.sep}index.html`,
   `about${path.sep}index.html`,
   `reviews${path.sep}index.html`,
   `contact${path.sep}index.html`,
@@ -516,13 +519,18 @@ const indexableReleaseFiles = new Set([
   `pasco-wa-photographer${path.sep}index.html`,
   `journal${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
+  `journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`,
+  `journal${path.sep}in-home-vs-studio-newborn-photography${path.sep}index.html`,
   `journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`,
 ]);
 const indexablePageSchemaTypes = new Map([
   ["index.html", "WebPage"],
   [`family-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
+  [`senior-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
   [`newborn-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
+  [`branding-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
   [`headshot-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
+  [`investment${path.sep}index.html`, "WebPage"],
   [`about${path.sep}index.html`, "AboutPage"],
   [`reviews${path.sep}index.html`, "WebPage"],
   [`contact${path.sep}index.html`, "ContactPage"],
@@ -531,6 +539,8 @@ const indexablePageSchemaTypes = new Map([
   [`pasco-wa-photographer${path.sep}index.html`, "WebPage"],
   [`journal${path.sep}index.html`, "CollectionPage"],
   [`journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`, "Article"],
+  [`journal${path.sep}when-to-book-senior-pictures-tri-cities${path.sep}index.html`, "Article"],
+  [`journal${path.sep}in-home-vs-studio-newborn-photography${path.sep}index.html`, "Article"],
   [`journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`, "Article"],
 ]);
 const expandedDirectoryLinkCounts = new Map([
@@ -550,10 +560,7 @@ const newbornComparisonRelative =
 const brandingHeadshotsRelative =
   `journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`;
 const journalHubRelative = `journal${path.sep}index.html`;
-const unpublishedJournalPaths = [
-  "/journal/when-to-book-senior-pictures-tri-cities/",
-  "/journal/in-home-vs-studio-newborn-photography/",
-];
+const unpublishedJournalPaths = [];
 const publicSiteOrigins = new Set([
   "https://www.itsakeeperphotography.com",
   "https://itsakeeperphotography.netlify.app",
@@ -663,11 +670,7 @@ const seniorTimingContract = {
         "We plan around it: shorter sets, warm layers between shots, and light that's worth it.",
     },
   ],
-  pending: [
-    "[VALIDAR: fechas concretas de los distritos de Richland, Kennewick y Pasco — dato local que nadie más publica]",
-    "[VALIDAR: si Lisa ofrece esto — Q54]",
-    "[FECHA]",
-  ],
+  pending: [],
 };
 const newbornComparisonSource = JSON.parse(
   await readFile(
@@ -718,7 +721,7 @@ const newbornComparisonContract = {
     "Studio: drive there, hand over the reins. In-home: no travel, but a little tidying — and only of the corners we'll actually use. (A good photographer needs one clean window, not a spotless house. Truly.)",
     "In the Tri-Cities, golden-hour outdoor sessions with a newborn are possible in mild months and make especially beautiful family sessions — baby in arms, siblings around, the river light doing its thing. Many families combine: intimate photos at home, then a short golden-hour family set when baby is a bit older.",
     "After twenty years of photographing families, here's what I've seen: the photographs families cry over a decade later are rarely the most styled ones. They're the ones with their people in their place — the nursery that got repainted, the house they moved away from, the way dad held the baby in that particular chair. Choose the session that preserves what you most want to remember.",
-    "During your second or third trimester. Photographers hold flexible space around due dates — reaching out early means your spot is safe no matter when baby arrives.",
+    "During your second or third trimester. Reaching out early gives us room to plan around baby's arrival, and I recommend reserving at least two hours for a newborn session.",
     "Almost never. One good window and a few honest square feet are enough — finding the light is the photographer's job, not yours.",
     "For in-home lifestyle photos, there's no missed window. Two months old is still brand new, still tiny, still worth documenting.",
     "If the in-home style speaks to you, that's the heart of how I photograph newborns across Richland, Kennewick and Pasco — gentle, unhurried, baby-led.",
@@ -770,7 +773,7 @@ const newbornComparisonContract = {
     {
       question: "When should I book newborn photos?",
       answer:
-        "During your second or third trimester. Photographers hold flexible space around due dates — reaching out early means your spot is safe no matter when baby arrives.",
+        "During your second or third trimester. Reaching out early gives us room to plan around baby's arrival, and I recommend reserving at least two hours for a newborn session.",
     },
     {
       question: "Is my house too small or too dark for in-home photos?",
@@ -783,11 +786,7 @@ const newbornComparisonContract = {
         "For in-home lifestyle photos, there's no missed window. Two months old is still brand new, still tiny, still worth documenting.",
     },
   ],
-  pending: [
-    "[VALIDAR CON LISA]",
-    "[VALIDAR: formato exacto que ofrece Lisa]",
-    "[FECHA]",
-  ],
+  pending: [],
 };
 const brandingHeadshotsSource = JSON.parse(
   await readFile(
@@ -796,7 +795,7 @@ const brandingHeadshotsSource = JSON.parse(
   ),
 );
 const brandingHeadshotsDirectionContract =
-  "Branding vs. Headshots Versus Axis: shared EditorialHero; one headshot proof faces an asymmetric branding library across a central seam; semantic checklist, table and FAQ with verified photography only; no package promises, gradients, rounded cards, tape, splatter, badges or shadows.";
+  "Branding vs. Headshots Versus Axis: shared EditorialHero; one headshot proof faces an asymmetric branding library across a central seam; semantic checklist, table and FAQ with verified photography only; no invented package promises, gradients, rounded cards, tape, splatter, badges or shadows.";
 const brandingHeadshotsContract = {
   title: "Branding Photos vs. Headshots: What's the Difference?",
   description:
@@ -831,7 +830,7 @@ const brandingHeadshotsContract = {
   ],
   sectionParagraphs: {
     "the-short-answer": [
-      "A headshot is one great portrait of you. Branding photos are a full library of images about your business — you working, your space, your tools, your process, your personality. A headshot answers \"who is this person?\"; branding photos answer \"what would it be like to work with them?\" Most businesses eventually need both, but they solve different problems.",
+      "A headshot is one great portrait of you. Branding photos are a planned gallery about your business — you working, your space, your tools, your process, your personality. A headshot answers \"who is this person?\"; branding photos answer \"what would it be like to work with them?\" Most businesses eventually need both, but they solve different problems.",
     ],
     "what-are-branding-photos": [
       "Branding photos (sometimes called a personal branding session or custom business photography) are a planned collection of images built around your brand. A typical branding gallery includes:",
@@ -847,7 +846,7 @@ const brandingHeadshotsContract = {
       "Every branding session I photograph includes headshots — it's the natural starting point of the session. So if you're unsure, a branding session is the answer that covers both.",
     ],
     "what-happens-in-a-branding-session": [
-      "With me, it starts with a strategy call: where will these images live, what do clients need to feel, what makes your business unmistakably yours. Then we shoot on location at your workspace or a Tri-Cities spot that fits your brand — guided the entire time, because feeling awkward in front of a camera at your own business is completely normal and completely fixable. You walk away with a warm, consistent library sized for real use.",
+      "With me, it starts with a strategy call: where will these images live, what do clients need to feel, what makes your business unmistakably yours. Then we shoot on location at your workspace or a Tri-Cities spot that fits your brand — guided the entire time, because feeling awkward in front of a camera at your own business is completely normal and completely fixable. About two weeks later, we review the gallery together and you choose the final images you need at $75 each, with commercial usage included.",
     ],
     "common-questions": [
       "Your brand's colors, your real working clothes, and one \"elevated\" option. We plan it together — the goal is recognizably you, one notch polished.",
@@ -869,10 +868,10 @@ const brandingHeadshotsContract = {
     [
       "What you get",
       "1 high-resolution digital download with commercial usage",
-      "A full library of varied images",
+      "Selected final images at $75 each with commercial usage",
     ],
     ["Focus", "You", "You + your work + your space + your story"],
-    ["Session length", "20–30 minutes", "Half a day, typically"],
+    ["Session length", "20–30 minutes", "90 minutes to 3 hours"],
     ["Where it lives", "LinkedIn, team page, bios", "Website, social, marketing, press"],
     ["Refresh cycle", "Every 2–3 years", "1–2 times a year"],
     [
@@ -1904,8 +1903,8 @@ for (const file of htmlFiles) {
       seniorTimingSource.route !==
         "/journal/when-to-book-senior-pictures-tri-cities/" ||
       seniorTimingSource.family !== "article" ||
-      seniorTimingSource.contentStatus !== "draft" ||
-      seniorTimingSource.searchVisibility !== "noindex" ||
+      seniorTimingSource.contentStatus !== "ready" ||
+      seniorTimingSource.searchVisibility !== "index" ||
       seniorTimingSource.schemaType !== "Article" ||
       seniorTimingSource.signature !== "crossing-line" ||
       seniorTimingSource.title !== seniorTimingContract.title ||
@@ -1915,7 +1914,7 @@ for (const file of htmlFiles) {
         JSON.stringify(seniorTimingContract.pending)
     ) {
       failures.push(
-        "content/pages/journal-senior-timing.json: draft state, section order, metadata or three pending facts changed",
+        "content/pages/journal-senior-timing.json: ready/index state, section order, metadata or empty pending contract changed",
       );
     }
 
@@ -1936,14 +1935,16 @@ for (const file of htmlFiles) {
       htmlAttribute(descriptionTag || "", "content") !==
         seniorTimingContract.description ||
       htmlAttribute(robotsTag || "", "content") !==
-        "noindex, nofollow, noarchive" ||
+        (mode === "release"
+          ? "index, follow, max-image-preview:large"
+          : "noindex, nofollow, noarchive") ||
       htmlAttribute(openGraphTypeTag || "", "content") !== "article" ||
       !source.includes(`<link rel="canonical" href="${canonical}">`) ||
-      !/data-content-status=["']draft["']/i.test(main) ||
+      !/data-content-status=["']ready["']/i.test(main) ||
       !/data-signature-device=["']crossing-line["']/i.test(main)
     ) {
       failures.push(
-        `${relative}: title, description, canonical, article OG type or draft/noindex state is invalid`,
+        `${relative}: title, description, canonical, article OG type or ready/index state is invalid`,
       );
     }
 
@@ -2160,8 +2161,8 @@ for (const file of htmlFiles) {
       article?.isPartOf?.["@id"] !== `${expectedOrigin}/#website` ||
       article?.mainEntityOfPage?.["@id"] !== canonical ||
       article?.inLanguage !== "en-US" ||
-      Object.hasOwn(article || {}, "datePublished") ||
-      Object.hasOwn(article || {}, "dateModified") ||
+      article?.datePublished !== "2026-08-17" ||
+      article?.dateModified !== "2026-08-17" ||
       JSON.stringify(articleAbout) !==
         JSON.stringify([
           ["Thing", "Senior pictures"],
@@ -2264,8 +2265,8 @@ for (const file of htmlFiles) {
       newbornComparisonSource.route !==
         "/journal/in-home-vs-studio-newborn-photography/" ||
       newbornComparisonSource.family !== "article" ||
-      newbornComparisonSource.contentStatus !== "draft" ||
-      newbornComparisonSource.searchVisibility !== "noindex" ||
+      newbornComparisonSource.contentStatus !== "ready" ||
+      newbornComparisonSource.searchVisibility !== "index" ||
       newbornComparisonSource.schemaType !== "Article" ||
       newbornComparisonSource.signature !== "overlap" ||
       newbornComparisonSource.title !== newbornComparisonContract.title ||
@@ -2277,7 +2278,7 @@ for (const file of htmlFiles) {
         JSON.stringify(newbornComparisonContract.pending)
     ) {
       failures.push(
-        "content/pages/journal-newborn-comparison.json: draft state, complete section order, metadata or three pending facts changed",
+        "content/pages/journal-newborn-comparison.json: ready/index state, complete section order, metadata or empty pending contract changed",
       );
     }
     const registeredPending = [...pendingRegistrySource.matchAll(
@@ -2288,7 +2289,7 @@ for (const file of htmlFiles) {
         JSON.stringify(newbornComparisonContract.pending)
     ) {
       failures.push(
-        "src/content/pending.ts: Newborn Comparison must register the same three pending facts in source order",
+        "src/content/pending.ts: Newborn Comparison must have no registered publication blockers",
       );
     }
 
@@ -2309,14 +2310,16 @@ for (const file of htmlFiles) {
       htmlAttribute(descriptionTag || "", "content") !==
         newbornComparisonContract.description ||
       htmlAttribute(robotsTag || "", "content") !==
-        "noindex, nofollow, noarchive" ||
+        (mode === "release"
+          ? "index, follow, max-image-preview:large"
+          : "noindex, nofollow, noarchive") ||
       htmlAttribute(openGraphTypeTag || "", "content") !== "article" ||
       !source.includes(`<link rel="canonical" href="${canonical}">`) ||
-      !/data-content-status=["']draft["']/i.test(main) ||
+      !/data-content-status=["']ready["']/i.test(main) ||
       !/data-signature-device=["']overlap["']/i.test(main)
     ) {
       failures.push(
-        `${relative}: title, description, canonical, article OG type or draft/noindex state is invalid`,
+        `${relative}: title, description, canonical, article OG type or ready/index state is invalid`,
       );
     }
 
@@ -2552,8 +2555,8 @@ for (const file of htmlFiles) {
       article?.isPartOf?.["@id"] !== `${expectedOrigin}/#website` ||
       article?.mainEntityOfPage?.["@id"] !== canonical ||
       article?.inLanguage !== "en-US" ||
-      Object.hasOwn(article || {}, "datePublished") ||
-      Object.hasOwn(article || {}, "dateModified") ||
+      article?.datePublished !== "2026-08-17" ||
+      article?.dateModified !== "2026-08-17" ||
       JSON.stringify(articleAbout) !==
         JSON.stringify([
           ["Thing", "Newborn photography"],
@@ -2834,7 +2837,7 @@ for (const file of htmlFiles) {
       JSON.stringify(strongTexts) !==
         JSON.stringify([
           "A headshot is one great portrait of you.",
-          "Branding photos are a full library of images about your business",
+          "Branding photos are a planned gallery about your business",
         ]) ||
       JSON.stringify(emphasisTexts) !==
         JSON.stringify(["look like your business", "is", "you", "are"])
@@ -3980,6 +3983,28 @@ if (
     "page-manifest.ts: Headshots must retain ready/index Service gates, exact title and 2026-08-17 lastModified",
   );
 }
+for (const [id, schemaType] of [
+  ["seniors", "Service"],
+  ["branding", "Service"],
+  ["investment", "WebPage"],
+  ["senior-timing", "Article"],
+]) {
+  const block = runtimeManifestSource.match(
+    new RegExp(`\\{\\s*id:\\s*"${id}",[\\s\\S]*?\\n\\s*\\},`),
+  )?.[0] || "";
+  if (
+    !/contentStatus:\s*"ready"/.test(block) ||
+    !/searchVisibility:\s*"index"/.test(block) ||
+    !new RegExp(`schemaType:\\s*"${schemaType}"`).test(block) ||
+    !/sitemap:\s*true/.test(block) ||
+    !/llms:\s*true/.test(block) ||
+    !/lastModified:\s*"2026-08-17"/.test(block)
+  ) {
+    failures.push(
+      `page-manifest.ts: ${id} must retain ready/index ${schemaType} gates and 2026-08-17 lastModified`,
+    );
+  }
+}
 const thankYouManifestBlock = runtimeManifestSource.match(
   /\{\s*id:\s*"thank-you",[\s\S]*?\n\s*\},/,
 )?.[0] || "";
@@ -4004,18 +4029,18 @@ const newbornComparisonManifestBlock = runtimeManifestSource.match(
   /\{\s*id:\s*"newborn-comparison",[\s\S]*?\n\s*\},/,
 )?.[0] || "";
 if (
-  !/contentStatus:\s*"draft"/.test(newbornComparisonManifestBlock) ||
-  !/searchVisibility:\s*"noindex"/.test(newbornComparisonManifestBlock) ||
+  !/contentStatus:\s*"ready"/.test(newbornComparisonManifestBlock) ||
+  !/searchVisibility:\s*"index"/.test(newbornComparisonManifestBlock) ||
   !/schemaType:\s*"Article"/.test(newbornComparisonManifestBlock) ||
   !/sitemap:\s*true/.test(newbornComparisonManifestBlock) ||
   !/llms:\s*true/.test(newbornComparisonManifestBlock) ||
+  !/lastModified:\s*"2026-08-17"/.test(newbornComparisonManifestBlock) ||
   !/title:\s*"In-Home vs\. Studio Newborn Photography: How to Choose"/.test(
     newbornComparisonManifestBlock,
-  ) ||
-  /lastModified:/.test(newbornComparisonManifestBlock)
+  )
 ) {
   failures.push(
-    "page-manifest.ts: Newborn Comparison must retain draft/noindex Article gates, exact title and no lastModified",
+    "page-manifest.ts: Newborn Comparison must retain ready/index Article gates, exact title and 2026-08-17 lastModified",
   );
 }
 const brandingHeadshotsManifestBlock = runtimeManifestSource.match(
@@ -4381,6 +4406,19 @@ if (
 ) {
   failures.push("contact: confirmed 25-mile / $2-per-additional-mile travel policy is incomplete");
 }
+if (
+  /\bextraOutfit\b|Additional outfit change/.test(sessionPricingSource) ||
+  !/outfits:\s*"2 outfits"/.test(sessionPricingSource) ||
+  !/outfits:\s*"3 outfits"/.test(sessionPricingSource) ||
+  !/outfits:\s*"4 outfits"/.test(sessionPricingSource) ||
+  !/id:\s*"brandingImages"/.test(sessionPricingSource) ||
+  !/\$75 per selected final image/.test(sessionPricingSource) ||
+  !/serviceIds:\s*\["branding"\]/.test(sessionPricingSource)
+) {
+  failures.push(
+    "contact: confirmed 2/3/4 outfits without a fee and Branding $75-per-image selection are incomplete",
+  );
+}
 const headshotPackageFacts = [
   "$175 plus tax",
   "20–30 minute session",
@@ -4657,20 +4695,6 @@ if (
 ) {
   failures.push("404: error artifact must remain excluded from sitemap.xml and llms.txt");
 }
-const seniorTimingPublicationPath =
-  "/journal/when-to-book-senior-pictures-tri-cities/";
-const newbornComparisonPublicationPath =
-  "/journal/in-home-vs-studio-newborn-photography/";
-for (const [label, publicationPath] of [
-  ["Senior Timing article", seniorTimingPublicationPath],
-  ["Newborn Comparison article", newbornComparisonPublicationPath],
-]) {
-  if (sitemap.includes(publicationPath) || llms.includes(publicationPath)) {
-    failures.push(
-      `${label}: draft route must remain excluded from sitemap.xml and llms.txt`,
-    );
-  }
-}
 const netlifyHeaderBlocks = [];
 let activeHeaderBlock = null;
 for (const line of headers.split(/\r?\n/)) {
@@ -4725,8 +4749,11 @@ if (mode === "staging") {
   const expectedSitemapUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/senior-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/branding-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/investment/",
     "https://www.itsakeeperphotography.com/about/",
     "https://www.itsakeeperphotography.com/reviews/",
     "https://www.itsakeeperphotography.com/contact/",
@@ -4735,6 +4762,8 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
+    "https://www.itsakeeperphotography.com/journal/when-to-book-senior-pictures-tri-cities/",
+    "https://www.itsakeeperphotography.com/journal/in-home-vs-studio-newborn-photography/",
     "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/",
   ];
   if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) {
@@ -4766,6 +4795,21 @@ if (mode === "staging") {
   )?.[0] || "";
   if (!/<lastmod>2026-08-17<\/lastmod>/.test(headshotsSitemapEntry)) {
     failures.push("sitemap.xml: Headshots lastmod must be 2026-08-17");
+  }
+  for (const route of [
+    "senior-photographer-tri-cities-wa",
+    "branding-photographer-tri-cities-wa",
+    "investment",
+    "journal/when-to-book-senior-pictures-tri-cities",
+    "journal/in-home-vs-studio-newborn-photography",
+  ]) {
+    const escapedRoute = route.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const entry = sitemap.match(
+      new RegExp(`<url>(?:(?!<\\/url>)[\\s\\S])*?<loc>https:\\/\\/www\\.itsakeeperphotography\\.com\\/${escapedRoute}\\/<\\/loc>(?:(?!<\\/url>)[\\s\\S])*?<\\/url>`),
+    )?.[0] || "";
+    if (!/<lastmod>2026-08-17<\/lastmod>/.test(entry)) {
+      failures.push(`sitemap.xml: ${route} lastmod must be 2026-08-17`);
+    }
   }
   const aboutSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/about\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
@@ -4815,8 +4859,11 @@ if (mode === "staging") {
   const expectedLlmsUrls = [
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/senior-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/branding-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/investment/",
     "https://www.itsakeeperphotography.com/about/",
     "https://www.itsakeeperphotography.com/reviews/",
     "https://www.itsakeeperphotography.com/contact/",
@@ -4825,6 +4872,8 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/pasco-wa-photographer/",
     "https://www.itsakeeperphotography.com/journal/",
     "https://www.itsakeeperphotography.com/journal/family-photo-locations-tri-cities/",
+    "https://www.itsakeeperphotography.com/journal/when-to-book-senior-pictures-tri-cities/",
+    "https://www.itsakeeperphotography.com/journal/in-home-vs-studio-newborn-photography/",
     "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/",
   ];
   if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
@@ -4897,6 +4946,20 @@ if (mode === "staging") {
   if (/^\/headshot-photographer-tri-cities-wa\/\*\s*$/m.test(headers)) {
     failures.push("_headers: Headshots noindex rule must not block the published service page");
   }
+  for (const route of [
+    "/senior-photographer-tri-cities-wa/",
+    "/branding-photographer-tri-cities-wa/",
+    "/investment/",
+    "/journal/when-to-book-senior-pictures-tri-cities/",
+    "/journal/in-home-vs-studio-newborn-photography/",
+  ]) {
+    if (
+      routeHeaderValues(route, "x-robots-tag")
+        .some((value) => /(?:^|,)\s*noindex(?:\s*,|$)/i.test(value))
+    ) {
+      failures.push(`_headers: ${route} noindex rule must not block the published page`);
+    }
+  }
   if (
     routeHeaderValues("/about/", "x-robots-tag")
       .some((value) => /(?:^|,)\s*noindex(?:\s*,|$)/i.test(value))
@@ -4932,8 +4995,6 @@ if (mode === "staging") {
     );
   }
   for (const route of [
-    "/journal/when-to-book-senior-pictures-tri-cities/*",
-    "/journal/in-home-vs-studio-newborn-photography/*",
     "/privacy/*",
     "/thank-you/*",
     "/404.html",

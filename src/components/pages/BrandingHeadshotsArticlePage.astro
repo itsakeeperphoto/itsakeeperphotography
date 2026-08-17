@@ -81,7 +81,7 @@ if (!finalCta) throw new Error("Branding photos vs. headshots article requires a
 const shortAnswerText = requireText(shortAnswer.paragraphs?.[0], "the Short Answer copy");
 const shortHeadshotLead = "A headshot is one great portrait of you.";
 const shortBrandingLead =
-  "Branding photos are a full library of images about your business";
+  "Branding photos are a planned gallery about your business";
 const shortLead = `${shortHeadshotLead} ${shortBrandingLead}`;
 if (!shortAnswerText.startsWith(shortLead)) {
   throw new Error("The definitive Short Answer emphasis contract changed.");

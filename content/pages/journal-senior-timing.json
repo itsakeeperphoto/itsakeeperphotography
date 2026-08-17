@@ -1,8 +1,8 @@
 {
   "route": "/journal/when-to-book-senior-pictures-tri-cities/",
   "family": "article",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Article",
   "signature": "crossing-line",
   "title": "When to Take Senior Pictures: A Photographer's Timeline",
@@ -113,7 +113,7 @@
       "image": "/uploads/kennewick-senior-riverside-portrait.jpg",
       "imageAlt": "High school senior standing beside water beneath leafy branches.",
       "paragraphs": [
-        "Senior dates fill faster than anything else I photograph. My practical advice, learned from twenty years of local booking patterns: reserve your session four to six weeks before the date you want, and earlier for the golden windows — summer evenings and October. If you're reading this in spring wanting a fall session, now is exactly the right time to reach out."
+        "Senior dates fill faster than anything else I photograph. My practical advice, learned from twenty years of local booking patterns: reserve your session four to six weeks before the date you want, and earlier for the golden windows — summer evenings and October. I'm currently booking the Class of 2027. If you're reading this in spring wanting a fall session, now is exactly the right time to reach out."
       ],
       "links": [
         {
@@ -160,9 +160,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[VALIDAR: fechas concretas de los distritos de Richland, Kennewick y Pasco — dato local que nadie más publica]",
-    "[VALIDAR: si Lisa ofrece esto — Q54]",
-    "[FECHA]"
-  ]
+  "pending": []
 }

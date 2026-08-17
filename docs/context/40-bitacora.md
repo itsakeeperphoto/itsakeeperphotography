@@ -1573,3 +1573,27 @@
 - **Git/operación:** implementación/arquitectura/ADR en `8045e79`
   (`fix(build): separate Tina and Astro phases`) y cierre documental local
   separado. No se hizo push, deploy ni `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Cinco rutas pendientes publicadas con respuestas de Lisa
+
+- **Objetivo:** convertir Seniors, Branding, Investment, Senior Timing y
+  Newborn Comparison a producción sin trasladar muletillas ni comentarios
+  internos de la nota de voz.
+- **Implementación:** se publicaron 2/3/4 outfits sin recargo, Class of 2027,
+  compra separada de sesión/fotografías, proceso de selección, Branding a `$75`
+  por imagen con uso comercial y Newborn recomendado desde dos horas. Contact
+  dejó de cobrar outfits y separa la selección Branding de las colecciones
+  personales.
+- **SEO/schema:** las cinco rutas están `ready/index`, fechadas `2026-08-17`,
+  sin pendientes ni header noindex. Sitemap y `llms.txt` pasan a 18/18. Senior
+  Timing y Newborn Comparison emiten fechas Article; Service/FAQ/Breadcrumb y
+  LocalBusiness/WebSite mantienen `@id` y Google `sameAs` canónicos.
+- **Exactitud:** no se publicaron galerías de 500–600 como garantía, deadlines
+  distritales no entregados, Knowledge Graph MID, dirección, coordenadas,
+  Review ni AggregateRating.
+- **QA:** Tina 5/38/20/19; Astro staging/release; validator 20/20 en ambos
+  modos; auditoría JSON-LD y crawler outputs 18/18. El wrapper Tina local no
+  abrió un segundo servidor porque `:9000` ya estaba ocupado; no se cerró el
+  proceso del usuario y las fases se comprobaron separadas.
+- **Git/operación:** commit local pendiente al escribir esta entrada. No se hizo
+  push, deploy, Search Console ni `./scripts/handoff.sh`.

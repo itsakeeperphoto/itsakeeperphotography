@@ -1,8 +1,8 @@
 {
   "route": "/investment/",
   "family": "trust",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "WebPage",
   "signature": "overlap",
   "title": "The Experience & Investment | It's A Keeper Photography",
@@ -63,8 +63,8 @@
           "detail": "You never need to know how to pose. That's my job."
         },
         {
-          "heading": "Hand-selected, hand-edited images",
-          "detail": "Finished in my warm, film-inspired style."
+          "heading": "A proof gallery prepared for review",
+          "detail": "Senior and family proof galleries generally include at least 200 images to review; newborn galleries may be smaller. We choose the final photographs and collection together."
         },
         {
           "heading": "An in-person gallery viewing",
@@ -72,7 +72,7 @@
         },
         {
           "heading": "A private phone album",
-          "detail": "Your images as my thank-you — with its own icon on your phone, and it never expires."
+          "detail": "Your selected images as my thank-you — with its own icon on your phone, and it never expires. It is made for viewing, not for printing."
         }
       ]
     },
@@ -104,7 +104,7 @@
         },
         {
           "heading": "6. We view your gallery together",
-          "detail": "About two weeks later, we sit down in person and go through your images. I'll help you choose, talk through what would look beautiful on your walls, and answer the questions that are genuinely hard to answer alone in front of a screen. You can order online if you'd rather — but almost nobody does once they've done it this way."
+          "detail": "About two weeks later, we sit down in person and go through your images. I'll help you choose, talk through what would look beautiful on your walls, and answer the questions that are genuinely hard to answer alone in front of a screen. If an item in a collection does not fit what you need, we can compare an alternative at a similar price point."
         },
         {
           "heading": "7. Your prints come home",
@@ -119,6 +119,8 @@
       "heading": "A Note About Pricing",
       "paragraphs": [
         "To help you plan before we talk, I've made a Session Estimate that gives you a useful starting number based on what you choose. It isn't a booking or a contract, and it isn't meant to replace a conversation. It's there so you can get a feel for the investment before you ever reach out.",
+        "The session fee covers your reserved photography time and planning; photographs and personal-session collections are purchased separately after you see your gallery. A retainer that counts toward the session fee reserves your date, and the remaining session balance is due by the day of the shoot.",
+        "Senior, family and newborn sessions use the same session options and personal photo collections. Newborn sessions are best booked for at least two hours. Branding uses the same session-time options, then final branding images are selected separately at $75 each with commercial usage included.",
         "The individual Headshot Package is $175 plus tax and includes a 20–30 minute session, one high-resolution digital download with commercial usage, and an online gallery with additional purchase options. Team headshots are planned from the headcount and confirmed with a custom estimate.",
         "Every session is planned individually — different families, different seasons, different walls to fill. Once we connect, I'll look at what you've selected, make sure it actually fits what you're hoping for, and confirm the complete price with nothing hidden and no pressure. From there, if it feels right, I'll walk you through the contract, retainer and payment details myself.",
         "What I'll say now: I'm not the cheapest photographer in the Tri-Cities, and I'm not trying to be. My clients tend to be people who found my work, loved it, and decided it was worth planning for. If that's you, we're going to get along."
@@ -237,7 +239,7 @@
         {
           "heading": "What's included in a session?",
           "paragraphs": [
-            "A phone consultation, wardrobe guidance, location planning, your fully guided golden-hour session, hand-editing in my signature style, an in-person gallery viewing, and a private phone album of your images as a thank-you."
+            "A phone consultation, wardrobe guidance, location planning, your fully guided session, preparation of a proof gallery, an in-person gallery viewing, and a private phone album of your selected images as a thank-you. Photographs and collections are purchased separately."
           ]
         },
         {
@@ -286,7 +288,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE: número de imágenes / duración por paquete — Lisa envió el pricing por separado. Añadir aquí una línea neutral por tipo de sesión, sin cifras de dinero.]"
-  ]
+  "pending": []
 }

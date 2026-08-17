@@ -3,93 +3,82 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 16:40 -05
+**Última actualización:** 2026-08-17 16:55 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional actual:** `8045e79` —
-`fix(build): separate Tina and Astro phases`
+**HEAD funcional al iniciar:** `3261d30` — `docs(context): record sequential Netlify build`
+**Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Remoto oficial:** `origin` →
-`https://github.com/itsakeeperphoto/itsakeeperphotography.git`
-
-**Base remota al inicio:** `3335478` — cierre documental de la reparación del
-build Netlify.
-
-**Estado Git:** antes del commit documental, `main` está un commit por delante
-de `origin/main`. No se hizo push, deploy, Search Console ni mutación externa.
+**Estado Git:** cambios funcionales y documentales de esta publicación quedan
+pendientes de commit local. No se hizo push, deploy, Search Console ni mutación
+externa.
 
 ---
 
 ## Siguiente paso concreto
 
-William publica los commits cuando lo decida y reintenta el deploy de Netlify.
-Después se verifica Homepage y Reviews en móvil, un guardado controlado desde
-Tina, Headshots 200/index, GA4/Clarity y el sitemap antes de enviarlo a Search
-Console.
+Crear el commit local de publicación. William podrá hacer push cuando lo decida;
+después del deploy se verifican 200/canonical/header de las cinco rutas, Realtime
+de GA4/Clarity y se envía `/sitemap.xml` a Search Console.
 
 ## Resultado funcional
 
-- El deploy falló en `validate:tina`: Homepage referenciaba
-  `/uploads/7-640.webp`, una variante local excluida por `.gitignore` y ausente
-  en el clon limpio de Netlify. El JPG fuente `7.jpg` había sido eliminado.
-- `why.frontImage` usa ahora
-  `/uploads/pasco-family-mother-children-golden-hour.jpg`, fotografía vertical
-  ya versionada. El alt describe literalmente a la mujer y los dos niños; no se
-  restauró la foto eliminada ni se cambió CSS o composición.
-- El primer error ocultaba un segundo gate: seis JPEG fuente superaban 2400 px.
-  El optimizador oficial los redujo proporcionalmente a un total de 2.60 MiB,
-  70.5% menos, sin recorte ni cambio de contenido.
-- Headshots continúa `ready/index`; el release conserva 20 rutas públicas y
-  13/13 URLs en sitemap/`llms.txt`.
-- La tarjeta de Christina Bergstrom comparte ahora un identificador estable y,
-  solo hasta 767 px, ancla su fotografía al borde superior. La cabeza queda
-  visible en Home y Reviews sin cambiar dimensiones, orden ni otras reseñas.
-- El segundo deploy llegó a construir todas las rutas, pero Netlify terminó el
-  padre Tina con código 137 mientras Astro trazaba la función SSR. Tina y Astro
-  ahora son comandos consecutivos: Tina termina/libera memoria antes de que
-  comience `astro build`; se conservan todos los gates y outputs anteriores.
+- Seniors, Branding, Investment, Senior Timing y Newborn Comparison están
+  `ready/index`, fechadas `2026-08-17`, sin pendientes ni headers release
+  `noindex`, y forman parte de sitemap y `llms.txt`.
+- El sitemap release y `llms.txt` contienen las mismas 18 URLs canónicas. Las
+  únicas rutas públicas fuera son Privacy —pendiente legal— y Thank-you
+  —noindex permanente—; 404 tampoco pertenece al manifiesto.
+- Lisa confirmó para Seniors 2/3/4 outfits en #ONE/#TWO/#THREE, sin recargo por
+  cambio; cambiarse consume tiempo de sesión. Class of 2027 sigue vigente.
+- El fee de sesión y las fotografías se compran por separado. La fecha se
+  reserva con un retainer aplicado al fee; el saldo vence a más tardar el día
+  de la sesión; la revisión guiada suele ocurrir unas dos semanas después.
+- Senior, Family y Newborn conservan sus colecciones personales. Newborn se
+  recomienda con al menos dos horas. Branding usa las coberturas generales,
+  pero cada imagen final cuesta `$75` e incluye uso comercial.
+- La galería digital final permanece activa aproximadamente un mes con
+  descargas ilimitadas; el álbum móvil de cortesía no expira y es para consulta,
+  no para impresión.
+- Senior Timing no inventa fechas distritales: manda revisar el deadline de la
+  escuela. Los dos artículos ahora emiten fechas estructuradas reales.
+- Todas las URLs indexables emiten exactamente un `LocalBusiness` y `WebSite`,
+  tipo principal correcto y el schema específico aplicable. `#business` es el
+  `@id` canónico y `sameAs` enlaza el perfil Google verificado
+  `https://g.page/r/CZnCWAWyBWnQEBM`; no se inventa Knowledge Graph MID,
+  dirección, coordenadas, Review ni AggregateRating.
+- GA4 `G-0YW8M601L1` y Clarity `xyqkkqom4v` siguen cargándose una sola vez solo
+  en release.
 
 ## QA ejecutada
 
 - `npm run validate:tina` — PASS: 5 colecciones, 38 documentos, 20 rutas y 19
-  contratos de renderer; toda media referenciada existe en git.
-- `npm run optimize:source-images` — PASS: todos los JPEG están en o por debajo
-  de 2400 px y 700 KiB.
-- Tina local en puertos alternativos 4002/9001 + `astro build` — PASS: 20 rutas
-  públicas y los cuatro artículos prerenderizados.
-- `npm run install:netlify-headers` + `npm run validate:site` — PASS: 20 rutas
-  en staging.
-- `git diff --check` — PASS.
-- Playwright 390×844 — PASS en `/` y `/reviews/`: fuente WebP 400 cargada,
-  `object-position: 50% 0%`, cabeza visible y overflow horizontal 0.
-- Detector Impeccable sobre componente/CSS — PASS `[]`.
-- Tina sin subcomando, puertos 4002/9001 — PASS y salida 0; el proceso cerró su
-  servidor antes de Astro.
-- Astro con `NETLIFY=true`, contexto production y adaptador real — PASS: 20
-  rutas, `Generated SSR Function` y salida 0 en 31.52 s.
-- Headers release + `validate:site` — PASS 20/20.
-- `npm run build` local llega hasta TinaCloud; no puede completar sin
-  `TINA_PUBLIC_CLIENT_ID`/`TINA_TOKEN`. El log de Netlify confirma que esas
-  variables sí están configuradas en el entorno remoto.
+  contratos de renderer.
+- `npx astro build` — PASS en staging y release; 20 rutas prerenderizadas.
+- `npm run install:netlify-headers` + `npm run validate:site` — PASS 20/20 en
+  staging y release.
+- Auditoría JSON-LD de las 18 URLs del sitemap — PASS: LocalBusiness/WebSite
+  únicos, página principal presente, Google `sameAs` correcto y schemas
+  Service/Article/FAQ/Breadcrumb según ruta.
+- Sitemap/`llms.txt` — PASS 18/18, con `lastmod` `2026-08-17` en las cinco rutas.
+- `npm run build:local` no pudo iniciar un segundo servidor Tina porque el
+  proceso del usuario ya ocupa `:9000`; no se cerró. Sus fases comprobables se
+  ejecutaron por separado y pasaron.
 
 ## Bloqueadores y pendientes operativos
 
-- No queda un bloqueo de código conocido para el siguiente deploy. Falta que el
-  usuario publique los commits y Netlify confirme el pipeline secuencial con
-  sus secretos y límites reales.
-- Realtime de GA4/Clarity, canonicals/headers y Search Console se verifican
-  después de publicar.
-- Las páginas pendientes de confirmación siguen siendo Seniors, Branding,
-  Investment, Senior Timing y Newborn Comparison. Privacy permanece pendiente
-  de revisión legal; Thank-you es noindex permanente.
+- No queda ninguna de las cinco páginas comerciales/editoriales pendiente de
+  `ready/index`.
+- Privacy requiere texto legal aprobado y seguirá fuera del sitemap.
+- El smoke autenticado de TinaCloud, el deploy real, GA4/Clarity Realtime y
+  Search Console solo pueden verificarse después de publicar.
 
 ## Operación Git
 
-- Commit funcional actual: `8045e79`.
-- Estado, backlog y bitácora forman el commit documental de cierre.
-- No se ejecuta `./scripts/handoff.sh` porque hace push y el usuario autorizó
-  commits locales, no pushes.
-- No se prepararon transcripts `.handoff/sessions/*.jsonl` para commit.
+- Debe crearse un commit local; no ejecutar push.
+- No ejecutar `./scripts/handoff.sh` porque incluye push y el usuario autorizó
+  únicamente commits.
+- No preparar `.handoff/sessions/*.jsonl` para commit.

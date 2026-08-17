@@ -21,8 +21,12 @@ export const GET: APIRoute = () => {
   );
   const sectionFor = (id: string) => {
     if (id === "home") return "Start here";
-    if (["family", "newborn", "headshots"].includes(id)) return "Portrait services";
-    if (["about", "reviews", "contact"].includes(id)) return "About and planning";
+    if (["family", "seniors", "newborn", "branding", "headshots"].includes(id)) {
+      return "Portrait services";
+    }
+    if (["about", "reviews", "investment", "contact"].includes(id)) {
+      return "About and planning";
+    }
     if (["richland", "kennewick", "pasco"].includes(id)) return "Local service areas";
     return "Journal and planning guides";
   };

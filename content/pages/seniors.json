@@ -1,8 +1,8 @@
 {
   "route": "/senior-photographer-tri-cities-wa/",
   "family": "service",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Service",
   "signature": "arch",
   "title": "Senior Pictures Tri-Cities WA | Class of 2027 Photographer",
@@ -160,7 +160,7 @@
         {
           "heading": "How many outfits can I bring?",
           "paragraphs": [
-            "We'll plan that together on our call, and it depends on your session length. The important thing is that each one is something you can move comfortably in."
+            "Package #ONE includes two outfits, Package #TWO includes three, and Package #THREE includes four. There is no extra fee for outfit changes, but changing is part of your booked session time, so we'll plan each look carefully."
           ]
         },
         {
@@ -207,7 +207,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE: número por paquete]"
-  ]
+  "pending": []
 }

@@ -127,6 +127,8 @@ const seniorTimingArticleSchemaExtra = {
   headline: page.title,
   author: { "@id": `${siteOrigin}/#lisa` },
   publisher: { "@id": `${siteOrigin}/#business` },
+  datePublished: entry.lastModified,
+  dateModified: entry.lastModified,
   image: seniorTimingImage,
   mainEntityOfPage: {
     "@type": "WebPage",
@@ -185,6 +187,8 @@ const newbornComparisonArticleSchemaExtra = {
   headline: page.title,
   author: { "@id": `${siteOrigin}/#lisa` },
   publisher: { "@id": `${siteOrigin}/#business` },
+  datePublished: entry.lastModified,
+  dateModified: entry.lastModified,
   image: newbornComparisonImage,
   mainEntityOfPage: {
     "@type": "WebPage",
@@ -301,7 +305,7 @@ const directionContract = isSeniorTiming
   : isNewbornComparison
     ? "Newborn Comparison House Archive: shared EditorialHero; verified in-home and outdoor photography; studio context remains typographic; one arched image, ruled comparison rows and no invented dates, studio portfolio, gradients, rounded cards, tape, splatter, badges or shadows."
   : isBrandingHeadshots
-    ? "Branding vs. Headshots Versus Axis: shared EditorialHero; one headshot proof faces an asymmetric branding library across a central seam; semantic checklist, table and FAQ with verified photography only; no package promises, gradients, rounded cards, tape, splatter, badges or shadows."
+    ? "Branding vs. Headshots Versus Axis: shared EditorialHero; one headshot proof faces an asymmetric branding library across a central seam; semantic checklist, table and FAQ with verified photography only; no invented package promises, gradients, rounded cards, tape, splatter, badges or shadows."
   : undefined;
 ---
 

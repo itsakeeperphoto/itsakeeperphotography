@@ -332,67 +332,30 @@ const reviewsBreadcrumbSchema =
         ],
       }
     : null;
-const detailedFaqSchema =
-  entry.id === "branding"
-    ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "@id": `${canonical}#faq`,
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "What's the difference between branding photos and headshots?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "A headshot is one polished portrait. Branding photography is a full library covering the person, their work, their space and their product details. Branding sessions include headshots.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Can branding photos be used for advertising?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes. Branding sessions include commercial usage rights, which is what distinguishes them from personal sessions that carry personal print rights only.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Where do branding sessions take place?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Usually at the client's place of business in Richland, Kennewick or Pasco, or at Tri-Cities locations chosen to match the brand.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "How often should branding photos be updated?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Most businesses refresh branding images once or twice a year. Headshots typically last two to three years.",
-            },
-          },
-        ],
-      }
-    : entry.id === "headshots"
-      ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "@id": `${canonical}#faq`,
-          mainEntity: (page.sections || [])
-            .find((section) => section.id === "headshot-questions")
-            ?.items?.filter(
-              (item) => item.heading && item.paragraphs?.[0],
-            )
-            .map((item) => ({
-              "@type": "Question",
-              name: item.heading,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: item.paragraphs?.[0],
-              },
-            })) || [],
-        }
-      : null;
+const serviceFaqSectionIds: Partial<Record<string, string>> = {
+  branding: "branding-questions",
+  headshots: "headshot-questions",
+};
+const serviceFaqItems = serviceFaqSectionIds[entry.id]
+  ? (page.sections || [])
+      .find((section) => section.id === serviceFaqSectionIds[entry.id])
+      ?.items?.filter((item) => item.heading && item.paragraphs?.length) || []
+  : [];
+const detailedFaqSchema = serviceFaqItems.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      mainEntity: serviceFaqItems.map((item) => ({
+        "@type": "Question",
+        name: item.heading,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.paragraphs?.join(" "),
+        },
+      })),
+    }
+  : null;
 const detailedServiceOffer =
   entry.id === "headshots"
     ? {

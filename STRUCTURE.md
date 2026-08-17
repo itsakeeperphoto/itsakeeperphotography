@@ -28,8 +28,11 @@ entry when that date is missing.
 | --- | --- | --- |
 | `/` | Homepage | 2026-08-17 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
+| `/senior-photographer-tri-cities-wa/` | Service | 2026-08-17 |
 | `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-17 |
+| `/branding-photographer-tri-cities-wa/` | Service | 2026-08-17 |
 | `/headshot-photographer-tri-cities-wa/` | Service | 2026-08-17 |
+| `/investment/` | Experience / planning | 2026-08-17 |
 | `/about/` | About / trust | 2026-08-10 |
 | `/reviews/` | Reviews / trust | 2026-08-12 |
 | `/contact/` | Contact / conversion | 2026-08-17 |
@@ -38,24 +41,26 @@ entry when that date is missing.
 | `/pasco-wa-photographer/` | Service area | 2026-08-17 |
 | `/journal/` | Journal collection | 2026-08-14 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
+| `/journal/when-to-book-senior-pictures-tri-cities/` | Article | 2026-08-17 |
+| `/journal/in-home-vs-studio-newborn-photography/` | Article | 2026-08-17 |
 | `/journal/branding-photos-vs-headshots/` | Article | 2026-08-17 |
 
-The release sitemap and `llms.txt` each contain the same 13 canonical URLs.
+The release sitemap and `llms.txt` each contain the same 18 canonical URLs.
 
 ## Planned public architecture
 
 ### Services
 
 - `/family-photographer-tri-cities-wa/` — ready and indexable
-- `/senior-photographer-tri-cities-wa/` — draft; excluded
+- `/senior-photographer-tri-cities-wa/` — ready and indexable
 - `/newborn-photographer-tri-cities-wa/` — ready and indexable
-- `/branding-photographer-tri-cities-wa/` — draft; excluded
+- `/branding-photographer-tri-cities-wa/` — ready and indexable
 - `/headshot-photographer-tri-cities-wa/` — ready and indexable; individual
   package and responsive/schema QA confirmed
 
 ### Trust and conversion
 
-- `/investment/` — draft; excluded
+- `/investment/` — ready and indexable
 - `/about/` — ready and indexable
 - `/reviews/` — ready and indexable
 - `/contact/` — ready and indexable
@@ -74,13 +79,11 @@ threshold. Each must retain genuinely city-specific content before it is approve
 - `/journal/` — ready and indexable as a `CollectionPage`, last modified
   `2026-08-14`
 - `/journal/family-photo-locations-tri-cities/` — ready and indexable
-- `/journal/when-to-book-senior-pictures-tri-cities/` — redesigned with a
-  specialized article renderer; remains draft/noindex and excluded while the
-  editorial date, district-specific evidence and Q54 remain pending
-- `/journal/in-home-vs-studio-newborn-photography/` — redesigned with the
-  specialized House Archive renderer and route-only CSS; remains draft/noindex,
-  without dates and excluded from sitemap/`llms.txt` until Lisa approves the
-  article, confirms the exact combined format and supplies a real date
+- `/journal/when-to-book-senior-pictures-tri-cities/` — ready and indexable;
+  it tells readers to check their own school deadline and does not publish
+  unprovided district dates
+- `/journal/in-home-vs-studio-newborn-photography/` — ready and indexable with
+  the specialized House Archive renderer and route-only CSS
 - `/journal/branding-photos-vs-headshots/` — redesigned with the specialized
   Versus Axis renderer and route-only CSS; ready and indexable with publication
   and modification date `2026-08-11`
@@ -139,18 +142,14 @@ crossfade fallback under reduced motion.
 The Journal hub publication contract preserves the existing overlap signature
 and four-card editorial sequence. It emits exactly one canonical
 `CollectionPage` and one `BreadcrumbList` Home → Journal, not an `Article` or
-`Service`. No ready/index route or footer may link Senior Timing or Newborn
-Comparison while either remains draft. Release includes the hub once with
-`lastmod` `2026-08-14`; staging keeps the complete 20-route surface noindex and
-its sitemap empty.
+`Service`. Senior Timing and Newborn Comparison are now approved destinations.
+Release includes the hub once with `lastmod` `2026-08-14`; staging keeps the
+complete 20-route surface noindex and its sitemap empty.
 
-The Newborn Comparison release contract is intentionally stricter than its
-visual completion: it renders one `Article`, one FAQ derived 1:1 from the three
-visible questions and one `BreadcrumbList`, with no publication/modification
-dates. Its exact 1 H1/8 H2/7 H3 hierarchy, complete ordered paragraph copy and
-nine-image 7-informative/2-decorative inventory are validated, but none of those
-facts authorizes indexing while `[VALIDAR CON LISA]`,
-`[VALIDAR: formato exacto que ofrece Lisa]` and `[FECHA]` remain unresolved.
+The Newborn Comparison release contract renders one dated `Article`, one FAQ
+derived 1:1 from the three visible questions and one `BreadcrumbList`. Its
+exact 1 H1/8 H2/7 H3 hierarchy, complete ordered paragraph copy and nine-image
+7-informative/2-decorative inventory are validated.
 
 The Branding vs. Headshots publication contract uses Comp C / Impeccable
 `Versus Axis`: one formal headshot proof faces an asymmetric branding library
@@ -160,8 +159,8 @@ six-row table, three anchors and eleven unique images with an 8-informative /
 3-decorative split are validated. It emits one `Article` dated `2026-08-11`,
 one `FAQPage` derived 1:1 from the visible questions and one `BreadcrumbList`.
 It does not turn editorial comparisons into `Service`, `Offer`, structured
-duration or price claims. Its service destinations remain independently
-`draft/noindex`.
+duration or price claims. Its service destinations are independently
+`ready/index`.
 
 ## Publishing a draft route
 

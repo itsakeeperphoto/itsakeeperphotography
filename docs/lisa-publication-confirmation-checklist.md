@@ -1,14 +1,33 @@
 # Confirmaciones de Lisa para publicar las páginas pendientes
 
 **Preparado:** 11 de agosto de 2026
-**Objetivo:** reunir en una sola respuesta los hechos que faltan para convertir
-las páginas comerciales y los dos artículos terminados de `draft/noindex` a
-`ready/index`.
+**Estado:** cerrado el 17 de agosto de 2026; se conserva como evidencia de los
+gates resueltos.
 
-> **Actualización 2026-08-17:** Lisa confirmó el paquete individual de
-> Headshots y la política de viaje. Esas respuestas se registran abajo; las
-> preguntas de equipos y los demás servicios continúan abiertas. La versión
-> `.docx` anterior no debe reenviarse sin regenerarla desde este Markdown.
+> **Actualización 2026-08-17:** Lisa confirmó Headshots, viaje, Seniors,
+> Branding, Investment y las condiciones que bloqueaban los dos artículos. La
+> versión `.docx` anterior queda histórica y no debe reenviarse.
+
+## Cierre factual confirmado
+
+- Seniors: #ONE incluye dos outfits, #TWO tres y #THREE cuatro. No hay recargo
+  por cambiarse; el cambio consume tiempo reservado. Class of 2027 sigue
+  vigente.
+- Sesión y fotografías se compran por separado. El retainer forma parte del
+  fee y reserva la fecha; el saldo vence a más tardar el día de la sesión.
+- Aproximadamente dos semanas después se revisa la galería con Lisa. Seniors y
+  Family suelen tener al menos 200 proofs para revisar; Newborn puede tener
+  menos. No se garantiza una galería de 500–600 imágenes.
+- La galería digital final suele permanecer activa un mes con descargas
+  ilimitadas. El álbum móvil de cortesía no expira y no se ofrece para imprimir.
+- Senior, Family y Newborn usan las colecciones personales. Para Newborn se
+  recomienda reservar al menos dos horas.
+- Branding usa las mismas coberturas de sesión, pero no las colecciones
+  personales: las imágenes finales cuestan `$75` cada una e incluyen uso
+  comercial. Cada branding incluye un headshot.
+- Senior Timing no publica deadlines distritales no aportados; indica revisar
+  la fecha de cada escuela. Senior Timing y Newborn Comparison usan fecha
+  editorial `2026-08-17`.
 
 ## Alcance
 
@@ -45,8 +64,8 @@ Investment**. No hace falta responder lo mismo cuatro veces.
 #### Cobertura de sesión
 
 - **#ONE — $160:** hasta 90 minutos, 1–2 lugares, 2 outfits.
-- **#TWO — $220:** 2 horas, 1–3 lugares, 2–3 outfits.
-- **#THREE — $330:** hasta 3 horas, 3–4 lugares, 3–4 outfits.
+- **#TWO — $220:** 2 horas, 1–3 lugares, 3 outfits.
+- **#THREE — $330:** hasta 3 horas, 3–4 lugares, 4 outfits.
 
 #### Colecciones de fotografías
 
@@ -60,7 +79,7 @@ Investment**. No hace falta responder lo mismo cuatro veces.
 #### Otros datos vigentes en el estimador
 
 - Imagen digital retocada adicional: $25.
-- Outfit adicional: $20.
+- Outfit adicional: sin recargo; cambiarse consume tiempo de sesión.
 - Rush de 48 horas: $75.
 - Cinco personas incluidas; $15 por persona adicional.
 

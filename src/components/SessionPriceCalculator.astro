@@ -431,6 +431,8 @@ const pricingVersion = "2026-08-17";
                         ? "No collection yet"
                         : collection.id === "headshotGallery"
                           ? "Included online gallery"
+                          : collection.id === "brandingImages"
+                            ? "Branding images selected later"
                         : `Collection ${collection.name}`}
                     </strong>
                     <span>
@@ -481,6 +483,11 @@ const pricingVersion = "2026-08-17";
                 Your Headshot Package includes one high-resolution digital
                 download with commercial usage. The online gallery offers
                 additional purchase options; Lisa confirms those prices with you.
+              </p>
+              <p data-branding-purchase-note hidden>
+                Branding session coverage and final images are purchased
+                separately. After the session, choose the images you need at
+                $75 each; commercial usage is included.
               </p>
             </div>
           </fieldset>

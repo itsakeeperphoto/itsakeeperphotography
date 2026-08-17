@@ -23,21 +23,6 @@
 /privacy/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
-/senior-photographer-tri-cities-wa/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/branding-photographer-tri-cities-wa/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/investment/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/journal/when-to-book-senior-pictures-tri-cities/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/journal/in-home-vs-studio-newborn-photography/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 

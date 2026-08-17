@@ -1078,7 +1078,8 @@
 
 ### ADR-051 — Branding y Headshots usan media diversa con XMP local segura
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-069 únicamente en el
+  gate `draft/noindex` de Branding.
 - **Contexto:** Branding renderizaba 13 superficies desde solo cuatro fuentes y
   Headshots 14 desde cuatro; las repeticiones consecutivas debilitaban la
   lectura de servicios distintos. El usuario pidió renovar ambas rutas desde
@@ -1191,7 +1192,8 @@
 
 ### ADR-054 — Senior Timing adopta un field guide image-first sin fabricar el gate editorial
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-069 en pendientes,
+  fecha y gate de publicación.
 - **Contexto:** El artículo Senior Timing usaba `ContentPage` genérico aunque
   su copy, oportunidad SEO y secuencia estacional requerían una lectura
   editorial propia. El documento definitivo conservaba tres pendientes: fechas
@@ -1235,7 +1237,8 @@
 
 ### ADR-055 — Newborn Comparison adopta House Archive sin fabricar su publicación
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-069 en pendientes,
+  fecha y gate de publicación.
 - **Contexto:** El artículo comparativo Newborn caía en `ContentPage`, había
   perdido el capítulo Outdoor y el cierre del copy definitivo, y el ejemplo de
   schema no coincidía con sus FAQ visibles. La fotografía local no demostraba
@@ -1266,7 +1269,8 @@
 
 ### ADR-056 — Branding vs. Headshots publica un Versus Axis sin convertir comparación editorial en paquete
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-069 únicamente en el
+  gate de la página de servicio Branding.
 - **Contexto:** El artículo
   `/journal/branding-photos-vs-headshots/` caía en `ContentPage` aunque su copy
   comparaba dos productos visualmente distintos y ya contaba con fotografía
@@ -1314,8 +1318,9 @@
 
 ### ADR-057 — Journal se publica como colección sin enlazar artículos draft y los gates restantes se consultan en un solo documento
 - **Fecha:** 2026-08-11
-- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-061 únicamente en el
-  enlace secundario a Portfolio, la fecha de Journal y los conteos derivados.
+- **Estado:** Aceptada; SUPERSEDIDA PARCIALMENTE POR ADR-061 en Portfolio,
+  fecha de Journal y conteos; y POR ADR-069 en los gates de Senior Timing,
+  Newborn Comparison y las páginas comerciales ya confirmadas.
 - **Contexto:** El hub `/journal/` tenía copy, composición y cards completos,
   pero seguía `draft/noindex` y fuera de crawler outputs. Dos de sus cuatro
   artículos —Senior Timing y Newborn Comparison— todavía conservan gates
@@ -1597,8 +1602,8 @@
 ### ADR-064 — Headshots usa un paquete propio y el viaje se calcula después de 25 millas
 
 - **Fecha:** 2026-08-17
-- **Estado:** Aceptada; **SUPERSEDIDA PARCIALMENTE POR ADR-065** únicamente en
-  el gate de publicación de Headshots.
+- **Estado:** Aceptada; **SUPERSEDIDA PARCIALMENTE POR ADR-065** en el gate de
+  Headshots y **POR ADR-069** en colecciones Branding y cobro por outfits.
 - **Contexto:** Lisa confirmó una política de viaje general y un paquete
   individual de Headshots que no coincide con la matriz de cobertura y
   colecciones usada por las otras sesiones. El sitio aplicaba los mismos tres
@@ -1730,3 +1735,37 @@
   genera 20 rutas, la función Netlify, headers release y validación 20/20 con
   código 0. El siguiente deploy debe confirmar el comportamiento en el entorno
   remoto; no se hizo push.
+
+### ADR-069 — Las cinco rutas pendientes se publican con la matriz comercial confirmada
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada; supersede los gates identificados de ADR-051, ADR-054,
+  ADR-055, ADR-056 y ADR-057, y corrige en ADR-064 la colección de Branding y
+  el supuesto cobro por outfit.
+- **Contexto:** Lisa respondió las preguntas que bloqueaban Seniors, Branding,
+  Investment, Senior Timing y Newborn Comparison. La transcripción incluía
+  muletillas y comentarios internos que no son copy público. Los hechos útiles
+  confirman outfits, año escolar, compra separada, revisión de galería,
+  duración de acceso, estructura Branding y recomendación Newborn.
+- **Decisión:** Publicar solo los hechos confirmados. Seniors usa 2/3/4 outfits
+  en #ONE/#TWO/#THREE, sin cargo por cambio; Class of 2027 sigue vigente.
+  Sesión y fotografías se compran por separado; el retainer forma parte del fee,
+  el saldo vence el día de la sesión y la selección suele hacerse en persona
+  unas dos semanas después. Senior/Family/Newborn conservan colecciones
+  personales; Newborn se recomienda con al menos dos horas. Branding conserva
+  las coberturas de sesión, pero sus imágenes finales cuestan `$75` cada una e
+  incluyen uso comercial; cada branding incluye un headshot. No publicar como
+  garantía galerías de 500–600 imágenes ni fechas distritales no aportadas.
+  Marcar las cinco rutas `ready/index`, fecharlas `2026-08-17`, vaciar sus
+  pendientes, retirar headers noindex e incluirlas en sitemap/`llms.txt`.
+- **Alternativas descartadas:** Transcribir comentarios de la nota de voz,
+  mantener el add-on de outfit `$20`, aplicar colecciones personales a Branding,
+  prometer 500–600 proofs, inventar deadlines escolares o dejar las páginas
+  terminadas fuera del índice se descartó por inexactitud o señales SEO
+  contradictorias.
+- **Consecuencias:** Release mantiene 20 rutas públicas y publica 18/18 URLs en
+  sitemap/`llms.txt`; Privacy y Thank-you permanecen fuera por razones propias.
+  Las 18 URLs emiten LocalBusiness/WebSite canónicos y schema específico; los
+  dos artículos añaden fechas reales. Contact calcula Branding sin fingir que
+  la compra posterior por imagen está incluida en el total. Staging/release y
+  la auditoría JSON-LD pasan; no se hizo push, deploy ni Search Console.

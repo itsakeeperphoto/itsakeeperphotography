@@ -88,8 +88,8 @@
   18 JPEG Drive, 72 WebP regenerables, filenames/alt descriptivos y XMP de
   ciudad verificada sin GPS ni metadata sensible. Branding queda 13/11 y
   Headshots 14/11, máximo dos usos por fuente; release 21/21 y Playwright
-  1440/1200/900/390 pasan. Ambas rutas siguen `draft/noindex` por entregables
-  pendientes y no se borró media previa.
+  1440/1200/900/390 pasan. Ambas rutas terminaron publicadas tras resolver sus
+  gates comerciales; no se borró media previa.
 - [x] **17. Actualizar Kind Words según ADR-052.** Diez reseñas del PDF quedan
   destacadas en orden 1–10, cinco originales se confirmaron visualmente en
   Drive, siete JPEG nuevos se optimizaron y los tres exactos existentes se
@@ -116,8 +116,8 @@
   anchors y 11 imágenes 8/3. Validadores 21/21, Playwright
   1440/1200/900/390/1728, 15 capturas, Impeccable `[]` y revisión independiente
   `PASS` sin P1/P2. La ruta queda `ready/index`, fecha `2026-08-11`, sitemap 11,
-  `llms.txt` 10 y Article + FAQ + Breadcrumb; las páginas de servicio siguen
-  `draft/noindex`.
+  `llms.txt` 10 y Article + FAQ + Breadcrumb; sus destinos de servicio fueron
+  publicados después en ADR-065/069.
 - [x] **19C. Cerrar documentalmente Branding vs. Headshots.** El commit
   `a33f6ec` registra su publicación; el usuario lo subió a `origin/main` junto
   con el historial local anterior.
@@ -157,19 +157,17 @@
   como Editor, abrir Homepage y una muestra de cada familia, guardar y revertir
   un cambio controlado en una página draft, y confirmar preview, permisos y
   CSP/headers sin registrar credenciales ni contenido personal en git.
-- [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
+- [x] **19E. Registrar las respuestas de Lisa al checklist.** Usar
   `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
   Seniors, Branding, Investment, Senior Timing y Newborn Comparison;
   Reviews se resolvió aparte en ADR-058; Privacy permanece fuera por
   instrucción del usuario. El 2026-08-17 quedaron resueltos el paquete
-  individual de Headshots y la política de viaje; no usar la versión `.docx`
-  anterior sin regenerarla.
-- [ ] **19F. Publicar Newborn Comparison solo después de sus tres gates.**
-  Resolver `[VALIDAR CON LISA]`,
-  `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; hasta entonces
-  conservar `draft/noindex`, header release, ausencia de fechas y exclusión de
-  sitemap/`llms.txt`.
+  individual de Headshots, viaje y las cinco rutas restantes; la versión
+  `.docx` anterior queda histórica y no debe reenviarse.
+- [x] **19F. Publicar Newborn Comparison después de resolver sus gates.** Lisa
+  confirmó la operación newborn; `pending` queda vacío, fecha `2026-08-17`,
+  `ready/index` y crawler outputs 18/18.
 - [ ] **20. Verificar Homepage, About, Reviews, Contact, Richland, Kennewick,
   Pasco, Newborn y Journal después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
@@ -186,19 +184,15 @@
   navegación, sin guardar PII en git.
 - [ ] En Journal, confirmar canonical/index, `CollectionPage` + breadcrumb,
   `lastModified: 2026-08-14`, membresía única en sitemap/`llms.txt`, cuatro
-  anchors Locations/Branding/Reviews/Contact y ausencia de
-  enlaces a Senior Timing/Newborn Comparison mientras continúen draft.
-- [ ] En el mismo deploy, comprobar que Branding continúa `noindex`, ausente de
-  sitemap/`llms.txt`, sin imágenes rotas y sirviendo WebP responsive. Confirmar
-  que Headshots responde 200/index, aparece una vez en sitemap/`llms.txt` y
-  conserva su paquete/schema confirmado. Branding sigue bloqueada por
-  duración/entregables.
-- [ ] Confirmar también que Senior Timing conserva `draft/noindex`, header
-  release, exclusión de sitemap/`llms.txt`, schema sin fechas y las 11 imágenes
-  responsive; el push del rediseño no autoriza su publicación.
-- [ ] Confirmar también que Newborn Comparison conserva `draft/noindex`, header
-  release, exclusión de sitemap/`llms.txt`, schema sin fechas, CSS aislado y las
-  nueve imágenes responsive; el push del rediseño no autoriza su publicación.
+  anchors Locations/Branding/Reviews/Contact y las cards de Senior Timing y
+  Newborn Comparison ya publicadas.
+- [ ] En el mismo deploy, comprobar que Branding y Headshots responden
+  200/index, aparecen una vez en sitemap/`llms.txt`, conservan media responsive
+  y schema confirmado; Branding debe publicar `$75` por imagen con uso comercial.
+- [ ] Confirmar también que Senior Timing responde 200/index, carece de header
+  noindex, emite fechas `2026-08-17` y conserva sus 11 imágenes responsive.
+- [ ] Confirmar también que Newborn Comparison responde 200/index, carece de
+  header noindex, emite fechas `2026-08-17`, CSS aislado y nueve imágenes.
 - [ ] Confirmar que Branding vs. Headshots responde 200/index en producción,
   carece de header noindex, conserva publicación `2026-08-11`, modificación
   `2026-08-17`, aparece una vez en sitemap y
@@ -212,24 +206,23 @@
   1 H1/8 H2/7 H3, cuatro anchors y 11 imágenes. La frase distrital no demostrada
   se sustituyó por guía basada en el deadline publicado por la escuela; Q54 y
   fecha no se inventaron. Staging/release 21/21, Playwright
-  1440/1200/900/390 y revisión independiente `PASS`. La ruta permanece
-  `draft/noindex`, con header y exclusión sitemap/llms intactos.
-- [ ] **23. Completar el cluster Seniors con hechos confirmados.** Revisar
+  1440/1200/900/390 y revisión independiente `PASS`. ADR-069 resolvió después
+  su publicación con fecha real y Class of 2027 confirmada.
+- [x] **23. Completar el cluster Seniors con hechos confirmados.** Revisar
   `src/content/pending.ts` y `content/pages/seniors.json`; obtener de Lisa los
   outfits incluidos por paquete y la regla de outfit adicional, la oferta
   referida en Q54 y la fecha editorial
-  de `/journal/when-to-book-senior-pictures-tri-cities/`. Los datos concretos de
-  deadlines distritales son una mejora opcional y solo se añaden con fuente
-  verificable. Actualizar copy sin reescribir su voz.
-- [ ] Después de editar esos hechos, ejecutar `npm run build:local`, confirmar
-  `Validated 20 public routes in staging mode.` y revisar inmediatamente
-  `git status --short` por IDs de forms generados.
+  de `/journal/when-to-book-senior-pictures-tri-cities/`. Confirmados 2/3/4
+  outfits, sin fee, Class of 2027 y fecha `2026-08-17`; los deadlines
+  distritales siguen como mejora opcional solo con fuente verificable.
+- [x] Después de editar esos hechos, validar Tina y ejecutar Astro/headers/site
+  por separado porque el servidor Tina del usuario ocupaba `:9000`; staging y
+  release pasan 20/20.
 - [ ] Repetir Playwright para la página de servicio Seniors y el artículo en
   1440×1000, 1200×900, 900×900 y 390×844; verificar overflow, crops, foco,
   reduced motion, consola, body links, robots y composición.
-- [ ] Solo si contenido, fecha y QA pasan, decidir por separado si Seniors y su
-  artículo cambian a `ready/index`; entonces actualizar `lastModified`, headers
-  y manifest, reconstruir y comprobar sitemap/robots/llms de release.
+- [x] Seniors y su artículo cambiaron a `ready/index`; manifest, headers,
+  `lastModified`, sitemap, robots y `llms.txt` pasan en release.
 
 ## Contenido pendiente registrado
 
@@ -313,15 +306,17 @@ sin reemplazar el archivo.
   Headshots 14/11, máximo dos usos por fuente, alt literal y XMP de ciudad sin
   GPS ni metadata privada. QA release/Playwright completo; no se borraron
   fuentes anteriores.
-- [ ] Confirmar entregables, número de imágenes y duración de Branding.
+- [x] Confirmado Branding: usa las coberturas de sesión generales; el fee no
+  incluye fotografías y las imágenes finales cuestan `$75` cada una con uso
+  comercial. Cada branding incluye un headshot.
 - [x] Confirmados y aplicados el 2026-08-17 para Headshots individual:
   `$175 + tax`, 20–30 minutos, una descarga digital en alta resolución con uso
   comercial y galería online con compras adicionales. Equipos usan custom
   estimate sin tarifa inventada; `pending` queda vacío y schema/Playwright
   pasan. ADR-065 publica la ruta `ready/index`, `lastModified: 2026-08-17`,
   sitemap/`llms.txt` y retira su header release noindex.
-- [ ] Revalidar que el copy de Branding coincide con
-  `src/lib/session-pricing.ts` y no promete un número distinto.
+- [x] Revalidado que Branding y `src/lib/session-pricing.ts` coinciden y no
+  prometen una cantidad final no confirmada.
 - [x] El artículo comparativo usa ese inventario real sin media nueva y tiene
   fecha editorial autorizada `2026-08-11`; su publicación `ready/index` es
   independiente de los gates de duración/entregables de las páginas service.
@@ -335,17 +330,14 @@ sin reemplazar el archivo.
 - [ ] Pendiente no bloqueante Q41: confirmar si Lisa tiene formación de
   seguridad newborn antes de añadir cualquier claim. Hoy no se publica.
 - [x] Rediseño comparativo completo en `1dd00d3`: renderer especializado, copy
-  1/8/7/3, nueve imágenes 7/2, schema seguro y QA integral; esto no publica la
-  ruta.
-- [ ] Resolver `[VALIDAR CON LISA]` sobre las afirmaciones del artículo.
-- [ ] Resolver `[VALIDAR: formato exacto que ofrece Lisa]`, especialmente la
-  combinación casa + golden hour posterior.
-- [ ] Resolver `[FECHA]` con una fecha editorial real.
+  1/8/7/3, nueve imágenes 7/2 y schema seguro. ADR-069 resolvió sus gates y lo
+  publicó con fecha `2026-08-17`.
 
 ### Investment
 
-- [ ] Confirmar cantidades/duraciones mencionadas de manera neutral en el copy.
-- [ ] Revisar todo el copy contra `src/lib/session-pricing.ts`: las páginas deben
+- [x] Confirmadas y publicadas las duraciones de sesión, la compra separada y
+  Branding a `$75` por imagen; no se garantiza una cantidad de proofs.
+- [x] Revisar todo el copy contra `src/lib/session-pricing.ts`: las páginas deben
   describir una starting point/session estimate, no un precio contractual distinto.
 - [ ] QA actual de sticky headings, timeline, policy section y final paper en los
   cuatro breakpoints; la evidencia actual es puntual.
@@ -386,20 +378,19 @@ sin reemplazar el archivo.
 - [x] Hub publicado `ready/index` en `ffe5198`, `lastModified: 2026-08-14`,
   `CollectionPage` + breadcrumb y crawler outputs 12/12. Conserva cuatro cards,
   pero solo enlaza Locations y Branding vs. Headshots; Reviews y Contact
-  completan los cuatro anchors. Senior Timing y Newborn Comparison permanecen
-  visibles sin link mientras sigan draft.
+  completan los cuatro anchors. Senior Timing y Newborn Comparison se
+  publicaron después mediante ADR-069.
 - [x] Fecha editorial para Branding Photos vs Headshots: `2026-08-11`.
 - [x] Fecha editorial para Family Photo Locations: `2026-08-08`.
-- [ ] Datos de distritos/fechas escolares para Senior timing.
-- [ ] Respuesta/offer de Lisa referida en Q54 para Senior timing.
-- [ ] Fecha editorial para Senior timing.
+- [ ] Mejora opcional: datos de distritos/fechas escolares para Senior Timing,
+  solo con fuente verificable; no bloquean la guía.
+- [x] Class of 2027 y reglas de outfits confirmadas para Senior Timing/Seniors.
+- [x] Fecha editorial para Senior Timing: `2026-08-17`.
 - [x] Rediseño Senior Timing completo sin resolver los tres pendientes por
-  inferencia: guía escolar neutral, Q54 omitida y schema/byline sin fecha; la
-  ruta conserva `draft/noindex` y exclusión de crawler outputs.
-- [x] Rediseño Newborn Comparison completo según ADR-055, sin inferir sus
-  pendientes ni fechas.
-- [ ] Validación de Lisa, formato exacto y fecha real para Newborn Comparison;
-  mantener `draft/noindex` y exclusión crawler mientras falte cualquiera.
+  inferencia: guía escolar neutral y Q54 omitida; ADR-069 añadió fecha real y
+  publicó la ruta.
+- [x] Rediseño Newborn Comparison completo según ADR-055 y publicación
+  `ready/index` con fecha `2026-08-17` según ADR-069.
 - [x] Cerrados QA y hash de Branding vs. Headshots en `b22c581`: diseño
   `Versus Axis`, renderer/CSS, copy, media, schema y gates de publicación
   aprobados sin P1/P2.
@@ -721,10 +712,12 @@ sin reemplazar el archivo.
   header release noindex y con membresía en sitemap/`llms.txt`; tras retirar
   Portfolio, el estado vigente queda 13/13. Emite WebPage, Service + Offer,
   FAQPage y BreadcrumbList con el paquete confirmado.
-- [x] Newborn Comparison rediseñado con Article/FAQPage/Breadcrumb y sin fechas;
-  conserva `draft/noindex`, header release y exclusión sitemap/`llms.txt` hasta
-  resolver sus tres gates literales.
-- [x] Revisar metadata y schema de las 13 URLs indexables: un LocalBusiness y
+- [x] Newborn Comparison rediseñado y publicado `ready/index` con
+  Article/FAQPage/Breadcrumb y fechas `2026-08-17`.
+- [x] Publicar Seniors, Branding, Investment y Senior Timing con las respuestas
+  factuales de Lisa, pendientes vacíos, header release limpio y fecha
+  `2026-08-17`.
+- [x] Revisar metadata y schema de las 18 URLs indexables: un LocalBusiness y
   WebSite canónicos, tipo principal correcto, Breadcrumb/Service/Article/FAQ
   según contenido visible, perfil Google Business por `sameAs`, sin calle/geo
   privada ni ratings no verificables. Validator release/staging PASS.
@@ -757,18 +750,16 @@ sin reemplazar el archivo.
   cálculo vivo, viaje confirmado y paquete Headshots separado, con submit HTML
   nativo; preserva `ready/index`, form único y schema sobrio.
 - [x] Renovadas Branding y Headshots con fotografía Drive local, diversidad
-  protegida, filenames/alt descriptivos y XMP de ciudad segura. Headshots ya
-  resolvió su paquete individual y está `ready/index`; Branding continúa
-  `draft/noindex` hasta confirmar duración y entregables.
+  protegida, filenames/alt descriptivos y XMP de ciudad segura. Ambas están
+  `ready/index`; Branding publica imágenes finales a `$75` con uso comercial.
 - [x] Completar Reviews con `Words Become Pictures`, testimonios reales,
   `KindWords` exacto y libro reutilizable; no se usó una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez
   sesiones verificadas.
 - [x] Completar Newborn con composición A+C, fuente v2 reconciliada, hero y
   proceso protegidos, ocho FAQ y prueba in-home verificada.
-- [x] Completar Newborn Comparison con Concept B / House Archive, renderer y
-  CSS aislados, copy 1/8/7/3, media existente 7/2 y QA responsive; su publicación
-  continúa como pendiente editorial separado.
+- [x] Completar y publicar Newborn Comparison con Concept B / House Archive,
+  renderer y CSS aislados, copy 1/8/7/3 y media existente 7/2.
 - [x] Cerrado Branding vs. Headshots en `b22c581` con Comp C / Versus Axis,
   renderer y CSS aislados, copy 1/8/6/3, media existente 8/3, QA final y
   publicación `ready/index`.
@@ -880,8 +871,8 @@ sin reemplazar el archivo.
   GPS y QA responsive completo, sin borrar media de producción ni publicar las
   rutas draft.
 - [x] Rediseñado Newborn Comparison en `1dd00d3` con House Archive, renderer/CSS
-  aislados, copy definitivo completo, nueve imágenes existentes y QA integral,
-  preservando `draft/noindex` y sus tres gates de publicación.
+  aislados, copy definitivo completo, nueve imágenes existentes y QA integral;
+  publicado después `ready/index` por ADR-069.
 - [x] Publicado Journal hub en `ffe5198` con `ready/index`, cuatro anchors
   seguros, `CollectionPage` + breadcrumb, sitemap 12, `llms.txt` 11 y QA
   responsive completo; los dos artículos pendientes permanecen sin links.

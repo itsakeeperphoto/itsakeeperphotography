@@ -42,7 +42,7 @@ export const SESSION_PACKAGES = {
     priceCents: 22_000,
     duration: "2 hours",
     locations: "1–3 locations",
-    outfits: "2–3 outfits",
+    outfits: "3 outfits",
     serviceIds: ["senior", "family", "newborn", "branding"] as const,
   },
   three: {
@@ -51,7 +51,7 @@ export const SESSION_PACKAGES = {
     priceCents: 33_000,
     duration: "Up to 3 hours",
     locations: "3–4 locations",
-    outfits: "3–4 outfits",
+    outfits: "4 outfits",
     serviceIds: ["senior", "family", "newborn", "branding"] as const,
   },
   headshot: {
@@ -71,7 +71,7 @@ export const PHOTO_COLLECTIONS = {
     name: "None",
     priceCents: 0,
     details: [] as const,
-    serviceIds: ["senior", "family", "newborn", "branding"] as const,
+    serviceIds: ["senior", "family", "newborn"] as const,
   },
   one: {
     id: "one",
@@ -81,7 +81,7 @@ export const PHOTO_COLLECTIONS = {
       "(15) 4x6 linen prints",
       "(15) retouched downloads",
     ] as const,
-    serviceIds: ["senior", "family", "newborn", "branding"] as const,
+    serviceIds: ["senior", "family", "newborn"] as const,
   },
   two: {
     id: "two",
@@ -91,7 +91,7 @@ export const PHOTO_COLLECTIONS = {
       "Mini 5x5 signature album (30 images)",
       "(30) retouched downloads",
     ] as const,
-    serviceIds: ["senior", "family", "newborn", "branding"] as const,
+    serviceIds: ["senior", "family", "newborn"] as const,
   },
   three: {
     id: "three",
@@ -102,7 +102,17 @@ export const PHOTO_COLLECTIONS = {
       "(100) retouched downloads",
       "(1) 8x10 leather-bound album (30 images)",
     ] as const,
-    serviceIds: ["senior", "family", "newborn", "branding"] as const,
+    serviceIds: ["senior", "family", "newborn"] as const,
+  },
+  brandingImages: {
+    id: "brandingImages",
+    name: "Branding images",
+    priceCents: 0,
+    details: [
+      "$75 per selected final image",
+      "Commercial usage included",
+    ] as const,
+    serviceIds: ["branding"] as const,
   },
   headshotGallery: {
     id: "headshotGallery",
@@ -120,13 +130,7 @@ export const SESSION_ADD_ONS = {
     id: "extraImage",
     name: "Extra retouched digital image",
     priceCents: 2_500,
-    serviceIds: ["senior", "family", "newborn", "branding"] as const,
-  },
-  extraOutfit: {
-    id: "extraOutfit",
-    name: "Additional outfit change",
-    priceCents: 2_000,
-    serviceIds: ["senior", "family", "newborn", "branding"] as const,
+    serviceIds: ["senior", "family", "newborn"] as const,
   },
   rush: {
     id: "rush",

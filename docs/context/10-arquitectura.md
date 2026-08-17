@@ -1,7 +1,7 @@
 # 10 — Arquitectura
 
 > Solo describe lo que existe y fue inspeccionado o construido con éxito el
-> 2026-08-14. Lo planeado está en `50-backlog.md`.
+> 2026-08-17. Lo planeado está en `50-backlog.md`.
 
 ## Stack
 
@@ -114,9 +114,9 @@
   `printImage` falta, `MeetLisa.astro` usa `portrait` como fallback. El hero
   conserva una fuente editorial en JSON y variantes art-directed preconstruidas
   para desktop y móvil.
-- `why.frontImage` usa `/uploads/7-640.webp`: es la variante versionada de la
-  misma fotografía después de retirar su JPG fuente, y cubre el marco máximo de
-  398 px sin modificar composición. `validate:tina` recorre referencias
+- `why.frontImage` usa
+  `/uploads/pasco-family-mother-children-golden-hour.jpg`, una fuente versionada
+  que sustituyó la referencia borrada a `7.jpg`. `validate:tina` recorre referencias
   `/uploads/...` de los 38 JSON y falla si una ruta no existe.
 - Reviews consume `homepage.kindWords`, las diez entradas `featured` de
   `content/testimonials/` y las seis páginas de `content/journal-pages/` desde
@@ -129,13 +129,16 @@
 
 - Servicios: Senior, Family, Newborn, Branding y Headshots.
 - Senior, Family, Newborn y Branding usan cobertura #ONE `$160`, #TWO `$220`
-  y #THREE `$330`, las colecciones generales y los add-ons confirmados.
+  y #THREE `$330`. En Seniors corresponden a 2, 3 y 4 outfits; cambiarse forma
+  parte del tiempo reservado y no tiene recargo.
 - Headshots usa su paquete propio de `$175 + tax`: 20–30 minutos, una descarga
   digital en alta resolución con uso comercial y galería online con compras
   adicionales. No hereda colecciones ni add-ons generales.
-- Colecciones generales: ninguna `$0`, #1 `$495.98`, #2 `$1,169.48`,
-  #3 `$1,799.99`.
-- Add-ons generales: imagen retocada `$25`, outfit `$20`, rush 48h `$75`.
+- Senior, Family y Newborn usan colecciones generales: ninguna `$0`, #1
+  `$495.98`, #2 `$1,169.48`, #3 `$1,799.99`. Branding selecciona después sus
+  imágenes finales a `$75` cada una con uso comercial incluido.
+- Add-ons generales: imagen retocada `$25` y rush 48h `$75`; no existe cobro
+  por outfit adicional.
 - En los cuatro servicios generales hay cinco personas incluidas y `$15` por
   persona adicional. Headshots individual incluye una persona; los equipos
   reciben cotización personalizada porque no existe tarifa confirmada.
@@ -550,23 +553,23 @@ repositorio.
   descarga en alta resolución, uso comercial y galería online; no inventa
   tarifa de equipo. También fija `ready/index`, fecha `2026-08-17`, membresía
   exacta en sitemap/`llms.txt` y ausencia del antiguo header release noindex.
-- Para Senior Timing fija el estado `draft/noindex`, metadata/canonical,
-  `og:type=article`, tres pendientes literales y exclusión de sitemap/`llms.txt`.
+- Para Senior Timing fija el estado `ready/index`, metadata/canonical,
+  `og:type=article`, fecha `2026-08-17` y membresía en sitemap/`llms.txt`.
   En el HTML exige 1 H1, 8 H2, 7 H3, cuatro anchors en orden, 11 imágenes con
   nueve alts informativos/dos vacíos decorativos, byline sin fecha, CTA local
   como botón, tres FAQ visibles y CSS aislado. Contrasta `Article`, `FAQPage` y
-  `BreadcrumbList` con el copy visible y prohíbe fechas, Q54, deadlines
-  distritales, `Service`, ratings, calle y geodatos inventados. Playwright cubre
+  `BreadcrumbList` con el copy visible y prohíbe deadlines distritales no
+  aportados, `Service`, ratings, calle y geodatos inventados. Playwright cubre
   1440/1200/900/390, foco, acordeones, reduced motion, crops, carga WebP,
   consola/red, overflow y ausencia de regresión de `og:type` en las 20 rutas.
-- Para Newborn Comparison fija el estado `draft/noindex`, title/description,
-  canonical, `og:type=article`, los tres pendientes literales y la exclusión de
+- Para Newborn Comparison fija el estado `ready/index`, title/description,
+  canonical, `og:type=article`, fecha `2026-08-17` y membresía en
   sitemap/`llms.txt`. En HTML exige 1 H1, 8 H2, 7 H3, tres anchors en orden,
   nueve fuentes únicas con siete alts informativos/dos decorativos, byline sin
   fecha, hero scroll como botón, tres FAQ visibles y CSS aislado. También
   compara todos los párrafos definitivos en su orden exacto y alinea un único
   `Article`, `FAQPage` y `BreadcrumbList` con el contenido visible, sin
-  `Service`, ratings, calle, geodatos, credenciales ni fechas. Playwright cubre
+  `Service`, ratings, calle, geodatos ni credenciales. Playwright cubre
   1440/1200/900/390; la revisión visual añade un spot-check a 1728 px.
 - Para Branding vs. Headshots fija `ready/index`, fecha `2026-08-11`,
   title/description/canonical, `og:type=article`, ausencia de header noindex y
@@ -585,19 +588,20 @@ repositorio.
   `lastModified: 2026-08-14`, ausencia de pendientes y membresía exacta en
   sitemap/`llms.txt`. En fuente y HTML exige cuatro guías visibles, anchors
   Locations → Branding vs. Headshots → Reviews → Contact, cero links a los
-  dos artículos draft, canonical exacta, un `CollectionPage` y un
-  `BreadcrumbList` Home → Journal. El mismo guard prohíbe que cualquier ruta
-  `ready/index` vuelva a enlazar Senior Timing o Newborn Comparison antes de su
-  publicación.
+  los artículos publicados, canonical exacta, un `CollectionPage` y un
+  `BreadcrumbList` Home → Journal.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para trece rutas:
+En `release`, el manifiesto actualmente permite sitemap para dieciocho rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
+- `/senior-photographer-tri-cities-wa/`
 - `/newborn-photographer-tri-cities-wa/`
+- `/branding-photographer-tri-cities-wa/`
 - `/headshot-photographer-tri-cities-wa/`
+- `/investment/`
 - `/about/`
 - `/reviews/`
 - `/contact/`
@@ -606,16 +610,14 @@ En `release`, el manifiesto actualmente permite sitemap para trece rutas:
 - `/pasco-wa-photographer/`
 - `/journal/`
 - `/journal/family-photo-locations-tri-cities/`
+- `/journal/when-to-book-senior-pictures-tri-cities/`
+- `/journal/in-home-vs-studio-newborn-photography/`
 - `/journal/branding-photos-vs-headshots/`
 
-`llms.txt` incluye Homepage, Family, Newborn, Headshots, About, Reviews, Contact,
-Richland, Kennewick, Pasco, Journal, Family Photo Locations y Branding vs.
-Headshots. Seniors, Branding, Investment, Senior Timing, Newborn Comparison y
-Privacy siguen
-`draft/noindex`.
-`/thank-you/` es noindex permanente. Los headers release de Journal deben
-enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
-también los artículos publicados. En
+`llms.txt` incluye exactamente las mismas dieciocho URLs, agrupadas en inicio,
+servicios, planificación, áreas locales y guías. Privacy sigue `draft/noindex`.
+`/thank-you/` es noindex permanente. No existe wildcard `/journal/*`, porque
+bloquearía los artículos publicados. En
 `staging`, sitemap queda sin URLs indexables y todo el sitio lleva noindex.
 `404.html` también es noindex permanente, no declara canonical ni schema y
 permanece fuera del manifest, sitemap y `llms.txt`; no se bloquea en
@@ -657,6 +659,13 @@ las seis respuestas visibles y `BreadcrumbList`. El precio se describe como
 ruta está `ready/index`, fechada `2026-08-17`, sin header release noindex y
 dentro de sitemap y `llms.txt`.
 
+Para Seniors y Branding, `Base.astro` emite `WebPage`; `[slug].astro` añade un
+`Service` enlazado a `#business`, `BreadcrumbList` y `FAQPage` derivado del
+copy visible. Branding no publica un `Offer` de sesión único: la cobertura se
+estima por separado y las imágenes finales se seleccionan a `$75` cada una con
+uso comercial. Investment emite `WebPage` y breadcrumb, sin convertir el
+estimador en `Offer` ni afirmar que las fotografías estén incluidas en el fee.
+
 Para Contact, `Base.astro` emite un único `ContactPage` enlazado al negocio y
 `[slug].astro` añade `BreadcrumbList` Home → Session Pricing Estimate. La ruta
 no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
@@ -672,20 +681,18 @@ en crawler outputs hasta levantar sus gates propios.
 Para Senior Timing, `Base.astro` emite `Article` con headline, author/publisher,
 imagen, `mainEntityOfPage`, `about` y cobertura Richland/Kennewick/Pasco;
 `journal/[slug].astro` añade `FAQPage` de tres respuestas visibles y
-`BreadcrumbList` Home → Journal → When to Take Senior Pictures. Ningún nodo
-contiene `datePublished`, `dateModified` o `lastModified` mientras `[FECHA]`
-siga pendiente. La frase distrital no demostrada y Q54 tampoco se exponen. La
-ruta conserva `draft/noindex`, su header release y exclusión de sitemap/llms.
+`BreadcrumbList` Home → Journal → When to Take Senior Pictures. Publica
+`datePublished` y `dateModified` `2026-08-17`; no publica fechas distritales no
+aportadas y dirige a comprobar el deadline de cada escuela. La ruta está
+`ready/index`, sin header release noindex y dentro de sitemap/`llms.txt`.
 
 Para Newborn Comparison, `Base.astro` emite un único `Article` y
 `journal/[slug].astro` lo enriquece con headline, `#lisa`, `#business`, imagen
 hero real, `mainEntityOfPage`, tema Newborn y cobertura
 Richland/Kennewick/Pasco. La ruta añade un único `FAQPage` derivado 1:1 de las
 tres preguntas visibles y `BreadcrumbList` Home → Journal → In-Home vs. Studio
-Newborn Photography. No contiene `datePublished`, `dateModified` ni
-`lastModified`: permanece `draft/noindex`, con header release y fuera de
-sitemap/`llms.txt` hasta resolver `[VALIDAR CON LISA]`,
-`[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`.
+Newborn Photography. Publica `datePublished` y `dateModified` `2026-08-17` y
+está `ready/index`, sin header release noindex y dentro de sitemap/`llms.txt`.
 
 Para Branding vs. Headshots, `Base.astro` emite un único `Article` y
 `journal/[slug].astro` lo enriquece con headline, `#lisa`, `#business`, fecha
