@@ -10,8 +10,8 @@
   "hero": {
     "tone": "earth",
     "heading": "Senior Pictures in the Tri-Cities, WA",
-    "scriptLine": "this year",
     "intro": "Relaxed, confident senior pictures in Richland, Kennewick and Pasco — planned around your style, shot across several locations in one golden-hour evening.",
+    "scriptLine": "this year",
     "image": "/uploads/senior-session-summer-light-richland.jpg",
     "imageAlt": "High school senior in golden evening light during senior pictures in the Tri-Cities, WA",
     "secondaryImage": "/uploads/autumn-senior-portrait-tricities.jpg",
@@ -29,52 +29,50 @@
       "kind": "prose",
       "tone": "sand",
       "heading": "This Year Only Happens Once",
-      "image": "/uploads/senior-portrait-golden-hour-richland.jpg",
-      "imageAlt": "High school senior in a black dress photographed in warm natural light in the Tri-Cities",
       "paragraphs": [
         "Senior year moves fast. School, games, applications, lasts of everything you didn't know were lasts.",
         "Your senior pictures are the one place where all of it slows down for an evening — who you are right now, before everything changes. And I take that seriously, because I've been photographing seniors in this valley for twenty years and I've watched a lot of them turn into adults.",
         "Here's what I've learned: the best senior pictures don't come from copying somebody else's Pinterest board. They come from your actual style, your actual personality, and a photographer who's paying attention."
-      ]
+      ],
+      "image": "/uploads/senior-portrait-golden-hour-richland.jpg",
+      "imageAlt": "High school senior in a black dress photographed in warm natural light in the Tri-Cities"
     },
     {
       "id": "not-photogenic",
       "kind": "split",
       "tone": "ivory",
       "heading": "\"I'm Not Photogenic\" — Let's Deal With That Now",
-      "image": "/uploads/autumn-senior-portrait-tricities.jpg",
-      "imageAlt": "High school senior in a black dress framed by autumn leaves in the Tri-Cities",
-      "secondaryImage": "/uploads/spring-portrait-blossoms-tricities.jpg",
-      "secondaryImageAlt": "High school senior photographed among spring blossoms in the Tri-Cities",
       "paragraphs": [
         "Almost every senior says some version of this before their session. \"I don't know how to pose.\" \"I don't know what to do with my hands.\" \"I always look weird in pictures.\"",
         "Then there's my favorite moment of every shoot: I turn the camera around and show you the back of it. Watching someone who was sure they weren't photogenic realize they absolutely are — that never gets old. Not after hundreds of sessions.",
         "You don't have to know how to pose. That's genuinely my job. I'll guide you the entire time with prompts, movement and a few things that will feel completely ridiculous. I will probably ask you to fake-laugh, and you'll feel silly, and then a real laugh comes out, and that's the frame you'll pick.",
         "You're hiring someone who's done this a long time. This is not my first rodeo — you just have to show up and have a good time."
-      ]
+      ],
+      "image": "/uploads/autumn-senior-portrait-tricities.jpg",
+      "imageAlt": "High school senior in a black dress framed by autumn leaves in the Tri-Cities",
+      "secondaryImage": "/uploads/about-story-senior-horse-tricities.jpg",
+      "secondaryImageAlt": "High school senior photographed with a horse in the Tri-Cities"
     },
     {
       "id": "several-locations-one-evening",
       "kind": "locations",
       "tone": "earth",
       "heading": "Several Locations, One Evening",
-      "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
-      "imageAlt": "High school senior photographed beside the river at golden hour in the Tri-Cities",
-      "secondaryImage": "/uploads/journal-senior-golden-hour-tricities.jpg",
-      "secondaryImageAlt": "Senior photographed in soft natural greenery during a Tri-Cities portrait session",
       "paragraphs": [
         "Senior sessions are my favorite thing to shoot, and part of the reason is that you can move. You're seventeen and you can get around, which means we're not stuck in one place.",
         "A typical session bounces between a few spots chosen for your style — open fields, the river, flower gardens, brick and murals downtown, sometimes even a coffee shop or a library if that's your vibe. I pick locations close enough together that we're not burning your session time in the car, because once the clock starts, the session has started. And the sun doesn't wait around for us.",
         "Green and lush, dry and moody, urban and edgy — we'll figure out which one is you before we ever meet."
-      ]
+      ],
+      "image": "/uploads/senior-riverside-golden-hour-tricities.jpg",
+      "imageAlt": "High school senior photographed beside the river at golden hour in the Tri-Cities",
+      "secondaryImage": "/uploads/journal-senior-golden-hour-tricities.jpg",
+      "secondaryImageAlt": "Senior photographed in soft natural greenery during a Tri-Cities portrait session"
     },
     {
       "id": "how-we-plan-yours",
       "kind": "steps",
       "tone": "olive",
       "heading": "How We Plan Yours",
-      "image": "/uploads/spring-portrait-blossoms-tricities.jpg",
-      "imageAlt": "Class of 2027 senior photographed among spring blossoms in the Tri-Cities",
       "items": [
         {
           "heading": "We talk first.",
@@ -100,23 +98,25 @@
             "Bring a friend, bring your mom, bring your dog. Bring music. Whatever makes you feel like yourself."
           ]
         }
-      ]
+      ],
+      "image": "/uploads/spring-portrait-blossoms-tricities.jpg",
+      "imageAlt": "Class of 2027 senior photographed among spring blossoms in the Tri-Cities"
     },
     {
       "id": "for-parents",
       "kind": "quote",
       "tone": "earth",
       "heading": "For Parents",
-      "image": "/uploads/senior-session-summer-light-richland.jpg",
-      "imageAlt": "A high school senior standing in a sunlit Tri-Cities field near the end of the day",
-      "secondaryImage": "/uploads/senior-portrait-golden-hour-richland.jpg",
-      "secondaryImageAlt": "High school senior in a black dress photographed at golden hour in Richland",
       "paragraphs": [
         "I know these photographs are for both of you.",
         "My promise: your senior will be guided, comfortable and safe the entire session, and the images will show the young adult you actually know — not a stiff, over-posed version of them.",
         "And then there's the part I can't fully prepare you for. I've sat across from a lot of parents seeing their senior's gallery for the first time, and their eyes fill up almost every time. Sometimes because their baby grew up. Sometimes because their child was finally captured the way they see them. Sometimes because of everything that kid walked through to get to this year.",
         "Many of the seniors I photograph now, I photographed when they were small. That's the part of twenty years in one town that I didn't see coming."
       ],
+      "image": "/uploads/senior-session-summer-light-richland.jpg",
+      "imageAlt": "A high school senior standing in a sunlit Tri-Cities field near the end of the day",
+      "secondaryImage": "/uploads/senior-portrait-golden-hour-richland.jpg",
+      "secondaryImageAlt": "High school senior in a black dress photographed at golden hour in Richland",
       "links": [
         {
           "label": "twenty years in one town",
@@ -129,15 +129,15 @@
       "kind": "prose",
       "tone": "ivory",
       "heading": "When to Book",
-      "image": "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
-      "imageAlt": "High school senior surrounded by flowers in warm evening light in the Tri-Cities",
-      "secondaryImage": "/uploads/review-charity-senior-golden-hour-tricities.jpg",
-      "secondaryImageAlt": "High school senior in a black dress photographed against a sunlit rocky landscape",
       "paragraphs": [
         "Most Tri-Cities seniors shoot the summer before senior year or early fall, ahead of yearbook deadlines. Spring of junior year works beautifully too and beats the rush entirely.",
         "Senior dates fill faster than anything else I photograph — summer evenings and October go first. Reach out four to six weeks before the date you want, and earlier for those windows.",
         "And if you're reading this thinking you've left it too late: you almost certainly haven't. The deadline is the yearbook's, not your photographs'."
       ],
+      "image": "/uploads/review-isabella-senior-golden-hour-tricities.jpg",
+      "imageAlt": "High school senior surrounded by flowers in warm evening light in the Tri-Cities",
+      "secondaryImage": "/uploads/review-charity-senior-golden-hour-tricities.jpg",
+      "secondaryImageAlt": "High school senior in a black dress photographed against a sunlit rocky landscape",
       "links": [
         {
           "label": "you've left it too late",
