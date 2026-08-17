@@ -9,18 +9,19 @@
 
 **Rama:** `main`
 
-**HEAD de inicio:** `976efaa` — `docs(context): record confirmed page publication`
+**HEAD funcional actual:** `e143163` — `fix(seo): remove stale noindex and link journal guides`
 **Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git:** corrección funcional, documentación y commit local pendientes
-al redactar este estado. No se hizo push, deploy ni mutación en Search Console.
+**Estado Git:** corrección funcional y memoria registradas en `e143163`; este
+cierre documental queda en un commit local separado. No se hizo push, deploy
+ni mutación en Search Console.
 
 ---
 
 ## Siguiente paso concreto
 
-Crear el commit local. Cuando William haga push y Netlify publique ese commit,
-verificar primero con `curl -I` que las 18 URLs indexables no reciban
+Cuando William haga push y Netlify publique `e143163`, verificar primero con
+`curl -I` que las 18 URLs indexables no reciban
 `X-Robots-Tag: noindex`; después usar URL Inspection live test y solicitar
 indexación para las rutas que Google había bloqueado.
 
@@ -74,6 +75,7 @@ indexación para las rutas que Google había bloqueado.
 
 ## Operación Git
 
-- Crear solo commit local; el usuario prohibió push desde el agente.
+- Commit funcional local: `e143163`; el cierre documental se registra aparte.
+- El usuario prohibió push desde el agente.
 - No ejecutar `./scripts/handoff.sh` porque incluye push.
 - No preparar `.handoff/sessions/*.jsonl` para commit.

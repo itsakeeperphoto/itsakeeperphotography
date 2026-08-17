@@ -1617,5 +1617,7 @@
   headers release y `validate:site` PASS 20/20; Journal contiene los seis hrefs
   esperados y no quedan reglas noindex para rutas publicables. El wrapper Tina
   completo no abrió otro servidor porque el proceso del usuario ocupa `:9000`.
-- **Git/operación:** commit local pendiente al redactar esta entrada. No se hizo
-  push, deploy, Search Console ni `./scripts/handoff.sh`.
+- **Git/operación:** implementación y memoria funcional en `e143163`
+  (`fix(seo): remove stale noindex and link journal guides`), con cierre
+  documental local separado. No se hizo push, deploy, Search Console ni
+  `./scripts/handoff.sh`.
