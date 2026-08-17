@@ -227,7 +227,7 @@ export const pageManifest = [
     schemaType: "CollectionPage",
     sitemap: true,
     llms: true,
-    lastModified: "2026-08-14",
+    lastModified: "2026-08-17",
     primaryRoute: true,
     signature: "overlap",
     title: "Photography Journal | Tips & Locations From Lisa",

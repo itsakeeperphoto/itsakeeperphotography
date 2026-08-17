@@ -40,14 +40,16 @@ const requireGuide = (heading: string): PageItem => {
 };
 
 const featuredGuide = requireGuide(
-  "12 Best Places to Take Pictures in the Tri-Cities, WA",
+  "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
 );
 const seniorGuide = requireGuide(
-  "When to Take Senior Pictures: A Tri-Cities Timeline",
+  "When to Take Senior Pictures: A Photographer's Timeline",
 );
-const newbornGuide = requireGuide("In-Home vs. Studio Newborn Photography");
+const newbornGuide = requireGuide(
+  "In-Home vs. Studio Newborn Photography: How to Choose",
+);
 const brandingGuide = requireGuide(
-  "Branding Photos vs. Headshots: What Your Business Actually Needs",
+  "Branding Photos vs. Headshots: What's the Difference?",
 );
 const featuredHref = featuredGuide.links?.[0]?.href;
 if (!featuredHref) {
@@ -66,6 +68,7 @@ const guideCards: JournalGuide[] = [
     item: newbornGuide,
     image: "/uploads/family-newborn-at-home-tricities.jpg",
     imageAlt: "A family together with their newborn at home.",
+    href: newbornGuide.links?.[0]?.href,
     shape: "arch",
   },
   {

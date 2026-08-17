@@ -125,7 +125,8 @@
   `ready/index`, añade `CollectionPage` + breadcrumb, conserva cuatro cards y
   originalmente expuso Locations, Branding vs. Headshots, Portfolio y Contact.
   ADR-061 sustituyó Portfolio por Reviews y actualizó la fecha a `2026-08-14`;
-  el estado vigente valida 20/20 y crawler outputs 12/12.
+  ADR-070 enlazó después las cuatro guías publicadas, actualizó la fecha a
+  `2026-08-17` y dejó crawler outputs 18/18.
 - [x] **19D.1. Rediseñar y publicar Reviews según ADR-058.** La ruta usa
   `ReviewsPage`, el hero compartido, `KindWords` exacto y `JournalBook`;
   conserva diez testimonios atribuidos y schema sobrio. El follow-up ADR-059
@@ -183,9 +184,8 @@
   un envío nativo controlado hacia Thank-you; registrar solo recepción y
   navegación, sin guardar PII en git.
 - [ ] En Journal, confirmar canonical/index, `CollectionPage` + breadcrumb,
-  `lastModified: 2026-08-14`, membresía única en sitemap/`llms.txt`, cuatro
-  anchors Locations/Branding/Reviews/Contact y las cards de Senior Timing y
-  Newborn Comparison ya publicadas.
+  `lastModified: 2026-08-17`, membresía única en sitemap/`llms.txt` y seis
+  anchors Locations/Senior Timing/Newborn Comparison/Branding/Reviews/Contact.
 - [ ] En el mismo deploy, comprobar que Branding y Headshots responden
   200/index, aparecen una vez en sitemap/`llms.txt`, conservan media responsive
   y schema confirmado; Branding debe publicar `$75` por imagen con uso comercial.
@@ -375,11 +375,14 @@ sin reemplazar el archivo.
 
 ### Journal
 
-- [x] Hub publicado `ready/index` en `ffe5198`, `lastModified: 2026-08-14`,
-  `CollectionPage` + breadcrumb y crawler outputs 12/12. Conserva cuatro cards,
-  pero solo enlaza Locations y Branding vs. Headshots; Reviews y Contact
-  completan los cuatro anchors. Senior Timing y Newborn Comparison se
-  publicaron después mediante ADR-069.
+- [x] Hub publicado `ready/index` en `ffe5198`; actualizado el 2026-08-17 para
+  enlazar sus cuatro guías publicadas con títulos coherentes con cada destino.
+  Conserva `CollectionPage` + breadcrumb, seis anchors editoriales y crawler
+  outputs 18/18.
+- [ ] Después del próximo deploy, comprobar con `curl -I` y URL Inspection que
+  las 18 URLs indexables ya no reciben `X-Robots-Tag: noindex`; solicitar
+  indexación primero para Seniors, Branding, Investment, Senior Timing y
+  Newborn Comparison.
 - [x] Fecha editorial para Branding Photos vs Headshots: `2026-08-11`.
 - [x] Fecha editorial para Family Photo Locations: `2026-08-08`.
 - [ ] Mejora opcional: datos de distritos/fechas escolares para Senior Timing,
@@ -875,7 +878,8 @@ sin reemplazar el archivo.
   publicado después `ready/index` por ADR-069.
 - [x] Publicado Journal hub en `ffe5198` con `ready/index`, cuatro anchors
   seguros, `CollectionPage` + breadcrumb, sitemap 12, `llms.txt` 11 y QA
-  responsive completo; los dos artículos pendientes permanecen sin links.
+  responsive completo. ADR-070 añadió después los links de Senior Timing y
+  Newborn Comparison ya publicados y elevó el contrato vigente a seis anchors.
 - [x] Rediseñado y publicado Reviews con dirección `Words Become Pictures`,
   hero compartido, diez testimonios, `JournalBook`, un único CTA, sitemap 13,
   `llms.txt` 12 y QA responsive/accesible completo.

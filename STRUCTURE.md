@@ -39,7 +39,7 @@ entry when that date is missing.
 | `/richland-wa-photographer/` | Service area | 2026-08-17 |
 | `/kennewick-wa-photographer/` | Service area | 2026-08-17 |
 | `/pasco-wa-photographer/` | Service area | 2026-08-17 |
-| `/journal/` | Journal collection | 2026-08-14 |
+| `/journal/` | Journal collection | 2026-08-17 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/journal/when-to-book-senior-pictures-tri-cities/` | Article | 2026-08-17 |
 | `/journal/in-home-vs-studio-newborn-photography/` | Article | 2026-08-17 |
@@ -77,7 +77,7 @@ threshold. Each must retain genuinely city-specific content before it is approve
 ### Journal
 
 - `/journal/` — ready and indexable as a `CollectionPage`, last modified
-  `2026-08-14`
+  `2026-08-17`; links all four published guides
 - `/journal/family-photo-locations-tri-cities/` — ready and indexable
 - `/journal/when-to-book-senior-pictures-tri-cities/` — ready and indexable;
   it tells readers to check their own school deadline and does not publish
@@ -143,7 +143,7 @@ The Journal hub publication contract preserves the existing overlap signature
 and four-card editorial sequence. It emits exactly one canonical
 `CollectionPage` and one `BreadcrumbList` Home → Journal, not an `Article` or
 `Service`. Senior Timing and Newborn Comparison are now approved destinations.
-Release includes the hub once with `lastmod` `2026-08-14`; staging keeps the
+Release includes the hub once with `lastmod` `2026-08-17`; staging keeps the
 complete 20-route surface noindex and its sitemap empty.
 
 The Newborn Comparison release contract renders one dated `Article`, one FAQ
@@ -170,5 +170,5 @@ Before adding a route to the release sitemap:
 2. Mark the content file and `src/lib/page-manifest.ts` entry as `ready` and `index`.
 3. Add the date of the last substantial page change as `lastModified`.
 4. Remove its route-specific `X-Robots-Tag` noindex rule from
-   `config/netlify-headers/release`.
+   `config/netlify-headers/release` and sync the root `release` mirror.
 5. Run a release build and `SITE_MODE=release npm run validate:site`.

@@ -11,52 +11,16 @@
   X-Robots-Tag: noindex, nofollow, noarchive
   Cache-Control: no-store
 
-/api/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/sitemap.xml
-  Cache-Control: public, max-age=0, s-maxage=3600
-
 /thank-you/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
+/404.html
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/404/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
 /privacy/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/senior-photographer-tri-cities-wa/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/newborn-photographer-tri-cities-wa/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/branding-photographer-tri-cities-wa/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/headshot-photographer-tri-cities-wa/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/investment/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/about/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/reviews/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/contact/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/richland-wa-photographer/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/kennewick-wa-photographer/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/pasco-wa-photographer/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/journal/*
   X-Robots-Tag: noindex, nofollow, noarchive
 
 /_astro/*

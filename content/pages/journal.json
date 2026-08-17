@@ -20,29 +20,41 @@
       "heading": "Planning Guides",
       "items": [
         {
-          "heading": "12 Best Places to Take Pictures in the Tri-Cities, WA",
+          "heading": "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
           "detail": "Where the light falls in Richland, Kennewick and Pasco, from a photographer who's chased it for twenty years.",
           "links": [
             {
-              "label": "12 Best Places to Take Pictures in the Tri-Cities, WA",
+              "label": "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
               "href": "/journal/family-photo-locations-tri-cities/"
             }
           ]
         },
         {
-          "heading": "When to Take Senior Pictures: A Tri-Cities Timeline",
-          "detail": "The honest answer to \"is it too late?\", plus the booking calendar nobody tells you about."
+          "heading": "When to Take Senior Pictures: A Photographer's Timeline",
+          "detail": "The honest answer to \"is it too late?\", plus the booking calendar nobody tells you about.",
+          "links": [
+            {
+              "label": "When to Take Senior Pictures: A Photographer's Timeline",
+              "href": "/journal/when-to-book-senior-pictures-tri-cities/"
+            }
+          ]
         },
         {
-          "heading": "In-Home vs. Studio Newborn Photography",
-          "detail": "An honest comparison to help you choose what's right for your family's first days."
+          "heading": "In-Home vs. Studio Newborn Photography: How to Choose",
+          "detail": "An honest comparison to help you choose what's right for your family's first days.",
+          "links": [
+            {
+              "label": "In-Home vs. Studio Newborn Photography: How to Choose",
+              "href": "/journal/in-home-vs-studio-newborn-photography/"
+            }
+          ]
         },
         {
-          "heading": "Branding Photos vs. Headshots: What Your Business Actually Needs",
+          "heading": "Branding Photos vs. Headshots: What's the Difference?",
           "detail": "The difference, the overlap, and how to decide where to start.",
           "links": [
             {
-              "label": "Branding Photos vs. Headshots: What Your Business Actually Needs",
+              "label": "Branding Photos vs. Headshots: What's the Difference?",
               "href": "/journal/branding-photos-vs-headshots/"
             }
           ]

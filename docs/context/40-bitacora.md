@@ -1599,3 +1599,23 @@
   (`feat(seo): publish confirmed service and guide pages`), con cierre
   documental local separado. No se hizo push, deploy, Search Console ni
   `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Noindex HTTP corregido y cuatro guías enlazadas
+
+- **Objetivo:** resolver el bloqueo reportado por URL Inspection y completar la
+  descubribilidad interna de los artículos publicados.
+- **Diagnóstico:** producción respondía 200 y HTML `ready/index`, pero añadía
+  `X-Robots-Tag: noindex` a Seniors, Branding, Investment y otras rutas. El
+  header coincidía con el mirror raíz `release`, desactualizado frente a la
+  configuración vigente. Journal solo enlazaba Locations y Branding y mostraba
+  un título Locations distinto al destino.
+- **Implementación:** se sincronizaron `release`/`staging` con sus fuentes de
+  `config/netlify-headers`, se añadió guard byte-identical, se enlazaron Senior
+  Timing y Newborn Comparison desde Journal y Footer, se alinearon los cuatro
+  títulos y el hub pasó a `lastModified: 2026-08-17`.
+- **QA:** `validate:tina` PASS 5/38/20/19; Astro release prerenderizó 20 rutas;
+  headers release y `validate:site` PASS 20/20; Journal contiene los seis hrefs
+  esperados y no quedan reglas noindex para rutas publicables. El wrapper Tina
+  completo no abrió otro servidor porque el proceso del usuario ocupa `:9000`.
+- **Git/operación:** commit local pendiente al redactar esta entrada. No se hizo
+  push, deploy, Search Console ni `./scripts/handoff.sh`.

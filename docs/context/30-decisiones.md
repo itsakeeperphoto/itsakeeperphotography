@@ -1769,3 +1769,31 @@
   dos artículos añaden fechas reales. Contact calcula Branding sin fingir que
   la compra posterior por imagen está incluida en el total. Staging/release y
   la auditoría JSON-LD pasan; no se hizo push, deploy ni Search Console.
+
+### ADR-070 — Los headers desplegables y el Journal siguen el estado de publicación
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada; corrige el drift operativo posterior a ADR-069.
+- **Contexto:** Google URL Inspection confirmó que Seniors, Branding e
+  Investment seguían recibiendo `X-Robots-Tag: noindex` aunque su HTML ya
+  declaraba `ready/index` y `meta robots` indexable. El dominio principal `www`
+  y los canonicals ya estaban corregidos. La respuesta HTTP de producción
+  coincidía con un mirror raíz `release` que conservaba gates antiguos, mientras
+  `config/netlify-headers/release` ya estaba actualizado. El hub Journal también
+  conservaba dos cards sin enlace y un título Locations distinto al destino.
+- **Decisión:** Mantener los archivos raíz `release` y `staging` como mirrors
+  byte-identical de `config/netlify-headers/*` y hacer que `validate:site` falle
+  si divergen. Release solo aplicará noindex a Admin, Tina Island, Thank-you,
+  Privacy y 404. Enlazar desde Journal y Footer las cuatro guías publicadas y
+  alinear los títulos de las cards con sus páginas; fechar el cambio del hub
+  como `2026-08-17`.
+- **Alternativas descartadas:** Esperar a que Search Console olvidara el header,
+  declarar `index` en otro header para competir con `noindex`, ocultar las dos
+  guías ya publicadas o cambiar sus canonicals se descartó porque Google obedece
+  cualquier `noindex`, las señales duplicadas son ambiguas y las rutas ya están
+  aprobadas.
+- **Consecuencias:** El artefacto release local contiene 18 URLs indexables sin
+  reglas HTTP noindex, Journal expone seis anchors editoriales y el sitemap
+  actualiza el hub. Tras el próximo deploy todavía se debe ejecutar una prueba
+  en vivo y solicitar indexación; un commit local no modifica la cabecera que
+  Google ve. No se hizo push.

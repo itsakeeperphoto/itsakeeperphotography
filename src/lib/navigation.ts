@@ -22,6 +22,8 @@ export const footerNavigation = {
   ],
   guides: [
     { label: "Family Photo Locations", href: "/journal/family-photo-locations-tri-cities/" },
+    { label: "When to Take Senior Pictures", href: "/journal/when-to-book-senior-pictures-tri-cities/" },
+    { label: "In-Home vs Studio Newborn", href: "/journal/in-home-vs-studio-newborn-photography/" },
     { label: "Branding Photos vs Headshots", href: "/journal/branding-photos-vs-headshots/" },
   ],
   places: [

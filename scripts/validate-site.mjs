@@ -29,6 +29,26 @@ const htmlFiles = (await collectHtml(output)).filter(
   (file) => !file.includes(`${path.sep}admin${path.sep}`)
 );
 const failures = [];
+const releaseHeaderConfig = await readFile(
+  path.join(root, "config", "netlify-headers", "release"),
+  "utf8",
+);
+const releaseHeaderMirror = await readFile(path.join(root, "release"), "utf8");
+const stagingHeaderConfig = await readFile(
+  path.join(root, "config", "netlify-headers", "staging"),
+  "utf8",
+);
+const stagingHeaderMirror = await readFile(path.join(root, "staging"), "utf8");
+if (releaseHeaderConfig !== releaseHeaderMirror) {
+  failures.push(
+    "release: root compatibility mirror must exactly match config/netlify-headers/release",
+  );
+}
+if (stagingHeaderConfig !== stagingHeaderMirror) {
+  failures.push(
+    "staging: root compatibility mirror must exactly match config/netlify-headers/staging",
+  );
+}
 const imageSeoManifest = validateImageSeoManifest(
   JSON.parse(
     await readFile(
@@ -971,23 +991,27 @@ const journalPlanningGuides = journalHubSource.sections
 const journalGuideByHeading = (heading) =>
   journalPlanningGuides?.items?.find((item) => item.heading === heading);
 const journalLocationsGuide = journalGuideByHeading(
-  "12 Best Places to Take Pictures in the Tri-Cities, WA",
+  "Where to Take Photos in the Tri-Cities: A Photographer's Guide",
 );
 const journalSeniorGuide = journalGuideByHeading(
-  "When to Take Senior Pictures: A Tri-Cities Timeline",
+  "When to Take Senior Pictures: A Photographer's Timeline",
 );
 const journalNewbornGuide = journalGuideByHeading(
-  "In-Home vs. Studio Newborn Photography",
+  "In-Home vs. Studio Newborn Photography: How to Choose",
 );
 const journalBrandingGuide = journalGuideByHeading(
-  "Branding Photos vs. Headshots: What Your Business Actually Needs",
+  "Branding Photos vs. Headshots: What's the Difference?",
 );
 if (
   journalLocationsGuide?.links?.length !== 1 ||
   journalLocationsGuide.links[0]?.href !==
     "/journal/family-photo-locations-tri-cities/" ||
-  (journalSeniorGuide?.links?.length ?? 0) !== 0 ||
-  (journalNewbornGuide?.links?.length ?? 0) !== 0 ||
+  journalSeniorGuide?.links?.length !== 1 ||
+  journalSeniorGuide.links[0]?.href !==
+    "/journal/when-to-book-senior-pictures-tri-cities/" ||
+  journalNewbornGuide?.links?.length !== 1 ||
+  journalNewbornGuide.links[0]?.href !==
+    "/journal/in-home-vs-studio-newborn-photography/" ||
   journalBrandingGuide?.links?.length !== 1 ||
   journalBrandingGuide.links[0]?.href !==
     "/journal/branding-photos-vs-headshots/" ||
@@ -997,7 +1021,7 @@ if (
   journalHubSource.finalCta?.link?.href !== "/contact/"
 ) {
   failures.push(
-    "content/pages/journal.json: Journal must link only Locations, Branding vs. Headshots, Reviews and Contact; draft Senior/Newborn cards must have no links",
+    "content/pages/journal.json: Journal must link all four published guides, Reviews and Contact",
   );
 }
 const serviceMediaContracts = new Map([
@@ -1714,6 +1738,8 @@ for (const file of htmlFiles) {
       : "https://itsakeeperphotography.netlify.app";
     const expectedJournalAnchors = [
       "/journal/family-photo-locations-tri-cities/",
+      "/journal/when-to-book-senior-pictures-tri-cities/",
+      "/journal/in-home-vs-studio-newborn-photography/",
       "/journal/branding-photos-vs-headshots/",
       "/reviews/",
       "/contact/",
@@ -1723,7 +1749,7 @@ for (const file of htmlFiles) {
       unpublishedJournalPaths.some((href) => internalAnchors.includes(href))
     ) {
       failures.push(
-        `${relative}: Journal body anchors must be Locations, Branding vs. Headshots, Reviews and Contact only; draft articles must expose zero anchors`,
+        `${relative}: Journal body anchors must include all four published guides, Reviews and Contact`,
       );
     }
     if (
@@ -3937,13 +3963,13 @@ if (
   !/schemaType:\s*"CollectionPage"/.test(journalHubManifestBlock) ||
   !/sitemap:\s*true/.test(journalHubManifestBlock) ||
   !/llms:\s*true/.test(journalHubManifestBlock) ||
-  !/lastModified:\s*"2026-08-14"/.test(journalHubManifestBlock) ||
+  !/lastModified:\s*"2026-08-17"/.test(journalHubManifestBlock) ||
   !/title:\s*"Photography Journal \| Tips & Locations From Lisa"/.test(
     journalHubManifestBlock,
   )
 ) {
   failures.push(
-    "page-manifest.ts: Journal hub must retain ready/index CollectionPage gates, exact title and 2026-08-14 lastModified",
+    "page-manifest.ts: Journal hub must retain ready/index CollectionPage gates, exact title and 2026-08-17 lastModified",
   );
 }
 const reviewsManifestBlock = runtimeManifestSource.match(
@@ -4832,8 +4858,8 @@ if (mode === "staging") {
   const journalHubSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
   )?.[0] || "";
-  if (!/<lastmod>2026-08-14<\/lastmod>/.test(journalHubSitemapEntry)) {
-    failures.push("sitemap.xml: Journal hub lastmod must be 2026-08-14");
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(journalHubSitemapEntry)) {
+    failures.push("sitemap.xml: Journal hub lastmod must be 2026-08-17");
   }
   const brandingHeadshotsSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/branding-photos-vs-headshots\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,

@@ -209,13 +209,13 @@ Componentes especializados existentes:
 - `RichlandPage.astro`, `KennewickPage.astro`, `PascoPage.astro`
 - `ContentPage.astro` como fallback genérico de Privacy.
 
-`JournalPage.astro` conserva la firma visual `overlap` y cuatro cards, pero el
-hub publicado expone solo cuatro anchors seguros: Locations Guide, Branding vs.
-Headshots, Reviews y Contact. Senior Timing y Newborn Comparison conservan
-título y extracto sin link mientras sigan `draft/noindex`. El footer tampoco
-enlaza esos artículos y Newborn mantiene su copy relacionado sin convertirlo
-en anchor. El manifiesto del hub usa `ready/index`, `CollectionPage`,
-`sitemap: true`, `llms: true` y `lastModified: 2026-08-14`.
+`JournalPage.astro` conserva la firma visual `overlap` y cuatro cards. Las
+cuatro guías publicadas —Locations, Senior Timing, Newborn Comparison y
+Branding vs. Headshots— enlazan su canonical desde el hub y el footer; Reviews
+y Contact completan los anchors editoriales del hub. Los títulos de las cards
+coinciden con el título público de cada destino. El manifiesto del hub usa
+`ready/index`, `CollectionPage`, `sitemap: true`, `llms: true` y
+`lastModified: 2026-08-17`.
 
 `EditorialHero.astro` materializa la estructura de hero basada en Seniors y es
 compartido por varias páginas especializadas, incluidas Kennewick y Pasco. Su frase
@@ -504,6 +504,10 @@ repositorio.
 - `astro.config.mjs` rechaza combinaciones incoherentes de modo/contexto y elige
   adaptador Netlify, Vercel o Node; la salida pública es estática.
 - `scripts/install-netlify-headers.mjs` instala el set de headers correcto.
+  Los archivos raíz `release` y `staging` son mirrors de compatibilidad y deben
+  coincidir byte por byte con `config/netlify-headers/release` y
+  `config/netlify-headers/staging`; `validate:site` bloquea cualquier drift para
+  impedir que reaparezcan headers `noindex` de una etapa editorial anterior.
 - `scripts/validate-site.mjs` valida las 20 rutas editoriales y, por separado,
   el artefacto `404.html`, canonicals, crawler outputs,
   formularios, placeholders, enlaces internos rotos y gates de publicación.
@@ -585,11 +589,11 @@ repositorio.
   costura `VS` vertical 900–1728/horizontal 390, cero overflow/runtime,
   Impeccable `[]` y revisión independiente sin P1/P2.
 - Para Journal fija estado `ready/index`, metadata exacta, firma `overlap`,
-  `lastModified: 2026-08-14`, ausencia de pendientes y membresía exacta en
-  sitemap/`llms.txt`. En fuente y HTML exige cuatro guías visibles, anchors
-  Locations → Branding vs. Headshots → Reviews → Contact, cero links a los
-  los artículos publicados, canonical exacta, un `CollectionPage` y un
-  `BreadcrumbList` Home → Journal.
+  `lastModified: 2026-08-17`, ausencia de pendientes y membresía exacta en
+  sitemap/`llms.txt`. En fuente y HTML exige cuatro guías visibles y enlazadas
+  en orden: Locations → Senior Timing → Newborn Comparison → Branding vs.
+  Headshots → Reviews → Contact; también exige canonical exacta, un
+  `CollectionPage` y un `BreadcrumbList` Home → Journal.
 
 ## SEO/indexación actual
 
