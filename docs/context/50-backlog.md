@@ -6,6 +6,12 @@
 
 ## Ahora — siguiente operación y ruta hacia producción
 
+- [x] **0. Reparar el build Netlify del 2026-08-17.** Homepage dejó de apuntar
+  a la variante ignorada `7-640.webp`, usa una fotografía vertical versionada
+  y conserva su composición. Los seis JPEG que bloqueaban el gate de fuentes
+  quedaron optimizados sin recorte; Tina, Astro, headers y 20/20 rutas pasan.
+  Falta únicamente publicar el commit y confirmar el deploy remoto.
+
 - [x] **1. Resolver la divergencia Git anterior.** Al cerrar la implementación
   visual, `main...origin/main` coincide en `c663d68`. Política vigente del
   usuario: Codex crea commits locales y no ejecuta pushes.

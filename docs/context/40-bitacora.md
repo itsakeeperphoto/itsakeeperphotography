@@ -1524,3 +1524,20 @@
 - **Git/operación:** implementación en `dbc8371`
   (`fix(cms): repair deleted homepage media reference`) y cierre documental
   local separado. No se hizo push, deploy ni `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Build Netlify reparado en clon limpio
+
+- **Objetivo:** diagnosticar el log del deploy fallido y dejar el pipeline listo
+  sin restaurar `7.jpg`, alterar el diseño ni ejecutar push.
+- **Diagnóstico:** `validate:tina` veía localmente `7-640.webp`, pero la variante
+  está ignorada y no existe en un clon limpio. Al resolverla apareció el gate
+  pendiente de seis JPEG fuente con dimensiones superiores a 2400 px.
+- **Implementación:** Homepage usa la fotografía vertical versionada
+  `pasco-family-mother-children-golden-hour.jpg` con alt literal. El optimizador
+  oficial redujo proporcionalmente seis JPEG de 8.82 a 2.60 MiB, sin recorte.
+- **QA:** Tina PASS 5/38/20/19; fuentes PASS ≤2400 px/700 KiB; Tina/Astro en
+  4002/9001 construyó las 20 rutas; headers y `validate:site` staging 20/20.
+  El build cloud local solo carece de secretos, presentes en el log de Netlify.
+- **Git/operación:** implementación en `a1e9b1b`
+  (`fix(build): repair homepage media and image sources`) y cierre documental
+  local separado. No se hizo push, deploy ni `./scripts/handoff.sh`.
