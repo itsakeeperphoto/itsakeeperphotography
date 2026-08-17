@@ -1555,3 +1555,21 @@
 - **Git/operación:** implementación en `059cb93`
   (`fix(reviews): preserve Christina portrait crop on mobile`) y cierre
   documental local separado. No se hizo push ni `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Build Tina/Astro separado para Netlify
+
+- **Objetivo:** resolver el segundo deploy fallido, código 137 durante el
+  empaquetado de la función SSR, sin retirar Tina ni degradar publicación.
+- **Diagnóstico:** Tina, imágenes y 20 rutas pasaron; Netlify mató el proceso
+  padre mientras Astro continuó y completó la función. Astro con el adaptador
+  Netlify aislado terminó localmente, confirmando un pico conjunto de memoria.
+- **Implementación:** `build` y `build:local` ya no usan `tinacms ... -c`.
+  Tina genera cliente/admin, termina y libera su servidor; después Astro inicia.
+  Se conservan contenido local/cloud checks en deploy, modo local, assets,
+  headers y validadores. ADR-068 fija el contrato.
+- **QA:** Tina separada salió 0; Astro production con adaptador Netlify generó
+  20 rutas y SSR Function en 31.52 s; headers release, Tina 5/38/20/19,
+  `validate:site` 20/20 y diff pasan.
+- **Git/operación:** implementación/arquitectura/ADR en `8045e79`
+  (`fix(build): separate Tina and Astro phases`) y cierre documental local
+  separado. No se hizo push, deploy ni `./scripts/handoff.sh`.

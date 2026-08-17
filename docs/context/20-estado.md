@@ -3,14 +3,14 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 16:20 -05
+**Última actualización:** 2026-08-17 16:40 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional actual:** `059cb93` —
-`fix(reviews): preserve Christina portrait crop on mobile`
+**HEAD funcional actual:** `8045e79` —
+`fix(build): separate Tina and Astro phases`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
@@ -25,9 +25,10 @@ de `origin/main`. No se hizo push, deploy, Search Console ni mutación externa.
 
 ## Siguiente paso concreto
 
-William publica los commits cuando lo decida. Después se verifica Homepage y
-Reviews en móvil, un guardado controlado desde Tina, Headshots 200/index,
-GA4/Clarity y el sitemap antes de enviarlo a Search Console.
+William publica los commits cuando lo decida y reintenta el deploy de Netlify.
+Después se verifica Homepage y Reviews en móvil, un guardado controlado desde
+Tina, Headshots 200/index, GA4/Clarity y el sitemap antes de enviarlo a Search
+Console.
 
 ## Resultado funcional
 
@@ -46,6 +47,10 @@ GA4/Clarity y el sitemap antes de enviarlo a Search Console.
 - La tarjeta de Christina Bergstrom comparte ahora un identificador estable y,
   solo hasta 767 px, ancla su fotografía al borde superior. La cabeza queda
   visible en Home y Reviews sin cambiar dimensiones, orden ni otras reseñas.
+- El segundo deploy llegó a construir todas las rutas, pero Netlify terminó el
+  padre Tina con código 137 mientras Astro trazaba la función SSR. Tina y Astro
+  ahora son comandos consecutivos: Tina termina/libera memoria antes de que
+  comience `astro build`; se conservan todos los gates y outputs anteriores.
 
 ## QA ejecutada
 
@@ -61,6 +66,11 @@ GA4/Clarity y el sitemap antes de enviarlo a Search Console.
 - Playwright 390×844 — PASS en `/` y `/reviews/`: fuente WebP 400 cargada,
   `object-position: 50% 0%`, cabeza visible y overflow horizontal 0.
 - Detector Impeccable sobre componente/CSS — PASS `[]`.
+- Tina sin subcomando, puertos 4002/9001 — PASS y salida 0; el proceso cerró su
+  servidor antes de Astro.
+- Astro con `NETLIFY=true`, contexto production y adaptador real — PASS: 20
+  rutas, `Generated SSR Function` y salida 0 en 31.52 s.
+- Headers release + `validate:site` — PASS 20/20.
 - `npm run build` local llega hasta TinaCloud; no puede completar sin
   `TINA_PUBLIC_CLIENT_ID`/`TINA_TOKEN`. El log de Netlify confirma que esas
   variables sí están configuradas en el entorno remoto.
@@ -68,7 +78,8 @@ GA4/Clarity y el sitemap antes de enviarlo a Search Console.
 ## Bloqueadores y pendientes operativos
 
 - No queda un bloqueo de código conocido para el siguiente deploy. Falta que el
-  usuario publique los commits y Netlify ejecute el pipeline con sus secretos.
+  usuario publique los commits y Netlify confirme el pipeline secuencial con
+  sus secretos y límites reales.
 - Realtime de GA4/Clarity, canonicals/headers y Search Console se verifican
   después de publicar.
 - Las páginas pendientes de confirmación siguen siendo Seniors, Branding,
@@ -77,7 +88,7 @@ GA4/Clarity y el sitemap antes de enviarlo a Search Console.
 
 ## Operación Git
 
-- Commit funcional actual: `059cb93`.
+- Commit funcional actual: `8045e79`.
 - Estado, backlog y bitácora forman el commit documental de cierre.
 - No se ejecuta `./scripts/handoff.sh` porque hace push y el usuario autorizó
   commits locales, no pushes.
