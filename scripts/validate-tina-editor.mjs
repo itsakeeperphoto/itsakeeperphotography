@@ -44,6 +44,20 @@ const expectedInventory = {
   "content/testimonials": 11,
 };
 
+const contentDirectories = Object.keys(expectedInventory);
+for (const directory of contentDirectories) {
+  for (const filename of jsonFiles(directory)) {
+    const relativePath = `${directory}/${filename}`;
+    const source = read(relativePath);
+    for (const match of source.matchAll(/"(\/uploads\/[^"]+)"/g)) {
+      const mediaPath = match[1];
+      if (!fs.existsSync(path.join(root, "public", mediaPath.replace(/^\//, "")))) {
+        fail(`${relativePath}: referenced media does not exist (${mediaPath}).`);
+      }
+    }
+  }
+}
+
 for (const [directory, expectedCount] of Object.entries(expectedInventory)) {
   const actualCount = jsonFiles(directory).length;
   if (actualCount !== expectedCount) {
