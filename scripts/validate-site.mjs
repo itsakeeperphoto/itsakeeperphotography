@@ -507,6 +507,7 @@ const indexableReleaseFiles = new Set([
   "index.html",
   `family-photographer-tri-cities-wa${path.sep}index.html`,
   `newborn-photographer-tri-cities-wa${path.sep}index.html`,
+  `headshot-photographer-tri-cities-wa${path.sep}index.html`,
   `about${path.sep}index.html`,
   `reviews${path.sep}index.html`,
   `contact${path.sep}index.html`,
@@ -516,6 +517,21 @@ const indexableReleaseFiles = new Set([
   `journal${path.sep}index.html`,
   `journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`,
   `journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`,
+]);
+const indexablePageSchemaTypes = new Map([
+  ["index.html", "WebPage"],
+  [`family-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
+  [`newborn-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
+  [`headshot-photographer-tri-cities-wa${path.sep}index.html`, "WebPage"],
+  [`about${path.sep}index.html`, "AboutPage"],
+  [`reviews${path.sep}index.html`, "WebPage"],
+  [`contact${path.sep}index.html`, "ContactPage"],
+  [`richland-wa-photographer${path.sep}index.html`, "WebPage"],
+  [`kennewick-wa-photographer${path.sep}index.html`, "WebPage"],
+  [`pasco-wa-photographer${path.sep}index.html`, "WebPage"],
+  [`journal${path.sep}index.html`, "CollectionPage"],
+  [`journal${path.sep}family-photo-locations-tri-cities${path.sep}index.html`, "Article"],
+  [`journal${path.sep}branding-photos-vs-headshots${path.sep}index.html`, "Article"],
 ]);
 const expandedDirectoryLinkCounts = new Map([
   [`richland-wa-photographer${path.sep}index.html`, 9],
@@ -1260,6 +1276,112 @@ const activeCityGalleryContracts = new Map([
 for (const file of htmlFiles) {
   const relative = path.relative(output, file);
   const source = await readFile(file, "utf8");
+  const headSource = source.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] || "";
+  const googleTagLoaderCount = (
+    headSource.match(
+      /https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-0YW8M601L1/g,
+    ) || []
+  ).length;
+  const googleTagConfigCount = (
+    headSource.match(/gtag\(['"]config['"],\s*['"]G-0YW8M601L1['"]\)/g) || []
+  ).length;
+  const clarityTagCount = (
+    headSource.match(/clarity["'],\s*["']script["'],\s*["']xyqkkqom4v["']/g) || []
+  ).length;
+  if (mode === "release") {
+    if (
+      googleTagLoaderCount !== 1 ||
+      googleTagConfigCount !== 1 ||
+      clarityTagCount !== 1 ||
+      /GTM-[A-Z0-9]+/.test(headSource)
+    ) {
+      failures.push(
+        `${relative}: production analytics must contain one GA4 G-0YW8M601L1 tag, one Clarity tag and no duplicate GTM container`,
+      );
+    }
+  } else if (
+    googleTagLoaderCount !== 0 ||
+    googleTagConfigCount !== 0 ||
+    clarityTagCount !== 0
+  ) {
+    failures.push(`${relative}: staging must not send GA4 or Clarity traffic`);
+  }
+
+  if (indexableReleaseFiles.has(relative)) {
+    const expectedOrigin = mode === "release"
+      ? "https://www.itsakeeperphotography.com"
+      : "https://itsakeeperphotography.netlify.app";
+    const expectedBusinessId = `${expectedOrigin}/#business`;
+    const expectedWebsiteId = `${expectedOrigin}/#website`;
+    const schemas = parseJsonLd(source, relative);
+    const businesses = schemas.filter(
+      (schema) => schema?.["@type"] === "LocalBusiness",
+    );
+    const websites = schemas.filter((schema) => schema?.["@type"] === "WebSite");
+    const expectedPageType = indexablePageSchemaTypes.get(relative);
+    const pageSchemas = schemas.filter(
+      (schema) => schema?.["@type"] === expectedPageType,
+    );
+    const business = businesses[0];
+    const website = websites[0];
+    const pageSchema = pageSchemas[0];
+    const expectedBusinessProfiles = [
+      "https://www.instagram.com/itsakeeperphoto/",
+      "https://www.facebook.com/10210306464689688",
+      "https://g.page/r/CZnCWAWyBWnQEBM",
+    ];
+    const unsafeIdentity = schemas
+      .flatMap(nestedSchemaObjects)
+      .some(
+        (schema) =>
+          Object.hasOwn(schema, "streetAddress") ||
+          Object.hasOwn(schema, "postalCode") ||
+          Object.hasOwn(schema, "latitude") ||
+          Object.hasOwn(schema, "longitude") ||
+          schema?.["@type"] === "GeoCoordinates",
+      );
+    if (
+      businesses.length !== 1 ||
+      business?.["@id"] !== expectedBusinessId ||
+      business?.url !== `${expectedOrigin}/` ||
+      business?.name !== "It's A Keeper Photography" ||
+      business?.founder?.["@id"] !== `${expectedOrigin}/#lisa` ||
+      business?.address?.addressLocality !== "Richland" ||
+      business?.address?.addressRegion !== "WA" ||
+      business?.address?.addressCountry !== "US" ||
+      JSON.stringify(business?.sameAs) !== JSON.stringify(expectedBusinessProfiles) ||
+      websites.length !== 1 ||
+      website?.["@id"] !== expectedWebsiteId ||
+      website?.url !== `${expectedOrigin}/` ||
+      website?.publisher?.["@id"] !== expectedBusinessId ||
+      pageSchemas.length !== 1 ||
+      pageSchema?.isPartOf?.["@id"] !== expectedWebsiteId ||
+      unsafeIdentity
+    ) {
+      failures.push(
+        `${relative}: indexable schema must share one canonical LocalBusiness, WebSite and ${expectedPageType} identity without private location data`,
+      );
+    }
+    for (const schema of schemas.filter((item) => item?.["@type"] === "Service")) {
+      if (schema?.provider?.["@id"] !== expectedBusinessId) {
+        failures.push(`${relative}: top-level Service provider must reference #business`);
+      }
+    }
+    for (const schema of schemas.filter((item) => item?.["@type"] === "Article")) {
+      if (
+        schema?.author?.["@id"] !== `${expectedOrigin}/#lisa` ||
+        schema?.publisher?.["@id"] !== expectedBusinessId
+      ) {
+        failures.push(`${relative}: Article author/publisher identity is inconsistent`);
+      }
+    }
+    const breadcrumbs = schemas.filter(
+      (schema) => schema?.["@type"] === "BreadcrumbList",
+    );
+    if (relative !== "index.html" && breadcrumbs.length !== 1) {
+      failures.push(`${relative}: indexable non-home route needs exactly one BreadcrumbList`);
+    }
+  }
   const stylesheetHrefs = (source.match(/<link\b[^>]*>/gi) || [])
     .filter((tag) => htmlAttribute(tag, "rel")?.toLowerCase() === "stylesheet")
     .map((tag) => htmlAttribute(tag, "href"))
@@ -3840,6 +3962,24 @@ if (
     "page-manifest.ts: Reviews must retain ready/index WebPage gates, exact title and 2026-08-12 lastModified",
   );
 }
+const headshotsManifestBlock = runtimeManifestSource.match(
+  /\{\s*id:\s*"headshots",[\s\S]*?\n\s*\},/,
+)?.[0] || "";
+if (
+  !/contentStatus:\s*"ready"/.test(headshotsManifestBlock) ||
+  !/searchVisibility:\s*"index"/.test(headshotsManifestBlock) ||
+  !/schemaType:\s*"Service"/.test(headshotsManifestBlock) ||
+  !/sitemap:\s*true/.test(headshotsManifestBlock) ||
+  !/llms:\s*true/.test(headshotsManifestBlock) ||
+  !/lastModified:\s*"2026-08-17"/.test(headshotsManifestBlock) ||
+  !/title:\s*"Headshot Photographer Tri-Cities WA \| I Come to You"/.test(
+    headshotsManifestBlock,
+  )
+) {
+  failures.push(
+    "page-manifest.ts: Headshots must retain ready/index Service gates, exact title and 2026-08-17 lastModified",
+  );
+}
 const thankYouManifestBlock = runtimeManifestSource.match(
   /\{\s*id:\s*"thank-you",[\s\S]*?\n\s*\},/,
 )?.[0] || "";
@@ -4249,15 +4389,15 @@ const headshotPackageFacts = [
 ];
 const serializedHeadshots = JSON.stringify(headshotsSource);
 if (
-  headshotsSource.contentStatus !== "draft" ||
-  headshotsSource.searchVisibility !== "noindex" ||
+  headshotsSource.contentStatus !== "ready" ||
+  headshotsSource.searchVisibility !== "index" ||
   !Array.isArray(headshotsSource.pending) ||
   headshotsSource.pending.length !== 0 ||
   headshotPackageFacts.some((fact) => !serializedHeadshots.includes(fact)) ||
   !/priceCents:\s*17_500/.test(sessionPricingSource) ||
   !/serviceIds:\s*\["headshots"\]/.test(sessionPricingSource)
 ) {
-  failures.push("headshots: confirmed individual package or draft/noindex QA gate is invalid");
+  failures.push("headshots: confirmed individual package or ready/index QA gate is invalid");
 }
 if (
   normalizedText(mobileBarMatch?.[2] || "") !==
@@ -4586,6 +4726,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/about/",
     "https://www.itsakeeperphotography.com/reviews/",
     "https://www.itsakeeperphotography.com/contact/",
@@ -4619,6 +4760,12 @@ if (mode === "staging") {
   )?.[0] || "";
   if (!/<lastmod>2026-08-17<\/lastmod>/.test(newbornSitemapEntry)) {
     failures.push("sitemap.xml: Newborn lastmod must be 2026-08-17");
+  }
+  const headshotsSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/headshot-photographer-tri-cities-wa\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(headshotsSitemapEntry)) {
+    failures.push("sitemap.xml: Headshots lastmod must be 2026-08-17");
   }
   const aboutSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/about\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
@@ -4669,6 +4816,7 @@ if (mode === "staging") {
     "https://www.itsakeeperphotography.com/",
     "https://www.itsakeeperphotography.com/family-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/newborn-photographer-tri-cities-wa/",
+    "https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/",
     "https://www.itsakeeperphotography.com/about/",
     "https://www.itsakeeperphotography.com/reviews/",
     "https://www.itsakeeperphotography.com/contact/",
@@ -4681,6 +4829,28 @@ if (mode === "staging") {
   ];
   if (JSON.stringify(llmsUrls) !== JSON.stringify(expectedLlmsUrls)) {
     failures.push(`llms.txt: release membership is ${llmsUrls.join(", ") || "empty"}`);
+  }
+  for (const requiredSection of [
+    "## Start here",
+    "## Portrait services",
+    "## About and planning",
+    "## Local service areas",
+    "## Journal and planning guides",
+  ]) {
+    if (!llms.includes(requiredSection)) {
+      failures.push(`llms.txt: optimized section is missing (${requiredSection})`);
+    }
+  }
+  if (
+    !llms.includes("only production pages approved for indexing and citation") ||
+    !llms.includes("the website does not publish a private street address")
+  ) {
+    failures.push("llms.txt: production scope and privacy guidance are incomplete");
+  }
+  const expectedHeadshotsLlmsLine =
+    "- [Headshot Photographer Tri-Cities WA | I Come to You](https://www.itsakeeperphotography.com/headshot-photographer-tri-cities-wa/): Professional headshots in Richland, Kennewick and Pasco — photographed at your office with portable studio lighting.";
+  if (!llms.includes(expectedHeadshotsLlmsLine)) {
+    failures.push("llms.txt: Headshots title or summary differs from the manifest contract");
   }
   const expectedAboutLlmsLine =
     "- [Meet Lisa Weiss | Tri-Cities Photographer for 20 Years](https://www.itsakeeperphotography.com/about/): Meet Lisa Weiss, the Richland photographer behind It's A Keeper Photography, with twenty years behind the camera and fourteen years in business.";
@@ -4723,6 +4893,9 @@ if (mode === "staging") {
   }
   if (/^\/newborn-photographer-tri-cities-wa\/\*\s*$/m.test(headers)) {
     failures.push("_headers: Newborn noindex rule must not block the published service page");
+  }
+  if (/^\/headshot-photographer-tri-cities-wa\/\*\s*$/m.test(headers)) {
+    failures.push("_headers: Headshots noindex rule must not block the published service page");
   }
   if (
     routeHeaderValues("/about/", "x-robots-tag")

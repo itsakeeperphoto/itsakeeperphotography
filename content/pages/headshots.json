@@ -1,8 +1,8 @@
 {
   "route": "/headshot-photographer-tri-cities-wa/",
   "family": "service",
-  "contentStatus": "draft",
-  "searchVisibility": "noindex",
+  "contentStatus": "ready",
+  "searchVisibility": "index",
   "schemaType": "Service",
   "signature": "overlap",
   "title": "Headshot Photographer Tri-Cities WA | I Come to You",

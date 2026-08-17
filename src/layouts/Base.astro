@@ -4,7 +4,12 @@ import "../styles/palette.css";
 import { telHref } from "../lib/content";
 import { imageMeta } from "../lib/images";
 import type { SchemaType, SearchVisibility } from "../content/page-types";
-import { absoluteUrl, robotsDirective, siteOrigin } from "../lib/site-environment";
+import {
+  absoluteUrl,
+  isRelease,
+  robotsDirective,
+  siteOrigin,
+} from "../lib/site-environment";
 
 interface Props {
   title: string;
@@ -46,6 +51,7 @@ const {
   isErrorPage = false,
 } = Astro.props;
 const isDevelopment = import.meta.env.DEV;
+const shouldLoadAnalytics = isRelease;
 
 const normalizedCanonicalPath = canonicalPath === "/"
   ? "/"
@@ -101,7 +107,11 @@ const localBusinessSchema = {
     addressCountry: "US",
   },
   areaServed: settings.serviceAreas.map((city) => ({ "@type": "City", name: city })),
-  sameAs: [settings.social.instagram, settings.social.facebook].filter(Boolean),
+  sameAs: [
+    settings.social.instagram,
+    settings.social.facebook,
+    settings.social.googleProfile?.replace(/\/review\/?$/, ""),
+  ].filter(Boolean),
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Portrait photography sessions",
@@ -130,7 +140,7 @@ const webSiteSchema = {
   inLanguage: "en-US",
 };
 
-const webPageSchema = !isErrorPage && normalizedCanonicalPath !== "/"
+const webPageSchema = !isErrorPage
   ? {
       "@context": "https://schema.org",
       "@type": schemaType,
@@ -157,23 +167,27 @@ const webPageSchema = !isErrorPage && normalizedCanonicalPath !== "/"
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script type="text/javascript" is:inline>
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "xyqkkqom4v");
-    </script>
+    {shouldLoadAnalytics && (
+      <>
+        <script type="text/javascript" is:inline>
+          (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "xyqkkqom4v");
+        </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-0YW8M601L1"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        <!-- Google tag (gtag.js) -->
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-0YW8M601L1"></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
 
-      gtag('config', 'G-0YW8M601L1');
-    </script>
+          gtag('config', 'G-0YW8M601L1');
+        </script>
+      </>
+    )}
 
     {hasHomepagePreloader && (
       <script is:inline define:vars={{ isDevelopment }}>
