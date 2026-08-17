@@ -1446,3 +1446,32 @@
   `EditorialHero` y el digest About quedaron en el commit 404 concurrente
   `f341a15`; no se reescribió ese historial. Este cierre documental forma un
   commit local separado, sin push, deploy, DNS ni `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Paquete Headshots y viaje confirmados
+
+- **Objetivo:** aplicar la confirmación de Lisa —viaje después de 25 millas a
+  `$2` por milla y paquete individual Headshots de `$175 + tax`— en Contact y
+  las páginas relacionadas, sin interpretar la imagen como dirección visual.
+- **Auditoría:** el estimador aplicaba #ONE/#TWO/#THREE a los cinco servicios y
+  varias fuentes conservaban “sin travel fee”. La página Headshots mezclaba
+  duraciones y no tenía un contrato de precio; no existe aún tarifa confirmada
+  para equipos ni para compras adicionales.
+- **Implementación:** pricing declara aplicabilidad por servicio; Headshots usa
+  20–30 minutos, una descarga high-resolution con commercial usage y galería
+  online. Contact filtra ofertas, calcula 25 millas incluidas + `$2` adicional,
+  muestra el viaje en recibo y lo envía en el POST nativo. Equipos quedan como
+  custom estimate. Se reconciliaron Home, Newborn, las tres ciudades,
+  Investment, Headshots y el artículo comparativo.
+- **SEO/schema:** Headshots emite un solo `FAQPage` 6:6 y un `Service.Offer` de
+  `$175` USD; permanece `draft/noindex`. Sitemap continúa con 12 URLs y recibe
+  lastmod `2026-08-17` para Home, Newborn, Contact, Richland, Kennewick, Pasco y
+  Branding vs. Headshots. ADR-064 registra la decisión.
+- **QA:** Tina PASS 5/38/20/19; build release y validador PASS 20/20. Playwright
+  aprobó Contact y Branding/Headshots en 1440/1200/900/390, incluidos `$985.98`
+  con 40 millas, paquete `$175 + tax`, POST interceptado, no-JS, WebP, red,
+  consola y overflow. Schema/sitemap dirigido, JSON, scripts y diff pasan.
+  TypeScript conserva únicamente ocho errores baseline ya documentados.
+- **Git/operación:** implementación en `64f10ca`
+  (`feat(pricing): add headshot package and travel fees`) y cierre documental
+  local separado. No se hizo push, deploy, Search Console ni
+  `./scripts/handoff.sh` porque el usuario autorizó commits locales solamente.
