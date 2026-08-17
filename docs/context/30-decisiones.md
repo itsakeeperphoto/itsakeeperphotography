@@ -1705,3 +1705,28 @@
   guardar en Tina local y futuras eliminaciones referenciadas fallan antes del
   dev/build con un mensaje accionable. El smoke TinaCloud autenticado se repite
   después del deploy. No se hizo push.
+
+### ADR-068 — Tina y Astro se construyen en fases consecutivas en Netlify
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada.
+- **Contexto:** Tras resolver referencias de media y fuentes sobredimensionadas,
+  el build Netlify validó Tina y prerenderizó las 20 rutas, pero terminó con
+  código 137 durante `@astrojs/netlify` → `Bundling function`. El proceso padre
+  Tina fue eliminado mientras el hijo Astro continuó y alcanzó después
+  `Generated SSR Function`/`Build Complete`. El mismo empaquetado Netlify,
+  ejecutado solo, terminó correctamente en 30–32 segundos. La causa era el pico
+  de memoria conjunto, no una ruta, schema, asset o error de compilación.
+- **Decisión:** Sustituir `tinacms build ... -c "astro build"` por dos comandos
+  encadenados: `tinacms build ...` debe completar y salir; solo entonces
+  `astro build` inicia. Conservar `--content=local`, cloud checks/indexación,
+  optimización, headers y validadores en producción; conservar `--local`,
+  `--skip-cloud-checks` y `--skip-indexing` en el build local.
+- **Alternativas descartadas:** Reintentar indefinidamente, aumentar aún más el
+  heap, retirar el endpoint visual Tina o cambiar el adaptador se descartó por
+  recurrencia, doble límite potencial, pérdida editorial o alcance innecesario.
+- **Consecuencias:** La memoria de la data layer/schema/admin Tina se libera
+  antes de que `@vercel/nft` trace la función SSR. La reproducción separada
+  genera 20 rutas, la función Netlify, headers release y validación 20/20 con
+  código 0. El siguiente deploy debe confirmar el comportamiento en el entorno
+  remoto; no se hizo push.

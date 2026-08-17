@@ -477,13 +477,18 @@ npm run audit:lighthouse
 ```
 
 `npm run dev`, `npm run build:local` y `npm run build` ejecutan primero el gate
-determinista de Tina. `npm run build:local` valida después que los JPEG fuente no excedan 2400 px ni
-700 KiB, genera variantes responsive, inicia Tina local, compila Astro, instala
-headers de staging y ejecuta `scripts/validate-site.mjs`. `npm run build`
-realiza la misma disciplina de assets y además indexación/build Tina según el
-entorno de deploy. En Netlify el guard puede optimizar una fuente grande en el
-checkout efímero; localmente exige `npm run optimize:source-images -- --write`
-para evitar cambios silenciosos al repositorio.
+determinista de Tina. Los dos builds validan después que los JPEG fuente no
+excedan 2400 px ni 700 KiB y generan variantes responsive. Tina y Astro son
+fases consecutivas, no un proceso padre con `-c`: Tina genera el cliente/admin,
+termina y libera su data layer antes de que Astro empaquete el adaptador. El
+build local usa Tina local sin cloud checks/indexing; el deploy usa contenido
+local con credenciales TinaCloud y conserva sus comprobaciones. Ambos instalan
+los headers correspondientes y ejecutan `scripts/validate-site.mjs`. Esta
+separación evita que el trazado de la función SSR Netlify coincida con la
+memoria retenida por Tina. En Netlify el guard puede optimizar una fuente grande
+en el checkout efímero; localmente exige
+`npm run optimize:source-images -- --write` para evitar cambios silenciosos al
+repositorio.
 
 ## Despliegue
 
