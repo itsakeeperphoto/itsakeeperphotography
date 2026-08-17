@@ -3,26 +3,26 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 16:55 -05
+**Última actualización:** 2026-08-17 17:02 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional al iniciar:** `3261d30` — `docs(context): record sequential Netlify build`
+**HEAD funcional actual:** `3772e79` — `feat(seo): publish confirmed service and guide pages`
 **Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git:** cambios funcionales y documentales de esta publicación quedan
-pendientes de commit local. No se hizo push, deploy, Search Console ni mutación
-externa.
+**Estado Git:** implementación y memoria funcional registradas en `3772e79`;
+este cierre documental queda en un commit local separado. No se hizo push,
+deploy, Search Console ni mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-Crear el commit local de publicación. William podrá hacer push cuando lo decida;
-después del deploy se verifican 200/canonical/header de las cinco rutas, Realtime
-de GA4/Clarity y se envía `/sitemap.xml` a Search Console.
+William podrá hacer push cuando lo decida; después del deploy se verifican
+200/canonical/header de las cinco rutas, Realtime de GA4/Clarity y se envía
+`/sitemap.xml` a Search Console.
 
 ## Resultado funcional
 
@@ -78,7 +78,7 @@ de GA4/Clarity y se envía `/sitemap.xml` a Search Console.
 
 ## Operación Git
 
-- Debe crearse un commit local; no ejecutar push.
+- Commit funcional local: `3772e79`; el cierre documental se registra aparte.
 - No ejecutar `./scripts/handoff.sh` porque incluye push y el usuario autorizó
   únicamente commits.
 - No preparar `.handoff/sessions/*.jsonl` para commit.

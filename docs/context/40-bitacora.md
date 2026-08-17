@@ -1595,5 +1595,7 @@
   modos; auditoría JSON-LD y crawler outputs 18/18. El wrapper Tina local no
   abrió un segundo servidor porque `:9000` ya estaba ocupado; no se cerró el
   proceso del usuario y las fases se comprobaron separadas.
-- **Git/operación:** commit local pendiente al escribir esta entrada. No se hizo
-  push, deploy, Search Console ni `./scripts/handoff.sh`.
+- **Git/operación:** implementación y memoria funcional en `3772e79`
+  (`feat(seo): publish confirmed service and guide pages`), con cierre
+  documental local separado. No se hizo push, deploy, Search Console ni
+  `./scripts/handoff.sh`.
