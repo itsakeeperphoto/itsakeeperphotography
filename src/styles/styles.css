@@ -3420,6 +3420,10 @@ footer[id] {
     padding-bottom: var(--space-16);
   }
 
+  .review-polaroid[data-review-name="Christina Bergstrom"] .review-polaroid__image {
+    object-position: 50% 0%;
+  }
+
   .inquiry__hook {
     width: calc(var(--full-width) - (var(--page-gutter-small) * 2));
   }
