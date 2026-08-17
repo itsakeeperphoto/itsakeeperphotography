@@ -11,6 +11,9 @@
   y conserva su composición. Los seis JPEG que bloqueaban el gate de fuentes
   quedaron optimizados sin recorte; Tina, Astro, headers y 20/20 rutas pasan.
   Falta únicamente publicar el commit y confirmar el deploy remoto.
+- [x] **0A. Corregir el crop móvil de Christina Bergstrom.** Home y Reviews
+  comparten el ajuste nominal hasta 767 px; Playwright 390×844 confirma cabeza
+  visible, WebP 400, sin overflow y sin cambios en las otras reseñas.
 
 - [x] **1. Resolver la divergencia Git anterior.** Al cerrar la implementación
   visual, `main...origin/main` coincide en `c663d68`. Política vigente del

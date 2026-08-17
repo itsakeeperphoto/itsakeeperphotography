@@ -1541,3 +1541,17 @@
 - **Git/operación:** implementación en `a1e9b1b`
   (`fix(build): repair homepage media and image sources`) y cierre documental
   local separado. No se hizo push, deploy ni `./scripts/handoff.sh`.
+
+### 2026-08-17 — Codex / GPT-5 — Christina visible completa en móvil
+
+- **Objetivo:** evitar que el encuadre horizontal de la reseña de Christina
+  Bergstrom cortara su cabeza en Home y Reviews a 390 px.
+- **Implementación:** `KindWords` expone el nombre de la reseña como selector
+  estable y solo Christina usa `object-position: 50% 0%` hasta 767 px. No se
+  cambiaron tamaños, copy, media, orden, interacción ni las otras tarjetas.
+- **QA:** Playwright 390×844 en `/` y `/reviews/` confirmó WebP 400, cabeza
+  visible y overflow 0; Astro construyó las 20 rutas, Tina 5/38/20/19,
+  `validate:site` 20/20 e Impeccable `[]`.
+- **Git/operación:** implementación en `059cb93`
+  (`fix(reviews): preserve Christina portrait crop on mobile`) y cierre
+  documental local separado. No se hizo push ni `./scripts/handoff.sh`.

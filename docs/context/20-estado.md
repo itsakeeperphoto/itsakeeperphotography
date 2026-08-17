@@ -3,20 +3,20 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 16:05 -05
+**Última actualización:** 2026-08-17 16:20 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional actual:** `a1e9b1b` —
-`fix(build): repair homepage media and image sources`
+**HEAD funcional actual:** `059cb93` —
+`fix(reviews): preserve Christina portrait crop on mobile`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Base remota al inicio:** `2faffd3` — cierre documental de la reparación Tina
-anterior.
+**Base remota al inicio:** `3335478` — cierre documental de la reparación del
+build Netlify.
 
 **Estado Git:** antes del commit documental, `main` está un commit por delante
 de `origin/main`. No se hizo push, deploy, Search Console ni mutación externa.
@@ -25,9 +25,9 @@ de `origin/main`. No se hizo push, deploy, Search Console ni mutación externa.
 
 ## Siguiente paso concreto
 
-William publica los commits cuando lo decida y reintenta el deploy de Netlify.
-Después se verifica Homepage en producción, un guardado controlado desde Tina,
-Headshots 200/index, GA4/Clarity y el sitemap antes de enviarlo a Search Console.
+William publica los commits cuando lo decida. Después se verifica Homepage y
+Reviews en móvil, un guardado controlado desde Tina, Headshots 200/index,
+GA4/Clarity y el sitemap antes de enviarlo a Search Console.
 
 ## Resultado funcional
 
@@ -43,6 +43,9 @@ Headshots 200/index, GA4/Clarity y el sitemap antes de enviarlo a Search Console
   70.5% menos, sin recorte ni cambio de contenido.
 - Headshots continúa `ready/index`; el release conserva 20 rutas públicas y
   13/13 URLs en sitemap/`llms.txt`.
+- La tarjeta de Christina Bergstrom comparte ahora un identificador estable y,
+  solo hasta 767 px, ancla su fotografía al borde superior. La cabeza queda
+  visible en Home y Reviews sin cambiar dimensiones, orden ni otras reseñas.
 
 ## QA ejecutada
 
@@ -55,6 +58,9 @@ Headshots 200/index, GA4/Clarity y el sitemap antes de enviarlo a Search Console
 - `npm run install:netlify-headers` + `npm run validate:site` — PASS: 20 rutas
   en staging.
 - `git diff --check` — PASS.
+- Playwright 390×844 — PASS en `/` y `/reviews/`: fuente WebP 400 cargada,
+  `object-position: 50% 0%`, cabeza visible y overflow horizontal 0.
+- Detector Impeccable sobre componente/CSS — PASS `[]`.
 - `npm run build` local llega hasta TinaCloud; no puede completar sin
   `TINA_PUBLIC_CLIENT_ID`/`TINA_TOKEN`. El log de Netlify confirma que esas
   variables sí están configuradas en el entorno remoto.
@@ -71,7 +77,7 @@ Headshots 200/index, GA4/Clarity y el sitemap antes de enviarlo a Search Console
 
 ## Operación Git
 
-- Commit funcional: `a1e9b1b`.
+- Commit funcional actual: `059cb93`.
 - Estado, backlog y bitácora forman el commit documental de cierre.
 - No se ejecuta `./scripts/handoff.sh` porque hace push y el usuario autorizó
   commits locales, no pushes.
