@@ -149,7 +149,9 @@
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
   Seniors, Branding, Headshots, Investment, Senior Timing y Newborn Comparison;
   Reviews se resolvió aparte en ADR-058; Privacy permanece fuera por
-  instrucción del usuario.
+  instrucción del usuario. El 2026-08-17 quedaron resueltos el paquete
+  individual de Headshots y la política de viaje; no usar la versión `.docx`
+  anterior sin regenerarla.
 - [ ] **19F. Publicar Newborn Comparison solo después de sus tres gates.**
   Resolver `[VALIDAR CON LISA]`,
   `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`; hasta entonces
@@ -159,7 +161,7 @@
   Pasco, Newborn y Journal después del push del usuario.** Confirmar en el dominio final status 200,
   meta index, canonical, ausencia de header noindex, membresía de sitemap/llms
   y lastmod:
-  ciudades `2026-08-09`; Newborn y About `2026-08-10`; Contact `2026-08-11`;
+  Richland/Kennewick/Pasco/Newborn/Contact `2026-08-17`; About `2026-08-10`;
   además del cierre Pasco
   sin panel, el nuevo fondo aprobado del hero About con crop `50% 24%` y la
   densidad Belief/Method corregida, incluido el inset tablet de 32 px. En `/`,
@@ -175,7 +177,8 @@
   enlaces a Senior Timing/Newborn Comparison mientras continúen draft.
 - [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
   `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
-  WebP responsive; no publicarlas hasta confirmar paquetes y entregables.
+  WebP responsive. Headshots ya tiene paquete individual y QA confirmados;
+  Branding sigue bloqueada por duración/entregables.
 - [ ] Confirmar también que Senior Timing conserva `draft/noindex`, header
   release, exclusión de sitemap/`llms.txt`, schema sin fechas y las 11 imágenes
   responsive; el push del rediseño no autoriza su publicación.
@@ -183,7 +186,8 @@
   release, exclusión de sitemap/`llms.txt`, schema sin fechas, CSS aislado y las
   nueve imágenes responsive; el push del rediseño no autoriza su publicación.
 - [ ] Confirmar que Branding vs. Headshots responde 200/index en producción,
-  carece de header noindex, usa fecha `2026-08-11`, aparece una vez en sitemap y
+  carece de header noindex, conserva publicación `2026-08-11`, modificación
+  `2026-08-17`, aparece una vez en sitemap y
   `llms.txt`, carga sus 11 imágenes responsive y mantiene el CSS aislado. Esta
   verificación no publica Branding ni Headshots service.
 - [ ] **21. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
@@ -296,8 +300,12 @@ sin reemplazar el archivo.
   GPS ni metadata privada. QA release/Playwright completo; no se borraron
   fuentes anteriores.
 - [ ] Confirmar entregables, número de imágenes y duración de Branding.
-- [ ] Confirmar duración y entregables de Headshots.
-- [ ] Revalidar que el copy de ambos coincide con
+- [x] Confirmados y aplicados el 2026-08-17 para Headshots individual:
+  `$175 + tax`, 20–30 minutos, una descarga digital en alta resolución con uso
+  comercial y galería online con compras adicionales. Equipos usan custom
+  estimate sin tarifa inventada; `pending` queda vacío y schema/Playwright
+  pasan, pero la ruta permanece `draft/noindex` hasta decisión de publicación.
+- [ ] Revalidar que el copy de Branding coincide con
   `src/lib/session-pricing.ts` y no promete un número distinto.
 - [x] El artículo comparativo usa ese inventario real sin media nueva y tiene
   fecha editorial autorizada `2026-08-11`; su publicación `ready/index` es
@@ -329,7 +337,7 @@ sin reemplazar el archivo.
 
 ### Contact
 
-- [x] Publicada `ready/index`, `lastModified: 2026-08-11`, dentro de sitemap y
+- [x] Publicada `ready/index`, `lastModified: 2026-08-17`, dentro de sitemap y
   `llms.txt`, con `ContactPage` y `BreadcrumbList` sin un `Service` inventado.
 - [x] **Histórico ADR-050, supersedido parcialmente por ADR-053:** los cuatro
   checks siguientes registran el gate que existió en `dd4a590`; ya no describen
@@ -350,6 +358,11 @@ sin reemplazar el archivo.
 - [x] Verificados Tina release integral `4002`/`9001`, staging/release 21/21,
   Playwright 1440/1200/900/390, navegación POST de documento y no-JS a 390 px;
   revisión final `PASS`, sin envíos reales.
+- [x] Actualizado el 2026-08-17 el estimador transparente: paquetes filtrados
+  por servicio, Headshots individual `$175 + tax`, equipos como custom estimate
+  y viaje con 25 millas incluidas + `$2` por milla adicional. Playwright valida
+  `$985.98` con 40 millas, el POST nativo y el fallback no-JS en
+  1440/1200/900/390; no hubo envío real.
 - [ ] Después del deploy transparente, realizar una prueba controlada del POST
   nativo y documentar recepción/navegación sin guardar PII en el repositorio.
 
@@ -419,10 +432,11 @@ sin reemplazar el archivo.
   agricultura, ríos, temporadas y planificación, sin publicar meeting points.
 - [x] Seleccionadas diez fotografías de diez sesiones Pasco verificadas, con alt
   literal; tres family/large-family y siete senior.
-- [x] Confirmada en la fuente aprobada la cobertura Tri-Cities sin travel fee.
+- [x] Política reconciliada el 2026-08-17: primeras 25 millas incluidas y `$2`
+  por cada milla adicional; se retiró el claim absoluto “sin travel fee”.
 - [x] Implementada `PascoPage.astro` con dirección A+C, hero compartido,
   directorio de cinco servicios, galería 10/10, FAQ 4:4 y cierre full-bleed.
-- [x] Publicada `ready/index`, `lastModified: 2026-08-09`, sitemap/llms/header,
+- [x] Publicada `ready/index`, `lastModified: 2026-08-17`, sitemap/llms/header,
   Service/spatialCoverage/breadcrumb y QA en cuatro viewports.
 - [ ] Mejora opcional: incorporar en el futuro sesiones Pasco verificadas de
   Newborn, Branding y Headshots para ampliar la prueba visual de servicios.
@@ -712,11 +726,12 @@ sin reemplazar el archivo.
   receipt locked y estados 2xx/error/no-JS; ADR-053 supersedió ese patrón sin
   borrar su registro.
 - [x] Contact actual usa estimate transparente: recibo/total SSR visibles,
-  cálculo vivo y submit HTML nativo, preservando `ready/index`, form único y
-  schema sobrio.
+  cálculo vivo, viaje confirmado y paquete Headshots separado, con submit HTML
+  nativo; preserva `ready/index`, form único y schema sobrio.
 - [x] Renovadas Branding y Headshots con fotografía Drive local, diversidad
   protegida, filenames/alt descriptivos y XMP de ciudad segura; el estado
-  editorial sigue `draft/noindex` hasta confirmar paquetes.
+  editorial sigue `draft/noindex`. Headshots ya resolvió su paquete individual;
+  Branding todavía espera duración y entregables.
 - [x] Completar Reviews con `Words Become Pictures`, testimonios reales,
   `KindWords` exacto y libro reutilizable; no se usó una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez

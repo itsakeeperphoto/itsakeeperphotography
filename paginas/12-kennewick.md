@@ -26,7 +26,7 @@ _Página 12 de 18 · Service-area · **v2 — lista para producción 2026-08-08*
 
 Kennewick, WA · Columbia River · Tri-Cities · Benton County · Washington · golden hour · warm-toned photography · outdoor portraits
 
-**Relación declarada:** el negocio sirve Kennewick desde Richland, sin travel fee. A diferencia de Richland, aquí no se declara ubicación física.
+**Relación declarada:** el negocio sirve Kennewick desde Richland; las primeras 25 millas están incluidas y después se cobran $2 por milla adicional. A diferencia de Richland, aquí no se declara ubicación física.
 
 ### Estructura de headings publicada
 
@@ -59,7 +59,7 @@ H1  Kennewick, WA Photographer
 
 I'm based in Richland, just across the river — which means Kennewick clients get a local photographer, not a visitor with a GPS. I've been photographing families, seniors and business owners on this side of the water for two decades.
 
-There's no travel fee anywhere in the Tri-Cities. Kennewick is home turf.
+Kennewick is home turf. Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile.
 
 ---
 
@@ -119,7 +119,7 @@ la misma sesión identificada como Benton City.
 **H2: Kennewick Questions**
 
 **H3: Do you charge a travel fee to Kennewick?**
-No. Richland, Kennewick and Pasco are all home coverage — no travel fee anywhere in the Tri-Cities.
+Kennewick is part of my regular home coverage. Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile.
 
 **H3: What's your editing style?**
 Warm, vibrant, with a film feel. I adjust white balance and apply my signature edit to every image, and final retouching goes on the ones you choose. I'll take care of the temporary things — a blemish, a shirt bunching oddly — but I won't make you look like someone else.

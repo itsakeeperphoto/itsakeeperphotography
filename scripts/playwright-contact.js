@@ -156,7 +156,63 @@ async (page) => {
       people.value = "7";
       people.dispatchEvent(new Event("input", { bubbles: true }));
       people.dispatchEvent(new Event("change", { bubbles: true }));
+
+      const travel = document.querySelector('input[name="travel_miles"]');
+      if (!(travel instanceof HTMLInputElement)) {
+        throw new Error("Missing travel control");
+      }
+      travel.value = "40";
+      travel.dispatchEvent(new Event("input", { bubbles: true }));
+      travel.dispatchEvent(new Event("change", { bubbles: true }));
     });
+  };
+
+  const verifyHeadshotPackage = async (targetPage, viewportId) => {
+    await targetPage.evaluate(() => {
+      const input = document.querySelector(
+        'input[name="session_type"][value="headshots"]',
+      );
+      if (!(input instanceof HTMLInputElement)) {
+        throw new Error("Missing Headshots service control");
+      }
+      input.checked = true;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    await targetPage.waitForFunction(
+      () =>
+        document.querySelector("[data-estimate-total]")?.textContent?.trim() ===
+          "$175 + tax" &&
+        document.querySelector(
+          'input[name="session_package"][value="headshot"]',
+        )?.checked === true &&
+        document.querySelector(
+          'input[name="collection"][value="headshotGallery"]',
+        )?.checked === true,
+    );
+    const contract = await targetPage.evaluate(() => ({
+      total: document.querySelector("[data-estimate-total]")?.textContent?.trim(),
+      headshotPackageVisible:
+        document.querySelector('[data-package-row]:has(input[value="headshot"])')
+          ?.hidden === false,
+      generalPackageHidden:
+        document.querySelector('[data-package-row]:has(input[value="one"])')
+          ?.hidden === true,
+      headshotGalleryVisible:
+        document.querySelector(
+          '[data-collection-row]:has(input[value="headshotGallery"])',
+        )?.hidden === false,
+      purchaseNoteVisible:
+        document.querySelector("[data-headshot-purchase-note]")?.hidden === false,
+    }));
+    ensure(
+      contract.total === "$175 + tax" &&
+        contract.headshotPackageVisible &&
+        contract.generalPackageHidden &&
+        contract.headshotGalleryVisible &&
+        contract.purchaseNoteVisible,
+      `${viewportId}px: confirmed Headshot Package contract is not active`,
+    );
   };
 
   const fillRequiredContactFields = async (targetPage, suffix) => {
@@ -320,16 +376,18 @@ async (page) => {
       );
       ensure(invalid.path === "/contact/", `${viewport.id}px: invalid form navigated`);
 
+      await verifyHeadshotPackage(page, viewport.id);
+
       await chooseQualifiedPlan(page);
       await fillRequiredContactFields(page, viewport.id);
       await page.waitForFunction(
         () =>
           document.querySelector("[data-estimate-total]")?.textContent?.trim() ===
-            "$955.98" &&
+            "$985.98" &&
           document.querySelector("[data-mobile-estimate-total]")?.textContent?.trim() ===
-            "$955.98" &&
+            "$985.98" &&
           document.querySelector('input[name="estimated_total"]')?.value ===
-            "$955.98",
+            "$985.98",
       );
 
       const calculated = await page.evaluate((forbiddenGateSelector) => {
@@ -349,10 +407,11 @@ async (page) => {
       ensure(calculated.valid, `${viewport.id}px: completed form is not valid`);
       ensure(calculated.timing === "", `${viewport.id}px: optional timing was not left empty`);
       ensure(
-        calculated.hiddenTotal === "$955.98" &&
-          calculated.totalLive === "Estimated total $955.98." &&
-          calculated.breakdown?.includes("Estimated total: $955.98"),
-        `${viewport.id}px: live or hidden estimate did not reach $955.98`,
+        calculated.hiddenTotal === "$985.98" &&
+          calculated.totalLive === "Estimated total $985.98." &&
+          calculated.breakdown?.includes("Travel: 40 miles (15 additional, $30)") &&
+          calculated.breakdown?.includes("Estimated total: $985.98"),
+        `${viewport.id}px: live or hidden estimate did not reach $985.98`,
       );
       ensure(calculated.gateCount === 0, `${viewport.id}px: gate appeared after changes`);
       ensure(!calculated.overflow, `${viewport.id}px: planner changes caused overflow`);
@@ -391,6 +450,12 @@ async (page) => {
       ensure(params.get("session_type") === "family", `${viewport.id}px: session type missing`);
       ensure(params.get("session_package") === "three", `${viewport.id}px: package missing`);
       ensure(params.get("people") === "7", `${viewport.id}px: people count missing`);
+      ensure(params.get("travel_miles") === "40", `${viewport.id}px: travel miles missing`);
+      ensure(
+        params.get("billable_travel_miles") === "15" &&
+          params.get("travel_fee") === "$30",
+        `${viewport.id}px: confirmed travel fee was not submitted`,
+      );
       ensure(params.get("collection") === "one", `${viewport.id}px: collection missing`);
       ensure(
         JSON.stringify(params.getAll("addons")) ===
@@ -410,9 +475,9 @@ async (page) => {
         `${viewport.id}px: story missing`,
       );
       ensure(
-        params.get("estimated_total") === "$955.98" &&
+        params.get("estimated_total") === "$985.98" &&
           params.get("calculation_status") === "Calculated in browser" &&
-          params.get("estimate_breakdown")?.includes("Estimated total: $955.98"),
+          params.get("estimate_breakdown")?.includes("Estimated total: $985.98"),
         `${viewport.id}px: submitted hidden estimate is incomplete`,
       );
       ensure(

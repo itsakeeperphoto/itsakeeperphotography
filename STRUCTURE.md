@@ -26,18 +26,18 @@ entry when that date is missing.
 
 | URL | Page type | Last substantial update |
 | --- | --- | --- |
-| `/` | Homepage | 2026-08-04 |
+| `/` | Homepage | 2026-08-17 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
-| `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-10 |
+| `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-17 |
 | `/about/` | About / trust | 2026-08-10 |
 | `/reviews/` | Reviews / trust | 2026-08-12 |
-| `/contact/` | Contact / conversion | 2026-08-11 |
-| `/richland-wa-photographer/` | Service area | 2026-08-09 |
-| `/kennewick-wa-photographer/` | Service area | 2026-08-09 |
-| `/pasco-wa-photographer/` | Service area | 2026-08-09 |
+| `/contact/` | Contact / conversion | 2026-08-17 |
+| `/richland-wa-photographer/` | Service area | 2026-08-17 |
+| `/kennewick-wa-photographer/` | Service area | 2026-08-17 |
+| `/pasco-wa-photographer/` | Service area | 2026-08-17 |
 | `/journal/` | Journal collection | 2026-08-14 |
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
-| `/journal/branding-photos-vs-headshots/` | Article | 2026-08-11 |
+| `/journal/branding-photos-vs-headshots/` | Article | 2026-08-17 |
 
 The release sitemap and `llms.txt` each contain the same 12 canonical URLs.
 
@@ -49,7 +49,8 @@ The release sitemap and `llms.txt` each contain the same 12 canonical URLs.
 - `/senior-photographer-tri-cities-wa/` — draft; excluded
 - `/newborn-photographer-tri-cities-wa/` — ready and indexable
 - `/branding-photographer-tri-cities-wa/` — draft; excluded
-- `/headshot-photographer-tri-cities-wa/` — draft; excluded
+- `/headshot-photographer-tri-cities-wa/` — draft; package individual and QA
+  responsive confirmed, pending explicit publication decision; excluded
 
 ### Trust and conversion
 

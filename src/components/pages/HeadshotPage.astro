@@ -74,16 +74,6 @@ const splitWithLinks = (
   return segments;
 };
 
-const faqSchema = (questions.items || [])
-  .filter((item) => item.heading && item.paragraphs?.length)
-  .map((item) => ({
-    "@type": "Question",
-    name: item.heading,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.paragraphs?.join(" "),
-    },
-  }));
 ---
 
 <article
@@ -469,17 +459,5 @@ const faqSchema = (questions.items || [])
         </div>
       </div>
     </section>
-  )}
-
-  {faqSchema.length > 0 && (
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faqSchema,
-      })}
-    />
   )}
 </article>

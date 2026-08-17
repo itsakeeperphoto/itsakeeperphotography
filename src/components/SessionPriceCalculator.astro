@@ -9,6 +9,8 @@ import {
   SESSION_ADD_ONS,
   SESSION_PACKAGES,
   SESSION_SERVICES,
+  TRAVEL_INCLUDED_MILES,
+  TRAVEL_PRICE_PER_MILE_CENTS,
   formatUsd,
 } from "../lib/session-pricing";
 
@@ -28,7 +30,7 @@ const collections = Object.values(PHOTO_COLLECTIONS);
 const addOns = Object.values(SESSION_ADD_ONS);
 const initialService = services[0];
 const initialPackage = packages[0];
-const pricingVersion = "2026-07-29";
+const pricingVersion = "2026-08-17";
 ---
 
 <section
@@ -136,6 +138,12 @@ const pricingVersion = "2026-07-29";
       />
       <input
         type="hidden"
+        name="team_pricing_status"
+        value=""
+        data-estimate-field="team_pricing_status"
+      />
+      <input
+        type="hidden"
         name="collection_name"
         value=""
         data-estimate-field="collection_name"
@@ -157,6 +165,18 @@ const pricingVersion = "2026-07-29";
         name="addon_total"
         value=""
         data-estimate-field="addon_total"
+      />
+      <input
+        type="hidden"
+        name="billable_travel_miles"
+        value="0"
+        data-estimate-field="billable_travel_miles"
+      />
+      <input
+        type="hidden"
+        name="travel_fee"
+        value="$0"
+        data-estimate-field="travel_fee"
       />
       <input
         type="hidden"
@@ -240,14 +260,18 @@ const pricingVersion = "2026-07-29";
               <span class="planner-phase__title">Choose the time we'll have together</span>
             </legend>
             <p class="planner-phase__intro">
-              Every package includes up to {PEOPLE_INCLUDED} people. The session
-              structure applies to seniors, families, newborns, branding and
-              headshots.
+              Coverage adjusts to the session you select. Headshots use their
+              own confirmed individual package; team pricing is planned with
+              Lisa from the headcount you send.
             </p>
 
             <div class="package-ledger">
               {packages.map((sessionPackage, index) => (
-                <label class="package-row">
+                <label
+                  class="package-row"
+                  data-package-row
+                  data-service-ids={sessionPackage.serviceIds.join(",")}
+                >
                   <input
                     type="radio"
                     name="session_package"
@@ -255,12 +279,17 @@ const pricingVersion = "2026-07-29";
                     required
                     checked={index === 0 || undefined}
                     data-package-radio
+                    data-service-ids={sessionPackage.serviceIds.join(",")}
                     data-next-target="planner-people"
                   />
                   <span class="package-row__marker" aria-hidden="true"></span>
                   <span class="package-row__identity">
                     <strong>{sessionPackage.name}</strong>
-                    <small>Session package</small>
+                    <small>
+                      {sessionPackage.id === "headshot"
+                        ? "Individual package"
+                        : "Session package"}
+                    </small>
                   </span>
                   <span class="package-row__coverage">
                     <span>{sessionPackage.duration}</span>
@@ -268,7 +297,7 @@ const pricingVersion = "2026-07-29";
                     <span>{sessionPackage.outfits}</span>
                   </span>
                   <span class="package-row__price">
-                    {formatUsd(sessionPackage.priceCents)}
+                    {formatUsd(sessionPackage.priceCents)}{sessionPackage.id === "headshot" ? " + tax" : ""}
                   </span>
                 </label>
               ))}
@@ -277,7 +306,7 @@ const pricingVersion = "2026-07-29";
             <div class="people-control" id="planner-people">
               <div>
                 <span class="people-control__label">People in the session</span>
-                <p>
+                <p data-people-policy>
                   Five are included; each additional person adds
                   {formatUsd(EXTRA_PERSON_PRICE_CENTS)}.
                 </p>
@@ -317,6 +346,51 @@ const pricingVersion = "2026-07-29";
                 Up to {PEOPLE_INCLUDED} people are included.
               </p>
             </div>
+
+            <div class="people-control" id="planner-travel">
+              <div>
+                <span class="people-control__label">Estimated travel distance</span>
+                <p>
+                  The first {TRAVEL_INCLUDED_MILES} miles are included. Beyond
+                  that, travel is {formatUsd(TRAVEL_PRICE_PER_MILE_CENTS)} per
+                  additional mile; Lisa confirms the final mileage before booking.
+                </p>
+              </div>
+              <div
+                class="people-stepper"
+                role="group"
+                aria-label="Estimated travel distance in miles"
+              >
+                <button
+                  type="button"
+                  aria-label="Remove one travel mile"
+                  data-travel-decrease
+                  disabled
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  name="travel_miles"
+                  value="0"
+                  min="0"
+                  step="1"
+                  inputmode="numeric"
+                  aria-label="Estimated travel distance in miles"
+                  data-travel-input
+                />
+                <button
+                  type="button"
+                  aria-label="Add one travel mile"
+                  data-travel-increase
+                >
+                  +
+                </button>
+              </div>
+              <p class="people-control__status" aria-live="polite" data-travel-status>
+                No travel fee in this estimate.
+              </p>
+            </div>
           </fieldset>
 
           <fieldset
@@ -329,13 +403,17 @@ const pricingVersion = "2026-07-29";
               <span class="planner-phase__title">Choose how you'd like to keep it</span>
             </legend>
             <p class="planner-phase__intro">
-              Add a collection now, or choose none and talk through it with Lisa
-              later.
+              Your session includes the delivery shown below. Add a collection
+              where available, or talk through other purchases with Lisa later.
             </p>
 
             <div class="collection-ledger">
               {collections.map((collection, index) => (
-                <label class="collection-row">
+                <label
+                  class="collection-row"
+                  data-collection-row
+                  data-service-ids={collection.serviceIds.join(",")}
+                >
                   <input
                     type="radio"
                     name="collection"
@@ -343,6 +421,7 @@ const pricingVersion = "2026-07-29";
                     required
                     checked={index === 0 || undefined}
                     data-collection-radio
+                    data-service-ids={collection.serviceIds.join(",")}
                     data-next-target="planner-add-ons"
                   />
                   <span class="collection-row__marker" aria-hidden="true"></span>
@@ -350,6 +429,8 @@ const pricingVersion = "2026-07-29";
                     <strong>
                       {collection.id === "none"
                         ? "No collection yet"
+                        : collection.id === "headshotGallery"
+                          ? "Included online gallery"
                         : `Collection ${collection.name}`}
                     </strong>
                     <span>
@@ -378,12 +459,17 @@ const pricingVersion = "2026-07-29";
               </div>
               <div class="add-on-list">
                 {addOns.map((addOn) => (
-                  <label class="add-on-row">
+                  <label
+                    class="add-on-row"
+                    data-addon-row
+                    data-service-ids={addOn.serviceIds.join(",")}
+                  >
                     <input
                       type="checkbox"
                       name="addons"
                       value={addOn.id}
                       data-addon-checkbox
+                      data-service-ids={addOn.serviceIds.join(",")}
                     />
                     <span class="add-on-row__box" aria-hidden="true">✓</span>
                     <span>{addOn.name}</span>
@@ -391,6 +477,11 @@ const pricingVersion = "2026-07-29";
                   </label>
                 ))}
               </div>
+              <p data-headshot-purchase-note hidden>
+                Your Headshot Package includes one high-resolution digital
+                download with commercial usage. The online gallery offers
+                additional purchase options; Lisa confirms those prices with you.
+              </p>
             </div>
           </fieldset>
 
@@ -532,6 +623,10 @@ const pricingVersion = "2026-07-29";
             <div>
               <dt>Add-ons</dt>
               <dd data-receipt-addons>None</dd>
+            </div>
+            <div>
+              <dt>Travel</dt>
+              <dd data-receipt-travel>0 miles · Included</dd>
             </div>
           </dl>
           <div class="estimate-receipt__total">

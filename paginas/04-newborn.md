@@ -162,10 +162,10 @@ moment — I'm keeping a record of a family, and I take that seriously.
 
 **Where do newborn sessions take place?**
 
-Usually in your own home, anywhere in the Tri-Cities — Richland, Kennewick,
-Pasco and the surrounding areas. Depending on the time of year, we can also
-photograph outdoors in a beautiful spot nearby. There's no travel fee within
-the Tri-Cities.
+Usually in your own home across Richland, Kennewick, Pasco and the surrounding
+areas. Depending on the time of year, we can also photograph outdoors in a
+beautiful spot nearby. Travel up to 25 miles is included; beyond 25 miles, the
+fee is $2 per additional mile.
 
 **When should newborn photos be taken?**
 

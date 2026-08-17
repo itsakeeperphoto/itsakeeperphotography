@@ -102,7 +102,7 @@ const detailedService =
             breadcrumbName: "Professional Headshots",
             serviceType: "On-location professional and team headshot photography",
             description:
-              "Professional headshots photographed on location at the client's workplace using portable studio lighting and backdrops. Individual and full-team sessions available across Richland, Kennewick and Pasco, Washington.",
+              "Professional headshots photographed on location at the client's workplace using portable studio lighting and backdrops. The individual package is 20–30 minutes and includes one high-resolution digital download with commercial usage; team sessions receive a custom estimate.",
           }
         : entry.id === "branding"
           ? {
@@ -373,6 +373,38 @@ const detailedFaqSchema =
           },
         ],
       }
+    : entry.id === "headshots"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": `${canonical}#faq`,
+          mainEntity: (page.sections || [])
+            .find((section) => section.id === "headshot-questions")
+            ?.items?.filter(
+              (item) => item.heading && item.paragraphs?.[0],
+            )
+            .map((item) => ({
+              "@type": "Question",
+              name: item.heading,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.paragraphs?.[0],
+              },
+            })) || [],
+        }
+      : null;
+const detailedServiceOffer =
+  entry.id === "headshots"
+    ? {
+        "@type": "Offer",
+        "@id": `${canonical}#individual-headshot-offer`,
+        name: "Individual Headshot Package",
+        price: "175.00",
+        priceCurrency: "USD",
+        description:
+          "$175 plus applicable tax for a 20–30 minute session, one high-resolution digital download with commercial usage, and an online gallery with additional purchase options.",
+        url: canonical,
+      }
     : null;
 const detailedAdditionalSchema = detailedService
   ? [
@@ -395,6 +427,7 @@ const detailedAdditionalSchema = detailedService
         ],
         url: canonical,
         mainEntityOfPage: { "@id": `${canonical}#webpage` },
+        ...(detailedServiceOffer ? { offers: detailedServiceOffer } : {}),
       },
       ...(detailedFaqSchema ? [detailedFaqSchema] : []),
       {

@@ -124,10 +124,19 @@
 `src/lib/session-pricing.ts` es la única fuente para el estimador de Contact:
 
 - Servicios: Senior, Family, Newborn, Branding y Headshots.
-- Cobertura: #ONE `$160`, #TWO `$220`, #THREE `$330`.
-- Colecciones: ninguna `$0`, #1 `$495.98`, #2 `$1,169.48`, #3 `$1,799.99`.
-- Add-ons: imagen retocada `$25`, outfit `$20`, rush 48h `$75`.
-- Cinco personas incluidas; `$15` por persona adicional; 1–30 personas.
+- Senior, Family, Newborn y Branding usan cobertura #ONE `$160`, #TWO `$220`
+  y #THREE `$330`, las colecciones generales y los add-ons confirmados.
+- Headshots usa su paquete propio de `$175 + tax`: 20–30 minutos, una descarga
+  digital en alta resolución con uso comercial y galería online con compras
+  adicionales. No hereda colecciones ni add-ons generales.
+- Colecciones generales: ninguna `$0`, #1 `$495.98`, #2 `$1,169.48`,
+  #3 `$1,799.99`.
+- Add-ons generales: imagen retocada `$25`, outfit `$20`, rush 48h `$75`.
+- En los cuatro servicios generales hay cinco personas incluidas y `$15` por
+  persona adicional. Headshots individual incluye una persona; los equipos
+  reciben cotización personalizada porque no existe tarifa confirmada.
+- Viaje: las primeras 25 millas están incluidas y cada milla adicional suma
+  `$2` al estimado. Lisa confirma el kilometraje final antes del booking.
 - No existe add-on de segunda ubicación.
 
 La versión enviada con el formulario se define en
@@ -138,7 +147,9 @@ En Contact, el recibo, el desglose y los totales desktop/móvil se renderizan
 visibles en SSR con el paquete inicial #ONE y `$160`. La ruta contiene un único
 form `session-estimate`; nombre, email, teléfono e historia son obligatorios, y
 preferred timing es opcional. JavaScript recalcula en vivo las líneas, la
-fotografía, el total y los campos ocultos, pero no intercepta el submit. El
+fotografía, las millas de viaje, el total y los campos ocultos, filtra paquetes
+por servicio y marca equipos Headshots como cotización personalizada, pero no
+intercepta el submit. El
 navegador ejecuta el `POST` URL-encoded con `action="/thank-you/"` como
 navegación de documento, también cuando JavaScript está desactivado. No existen
 `fetch`, `preventDefault`, gate, reveal, estados locked/unlocked, timeout,
@@ -493,7 +504,9 @@ para evitar cambios silenciosos al repositorio.
   instancia de `session-estimate`, nombre/email/teléfono/historia requeridos,
   timing opcional, recibo y totales SSR visibles en `$160`, región live, campos
   calculados, acción nativa `/thank-you/` y ausencia completa de markup, script
-  y analítica del gate. Playwright lleva el total a `$955.98`, intercepta el
+  y analítica del gate. Playwright lleva el plan general a `$985.98` al añadir
+  40 millas de viaje —15 facturables, `$30`—, valida por separado el paquete
+  Headshots de `$175 + tax`, intercepta el
   POST URL-encoded como navegación de documento en 1440/1200/900/390 y repite
   el fallback sin JavaScript a 390 px. El contrato conserva
   `ContactPage`/`BreadcrumbList`, ausencia de un `Service` inventado, membresía
@@ -514,6 +527,12 @@ para evitar cambios silenciosos al repositorio.
   fuente y alt de cada superficie, mínimo 11 fuentes únicas por ruta, máximo
   dos usos por fuente, hero distinto del cierre y unicidad específica del
   mosaico Branding y el par Team Headshots.
+- Para Headshots también fija el paquete individual confirmado, seis FAQ
+  visibles y un único `FAQPage`, además de un `Service` con `Offer` de `$175`
+  USD. La descripción estructurada conserva `+ tax`, 20–30 minutos, una
+  descarga en alta resolución, uso comercial y galería online; no inventa
+  tarifa de equipo. La ruta sigue `draft/noindex` hasta una decisión explícita
+  de publicación.
 - Para Senior Timing fija el estado `draft/noindex`, metadata/canonical,
   `og:type=article`, tres pendientes literales y exclusión de sitemap/`llms.txt`.
   En el HTML exige 1 H1, 8 H2, 7 H3, cuatro anchors en orden, 11 imágenes con
@@ -606,6 +625,13 @@ conocimiento, idioma, perfiles sociales y la publicación verificable de
 Tri-Cities MOM Magazine de agosto de 2019. No emite `Service`, `FAQPage`,
 `Review`, `AggregateRating`, premio ni credencial.
 
+Para Headshots, `Base.astro` emite `WebPage`; `[slug].astro` añade un único
+`Service`, su `Offer` individual de `$175` USD, un `FAQPage` derivado 1:1 de
+las seis respuestas visibles y `BreadcrumbList`. El precio se describe como
+`$175 + tax`; equipos quedan en cotización personalizada. No se publican
+`Review`, `AggregateRating`, calle, coordenadas ni una tarifa de equipo. La
+ruta conserva `draft/noindex` y está fuera de crawler outputs.
+
 Para Contact, `Base.astro` emite un único `ContactPage` enlazado al negocio y
 `[slug].astro` añade `BreadcrumbList` Home → Session Pricing Estimate. La ruta
 no emite un `Service` de nivel superior, calle, coordenadas, `Review` ni
@@ -637,8 +663,8 @@ sitemap/`llms.txt` hasta resolver `[VALIDAR CON LISA]`,
 `[VALIDAR: formato exacto que ofrece Lisa]` y `[FECHA]`.
 
 Para Branding vs. Headshots, `Base.astro` emite un único `Article` y
-`journal/[slug].astro` lo enriquece con headline, `#lisa`, `#business`, fechas
-de publicación/modificación `2026-08-11`, imagen hero real,
+`journal/[slug].astro` lo enriquece con headline, `#lisa`, `#business`, fecha
+de publicación `2026-08-11` y modificación `2026-08-17`, imagen hero real,
 `mainEntityOfPage`, temas Branding/Headshots y cobertura
 Richland/Kennewick/Pasco. La ruta añade un único `FAQPage` derivado 1:1 de las
 tres preguntas visibles y `BreadcrumbList` Home → Journal → Branding Photos

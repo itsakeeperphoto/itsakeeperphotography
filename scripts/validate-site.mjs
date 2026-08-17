@@ -118,7 +118,7 @@ const homepageHeroContract = {
     "/uploads/kennewick-couple-open-field-golden-hour-mobile.webp",
 };
 const homepageBiographyContract = {
-  portrait: "/uploads/lisa-photographer-tricities.jpg",
+  portrait: "/uploads/about-lisa-camera-portrait-tricities.jpg",
   portraitAlt:
     "Lisa, owner of It’s A Keeper Photography, holding her camera in the Tri-Cities",
   printImage: "/uploads/about-lisa-camera-candid-black-white.jpg",
@@ -169,12 +169,12 @@ for (const [asset, expectedDigest] of [
 const homepageSessionCards = [
   {
     label: "Seniors",
-    image: "/uploads/senior-portrait-golden-hour-richland.jpg",
+    image: "/uploads/13.jpg",
     imageAlt: "High school senior in a black dress photographed at golden hour in Richland",
   },
   {
     label: "Families",
-    image: "/uploads/about-belief-family-golden-hour-tricities.jpg",
+    image: "/uploads/14.jpg",
     imageAlt: "Parents holding their young child close in warm evening light",
   },
   {
@@ -184,13 +184,13 @@ const homepageSessionCards = [
   },
   {
     label: "Branding",
-    image: "/uploads/about-lisa-camera-portrait-tricities.jpg",
-    imageAlt: "A photographer holding her camera during an outdoor portrait",
+    image: "/uploads/business-professional-working-laptop-richland-wa.jpg",
+    imageAlt: "Business man on his phone with laptop and coffee in Richland Tricots, WA",
   },
   {
     label: "Headshots",
-    image: "/uploads/review-lisa-griffith-headshot-tricities.jpg",
-    imageAlt: "A man in a black shirt seated against a dark studio backdrop",
+    image: "/uploads/11.jpg",
+    imageAlt: "A man in a blue suit seated against a dark studio backdrop",
   },
 ];
 const homepageSessionContract = (homepageContent.sessions?.cards || []).map(
@@ -212,16 +212,16 @@ for (const card of homepageSessionCards) {
 const homepageSeniorDigest = createHash("sha256")
   .update(
     await readFile(
-      path.join(root, "public", "uploads", "senior-portrait-golden-hour-richland.jpg"),
+      path.join(root, "public", "uploads", "13.jpg"),
     ),
   )
   .digest("hex");
 if (
   homepageSeniorDigest !==
-  "1a85d3e4c31018b57001d63a2a782eee3fb037e92f054680d3030ed8dc8a679c"
+  "96deb2d703ba68a76d8a584b5c758967ce43ace9a05d00d07cad07dd0f425240"
 ) {
   failures.push(
-    `public/uploads/senior-portrait-golden-hour-richland.jpg: protected Seniors image changed (${homepageSeniorDigest})`,
+    `public/uploads/13.jpg: protected Seniors image changed (${homepageSeniorDigest})`,
   );
 }
 const aboutSource = JSON.parse(
@@ -823,6 +823,7 @@ const brandingHeadshotsContract = {
     ],
     "what-is-a-headshot": [
       "A headshot is a professional portrait — usually shoulders-up, clean background, focused entirely on you. It lives on LinkedIn, your company's team page, conference programs, proposals and anywhere your name appears. A great headshot is warm, confident and current (that last one matters — a ten-year-old headshot works against you).",
+      "The individual Headshot Package is $175 plus tax: a 20–30 minute session, one high-resolution digital download with commercial usage, and an online gallery with additional purchase options. Team headshots are quoted from the headcount.",
     ],
     "which-does-your-business-need-first": [
       "You mainly need to look credible and current — you work for a company, you're job hunting, or your face appears in bios and proposals more than in marketing.",
@@ -849,9 +850,13 @@ const brandingHeadshotsContract = {
     "Lifestyle moments that show the experience of working with you",
   ],
   comparisonRows: [
-    ["What you get", "1–3 polished portraits", "A full library of varied images"],
+    [
+      "What you get",
+      "1 high-resolution digital download with commercial usage",
+      "A full library of varied images",
+    ],
     ["Focus", "You", "You + your work + your space + your story"],
-    ["Session length", "Under an hour", "Half a day, typically"],
+    ["Session length", "20–30 minutes", "Half a day, typically"],
     ["Where it lives", "LinkedIn, team page, bios", "Website, social, marketing, press"],
     ["Refresh cycle", "Every 2–3 years", "1–2 times a year"],
     [
@@ -2934,7 +2939,7 @@ for (const file of htmlFiles) {
       article?.author?.["@id"] !== `${expectedOrigin}/#lisa` ||
       article?.publisher?.["@id"] !== `${expectedOrigin}/#business` ||
       article?.datePublished !== "2026-08-11" ||
-      article?.dateModified !== "2026-08-11" ||
+      article?.dateModified !== "2026-08-17" ||
       article?.image !==
         `${expectedOrigin}/uploads/branding-chef-kitchen-richland-wa.jpg` ||
       article?.primaryImageOfPage?.url !==
@@ -3777,6 +3782,13 @@ const contactCalculatorScript = await readFile(
   path.join(root, "src", "scripts", "session-price-calculator.ts"),
   "utf8",
 );
+const sessionPricingSource = await readFile(
+  path.join(root, "src", "lib", "session-pricing.ts"),
+  "utf8",
+);
+const headshotsSource = JSON.parse(
+  await readFile(path.join(root, "content", "pages", "headshots.json"), "utf8"),
+);
 const runtimeManifestSource = await readFile(
   path.join(root, "src", "lib", "page-manifest.ts"),
   "utf8",
@@ -3875,13 +3887,13 @@ if (
   !/schemaType:\s*"Article"/.test(brandingHeadshotsManifestBlock) ||
   !/sitemap:\s*true/.test(brandingHeadshotsManifestBlock) ||
   !/llms:\s*true/.test(brandingHeadshotsManifestBlock) ||
-  !/lastModified:\s*"2026-08-11"/.test(brandingHeadshotsManifestBlock) ||
+  !/lastModified:\s*"2026-08-17"/.test(brandingHeadshotsManifestBlock) ||
   !/title:\s*"Branding Photos vs\. Headshots: What's the Difference\?"/.test(
     brandingHeadshotsManifestBlock,
   )
 ) {
   failures.push(
-    "page-manifest.ts: Branding vs. Headshots must retain ready/index Article gates, exact title and 2026-08-11 lastModified",
+    "page-manifest.ts: Branding vs. Headshots must retain ready/index Article gates, exact title and 2026-08-17 lastModified",
   );
 }
 const homepageHero = sectionById(homepage, "home");
@@ -4082,8 +4094,11 @@ if (contactFormMatches.length !== 1) {
   const emailField = inputByName("email");
   const phoneField = inputByName("phone");
   const preferredTimingField = inputByName("preferred_timing");
+  const travelMilesField = inputByName("travel_miles");
   const storyField = textareaByName("story");
   const estimatedTotalField = inputByName("estimated_total");
+  const billableTravelMilesField = inputByName("billable_travel_miles");
+  const travelFeeField = inputByName("travel_fee");
 
   if (
     htmlAttribute(formNameField, "type") !== "hidden" ||
@@ -4110,6 +4125,19 @@ if (contactFormMatches.length !== 1) {
     hasHtmlAttribute(preferredTimingField, "required")
   ) {
     failures.push("contact: preferred timing must exist and remain optional");
+  }
+  if (
+    htmlAttribute(travelMilesField, "type") !== "number" ||
+    htmlAttribute(travelMilesField, "min") !== "0" ||
+    htmlAttribute(travelMilesField, "step") !== "1" ||
+    hasHtmlAttribute(travelMilesField, "required") ||
+    htmlAttribute(billableTravelMilesField, "type") !== "hidden" ||
+    htmlAttribute(billableTravelMilesField, "data-estimate-field") !==
+      "billable_travel_miles" ||
+    htmlAttribute(travelFeeField, "type") !== "hidden" ||
+    htmlAttribute(travelFeeField, "data-estimate-field") !== "travel_fee"
+  ) {
+    failures.push("contact: optional travel input or calculated travel fields are invalid");
   }
   if (
     [nameField, emailField, phoneField, preferredTimingField, storyField].some(
@@ -4193,10 +4221,43 @@ for (const marker of [
   "data-receipt-people",
   "data-receipt-collection",
   "data-receipt-addons",
+  "data-receipt-travel",
 ]) {
   if (!receiptSource.includes(marker)) {
     failures.push(`contact: visible receipt is missing ${marker}`);
   }
+}
+
+const confirmedTravelPolicy =
+  "Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile.";
+if (
+  !contactContent.sections
+    ?.find((section) => section.id === "where-i-work")
+    ?.paragraphs?.some((paragraph) => paragraph.includes(confirmedTravelPolicy)) ||
+  !contact.includes("The first 25 miles are included") ||
+  !contact.includes("$2 per additional mile") ||
+  !/TRAVEL_INCLUDED_MILES\s*=\s*25/.test(sessionPricingSource) ||
+  !/TRAVEL_PRICE_PER_MILE_CENTS\s*=\s*200/.test(sessionPricingSource)
+) {
+  failures.push("contact: confirmed 25-mile / $2-per-additional-mile travel policy is incomplete");
+}
+const headshotPackageFacts = [
+  "$175 plus tax",
+  "20–30 minute session",
+  "one high-resolution digital download with commercial usage",
+  "online gallery with additional purchase options",
+];
+const serializedHeadshots = JSON.stringify(headshotsSource);
+if (
+  headshotsSource.contentStatus !== "draft" ||
+  headshotsSource.searchVisibility !== "noindex" ||
+  !Array.isArray(headshotsSource.pending) ||
+  headshotsSource.pending.length !== 0 ||
+  headshotPackageFacts.some((fact) => !serializedHeadshots.includes(fact)) ||
+  !/priceCents:\s*17_500/.test(sessionPricingSource) ||
+  !/serviceIds:\s*\["headshots"\]/.test(sessionPricingSource)
+) {
+  failures.push("headshots: confirmed individual package or draft/noindex QA gate is invalid");
 }
 if (
   normalizedText(mobileBarMatch?.[2] || "") !==
@@ -4541,17 +4602,23 @@ if (mode === "staging") {
   if (sitemap.includes("/portfolio/") || llms.includes("/portfolio/")) {
     failures.push("crawler outputs: retired Portfolio route must remain absent");
   }
+  const homeSitemapEntry = sitemap.match(
+    /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
+  )?.[0] || "";
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(homeSitemapEntry)) {
+    failures.push("sitemap.xml: Homepage lastmod must be 2026-08-17");
+  }
   const pascoSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/pasco-wa-photographer\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
   )?.[0] || "";
-  if (!/<lastmod>2026-08-09<\/lastmod>/.test(pascoSitemapEntry)) {
-    failures.push("sitemap.xml: Pasco lastmod must be 2026-08-09");
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(pascoSitemapEntry)) {
+    failures.push("sitemap.xml: Pasco lastmod must be 2026-08-17");
   }
   const newbornSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/newborn-photographer-tri-cities-wa\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
   )?.[0] || "";
-  if (!/<lastmod>2026-08-10<\/lastmod>/.test(newbornSitemapEntry)) {
-    failures.push("sitemap.xml: Newborn lastmod must be 2026-08-10");
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(newbornSitemapEntry)) {
+    failures.push("sitemap.xml: Newborn lastmod must be 2026-08-17");
   }
   const aboutSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/about\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
@@ -4568,8 +4635,8 @@ if (mode === "staging") {
   const contactSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/contact\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
   )?.[0] || "";
-  if (!/<lastmod>2026-08-11<\/lastmod>/.test(contactSitemapEntry)) {
-    failures.push("sitemap.xml: Contact lastmod must be 2026-08-11");
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(contactSitemapEntry)) {
+    failures.push("sitemap.xml: Contact lastmod must be 2026-08-17");
   }
   const journalHubSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
@@ -4580,10 +4647,18 @@ if (mode === "staging") {
   const brandingHeadshotsSitemapEntry = sitemap.match(
     /<url>(?:(?!<\/url>)[\s\S])*?<loc>https:\/\/www\.itsakeeperphotography\.com\/journal\/branding-photos-vs-headshots\/<\/loc>(?:(?!<\/url>)[\s\S])*?<\/url>/,
   )?.[0] || "";
-  if (!/<lastmod>2026-08-11<\/lastmod>/.test(brandingHeadshotsSitemapEntry)) {
+  if (!/<lastmod>2026-08-17<\/lastmod>/.test(brandingHeadshotsSitemapEntry)) {
     failures.push(
-      "sitemap.xml: Branding vs. Headshots lastmod must be 2026-08-11",
+      "sitemap.xml: Branding vs. Headshots lastmod must be 2026-08-17",
     );
+  }
+  for (const city of ["richland", "kennewick"]) {
+    const cityEntry = sitemap.match(
+      new RegExp(`<url>(?:(?!<\\/url>)[\\s\\S])*?<loc>https:\\/\\/www\\.itsakeeperphotography\\.com\\/${city}-wa-photographer\\/<\\/loc>(?:(?!<\\/url>)[\\s\\S])*?<\\/url>`),
+    )?.[0] || "";
+    if (!/<lastmod>2026-08-17<\/lastmod>/.test(cityEntry)) {
+      failures.push(`sitemap.xml: ${city} lastmod must be 2026-08-17`);
+    }
   }
   if (!/Sitemap: https:\/\/www\.itsakeeperphotography\.com\/sitemap\.xml/.test(robots)) {
     failures.push("robots.txt: release sitemap declaration is missing");

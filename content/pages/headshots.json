@@ -10,7 +10,7 @@
   "hero": {
     "tone": "earth",
     "heading": "Professional Headshots in the Tri-Cities, WA",
-    "intro": "Warm, confident headshots photographed at your Richland, Kennewick or Pasco workplace — I bring the studio, you bring about twenty minutes.",
+    "intro": "Warm, confident headshots photographed at your Richland, Kennewick or Pasco workplace — I bring the studio, you bring 20–30 minutes.",
     "image": "/uploads/business-professional-working-laptop-richland-wa.jpg",
     "imageAlt": "Business professional working at a laptop during a Richland branding session.",
     "secondaryImage": "/uploads/professional-headshot-woman-neutral-backdrop.jpg",
@@ -50,7 +50,8 @@
       "paragraphs": [
         "Your headshot arrives before you do. LinkedIn, your company's team page, the conference program, the proposal, the \"about\" page someone checks before they ever pick up the phone.",
         "It deserves better than a cropped wedding photo or the one from three jobs ago that you keep meaning to replace.",
-        "Mine are warm and genuinely you — professional enough for the boardroom, human enough that someone feels like they've already met you. Which, in a community like the Tri-Cities, is most of the reason people call."
+        "Mine are warm and genuinely you — professional enough for the boardroom, human enough that someone feels like they've already met you. Which, in a community like the Tri-Cities, is most of the reason people call.",
+        "The individual Headshot Package is $175 plus tax. It includes a 20–30 minute session, one high-resolution digital download with commercial usage, and an online gallery with additional purchase options."
       ]
     },
     {
@@ -111,13 +112,13 @@
         {
           "heading": "We shoot.",
           "paragraphs": [
-            "Guided the whole way, with a few variations for options. Individuals are usually done well within the hour."
+            "Guided the whole way, with a few variations for options. The individual Headshot Package is a 20–30 minute session."
           ]
         },
         {
           "heading": "You choose.",
           "paragraphs": [
-            "A gallery of edited images, retouched honestly — I'll take care of the temporary things and leave you looking like you."
+            "Your online gallery includes one high-resolution digital download with commercial usage, with additional purchase options available. I'll retouch honestly — taking care of the temporary things and leaving you looking like you."
           ]
         }
       ]
@@ -145,7 +146,7 @@
         {
           "heading": "How long does a headshot session take?",
           "paragraphs": [
-            "Usually under an hour for an individual. Team sessions depend on headcount — most teams are done in a morning."
+            "The individual Headshot Package is 20–30 minutes. Team sessions depend on headcount — send me the number of people and I'll confirm the schedule and a custom team estimate."
           ]
         },
         {
@@ -183,7 +184,7 @@
     "tone": "walnut",
     "heading": "Let's Update That Profile Photo",
     "paragraphs": [
-      "Tell me where your headshot needs to work and when you need it."
+      "Tell me where your headshot needs to work and when you need it. The individual package is $175 plus tax; team pricing is confirmed from your headcount."
     ],
     "image": "/uploads/business-team-meeting-richland-wa.jpg",
     "imageAlt": "Four professionals collaborating around a table in a bright Richland office.",
@@ -192,7 +193,5 @@
       "href": "/contact/"
     }
   },
-  "pending": [
-    "[PENDIENTE: duración y entregables exactos por paquete]"
-  ]
+  "pending": []
 }

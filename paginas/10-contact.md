@@ -170,7 +170,8 @@ that matters.
 **(509) 948-7322**
 
 I photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the
-countryside around them — with no travel fee anywhere in the area. Sessions
+countryside around them. Travel up to 25 miles is included; beyond 25 miles,
+the fee is $2 per additional mile. Sessions
 happen outdoors at golden hour, at a location we choose together, except
 newborn sessions, which happen in your home.
 

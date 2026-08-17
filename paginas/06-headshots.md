@@ -42,7 +42,7 @@ H1  Professional Headshots in the Tri-Cities, WA
 
 **H1:** Professional Headshots in the Tri-Cities, WA
 
-**Subhead:** Warm, confident headshots photographed at your Richland, Kennewick or Pasco workplace — I bring the studio, you bring about twenty minutes.
+**Subhead:** Warm, confident headshots photographed at your Richland, Kennewick or Pasco workplace — I bring the studio, you bring 20–30 minutes.
 
 **CTA:** Book Your Headshot → `/contact/`
 
@@ -65,6 +65,8 @@ Your headshot arrives before you do. LinkedIn, your company's team page, the con
 It deserves better than a cropped wedding photo or the one from three jobs ago that you keep meaning to replace.
 
 Mine are warm and genuinely *you* — professional enough for the boardroom, human enough that someone feels like they've already met you. Which, in a community like the Tri-Cities, is most of the reason people call.
+
+The individual Headshot Package is $175 plus tax. It includes a 20–30 minute session, one high-resolution digital download with commercial usage, and an online gallery with additional purchase options.
 
 ---
 
@@ -90,10 +92,8 @@ If your team page is currently a patchwork of selfies, vacation crops and photos
 
 1. **Quick planning.** Where the headshot needs to work, what to wear, and the impression you want to give.
 2. **I arrive and set up.** Portable lighting and backdrop, in whatever space you've got.
-3. **We shoot.** Guided the whole way, with a few variations for options. Individuals are usually done well within the hour.
-4. **You choose.** A gallery of edited images, retouched honestly — I'll take care of the temporary things and leave you looking like you.
-
-`[PENDIENTE: duración y entregables exactos por paquete]`
+3. **We shoot.** Guided the whole way, with a few variations for options. The individual Headshot Package is a 20–30 minute session.
+4. **You choose.** Your online gallery includes one high-resolution digital download with commercial usage, with additional purchase options available. I'll retouch honestly — taking care of the temporary things and leaving you looking like you.
 
 ---
 
@@ -106,7 +106,7 @@ No — I bring one to you. Portable studio lighting and backdrops set up at your
 Solid colors near your face photograph best. Avoid busy patterns and large logos. Bring two or three options and I'll help you choose when I arrive.
 
 **H3: How long does a headshot session take?**
-Usually under an hour for an individual. Team sessions depend on headcount — most teams are done in a morning.
+The individual Headshot Package is 20–30 minutes. Team sessions depend on headcount — send me the number of people and I'll confirm the schedule and a custom team estimate.
 
 **H3: Do you retouch headshots?**
 Gently and honestly. A blemish, a stray hair, a collar sitting oddly. What I won't do is smooth you into someone else — you should still look like you on a very good day.
@@ -121,7 +121,7 @@ Yes, and that's usually how it's done. Send me a headcount and I'll build a sche
 
 **H2: Let's Update That Profile Photo**
 
-Tell me where your headshot needs to work and when you need it.
+Tell me where your headshot needs to work and when you need it. The individual package is $175 plus tax; team pricing is confirmed from your headcount.
 
 **CTA:** Book your headshot → `/contact/`
 
@@ -177,7 +177,7 @@ duplican la narración para lectores de pantalla.
       "mainEntity": [
         {"@type": "Question", "name": "Do you have a headshot studio in the Tri-Cities?", "acceptedAnswer": {"@type": "Answer", "text": "No — portable studio lighting and backdrops are brought to the client's office, clinic or workplace anywhere in the Tri-Cities."}},
         {"@type": "Question", "name": "What should I wear for a professional headshot?", "acceptedAnswer": {"@type": "Answer", "text": "Solid colors near the face photograph best. Busy patterns and large logos are best avoided. Bringing two or three options allows for guidance on site."}},
-        {"@type": "Question", "name": "How long does a headshot session take?", "acceptedAnswer": {"@type": "Answer", "text": "Usually under an hour for an individual. Team sessions depend on headcount and are typically completed in a single morning."}},
+        {"@type": "Question", "name": "How long does a headshot session take?", "acceptedAnswer": {"@type": "Answer", "text": "The individual Headshot Package is 20–30 minutes. Team sessions depend on headcount and receive a custom schedule and estimate."}},
         {"@type": "Question", "name": "Can you photograph an entire team's headshots in one visit?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Team headshots are photographed on site in a single visit, scheduled around the workday."}}
       ]
     },
@@ -202,9 +202,10 @@ duplican la narración para lectores de pantalla.
 
 ## Estado de implementación y media — 2026-08-11
 
-- La ruta continúa `draft/noindex` y permanece fuera de sitemap y `llms.txt`.
-  La actualización fotográfica no resuelve el pendiente de duración y
-  entregables por paquete, por lo que no autoriza publicar.
+- La ruta continúa `draft/noindex` hasta completar su QA de publicación. La
+  duración, precio y entregables del paquete individual quedaron confirmados
+  el 2026-08-17; los equipos se cotizan desde el headcount y no se inventa una
+  tarifa por persona.
 - La selección combina las carpetas verificadas `Branding photos` de Richland,
   Kennewick y West Richland con el inventario Headshot auditado en Drive. El
   render contiene 14 superficies fotográficas, 11 fuentes únicas y un máximo

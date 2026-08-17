@@ -173,7 +173,7 @@ _(Mantener las 3 citas actuales; añadir atribución con nombre real cuando Lisa
 **H2:** Questions Families Ask Me
 
 **H3: What areas do you serve?**
-I'm based in Richland, Washington, and photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the surrounding areas, with no travel fee anywhere in the area. Most sessions happen outdoors at golden hour, at a location we choose together. Newborn sessions happen in your home.
+I'm based in Richland, Washington, and photograph throughout the Tri-Cities — Richland, Kennewick, Pasco and the surrounding areas. Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile. Most sessions happen outdoors at golden hour, at a location we choose together. Newborn sessions happen in your home.
 
 **H3: How far in advance should I book?**
 I reserve most sessions four to six weeks ahead. May through October is my busiest season and fall dates fill first every year, so if you're picturing autumn light, reach out in late summer.
@@ -300,7 +300,7 @@ _(Internal linking de footer = refuerzo de arquitectura en todo el sitio.)_
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": "What areas do you serve?", "acceptedAnswer": {"@type": "Answer", "text": "Based in Richland, Washington, photographing throughout the Tri-Cities — Richland, Kennewick, Pasco and surrounding areas — with no travel fee. Most sessions are outdoors at golden hour; newborn sessions take place in the client's home."}},
+        {"@type": "Question", "name": "What areas do you serve?", "acceptedAnswer": {"@type": "Answer", "text": "Based in Richland, Washington, photographing throughout the Tri-Cities — Richland, Kennewick, Pasco and surrounding areas. Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile. Most sessions are outdoors at golden hour; newborn sessions take place in the client's home."}},
         {"@type": "Question", "name": "How far in advance should I book a photo session?", "acceptedAnswer": {"@type": "Answer", "text": "Most sessions are reserved four to six weeks ahead. May through October is peak season and fall dates fill first."}},
         {"@type": "Question", "name": "What if we're awkward in front of the camera?", "acceptedAnswer": {"@type": "Answer", "text": "Almost everyone feels nervous at first. Sessions are fully guided with gentle prompts, so clients always know what to do."}},
         {"@type": "Question", "name": "How long until we see our photos?", "acceptedAnswer": {"@type": "Answer", "text": "About two weeks until an in-person gallery viewing, with final images following roughly a week after selection."}},

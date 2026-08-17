@@ -57,13 +57,15 @@ The point is variety and consistency: months of website, social, newsletter and 
 
 A headshot is a professional portrait — usually shoulders-up, clean background, focused entirely on you. It lives on LinkedIn, your company's team page, conference programs, proposals and anywhere your name appears. A great headshot is warm, confident and current (that last one matters — a ten-year-old headshot works against you).
 
+The individual Headshot Package is $175 plus tax: a 20–30 minute session, one high-resolution digital download with commercial usage, and an online gallery with additional purchase options. Team headshots are quoted from the headcount.
+
 **H2: Side by Side: Branding Photos vs. Headshots**
 
 | | **Headshot** | **Branding photos** |
 |---|---|---|
-| What you get | 1–3 polished portraits | A full library of varied images |
+| What you get | 1 high-resolution digital download with commercial usage | A full library of varied images |
 | Focus | You | You + your work + your space + your story |
-| Session length | Under an hour | Half a day, typically |
+| Session length | 20–30 minutes | Half a day, typically |
 | Where it lives | LinkedIn, team page, bios | Website, social, marketing, press |
 | Refresh cycle | Every 2–3 years | 1–2 times a year |
 | Best first step for | Employees, job seekers, professionals | Business owners, personal brands |
@@ -154,7 +156,7 @@ intrínsecas y variantes WebP responsive 400/640/960/1440 existentes.
       "author": {"@id": "https://www.itsakeeperphotography.com/#lisa"},
       "publisher": {"@id": "https://www.itsakeeperphotography.com/#business"},
       "datePublished": "2026-08-11",
-      "dateModified": "2026-08-11",
+      "dateModified": "2026-08-17",
       "url": "https://www.itsakeeperphotography.com/journal/branding-photos-vs-headshots/"
     },
     {
@@ -179,7 +181,8 @@ intrínsecas y variantes WebP responsive 400/640/960/1440 existentes.
 
 La implementación emite exactamente un `Article`, un `FAQPage` derivado 1:1
 de las tres preguntas visibles y un `BreadcrumbList` Home → Journal → Branding
-Photos vs. Headshots. El `Article` usa la fecha autorizada `2026-08-11`, la
+Photos vs. Headshots. El `Article` conserva `datePublished: 2026-08-11` y usa
+`dateModified: 2026-08-17`; la
 imagen real del hero, autor `#lisa`, publisher `#business`, tema Branding /
 Headshots y cobertura Richland/Kennewick/Pasco. No añade `Service`, `Offer`,
 duración estructurada, precio, `Review`, `AggregateRating`, calle ni
@@ -208,7 +211,7 @@ coordenadas.
   visible por defecto y `prefers-reduced-motion` la desactiva. En móvil la
   costura pasa de vertical a horizontal y la tabla mantiene wrapping sin
   `min-width` que provoque overflow.
-- La ruta queda `ready/index`, `lastModified: 2026-08-11`, sin header release
+- La ruta queda `ready/index`, `lastModified: 2026-08-17`, sin header release
   noindex y dentro de sitemap y `llms.txt`. Staging permanece globalmente
   noindex con sitemap vacío.
 

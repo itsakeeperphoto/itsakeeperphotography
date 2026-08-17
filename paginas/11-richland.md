@@ -120,7 +120,7 @@ Peak season here runs May through October, and fall books out first. But I photo
 No — and it's a deliberate choice. My work is outdoors in natural light, and the Tri-Cities gives us better light than any studio I could build. Newborn sessions happen in your home, and for headshots I bring portable studio equipment to your workplace.
 
 **H3: Do you photograph in West Richland too?**
-Yes. West Richland, north Richland, the whole area — there's no travel fee anywhere in the Tri-Cities.
+Yes. West Richland, north Richland and the surrounding area are part of my regular coverage. Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile.
 
 **H3: Where's the best place to take photos in Richland?**
 Honestly, it depends on the season, the time of day and who's in front of the camera. That's what your planning call is for — I'll bring you options with the light already worked out.
@@ -193,7 +193,7 @@ no sirven para ampliar el número de sesiones de la galería.
       "@type": "FAQPage",
       "mainEntity": [
         {"@type": "Question", "name": "Do you have a studio in Richland?", "acceptedAnswer": {"@type": "Answer", "text": "No — and it's a deliberate choice. My work is outdoors in natural light, and the Tri-Cities gives us better light than any studio I could build. Newborn sessions happen in your home, and for headshots I bring portable studio equipment to your workplace."}},
-        {"@type": "Question", "name": "Do you photograph in West Richland too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. West Richland, north Richland, the whole area — there's no travel fee anywhere in the Tri-Cities."}},
+        {"@type": "Question", "name": "Do you photograph in West Richland too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. West Richland, north Richland and the surrounding area are part of regular coverage. Travel up to 25 miles is included; beyond 25 miles, the fee is $2 per additional mile."}},
         {"@type": "Question", "name": "Where's the best place to take photos in Richland?", "acceptedAnswer": {"@type": "Answer", "text": "Honestly, it depends on the season, the time of day and who's in front of the camera. That's what your planning call is for — I'll bring you options with the light already worked out."}},
         {"@type": "Question", "name": "How far ahead should I book?", "acceptedAnswer": {"@type": "Answer", "text": "Four to six weeks for most sessions. If you want autumn light, reach out in late summer — those dates go first every single year."}}
       ]

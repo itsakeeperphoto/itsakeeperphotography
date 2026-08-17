@@ -5,6 +5,11 @@
 las páginas comerciales y los dos artículos terminados de `draft/noindex` a
 `ready/index`.
 
+> **Actualización 2026-08-17:** Lisa confirmó el paquete individual de
+> Headshots y la política de viaje. Esas respuestas se registran abajo; las
+> preguntas de equipos y los demás servicios continúan abiertas. La versión
+> `.docx` anterior no debe reenviarse sin regenerarla desde este Markdown.
+
 ## Alcance
 
 Este documento cubre solamente:
@@ -188,23 +193,16 @@ mismo tiempo.
 
 ## 4. Headshots
 
-El copy actual mezcla “about twenty minutes”, “well within the hour” y “usually
-under an hour”. Necesitamos distinguir tiempo frente a cámara de duración total.
+**Respuesta recibida el 2026-08-17 para el paquete individual:**
 
-**4.1 Duración individual**
+- [x] Sesión de 20–30 minutos.
+- [x] Una descarga digital en alta resolución.
+- [x] Uso comercial incluido para esa descarga.
+- [x] Galería online con opciones de compra adicionales.
+- [x] `$175 + tax`.
 
-- Tiempo frente a cámara: ______________________
-- Duración total con montaje: __________________
-
-**4.2 Entrega individual**
-
-- Número de fotografías finales: ______________________
-- [ ] Se entregan 1–3 retratos.
-- [ ] Hay galería de selección.
-- Retoque incluido: ____________________________________________________
-- Formato/resolución: __________________________________________________
-- Turnaround: __________________________________________________________
-- Derechos de uso: _____________________________________________________
+No se infiere el turnaround, el número de fotografías mostradas en la galería,
+el precio de compras adicionales ni el tiempo de montaje.
 
 **4.3 Equipos**
 
@@ -216,6 +214,9 @@ under an hour”. Necesitamos distinguir tiempo frente a cámara de duración to
 - [ ] Usa los paquetes generales.
 - Mínimo de setup/facturación, si existe: _______________________________
 - Fee de desplazamiento, si existe: ____________________________________
+
+Hasta recibir esa tabla, el sitio solicita headcount y muestra “custom
+estimate”; no calcula un precio por persona, equipo ni tiempo.
 
 El estudio portátil/on-site ya está tratado como un hecho confirmado; no hace
 falta volver a demostrarlo salvo que el servicio haya cambiado.
@@ -261,7 +262,8 @@ Responder **Unchanged** o corregir:
 - Galería online activa alrededor de un mes: __________________________
 - Gallery viewing en unas 2 semanas + finales una semana después: ______
 - Prints ~2 semanas; albums ~3; wood prints ~1 mes: ____________________
-- Sin travel fee dentro de Tri-Cities: _________________________________
+- [x] Viaje: primeras 25 millas incluidas; después `$2` por milla adicional
+  (confirmado 2026-08-17).
 
 ---
 

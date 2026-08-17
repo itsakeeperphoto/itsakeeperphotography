@@ -6,6 +6,7 @@ import {
   SESSION_ADD_ONS,
   SESSION_PACKAGES,
   SESSION_SERVICES,
+  TRAVEL_INCLUDED_MILES,
   calculateEstimate,
   formatUsd,
   type PhotoCollectionId,
@@ -90,6 +91,16 @@ const normalizePeople = (input: HTMLInputElement): number => {
   return people;
 };
 
+const normalizeTravelMiles = (input: HTMLInputElement): number => {
+  const parsedValue = Number(input.value);
+  const miles = Number.isFinite(parsedValue)
+    ? Math.max(0, Math.trunc(parsedValue))
+    : 0;
+
+  input.value = String(miles);
+  return miles;
+};
+
 const isValidatableControl = (
   element: Element,
 ): element is ValidatableControl =>
@@ -105,6 +116,7 @@ const initializePlanner = (planner: HTMLElement): void => {
     "[data-session-estimate-form]",
   );
   const peopleInput = query<HTMLInputElement>(planner, "[data-people-input]");
+  const travelInput = query<HTMLInputElement>(planner, "[data-travel-input]");
   const decreaseButton = query<HTMLButtonElement>(
     planner,
     "[data-people-decrease]",
@@ -112,6 +124,14 @@ const initializePlanner = (planner: HTMLElement): void => {
   const increaseButton = query<HTMLButtonElement>(
     planner,
     "[data-people-increase]",
+  );
+  const travelDecreaseButton = query<HTMLButtonElement>(
+    planner,
+    "[data-travel-decrease]",
+  );
+  const travelIncreaseButton = query<HTMLButtonElement>(
+    planner,
+    "[data-travel-increase]",
   );
   const receipt = query<HTMLElement>(planner, "[data-estimate-receipt]");
   const receiptImage = query<HTMLImageElement>(
@@ -134,7 +154,71 @@ const initializePlanner = (planner: HTMLElement): void => {
     planner.querySelectorAll<HTMLElement>("[data-planner-phase]"),
   );
 
-  if (!form || !peopleInput) return;
+  if (!form || !peopleInput || !travelInput) return;
+
+  const isAvailableForService = (
+    control: HTMLInputElement,
+    serviceId: SessionServiceId,
+  ): boolean =>
+    (control.dataset.serviceIds || "")
+      .split(",")
+      .filter(Boolean)
+      .includes(serviceId);
+
+  const syncAvailableChoices = (serviceId: SessionServiceId): void => {
+    const syncRadioGroup = (
+      rowSelector: string,
+      inputSelector: string,
+    ): void => {
+      const rows = Array.from(
+        form.querySelectorAll<HTMLElement>(rowSelector),
+      );
+      const availableInputs: HTMLInputElement[] = [];
+
+      rows.forEach((row) => {
+        const input = query<HTMLInputElement>(row, inputSelector);
+        if (!input) return;
+        const available = isAvailableForService(input, serviceId);
+        row.hidden = !available;
+        input.disabled = !available;
+        if (!available) input.checked = false;
+        if (available) availableInputs.push(input);
+      });
+
+      if (!availableInputs.some((input) => input.checked)) {
+        const firstAvailable = availableInputs[0];
+        if (firstAvailable) firstAvailable.checked = true;
+      }
+    };
+
+    syncRadioGroup("[data-package-row]", "[data-package-radio]");
+    syncRadioGroup("[data-collection-row]", "[data-collection-radio]");
+
+    form
+      .querySelectorAll<HTMLElement>("[data-addon-row]")
+      .forEach((row) => {
+        const input = query<HTMLInputElement>(row, "[data-addon-checkbox]");
+        if (!input) return;
+        const available = isAvailableForService(input, serviceId);
+        row.hidden = !available;
+        input.disabled = !available;
+        if (!available) input.checked = false;
+      });
+
+    const isHeadshot = serviceId === "headshots";
+    const headshotPurchaseNote = query<HTMLElement>(
+      form,
+      "[data-headshot-purchase-note]",
+    );
+    if (headshotPurchaseNote) headshotPurchaseNote.hidden = !isHeadshot;
+    setText(
+      form,
+      "[data-people-policy]",
+      isHeadshot
+        ? "The individual Headshot Package covers one person. Add the full headcount for a team and Lisa will confirm a custom team estimate."
+        : "Five are included; each additional person adds $15.",
+    );
+  };
 
   const setActivePhase = (phaseName: string): void => {
     progressButtons.forEach((button) => {
@@ -182,6 +266,11 @@ const initializePlanner = (planner: HTMLElement): void => {
       form,
       "[data-service-radio]:checked",
     );
+    if (!serviceRadio) return;
+
+    const serviceId = serviceRadio.value as SessionServiceId;
+    syncAvailableChoices(serviceId);
+
     const packageRadio = query<HTMLInputElement>(
       form,
       "[data-package-radio]:checked",
@@ -191,12 +280,12 @@ const initializePlanner = (planner: HTMLElement): void => {
       "[data-collection-radio]:checked",
     );
 
-    if (!serviceRadio || !packageRadio || !collectionRadio) return;
+    if (!packageRadio || !collectionRadio) return;
 
-    const serviceId = serviceRadio.value as SessionServiceId;
     const packageId = packageRadio.value as SessionPackageId;
     const collectionId = collectionRadio.value as PhotoCollectionId;
     const people = normalizePeople(peopleInput);
+    const travelMiles = normalizeTravelMiles(travelInput);
     const addOns: Partial<Record<SessionAddOnId, boolean>> = {};
 
     form
@@ -212,6 +301,7 @@ const initializePlanner = (planner: HTMLElement): void => {
         packageId,
         collectionId,
         people,
+        travelMiles,
         addOns,
       });
     } catch (error) {
@@ -235,31 +325,43 @@ const initializePlanner = (planner: HTMLElement): void => {
       estimate.breakdown.extraPeopleCents,
     );
     const formattedAddOnTotal = formatUsd(estimate.breakdown.addOnsCents);
+    const formattedTravelFee = formatUsd(estimate.breakdown.travelCents);
     const formattedTotal = formatUsd(estimate.totalCents);
+    const taxSuffix = serviceId === "headshots" ? " + tax" : "";
+    const formattedPackagePriceWithTax = `${formattedPackagePrice}${taxSuffix}`;
+    const formattedTotalWithTax = `${formattedTotal}${taxSuffix}`;
     const addOnNames = selectedAddOns.map((addOn) => addOn.name);
     const addOnLabel = addOnNames.length > 0 ? addOnNames.join(", ") : "None";
-    const peopleLabel =
-      estimate.breakdown.extraPeopleCount > 0
+    const peopleLabel = estimate.breakdown.extraPeopleRequireQuote
+      ? `${people} · Team pricing confirmed by Lisa`
+      : estimate.breakdown.extraPeopleCount > 0
         ? `${people} · ${estimate.breakdown.extraPeopleCount} extra · ${formattedExtraPeopleFee}`
         : `${people} · Included`;
     const collectionLabel =
       collection.id === "none"
         ? "No collection yet"
+        : collection.id === "headshotGallery"
+          ? "Included online gallery"
         : `Collection ${collection.name} · ${formattedCollectionPrice}`;
     const addOnReceiptLabel =
       selectedAddOns.length > 0
         ? `${addOnLabel} · ${formattedAddOnTotal}`
         : "None";
+    const travelLabel =
+      estimate.breakdown.billableTravelMiles > 0
+        ? `${travelMiles} miles · ${estimate.breakdown.billableTravelMiles} additional · ${formattedTravelFee}`
+        : `${travelMiles} miles · Included`;
 
     setText(planner, "[data-receipt-service]", serviceName);
     setText(
       planner,
       "[data-receipt-package]",
-      `${selectedPackage.name} · ${formattedPackagePrice}`,
+      `${selectedPackage.name} · ${formattedPackagePriceWithTax}`,
     );
     setText(planner, "[data-receipt-people]", peopleLabel);
     setText(planner, "[data-receipt-collection]", collectionLabel);
     setText(planner, "[data-receipt-addons]", addOnReceiptLabel);
+    setText(planner, "[data-receipt-travel]", travelLabel);
 
     if (receiptImage) {
       receiptImage.src = serviceImage;
@@ -267,21 +369,27 @@ const initializePlanner = (planner: HTMLElement): void => {
     }
 
     const totalChanged =
-      receiptTotal?.textContent?.trim() !== formattedTotal ||
-      mobileTotal?.textContent?.trim() !== formattedTotal;
-    if (receiptTotal) receiptTotal.textContent = formattedTotal;
-    if (mobileTotal) mobileTotal.textContent = formattedTotal;
+      receiptTotal?.textContent?.trim() !== formattedTotalWithTax ||
+      mobileTotal?.textContent?.trim() !== formattedTotalWithTax;
+    if (receiptTotal) receiptTotal.textContent = formattedTotalWithTax;
+    if (mobileTotal) mobileTotal.textContent = formattedTotalWithTax;
     if (totalChanged) {
       setText(
         planner,
         "[data-total-live]",
-        `Estimated total ${formattedTotal}.`,
+        `Estimated total ${formattedTotalWithTax}.`,
       );
       animateTotal(receiptTotal);
       animateTotal(mobileTotal);
     }
 
-    if (estimate.breakdown.extraPeopleCount > 0) {
+    if (estimate.breakdown.extraPeopleRequireQuote) {
+      setText(
+        planner,
+        "[data-people-status]",
+        `${people} people selected. Lisa will confirm custom team pricing.`,
+      );
+    } else if (estimate.breakdown.extraPeopleCount > 0) {
       const personWord =
         estimate.breakdown.extraPeopleCount === 1 ? "person" : "people";
       setText(
@@ -297,28 +405,63 @@ const initializePlanner = (planner: HTMLElement): void => {
       );
     }
 
+    if (estimate.breakdown.billableTravelMiles > 0) {
+      setText(
+        planner,
+        "[data-travel-status]",
+        `${estimate.breakdown.billableTravelMiles} miles beyond the included ${TRAVEL_INCLUDED_MILES} add ${formattedTravelFee}.`,
+      );
+    } else {
+      setText(
+        planner,
+        "[data-travel-status]",
+        `Travel up to ${TRAVEL_INCLUDED_MILES} miles is included.`,
+      );
+    }
+
     if (decreaseButton) decreaseButton.disabled = people <= MIN_PEOPLE;
     if (increaseButton) increaseButton.disabled = people >= MAX_PEOPLE;
+    if (travelDecreaseButton) travelDecreaseButton.disabled = travelMiles <= 0;
 
     setEstimateField(planner, "package_name", selectedPackage.name);
-    setEstimateField(planner, "package_price", formattedPackagePrice);
-    setEstimateField(planner, "extra_people_fee", formattedExtraPeopleFee);
+    setEstimateField(planner, "package_price", formattedPackagePriceWithTax);
+    setEstimateField(
+      planner,
+      "extra_people_fee",
+      estimate.breakdown.extraPeopleRequireQuote
+        ? "Custom team quote"
+        : formattedExtraPeopleFee,
+    );
+    setEstimateField(
+      planner,
+      "team_pricing_status",
+      estimate.breakdown.extraPeopleRequireQuote
+        ? "Requires custom team quote"
+        : "Not required",
+    );
     setEstimateField(planner, "collection_name", collection.name);
     setEstimateField(planner, "collection_price", formattedCollectionPrice);
     setEstimateField(planner, "selected_addons", addOnLabel);
     setEstimateField(planner, "addon_total", formattedAddOnTotal);
-    setEstimateField(planner, "estimated_total", formattedTotal);
+    setEstimateField(
+      planner,
+      "billable_travel_miles",
+      String(estimate.breakdown.billableTravelMiles),
+    );
+    setEstimateField(planner, "travel_fee", formattedTravelFee);
+    setEstimateField(planner, "estimated_total", formattedTotalWithTax);
     setEstimateField(planner, "calculation_status", "Calculated in browser");
     setEstimateField(
       planner,
       "estimate_breakdown",
       [
         `Session: ${serviceName}`,
-        `Package: ${selectedPackage.name} (${formattedPackagePrice})`,
-        `People: ${people} (${estimate.breakdown.extraPeopleCount} additional, ${formattedExtraPeopleFee})`,
+        `Package: ${selectedPackage.name} (${formattedPackagePriceWithTax})`,
+        `People: ${people} (${estimate.breakdown.extraPeopleRequireQuote ? "custom team quote required" : `${estimate.breakdown.extraPeopleCount} additional, ${formattedExtraPeopleFee}`})`,
         `Collection: ${collection.name} (${formattedCollectionPrice})`,
         `Add-ons: ${addOnLabel} (${formattedAddOnTotal})`,
-        `Estimated total: ${formattedTotal}`,
+        `Travel: ${travelMiles} miles (${estimate.breakdown.billableTravelMiles} additional, ${formattedTravelFee})`,
+        `Estimated total: ${formattedTotalWithTax}`,
       ].join("; "),
     );
   };
@@ -346,7 +489,7 @@ const initializePlanner = (planner: HTMLElement): void => {
     if (
       event.target instanceof Element &&
       event.target.matches(
-        "[data-service-radio], [data-package-radio], [data-collection-radio], [data-addon-checkbox], [data-people-input]",
+        "[data-service-radio], [data-package-radio], [data-collection-radio], [data-addon-checkbox], [data-people-input], [data-travel-input]",
       )
     ) {
       updateEstimate();
@@ -357,7 +500,7 @@ const initializePlanner = (planner: HTMLElement): void => {
     if (
       event.target instanceof Element &&
       event.target.matches(
-        "[data-service-radio], [data-package-radio], [data-collection-radio], [data-addon-checkbox], [data-people-input]",
+        "[data-service-radio], [data-package-radio], [data-collection-radio], [data-addon-checkbox], [data-people-input], [data-travel-input]",
       )
     ) {
       updateEstimate();
@@ -380,6 +523,20 @@ const initializePlanner = (planner: HTMLElement): void => {
     const people = normalizePeople(peopleInput);
     peopleInput.value = String(Math.min(MAX_PEOPLE, people + 1));
     peopleInput.removeAttribute("aria-invalid");
+    updateEstimate();
+  });
+
+  travelDecreaseButton?.addEventListener("click", () => {
+    const miles = normalizeTravelMiles(travelInput);
+    travelInput.value = String(Math.max(0, miles - 1));
+    travelInput.removeAttribute("aria-invalid");
+    updateEstimate();
+  });
+
+  travelIncreaseButton?.addEventListener("click", () => {
+    const miles = normalizeTravelMiles(travelInput);
+    travelInput.value = String(miles + 1);
+    travelInput.removeAttribute("aria-invalid");
     updateEstimate();
   });
 

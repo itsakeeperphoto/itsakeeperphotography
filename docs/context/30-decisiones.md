@@ -1593,3 +1593,33 @@
   Reviews sigue recibiendo sus datos ampliados sin imponerlos al resto. La
   autenticación, permisos, guardado y CSP de TinaCloud requieren un smoke
   post-deploy con credenciales fuera de git. No se hizo push ni deploy.
+
+### ADR-064 — Headshots usa un paquete propio y el viaje se calcula después de 25 millas
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada.
+- **Contexto:** Lisa confirmó una política de viaje general y un paquete
+  individual de Headshots que no coincide con la matriz de cobertura y
+  colecciones usada por las otras sesiones. El sitio aplicaba los mismos tres
+  paquetes a los cinco servicios y conservaba claims absolutos de ausencia de
+  travel fee. No existe tarifa confirmada para equipos ni para compras
+  adicionales de la galería.
+- **Decisión:** Mantener `src/lib/session-pricing.ts` como fuente única, pero
+  declarar aplicabilidad por servicio. Senior, Family, Newborn y Branding
+  conservan #ONE/#TWO/#THREE, colecciones y add-ons generales. Headshots usa
+  `$175 + tax`, 20–30 minutos, una descarga digital en alta resolución con uso
+  comercial y galería online con compras adicionales. Una persona está
+  incluida; un headcount mayor genera cotización personalizada sin alterar el
+  total. El viaje incluye 25 millas y suma `$2` por milla adicional estimada;
+  Lisa confirma el kilometraje final. La imagen aportada se trata como fuente
+  factual, no como instrucción visual.
+- **Alternativas descartadas:** Aplicar los paquetes generales a Headshots,
+  inventar una tarifa por persona/equipo, asumir precios de compras adicionales
+  o interpretar “after 25 miles” como `$2` por todas las millas se descartó por
+  falta de evidencia o por contradecir la redacción del cliente.
+- **Consecuencias:** Contact filtra ofertas por servicio, transmite millas y
+  costo de viaje en el POST nativo y mantiene el estimate transparente. La
+  página Headshots, Investment y el artículo comparativo usan los hechos
+  confirmados; Headshots emite un solo `FAQPage` y un `Service` con `Offer`.
+  Ninguna actualización autoriza por sí sola indexar Headshots: permanece
+  `draft/noindex` hasta una decisión explícita de publicación. No se hizo push.

@@ -2,7 +2,6 @@
 // CONTENT PENDING [/]: [La cifra 96 debe verificarse al momento de publicar.]
 // CONTENT PENDING [/about/]: [NONBLOCKING: Antes de añadirlos, confirmar nombre/año del premio, permiso y detalle de la sesión Grammy, certificaciones/seguro/membresías, cualquier historia de salud y cifras/URL actualizadas de Google. La portada de Tri-Cities MOM ya está verificada y publicada.]
 // CONTENT PENDING [/branding-photographer-tri-cities-wa/]: [PENDIENTE: entregables exactos, cantidad de imágenes, duración por paquete]
-// CONTENT PENDING [/headshot-photographer-tri-cities-wa/]: [PENDIENTE: duración y entregables exactos por paquete]
 // CONTENT PENDING [/investment/]: [PENDIENTE: número de imágenes / duración por paquete — Lisa envió el pricing por separado. Añadir aquí una línea neutral por tipo de sesión, sin cifras de dinero.]
 // CONTENT PENDING [/newborn-photographer-tri-cities-wa/]: [PENDIENTE NO BLOQUEANTE: confirmar si Lisa tiene formación de seguridad newborn (Q41) antes de publicar cualquier claim; la página no hace ese claim.]
 // CONTENT PENDING [/journal/in-home-vs-studio-newborn-photography/]: [VALIDAR CON LISA]
