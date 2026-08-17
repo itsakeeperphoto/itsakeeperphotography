@@ -1475,3 +1475,28 @@
   (`feat(pricing): add headshot package and travel fees`) y cierre documental
   local separado. No se hizo push, deploy, Search Console ni
   `./scripts/handoff.sh` porque el usuario autorizó commits locales solamente.
+
+### 2026-08-17 — Codex / GPT-5 — Headshots ready/index y señales SEO consolidadas
+
+- **Objetivo:** publicar Headshots y auditar schema, identidad Google,
+  `llms.txt` y GA4 de todas las páginas indexables antes de enviar el sitemap a
+  Search Console.
+- **Implementación:** Headshots pasa a `ready/index`, fecha `2026-08-17`,
+  sitemap/`llms.txt` y pierde su header release noindex. `Base.astro` añade el
+  WebPage de Home, conecta el Google Business Profile verificado por `sameAs` y
+  limita GA4/Clarity a release. `llms.txt` adopta secciones v2 y solo lista
+  páginas aprobadas.
+- **Schema/identidad:** las 13 URLs se validan contra un único LocalBusiness
+  `https://www.itsakeeperphotography.com/#business`, WebSite, tipo de página,
+  breadcrumbs y referencias Service/Article. No se inventó un Knowledge Graph
+  MID, dirección privada, geo, Review o AggregateRating.
+- **QA:** Tina 5/38/20/19, Tina/Astro release y staging 20 rutas, validators
+  20/20, sitemap/`llms.txt` 13/13 y sintaxis/diff PASS. Playwright interceptó
+  sin transmitir un único `page_view` GA4 con ID correcto en Headshots;
+  canonical, robots, seis tipos schema y consola 0/0 pasan. El wrapper completo
+  sigue bloqueado por siete JPEG fuente preexistentes sobredimensionados; no se
+  alteraron fuera de alcance.
+- **Git/operación:** implementación en `c9befdc`
+  (`feat(seo): publish headshots and harden site signals`) y cierre documental
+  local separado. No se hizo push, deploy, Search Console ni
+  `./scripts/handoff.sh`.

@@ -381,10 +381,12 @@ los POST como navegaciones de documento y no realizó envíos reales.
 
 - `src/layouts/Base.astro` carga Microsoft Clarity con project ID público
   `xyqkkqom4v` y Google tag/GA4 con measurement ID público
-  `G-0YW8M601L1` dentro del `<head>` compartido.
-- Los snippets se renderizan en las 20 rutas públicas, tanto en staging como en
-  release. No existe gating por entorno ni por consentimiento en el código
-  actual.
+  `G-0YW8M601L1` dentro del `<head>` compartido solo cuando
+  `SITE_MODE=release`.
+- Release emite exactamente un loader/config GA4 y una instancia Clarity por
+  ruta. Staging y desarrollo no cargan ninguno para no contaminar métricas.
+  Playwright interceptó el colector sin enviar datos reales y confirmó un único
+  `page_view` con el measurement ID correcto.
 - La revisión humana pendiente de Privacy debe considerar ambas herramientas;
   este registro técnico no sustituye una evaluación legal o de consentimiento.
 
@@ -531,8 +533,8 @@ para evitar cambios silenciosos al repositorio.
   visibles y un único `FAQPage`, además de un `Service` con `Offer` de `$175`
   USD. La descripción estructurada conserva `+ tax`, 20–30 minutos, una
   descarga en alta resolución, uso comercial y galería online; no inventa
-  tarifa de equipo. La ruta sigue `draft/noindex` hasta una decisión explícita
-  de publicación.
+  tarifa de equipo. También fija `ready/index`, fecha `2026-08-17`, membresía
+  exacta en sitemap/`llms.txt` y ausencia del antiguo header release noindex.
 - Para Senior Timing fija el estado `draft/noindex`, metadata/canonical,
   `og:type=article`, tres pendientes literales y exclusión de sitemap/`llms.txt`.
   En el HTML exige 1 H1, 8 H2, 7 H3, cuatro anchors en orden, 11 imágenes con
@@ -575,11 +577,12 @@ para evitar cambios silenciosos al repositorio.
 
 ## SEO/indexación actual
 
-En `release`, el manifiesto actualmente permite sitemap para doce rutas:
+En `release`, el manifiesto actualmente permite sitemap para trece rutas:
 
 - `/`
 - `/family-photographer-tri-cities-wa/`
 - `/newborn-photographer-tri-cities-wa/`
+- `/headshot-photographer-tri-cities-wa/`
 - `/about/`
 - `/reviews/`
 - `/contact/`
@@ -590,10 +593,10 @@ En `release`, el manifiesto actualmente permite sitemap para doce rutas:
 - `/journal/family-photo-locations-tri-cities/`
 - `/journal/branding-photos-vs-headshots/`
 
-`llms.txt` incluye Homepage, Family, Newborn, About, Reviews, Contact,
+`llms.txt` incluye Homepage, Family, Newborn, Headshots, About, Reviews, Contact,
 Richland, Kennewick, Pasco, Journal, Family Photo Locations y Branding vs.
-Headshots. Seniors, Branding, Headshots,
-Investment, Senior Timing, Newborn Comparison y Privacy siguen
+Headshots. Seniors, Branding, Investment, Senior Timing, Newborn Comparison y
+Privacy siguen
 `draft/noindex`.
 `/thank-you/` es noindex permanente. Los headers release de Journal deben
 enumerar las rutas draft explícitamente; un wildcard `/journal/*` bloquearía
@@ -603,7 +606,13 @@ también los artículos publicados. En
 permanece fuera del manifest, sitemap y `llms.txt`; no se bloquea en
 `robots.txt`, porque el status 404 y la meta son sus señales primarias.
 
-`Base.astro` emite WebSite, LocalBusiness, breadcrumbs y schema por familia.
+`Base.astro` emite WebSite, LocalBusiness y el schema principal por familia;
+Home incluye su propio `WebPage`. El negocio usa el `@id` canónico estable
+`https://www.itsakeeperphotography.com/#business` y enlaza Instagram, Facebook
+y el perfil Google Business verificado mediante `sameAs`. No se declara un
+Knowledge Graph MID porque no existe evidencia verificable, ni se exponen
+calle, código postal o coordenadas privadas. Las rutas interiores añaden sus
+breadcrumbs.
 También deriva `og:type`: `article` únicamente cuando `schemaType` es
 `Article`, y `website` para las demás familias.
 `src/pages/[slug].astro` añade para Kennewick y Pasco un `Service` de portrait
@@ -630,7 +639,8 @@ Para Headshots, `Base.astro` emite `WebPage`; `[slug].astro` añade un único
 las seis respuestas visibles y `BreadcrumbList`. El precio se describe como
 `$175 + tax`; equipos quedan en cotización personalizada. No se publican
 `Review`, `AggregateRating`, calle, coordenadas ni una tarifa de equipo. La
-ruta conserva `draft/noindex` y está fuera de crawler outputs.
+ruta está `ready/index`, fechada `2026-08-17`, sin header release noindex y
+dentro de sitemap y `llms.txt`.
 
 Para Contact, `Base.astro` emite un único `ContactPage` enlazado al negocio y
 `[slug].astro` añade `BreadcrumbList` Home → Session Pricing Estimate. La ruta

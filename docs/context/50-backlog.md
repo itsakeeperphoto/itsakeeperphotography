@@ -147,7 +147,7 @@
 - [ ] **19E. Enviar a Lisa el checklist de confirmación.** Usar
   `docs/lisa-publication-confirmation-checklist.md` o `.docx`, registrar sus
   respuestas sin inferirlas y aplicarlas ruta por ruta. El documento cubre
-  Seniors, Branding, Headshots, Investment, Senior Timing y Newborn Comparison;
+  Seniors, Branding, Investment, Senior Timing y Newborn Comparison;
   Reviews se resolvió aparte en ADR-058; Privacy permanece fuera por
   instrucción del usuario. El 2026-08-17 quedaron resueltos el paquete
   individual de Headshots y la política de viaje; no usar la versión `.docx`
@@ -175,10 +175,11 @@
   `lastModified: 2026-08-14`, membresía única en sitemap/`llms.txt`, cuatro
   anchors Locations/Branding/Reviews/Contact y ausencia de
   enlaces a Senior Timing/Newborn Comparison mientras continúen draft.
-- [ ] En el mismo deploy, comprobar que Branding y Headshots continúan
-  `noindex`, ausentes de sitemap/`llms.txt`, sin imágenes rotas y sirviendo
-  WebP responsive. Headshots ya tiene paquete individual y QA confirmados;
-  Branding sigue bloqueada por duración/entregables.
+- [ ] En el mismo deploy, comprobar que Branding continúa `noindex`, ausente de
+  sitemap/`llms.txt`, sin imágenes rotas y sirviendo WebP responsive. Confirmar
+  que Headshots responde 200/index, aparece una vez en sitemap/`llms.txt` y
+  conserva su paquete/schema confirmado. Branding sigue bloqueada por
+  duración/entregables.
 - [ ] Confirmar también que Senior Timing conserva `draft/noindex`, header
   release, exclusión de sitemap/`llms.txt`, schema sin fechas y las 11 imágenes
   responsive; el push del rediseño no autoriza su publicación.
@@ -191,8 +192,8 @@
   `llms.txt`, carga sus 11 imágenes responsive y mantiene el CSS aislado. Esta
   verificación no publica Branding ni Headshots service.
 - [ ] **21. Verificar analítica en el deploy.** Confirmar una visita etiquetada en
-  tiempo real en Microsoft Clarity y Google Analytics, y decidir si staging se
-  filtra o se excluye antes de interpretar métricas.
+  tiempo real en Microsoft Clarity y Google Analytics. Staging ya está excluido
+  por código y no carga ninguno de los dos tags.
 - [x] **22. Rediseñar el artículo Senior Timing según ADR-054.** Se implementó
   `SeniorTimingPage` con `EditorialHero`, contact sheet estacional, CSS `?url`,
   1 H1/8 H2/7 H3, cuatro anchors y 11 imágenes. La frase distrital no demostrada
@@ -304,7 +305,8 @@ sin reemplazar el archivo.
   `$175 + tax`, 20–30 minutos, una descarga digital en alta resolución con uso
   comercial y galería online con compras adicionales. Equipos usan custom
   estimate sin tarifa inventada; `pending` queda vacío y schema/Playwright
-  pasan, pero la ruta permanece `draft/noindex` hasta decisión de publicación.
+  pasan. ADR-065 publica la ruta `ready/index`, `lastModified: 2026-08-17`,
+  sitemap/`llms.txt` y retira su header release noindex.
 - [ ] Revalidar que el copy de Branding coincide con
   `src/lib/session-pricing.ts` y no promete un número distinto.
 - [x] El artículo comparativo usa ese inventario real sin media nueva y tiene
@@ -506,7 +508,8 @@ sin reemplazar el archivo.
   `G-0YW8M601L1`.
 - [ ] Verificar tráfico en tiempo real en ambos dashboards desde el deploy
   oficial.
-- [ ] Decidir y documentar si staging debe excluirse o filtrarse.
+- [x] Excluir staging y desarrollo por código; GA4 y Clarity se cargan una sola
+  vez únicamente en `SITE_MODE=release`.
 
 ### Netlify Forms
 
@@ -695,11 +698,17 @@ sin reemplazar el archivo.
   header release noindex y con membresía en sitemap/`llms.txt`; release contiene
   ahora 13 URLs y 12 entradas citables. Emite `WebPage` y `BreadcrumbList`, sin
   schema de reseñas o rating fabricado.
+- [x] Headshots actualizado a `ready/index`, `lastModified: 2026-08-17`, sin
+  header release noindex y con membresía en sitemap/`llms.txt`; tras retirar
+  Portfolio, el estado vigente queda 13/13. Emite WebPage, Service + Offer,
+  FAQPage y BreadcrumbList con el paquete confirmado.
 - [x] Newborn Comparison rediseñado con Article/FAQPage/Breadcrumb y sin fechas;
   conserva `draft/noindex`, header release y exclusión sitemap/`llms.txt` hasta
   resolver sus tres gates literales.
-- [ ] Revisar metadata, Service/Article/LocalBusiness/Breadcrumb/FAQ schema con
-  contenido visible actual; no crear ratings no verificados.
+- [x] Revisar metadata y schema de las 13 URLs indexables: un LocalBusiness y
+  WebSite canónicos, tipo principal correcto, Breadcrumb/Service/Article/FAQ
+  según contenido visible, perfil Google Business por `sameAs`, sin calle/geo
+  privada ni ratings no verificables. Validator release/staging PASS.
 - [ ] Actualizar `README.md` para reflejar las 20 rutas, forms reales, modos de
   deploy y comandos actuales.
 - [ ] Crear un nuevo handoff final; conservar `docs/final-handoff.md` como
@@ -729,9 +738,9 @@ sin reemplazar el archivo.
   cálculo vivo, viaje confirmado y paquete Headshots separado, con submit HTML
   nativo; preserva `ready/index`, form único y schema sobrio.
 - [x] Renovadas Branding y Headshots con fotografía Drive local, diversidad
-  protegida, filenames/alt descriptivos y XMP de ciudad segura; el estado
-  editorial sigue `draft/noindex`. Headshots ya resolvió su paquete individual;
-  Branding todavía espera duración y entregables.
+  protegida, filenames/alt descriptivos y XMP de ciudad segura. Headshots ya
+  resolvió su paquete individual y está `ready/index`; Branding continúa
+  `draft/noindex` hasta confirmar duración y entregables.
 - [x] Completar Reviews con `Words Become Pictures`, testimonios reales,
   `KindWords` exacto y libro reutilizable; no se usó una grilla genérica.
 - [x] Completar Pasco con composición A+C propia, conocimiento local y diez

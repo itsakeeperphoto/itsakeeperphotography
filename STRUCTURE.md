@@ -29,6 +29,7 @@ entry when that date is missing.
 | `/` | Homepage | 2026-08-17 |
 | `/family-photographer-tri-cities-wa/` | Service | 2026-08-04 |
 | `/newborn-photographer-tri-cities-wa/` | Service | 2026-08-17 |
+| `/headshot-photographer-tri-cities-wa/` | Service | 2026-08-17 |
 | `/about/` | About / trust | 2026-08-10 |
 | `/reviews/` | Reviews / trust | 2026-08-12 |
 | `/contact/` | Contact / conversion | 2026-08-17 |
@@ -39,7 +40,7 @@ entry when that date is missing.
 | `/journal/family-photo-locations-tri-cities/` | Article | 2026-08-08 |
 | `/journal/branding-photos-vs-headshots/` | Article | 2026-08-17 |
 
-The release sitemap and `llms.txt` each contain the same 12 canonical URLs.
+The release sitemap and `llms.txt` each contain the same 13 canonical URLs.
 
 ## Planned public architecture
 
@@ -49,8 +50,8 @@ The release sitemap and `llms.txt` each contain the same 12 canonical URLs.
 - `/senior-photographer-tri-cities-wa/` — draft; excluded
 - `/newborn-photographer-tri-cities-wa/` — ready and indexable
 - `/branding-photographer-tri-cities-wa/` — draft; excluded
-- `/headshot-photographer-tri-cities-wa/` — draft; package individual and QA
-  responsive confirmed, pending explicit publication decision; excluded
+- `/headshot-photographer-tri-cities-wa/` — ready and indexable; individual
+  package and responsive/schema QA confirmed
 
 ### Trust and conversion
 

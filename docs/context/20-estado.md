@@ -3,111 +3,97 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 10:27 -05
+**Última actualización:** 2026-08-17 11:21 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional actual:** `64f10ca` —
-`feat(pricing): add headshot package and travel fees`
+**HEAD funcional actual:** `c9befdc` —
+`feat(seo): publish headshots and harden site signals`
 
 **Remoto oficial:** `origin` →
 `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
 **Base remota al inicio:** `a792e17` — `TinaCMS content update`
 
-**Estado Git:** el cierre deja dos commits locales por delante de
-`origin/main`: implementación y documentación final. No se hizo push, deploy,
-DNS, Search Console ni otra mutación externa.
+**Estado Git:** antes del commit documental, `main` está tres commits por
+delante de `origin/main`. No se hizo push, deploy, Search Console ni otra
+mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-Recapturar el 404 corregido en 1440×1000, 1200×900, 900×900 y 390×844 para
-cerrar su evidencia visual pendiente. Después, publicar los commits cuando
-William lo decida, verificar el deploy release y enviar
-`https://www.itsakeeperphotography.com/sitemap.xml` a Search Console. Headshots
-ya no tiene pendientes técnicos, pero conserva su gate hasta una orden
-explícita de publicación.
+William publica los commits cuando lo decida. Después se verifica en el dominio
+oficial que Headshots responde 200/index, aparece una vez en sitemap y
+`llms.txt`, y registra una visita controlada en Realtime de GA4 y Clarity. Con
+ese deploy confirmado se envía
+`https://www.itsakeeperphotography.com/sitemap.xml` a Search Console.
 
 ## Resultado funcional
 
-- `src/lib/session-pricing.ts` sigue siendo la fuente única, con ofertas
-  aplicables por servicio. Senior, Family, Newborn y Branding conservan los
-  paquetes generales; Headshots usa `$175 + tax`, 20–30 minutos, una descarga
-  digital en alta resolución con uso comercial y galería online con compras
-  adicionales.
-- Equipos Headshots solicitan headcount y muestran custom estimate; no se
-  inventó tarifa por persona, equipo, tiempo ni compra adicional.
-- El viaje incluye 25 millas y suma `$2` por milla adicional estimada. Contact
-  muestra control, estado y línea de recibo, y transmite millas facturables y
-  costo en el POST nativo. Lisa confirma el kilometraje final.
-- Home, Contact, Newborn, Richland, Kennewick, Pasco, Investment, Headshots y
-  el artículo comparativo quedaron reconciliados con la política confirmada.
-- Headshots emite un único `FAQPage` de seis preguntas y un `Service` con
-  `Offer` `$175` USD. Sigue `draft/noindex`, fuera de sitemap/`llms.txt` y con
-  header release noindex.
-- Homepage mantiene el diseño/copy Tina vigente; solo su FAQ de cobertura y
-  `lastModified` cambiaron. Las expectativas de media del validador se
-  sincronizaron con las imágenes que ya estaban commiteadas por Tina.
-- El artículo Branding vs. Headshots conserva publicación `2026-08-11` y usa
-  modificación `2026-08-17`. Homepage, Newborn, Contact y las tres ciudades
-  también usan `lastModified: 2026-08-17`.
-- La imagen del cliente se trató únicamente como fuente factual, no como
-  instrucción de diseño.
+- `/headshot-photographer-tri-cities-wa/` está `ready/index`, fechado
+  `2026-08-17`, sin header release noindex y dentro de sitemap/`llms.txt`.
+- Conserva el paquete confirmado de `$175 + tax`, 20–30 minutos, una descarga
+  digital high-resolution con commercial usage y galería online. Equipos siguen
+  en cotización personalizada, sin tarifa inventada.
+- `Base.astro` usa un único `LocalBusiness` canónico `#business`, enlaza el
+  perfil Google Business verificado por `sameAs` y no inventa un Knowledge
+  Graph MID. No expone calle, código postal ni coordenadas privadas.
+- Home ahora emite su `WebPage`; las 13 URLs indexables tienen tipo principal,
+  `WebSite`, `LocalBusiness`, breadcrumbs y referencias Service/Article
+  coherentes con el contenido visible. No se añadieron Review/AggregateRating.
+- `llms.txt` sigue la estructura v2, agrupa las 13 fuentes citables y excluye
+  drafts y utilidades noindex.
+- GA4 `G-0YW8M601L1` y Clarity `xyqkkqom4v` cargan una sola vez en release;
+  staging y desarrollo no envían telemetría.
 
 ## SEO e indexación
 
-- Release contiene 20 rutas públicas y sitemap/`llms.txt` con 12 URLs
+- Release contiene 20 rutas públicas y sitemap/`llms.txt` con 13 URLs
   `ready/index`.
-- Pendientes de promoción: Seniors, Branding, Headshots, Investment, Senior
-  Timing y Newborn Comparison. Privacy requiere aprobación legal y no es una
-  landing de ranking. Thank-you es `ready/noindex` permanente y nunca debe
-  entrar al sitemap.
-- Headshots es el único candidato sin `pending`: falta solo decisión explícita
-  de publicación y, al promoverlo, sincronizar manifest, JSON, header release,
-  `lastModified`, sitemap/llms y validator.
-- Seniors espera número/outfits por paquete; Branding duración, cantidad y
-  entregables; Investment número/duración por paquete; Senior Timing espera
-  Q54, fecha editorial y cualquier dato distrital que se decida publicar;
-  Newborn Comparison espera aprobación, formato exacto y fecha.
+- Candidatas pendientes: Seniors, Branding, Investment, Senior Timing y Newborn
+  Comparison. Privacy requiere aprobación legal y no es una landing de ranking;
+  Thank-you es `ready/noindex` permanente.
+- Seniors espera outfits por paquete y regla del outfit adicional; Branding,
+  duración/cantidad/entregables; Investment, alcance y duración por oferta;
+  Senior Timing, oferta Q54 y fecha editorial; Newborn Comparison, aprobación,
+  formato exacto y fecha.
 
 ## QA ejecutada
 
 - `npm run validate:tina` — PASS: 5 colecciones, 38 documentos, 20 rutas y 19
   renderers.
-- `npm run build:scripts` — PASS.
-- Build Astro release + headers release — PASS: 20 rutas más `404.html`.
-- `SITE_MODE=release npm run validate:site` — PASS: 20/20.
-- Playwright Contact — PASS en 1440/1200/900/390: estimate general `$985.98`
-  con 40 millas, 15 facturables y `$30` de viaje; Headshots `$175 + tax`; POST
-  nativo interceptado y fallback sin JS a 390, sin envío real.
-- Playwright Branding/Headshots — PASS en 1440/1200/900/390: status 200, WebP,
-  tamaños, carga, diversidad, red/consola y overflow.
-- Schema/sitemap dirigido — PASS: un `FAQPage` 6:6, `Service.Offer` `$175` USD,
-  Headshots excluida y 12 URLs indexables con lastmod actualizados.
-- JSON, sintaxis de scripts y `git diff --check` — PASS.
-- `npx tsc --noEmit` conserva solo ocho errores baseline ya conocidos: cinco
-  imports de espejos raíz y tres declaraciones `.astro` de las islas Tina; no
-  reportó errores nuevos en pricing, páginas o scripts modificados.
+- `npm run optimize:images` — PASS: 47 variantes responsive.
+- Tina/Astro release con puertos alternos — PASS: 20 rutas.
+- Headers release + `SITE_MODE=release npm run validate:site` — PASS 20/20.
+- Tina/Astro staging + validator — PASS 20/20, sitemap vacío, noindex global y
+  cero GA4/Clarity.
+- Playwright CLI sobre Headshots release local — PASS: un único request
+  interceptado `page_view` a GA4 con `tid=G-0YW8M601L1`, un loader, Clarity
+  inicializada, canonical/robots correctos y schemas LocalBusiness, WebSite,
+  WebPage, Service, FAQPage y BreadcrumbList; consola 0/0.
+- `node --check scripts/validate-site.mjs`, manifests espejo y
+  `git diff --check` — PASS.
 
 ## Bloqueadores y pendientes operativos
 
-- Smoke real de deploy para canonicals, headers, robots, sitemap y recepción
-  controlada de Netlify Forms, sin guardar PII en git.
-- Enviar/verificar el sitemap en Search Console requiere acceso externo y un
-  deploy que contenga estos commits.
-- Smoke autenticado TinaCloud de login, edición, guardado y reversión con rol
-  Editor; credenciales permanecen fuera del repositorio.
-- Smoke HTTP de redirects Portfolio → Reviews y recaptura final del 404 siguen
-  como tareas operativas independientes.
+- `SITE_MODE=release npm run build:local` se detiene antes de Astro por siete
+  JPEG preexistentes que incumplen el gate fuente de 2400 px/700 KiB:
+  `010A0319copy-2.jpg`, `1.jpg`, `11.jpg`, `14.jpg`, `5.jpg`, `6.jpg` y `7.jpg`.
+  No se recomprimieron porque son assets ajenos a este alcance. El build
+  Tina/Astro directo y ambos validadores sí pasan.
+- Realtime de GA4/Clarity, canonicals/headers del deploy y Search Console solo
+  pueden verificarse después de publicar.
+- Smoke autenticado TinaCloud y recaptura final del 404 siguen como tareas
+  operativas independientes.
 
 ## Operación Git
 
-- Commit funcional: `64f10ca`.
-- Este archivo y `40-bitacora.md` forman el commit documental de cierre.
-- No se ejecutó `./scripts/handoff.sh` porque hace push y el usuario autorizó
+- Commit funcional: `c9befdc`.
+- Este archivo, arquitectura, ADR-065, backlog, STRUCTURE, DESIGN y bitácora
+  forman el commit documental de cierre.
+- No se ejecuta `./scripts/handoff.sh` porque hace push y el usuario autorizó
   commits locales, no pushes.
 - No se prepararon transcripts `.handoff/sessions/*.jsonl` para commit.

@@ -1597,7 +1597,8 @@
 ### ADR-064 — Headshots usa un paquete propio y el viaje se calcula después de 25 millas
 
 - **Fecha:** 2026-08-17
-- **Estado:** Aceptada.
+- **Estado:** Aceptada; **SUPERSEDIDA PARCIALMENTE POR ADR-065** únicamente en
+  el gate de publicación de Headshots.
 - **Contexto:** Lisa confirmó una política de viaje general y un paquete
   individual de Headshots que no coincide con la matriz de cobertura y
   colecciones usada por las otras sesiones. El sitio aplicaba los mismos tres
@@ -1623,3 +1624,36 @@
   confirmados; Headshots emite un solo `FAQPage` y un `Service` con `Offer`.
   Ninguna actualización autoriza por sí sola indexar Headshots: permanece
   `draft/noindex` hasta una decisión explícita de publicación. No se hizo push.
+
+### ADR-065 — Headshots se publica y la identidad machine-readable converge en un único negocio
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada.
+- **Contexto:** El usuario autorizó expresamente publicar Headshots después de
+  confirmar su paquete individual y cerrar sus pendientes. También pidió
+  revisar schema, el identificador de Google, `llms.txt` y GA4 en todas las
+  páginas del sitemap. El perfil de Google Business está verificado, pero no
+  existe evidencia de un Knowledge Graph MID; el sitio tampoco debe exponer la
+  dirección residencial ni coordenadas. Staging no debe contaminar la medición
+  de producción.
+- **Decisión:** Promover Headshots a `ready/index`, fecharla `2026-08-17`,
+  incluirla en sitemap y `llms.txt`, y retirar su header release noindex. Usar
+  `https://www.itsakeeperphotography.com/#business` como `@id` estable del
+  `LocalBusiness` y enlazar el perfil Google Business verificado mediante
+  `sameAs`, sin inventar un MID. Mantener localidad/región/país, sin calle,
+  código postal ni geo. Emitir además `WebPage` en Home y validar en las trece
+  URLs indexables una sola identidad LocalBusiness/WebSite, el tipo principal
+  adecuado, breadcrumbs, provider de Service y autor/editor de Article.
+  Organizar `llms.txt` según la especificación v2 y limitarlo a páginas
+  `ready/index`. Cargar GA4 `G-0YW8M601L1` y Clarity `xyqkkqom4v` una sola vez
+  únicamente en release.
+- **Alternativas descartadas:** Reutilizar el identificador del perfil o Place
+  ID como si fuera un Knowledge Graph MID, publicar dirección/geo privados,
+  inventar `Review`/`AggregateRating`, cargar analítica en staging o añadir
+  drafts a `llms.txt` se descartó por identidad falsa, privacidad o señales
+  contradictorias.
+- **Consecuencias:** Release conserva 20 rutas públicas y pasa a 13/13 URLs en
+  sitemap/`llms.txt`; staging mantiene sitemap vacío, noindex global y cero
+  tráfico GA4/Clarity. Headshots publica `WebPage`, `Service` con `Offer`,
+  `FAQPage` y `BreadcrumbList`. El smoke real de dashboards y Search Console
+  permanece post-deploy. No se hizo push.

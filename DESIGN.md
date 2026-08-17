@@ -1959,3 +1959,22 @@ previsualizaciones auditables y documentada con surface seed `02ea6a91`.
   exclusión crawler. Staging/release aprueban 20/20. Playwright CLI aprueba
   1440×1000, 1200×900, 900×900 y 390×844, con seis imágenes cargadas, cero
   overflow, errores de consola/red o contenido oculto bajo reduced motion.
+
+## 22. ADDENDUM SEO — HEADSHOTS READY/INDEX E IDENTIDAD CANÓNICA
+
+Este addendum no modifica diseño, copy, fotografías, composición ni responsive.
+Supersede únicamente el gate histórico que mantenía
+`/headshot-photographer-tri-cities-wa/` como draft después de cerrar su paquete.
+
+- Headshots queda `ready/index`, `lastModified: 2026-08-17`, sin header release
+  noindex y con membresía única en sitemap y `llms.txt`.
+- Release mantiene 20 rutas y 13/13 URLs en sitemap/`llms.txt`; staging conserva
+  sitemap vacío y noindex global.
+- La página conserva `WebPage`, `Service` + `Offer` `$175`, `FAQPage` 6:6 y
+  `BreadcrumbList`, todos enlazados al negocio canónico.
+- `https://www.itsakeeperphotography.com/#business` es el `@id` estable de
+  It's A Keeper Photography. Google Business, Instagram y Facebook se enlazan
+  mediante `sameAs`; no se inventa un Knowledge Graph MID ni se publica calle,
+  código postal o geo privados.
+- GA4 `G-0YW8M601L1` y Clarity `xyqkkqom4v` se cargan solo en release. Este
+  cambio no introduce widgets, estados ni efectos visuales nuevos.
