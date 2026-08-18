@@ -3,79 +3,61 @@
 > Foto operativa al cierre de la sesión. Si contradice otro documento, este
 > manda.
 
-**Última actualización:** 2026-08-17 18:05 -05
+**Última actualización:** 2026-08-18 09:49 -05
 
 **Actualizado por:** Codex / GPT-5
 
 **Rama:** `main`
 
-**HEAD funcional actual:** `e143163` — `fix(seo): remove stale noindex and link journal guides`
+**HEAD funcional actual:** `f9865ba` — `fix(pasco): contain faq heading on desktop`
 **Remoto oficial:** `origin` → `https://github.com/itsakeeperphoto/itsakeeperphotography.git`
 
-**Estado Git:** corrección funcional y memoria registradas en `e143163`; este
-cierre documental queda en un commit local separado. No se hizo push, deploy
-ni mutación en Search Console.
+**Estado Git:** implementación funcional commiteada; este cierre documental
+queda en un commit local separado. No se hizo push, deploy ni mutación externa.
 
 ---
 
 ## Siguiente paso concreto
 
-Cuando William haga push y Netlify publique `e143163`, verificar primero con
-`curl -I` que las 18 URLs indexables no reciban
-`X-Robots-Tag: noindex`; después usar URL Inspection live test y solicitar
-indexación para las rutas que Google había bloqueado.
+William puede hacer push de los commits locales. Después del deploy, verificar
+la FAQ de `/pasco-wa-photographer/` en desktop ancho y continuar la comprobación
+post-deploy de headers `X-Robots-Tag` e indexación descrita en ADR-070.
 
-## Diagnóstico confirmado en producción
+## Implementación cerrada
 
-- El dominio principal ya redirige correctamente de apex a `www`; Homepage y
-  Family permitieron solicitar indexación.
-- Seniors, Branding, Investment, Senior Timing y Newborn Comparison respondían
-  200 y HTML `ready/index`, pero el header HTTP seguía enviando
-  `X-Robots-Tag: noindex, nofollow, noarchive`; el error de GSC era real.
-- La respuesta coincidía con el mirror raíz `release`, que conservaba gates
-  editoriales antiguos y había divergido de `config/netlify-headers/release`.
-- El hub Journal mostraba cuatro cards, pero Senior Timing y Newborn Comparison
-  no tenían href; Footer también omitía ambas rutas. Locations mostraba un
-  título anterior distinto al destino.
-
-## Implementación local
-
-- `release` y `staging` ahora coinciden byte por byte con sus fuentes en
-  `config/netlify-headers/`; release solo mantiene noindex en Admin, Tina
-  Island, Thank-you, Privacy y 404.
-- `validate:site` compara ambos pares y falla si reaparece drift.
-- Journal enlaza Locations, Senior Timing, Newborn Comparison y Branding vs.
-  Headshots; Reviews y Contact completan seis anchors del cuerpo.
-- Footer enlaza las cuatro guías y los títulos de las cards coinciden con sus
-  páginas. El hub usa `lastModified: 2026-08-17` en manifest y sitemap.
-- El sitemap y `llms.txt` continúan con las mismas 18 URLs canónicas.
+- La FAQ Pasco conserva cuatro preguntas nativas y su fuente schema 4:4.
+- El encabezado sigue ocupando cuatro columnas desktop, pero su H2 ya no escala
+  hasta `7rem`: queda entre `4rem` y `4.5rem`, limitado por su propio rail.
+- `PASCO QUESTIONS` termina antes del divisor y de la columna de preguntas.
+- No cambiaron copy, HTML, orden DOM, colores, fotografías, schema, estado
+  `ready/index`, sitemap ni `llms.txt`.
 
 ## QA ejecutada
 
 - `npm run validate:tina` — PASS: 5 colecciones, 38 documentos, 20 rutas y 19
   contratos de renderer.
-- `SITE_MODE=release npx astro build` — PASS: 20 rutas prerenderizadas.
-- `SITE_MODE=release npm run install:netlify-headers` — PASS.
-- `SITE_MODE=release npm run validate:site` — PASS 20/20.
-- Artefacto Journal — PASS: seis hrefs esperados y cuatro enlaces Footer.
-- Artefacto `_headers` — PASS: ninguna regla noindex para rutas publicables.
-- `npm run build:local` solo no completó porque el proceso Tina del usuario ya
-  ocupa `:9000`; no se cerró y todas sus fases verificables pasaron separadas.
+- `npx astro build` — PASS: 20 rutas prerenderizadas.
+- `npm run install:netlify-headers` + `npm run validate:site` — PASS 20/20 en
+  staging.
+- Playwright — PASS en 1728, 1440, 1200, 900 y 390 px: cero overflow; el título
+  permanece dentro del header y separado de la lista en layouts de columnas.
+- Interacción — PASS: cuatro `<details>`, segunda pregunta abre; consola 0/0.
+- Impeccable detector layout/final — `[]`; `git diff --check` — PASS.
+- `npm run build:local` llegó hasta Tina y no pudo abrir `::1:4001` por el
+  sandbox. Las fases verificables se ejecutaron por separado sin errores.
 
 ## Pendientes operativos
 
-- Publicar el commit local; hasta entonces Google seguirá viendo el header del
-  deploy anterior.
-- Post-deploy: inspeccionar live Seniors, Branding, Investment, Senior Timing y
-  Newborn Comparison y luego solicitar indexación. Repetir para el resto del
-  sitemap por prioridad, sin reenviar URLs que aún muestren noindex.
+- Hacer push y confirmar el deploy; el agente tiene prohibido hacer push.
+- En producción, confirmar que las 18 URLs indexables no reciben noindex HTTP y
+  solicitar indexación en GSC donde corresponda.
 - Verificar TinaCloud autenticado y Realtime de GA4/Clarity en producción.
-- Privacy conserva `draft/noindex` hasta disponer de texto legal aprobado;
-  Thank-you y 404 permanecen noindex por diseño.
+- Privacy conserva `draft/noindex`; Thank-you y 404 permanecen noindex por
+  diseño.
 
 ## Operación Git
 
-- Commit funcional local: `e143163`; el cierre documental se registra aparte.
-- El usuario prohibió push desde el agente.
+- Commit funcional local: `f9865ba`.
+- El cierre documental se registra en un segundo commit local.
 - No ejecutar `./scripts/handoff.sh` porque incluye push.
 - No preparar `.handoff/sessions/*.jsonl` para commit.

@@ -18,6 +18,10 @@
   ejecutan secuencialmente para liberar la data layer antes del trazado SSR. La
   reproducción con adaptador Netlify real genera función, release y 20/20 con
   salida 0; falta confirmar el siguiente deploy remoto.
+- [x] **0C. Contener el título FAQ de Pasco en desktop.** El H2 conserva el rail
+  izquierdo de cuatro columnas y una escala editorial acotada; Playwright
+  confirma que no cruza el divisor en 1728/1440/1200/900, que móvil apila sin
+  overflow a 390 px y que las cuatro preguntas siguen operativas.
 
 - [x] **1. Resolver la divergencia Git anterior.** Al cerrar la implementación
   visual, `main...origin/main` coincide en `c663d68`. Política vigente del

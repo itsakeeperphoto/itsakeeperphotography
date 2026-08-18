@@ -355,6 +355,9 @@ cabeza del sujeto; tablet y móvil mantienen su crop previo.
 de diez sesiones, cuatro FAQ y ocho anchors exactos. Su secuencia A+C combina
 hero/intro de horizonte abierto, dos bloques de paisaje, directorio ledger,
 galería editorial, planificación estacional, FAQ nativo y cierre full-bleed.
+En desktop, el encabezado del FAQ conserva su rail de cuatro columnas y limita
+su escala por el ancho de ese rail; `PASCO QUESTIONS` no puede cruzar el divisor
+ni invadir la lista. En móvil, encabezado y preguntas se apilan en orden DOM.
 El cierre reutiliza la geometría centrada de la invitación Richland —retícula de
 12 columnas, wash umber, display marfil y CTA outlined— sin compartir CSS ni
 media: conserva copy, fotografía, alt y focal crops propios de Pasco. En móvil

@@ -1621,3 +1621,22 @@
   (`fix(seo): remove stale noindex and link journal guides`), con cierre
   documental local separado. No se hizo push, deploy, Search Console ni
   `./scripts/handoff.sh`.
+
+### 2026-08-18 — Codex / GPT-5 — Título FAQ de Pasco contenido en desktop
+
+- **Objetivo:** corregir la superposición de `PASCO QUESTIONS` sobre la lista
+  de preguntas en `/pasco-wa-photographer/` sin cambiar copy, estructura ni la
+  dirección visual A+C.
+- **Diagnóstico:** el encabezado ocupa cuatro columnas, pero el H2 escalaba con
+  todo el viewport hasta `7rem`; la palabra `QUESTIONS` excedía su rail y
+  atravesaba el divisor vertical en desktop ancho.
+- **Implementación:** el H2 conserva el rail y la jerarquía editorial, usa todo
+  el ancho disponible de su columna y limita su escala a `4–4.5rem`. Tablet y
+  móvil mantienen sus reglas previas.
+- **QA:** Astro prerenderizó 20 rutas y `validate:site` pasó 20/20. Playwright
+  midió título antes del divisor, cero overflow y geometría válida en
+  1728/1440/1200/900/390; las cuatro preguntas abren y la consola queda limpia.
+  Impeccable layout/final devuelve `[]`.
+- **Git/operación:** implementación en `f9865ba`
+  (`fix(pasco): contain faq heading on desktop`); cierre documental local
+  separado. No se hizo push ni `./scripts/handoff.sh`.
